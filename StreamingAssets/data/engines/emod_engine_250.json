@@ -1,0 +1,33 @@
+{
+    "DissipationCapacity" : 10,
+    "Description" : {
+        "Cost" : 3000000,
+        "Rarity" : 0,
+        "Purchasable" : true,
+        "Manufacturer" : "GoreTex",
+        "Model" : "Standard",
+        "UIName" : "Engine 250",
+        "Id" : "emod_engine_250",
+        "Name" : "Engine 250",
+        "Details" : "wohooo",
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
+    },
+    "BonusValueA" : "- 10 Heat / Turn",
+    "BonusValueB" : "",
+    "ComponentType" : "HeatSink",
+    "ComponentSubType" : "Heatsink",
+    "PrefabIdentifier" : "",
+    "BattleValue" : 0,
+    "InventorySize" : 2,
+    "Tonnage" : 11.5,
+    "AllowedLocations" : "CenterTorso",
+    "DisallowedLocations" : "All",
+    "CriticalComponent" : false,
+    "statusEffects" : null,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile" : ""
+    }
+}

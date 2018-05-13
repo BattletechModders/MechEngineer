@@ -1,0 +1,9 @@
+{
+    "InventorySize" : 1,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile" : ""
+    }
+}

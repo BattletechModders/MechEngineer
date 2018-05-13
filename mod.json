@@ -1,0 +1,37 @@
+{
+	"Name": "MechEngineMod",
+	"Author": "CptMoore",
+	"Website": "https://github.com/CptMoore/MechEngineMod",
+
+	"DependsOn": ["DynModLib", "StatsFixMod"],
+	"DLL": "MechEngineMod.dll",
+	"DLLEntryPoint": "MechEngineMod.Control.Start",
+	
+	"Manifest": [
+		{
+			"Type": "CombatGameConstants",
+			"Path": "StreamingAssets/data/constants/CombatGameConstants.json",
+			"ShouldMergeJSON": true
+		},
+		{
+			"Type": "ChassisDef",
+			"Path": "StreamingAssets/data/chassis/chassisdef_shadowhawk_SHD-2D.json",
+			"ShouldMergeJSON": true
+		},
+		{
+			"Type": "UpgradeDef",
+			"Path": "StreamingAssets/data/upgrades/gyros/Gear_Gyro_Friedhof_Sparrow.json",
+			"ShouldMergeJSON": true
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_250.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_100.json",
+			"ShouldMergeJSON": false
+		}
+	]
+}
