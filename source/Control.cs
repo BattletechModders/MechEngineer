@@ -19,6 +19,8 @@ namespace MechEngineMod
         public int TechCostPerEngineTon = 1;
         public float? MaxSprintFactor = null;
         public float? MinSprintFactor = null;
+        public int FallbackHeatSinkCapacity = 30;
+        public float SpeedMultiplierPerDamagedEnginePart = 0.7f;
     }
 
     internal class EngineCalculator
@@ -196,7 +198,28 @@ namespace MechEngineMod
                 mod.Logger.LogError(e);
             }
         }
-        
+
+        // set initial weight of mechs to 0.1 times the tonnage
+        [HarmonyPatch(typeof(ChassisDef), "FromJSON")]
+        public static class ChassisDefPatch
+        {
+            public static void Postfix(ChassisDef __instance)
+            {
+                try
+                {
+                    var value = __instance.Tonnage * 0.1;
+                    var propInfo = typeof(ChassisDef).GetProperty("InitialTonnage");
+                    var propValue = Convert.ChangeType(value, propInfo.PropertyType);
+                    propInfo.SetValue(__instance, propValue, null);
+                    //Traverse.Create(__instance).Property("InitialTonnage").SetValue(value);
+                }
+                catch (Exception e)
+                {
+                    mod.Logger.LogError(e);
+                }
+            }
+        }
+
         // invalidate mech loadouts that don't have an engine
         [HarmonyPatch(typeof(MechValidationRules), "ValidateMechPosessesWeapons")]
         public static class MechValidationRulesPatch
@@ -207,13 +230,13 @@ namespace MechEngineMod
                 {
                     var engineRefs = mechDef.Inventory.Where(x => Engine.IsEnginePart(x.Def)).ToList();
                     var mainEngine = engineRefs
-                        .Where(x => x.DamageLevel == ComponentDamageLevel.Functional)
+                        .Where(x => x.DamageLevel == ComponentDamageLevel.Functional || x.DamageLevel == ComponentDamageLevel.NonFunctional)
                         .Select(x => Engine.MainEngineFromDef(x.Def)).FirstOrDefault();
                     if (mainEngine == null)
                     {
                         errorMessages[MechValidationType.InvalidInventorySlots].Add("MISSING ENGINE: This Mech must mount a functional Fusion Engine");
                     }
-                    else if (mainEngine.Type == EngineType.XL && engineRefs.Count(x => x.DamageLevel == ComponentDamageLevel.Functional) != 3)
+                    else if (mainEngine.Type == EngineType.XL && engineRefs.Count(x => x.DamageLevel == ComponentDamageLevel.Functional || x.DamageLevel == ComponentDamageLevel.NonFunctional) != 3)
                     {
                         errorMessages[MechValidationType.InvalidInventorySlots].Add("INCOMPLETE ENGINE: An XL Engine requires left and right torso components");
                     }
@@ -225,7 +248,7 @@ namespace MechEngineMod
             }
         }
         
-        // only allow one engine in a specific location
+        // only allow one engine part per specific location
         [HarmonyPatch(typeof(MechLabLocationWidget), "ValidateAdd", new[] { typeof(MechComponentDef) })]
         public static class MechLabLocationWidgetEnginePatch
         {
@@ -416,6 +439,7 @@ namespace MechEngineMod
 
                     if (engine == null)
                     {
+                        __instance.StatCollection.GetStatistic("HeatSinkCapacity").SetValue(settings.FallbackHeatSinkCapacity);
                         return;
                     }
                     
@@ -454,6 +478,56 @@ namespace MechEngineMod
                     }
 
                     __result.SetCost(calc.CalcInstallTechCost(engine));
+                }
+                catch (Exception e)
+                {
+                    mod.Logger.LogError(e);
+                }
+            }
+        }
+
+        // crit engine reduces speed
+        // destroyed engine destroys CT
+        [HarmonyPatch(typeof(MechComponent), "DamageComponent")]
+        public static class MechComponentPatch
+        {
+            public static void Postfix(MechComponent __instance, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
+            {
+                try
+                {
+                    if (__instance.componentDef == null || !(__instance.parent is Mech))
+                    {
+                        return;
+                    }
+
+                    if (!Engine.IsEnginePart(__instance.componentDef))
+                    {
+                        return;
+                    }
+
+                    var mech = (Mech)__instance.parent;
+                    if (damageLevel == ComponentDamageLevel.Penalized)
+                    {
+                        if (!mech.IsLocationDestroyed(ChassisLocations.CenterTorso))
+                        {
+                            mod.Logger.LogDebug("Penalized=" + __instance.Location);
+
+                            var walkSpeed = mech.StatCollection.GetStatistic("WalkSpeed");
+                            var runSpeed = mech.StatCollection.GetStatistic("RunSpeed");
+                            mech.StatCollection.Float_Multiply(walkSpeed, settings.SpeedMultiplierPerDamagedEnginePart);
+                            mech.StatCollection.Float_Multiply(runSpeed, settings.SpeedMultiplierPerDamagedEnginePart);
+                        }
+                    }
+                    else if (damageLevel == ComponentDamageLevel.Destroyed)
+                    {
+                        mod.Logger.LogDebug("Destroyed=" + __instance.Location);
+
+                        if (!mech.IsLocationDestroyed(ChassisLocations.CenterTorso))
+                        {
+                            var onUnitSphere = UnityEngine.Random.onUnitSphere;
+                            mech.NukeStructureLocation(hitInfo, __instance.Location, ChassisLocations.CenterTorso, onUnitSphere, false);
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
