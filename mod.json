@@ -14,8 +14,13 @@
 			"ShouldMergeJSON": true
 		},
 		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/heatsinks/Gear_HeatSink_Generic_Double.json",
+			"ShouldMergeJSON": true
+		},
+		{
 			"Type": "ChassisDef",
-			"Path": "StreamingAssets/data/chassis/chassisdef_shadowhawk_SHD-2D.json",
+			"Path": "StreamingAssets/data/chassis/chassisdef_atlas_AS7-D.json",
 			"ShouldMergeJSON": true
 		},
 		{
@@ -25,12 +30,82 @@
 		},
 		{
 			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_250.json",
+			"Path": "StreamingAssets/data/engines/emod_engine_std_400.json",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_100.json",
+			"Path": "StreamingAssets/data/engines/emod_engine_std_350.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_std_300.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_std_250.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_std_200.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_std_150.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_std_100.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_xl_400.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_xl_350.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_xl_300.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_xl_250.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_xl_200.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_xl_150.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_engine_xl_100.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_slots_xl_left.json",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "StreamingAssets/data/engines/emod_slots_xl_right.json",
 			"ShouldMergeJSON": false
 		}
 	]

@@ -1,0 +1,33 @@
+{
+    "DissipationCapacity" : 18,
+    "Description" : {
+        "Cost" : 3000000,
+        "Rarity" : 0,
+        "Purchasable" : true,
+        "Manufacturer" : "GoreTex",
+        "Model" : "Military Fusion",
+        "UIName" : "Std. Engine 150",
+        "Id" : "emod_engine_std_150",
+        "Name" : "Std. Engine 150",
+        "Details" : "3 ton engine + 2 ton gyro + 6 heat sinks",
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
+    },
+    "BonusValueA" : "- 18 Heat / Turn",
+    "BonusValueB" : "",
+    "ComponentType" : "HeatSink",
+    "ComponentSubType" : "Heatsink",
+    "PrefabIdentifier" : "",
+    "BattleValue" : 0,
+    "InventorySize" : 2,
+    "Tonnage" : 5,
+    "AllowedLocations" : "CenterTorso",
+    "DisallowedLocations" : "All",
+    "CriticalComponent" : false,
+    "statusEffects" : null,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile" : ""
+    }
+}

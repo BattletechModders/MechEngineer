@@ -1,3 +1,4 @@
 {
-    "engineInstallTechCost": 10
+    "TechCostPerEngineTon": 1,
+	"logLevel": "Debug"
 }
