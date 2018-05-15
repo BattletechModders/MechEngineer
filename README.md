@@ -14,7 +14,24 @@ or
 
 ## Features
 
-TBD
+* added std engine type
+* added xl engine type and side torso xl engine parts
+* calculate walk and run speeds based on engine rating and mech tonnage
+* all mechs have 10% their max tonnage as initial tonnage
+* mechlab enforces to use an engine on a mech, xl engine requires the side torso parts
+* mechlab enforces only one engine part per chassis location
+* mechlab enforces only one gyro for center torso, also gryo to be 1 crit high
+* adjust movement speed summary stat based on engine rating
+* hide incompatible engines for mech
+* engine tonnage determins install tech cost
+* crit engine parts reduce speed, destroyed engine parts destroy mech
+
+TBD:
+* add stock engines to each mech (first add advanced array manipulation feature to modtek)
+* sort out what engine ratings to add to the game (need stock engines for mechs, get rid of xl again?)
+* figure out economy of engines (tech costs factor)
+* availability (shops and salvage settings)
+* more?
 
 ## Download
 
