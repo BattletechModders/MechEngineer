@@ -16,6 +16,7 @@ or
 
 * added std engine type
 * added xl engine type and side torso xl engine parts
+* removed global 10 heatsinks, each engine comes with TT free heatsink count
 * calculate walk and run speeds based on engine rating and mech tonnage
 * all mechs have 10% their max tonnage as initial tonnage
 * mechlab enforces to use an engine on a mech, xl engine requires the side torso parts
