@@ -99,6 +99,15 @@ namespace MechEngineMod
         {
             return Mathf.CeilToInt(Control.settings.TechCostPerEngineTon * engine.Def.Tonnage);
         }
+        
+        internal int CalcJumpJetCount(Engine engine, float tonnage)
+        {
+            var runSpeed = DistanceFormula(engine.Rating, tonnage);
+            var percentOfMaxSpeed = (runSpeed - MinSprintFactor) / (MaxSprintFactor - MinSprintFactor);
+
+            var maxSpeedByTTRules = 8;
+            return Mathf.CeilToInt(percentOfMaxSpeed * maxSpeedByTTRules);
+        }
 
         private static float DistanceFormula(int rating, float tonnage)
         {
@@ -221,6 +230,7 @@ namespace MechEngineMod
         }
 
         // invalidate mech loadouts that don't have an engine
+        // invalidate mech loadouts that have more jump jets than the engine supports
         [HarmonyPatch(typeof(MechValidationRules), "ValidateMechPosessesWeapons")]
         public static class MechValidationRulesPatch
         {
@@ -240,6 +250,13 @@ namespace MechEngineMod
                     {
                         errorMessages[MechValidationType.InvalidInventorySlots].Add("INCOMPLETE ENGINE: An XL Engine requires left and right torso components");
                     }
+
+                    var currentCount = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
+                    var maxCount = calc.CalcJumpJetCount(mainEngine, mechDef.Chassis.Tonnage); ;
+                    if (currentCount > maxCount)
+                    {
+                        errorMessages[MechValidationType.InvalidJumpjets].Add(string.Format("JUMPJETS: This 'Mech mounts too many jumpjets ({0} out of {1})", currentCount, maxCount));
+                    }
                 }
                 catch (Exception e)
                 {
@@ -247,7 +264,7 @@ namespace MechEngineMod
                 }
             }
         }
-        
+
         // only allow one engine part per specific location
         [HarmonyPatch(typeof(MechLabLocationWidget), "ValidateAdd", new[] { typeof(MechComponentDef) })]
         public static class MechLabLocationWidgetEnginePatch

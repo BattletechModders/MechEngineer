@@ -26,6 +26,7 @@ or
 * hide incompatible engines for mech
 * engine tonnage determins install tech cost
 * crit engine parts reduce speed, destroyed engine parts destroy mech
+* max jump jet is calculated linear to the speed of the mech up to 8 JJ at max sprint speed
 
 TBD:
 * add stock engines to each mech (first add advanced array manipulation feature to modtek)

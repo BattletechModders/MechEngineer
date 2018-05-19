@@ -3,7 +3,8 @@
 	"Author": "CptMoore",
 	"Website": "https://github.com/CptMoore/MechEngineMod",
 
-	"DependsOn": ["DynModLib", "StatsFixMod"],
+	"Enabled": true,
+	"DependsOn": ["DynModLib"],
 	"DLL": "MechEngineMod.dll",
 	"DLLEntryPoint": "MechEngineMod.Control.Start",
 	
