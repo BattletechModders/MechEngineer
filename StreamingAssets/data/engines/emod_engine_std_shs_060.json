@@ -1,0 +1,33 @@
+{	
+	"DissipationCapacity" : 30,
+	"Description" : {
+		"Cost" : 500000,
+		"Rarity" : 0,
+		"Purchasable" : true,
+		"Manufacturer" : "Generic",
+		"Model" : "",
+		"UIName" : "Std. Engine 060 (SHS)",
+		"Id" : "emod_engine_std_shs_060",
+		"Name" : "Std. Engine 060 (SHS)",
+		"Details" : "1.5 ton engine + 1 ton gyro + 10 standard heat sinks",
+		"Icon" : "uixSvgIcon_equipment_Heatsink"
+	},
+	"BonusValueA" : "- 30 Heat / Turn",
+	"BonusValueB" : "",
+	"ComponentType" : "HeatSink",
+	"ComponentSubType" : "Heatsink",
+	"PrefabIdentifier" : "",
+	"BattleValue" : 0,
+	"InventorySize" : 2,
+	"Tonnage" : 2.5,
+	"AllowedLocations" : "CenterTorso",
+	"DisallowedLocations" : "All",
+	"CriticalComponent" : false,
+	"statusEffects" : null,
+	"ComponentTags" : {
+		"items" : [
+			"component_type_stock"
+		],
+		"tagSetSourceFile" : ""
+	}
+}

@@ -4,7 +4,7 @@
         "Cost" : 3000000,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "GoreTex",
+        "Manufacturer" : "Generic",
         "Model" : "XL Engine Part",
         "UIName" : "XL Right Slots",
         "Id" : "emod_slots_xl_right",

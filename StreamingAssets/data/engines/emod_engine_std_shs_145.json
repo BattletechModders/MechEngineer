@@ -1,0 +1,34 @@
+{	
+	"DissipationCapacity" : 30,
+	"Description" : {
+		"Cost" : 500000,
+		"Rarity" : 0,
+		"Purchasable" : true,
+		"Manufacturer" : "Generic",
+		"Model" : "",
+		"UIName" : "Std. Engine 145 (SHS)",
+		"Id" : "emod_engine_std_shs_145",
+		"Name" : "Std. Engine 145 (SHS)",
+		"Details" : "5 ton engine + 2 ton gyro + 10 Standard Heat Sinks",
+		"Icon" : "uixSvgIcon_equipment_Heatsink"
+	},
+	"BonusValueA" : "- 30 Heat / Turn",
+	"BonusValueB" : "",
+	"ComponentType" : "HeatSink",
+	"ComponentSubType" : "Heatsink",
+	"PrefabIdentifier" : "",
+	"BattleValue" : 0,
+	"InventorySize" : 2,
+	"Tonnage" : 7,
+	"AllowedLocations" : "CenterTorso",
+	"DisallowedLocations" : "All",
+	"CriticalComponent" : false,
+	"statusEffects" : null,
+	"ComponentTags" : {
+		"items" : [
+			"component_type_stock"
+
+		],
+		"tagSetSourceFile" : ""
+	}
+}
