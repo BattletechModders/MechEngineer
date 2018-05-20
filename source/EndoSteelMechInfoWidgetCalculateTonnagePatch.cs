@@ -26,7 +26,7 @@ namespace MechEngineMod
                 }
                 if (mechDef.Inventory.Any(x => x.Def.IsEndoSteel()))
                 {
-                    __instance.currentTonnage -= mechDef.Chassis.InitialTonnage / 2;
+                    __instance.currentTonnage -= EndoSteelMechStatisticsRulesPatch.WeightSavingsIfEndoSteel(mechDef);
                 }
 
                 var adapter = new MechLabMechInfoWidgetAdapter(__instance);

@@ -15,13 +15,23 @@ namespace MechEngineMod
             {
                 if (mechDef.Inventory.Any(x => x.Def.IsEndoSteel()))
                 {
-                    currentValue -= mechDef.Chassis.InitialTonnage / 2;
+                    currentValue -= WeightSavingsIfEndoSteel(mechDef);
                 }
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
+        }
+
+        internal static float WeightSavingsIfEndoSteel(MechDef mechDef)
+        {
+            if (mechDef.Inventory.Any(x => x.Def.IsEndoSteel()))
+            {
+                return mechDef.Chassis.Tonnage / 10f / 2f;
+            }
+
+            return 0;
         }
     }
 }
