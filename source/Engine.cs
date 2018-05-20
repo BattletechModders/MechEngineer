@@ -8,7 +8,7 @@ namespace MechEngineMod
     {
         internal enum EngineType
         {
-            Std_shs, XL_dhs
+            Std, XL
         }
 
         internal EngineType Type;
