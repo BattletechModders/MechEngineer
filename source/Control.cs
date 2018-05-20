@@ -17,12 +17,13 @@ namespace MechEngineMod
     public class MechEngineModSettings : ModSettings
     {
         public int TechCostPerEngineTon = 1;
-        public float? MaxSprintFactor = null;
-        public float? MinSprintFactor = null;
         public int FallbackHeatSinkCapacity = 30;
         public float SpeedMultiplierPerDamagedEnginePart = 0.7f;
-		
-		/* 
+        public bool InitialTonnageOverride = false;
+        public float InitialToTotalTonnageFactor = 0.1f;
+        public string[] InitialTonnageOverrideSkipChassis = {};
+
+        /* 
 		set to false to use TT walk values
 		using the default game values, slow mechs move a bit faster, and fast mechs move a bit slower
 		Examples if set to true:
@@ -34,7 +35,7 @@ namespace MechEngineMod
 			Walk 7 190 / 315
 			Walk 8 210 / 350
 		*/
-		public bool UseGameWalkValues = true;
+        public bool UseGameWalkValues = true;
 		
 		// set to false to only allow engines that produce integer walk values
 		public bool AllowNonIntWalkValues = true;
@@ -281,6 +282,37 @@ namespace MechEngineMod
                 mod.Logger.LogError(e);
             }
         }
+
+        // set initial weight of mechs to 0.1 times the tonnage
+        [HarmonyPatch(typeof(ChassisDef), "FromJSON")]
+        public static class ChassisDefPatch
+        {
+            public static void Postfix(ChassisDef __instance)
+            {
+                try
+                {
+                    if (!settings.InitialTonnageOverride)
+                    {
+                        return;
+                    }
+
+                    if (settings.InitialTonnageOverrideSkipChassis.Contains(__instance.Description.Id))
+                    {
+                        return;
+                    }
+
+                    var value = __instance.Tonnage * settings.InitialToTotalTonnageFactor;
+                    var propInfo = typeof(ChassisDef).GetProperty("InitialTonnage");
+                    var propValue = Convert.ChangeType(value, propInfo.PropertyType);
+                    propInfo.SetValue(__instance, propValue, null);
+                }
+                catch (Exception e)
+                {
+                    mod.Logger.LogError(e);
+                }
+            }
+        }
+
         // invalidate mech loadouts that don't have an engine
         // invalidate mech loadouts that have more jump jets than the engine supports
         [HarmonyPatch(typeof(MechValidationRules), "ValidateMechPosessesWeapons")]
