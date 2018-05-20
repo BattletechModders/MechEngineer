@@ -22,6 +22,7 @@ namespace MechEngineMod
         public bool InitialTonnageOverride = false;
         public float InitialToTotalTonnageFactor = 0.1f;
         public string[] InitialTonnageOverrideSkipChassis = {};
+        public int EndoSteelRequiredCriticals = 14;
 
         /* 
 		set to false to use TT walk values
@@ -219,19 +220,28 @@ namespace MechEngineMod
             };
         }
 
+        // main engine + engine slots
         internal static bool IsEnginePart(MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_");
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_engine");
         }
 
+        // only main engine
         internal static bool IsMainEngine(MechComponentDef componentDef)
         {
             return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_engine_");
         }
 
+        // TODO go through all items that are components and can only be mounted center -> substract inventory size by 2 to a min of 1
+        // don't go by name
         internal static bool IsGryo(MechComponentDef componentDef)
         {
             return CheckComponentDef(componentDef, ComponentType.Upgrade, "Gear_Gyro_");
+        }
+
+        internal static bool IsEndoSteel(MechComponentDef componentDef)
+        {
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_structureslots_endosteel");
         }
 
         private static bool CheckComponentDef(MechComponentDef componentDef, ComponentType type, string prefix)
@@ -315,6 +325,7 @@ namespace MechEngineMod
 
         // invalidate mech loadouts that don't have an engine
         // invalidate mech loadouts that have more jump jets than the engine supports
+        // invalidate mech loadouts that have more than one endo-steel critical slot but not exactly 14
         [HarmonyPatch(typeof(MechValidationRules), "ValidateMechPosessesWeapons")]
         public static class MechValidationRulesPatch
         {
@@ -322,6 +333,7 @@ namespace MechEngineMod
             {
                 try
                 {
+                    // engine
                     var engineRefs = mechDef.Inventory.Where(x => Engine.IsEnginePart(x.Def)).ToList();
                     var mainEngine = engineRefs
                         .Where(x => x.DamageLevel == ComponentDamageLevel.Functional || x.DamageLevel == ComponentDamageLevel.NonFunctional)
@@ -335,11 +347,24 @@ namespace MechEngineMod
                         errorMessages[MechValidationType.InvalidInventorySlots].Add("INCOMPLETE ENGINE: An XL Engine requires left and right torso components");
                     }
 
-                    var currentCount = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
-                    var maxCount = calc.CalcJumpJetCount(mainEngine, mechDef.Chassis.Tonnage); ;
-                    if (currentCount > maxCount)
+                    // jump jets
                     {
-                        errorMessages[MechValidationType.InvalidJumpjets].Add(string.Format("JUMPJETS: This 'Mech mounts too many jumpjets ({0} out of {1})", currentCount, maxCount));
+                        var currentCount = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
+                        var maxCount = calc.CalcJumpJetCount(mainEngine, mechDef.Chassis.Tonnage); ;
+                        if (currentCount > maxCount)
+                        {
+                            errorMessages[MechValidationType.InvalidJumpjets].Add(string.Format("JUMPJETS: This Mech mounts too many jumpjets ({0} out of {1})", currentCount, maxCount));
+                        }
+                    }
+
+                    // endo-steel
+                    {
+                        var currentCount = mechDef.Inventory.Count(x => Engine.IsEndoSteel(x.Def));
+                        var exactCount = settings.EndoSteelRequiredCriticals;
+                        if (currentCount > 0 && currentCount != exactCount)
+                        {
+                            errorMessages[MechValidationType.InvalidInventorySlots].Add(string.Format("INCOMPLETE ENDO-STEEL: Critical slots count does not match ({0} instead of {1})", currentCount, exactCount));
+                        }
                     }
                 }
                 catch (Exception e)
@@ -434,6 +459,26 @@ namespace MechEngineMod
             }
         }
 
+        // include endo-steel calculations
+        [HarmonyPatch(typeof(MechStatisticsRules), "CalculateTonnage")]
+        public static class MechStatisticsRulesCalculateTonnagePatch
+        {
+            public static void Postfix(MechDef mechDef, ref float currentValue, ref float maxValue)
+            {
+                try
+                {
+                    if (mechDef.Inventory.Any(x => Engine.IsEndoSteel(x.Def)))
+                    {
+                        currentValue -= mechDef.Chassis.InitialTonnage / 2;
+                    }
+                }
+                catch (Exception e)
+                {
+                    mod.Logger.LogError(e);
+                }
+            }
+        }
+
         // make the mech movement summary stat be calculated using the engine
         [HarmonyPatch(typeof(MechStatisticsRules), "CalculateMovementStat")]
         public static class MechStatisticsRulesStatPatch
@@ -456,7 +501,6 @@ namespace MechEngineMod
                     //MechStatisticsRules.CalculateTonnage(mechDef, ref currentTonnage, ref maxTonnage);
                     float walkSpeed, runSpeed, TTwalkSpeed;
                     calc.CalcSpeeds(engine, maxTonnage, out walkSpeed, out runSpeed, out TTwalkSpeed);
-                    var maxSprintDistance = runSpeed;
 
 					//used much more familiar TT walk speed values
 					//also, user doesn't have to change min/max sprint values depending on if they are using curved movement or not
