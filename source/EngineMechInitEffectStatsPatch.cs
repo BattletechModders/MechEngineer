@@ -19,7 +19,6 @@ namespace MechEngineMod
 
                 if (engine == null)
                 {
-                    __instance.StatCollection.GetStatistic("HeatSinkCapacity").SetValue(Control.settings.FallbackHeatSinkCapacity);
                     return;
                 }
                     

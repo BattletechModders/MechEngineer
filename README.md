@@ -19,9 +19,12 @@ or
 * calculate walk and run speeds based on engine rating and mech tonnage
 * all mechs have about 10% their max tonnage as initial tonnage (can be forced to be 10% for all mechs)
 * added endo-steel critical slots to reduce initial weight by half
+* add all free heat sinks an engine supports, select type of heat sinks for engine by installing either double or single heatsinks on mech
 * mechlab enforces to use an engine on a mech, xl engine requires the side torso parts
 * mechlab enforces only one engine part per chassis location
 * mechlab enforces only one gyro for center torso, also gryo to be 1 crit high
+* mechlab enforces the use of all 14 critical slots when choosing endo-steel
+* mechlab enforces either single or double heat sink types but no mix
 * adjust movement speed summary stat based on engine rating
 * hide incompatible engines for mech
 * engine tonnage determins install tech cost

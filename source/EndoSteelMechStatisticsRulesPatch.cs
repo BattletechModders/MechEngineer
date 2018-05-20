@@ -13,7 +13,7 @@ namespace MechEngineMod
         {
             try
             {
-                if (mechDef.Inventory.Any(x => Control.IsEndoSteel(x.Def)))
+                if (mechDef.Inventory.Any(x => x.Def.IsEndoSteel()))
                 {
                     currentValue -= mechDef.Chassis.InitialTonnage / 2;
                 }

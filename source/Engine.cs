@@ -8,8 +8,7 @@ namespace MechEngineMod
     {
         internal enum EngineType
         {
-            //making provisions for engines with single or double heat sinks
-            Std_shs, Std_dhs, XL_shs, XL_dhs
+            Std_shs, XL_dhs
         }
 
         internal EngineType Type;
@@ -20,7 +19,7 @@ namespace MechEngineMod
 
         internal static Engine MainEngineFromDef(MechComponentDef componentDef)
         {
-            if (!Control.IsMainEngine(componentDef))
+            if (!componentDef.IsMainEngine())
             {
                 return null;
             }

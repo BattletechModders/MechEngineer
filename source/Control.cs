@@ -37,42 +37,52 @@ namespace MechEngineMod
         }
 
         // main engine + engine slots
-        internal static bool IsEnginePart(MechComponentDef componentDef)
+        internal static bool IsEnginePart(this MechComponentDef componentDef)
         {
             return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_engine");
         }
 
         // only main engine
-        internal static bool IsMainEngine(MechComponentDef componentDef)
+        internal static bool IsMainEngine(this MechComponentDef componentDef)
         {
             return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_engine_");
         }
 
         // we want to know about center torso upgrade (gyros), since we reduce their size
-        internal static bool IsCenterTorsoUpgrade(MechComponentDef componentDef)
+        internal static bool IsCenterTorsoUpgrade(this MechComponentDef componentDef)
         {
             return componentDef.AllowedLocations == ChassisLocations.CenterTorso && componentDef.ComponentType == ComponentType.Upgrade;
         }
 
         // endo steel has some calculations behind it
-        internal static bool IsEndoSteel(MechComponentDef componentDef)
+        internal static bool IsEndoSteel(this MechComponentDef componentDef)
         {
             return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_structureslots_endosteel");
         }
 
         private static bool CheckComponentDef(MechComponentDef componentDef, ComponentType type, string prefix)
         {
-            if (componentDef == null || componentDef.Description == null || componentDef.Description.Id == null)
-            {
-                return false;
-            }
-
             if (componentDef.ComponentType != type)
             {
                 return false;
             }
 
+            if (componentDef == null || componentDef.Description == null || componentDef.Description.Id == null)
+            {
+                return false;
+            }
+
             return componentDef.Description.Id.StartsWith(prefix);
+        }
+
+        internal static bool IsDouble(this HeatSinkDef def)
+        {
+            return def.Description.Id == "Gear_HeatSink_Generic_Double";
+        }
+
+        internal static bool IsSingle(this HeatSinkDef def)
+        {
+            return def.Description.Id == "Gear_HeatSink_Generic_Standard";
         }
     }
 }

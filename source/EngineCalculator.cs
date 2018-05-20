@@ -63,22 +63,25 @@ namespace MechEngineMod
             walkSpeed = Calc_WalkDistance(TTWalkSpeed);
             runSpeed = Calc_SprintDistance(TTWalkSpeed);
 
-			
             Control.mod.Logger.LogDebug("CalcSpeeds" +
                                         " rating=" + engine.Rating +
                                         " tonnage=" + tonnage +
                                         " walkSpeed=" + walkSpeed +
                                         " runSpeed=" + runSpeed 
                                         +
-                                        " TTWalkSpeed=" + TTWalkSpeed)
-                ;
+                                        " TTWalkSpeed=" + TTWalkSpeed);
         }
 
         internal int CalcInstallTechCost(Engine engine)
         {
             return Mathf.CeilToInt(Control.settings.TechCostPerEngineTon * engine.Def.Tonnage);
         }
-        
+
+        internal int CalcHeatSinks(Engine engine)
+        {
+            return Math.Min(engine.Rating / 25, 10);
+        }
+
         internal int CalcJumpJetCount(Engine engine, float tonnage)
         {
 

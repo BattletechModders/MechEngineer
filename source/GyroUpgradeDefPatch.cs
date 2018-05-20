@@ -12,7 +12,7 @@ namespace MechEngineMod
         {
             try
             {
-                if (!Control.IsCenterTorsoUpgrade(__instance))
+                if (!__instance.IsCenterTorsoUpgrade())
                 {
                     return;
                 }

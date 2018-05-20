@@ -24,7 +24,7 @@ namespace MechEngineMod
                 {
                     return;
                 }
-                if (mechDef.Inventory.Any(x => Control.IsEndoSteel(x.Def)))
+                if (mechDef.Inventory.Any(x => x.Def.IsEndoSteel()))
                 {
                     __instance.currentTonnage -= mechDef.Chassis.InitialTonnage / 2;
                 }

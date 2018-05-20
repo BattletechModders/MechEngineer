@@ -18,7 +18,7 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (!Control.IsEnginePart(__instance.componentDef))
+                if (!__instance.componentDef.IsEnginePart())
                 {
                     return;
                 }

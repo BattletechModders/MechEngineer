@@ -68,11 +68,13 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="EndoSteelMechInfoWidgetCalculateTonnagePatch.cs" />
     <Compile Include="EndoSteelMechStatisticsRulesPatch.cs" />
+    <Compile Include="EngineHeatSinkMechPatch.cs" />
     <Compile Include="EngineMechComponentDamagePatch.cs" />
     <Compile Include="EndoSteelMechValidationRulesPatch.cs" />
     <Compile Include="EngineMechInitEffectStatsPatch.cs" />
     <Compile Include="EngineMechLabInventoryWidgetPatch.cs" />
     <Compile Include="EngineMechStatisticsRulesStatPatch.cs" />
+    <Compile Include="EngineHeatSinkMechValidationRulesPatch.cs" />
     <Compile Include="EngineSimGameStateWorkOrderPatch.cs" />
     <Compile Include="GyroMechLabLocationWidgetPatch.cs" />
     <Compile Include="GyroUpgradeDefPatch.cs" />

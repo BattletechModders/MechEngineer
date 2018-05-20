@@ -19,13 +19,13 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (!Control.IsEnginePart(newComponentDef))
+                if (!newComponentDef.IsEnginePart())
                 {
                     return;
                 }
 
                 var adapter = new MechLabLocationWidgetAdapter(__instance);
-                if (adapter.LocalInventory.Select(x => x.ComponentRef).All(x => x == null || !Control.IsEnginePart(x.Def)))
+                if (adapter.LocalInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsEnginePart()))
                 {
                     return;
                 }
