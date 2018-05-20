@@ -29,7 +29,7 @@ namespace MechEngineMod
 
                 if (mainEngine.Type == Engine.EngineType.XL && engineRefs.Count(x => x.DamageLevel == ComponentDamageLevel.Functional || x.DamageLevel == ComponentDamageLevel.NonFunctional) != 3)
                 {
-                    errorMessages[MechValidationType.InvalidInventorySlots].Add("INCOMPLETE ENGINE: An XL Engine requires left and right torso components");
+                    errorMessages[MechValidationType.InvalidInventorySlots].Add("XL ENGINE: Requires XL left and right slots");
                 }
 
                 // jump jets
