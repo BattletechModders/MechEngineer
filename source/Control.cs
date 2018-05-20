@@ -128,7 +128,6 @@ namespace MechEngineMod
 
 
 		internal void CalcSpeeds(Engine engine, float tonnage, out float walkSpeed, out float runSpeed, out float TTWalkSpeed)
-		//end Crusher Bob Additions
         {
 
 			TTWalkSpeed = engine.Rating / tonnage;
@@ -232,11 +231,10 @@ namespace MechEngineMod
             return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_engine_");
         }
 
-        // TODO go through all items that are components and can only be mounted center -> substract inventory size by 2 to a min of 1
-        // don't go by name
-        internal static bool IsGryo(MechComponentDef componentDef)
+        // we want to know about center torso upgrade (gyros), since we reduce their size, several could be added, and this makes sure only one can be added
+        internal static bool IsCenterTorsoUpgrade(MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.Upgrade, "Gear_Gyro_");
+            return componentDef.AllowedLocations == ChassisLocations.CenterTorso && componentDef.ComponentType == ComponentType.Upgrade;
         }
 
         internal static bool IsEndoSteel(MechComponentDef componentDef)
@@ -313,6 +311,36 @@ namespace MechEngineMod
 
                     var value = __instance.Tonnage * settings.InitialToTotalTonnageFactor;
                     var propInfo = typeof(ChassisDef).GetProperty("InitialTonnage");
+                    var propValue = Convert.ChangeType(value, propInfo.PropertyType);
+                    propInfo.SetValue(__instance, propValue, null);
+                }
+                catch (Exception e)
+                {
+                    mod.Logger.LogError(e);
+                }
+            }
+        }
+
+        // reduce upgrade components for the center torso that are 3 or larger 
+        [HarmonyPatch(typeof(UpgradeDef), "FromJSON")]
+        public static class UpgradeDefPatch
+        {
+            public static void Postfix(UpgradeDef __instance)
+            {
+                try
+                {
+                    if (!Engine.IsCenterTorsoUpgrade(__instance))
+                    {
+                        return;
+                    }
+
+                    if (__instance.InventorySize < 3)
+                    {
+                        return;
+                    }
+
+                    var value = __instance.InventorySize - 2;
+                    var propInfo = typeof(ChassisDef).GetProperty("InventorySize");
                     var propValue = Convert.ChangeType(value, propInfo.PropertyType);
                     propInfo.SetValue(__instance, propValue, null);
                 }
@@ -421,18 +449,18 @@ namespace MechEngineMod
                         return;
                     }
 
-                    if (!Engine.IsGryo(newComponentDef))
+                    if (!Engine.IsCenterTorsoUpgrade(newComponentDef))
                     {
                         return;
                     }
 
                     var adapter = new MechLabLocationWidgetAdapter(__instance);
-                    if (adapter.LocalInventory.Select(x => x.ComponentRef).All(x => x == null || !Engine.IsGryo(x.Def)))
+                    if (adapter.LocalInventory.Select(x => x.ComponentRef).All(x => x == null || !Engine.IsCenterTorsoUpgrade(x.Def)))
                     {
                         return;
                     }
 
-                    adapter.DropErrorMessage = string.Format("Cannot add {0}: An engine upgrade is already installed", newComponentDef.Description.Name);
+                    adapter.DropErrorMessage = string.Format("Cannot add {0}: A center torso upgrade is already installed", newComponentDef.Description.Name);
                     __result = false;
                 }
                 catch (Exception e)
