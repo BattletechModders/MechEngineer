@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using BattleTech;
 using BattleTech.UI;
 using DynModLib;
+using TMPro;
 using UnityEngine;
 using Logger = HBS.Logging.Logger;
 
@@ -340,7 +341,7 @@ namespace MechEngineMod
                     }
 
                     var value = __instance.InventorySize - 2;
-                    var propInfo = typeof(ChassisDef).GetProperty("InventorySize");
+                    var propInfo = typeof(UpgradeDef).GetProperty("InventorySize");
                     var propValue = Convert.ChangeType(value, propInfo.PropertyType);
                     propInfo.SetValue(__instance, propValue, null);
                 }
@@ -369,19 +370,23 @@ namespace MechEngineMod
                     if (mainEngine == null)
                     {
                         errorMessages[MechValidationType.InvalidInventorySlots].Add("MISSING ENGINE: This Mech must mount a functional Fusion Engine");
+                        return;
                     }
-					else if ((mainEngine.Type == EngineType.XL_shs || mainEngine.Type == EngineType.XL_dhs ) && engineRefs.Count(x => x.DamageLevel == ComponentDamageLevel.Functional || x.DamageLevel == ComponentDamageLevel.NonFunctional) != 3)
+
+					if ((mainEngine.Type == EngineType.XL_shs || mainEngine.Type == EngineType.XL_dhs ) && engineRefs.Count(x => x.DamageLevel == ComponentDamageLevel.Functional || x.DamageLevel == ComponentDamageLevel.NonFunctional) != 3)
                     {
                         errorMessages[MechValidationType.InvalidInventorySlots].Add("INCOMPLETE ENGINE: An XL Engine requires left and right torso components");
+                        return;
                     }
 
                     // jump jets
                     {
                         var currentCount = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
-                        var maxCount = calc.CalcJumpJetCount(mainEngine, mechDef.Chassis.Tonnage); ;
+                        var maxCount = calc.CalcJumpJetCount(mainEngine, mechDef.Chassis.Tonnage);
                         if (currentCount > maxCount)
                         {
                             errorMessages[MechValidationType.InvalidJumpjets].Add(string.Format("JUMPJETS: This Mech mounts too many jumpjets ({0} out of {1})", currentCount, maxCount));
+                            return;
                         }
                     }
 
@@ -391,7 +396,8 @@ namespace MechEngineMod
                         var exactCount = settings.EndoSteelRequiredCriticals;
                         if (currentCount > 0 && currentCount != exactCount)
                         {
-                            errorMessages[MechValidationType.InvalidInventorySlots].Add(string.Format("INCOMPLETE ENDO-STEEL: Critical slots count does not match ({0} instead of {1})", currentCount, exactCount));
+                            errorMessages[MechValidationType.InvalidInventorySlots].Add(string.Format("ENDO-STEEL: Critical slots count does not match ({0} instead of {1})", currentCount, exactCount));
+                            return;
                         }
                     }
                 }
@@ -487,7 +493,7 @@ namespace MechEngineMod
             }
         }
 
-        // include endo-steel calculations
+        // endo-steel calculations for validation
         [HarmonyPatch(typeof(MechStatisticsRules), "CalculateTonnage")]
         public static class MechStatisticsRulesCalculateTonnagePatch
         {
@@ -504,6 +510,84 @@ namespace MechEngineMod
                 {
                     mod.Logger.LogError(e);
                 }
+            }
+        }
+
+        // endo-steel calculations for mechlab info widget
+        [HarmonyPatch(typeof(MechLabMechInfoWidget), "CalculateTonnage")]
+        public static class MechLabMechInfoWidgetsCalculateTonnagePatch
+        {
+            public static void Postfix(MechLabMechInfoWidget __instance)
+            {
+                try
+                {
+                    var mechLab = Traverse.Create(__instance).Field("mechLab").GetValue<MechLabPanel>();
+                    if (mechLab == null)
+                    {
+                        return;
+                    }
+                    var mechDef = mechLab.activeMechDef;
+                    if (mechDef == null)
+                    {
+                        return;
+                    }
+                    if (mechDef.Inventory.Any(x => Engine.IsEndoSteel(x.Def)))
+                    {
+                        __instance.currentTonnage -= mechDef.Chassis.InitialTonnage / 2;
+                    }
+
+                    var adapter = new MechLabMechInfoWidgetAdapter(__instance);
+
+                    var current = __instance.currentTonnage;
+                    var max = mechDef.Chassis.Tonnage;
+
+                    var left = max - current;
+                    var uicolor = left >= 0f ? UIColor.WhiteHalf : UIColor.Red;
+                    var uicolor2 = left >= 0f ? (left > 5f ? UIColor.White : UIColor.Gold) : UIColor.Red;
+                    adapter.totalTonnage.text = string.Format("{0:###0.##} / {1}", current, max);
+                    adapter.totalTonnageColor.SetUIColor(uicolor);
+                    if (left < 0f)
+                    {
+                        left = Mathf.Abs(left);
+                        adapter.remainingTonnage.text = string.Format("{0:###0.##} ton{1} overweight", left, left != 1f ? "s" : string.Empty);
+                    }
+                    else
+                    {
+                        adapter.remainingTonnage.text = string.Format("{0:###0.##} ton{1} remaining", left, left != 1f ? "s" : string.Empty);
+                    }
+                    adapter.remainingTonnageColor.SetUIColor(uicolor2);
+                }
+                catch (Exception e)
+                {
+                    mod.Logger.LogError(e);
+                }
+            }
+        }
+
+        internal class MechLabMechInfoWidgetAdapter : Adapter<MechLabMechInfoWidget>
+        {
+            internal MechLabMechInfoWidgetAdapter(MechLabMechInfoWidget instance) : base(instance)
+            {
+            }
+
+            public TextMeshProUGUI totalTonnage
+            {
+                get { return traverse.Field("totalTonnage").GetValue<TextMeshProUGUI>(); }
+            }
+
+            public UIColorRefTracker totalTonnageColor
+            {
+                get { return traverse.Field("totalTonnageColor").GetValue<UIColorRefTracker>(); }
+            }
+
+            public TextMeshProUGUI remainingTonnage
+            {
+                get { return traverse.Field("remainingTonnage").GetValue<TextMeshProUGUI>(); }
+            }
+
+            public UIColorRefTracker remainingTonnageColor
+            {
+                get { return traverse.Field("remainingTonnageColor").GetValue<UIColorRefTracker>(); }
             }
         }
 

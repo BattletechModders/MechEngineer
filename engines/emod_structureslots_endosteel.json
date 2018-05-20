@@ -7,7 +7,7 @@
         "Manufacturer" : "Generic",
         "Model" : "Critical Slot",
         "UIName" : "Endo-Steel Slot",
-        "Id" : "emod_slots_endo_steel",
+        "Id" : "emod_structureslots_endosteel",
         "Name" : "Endo-Steel Slot",
         "Details" : "Add exactly 14 endo steel slots to half your internal structure weight.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
@@ -18,7 +18,7 @@
     "ComponentSubType" : "Heatsink",
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
-    "InventorySize" : 3,
+    "InventorySize" : 1,
     "Tonnage" : 0,
     "AllowedLocations" : "All",
     "DisallowedLocations" : "All",
