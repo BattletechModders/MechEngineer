@@ -50,8 +50,11 @@ namespace MechEngineMod
                     }
                 }
 
-                totalHeatSinkDissipation += GetHeatDissipation(mechDef);
 
+                var engineHeatSinkDissipation = GetEngineHeatDissipation(mechDef);
+                totalHeatSinkDissipation += engineHeatSinkDissipation;
+
+                Control.mod.Logger.LogDebug("engineHeatSinkDissipation=" + engineHeatSinkDissipation);
                 Control.mod.Logger.LogDebug("heatGenerationWeapons=" + heatGenerationWeapons);
                 Control.mod.Logger.LogDebug("totalHeatSinkDissipation=" + totalHeatSinkDissipation);
 
@@ -109,6 +112,8 @@ namespace MechEngineMod
                     heatGenerationJumpJets = 0f;
                 }
 
+                Control.mod.Logger.LogDebug("heatGenerationJumpJets=" + heatGenerationJumpJets);
+
                 totalHeatSinkDissipation *= Combat.Heat.GlobalHeatSinkMultiplier;
                 var totalHeatGeneration = (heatGenerationWeapons + heatGenerationJumpJets) * Combat.Heat.GlobalHeatIncreaseMultiplier;
 
@@ -151,16 +156,11 @@ namespace MechEngineMod
             collection.PerformOperation(statistic, data.operation, variant);
         }
 
-        internal static float GetHeatDissipation(MechDef mechDef)
+        internal static float GetEngineHeatDissipation(MechDef mechDef)
         {
             var engine = mechDef.Inventory
                 .Select(x => Engine.MainEngineFromDef(x.Def))
                 .FirstOrDefault(x => x != null);
-
-            if (engine == null)
-            {
-                return Control.settings.FallbackHeatSinkCapacity;
-            }
 
             var heatSink = mechDef.Inventory
                 .Where(c => c.ComponentDefType == ComponentType.HeatSink)
@@ -168,15 +168,17 @@ namespace MechEngineMod
                 .Where(c => c != null)
                 .FirstOrDefault(cd => cd.IsDouble() || cd.IsSingle());
 
-            if (heatSink == null)
+            var heatSinkDissipationCapacity = heatSink != null ? heatSink.DissipationCapacity : Combat.Heat.DefaultHeatSinkDissipationCapacity;
+
+            if (engine == null)
             {
-                return Control.settings.FallbackHeatSinkCapacity;
+                return Control.settings.FallbackHeatSinkCount * heatSinkDissipationCapacity;
             }
 
             var heatsinks = Control.calc.CalcHeatSinks(engine);
-            Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engine.Rating + " heatsinks=" + heatsinks);
+            Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engine.Rating + " heatsinks=" + heatsinks + " defaultHeatSinkDissipationCapacity=" + heatSinkDissipationCapacity);
 
-            return heatsinks * heatSink.DissipationCapacity;
+            return heatsinks * heatSinkDissipationCapacity;
         }
     }
 }

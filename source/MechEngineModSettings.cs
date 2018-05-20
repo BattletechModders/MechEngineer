@@ -5,7 +5,7 @@ namespace MechEngineMod
     public class MechEngineModSettings : ModSettings
     {
         public int TechCostPerEngineTon = 1;
-        public int FallbackHeatSinkCapacity = 30;
+        public int FallbackHeatSinkCount = 10;
         public float SpeedMultiplierPerDamagedEnginePart = 0.7f;
         public bool InitialTonnageOverride = false;
         public float InitialToTotalTonnageFactor = 0.1f;
