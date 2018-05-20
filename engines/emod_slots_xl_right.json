@@ -9,7 +9,7 @@
         "UIName" : "XL Right Slots",
         "Id" : "emod_slots_xl_right",
         "Name" : "XL Right Slots",
-        "Details" : "",
+        "Details" : "To mount an XL engine you need both left and right torso engine parts",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : "",
