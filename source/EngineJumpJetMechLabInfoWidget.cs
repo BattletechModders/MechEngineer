@@ -15,27 +15,28 @@ namespace MechEngineMod
             try
             {
                 var adapter = new MechLabMechInfoWidgetAdapter(__instance);
-                var engine = adapter.mechLab.activeMechDef.Inventory
+                var mechLab = adapter.mechLab;
+                var engine = mechLab.activeMechDef.Inventory
                     .Select(x => Engine.MainEngineFromDef(x.Def))
                     .FirstOrDefault(x => x != null);
 
-                var current = adapter.mechLab.headWidget.currentJumpjetCount
-                              + adapter.mechLab.centerTorsoWidget.currentJumpjetCount
-                              + adapter.mechLab.leftTorsoWidget.currentJumpjetCount
-                              + adapter.mechLab.rightTorsoWidget.currentJumpjetCount
-                              + adapter.mechLab.leftArmWidget.currentJumpjetCount
-                              + adapter.mechLab.rightArmWidget.currentJumpjetCount
-                              + adapter.mechLab.leftLegWidget.currentJumpjetCount
-                              + adapter.mechLab.rightLegWidget.currentJumpjetCount;
-
-
+                var current = mechLab.headWidget.currentJumpjetCount
+                              + mechLab.centerTorsoWidget.currentJumpjetCount
+                              + mechLab.leftTorsoWidget.currentJumpjetCount
+                              + mechLab.rightTorsoWidget.currentJumpjetCount
+                              + mechLab.leftArmWidget.currentJumpjetCount
+                              + mechLab.rightArmWidget.currentJumpjetCount
+                              + mechLab.leftLegWidget.currentJumpjetCount
+                              + mechLab.rightLegWidget.currentJumpjetCount;
+                
                 if (engine == null)
                 {
-                    adapter.hardpoints[4].SetData(WeaponCategory.AMS, string.Format("{0} / {1}", current, 0));
-                    return;
+                    __instance.totalJumpjets = 0;
                 }
-
-                __instance.totalJumpjets = Control.calc.CalcJumpJetCount(engine, adapter.mechLab.activeMechDef.Chassis.Tonnage);
+                else
+                {
+                    __instance.totalJumpjets = Control.calc.CalcJumpJetCount(engine, adapter.mechLab.activeMechDef.Chassis.Tonnage);
+                }
                 adapter.hardpoints[4].SetData(WeaponCategory.AMS, string.Format("{0} / {1}", current, __instance.totalJumpjets));
             }
             catch (Exception e)
