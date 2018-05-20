@@ -7,7 +7,7 @@
 		"Manufacturer" : "Generic",
 		"Model" : "",
 		"UIName" : "Std. Engine 355",
-		"Id" : "emod_engine_std_shs_355",
+		"Id" : "emod_engine_std_355",
 		"Name" : "Std. Engine 355",
 		"Details" : "31.5 ton engine + 4 ton gyro",
 		"Icon" : "uixSvgIcon_equipment_Heatsink"

@@ -7,7 +7,7 @@
 		"Manufacturer" : "Generic",
 		"Model" : "",
 		"UIName" : "Std. Engine 370",
-		"Id" : "emod_engine_std_shs_370",
+		"Id" : "emod_engine_std_370",
 		"Name" : "Std. Engine 370",
 		"Details" : "37 ton engine + 4 ton gyro",
 		"Icon" : "uixSvgIcon_equipment_Heatsink"

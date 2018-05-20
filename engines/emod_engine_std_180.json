@@ -7,7 +7,7 @@
         "Manufacturer" : "Generic",
         "Model" : "",
         "UIName" : "Std. Engine 180",
-        "Id" : "emod_engine_std_shs_180",
+        "Id" : "emod_engine_std_180",
         "Name" : "Std. Engine 180",
         "Details" : "7 ton engine + 2 ton gyro",
         "Icon" : "uixSvgIcon_equipment_Heatsink"

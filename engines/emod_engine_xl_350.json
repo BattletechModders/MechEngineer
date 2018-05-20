@@ -7,7 +7,7 @@
         "Manufacturer" : "Generic",
         "Model" : "",
         "UIName" : "XL Engine 350",
-        "Id" : "emod_engine_xl_dhs_350",
+        "Id" : "emod_engine_xl_350",
         "Name" : "XL Engine 350",
         "Details" : "15 ton engine + 4 ton gyro",
         "Icon" : "uixSvgIcon_equipment_Heatsink"

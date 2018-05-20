@@ -86,7 +86,7 @@
     <Compile Include="EngineMechLabLocationWidgetPatch.cs" />
     <Compile Include="EngineMechValidationRulesPatch.cs" />
     <Compile Include="MechLabMechInfoWidgetAdapter.cs" />
-    <Compile Include="EngineMechStatisticsRulesHeatPatch.cs" />
+    <Compile Include="EngineHeatMechStatisticsRulesPatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\mod.json" />

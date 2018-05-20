@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BattleTech;
 using Harmony;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace MechEngineMod
     // caluclate heat efficency and support engine heat dissipation
     [HarmonyPriority(500)]
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateHeatEfficiencyStat")]
-    public static class EngineMechStatisticsRulesHeatPatch
+    public static class EngineHeatMechStatisticsRulesPatch
     {
         private static CombatGameConstants Combat;
 
@@ -48,6 +49,8 @@ namespace MechEngineMod
                         totalHeatSinkDissipation += heatSinkDef.DissipationCapacity;
                     }
                 }
+
+                totalHeatSinkDissipation += GetHeatDissipation(mechDef);
 
                 Control.mod.Logger.LogDebug("heatGenerationWeapons=" + heatGenerationWeapons);
                 Control.mod.Logger.LogDebug("totalHeatSinkDissipation=" + totalHeatSinkDissipation);
@@ -146,6 +149,34 @@ namespace MechEngineMod
             variant.SetValue(data.modValue);
             variant.statName = data.statName;
             collection.PerformOperation(statistic, data.operation, variant);
+        }
+
+        internal static float GetHeatDissipation(MechDef mechDef)
+        {
+            var engine = mechDef.Inventory
+                .Select(x => Engine.MainEngineFromDef(x.Def))
+                .FirstOrDefault(x => x != null);
+
+            if (engine == null)
+            {
+                return Control.settings.FallbackHeatSinkCapacity;
+            }
+
+            var heatSink = mechDef.Inventory
+                .Where(c => c.ComponentDefType == ComponentType.HeatSink)
+                .Select(c => c.Def as HeatSinkDef)
+                .Where(c => c != null)
+                .FirstOrDefault(cd => cd.IsDouble() || cd.IsSingle());
+
+            if (heatSink == null)
+            {
+                return Control.settings.FallbackHeatSinkCapacity;
+            }
+
+            var heatsinks = Control.calc.CalcHeatSinks(engine);
+            Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engine.Rating + " heatsinks=" + heatsinks);
+
+            return heatsinks * heatSink.DissipationCapacity;
         }
     }
 }

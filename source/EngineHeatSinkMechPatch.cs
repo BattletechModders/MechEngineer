@@ -13,29 +13,7 @@ namespace MechEngineMod
         {
             try
             {
-                var engine = __instance.MechDef.Inventory
-                    .Select(x => Engine.MainEngineFromDef(x.Def))
-                    .FirstOrDefault(x => x != null);
-
-                if (engine == null)
-                {
-                    __result += Control.settings.FallbackHeatSinkCapacity;
-                    return;
-                }
-
-                var heatSink = __instance.MechDef.Inventory
-                    .Where(c => c.ComponentDefType == ComponentType.HeatSink)
-                    .Select(c => c.Def as HeatSinkDef)
-                    .Where(c => c != null)
-                    .FirstOrDefault(cd => cd.IsDouble() || cd.IsSingle());
-
-                if (heatSink == null)
-                {
-                    __result += Control.settings.FallbackHeatSinkCapacity;
-                    return;
-                }
-
-                __result += Control.calc.CalcHeatSinks(engine) * heatSink.DissipationCapacity;
+                __result += EngineHeatMechStatisticsRulesPatch.GetHeatDissipation(__instance.MechDef);
             }
             catch (Exception e)
             {

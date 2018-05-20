@@ -7,7 +7,7 @@
         "Manufacturer" : "Generic",
         "Model" : "",
         "UIName" : "XL Engine 300",
-        "Id" : "emod_engine_xl_dhs_300",
+        "Id" : "emod_engine_xl_300",
         "Name" : "XL Engine 300",
         "Details" : "9.5 ton engine + 3 ton gyro",
         "Icon" : "uixSvgIcon_equipment_Heatsink"

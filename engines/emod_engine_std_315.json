@@ -7,7 +7,7 @@
 		"Manufacturer" : "Generic",
 		"Model" : "",
 		"UIName" : "Std. Engine 315",
-		"Id" : "emod_engine_std_shs_315",
+		"Id" : "emod_engine_std_315",
 		"Name" : "Std. Engine 315",
 		"Details" : "21.5 ton engine + 4 ton gyro",
 		"Icon" : "uixSvgIcon_equipment_Heatsink"

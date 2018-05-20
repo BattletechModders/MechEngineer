@@ -7,7 +7,7 @@
 		"Manufacturer" : "Generic",
 		"Model" : "",
 		"UIName" : "Std. Engine 345",
-		"Id" : "emod_engine_std_shs_345",
+		"Id" : "emod_engine_std_345",
 		"Name" : "Std. Engine 345",
 		"Details" : "28.5 ton engine + 4 ton gyro",
 		"Icon" : "uixSvgIcon_equipment_Heatsink"

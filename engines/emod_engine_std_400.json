@@ -7,7 +7,7 @@
 		"Manufacturer" : "Generic",
 		"Model" : "",
 		"UIName" : "Std. Engine 400",
-		"Id" : "emod_engine_std_shs_400",
+		"Id" : "emod_engine_std_400",
 		"Name" : "Std. Engine 400",
 		"Details" : "52.5 ton engine + 4 ton gyro",
 		"Icon" : "uixSvgIcon_equipment_Heatsink"

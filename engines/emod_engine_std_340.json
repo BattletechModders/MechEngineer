@@ -7,7 +7,7 @@
         "Manufacturer" : "Generic",
         "Model" : "",
         "UIName" : "Std. Engine 340",
-        "Id" : "emod_engine_std_shs_340",
+        "Id" : "emod_engine_std_340",
         "Name" : "Std. Engine 340",
         "Details" : "27 ton engine + 4 ton gyro",
         "Icon" : "uixSvgIcon_equipment_Heatsink"

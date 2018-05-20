@@ -7,7 +7,7 @@
         "Manufacturer" : "Generic",
         "Model" : "",
         "UIName" : "XL Engine 250",
-        "Id" : "emod_engine_xl_dhs_250",
+        "Id" : "emod_engine_xl_250",
         "Name" : "XL Engine 250",
         "Details" : "6 ton engine + 3 ton gyro",
         "Icon" : "uixSvgIcon_equipment_Heatsink"

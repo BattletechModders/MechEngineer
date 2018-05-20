@@ -7,7 +7,7 @@
 		"Manufacturer" : "Generic",	
 		"Model" : "",	
 		"UIName" : "Std. Engine 115",	
-		"Id" : "emod_engine_std_shs_115",	
+		"Id" : "emod_engine_std_115",	
 		"Name" : "Std. Engine 115",	
 		"Details" : "4 ton engine + 2 ton gyro",	
 		"Icon" : "uixSvgIcon_equipment_Heatsink"	

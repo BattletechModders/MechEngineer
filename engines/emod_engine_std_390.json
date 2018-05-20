@@ -7,7 +7,7 @@
 		"Manufacturer" : "Generic",
 		"Model" : "",
 		"UIName" : "Std. Engine 390",
-		"Id" : "emod_engine_std_shs_390",
+		"Id" : "emod_engine_std_390",
 		"Name" : "Std. Engine 390",
 		"Details" : "46 ton engine + 4 ton gyro",
 		"Icon" : "uixSvgIcon_equipment_Heatsink"

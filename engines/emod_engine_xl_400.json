@@ -7,7 +7,7 @@
         "Manufacturer" : "Generic",
         "Model" : "",
         "UIName" : "XL Engine 400",
-        "Id" : "emod_engine_xl_dhs_400",
+        "Id" : "emod_engine_xl_400",
         "Name" : "XL Engine 400",
         "Details" : "26.5 ton engine + 4 ton gyro",
         "Icon" : "uixSvgIcon_equipment_Heatsink"

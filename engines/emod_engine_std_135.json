@@ -7,7 +7,7 @@
 		"Manufacturer" : "Generic",	
 		"Model" : "",	
 		"UIName" : "Std. Engine 135",	
-		"Id" : "emod_engine_std_shs_135",	
+		"Id" : "emod_engine_std_135",	
 		"Name" : "Std. Engine 135",	
 		"Details" : "4.5 ton engine + 2 ton gyro",	
 		"Icon" : "uixSvgIcon_equipment_Heatsink"	

@@ -7,7 +7,7 @@
         "Manufacturer" : "Generic",
         "Model" : "",
         "UIName" : "Std. Engine 240",
-        "Id" : "emod_engine_std_shs_240",
+        "Id" : "emod_engine_std_240",
         "Name" : "Std. Engine 240",
         "Details" : "11.5 ton engine + 3 ton gyro",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
