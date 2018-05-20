@@ -17,7 +17,8 @@ or
 * added std engine type
 * added xl engine type and side torso xl engine parts
 * calculate walk and run speeds based on engine rating and mech tonnage
-* all mechs have 10% their max tonnage as initial tonnage
+* all mechs have about 10% their max tonnage as initial tonnage (can be forced to be 10% for all mechs)
+* added endo-steel critical slots to reduce initial weight by half
 * mechlab enforces to use an engine on a mech, xl engine requires the side torso parts
 * mechlab enforces only one engine part per chassis location
 * mechlab enforces only one gyro for center torso, also gryo to be 1 crit high
@@ -26,7 +27,6 @@ or
 * engine tonnage determins install tech cost
 * crit engine parts reduce speed, destroyed engine parts destroy mech
 * jump jets should now be limited to the integer distance of the mech's TT walk speed
-
 
 ## Download
 
