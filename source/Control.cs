@@ -231,7 +231,7 @@ namespace MechEngineMod
             return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_engine_");
         }
 
-        // we want to know about center torso upgrade (gyros), since we reduce their size, several could be added, and this makes sure only one can be added
+        // we want to know about center torso upgrade (gyros), since we reduce their size
         internal static bool IsCenterTorsoUpgrade(MechComponentDef componentDef)
         {
             return componentDef.AllowedLocations == ChassisLocations.CenterTorso && componentDef.ComponentType == ComponentType.Upgrade;
