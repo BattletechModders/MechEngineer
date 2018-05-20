@@ -60,19 +60,30 @@ namespace MechEngineMod
             return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_structureslots_endosteel");
         }
 
-        private static bool CheckComponentDef(MechComponentDef componentDef, ComponentType type, string prefix)
+        private static bool CheckComponentDef(MechComponentDef def, ComponentType type, string prefix)
         {
-            if (componentDef.ComponentType != type)
+            if (def.ComponentType != type)
             {
                 return false;
             }
 
-            if (componentDef == null || componentDef.Description == null || componentDef.Description.Id == null)
+            if (def.Description == null || def.Description.Id == null)
             {
                 return false;
             }
 
-            return componentDef.Description.Id.StartsWith(prefix);
+            return def.Description.Id.StartsWith(prefix);
+        }
+
+        private static bool CheckChassisDef(ChassisDef def, string prefix)
+        {
+
+            if (def.Description == null || def.Description.Id == null)
+            {
+                return false;
+            }
+
+            return def.Description.Id.StartsWith(prefix);
         }
 
         internal static bool IsDouble(this HeatSinkDef def)
