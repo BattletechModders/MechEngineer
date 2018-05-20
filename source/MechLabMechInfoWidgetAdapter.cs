@@ -10,6 +10,11 @@ namespace MechEngineMod
         {
         }
 
+        public MechLabPanel mechLab
+        {
+            get { return traverse.Field("mechLab").GetValue<MechLabPanel>(); }
+        }
+
         public TextMeshProUGUI totalTonnage
         {
             get { return traverse.Field("totalTonnage").GetValue<TextMeshProUGUI>(); }
@@ -28,6 +33,11 @@ namespace MechEngineMod
         public UIColorRefTracker remainingTonnageColor
         {
             get { return traverse.Field("remainingTonnageColor").GetValue<UIColorRefTracker>(); }
+        }
+        
+        public MechLabHardpointElement[] hardpoints
+        {
+            get { return traverse.Field("hardpoints").GetValue<MechLabHardpointElement[]>(); }
         }
     }
 }

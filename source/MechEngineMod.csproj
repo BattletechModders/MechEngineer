@@ -73,6 +73,7 @@
     <Compile Include="EndoSteelMechValidationRulesPatch.cs" />
     <Compile Include="EngineMechInitEffectStatsPatch.cs" />
     <Compile Include="EngineMechLabInventoryWidgetPatch.cs" />
+    <Compile Include="EngineJumpJetMechLabInfoWidget.cs" />
     <Compile Include="EngineMechStatisticsRulesMovementPatch.cs" />
     <Compile Include="EngineHeatSinkMechValidationRulesPatch.cs" />
     <Compile Include="EngineSimGameStateWorkOrderPatch.cs" />

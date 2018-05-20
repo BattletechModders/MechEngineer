@@ -14,7 +14,8 @@ namespace MechEngineMod
         {
             try
             {
-                var mechLab = Traverse.Create(__instance).Field("mechLab").GetValue<MechLabPanel>();
+                var adapter = new MechLabMechInfoWidgetAdapter(__instance);
+                var mechLab = adapter.mechLab;
                 if (mechLab == null)
                 {
                     return;
@@ -28,8 +29,6 @@ namespace MechEngineMod
                 {
                     __instance.currentTonnage -= EndoSteelMechStatisticsRulesPatch.WeightSavingsIfEndoSteel(mechDef);
                 }
-
-                var adapter = new MechLabMechInfoWidgetAdapter(__instance);
 
                 var current = __instance.currentTonnage;
                 var max = mechDef.Chassis.Tonnage;
