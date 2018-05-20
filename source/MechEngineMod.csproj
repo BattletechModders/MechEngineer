@@ -73,7 +73,7 @@
     <Compile Include="EndoSteelMechValidationRulesPatch.cs" />
     <Compile Include="EngineMechInitEffectStatsPatch.cs" />
     <Compile Include="EngineMechLabInventoryWidgetPatch.cs" />
-    <Compile Include="EngineMechStatisticsRulesStatPatch.cs" />
+    <Compile Include="EngineMechStatisticsRulesMovementPatch.cs" />
     <Compile Include="EngineHeatSinkMechValidationRulesPatch.cs" />
     <Compile Include="EngineSimGameStateWorkOrderPatch.cs" />
     <Compile Include="GyroMechLabLocationWidgetPatch.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="EngineMechLabLocationWidgetPatch.cs" />
     <Compile Include="EngineMechValidationRulesPatch.cs" />
     <Compile Include="MechLabMechInfoWidgetAdapter.cs" />
+    <Compile Include="EngineMechStatisticsRulesHeatPatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\mod.json" />

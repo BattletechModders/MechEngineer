@@ -7,7 +7,7 @@ using UnityEngine;
 namespace MechEngineMod
 {
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateMovementStat")]
-    public static class EngineMechStatisticsRulesStatPatch
+    public static class EngineMechStatisticsRulesMovementPatch
     {
         // make the mech movement summary stat be calculated using the engine
         [HarmonyPriority(500)]

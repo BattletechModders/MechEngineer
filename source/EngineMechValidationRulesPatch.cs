@@ -27,7 +27,7 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (mainEngine.Type == Engine.EngineType.XL_dhs && engineRefs.Count(x => x.DamageLevel == ComponentDamageLevel.Functional || x.DamageLevel == ComponentDamageLevel.NonFunctional) != 3)
+                if (mainEngine.Type == Engine.EngineType.XL && engineRefs.Count(x => x.DamageLevel == ComponentDamageLevel.Functional || x.DamageLevel == ComponentDamageLevel.NonFunctional) != 3)
                 {
                     errorMessages[MechValidationType.InvalidInventorySlots].Add("INCOMPLETE ENGINE: An XL Engine requires left and right torso components");
                 }
