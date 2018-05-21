@@ -1,0 +1,33 @@
+{
+    "DissipationCapacity" : 0,
+    "Description" : {
+        "Cost" : 3000000,
+        "Rarity" : 0,
+        "Purchasable" : true,
+        "Manufacturer" : "Generic",
+        "Model" : "XL Engine Part",
+        "UIName" : "XL Left Slots",
+        "Id" : "emod_engineslots_xl_left",
+        "Name" : "XL Left Slots",
+        "Details" : "To mount an XL engine you need both left and right torso engine parts",
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
+    },
+    "BonusValueA" : "",
+    "BonusValueB" : "",
+    "ComponentType" : "HeatSink",
+    "ComponentSubType" : "Heatsink",
+    "PrefabIdentifier" : "",
+    "BattleValue" : 0,
+    "InventorySize" : 3,
+    "Tonnage" : 0,
+    "AllowedLocations" : "LeftTorso",
+    "DisallowedLocations" : "All",
+    "CriticalComponent" : false,
+    "statusEffects" : null,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile" : ""
+    }
+}

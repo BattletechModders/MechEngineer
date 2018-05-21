@@ -1,6 +1,6 @@
 {
 	"Name": "MechEngineMod",
-	"Author": "CptMoore",
+	"Author": "Original Author: CptMoore; modifications by: Crusher Bob",
 	"Website": "https://github.com/CptMoore/MechEngineMod",
 
 	"Enabled": true,
@@ -10,143 +10,8 @@
 	
 	"Manifest": [
 		{
-			"Type": "CombatGameConstants",
-			"Path": "StreamingAssets/data/constants/CombatGameConstants.json",
-			"ShouldMergeJSON": true
-		},
-		{
 			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/heatsinks/Gear_HeatSink_Generic_Double.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "UpgradeDef",
-			"Path": "StreamingAssets/data/upgrades/gyros/Gear_Gyro_Friedhof_Sparrow.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "AmmunitionBoxDef",
-			"Path": "StreamingAssets/data/ammunitionBox/Ammo_AmmunitionBox_Generic_GAUSS.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "WeaponDef",
-			"Path": "StreamingAssets/data/weapon/Weapon_Gauss_Gauss_0-STOCK.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "WeaponDef",
-			"Path": "StreamingAssets/data/weapon/Weapon_Laser_LargeLaserER_0-STOCK.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "WeaponDef",
-			"Path": "StreamingAssets/data/weapon/Weapon_Laser_LargeLaserPulse_0-STOCK.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "WeaponDef",
-			"Path": "StreamingAssets/data/weapon/Weapon_Laser_MediumLaserER_0-STOCK.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "WeaponDef",
-			"Path": "StreamingAssets/data/weapon/Weapon_Laser_MediumLaserPulse_0-STOCK.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "WeaponDef",
-			"Path": "StreamingAssets/data/weapon/Weapon_Laser_SmallLaserER_0-STOCK.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "WeaponDef",
-			"Path": "StreamingAssets/data/weapon/Weapon_Laser_SmallLaserPulse_0-STOCK.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "WeaponDef",
-			"Path": "StreamingAssets/data/weapon/Weapon_PPC_PPCER_0-STOCK.json",
-			"ShouldMergeJSON": true
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_std_400.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_std_350.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_std_300.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_std_250.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_std_200.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_std_150.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_std_100.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_xl_400.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_xl_350.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_xl_300.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_xl_250.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_xl_200.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_xl_150.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_engine_xl_100.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_slots_xl_left.json",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "StreamingAssets/data/engines/emod_slots_xl_right.json",
+			"Path": "engines/",
 			"ShouldMergeJSON": false
 		}
 	]

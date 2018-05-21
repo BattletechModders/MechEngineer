@@ -16,24 +16,20 @@ or
 
 * added std engine type
 * added xl engine type and side torso xl engine parts
-* removed global 10 heatsinks, each engine comes with TT free heatsink count
 * calculate walk and run speeds based on engine rating and mech tonnage
-* all mechs have 10% their max tonnage as initial tonnage
+* all mechs have about 10% their max tonnage as initial tonnage (can be forced to be 10% for all mechs)
+* added endo-steel critical slots to reduce initial weight by half
+* add all free heat sinks an engine supports, select type of heat sinks for engine by installing either double or single heatsinks on mech
 * mechlab enforces to use an engine on a mech, xl engine requires the side torso parts
 * mechlab enforces only one engine part per chassis location
 * mechlab enforces only one gyro for center torso, also gryo to be 1 crit high
+* mechlab enforces the use of all 14 critical slots when choosing endo-steel
+* mechlab enforces either single or double heat sink types but no mix
 * adjust movement speed summary stat based on engine rating
 * hide incompatible engines for mech
 * engine tonnage determins install tech cost
 * crit engine parts reduce speed, destroyed engine parts destroy mech
-* max jump jet is calculated linear to the speed of the mech up to 8 JJ at max sprint speed
-
-TBD:
-* add stock engines to each mech (first add advanced array manipulation feature to modtek)
-* sort out what engine ratings to add to the game (need stock engines for mechs, get rid of xl again?)
-* figure out economy of engines (tech costs factor)
-* availability (shops and salvage settings)
-* more?
+* jump jets should now be limited to the integer distance of the mech's TT walk speed
 
 ## Download
 
