@@ -13,7 +13,7 @@ namespace MechEngineMod
         public int EndoSteelRequiredCriticals = 14;
         public float EndoSteelStructureWeightSavingsFactor = 0.5f;
         public int FerrosFibrousRequiredCriticals = 14;
-        public float FerrosFibrousArmorWeightSavingsFactor = 1f - (1f / 1.12f);
+        public float FerrosFibrousArmorWeightSavingsFactor = 1f / 1.12f;
 
         /* 
 		set to false to use TT walk values

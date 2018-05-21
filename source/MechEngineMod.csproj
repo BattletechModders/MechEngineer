@@ -66,11 +66,11 @@
   <ItemGroup>
     <Compile Include="Control.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="EndoSteelMechInfoWidgetCalculateTonnagePatch.cs" />
-    <Compile Include="EndoSteelMechStatisticsRulesPatch.cs" />
+    <Compile Include="StructArmorMechInfoWidgetCalculateTonnagePatch.cs" />
+    <Compile Include="StructArmorMechStatisticsRulesPatch.cs" />
     <Compile Include="EngineHeatSinkMechPatch.cs" />
     <Compile Include="EngineMechComponentDamagePatch.cs" />
-    <Compile Include="EndoSteelMechValidationRulesPatch.cs" />
+    <Compile Include="StructArmorMechValidationRulesPatch.cs" />
     <Compile Include="EngineMechInitEffectStatsPatch.cs" />
     <Compile Include="EngineMechLabInventoryWidgetPatch.cs" />
     <Compile Include="EngineJumpJetMechLabInfoWidget.cs" />
