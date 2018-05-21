@@ -6,9 +6,9 @@
         "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "Critical Slot",
-        "UIName" : "Ferro-Fibrous Slot",
+        "UIName" : "Ferro-Fibrous",
         "Id" : "emod_structureslots_ferrosfibrous",
-        "Name" : "Ferro-Fibrous Slot",
+        "Name" : "Ferro-Fibrous",
         "Details" : "Add exactly 14 Ferro-Fibrous slots to loose 1/12 armor weight.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },

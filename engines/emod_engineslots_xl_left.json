@@ -5,10 +5,10 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "XL Engine Part",
-        "UIName" : "XL Left Slots",
+        "Model" : "XL Critical Slots",
+        "UIName" : "XL Engine Left",
         "Id" : "emod_engineslots_xl_left",
-        "Name" : "XL Left Slots",
+        "Name" : "XL Engine Left",
         "Details" : "To mount an XL engine you need both left and right torso engine parts",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
