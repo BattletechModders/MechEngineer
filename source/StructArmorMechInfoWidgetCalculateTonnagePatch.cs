@@ -7,9 +7,9 @@ using UnityEngine;
 namespace MechEngineMod
 {
     [HarmonyPatch(typeof(MechLabMechInfoWidget), "CalculateTonnage")]
-    public static class EndoSteelMechInfoWidgetCalculateTonnagePatch
+    public static class StructArmorMechInfoWidgetCalculateTonnagePatch
     {
-        // endo-steel calculations for mechlab info widget
+        // endo-steel and ferros-fibrous calculations for mechlab info widget
         public static void Postfix(MechLabMechInfoWidget __instance)
         {
             try
@@ -25,10 +25,9 @@ namespace MechEngineMod
                 {
                     return;
                 }
-                if (mechDef.Inventory.Any(x => x.Def.IsEndoSteel()))
-                {
-                    __instance.currentTonnage -= EndoSteelMechStatisticsRulesPatch.WeightSavingsIfEndoSteel(mechDef);
-                }
+
+                __instance.currentTonnage -= StructArmorMechStatisticsRulesPatch.WeightSavingsIfEndoSteel(mechDef);
+                __instance.currentTonnage -= StructArmorMechStatisticsRulesPatch.WeightSavingsIfFerrosFibrous(mechDef);
 
                 var current = __instance.currentTonnage;
                 var max = mechDef.Chassis.Tonnage;

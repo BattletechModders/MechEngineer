@@ -60,6 +60,12 @@ namespace MechEngineMod
             return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_structureslots_endosteel");
         }
 
+        // ferros fibrous has some calculations behind it
+        internal static bool IsFerrosFibrous(this MechComponentDef componentDef)
+        {
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_structureslots_ferrosfibrous");
+        }
+
         private static bool CheckComponentDef(MechComponentDef def, ComponentType type, string prefix)
         {
             if (def.ComponentType != type)
