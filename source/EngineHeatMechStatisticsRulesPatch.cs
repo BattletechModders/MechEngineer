@@ -51,7 +51,7 @@ namespace MechEngineMod
                 }
 
 
-                var engineHeatSinkDissipation = GetEngineHeatDissipation(mechDef);
+                var engineHeatSinkDissipation = GetEngineHeatDissipation(mechDef.Inventory);
                 totalHeatSinkDissipation += engineHeatSinkDissipation;
 
                 Control.mod.Logger.LogDebug("engineHeatSinkDissipation=" + engineHeatSinkDissipation);
@@ -156,13 +156,13 @@ namespace MechEngineMod
             collection.PerformOperation(statistic, data.operation, variant);
         }
 
-        internal static float GetEngineHeatDissipation(MechDef mechDef)
+        internal static float GetEngineHeatDissipation(MechComponentRef[] inventory)
         {
-            var engine = mechDef.Inventory
+            var engine = inventory
                 .Select(x => Engine.MainEngineFromDef(x.Def))
                 .FirstOrDefault(x => x != null);
 
-            var heatSink = mechDef.Inventory
+            var heatSink = inventory
                 .Where(c => c.ComponentDefType == ComponentType.HeatSink)
                 .Select(c => c.Def as HeatSinkDef)
                 .Where(c => c != null)

@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Control.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="EngineTooltipPrefab_EquipmentPatch.cs" />
     <Compile Include="StructArmorMechInfoWidgetCalculateTonnagePatch.cs" />
     <Compile Include="StructArmorMechStatisticsRulesPatch.cs" />
     <Compile Include="EngineHeatSinkMechPatch.cs" />

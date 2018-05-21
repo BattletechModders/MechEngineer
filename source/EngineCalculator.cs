@@ -67,8 +67,7 @@ namespace MechEngineMod
                                         " rating=" + engine.Rating +
                                         " tonnage=" + tonnage +
                                         " walkSpeed=" + walkSpeed +
-                                        " runSpeed=" + runSpeed 
-                                        +
+                                        " runSpeed=" + runSpeed +
                                         " TTWalkSpeed=" + TTWalkSpeed);
         }
 

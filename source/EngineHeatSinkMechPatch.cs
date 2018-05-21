@@ -13,7 +13,7 @@ namespace MechEngineMod
         {
             try
             {
-                __result += EngineHeatMechStatisticsRulesPatch.GetEngineHeatDissipation(__instance.MechDef);
+                __result += EngineHeatMechStatisticsRulesPatch.GetEngineHeatDissipation(__instance.MechDef.Inventory);
             }
             catch (Exception e)
             {
