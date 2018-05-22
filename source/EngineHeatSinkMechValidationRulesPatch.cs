@@ -14,6 +14,11 @@ namespace MechEngineMod
         {
             try
             {
+                if (Control.settings.AllowMixingDoubleAndSingleHeatSinks)
+                {
+                    return;
+                }
+
                 bool hasSingle = false, hasDouble = false;
                 var mixed = mechDef.Inventory
                     .Where(c => c.ComponentDefType == ComponentType.HeatSink)

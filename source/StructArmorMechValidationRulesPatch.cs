@@ -19,7 +19,7 @@ namespace MechEngineMod
 
                     var currentCount = mechDef.Inventory.Count(x => x.Def.IsEndoSteel());
                     var exactCount = Control.settings.EndoSteelRequiredCriticals;
-                    if (currentCount > 0 && currentCount != exactCount)
+                    if (currentCount > 0 && (Control.settings.EndoSteelRequireAllSlots ? currentCount != exactCount : currentCount <= exactCount))
                     {
                         errorMessages[MechValidationType.InvalidInventorySlots].Add(String.Format("ENDO-STEEL: Critical slots count does not match ({0} instead of {1})", currentCount, exactCount));
                     }
@@ -29,7 +29,7 @@ namespace MechEngineMod
 
                     var currentCount = mechDef.Inventory.Count(x => x.Def.IsFerrosFibrous());
                     var exactCount = Control.settings.FerrosFibrousRequiredCriticals;
-                    if (currentCount > 0 && currentCount != exactCount)
+                    if (currentCount > 0 && (Control.settings.FerroFibrousRequireAllSlots ? currentCount != exactCount : currentCount <= exactCount))
                     {
                         errorMessages[MechValidationType.InvalidInventorySlots].Add(String.Format("FERROS-FIBROUS: Critical slots count does not match ({0} instead of {1})", currentCount, exactCount));
                     }

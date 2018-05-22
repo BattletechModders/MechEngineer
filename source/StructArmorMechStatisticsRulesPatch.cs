@@ -24,17 +24,21 @@ namespace MechEngineMod
 
         internal static float WeightSavingsIfEndoSteel(MechDef mechDef)
         {
-            if (!mechDef.Inventory.Any(x => x.Def.IsEndoSteel()))
+            var count = mechDef.Inventory.Count(x => x.Def.IsEndoSteel());
+            if (count == 0)
             {
                 return 0;
             }
 
-            return mechDef.Chassis.Tonnage / 10f * Control.settings.EndoSteelStructureWeightSavingsFactor;
+            var partialFactor = Control.settings.EndoSteelRequireAllSlots ? 1.0f : count / (float)Control.settings.EndoSteelRequiredCriticals;
+
+            return mechDef.Chassis.Tonnage / 10f * partialFactor * Control.settings.EndoSteelStructureWeightSavingsFactor;
         }
 
         internal static float WeightSavingsIfFerrosFibrous(MechDef mechDef)
         {
-            if (!mechDef.Inventory.Any(x => x.Def.IsFerrosFibrous()))
+            var count = mechDef.Inventory.Count(x => x.Def.IsFerrosFibrous());
+            if (count == 0)
             {
                 return 0;
             }
@@ -52,7 +56,9 @@ namespace MechEngineMod
             num += mechDef.LeftLeg.AssignedArmor;
             num += mechDef.RightLeg.AssignedArmor;
             var armorWeight = num / (UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f);
-            return armorWeight * Control.settings.FerrosFibrousArmorWeightSavingsFactor;
+
+            var partialFactor = Control.settings.FerroFibrousRequireAllSlots ? 1.0f : count / (float)Control.settings.FerrosFibrousRequiredCriticals;
+            return armorWeight * partialFactor * Control.settings.FerrosFibrousArmorWeightSavingsFactor;
         }
     }
 }

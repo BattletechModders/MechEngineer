@@ -11,10 +11,13 @@ namespace MechEngineMod
         public bool InitialTonnageOverride = false;
         public float InitialToTotalTonnageFactor = 0.1f;
         public string[] InitialTonnageOverrideSkipChassis = {};
+        public bool EndoSteelRequireAllSlots = true;
         public int EndoSteelRequiredCriticals = 14;
         public float EndoSteelStructureWeightSavingsFactor = 0.5f;
+        public bool FerroFibrousRequireAllSlots = true;
         public int FerrosFibrousRequiredCriticals = 14;
         public float FerrosFibrousArmorWeightSavingsFactor = 1f / 1.12f;
+        public bool AllowMixingDoubleAndSingleHeatSinks = false;
 
         /* 
 		set to false to use TT walk values
