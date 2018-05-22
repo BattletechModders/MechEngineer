@@ -19,7 +19,7 @@ namespace MechEngineMod
                     .Where(c => c.ComponentDefType == ComponentType.HeatSink)
                     .Select(c => c.Def as HeatSinkDef)
                     .Where(c => c != null)
-                    .Do(cd =>
+                    .Select(cd =>
                     {
                         if (cd.IsSingle())
                         {
@@ -29,6 +29,7 @@ namespace MechEngineMod
                         {
                             hasDouble = true;
                         }
+                        return cd;
                     })
                     .Any(c => hasSingle && hasDouble);
 
