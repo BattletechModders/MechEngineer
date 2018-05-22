@@ -16,6 +16,12 @@ namespace MechEngineMod
             {
                 var adapter = new MechLabMechInfoWidgetAdapter(__instance);
                 var mechLab = adapter.mechLab;
+
+                if (mechLab == null)
+                {
+                    return;
+                }
+
                 var engine = mechLab.activeMechDef.Inventory
                     .Select(x => Engine.MainEngineFromDef(x.Def))
                     .FirstOrDefault(x => x != null);
