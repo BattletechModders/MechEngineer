@@ -6,7 +6,8 @@ namespace MechEngineMod
     {
         public int TechCostPerEngineTon = 1;
         public int FallbackHeatSinkCount = 10;
-        public float SpeedMultiplierPerDamagedEnginePart = 0.7f;
+        public float SpeedMultiplierPerDamagedEnginePart = 1.0f; // no speed reduction
+        public int HeatSinkCapacityPerDamagedEnginePart = -15;
         public bool InitialTonnageOverride = false;
         public float InitialToTotalTonnageFactor = 0.1f;
         public string[] InitialTonnageOverrideSkipChassis = {};

@@ -24,7 +24,7 @@ namespace MechEngineMod
                 }
 
                 var mech = (Mech)__instance.parent;
-                if (damageLevel == ComponentDamageLevel.Penalized)
+                if (damageLevel == ComponentDamageLevel.Penalized || damageLevel == ComponentDamageLevel.Misaligned)
                 {
                     if (!mech.IsLocationDestroyed(ChassisLocations.CenterTorso))
                     {
@@ -34,6 +34,9 @@ namespace MechEngineMod
                         var runSpeed = mech.StatCollection.GetStatistic("RunSpeed");
                         mech.StatCollection.Float_Multiply(walkSpeed, Control.settings.SpeedMultiplierPerDamagedEnginePart);
                         mech.StatCollection.Float_Multiply(runSpeed, Control.settings.SpeedMultiplierPerDamagedEnginePart);
+
+                        var heatSink = mech.StatCollection.GetStatistic("HeatSinkCapacity");
+                        mech.StatCollection.Int_Add(heatSink, Control.settings.HeatSinkCapacityPerDamagedEnginePart);
                     }
                 }
                 else if (damageLevel == ComponentDamageLevel.Destroyed)
