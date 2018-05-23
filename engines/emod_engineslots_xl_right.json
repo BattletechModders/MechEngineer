@@ -22,7 +22,7 @@
     "Tonnage" : 0,
     "AllowedLocations" : "RightTorso",
     "DisallowedLocations" : "All",
-    "CriticalComponent" : false,
+    "CriticalComponent" : true,
     "statusEffects" : null,
     "ComponentTags" : {
         "items" : [

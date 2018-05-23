@@ -14,7 +14,7 @@ namespace MechEngineMod
         {
             try
             {
-                if (!applyEffects) // fake test through AI calculations
+                if (!applyEffects) // fake test through AI calculations or went through crit calculations already
                 {
                     return true;
                 }
@@ -35,7 +35,7 @@ namespace MechEngineMod
                 }
 
                 var mech = (Mech)__instance.parent;
-                if (mech.IsLocationDestroyed(ChassisLocations.CenterTorso))
+                if (mech.IsLocationDestroyed(ChassisLocations.CenterTorso)) // implies destroyed LT, CT, RT
                 {
                     return true;
                 }
@@ -53,16 +53,15 @@ namespace MechEngineMod
                         break;
                 }
 
-                __instance.StatCollection.ModifyStat(
-                    hitInfo.attackerId,
-                    hitInfo.stackItemUID,
-                    "DamageLevel",
-                    StatCollection.StatOperation.Set,
-                    damageLevel);
+                if (mech.IsLocationDestroyed((ChassisLocations) __instance.Location))
+                {
+                    damageLevel = ComponentDamageLevel.Destroyed;
+                }
 
+                // do on CRIT
                 if (damageLevel < ComponentDamageLevel.NonFunctional)
                 {
-                    Control.mod.Logger.LogDebug("Penalized=" + __instance.Name);
+                    Control.mod.Logger.LogDebug("CRIT on " + __instance.Name);
 
                     var walkSpeed = mech.StatCollection.GetStatistic("WalkSpeed");
                     var runSpeed = mech.StatCollection.GetStatistic("RunSpeed");
@@ -72,22 +71,27 @@ namespace MechEngineMod
                     var heatSink = mech.StatCollection.GetStatistic("HeatSinkCapacity");
                     mech.StatCollection.Int_Add(heatSink, Control.settings.HeatSinkCapacityPerDamagedEnginePart);
 
-                    return false;
+                    __instance.StatCollection.ModifyStat(
+                        hitInfo.attackerId,
+                        hitInfo.stackItemUID,
+                        "DamageLevel",
+                        StatCollection.StatOperation.Set,
+                        damageLevel);
                 }
                 else
                 {
-                    // destory all other component parts
+                    // destory all other engine component parts
                     foreach (var component in mech.allComponents.Where(c => c != null && c.componentDef != null && c.componentDef.IsEnginePart()))
                     {
                         if (component.DamageLevel == ComponentDamageLevel.Destroyed)
                         {
                             continue;
                         }
-                        component.DamageComponent(hitInfo, damageLevel, true);
+                        component.DamageComponent(hitInfo, damageLevel, false);
                     }
-
-                    return true;
                 }
+
+                return false;
             }
             catch (Exception e)
             {
