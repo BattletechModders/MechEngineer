@@ -76,9 +76,14 @@ namespace MechEngineMod
             return Mathf.CeilToInt(Control.settings.TechCostPerEngineTon * engine.Def.Tonnage);
         }
 
-        internal int CalcHeatSinks(Engine engine)
+        internal int CalcHeatSinksInternalWithoutTonnage(Engine engine)
         {
             return Math.Min(engine.Rating / 25, 10);
+        }
+
+        internal int CalcHeatSinksInternal(Engine engine)
+        {
+            return engine.Rating / 25;
         }
 
         internal int CalcJumpJetCount(Engine engine, float tonnage)

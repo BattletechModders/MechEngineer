@@ -17,12 +17,18 @@ namespace MechEngineMod
                 var adapter = new MechLabMechInfoWidgetAdapter(__instance);
                 var mechLab = adapter.mechLab;
 
-                if (mechLab == null)
+                if (mechLab == null || mechLab.activeMechDef == null || mechLab.activeMechDef.Inventory == null)
+                {
+                    return;
+                }
+
+                if (adapter.mechLab.activeMechDef.Chassis == null)
                 {
                     return;
                 }
 
                 var engine = mechLab.activeMechDef.Inventory
+                    .Where(x => x != null)
                     .Select(x => Engine.MainEngineFromDef(x.Def))
                     .FirstOrDefault(x => x != null);
 
@@ -43,6 +49,12 @@ namespace MechEngineMod
                 {
                     __instance.totalJumpjets = Control.calc.CalcJumpJetCount(engine, adapter.mechLab.activeMechDef.Chassis.Tonnage);
                 }
+
+                if (adapter.hardpoints == null || adapter.hardpoints[4] == null)
+                {
+                    return;
+                }
+
                 adapter.hardpoints[4].SetData(WeaponCategory.AMS, string.Format("{0} / {1}", current, __instance.totalJumpjets));
             }
             catch (Exception e)

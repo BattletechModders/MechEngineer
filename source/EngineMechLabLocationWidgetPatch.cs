@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
@@ -10,7 +11,13 @@ namespace MechEngineMod
     public static class EngineMechLabLocationWidgetPatch
     {
         // only allow one engine part per specific location
-        public static void Postfix(MechLabLocationWidget __instance, MechComponentDef newComponentDef, ref bool __result)
+        public static void Postfix(
+            MechLabLocationWidget __instance,
+            MechComponentDef newComponentDef,
+            MechLabPanel ___mechLab,
+            List<MechLabItemSlotElement> ___localInventory,
+            ref string ___dropErrorMessage,
+            ref bool __result)
         {
             try
             {
@@ -24,13 +31,17 @@ namespace MechEngineMod
                     return;
                 }
 
-                var adapter = new MechLabLocationWidgetAdapter(__instance);
-                if (adapter.LocalInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsEnginePart()))
+                var existingEngine = ___localInventory
+                    .Where(x => x != null)
+                    .Select(x => x.ComponentRef)
+                    .FirstOrDefault(x => x != null && x.Def != null && x.Def.IsEnginePart());
+
+                if (existingEngine == null)
                 {
                     return;
                 }
 
-                adapter.DropErrorMessage = String.Format("Cannot add {0}: An engine part is already installed", newComponentDef.Description.Name);
+                ___dropErrorMessage = String.Format("Cannot add {0}: An engine part is already installed", newComponentDef.Description.Name);
                 __result = false;
             }
             catch (Exception e)

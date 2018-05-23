@@ -175,7 +175,7 @@ namespace MechEngineMod
                 return Control.settings.FallbackHeatSinkCount * heatSinkDissipationCapacity;
             }
 
-            var heatsinks = Control.calc.CalcHeatSinks(engine);
+            var heatsinks = Control.calc.CalcHeatSinksInternalWithoutTonnage(engine);
             Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engine.Rating + " heatsinks=" + heatsinks + " defaultHeatSinkDissipationCapacity=" + heatSinkDissipationCapacity);
 
             return heatsinks * heatSinkDissipationCapacity;
