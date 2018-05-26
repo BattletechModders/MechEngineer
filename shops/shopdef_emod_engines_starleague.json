@@ -1,0 +1,99 @@
+{
+    "ID": "shopdef_emod_engines_starleague",
+    "RequirementTags": {
+        "items": [
+            "planet_other_blackmarket",
+            "planet_other_starleague"
+        ],
+        "tagSetSourceFile": ""
+    },
+    "ExclusionTags": {
+        "items": [
+		    "planet_other_empty",
+            "planet_progress_1"
+        ],
+        "tagSetSourceFile": ""
+    },
+   "Inventory" : [
+      {
+         "ID" : "Gear_HeatSink_Generic_Double",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_kit_dhs",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_structureslots_endosteel",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_structureslots_ferrosfibrous",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_xl_left",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_xl_right",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      }
+   ],
+    "Specials": [
+        {
+            "ID": "emod_engine_xl_400",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xl_350",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xl_300",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xl_250",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xl_150",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xl_100",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+	]
+}

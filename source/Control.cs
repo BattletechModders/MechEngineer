@@ -11,9 +11,9 @@ namespace MechEngineMod
 {
     public static class Control
     {
-        public static Mod mod;
+        internal static Mod mod;
 
-        public static MechEngineModSettings settings = new MechEngineModSettings();
+        internal static MechEngineModSettings settings = new MechEngineModSettings();
         internal static EngineCalculator calc = new EngineCalculator();
 
         public static void Start(string modDirectory, string json)
@@ -36,70 +36,20 @@ namespace MechEngineMod
             }
         }
 
-        // main engine + engine slots
-        internal static bool IsEnginePart(this MechComponentDef componentDef)
+        private static CombatGameConstants _combat;
+
+        public static CombatGameConstants Combat
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_engine");
+            get { return _combat ?? (_combat = CombatGameConstants.CreateFromSaved(UnityGameInstance.BattleTechGame)); }
         }
 
-        // only main engine
-        internal static bool IsMainEngine(this MechComponentDef componentDef)
-        {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_engine_");
-        }
-
-        // we want to know about center torso upgrade (gyros), since we reduce their size
-        internal static bool IsCenterTorsoUpgrade(this MechComponentDef componentDef)
-        {
-            return componentDef.AllowedLocations == ChassisLocations.CenterTorso && componentDef.ComponentType == ComponentType.Upgrade;
-        }
-
-        // endo steel has some calculations behind it
-        internal static bool IsEndoSteel(this MechComponentDef componentDef)
-        {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_structureslots_endosteel");
-        }
-
-        // ferros fibrous has some calculations behind it
-        internal static bool IsFerrosFibrous(this MechComponentDef componentDef)
-        {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, "emod_structureslots_ferrosfibrous");
-        }
-
-        private static bool CheckComponentDef(MechComponentDef def, ComponentType type, string prefix)
-        {
-            if (def.ComponentType != type)
-            {
-                return false;
-            }
-
-            if (def.Description == null || def.Description.Id == null)
-            {
-                return false;
-            }
-
-            return def.Description.Id.StartsWith(prefix);
-        }
-
-        private static bool CheckChassisDef(ChassisDef def, string prefix)
-        {
-
-            if (def.Description == null || def.Description.Id == null)
-            {
-                return false;
-            }
-
-            return def.Description.Id.StartsWith(prefix);
-        }
-
-        internal static bool IsDouble(this HeatSinkDef def)
-        {
-            return def.Description.Id == "Gear_HeatSink_Generic_Double";
-        }
-
-        internal static bool IsSingle(this HeatSinkDef def)
-        {
-            return def.Description.Id == "Gear_HeatSink_Generic_Standard";
-        }
+        // used id or id prefixes
+        internal static string EnginePartPrefix = "emod_engine";
+        internal static string MainEnginePrefix = "emod_engine_";
+        internal static string EndoSteelPrefix = "emod_structureslots_endosteel";
+        internal static string FerrosFibrousPrefix = "emod_structureslots_ferrosfibrous";
+        internal static string GearHeatSinkGenericDouble = "Gear_HeatSink_Generic_Double";
+        internal static string GearHeatSinkGenericStandard = "Gear_HeatSink_Generic_Standard";
+        internal static string EngineKitDHS = "emod_kit_dhs";
     }
 }

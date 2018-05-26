@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
@@ -7,10 +8,15 @@ using Harmony;
 namespace MechEngineMod
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), "ValidateAdd", new[] { typeof(MechComponentDef) })]
-    public static class GyroMechLabLocationWidgetPatch
+    public static class MechLabLocationWidgetValidateAddPatch
     {
         // allow gyro upgrades to be 1 slot and still only be added once
-        public static void Postfix(MechLabLocationWidget __instance, MechComponentDef newComponentDef, ref bool __result)
+        public static void Postfix(
+            MechLabLocationWidget __instance,
+            MechComponentDef newComponentDef,
+            List<MechLabItemSlotElement> ___localInventory,
+            ref string ___dropErrorMessage,
+            ref bool __result)
         {
             try
             {
@@ -19,19 +25,17 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (!newComponentDef.IsCenterTorsoUpgrade())
+                Gyro.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                if (!__result)
                 {
                     return;
                 }
 
-                var adapter = new MechLabLocationWidgetAdapter(__instance);
-                if (adapter.LocalInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsCenterTorsoUpgrade()))
+                Engine.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                if (!__result)
                 {
                     return;
                 }
-
-                adapter.DropErrorMessage = String.Format("Cannot add {0}: A center torso upgrade is already installed", newComponentDef.Description.Name);
-                __result = false;
             }
             catch (Exception e)
             {

@@ -1,41 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
-using Harmony;
 
 namespace MechEngineMod
 {
-    [HarmonyPatch(typeof(MechStatisticsRules), "CalculateTonnage")]
-    public static class StructArmorMechStatisticsRulesPatch
+    internal static class FerrosFibrous
     {
-        // endo-steel and ferros-fibrous calculations for validation
-        public static void Postfix(MechDef mechDef, ref float currentValue, ref float maxValue)
+        internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            try
+            var currentCount = mechDef.Inventory.Count(x => x.Def.IsFerrosFibrous());
+            var exactCount = Control.settings.FerrosFibrousRequiredCriticals;
+            if (currentCount > 0 && (Control.settings.FerroFibrousRequireAllSlots ? currentCount != exactCount : currentCount <= exactCount))
             {
-                currentValue -= WeightSavingsIfEndoSteel(mechDef);
-                currentValue -= WeightSavingsIfFerrosFibrous(mechDef);
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
+                errorMessages[MechValidationType.InvalidInventorySlots].Add(String.Format("FERROS-FIBROUS: Critical slots count does not match ({0} instead of {1})", currentCount, exactCount));
             }
         }
-
-        internal static float WeightSavingsIfEndoSteel(MechDef mechDef)
-        {
-            var count = mechDef.Inventory.Count(x => x.Def.IsEndoSteel());
-            if (count == 0)
-            {
-                return 0;
-            }
-
-            var partialFactor = Control.settings.EndoSteelRequireAllSlots ? 1.0f : count / (float)Control.settings.EndoSteelRequiredCriticals;
-
-            return mechDef.Chassis.Tonnage / 10f * partialFactor * Control.settings.EndoSteelStructureWeightSavingsFactor;
-        }
-
-        internal static float WeightSavingsIfFerrosFibrous(MechDef mechDef)
+        
+        internal static float WeightSavings(MechDef mechDef)
         {
             var count = mechDef.Inventory.Count(x => x.Def.IsFerrosFibrous());
             if (count == 0)

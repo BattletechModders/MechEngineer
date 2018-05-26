@@ -19,18 +19,18 @@ namespace MechEngineMod
                 return (value - (value % 5f) + 5f);
         }
 
-        internal bool CalcAvailability(Engine engine, float tonnage)
+        internal bool CalcAvailability(EngineDef engineDef, float tonnage)
         {
-            Control.mod.Logger.LogDebug("CalcAvailability rating=" + engine.Rating + " tonnage=" + tonnage);
+            //Control.mod.Logger.LogDebug("CalcAvailability rating=" + engineDef.Rating + " tonnage=" + tonnage);
 			
-            float TTWalkDistance = engine.Rating / tonnage;
+            float TTWalkDistance = engineDef.Rating / tonnage;
 
-            Control.mod.Logger.LogDebug("CalcAvailability" +
-                                        " rating=" + engine.Rating +
-                                        " tonnage=" + tonnage +
-                                        " TTWalkDistance=" + TTWalkDistance +
-                                        " Min Walk =" + Control.settings.const_MinTTWalk +
-                                        " Max Walk =" + Control.settings.const_MaxTTWalk);
+            //Control.mod.Logger.LogDebug("CalcAvailability" +
+            //                            " rating=" + engineDef.Rating +
+            //                            " tonnage=" + tonnage +
+            //                            " TTWalkDistance=" + TTWalkDistance +
+            //                            " Min Walk =" + Control.settings.const_MinTTWalk +
+            //                            " Max Walk =" + Control.settings.const_MaxTTWalk);
 
             // check if over max walk distance
             if (TTWalkDistance > Control.settings.const_MaxTTWalk)
@@ -56,40 +56,41 @@ namespace MechEngineMod
         }
 
 
-        internal void CalcSpeeds(Engine engine, float tonnage, out float walkSpeed, out float runSpeed, out float TTWalkSpeed)
+        internal void CalcSpeeds(EngineDef engineDef, float tonnage, out float walkSpeed, out float runSpeed, out float TTWalkSpeed)
         {
-
-            TTWalkSpeed = engine.Rating / tonnage;
+            TTWalkSpeed = engineDef.Rating / tonnage;
             walkSpeed = Calc_WalkDistance(TTWalkSpeed);
             runSpeed = Calc_SprintDistance(TTWalkSpeed);
 
-            Control.mod.Logger.LogDebug("CalcSpeeds" +
-                                        " rating=" + engine.Rating +
-                                        " tonnage=" + tonnage +
-                                        " walkSpeed=" + walkSpeed +
-                                        " runSpeed=" + runSpeed +
-                                        " TTWalkSpeed=" + TTWalkSpeed);
+            //Control.mod.Logger.LogDebug("CalcSpeeds" +
+            //                            " rating=" + engineDef.Rating +
+            //                            " tonnage=" + tonnage +
+            //                            " walkSpeed=" + walkSpeed +
+            //                            " runSpeed=" + runSpeed +
+            //                            " TTWalkSpeed=" + TTWalkSpeed);
         }
 
-        internal int CalcInstallTechCost(Engine engine)
+        internal int CalcInstallTechCost(EngineDef engineDef)
         {
-            return Mathf.CeilToInt(Control.settings.TechCostPerEngineTon * engine.Def.Tonnage);
+            return Mathf.CeilToInt(Control.settings.TechCostPerEngineTon * engineDef.Def.Tonnage);
         }
 
-        internal int CalcHeatSinksInternalWithoutTonnage(Engine engine)
+        internal void CalcHeatSinks(EngineDef engineDef, out int minHeatSinks, out int maxHeatSinks)
         {
-            return Math.Min(engine.Rating / 25, 10);
+            maxHeatSinks = engineDef.Rating / 25;
+            minHeatSinks = Math.Min(maxHeatSinks, 10);
         }
 
-        internal int CalcHeatSinksInternal(Engine engine)
+        internal float CalcGyroWeight(EngineDef engineDef)
         {
-            return engine.Rating / 25;
+            // for now only used for engine details text, not for any actual tonnage calculations
+            return Mathf.Round(engineDef.Rating / 100 * 2) / 2;
         }
 
-        internal int CalcJumpJetCount(Engine engine, float tonnage)
+        internal int CalcJumpJetCount(EngineDef engineDef, float tonnage)
         {
 
-            float TTWalkSpeed = engine.Rating / tonnage;
+            float TTWalkSpeed = engineDef.Rating / tonnage;
             float AllowedJJs = Math.Min(TTWalkSpeed, Control.settings.const_MaxNumberOfJJ);
 			
             if (Control.settings.JJRoundUp == true)

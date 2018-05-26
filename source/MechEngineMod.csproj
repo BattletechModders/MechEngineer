@@ -64,39 +64,49 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\EngineCrits.cs" />
+    <Compile Include="Engine\EnginePersistence.cs" />
+    <Compile Include="Engine\EngineTooltip.cs" />
+    <Compile Include="Patches\MechLabInventoryWidgetCreateInventoryItemPatch.cs" />
+    <Compile Include="Misc\EndoSteel.cs" />
+    <Compile Include="Misc\FerrosFibrous.cs" />
+    <Compile Include="Misc\Chassis.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="EngineTooltipPrefab_EquipmentPatch.cs" />
-    <Compile Include="StructArmorMechInfoWidgetCalculateTonnagePatch.cs" />
-    <Compile Include="StructArmorMechStatisticsRulesPatch.cs" />
-    <Compile Include="EngineHeatSinkMechPatch.cs" />
-    <Compile Include="EngineMechComponentDamagePatch.cs" />
-    <Compile Include="StructArmorMechValidationRulesPatch.cs" />
-    <Compile Include="EngineMechInitEffectStatsPatch.cs" />
-    <Compile Include="EngineMechLabInventoryWidgetPatch.cs" />
-    <Compile Include="EngineJumpJetMechLabInfoWidget.cs" />
-    <Compile Include="EngineMechStatisticsRulesMovementPatch.cs" />
-    <Compile Include="EngineHeatSinkMechValidationRulesPatch.cs" />
-    <Compile Include="EngineSimGameStateWorkOrderPatch.cs" />
-    <Compile Include="GyroMechLabLocationWidgetPatch.cs" />
-    <Compile Include="GyroUpgradeDefPatch.cs" />
-    <Compile Include="InitialTonnageChassisDefPatch.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="EngineCalculator.cs" />
+    <Compile Include="Patches\MechLabLocationWidgetOnMechLabDropPatch.cs" />
+    <Compile Include="Engine\EngineRef.cs" />
+    <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatchPatch.cs" />
+    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />
+    <Compile Include="Misc\CalculateTonnageFacade.cs" />
+    <Compile Include="Patches\MechLabMechInfoWidgetCalculateTonnagePatch.cs" />
+    <Compile Include="Patches\MechStatisticsRulesCalculateTonnagePatch.cs" />
+    <Compile Include="Patches\MechGetHeatSinkDissipationPatch.cs" />
+    <Compile Include="Patches\MechComponentDamageComponentPatch.cs" />
+    <Compile Include="Patches\MechValidationRulesValidateMechPosessesWeaponsPatch.cs" />
+    <Compile Include="Patches\MechInitEffectStatsPatch.cs" />
+    <Compile Include="Patches\MechLabInventoryWidgetRefreshJumpJetOptionsPatch.cs" />
+    <Compile Include="Patches\MechLabMechInfoWidgetGetTotalHardpointsPatch.cs" />
+    <Compile Include="Patches\MechStatisticsRulesCalculateMovementStatPatch.cs" />
+    <Compile Include="Engine\EngineHeat.cs" />
+    <Compile Include="Patches\SimGameStateCreateComponentInstallWorkOrderPatch.cs" />
+    <Compile Include="Misc\Gyro.cs" />
+    <Compile Include="Patches\UpgradeDefFromJSONPatch.cs" />
+    <Compile Include="Patches\ChassisDefFromJSONPatch.cs" />
+    <Compile Include="Engine\EngineDef.cs" />
+    <Compile Include="Engine\EngineCalculator.cs" />
     <Compile Include="MechEngineModSettings.cs" />
-    <Compile Include="MechLabLocationWidgetAdapter.cs" />
-    <Compile Include="EngineMechLabLocationWidgetPatch.cs" />
-    <Compile Include="EngineMechValidationRulesPatch.cs" />
-    <Compile Include="MechLabMechInfoWidgetAdapter.cs" />
-    <Compile Include="EngineHeatMechStatisticsRulesPatch.cs" />
+    <Compile Include="Patches\MechStatisticsRulesCalculateHeatEfficiencyStatPatch.cs" />
+    <Compile Include="Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\mod.json" />
     <None Include="..\README.md" />
     <None Include="..\Settings.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>REM  copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)..\..\$(TargetName).dll"</PostBuildEvent>
+    <PostBuildEvent>REM copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)..\$(TargetName).dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>
