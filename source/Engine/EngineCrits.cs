@@ -54,7 +54,7 @@ namespace MechEngineMod
             // do on CRIT
             if (damageLevel < ComponentDamageLevel.NonFunctional)
             {
-                Control.mod.Logger.LogDebug("CRIT on " + mechComponent.Name);
+                //Control.mod.Logger.LogDebug("CRIT on " + mechComponent.Name);
 
                 var walkSpeed = mech.StatCollection.GetStatistic("WalkSpeed");
                 var runSpeed = mech.StatCollection.GetStatistic("RunSpeed");

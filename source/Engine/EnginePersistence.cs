@@ -30,11 +30,11 @@ namespace MechEngineMod
                 return;
             }
 
-            Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem " + componentRef.Def.Description.Id + " UID=" + componentRef.SimGameUID);
+            //Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem " + componentRef.Def.Description.Id + " UID=" + componentRef.SimGameUID);
 
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
-                Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem extracting componentDefID=" + componentDefID);
+                //Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem extracting componentDefID=" + componentDefID);
                 widget.OnAddItem(componentDefID, panel.sim, dataManager);
             }
             engineRef.ClearInternalComponents();
@@ -130,7 +130,7 @@ namespace MechEngineMod
 
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
-                Control.mod.Logger.LogDebug("SimGameState.OnAddItemStat extracting componentDefID=" + componentDefID);
+                //Control.mod.Logger.LogDebug("SimGameState.OnAddItemStat extracting componentDefID=" + componentDefID);
                 sim.AddItemStat(componentDefID, typeof(HeatSinkDef), false);
             }
         }
