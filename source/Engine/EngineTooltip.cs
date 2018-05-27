@@ -17,7 +17,7 @@ namespace MechEngineMod
                 return;
             }
 
-            var engineRef = panel.activeMechInventory.Select(x => Extensions.GetEngineRef(x)).FirstOrDefault(x => x != null);
+            var engineRef = panel.activeMechInventory.Select(x => x.GetEngineRef()).FirstOrDefault(x => x != null);
             if (engineRef == null)
             {
                 return;

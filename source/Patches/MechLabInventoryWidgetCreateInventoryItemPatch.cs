@@ -6,10 +6,10 @@ using Harmony;
 
 namespace MechEngineMod
 {
-    [HarmonyPatch(typeof(MechLabInventoryWidget), "CreateInventoryItem")]
+    [HarmonyPatch(typeof(MechLabInventoryWidget), "OnAddItem")]
     public static class MechLabInventoryWidgetCreateInventoryItemPatch
     {
-        public static void Prefix(MechLabInventoryWidget __instance, DataManager ___dataManager, MechComponentRef componentRef)
+        public static void Prefix(MechLabInventoryWidget __instance, DataManager ___dataManager, IMechLabDraggableItem item)
         {
             try
             {
@@ -28,12 +28,12 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (componentRef == null)
+                if (item == null)
                 {
                     return;
                 }
 
-                EnginePersistence.OnCreateInventoryItem(__instance, panel, ___dataManager, componentRef);
+                EnginePersistence.OnAddItem(__instance, panel, ___dataManager, item);
             }
             catch (Exception e)
             {

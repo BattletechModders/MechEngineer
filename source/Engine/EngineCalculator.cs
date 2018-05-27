@@ -5,20 +5,6 @@ namespace MechEngineMod
 {
     internal class EngineCalculator
     {
-        // r = t * w
-        // s = w * 5/3
-        // f = d * t / r
-        // CDA-2A 350d 40t 320r // 44f
-        // SHD-2H 240d 55t 275r // 48f
-        // AS7-D 165d 100t 300r // 55f		
-        internal static float func_Roundby5(float value)
-        {
-            if (value % 5f < 2.5)
-                return (value - (value % 5f));
-            else
-                return (value - (value % 5f) + 5f);
-        }
-
         internal bool CalcAvailability(EngineDef engineDef, float tonnage)
         {
             //Control.mod.Logger.LogDebug("CalcAvailability rating=" + engineDef.Rating + " tonnage=" + tonnage);
@@ -84,7 +70,7 @@ namespace MechEngineMod
         internal float CalcGyroWeight(EngineDef engineDef)
         {
             // for now only used for engine details text, not for any actual tonnage calculations
-            return Mathf.Round(engineDef.Rating / 100 * 2) / 2;
+            return (engineDef.Rating / 100f).RoundToHalf();
         }
 
         internal int CalcJumpJetCount(EngineDef engineDef, float tonnage)
@@ -93,7 +79,7 @@ namespace MechEngineMod
             float TTWalkSpeed = engineDef.Rating / tonnage;
             float AllowedJJs = Math.Min(TTWalkSpeed, Control.settings.const_MaxNumberOfJJ);
 			
-            if (Control.settings.JJRoundUp == true)
+            if (Control.settings.JJRoundUp)
                 return Mathf.CeilToInt(AllowedJJs);
             else
                 return Mathf.FloorToInt(AllowedJJs);
@@ -105,10 +91,10 @@ namespace MechEngineMod
             float WalkSpeedFixed = 26.05f;
             float WalkSpeedMult = 23.14f;
 		
-            if (Control.settings.UseGameWalkValues == true)
-                return func_Roundby5(WalkSpeedFixed + TTWalkSpeed * WalkSpeedMult);
+            if (Control.settings.UseGameWalkValues)
+                return (WalkSpeedFixed + TTWalkSpeed * WalkSpeedMult).RoundBy5();
             else
-                return func_Roundby5(TTWalkSpeed * Control.settings.const_TTWalkMultiplier);
+                return (TTWalkSpeed * Control.settings.const_TTWalkMultiplier).RoundBy5();
 			
         }
 		
@@ -118,10 +104,10 @@ namespace MechEngineMod
             float RunSpeedFixed = 52.43f;
             float RunSpeedMult = 37.29f;
 			
-            if (Control.settings.UseGameWalkValues == true)
-                return func_Roundby5(RunSpeedFixed + TTWalkSpeed * RunSpeedMult);
+            if (Control.settings.UseGameWalkValues)
+                return (RunSpeedFixed + TTWalkSpeed * RunSpeedMult).RoundBy5();
             else
-                return func_Roundby5(TTWalkSpeed * Control.settings.const_TTSprintMultiplier);
+                return (TTWalkSpeed * Control.settings.const_TTSprintMultiplier).RoundBy5();
         }
 		
     }

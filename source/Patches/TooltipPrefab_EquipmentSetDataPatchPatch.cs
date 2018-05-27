@@ -29,6 +29,8 @@ namespace MechEngineMod
 
                 var mechComponentDef = (MechComponentDef)data;
                 EngineTooltip.AdjustTooltip(__instance, panel, mechComponentDef);
+                EndoSteel.AdjustTooltip(__instance, panel, mechComponentDef);
+                FerrosFibrous.AdjustTooltip(__instance, panel, mechComponentDef);
             }
             catch (Exception e)
             {

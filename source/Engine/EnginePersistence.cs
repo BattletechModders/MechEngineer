@@ -1,4 +1,5 @@
-﻿using BattleTech;
+﻿using System.Linq;
+using BattleTech;
 using BattleTech.Data;
 using BattleTech.UI;
 using Harmony;
@@ -7,39 +8,51 @@ namespace MechEngineMod
 {
     internal static class EnginePersistence
     {
-        internal static void OnCreateInventoryItem(MechLabInventoryWidget widget, MechLabPanel panel, DataManager dataManager, MechComponentRef componentRef)
+        // make sure to revert all changes when putting stuff back to the inventory
+        internal static void OnAddItem(MechLabInventoryWidget widget, MechLabPanel panel, DataManager dataManager, IMechLabDraggableItem item)
         {
+            var componentRef = item.ComponentRef;
+
+            if (item.ItemType != MechLabDraggableItemType.MechComponentItem)
+            {
+                return;
+            }
+
+            if (item.OriginalDropParentType != MechLabDropTargetType.InventoryList)
+            {
+                return;
+            }
+
             var engineRef = componentRef.GetEngineRef();
             if (engineRef == null)
             {
                 return;
             }
 
-            if (engineRef.AdditionalSHSCount > 0)
-            {
-                // add shs back
-                var def = dataManager.GetObjectOfType<HeatSinkDef>(Control.GearHeatSinkGenericStandard, BattleTechResourceType.HeatSinkDef);
-                widget.CreateInventoryItem(def.CreateRef(panel.sim), false, engineRef.AdditionalSHSCount);
-                engineRef.AdditionalSHSCount = 0;
-            }
+            Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem " + componentRef.Def.Description.Id + " UID=" + componentRef.SimGameUID);
 
-            if (engineRef.AdditionalDHSCount > 0)
+            foreach (var componentTypeID in engineRef.GetInternalComponents())
             {
-                // add dhs back
-                var def = dataManager.GetObjectOfType<HeatSinkDef>(Control.GearHeatSinkGenericDouble, BattleTechResourceType.HeatSinkDef);
-                widget.CreateInventoryItem(def.CreateRef(panel.sim), false, engineRef.AdditionalDHSCount);
-                engineRef.AdditionalDHSCount = 0;
+                widget.OnAddItem(componentTypeID, panel.sim, dataManager);
             }
-
-            if (engineRef.IsDHS)
-            {
-                // add dhs engine kit back
-                var def = dataManager.GetObjectOfType<HeatSinkDef>(Control.EngineKitDHS, BattleTechResourceType.HeatSinkDef);
-                widget.CreateInventoryItem(def.CreateRef(panel.sim), false, 1);
-                engineRef.IsDHS = false;
-            }
+            engineRef.ClearInternalComponents();
 
             SaveEngineState(engineRef, panel);
+
+            widget.RefreshFilterToggles();
+        }
+
+        internal static void OnAddItem(this MechLabInventoryWidget widget, string id, SimGameState sim, DataManager dataManager)
+        {
+            var def = dataManager.GetObjectOfType<HeatSinkDef>(id, BattleTechResourceType.HeatSinkDef);
+
+            var @ref = new MechComponentRef(def.Description.Id, sim.GenerateSimGameUID(), def.ComponentType, ChassisLocations.None);
+            @ref.DataManager = dataManager;
+            @ref.SetComponentDef(def);
+
+            var gear = new ListElementController_InventoryGear();
+            gear.InitAndCreate(@ref, dataManager, widget, 1);
+            widget.OnAddItem(gear.ItemWidget, false);
         }
 
         internal static void SaveEngineState(EngineRef engineRef, MechLabPanel panel)
@@ -48,13 +61,13 @@ namespace MechEngineMod
             var newSimGameUID = engineRef.GetNewSimGameUID();
             if (oldSimGameUID != newSimGameUID)
             {
+                Control.mod.Logger.LogDebug("saving new state of engine=" + engineRef.engineDef.Def.Description.Id + " old=" + oldSimGameUID + " new=" + newSimGameUID);
+
                 engineRef.mechComponentRef.SetSimGameUID(newSimGameUID);
                 // the only ones actually relying on SimGameUID are these work orders, so we have to change them
                 // hopefully no previous or other working order lists are affected
                 ChangeWorkOrderSimGameUID(panel, oldSimGameUID, newSimGameUID);
             }
-
-            //Control.mod.Logger.LogDebug("mechComponentRef SimGameUID=" + mechComponentRef.SimGameUID);
         }
 
         private static void ChangeWorkOrderSimGameUID(MechLabPanel panel, string oldSimGameUID, string newSimGameUID)
@@ -93,6 +106,57 @@ namespace MechEngineMod
 
                 traverse.SetValue(newSimGameUID);
             }
+        }
+
+        internal static bool OnReturnWorkOrder(SimGameState sim, WorkOrderEntry entry)
+        {
+            var install = entry as WorkOrderEntry_RepairComponent;
+            var repair = entry as WorkOrderEntry_InstallComponent;
+
+            string simGameUID;
+            if (repair != null)
+            {
+                simGameUID = repair.ComponentSimGameUID;
+            }
+            else if (install != null)
+            {
+                simGameUID = install.ComponentSimGameUID;
+            }
+            else
+            {
+                return true;
+            }
+
+            var mechComponentRef = sim.WorkOrderComponents.FirstOrDefault(c => c.SimGameUID == simGameUID);
+            if (mechComponentRef == null)
+            {
+                return true;
+            }
+
+            var engineRef = mechComponentRef.GetEngineRef();
+            if (engineRef == null)
+            {
+                return true;
+            }
+
+            foreach (var componentTypeID in engineRef.GetInternalComponents())
+            {
+                OnReturn(sim, componentTypeID);
+            }
+
+            OnReturn(sim, mechComponentRef.ComponentDefID);
+            sim.WorkOrderComponents.Remove(mechComponentRef);
+
+            return false;
+        }
+
+        internal static void OnReturn(SimGameState sim, string componentDefID)
+        {
+            sim.AddItemStat(
+                componentDefID,
+                typeof(HeatSinkDef),
+                false
+            );
         }
     }
 }

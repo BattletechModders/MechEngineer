@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using BattleTech.UI;
+using BattleTech.UI.Tooltips;
 
 namespace MechEngineMod
 {
@@ -19,7 +21,13 @@ namespace MechEngineMod
 
         internal static float WeightSavings(MechDef mechDef)
         {
-            var count = mechDef.Inventory.Count(x => x.Def.IsEndoSteel());
+            int count;
+            return WeightSavings(mechDef, out count);
+        }
+
+        internal static float WeightSavings(MechDef mechDef, out int count)
+        {
+            count = mechDef.Inventory.Count(x => x.Def.IsEndoSteel());
             if (count == 0)
             {
                 return 0;
@@ -27,7 +35,21 @@ namespace MechEngineMod
 
             var partialFactor = Control.settings.EndoSteelRequireAllSlots ? 1.0f : count / (float)Control.settings.EndoSteelRequiredCriticals;
 
-            return mechDef.Chassis.Tonnage / 10f * partialFactor * Control.settings.EndoSteelStructureWeightSavingsFactor;
+            var savings = mechDef.Chassis.Tonnage / 10f * partialFactor * Control.settings.EndoSteelStructureWeightSavingsFactor;
+            return savings.RoundToHalf();
+        }
+        
+        internal static void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
+        {
+            if (!mechComponentDef.IsEndoSteel())
+            {
+                return;
+            }
+
+            int count;
+            var tonnage = WeightSavings(panel.activeMechDef, out count);
+
+            tooltip.bonusesText.text = string.Format("- {0} ton,  {1} / {2}", tonnage, count, Control.settings.EndoSteelRequiredCriticals);
         }
     }
 }

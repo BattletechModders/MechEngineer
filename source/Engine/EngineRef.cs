@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BattleTech;
@@ -53,6 +54,31 @@ namespace MechEngineMod
             IsDHS = !string.IsNullOrEmpty(match.Groups[2].Value);
             AdditionalSHSCount = !string.IsNullOrEmpty(match.Groups[3].Value) ? int.Parse(match.Groups[3].Value) : 0;
             AdditionalDHSCount = !string.IsNullOrEmpty(match.Groups[4].Value) ? int.Parse(match.Groups[4].Value) : 0;
+        }
+
+        internal IEnumerable<string> GetInternalComponents()
+        {
+            if (IsDHS)
+            {
+                yield return Control.EngineKitDHS;
+            }
+
+            for (var i = 0; i < AdditionalSHSCount; i++)
+            {
+                yield return Control.GearHeatSinkGenericStandard;
+            }
+
+            for (var i = 0; i < AdditionalDHSCount; i++)
+            {
+                yield return Control.GearHeatSinkGenericDouble;
+            }
+        }
+
+        internal void ClearInternalComponents()
+        {
+            AdditionalSHSCount = 0;
+            AdditionalDHSCount = 0;
+            IsDHS = false;
         }
 
         internal string GetNewSimGameUID()

@@ -76,6 +76,13 @@ namespace MechEngineMod
                 return null;
             }
 
+            if (mechLab.DragItem.OriginalDropParentType != MechLabDropTargetType.Dismount)
+            {
+                return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                    string.Format("Cannot add {0}: Can only insert item from inventory", newComponentDef.Description.Name)
+                );
+            }
+
             // check if we can work with it
             if (!headSinkDef.IsDHSKit() && !headSinkDef.IsSingle() && !headSinkDef.IsDouble())
             {

@@ -75,6 +75,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Patches\MechLabLocationWidgetOnMechLabDropPatch.cs" />
     <Compile Include="Engine\EngineRef.cs" />
+    <Compile Include="Patches\SimGameStateReturnWorkOrderItemsToInventoryPatch.cs" />
     <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatchPatch.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />

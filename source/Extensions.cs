@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleTech;
+using UnityEngine;
 
 namespace MechEngineMod
 {
@@ -104,11 +105,6 @@ namespace MechEngineMod
             return new EngineRef(@this, engineDef);
         }
 
-        internal static MechComponentRef CreateRef(this MechComponentDef @this, SimGameState sim)
-        {
-            return new MechComponentRef(@this.Description.Id, sim.GenerateSimGameUID(), @this.ComponentType, ChassisLocations.None);
-        }
-
         internal static void PerformOperation(this StatCollection collection, Statistic statistic, StatisticEffectData data)
         {
             var type = Type.GetType(data.modType);
@@ -116,6 +112,16 @@ namespace MechEngineMod
             variant.SetValue(data.modValue);
             variant.statName = data.statName;
             collection.PerformOperation(statistic, data.operation, variant);
+        }
+
+        internal static float RoundToHalf(this float @this)
+        {
+            return Mathf.Round(@this * 2) / 2;
+        }
+
+        internal static float RoundBy5(this float @this)
+        {
+            return Mathf.Round(@this / 5) * 5;
         }
     }
 }
