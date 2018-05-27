@@ -6,6 +6,7 @@ using Harmony;
 
 namespace MechEngineMod
 {
+    // methods that are used for inv -> mech and mech -> inv
     internal static class EnginePersistence
     {
         // make sure to revert all changes when putting stuff back to the inventory
@@ -31,9 +32,10 @@ namespace MechEngineMod
 
             Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem " + componentRef.Def.Description.Id + " UID=" + componentRef.SimGameUID);
 
-            foreach (var componentTypeID in engineRef.GetInternalComponents())
+            foreach (var componentDefID in engineRef.GetInternalComponents())
             {
-                widget.OnAddItem(componentTypeID, panel.sim, dataManager);
+                Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem extracting componentDefID=" + componentDefID);
+                widget.OnAddItem(componentDefID, panel.sim, dataManager);
             }
             engineRef.ClearInternalComponents();
 
@@ -61,7 +63,7 @@ namespace MechEngineMod
             var newSimGameUID = engineRef.GetNewSimGameUID();
             if (oldSimGameUID != newSimGameUID)
             {
-                Control.mod.Logger.LogDebug("saving new state of engine=" + engineRef.engineDef.Def.Description.Id + " old=" + oldSimGameUID + " new=" + newSimGameUID);
+                // Control.mod.Logger.LogDebug("saving new state of engine=" + engineRef.engineDef.Def.Description.Id + " old=" + oldSimGameUID + " new=" + newSimGameUID);
 
                 engineRef.mechComponentRef.SetSimGameUID(newSimGameUID);
                 // the only ones actually relying on SimGameUID are these work orders, so we have to change them
@@ -108,55 +110,29 @@ namespace MechEngineMod
             }
         }
 
-        internal static bool OnReturnWorkOrder(SimGameState sim, WorkOrderEntry entry)
+        internal static void OnAddItemStat(SimGameState sim, MechComponentRef mechComponentRef)
         {
-            var install = entry as WorkOrderEntry_RepairComponent;
-            var repair = entry as WorkOrderEntry_InstallComponent;
-
-            string simGameUID;
-            if (repair != null)
-            {
-                simGameUID = repair.ComponentSimGameUID;
-            }
-            else if (install != null)
-            {
-                simGameUID = install.ComponentSimGameUID;
-            }
-            else
-            {
-                return true;
-            }
-
-            var mechComponentRef = sim.WorkOrderComponents.FirstOrDefault(c => c.SimGameUID == simGameUID);
             if (mechComponentRef == null)
             {
-                return true;
+                return;
             }
+
+            //if (mechComponentRef.DamageLevel == ComponentDamageLevel.Destroyed)
+            //{
+            //    return;
+            //}
 
             var engineRef = mechComponentRef.GetEngineRef();
             if (engineRef == null)
             {
-                return true;
+                return;
             }
 
-            foreach (var componentTypeID in engineRef.GetInternalComponents())
+            foreach (var componentDefID in engineRef.GetInternalComponents())
             {
-                OnReturn(sim, componentTypeID);
+                Control.mod.Logger.LogDebug("SimGameState.OnAddItemStat extracting componentDefID=" + componentDefID);
+                sim.AddItemStat(componentDefID, typeof(HeatSinkDef), false);
             }
-
-            OnReturn(sim, mechComponentRef.ComponentDefID);
-            sim.WorkOrderComponents.Remove(mechComponentRef);
-
-            return false;
-        }
-
-        internal static void OnReturn(SimGameState sim, string componentDefID)
-        {
-            sim.AddItemStat(
-                componentDefID,
-                typeof(HeatSinkDef),
-                false
-            );
         }
     }
 }

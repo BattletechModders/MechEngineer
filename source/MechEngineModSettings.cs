@@ -5,18 +5,24 @@ namespace MechEngineMod
     public class MechEngineModSettings : ModSettings
     {
         public int TechCostPerEngineTon = 1;
+
         public int FallbackHeatSinkCount = 10;
+
         public float SpeedMultiplierPerDamagedEnginePart = 1.0f; // no speed reduction
         public int HeatSinkCapacityPerDamagedEnginePart = -15;
-        public bool InitialTonnageOverride = false;
+
+        public bool InitialTonnageOverride = false; // needed for pure TT rules
         public float InitialToTotalTonnageFactor = 0.1f;
         public string[] InitialTonnageOverrideSkipChassis = {};
+
         public bool EndoSteelRequireAllSlots = true;
         public int EndoSteelRequiredCriticals = 14;
-        public float EndoSteelStructureWeightSavingsFactor = 0.5f;
+        public float EndoSteelStructureWeightSavingsFactor = 0.5f; // based on initial tonnage
+
         public bool FerroFibrousRequireAllSlots = true;
         public int FerrosFibrousRequiredCriticals = 14;
         public float FerrosFibrousArmorWeightSavingsFactor = 1f / 1.12f;
+
         public bool AllowMixingDoubleAndSingleHeatSinks = false;
 
         /* 
