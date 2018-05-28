@@ -5,11 +5,11 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "",
+        "Model" : "Extra-light Fusion",
         "UIName" : "XL Engine 250",
         "Id" : "emod_engine_xl_250",
         "Name" : "XL Engine 250",
-        "Details" : "6 ton engine + 3 ton gyro",
+        "Details" : "The Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The XL fusion engine is half the mass for the same performance. The XL fusion engine is twice as large as the standard fusion engine and intrudes into the side torso bays of a BattleMech.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : "",

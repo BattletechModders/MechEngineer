@@ -5,11 +5,11 @@
 		"Rarity" : 0,
 		"Purchasable" : true,
 		"Manufacturer" : "Generic",
-		"Model" : "",
+		"Model" : "Military Fusion",
 		"UIName" : "Std. Engine 390",
 		"Id" : "emod_engine_std_390",
 		"Name" : "Std. Engine 390",
-		"Details" : "46 ton engine + 4 ton gyro",
+		"Details" : "Fusion engines function by harnessing the power of a fusion reaction, running on light hydrogen and protium.\r\nFusion engines are defined by their <b>engine rating</b>. For 'Mechs, the engine rating is the mathematical product of the mass of the vehicle and its desired maximum walking or cruising velocity.",
 		"Icon" : "uixSvgIcon_equipment_Heatsink"
 	},
 	"BonusValueA" : "",

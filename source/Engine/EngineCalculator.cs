@@ -70,7 +70,7 @@ namespace MechEngineMod
         internal float CalcGyroWeight(EngineDef engineDef)
         {
             // for now only used for engine details text, not for any actual tonnage calculations
-            return (engineDef.Rating / 100f).RoundToHalf();
+            return (int)(engineDef.Rating / 100);
         }
 
         internal int CalcJumpJetCount(EngineDef engineDef, float tonnage)

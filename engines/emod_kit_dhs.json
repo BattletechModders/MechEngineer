@@ -9,7 +9,7 @@
         "UIName" : "DHS Engine Kit",
         "Id" : "emod_kit_dhs",
         "Name" : "DHS Engine Kit",
-        "Details" : "Converts an SHS engine to DHS. These specialized kits allow to change the installed heat sinks of an engine.",
+        "Details" : "Converts an SHS engine to DHS. These specialized kits are used to replace the internal heat sinks of an engine.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : "",
