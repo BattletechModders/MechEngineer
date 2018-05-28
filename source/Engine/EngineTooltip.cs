@@ -57,7 +57,7 @@ namespace MechEngineMod
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += originalText;
 
-            tooltip.bonusesText.text = string.Format("- {0} Heat / Turn ; + {1} Top Speed", heatDissipation, additionalRunSpeed);
+            tooltip.bonusesText.text = string.Format("- {0} Heat / Turn + {1} Top Speed", heatDissipation, additionalRunSpeed);
         }
     }
 }
