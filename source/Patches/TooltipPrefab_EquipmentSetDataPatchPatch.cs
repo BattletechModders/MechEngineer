@@ -53,5 +53,21 @@ namespace MechEngineMod
                 }
             }
         }
+
+        [HarmonyPatch(typeof(MechLabPanel), "ExitMechLab")]
+        public static class MechLabPanelExitMechLabPatch
+        {
+            public static void Postfix(MechLabPanel __instance)
+            {
+                try
+                {
+                    panelReference = new WeakReference(null);
+                }
+                catch (Exception e)
+                {
+                    Control.mod.Logger.LogError(e);
+                }
+            }
+        }
     }
 }
