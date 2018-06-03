@@ -5,15 +5,17 @@ namespace MechEngineMod
     public class MechEngineModSettings : ModSettings
     {
         public int TechCostPerEngineTon = 1;
-
-        public int FallbackHeatSinkCount = 10;
+        public int FallbackHeatSinkCount = 10; // for stuff that wasn't auto fixed
 
         public float SpeedMultiplierPerDamagedEnginePart = 1.0f; // no speed reduction
         public int HeatSinkCapacityPerDamagedEnginePart = -15;
 
-        public bool InitialTonnageOverride = false; // needed for pure TT rules
-        public float InitialToTotalTonnageFactor = 0.1f;
-        public string[] InitialTonnageOverrideSkipChassis = {};
+        public bool AutoFixMechDefs = true; // adds missing engine and removes too many jump jets
+        public string[] AutoFixMechDefsSkip = {};
+        public bool AutoFixChassisDefs = true;
+        public string[] AutoFixChassisDefsSkip = {};
+        public float AutoFixInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
+        public float AutoFixInitialFixedAddedTonnage = 3; // 3 for cockpit
 
         public bool EndoSteelRequireAllSlots = true;
         public int EndoSteelRequiredCriticals = 14;

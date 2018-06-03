@@ -12,7 +12,7 @@ namespace MechEngineMod
         {
             try
             {
-                Chassis.ModifyInitialTonnage(__instance);
+                Chassis.OverrideChassisSettings(__instance);
             }
             catch (Exception e)
             {

@@ -67,6 +67,7 @@
     <Compile Include="Engine\EngineCrits.cs" />
     <Compile Include="Engine\EnginePersistence.cs" />
     <Compile Include="Engine\EngineTooltip.cs" />
+    <Compile Include="Misc\MechDefMods.cs" />
     <Compile Include="Patches\MechLabDismountWidgetOnAddItemPatch.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
     <Compile Include="Misc\EndoSteel.cs" />
@@ -77,6 +78,12 @@
     <Compile Include="Patches\MechLabLocationWidgetOnMechLabDropPatch.cs" />
     <Compile Include="Engine\EngineRef.cs" />
     <Compile Include="Patches\SimGameStateAddItemStatPatch.cs" />
+    <Compile Include="Patches\SkirmishMechBayPanelLanceConfiguratorDataLoadedPatch.cs" />
+    <Compile Include="Patches\SkirmishSettings_BetaLanceConfiguratorDataLoadedPatch.cs" />
+    <Compile Include="Patches\SkirmishSettings_BetaLoadLanceConfiguratorDataPatch.cs" />
+    <Compile Include="Patches\SkirmishMechBayPanelRequestResourcesPatch.cs" />
+    <Compile Include="Patches\SimGameStateCreateComponentInstallWorkOrderPatch.cs" />
+    <Compile Include="Patches\SimGameStateRespondToDefsLoadCompletePatch.cs" />
     <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatch.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />
@@ -91,7 +98,7 @@
     <Compile Include="Patches\MechLabMechInfoWidgetGetTotalHardpointsPatch.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateMovementStatPatch.cs" />
     <Compile Include="Engine\EngineHeat.cs" />
-    <Compile Include="Patches\SimGameStateCreateComponentInstallWorkOrderPatch.cs" />
+    <Compile Include="Patches\SimGameStateRequestDataManagerResourcesPatch.cs" />
     <Compile Include="Misc\Gyro.cs" />
     <Compile Include="Patches\UpgradeDefFromJSONPatch.cs" />
     <Compile Include="Patches\ChassisDefFromJSONPatch.cs" />
