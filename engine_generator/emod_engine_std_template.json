@@ -1,14 +1,14 @@
 {
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : 500000,
+        "Cost" : {{COST}},
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "Military Fusion",
-        "UIName" : "Std. Engine 270",
-        "Id" : "emod_engine_std_270",
-        "Name" : "Std. Engine 270",
+        "UIName" : "Std. Engine {{RATING}}",
+        "Id" : "emod_engine_std_{{RATING}}",
+        "Name" : "Std. Engine {{RATING}}",
         "Details" : "Fusion engines function by harnessing the power of a fusion reaction, running on light hydrogen and protium.\r\nFusion engines are defined by their <b>engine rating</b>. For 'Mechs, the engine rating is the mathematical product of the mass of the vehicle and its desired maximum walking or cruising velocity.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
@@ -19,7 +19,7 @@
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 2,
-    "Tonnage" : 17.5,
+    "Tonnage" : {{TONNAGE}},
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : true,
