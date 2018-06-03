@@ -21,7 +21,6 @@ or
 * calculate walk and run speeds based on engine rating and mech tonnage
 * adjust movement speed summary stat based on engine rating
 * jump jets should now be limited to the integer distance of the mech's TT walk speed
-* all mechs have about 10% their max tonnage as initial tonnage (can be forced to be 10% for all mechs)
 * added endo-steel critical slots to reduce structure weight by half
 * mechlab enforces the use of all 14 critical slots when choosing endo-steel
 * added ferros-fibrous critical slots to reduce armor weight by 1/12
@@ -31,8 +30,10 @@ or
 * adjust heat performance summary stat based on engine rating
 * mechlab enforces only one gyro for center torso, also gryo to be 1 crit high
 * hide incompatible engines for mech
-* engine tonnage determins install tech cost
 * engine tooltip now gives info on speed and heatsink capability in mechlab
+* auto-adds engines to all newly bought and salvaged mechs that are missing them otherwise
+* internal structure of mechs weights 10% of maximum chassis weight
+* initial tonnage is the weight of internal structure + the cockpit weight of 3 tons
 
 TODO
 
