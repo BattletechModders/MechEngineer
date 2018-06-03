@@ -1,15 +1,14 @@
 ﻿using System;
-using BattleTech;
 using BattleTech.Data;
 using BattleTech.UI;
 using Harmony;
 
 namespace MechEngineMod
 {
-    [HarmonyPatch(typeof(MechLabInventoryWidget), "OnAddItem")]
-    public static class MechLabInventoryWidgetCreateInventoryItemPatch
+    [HarmonyPatch(typeof(MechLabDismountWidget), "OnAddItem")]
+    public static class MechLabDismountWidgetOnAddItemPatch
     {
-        public static void Prefix(MechLabInventoryWidget __instance, DataManager ___dataManager, IMechLabDraggableItem item)
+        public static void Prefix(MechLabDismountWidget __instance, IMechLabDraggableItem item)
         {
             try
             {
@@ -18,6 +17,7 @@ namespace MechEngineMod
                 {
                     return;
                 }
+
                 if (panel.baseWorkOrder == null)
                 {
                     return;
@@ -33,7 +33,7 @@ namespace MechEngineMod
                     return;
                 }
 
-                EnginePersistence.OnAddItem(__instance, panel, ___dataManager, item);
+                EnginePersistence.DismountWidgetOnAddItem(__instance, panel, item);
             }
             catch (Exception e)
             {

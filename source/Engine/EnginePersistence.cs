@@ -3,31 +3,41 @@ using BattleTech;
 using BattleTech.Data;
 using BattleTech.UI;
 using Harmony;
+using UnityEngine;
 
 namespace MechEngineMod
 {
     // methods that are used for inv -> mech and mech -> inv
     internal static class EnginePersistence
     {
-        // make sure to revert all changes when putting stuff back to the inventory
-        internal static void OnAddItem(MechLabInventoryWidget widget, MechLabPanel panel, DataManager dataManager, IMechLabDraggableItem item)
+        // auto strip engine when dismount 
+        internal static void DismountWidgetOnAddItem(MechLabDismountWidget widget, MechLabPanel panel, IMechLabDraggableItem item)
         {
-            var componentRef = item.ComponentRef;
+            StripEngine(panel, item);
+        }
 
+        // auto strip engine when put back to inventory
+        internal static void InventoryWidgetOnAddItem(MechLabInventoryWidget widget, MechLabPanel panel,  IMechLabDraggableItem item)
+        {
+            if (StripEngine(panel, item))
+            {
+                widget.RefreshFilterToggles();
+            }
+        }
+
+        internal static bool StripEngine(MechLabPanel panel, IMechLabDraggableItem item)
+        {
             if (item.ItemType != MechLabDraggableItemType.MechComponentItem)
             {
-                return;
+                return false;
             }
 
-            if (item.OriginalDropParentType != MechLabDropTargetType.InventoryList)
-            {
-                return;
-            }
+            var componentRef = item.ComponentRef;
 
             var engineRef = componentRef.GetEngineRef();
             if (engineRef == null)
             {
-                return;
+                return false;
             }
 
             //Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem " + componentRef.Def.Description.Id + " UID=" + componentRef.SimGameUID);
@@ -35,16 +45,20 @@ namespace MechEngineMod
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
                 //Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem extracting componentDefID=" + componentDefID);
-                widget.OnAddItem(componentDefID, panel.sim, dataManager);
+                var @ref = CreateMechComponentRef(componentDefID, panel.sim, panel.dataManager);
+
+                var mechLabItemSlotElement = panel.CreateMechComponentItem(@ref, false, item.MountedLocation, item.DropParent);
+                mechLabItemSlotElement.gameObject.transform.localScale = Vector3.one;
+                panel.OnAddItem(mechLabItemSlotElement, false);
             }
             engineRef.ClearInternalComponents();
 
             SaveEngineState(engineRef, panel);
 
-            widget.RefreshFilterToggles();
+            return true;
         }
 
-        internal static void OnAddItem(this MechLabInventoryWidget widget, string id, SimGameState sim, DataManager dataManager)
+        internal static MechComponentRef CreateMechComponentRef(string id, SimGameState sim, DataManager dataManager)
         {
             var def = dataManager.GetObjectOfType<HeatSinkDef>(id, BattleTechResourceType.HeatSinkDef);
 
@@ -52,9 +66,7 @@ namespace MechEngineMod
             @ref.DataManager = dataManager;
             @ref.SetComponentDef(def);
 
-            var gear = new ListElementController_InventoryGear();
-            gear.InitAndCreate(@ref, dataManager, widget, 1);
-            widget.OnAddItem(gear.ItemWidget, false);
+            return @ref;
         }
 
         internal static void SaveEngineState(EngineRef engineRef, MechLabPanel panel)

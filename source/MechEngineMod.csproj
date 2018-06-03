@@ -67,7 +67,8 @@
     <Compile Include="Engine\EngineCrits.cs" />
     <Compile Include="Engine\EnginePersistence.cs" />
     <Compile Include="Engine\EngineTooltip.cs" />
-    <Compile Include="Patches\MechLabInventoryWidgetCreateInventoryItemPatch.cs" />
+    <Compile Include="Patches\MechLabDismountWidgetOnAddItemPatch.cs" />
+    <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
     <Compile Include="Misc\EndoSteel.cs" />
     <Compile Include="Misc\FerrosFibrous.cs" />
     <Compile Include="Misc\Chassis.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="Patches\MechLabLocationWidgetOnMechLabDropPatch.cs" />
     <Compile Include="Engine\EngineRef.cs" />
     <Compile Include="Patches\SimGameStateAddItemStatPatch.cs" />
-    <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatchPatch.cs" />
+    <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatch.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />
     <Compile Include="Misc\CalculateTonnageFacade.cs" />
