@@ -8,7 +8,7 @@ namespace MechEngineMod
         public int FallbackHeatSinkCount = 10; // for stuff that wasn't auto fixed
 
         public float SpeedMultiplierPerDamagedEnginePart = 1.0f; // no speed reduction
-        public int HeatSinkCapacityPerDamagedEnginePart = -15;
+        public int HeatSinkCapacityAdjustmentPerCrit = -15;
 
         public bool AutoFixMechDefs = true; // adds missing engine and removes too many jump jets
         public string[] AutoFixMechDefsSkip = {};
