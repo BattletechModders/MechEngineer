@@ -23,7 +23,7 @@ namespace MechEngineMod
 
         public bool FerroFibrousRequireAllSlots = true;
         public int FerrosFibrousRequiredCriticals = 14;
-        public float FerrosFibrousArmorWeightSavingsFactor = 1f / 1.12f;
+        public float FerrosFibrousArmorWeightSavingsFactor = 1f - 1f / 1.12f;
 
         public bool AllowMixingDoubleAndSingleHeatSinks = false;
 
