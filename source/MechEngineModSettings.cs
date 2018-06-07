@@ -10,10 +10,11 @@ namespace MechEngineMod
         public float SpeedMultiplierPerDamagedEnginePart = 1.0f; // no speed reduction
         public int HeatSinkCapacityAdjustmentPerCrit = -15;
 
-        public bool AutoFixMechDefs = true; // adds missing engine and removes too many jump jets
-        public string[] AutoFixMechDefsSkip = {};
-        public bool AutoFixChassisDefs = true;
-        public string[] AutoFixChassisDefsSkip = {};
+        public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
+        public string[] AutoFixMechDefSkip = {};
+        public bool AutoFixChassisDefInitialTonnage = true;
+        public bool AutoFixChassisDefSlots = true; // add 2 torso slots at a cost of 2 leg slots per side
+        public string[] AutoFixChassisDefSkip = {};
         public float AutoFixInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
         public float AutoFixInitialFixedAddedTonnage = 3; // 3 for cockpit
 

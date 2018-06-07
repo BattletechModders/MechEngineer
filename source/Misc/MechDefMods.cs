@@ -21,12 +21,12 @@ namespace MechEngineMod
         // prepare all engine defs beforehand - RequestDataManagerResources()
         internal static void AddEngineIfPossible(MechDef mechDef)
         {
-            if (!Control.settings.AutoFixMechDefs)
+            if (!Control.settings.AutoFixMechDefEngine)
             {
                 return;
             }
 
-            if (Control.settings.AutoFixMechDefsSkip.Contains(mechDef.Description.Id))
+            if (Control.settings.AutoFixMechDefSkip.Contains(mechDef.Description.Id))
             {
                 return;
             }
