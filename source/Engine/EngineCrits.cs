@@ -8,6 +8,11 @@ namespace MechEngineMod
     {
         internal static bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
         {
+            if (!Control.settings.EngineCritsEnabled)
+            {
+                return true;
+            }
+
             if (damageLevel != ComponentDamageLevel.Destroyed) // only care about destructions, other things dont get through anyway
             {
                 return true;

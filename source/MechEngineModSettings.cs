@@ -7,6 +7,7 @@ namespace MechEngineMod
         public int TechCostPerEngineTon = 1;
         public int FallbackHeatSinkCount = 10; // for stuff that wasn't auto fixed
 
+        public bool EngineCritsEnabled = true;
         public float SpeedMultiplierPerDamagedEnginePart = 1.0f; // no speed reduction
         public int HeatSinkCapacityAdjustmentPerCrit = -15;
 
