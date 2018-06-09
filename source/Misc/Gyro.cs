@@ -47,6 +47,11 @@ namespace MechEngineMod
         {
             try
             {
+                if (!Control.settings.AutoShrinkGyroUpgrades)
+                {
+                    return;
+                }
+
                 if (!upgradeDef.IsCenterTorsoUpgrade())
                 {
                     return;
@@ -66,6 +71,16 @@ namespace MechEngineMod
             {
                 Control.mod.Logger.LogError(e);
             }
+        }
+
+        internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
+        {
+            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCenterTorsoUpgrade()))
+            {
+                return;
+            }
+
+            errorMessages[MechValidationType.InvalidInventorySlots].Add("MISSING GYRO: This Mech must mount a gyro");
         }
     }
 }

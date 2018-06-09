@@ -18,6 +18,7 @@ namespace MechEngineMod
                 FerrosFibrous.ValidationRulesCheck(mechDef, ref errorMessages);
                 EngineHeat.ValidationRulesCheck(mechDef, ref errorMessages);
                 Engine.ValidationRulesCheck(mechDef, ref errorMessages);
+                Gyro.ValidationRulesCheck(mechDef, ref errorMessages);
             }
             catch (Exception e)
             {

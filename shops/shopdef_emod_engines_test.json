@@ -12,7 +12,7 @@
       "tagSetSourceFile" : ""
    },
    "Inventory" : [
-      {
+	  {
          "ID" : "Gear_HeatSink_Generic_Double",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,

@@ -12,6 +12,12 @@
       "tagSetSourceFile" : ""
    },
    "Inventory" : [
+      {
+         "ID" : "Gear_Gyro_Generic",
+         "Type" : "UpgradeDef",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      }
    ],
    "Specials" : [
    ]

@@ -8,25 +8,46 @@ namespace MechEngineMod
 {
     internal static class MechDefMods
     {
+        // call if mechdef is first time retrieved
+        // prepare all engine defs beforehand - RequestDataManagerResources()
         internal static void PostProcessAfterLoading(DataManager dataManager)
         {
             foreach (var keyValuePair in dataManager.MechDefs)
             {
                 var mechDef = keyValuePair.Value;
+
+                if (Control.settings.AutoFixMechDefSkip.Contains(mechDef.Description.Id))
+                {
+                    continue;
+                }
+
+                AddGyroIfPossible(mechDef);
                 AddEngineIfPossible(mechDef);
             }
         }
 
-        // call if mechdef is first time retrieved
-        // prepare all engine defs beforehand - RequestDataManagerResources()
-        internal static void AddEngineIfPossible(MechDef mechDef)
+        internal static void AddGyroIfPossible(MechDef mechDef)
         {
-            if (!Control.settings.AutoFixMechDefEngine)
+            if (!Control.settings.AutoFixMechDefGyro)
             {
                 return;
             }
 
-            if (Control.settings.AutoFixMechDefSkip.Contains(mechDef.Description.Id))
+            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCenterTorsoUpgrade()))
+            {
+                return;
+            }
+
+            var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
+
+            var componentRef = new MechComponentRef("Gear_Gyro_Generic_Standard", null, ComponentType.Upgrade, ChassisLocations.CenterTorso);
+            componentRefs.Add(componentRef);
+
+            mechDef.SetInventory(componentRefs.ToArray());
+        }
+        internal static void AddEngineIfPossible(MechDef mechDef)
+        {
+            if (!Control.settings.AutoFixMechDefEngine)
             {
                 return;
             }

@@ -49,6 +49,7 @@ namespace MechEngineMod
         internal static string EndoSteelPrefix = "emod_structureslots_endosteel";
         internal static string FerrosFibrousPrefix = "emod_structureslots_ferrosfibrous";
         internal static string GearHeatSinkGenericDouble = "Gear_HeatSink_Generic_Double";
+        internal static string GearGyroGeneric = "Gear_Gyro_Generic_Standard";
         internal static string GearHeatSinkGenericStandard = "Gear_HeatSink_Generic_Standard";
         internal static string EngineKitDHS = "emod_kit_dhs";
     }

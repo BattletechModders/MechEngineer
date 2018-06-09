@@ -15,6 +15,11 @@
 			"ShouldMergeJSON": false
 		},
 		{
+			"Type": "UpgradeDef",
+			"Path": "gyros/",
+			"ShouldMergeJSON": false
+		},
+		{
 			"Type": "ShopDef",
 			"Path": "shops/",
 			"ShouldMergeJSON": false
