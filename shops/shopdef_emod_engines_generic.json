@@ -14,7 +14,7 @@
    "Inventory" : [
       {
          "ID" : "Gear_Gyro_Generic",
-         "Type" : "UpgradeDef",
+         "Type" : "Upgrade",
          "DiscountModifier" : 1.0,
          "Count" : 0
       }
