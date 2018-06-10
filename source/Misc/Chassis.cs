@@ -54,6 +54,8 @@ namespace MechEngineMod
                 ModifyInventorySlots(ref locations[i], ChassisLocations.RightTorso, 10, 12);
                 ModifyInventorySlots(ref locations[i], ChassisLocations.LeftLeg, 4, 2);
                 ModifyInventorySlots(ref locations[i], ChassisLocations.RightLeg, 4, 2);
+                ModifyInventorySlots(ref locations[i], ChassisLocations.Head, 1, 2);
+                ModifyInventorySlots(ref locations[i], ChassisLocations.CenterTorso, 4, 12);
             }
 
             traverse.Method("refreshLocationReferences").GetValue();

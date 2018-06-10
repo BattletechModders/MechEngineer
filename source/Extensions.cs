@@ -24,6 +24,12 @@ namespace MechEngineMod
             return componentDef.AllowedLocations == ChassisLocations.CenterTorso && componentDef.ComponentType == ComponentType.Upgrade;
         }
 
+        // we want to know about center torso upgrade (gyros), since we reduce their size
+        internal static bool IsHeadUpgrade(this MechComponentDef componentDef)
+        {
+            return componentDef.AllowedLocations == ChassisLocations.Head && componentDef.ComponentType == ComponentType.Upgrade;
+        }
+
         // endo steel has some calculations behind it
         internal static bool IsEndoSteel(this MechComponentDef componentDef)
         {

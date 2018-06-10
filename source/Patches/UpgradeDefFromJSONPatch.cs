@@ -12,7 +12,8 @@ namespace MechEngineMod
         {
             try
             {
-                Gyro.ReduceGyroSize(__instance);
+                Gyro.AdjustGyroUpgrade(__instance);
+                Cockpit.AdjustCockpitUpgrade(__instance);
             }
             catch (Exception e)
             {

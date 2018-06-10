@@ -36,6 +36,12 @@ namespace MechEngineMod
                 {
                     return;
                 }
+
+                Cockpit.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                if (!__result)
+                {
+                    return;
+                }
             }
             catch (Exception e)
             {

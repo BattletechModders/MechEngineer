@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Linq;
+using Object = System.Object;
 
 namespace MechEngineMod
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), "OnMechLabDrop")]
     public static class MechLabLocationWidgetOnMechLabDropPatch
     {
-
         // only allow one engine part per specific location
         public static bool Prefix(
             MechLabLocationWidget __instance,
@@ -71,6 +73,7 @@ namespace MechEngineMod
             {
                 this.errorMessage = errorMessage;
             }
+
             internal string errorMessage;
         }
 

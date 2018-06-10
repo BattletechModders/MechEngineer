@@ -89,9 +89,16 @@ namespace MechEngineMod
 
             if (existingEngine == null)
             {
-                return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                    string.Format("Cannot add {0}: No Engine found", newComponentDef.Description.Name)
+                if (headSinkDef.IsDHSKit())
+                {
+                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                        string.Format("Cannot add {0}: No Engine found", newComponentDef.Description.Name)
                     );
+                }
+                else
+                {
+                    return null;
+                }
             }
 
             var engineRef = existingEngine.GetEngineRef();
@@ -107,9 +114,10 @@ namespace MechEngineMod
 
                 if (!Control.settings.AllowMixingDoubleAndSingleHeatSinks && engineRef.AdditionalSHSCount > 0)
                 {
-                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                        string.Format("Cannot add {0}: Reinstall engine to remove additional heat sinks before converting", newComponentDef.Description.Name)
-                    );
+                    return null;
+                    //return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                    //    string.Format("Cannot add {0}: Reinstall engine to remove additional heat sinks before converting", newComponentDef.Description.Name)
+                    //);
                 }
 
                 engineRef.IsDHS = true;
@@ -121,9 +129,10 @@ namespace MechEngineMod
 
                 if (engineRef.AdditionalHeatSinkCount >= maxHeatSinks - minHeatSinks)
                 {
-                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                        string.Format("Cannot add {0}: Maximum additional heat sinks reached for engine", newComponentDef.Description.Name)
-                    );
+                    return null;
+                    //return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                    //    string.Format("Cannot add {0}: Maximum additional heat sinks reached for engine", newComponentDef.Description.Name)
+                    //);
                 }
 
                 if (!Control.settings.AllowMixingDoubleAndSingleHeatSinks)

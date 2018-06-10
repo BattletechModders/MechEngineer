@@ -19,6 +19,7 @@ namespace MechEngineMod
                 EngineHeat.ValidationRulesCheck(mechDef, ref errorMessages);
                 Engine.ValidationRulesCheck(mechDef, ref errorMessages);
                 Gyro.ValidationRulesCheck(mechDef, ref errorMessages);
+                Cockpit.ValidationRulesCheck(mechDef, ref errorMessages);
             }
             catch (Exception e)
             {

@@ -18,7 +18,7 @@
     "ComponentSubType" : "Heatsink",
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
-    "InventorySize" : 1,
+    "InventorySize" : 6,
     "Tonnage" : 42.5,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",

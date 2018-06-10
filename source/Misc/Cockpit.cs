@@ -7,7 +7,7 @@ using Harmony;
 
 namespace MechEngineMod
 {
-    internal static class Gyro
+    internal static class Cockpit
     {
         // allow gyro upgrades to be 1 slot and still only be added once
         internal static void ValidateAdd(
@@ -23,17 +23,17 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (!newComponentDef.IsCenterTorsoUpgrade())
+                if (!newComponentDef.IsHeadUpgrade())
                 {
                     return;
                 }
                 
-                if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsCenterTorsoUpgrade()))
+                if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsHeadUpgrade()))
                 {
                     return;
                 }
 
-                dropErrorMessage = String.Format("Cannot add {0}: A gyro is already installed", newComponentDef.Description.Name);
+                dropErrorMessage = String.Format("Cannot add {0}: A cockpit is already installed", newComponentDef.Description.Name);
                 result = false;
             }
             catch (Exception e)
@@ -43,27 +43,27 @@ namespace MechEngineMod
         }
 
         // reduce upgrade components for the center torso that are 3 or larger 
-        internal static void AdjustGyroUpgrade(UpgradeDef upgradeDef)
+        internal static void AdjustCockpitUpgrade(UpgradeDef upgradeDef)
         {
             try
             {
-                if (!Control.settings.AutoFixGyroUpgrades)
+                if (!Control.settings.AutoFixCockpitUpgrades)
                 {
                     return;
                 }
 
-                if (!upgradeDef.IsCenterTorsoUpgrade())
+                if (!upgradeDef.IsHeadUpgrade())
                 {
                     return;
                 }
 
-                if (upgradeDef.InventorySize != 3)
+                if (upgradeDef.Tonnage > 0.1)
                 {
                     return;
                 }
 
-                var value = 4;
-                var propInfo = typeof(UpgradeDef).GetProperty("InventorySize");
+                var value = 3;
+                var propInfo = typeof(UpgradeDef).GetProperty("Tonnage");
                 var propValue = Convert.ChangeType(value, propInfo.PropertyType);
                 propInfo.SetValue(upgradeDef, propValue, null);
             }
@@ -75,29 +75,29 @@ namespace MechEngineMod
 
         internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCenterTorsoUpgrade()))
+            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsHeadUpgrade()))
             {
                 return;
             }
 
-            errorMessages[MechValidationType.InvalidInventorySlots].Add("MISSING GYRO: This Mech must mount a gyro");
+            errorMessages[MechValidationType.InvalidInventorySlots].Add("MISSING COCKPIT: This Mech must mount a cockpit");
         }
 
-        internal static void AddGyroIfPossible(MechDef mechDef)
+        internal static void AddCockpitIfPossible(MechDef mechDef)
         {
-            if (!Control.settings.AutoFixMechDefGyro)
+            if (!Control.settings.AutoFixMechDefCockpit)
             {
                 return;
             }
 
-            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCenterTorsoUpgrade()))
+            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsHeadUpgrade()))
             {
                 return;
             }
 
             var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
-            var componentRef = new MechComponentRef(Control.GearGyroGeneric, null, ComponentType.Upgrade, ChassisLocations.CenterTorso);
+            var componentRef = new MechComponentRef(Control.GearCockpitGeneric, null, ComponentType.Upgrade, ChassisLocations.Head);
             componentRefs.Add(componentRef);
 
             mechDef.SetInventory(componentRefs.ToArray());

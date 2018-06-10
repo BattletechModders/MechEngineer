@@ -67,6 +67,7 @@
     <Compile Include="Engine\EngineCrits.cs" />
     <Compile Include="Engine\EnginePersistence.cs" />
     <Compile Include="Engine\EngineTooltip.cs" />
+    <Compile Include="Misc\Cockpit.cs" />
     <Compile Include="Misc\MechDefMods.cs" />
     <Compile Include="Patches\MechLabDismountWidgetOnAddItemPatch.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Misc\Chassis.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="MechLabSlotPatches.cs" />
     <Compile Include="Patches\MechLabLocationWidgetOnMechLabDropPatch.cs" />
     <Compile Include="Engine\EngineRef.cs" />
     <Compile Include="Patches\SimGameStateAddItemStatPatch.cs" />

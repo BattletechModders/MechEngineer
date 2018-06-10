@@ -13,13 +13,15 @@ namespace MechEngineMod
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
         public bool AutoFixMechDefGyro = true; // adds missing gyro
+        public bool AutoFixMechDefCockpit = true; // adds missing cockpit
         public string[] AutoFixMechDefSkip = {};
         public bool AutoFixChassisDefInitialTonnage = true;
         public bool AutoFixChassisDefSlots = true; // add 2 torso slots at a cost of 2 leg slots per side
         public string[] AutoFixChassisDefSkip = {};
         public float AutoFixInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
-        public float AutoFixInitialFixedAddedTonnage = 3; // 3 for cockpit
-        public bool AutoShrinkGyroUpgrades = true; // shrinks gyro upgrades
+        public float AutoFixInitialFixedAddedTonnage = 0; //
+        public bool AutoFixGyroUpgrades = true; // shrinks gyro upgrades
+        public bool AutoFixCockpitUpgrades = true; // adds tonange to cockpit upgrades
 
         public bool EndoSteelRequireAllSlots = true;
         public int EndoSteelRequiredCriticals = 14;
