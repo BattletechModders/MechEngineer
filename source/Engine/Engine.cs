@@ -66,6 +66,11 @@ namespace MechEngineMod
                 return;
             }
 
+            if (workOrderEntry.DesiredLocation == ChassisLocations.None)
+            {
+                return;
+            }
+
             var engine = mechComponent.GetEngineRef();
             if (engine == null)
             {

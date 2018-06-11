@@ -45,13 +45,16 @@ namespace MechEngineMod
 
         internal static float GetEngineHeatDissipation(MechComponentRef[] inventory)
         {
-            var componentRef = inventory.SingleOrDefault(x => x.Def.IsMainEngine());
-            if (componentRef == null)
+            var engineRef = inventory
+                .Where(x => x != null)
+                .Select(x => x.GetEngineRef())
+                .SingleOrDefault(x => x != null);
+
+            if (engineRef == null)
             {
                 return Control.settings.FallbackHeatSinkCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
             }
 
-            var engineRef = componentRef.GetEngineRef();
             return engineRef.GetEngineHeatDissipation();
         }
 
