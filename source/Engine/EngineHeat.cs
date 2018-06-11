@@ -48,7 +48,7 @@ namespace MechEngineMod
             var engineRef = inventory
                 .Where(x => x != null)
                 .Select(x => x.GetEngineRef())
-                .SingleOrDefault(x => x != null);
+                .FirstOrDefault(x => x != null);
 
             if (engineRef == null)
             {
