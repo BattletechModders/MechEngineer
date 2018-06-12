@@ -25,7 +25,37 @@
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,
-    "statusEffects" : null,
+    "statusEffects" : [
+        {
+			"durationData" :
+			{
+				"duration" : -1
+			},
+			"targetingData" : 
+			{
+				"effectTriggerType" : "OnActivation",
+				"effectTargetType" : "Creator",
+                "showInTargetPreview" : false,
+                "showInStatusPanel" : true
+			},
+			"effectType" : "StatisticEffect",
+			"Description" :
+			{
+				"Id" : "DefUnsteadySet40",
+				"Name" : "Gyroscopic Orientation",
+				"Details" : "The gyro helps establish center-of-mass equilibrium for the BattleMech.",
+				"Icon" : "uixSvgIcon_equipment_Gyro"
+			},
+			"statisticData" : 
+			{
+				"statName" : "UnsteadyThreshold",
+				"operation" : "Set",
+				"modValue" : "41.0",
+				"modType" : "System.Single"
+			},
+			"nature" : "Buff"
+		}
+    ],
     "ComponentTags" : {
         "items" : [
             "component_type_stock"
