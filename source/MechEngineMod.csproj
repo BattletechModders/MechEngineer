@@ -69,7 +69,7 @@
     <Compile Include="Engine\EngineTooltip.cs" />
     <Compile Include="Misc\Cockpit.cs" />
     <Compile Include="Misc\MechDefMods.cs" />
-    <Compile Include="Patches\MechLabDismountWidgetOnAddItemPatch.cs" />
+    <Compile Include="Misc\MechValidationRulesMods.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
     <Compile Include="Misc\EndoSteel.cs" />
     <Compile Include="Misc\FerrosFibrous.cs" />
@@ -79,7 +79,10 @@
     <Compile Include="MechLabSlotPatches.cs" />
     <Compile Include="Patches\MechLabLocationWidgetOnMechLabDropPatch.cs" />
     <Compile Include="Engine\EngineRef.cs" />
-    <Compile Include="Patches\SimGameStateAddItemStatPatch.cs" />
+    <Compile Include="Patches\MechLabPanelGetCantSaveErrorStringPatch.cs" />
+    <Compile Include="Patches\MechLabPanelGetNonFieldableErrorStringPatch.cs" />
+    <Compile Include="Patches\MechValidationRulesValidateMechCanBeFieldedPatch.cs" />
+    <Compile Include="Patches\SimGameStateML_InstallComponentPatch.cs" />
     <Compile Include="Patches\SkirmishMechBayPanelLanceConfiguratorDataLoadedPatch.cs" />
     <Compile Include="Patches\SkirmishSettings_BetaLanceConfiguratorDataLoadedPatch.cs" />
     <Compile Include="Patches\SkirmishSettings_BetaLoadLanceConfiguratorDataPatch.cs" />

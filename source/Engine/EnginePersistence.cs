@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BattleTech;
 using BattleTech.Data;
 using BattleTech.UI;
@@ -10,12 +11,6 @@ namespace MechEngineMod
     // methods that are used for inv -> mech and mech -> inv
     internal static class EnginePersistence
     {
-        // auto strip engine when dismount 
-        internal static void DismountWidgetOnAddItem(MechLabDismountWidget widget, MechLabPanel panel, IMechLabDraggableItem item)
-        {
-            StripEngine(panel, item);
-        }
-
         // auto strip engine when put back to inventory
         internal static void InventoryWidgetOnAddItem(MechLabInventoryWidget widget, MechLabPanel panel,  IMechLabDraggableItem item)
         {
@@ -122,29 +117,21 @@ namespace MechEngineMod
             }
         }
 
-        internal static void OnAddItemStat(SimGameState sim, MechComponentRef mechComponentRef)
+        internal static bool AddItemStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
         {
-            if (mechComponentRef == null)
-            {
-                return;
-            }
-
-            //if (mechComponentRef.DamageLevel == ComponentDamageLevel.Destroyed)
-            //{
-            //    return;
-            //}
-
             var engineRef = mechComponentRef.GetEngineRef();
             if (engineRef == null)
             {
-                return;
+                return true;
             }
-
+            
+            sim.AddItemStat(id, type, damaged);
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
-                //Control.mod.Logger.LogDebug("SimGameState.OnAddItemStat extracting componentDefID=" + componentDefID);
-                sim.AddItemStat(componentDefID, typeof(HeatSinkDef), false);
+                sim.AddItemStat(componentDefID, typeof(HeatSinkDef), damaged);
             }
+
+            return false;
         }
     }
 }
