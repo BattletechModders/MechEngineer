@@ -6,19 +6,19 @@ using Harmony;
 
 namespace MechEngineMod
 {
-    [HarmonyPatch(typeof(SimGameState), "ML_InstallComponent")]
-    public static class SimGameStateML_InstallComponentPatch
+    [HarmonyPatch(typeof(SimGameState), "MoveWorkOrderItemsToQueue")]
+    public static class SimGameStateMoveWorkOrderItemsToQueuePatch
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions
                 .MethodReplacer(
                     AccessTools.Method(typeof(SimGameState), "GetMechComponentRefForUID"),
-                    AccessTools.Method(typeof(SimGameStateML_InstallComponentPatch), "GetMechComponentRefForUID")
+                    AccessTools.Method(typeof(SimGameStateMoveWorkOrderItemsToQueuePatch), "GetMechComponentRefForUID")
                 )
                 .MethodReplacer(
-                    AccessTools.Method(typeof(SimGameState), "AddItemStat", new[] { typeof(string), typeof(Type), typeof(bool) }),
-                    AccessTools.Method(typeof(SimGameStateML_InstallComponentPatch), "AddItemStat")
+                    AccessTools.Method(typeof(SimGameState), "RemoveItemStat", new[] { typeof(string), typeof(Type), typeof(bool) }),
+                    AccessTools.Method(typeof(SimGameStateMoveWorkOrderItemsToQueuePatch), "RemoveItemStat")
                 );
         }
 
@@ -28,14 +28,14 @@ namespace MechEngineMod
             return mechComponentRef;
         }
 
-        internal static void AddItemStat(this SimGameState sim, string id, Type type, bool damaged)
+        internal static void RemoveItemStat(this SimGameState sim, string id, Type type, bool damaged)
         {
-            if (mechComponentRef != null && !EnginePersistence.AddItemStat(sim, mechComponentRef, id, type, damaged))
+            if (mechComponentRef != null && !EnginePersistence.RemoveItemStat(sim, mechComponentRef, id, type, damaged))
             {
                 return;
             }
 
-            sim.AddItemStat(id, type, damaged);
+            sim.RemoveItemStat(id, type, damaged);
         }
 
         internal static MechComponentRef mechComponentRef;

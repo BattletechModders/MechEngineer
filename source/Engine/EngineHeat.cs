@@ -134,7 +134,7 @@ namespace MechEngineMod
                 );
             }
 
-            if (mechLab.activeMechDef.Inventory.Contains(existingEngine))
+            if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == existingEngine.SimGameUID))
             {
                 return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
                     string.Format("Cannot add {0}: Engine cannot be modified once installed, remove engine first", newComponentDef.Description.Name)

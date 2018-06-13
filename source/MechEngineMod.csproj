@@ -82,6 +82,8 @@
     <Compile Include="Patches\MechLabPanelGetCantSaveErrorStringPatch.cs" />
     <Compile Include="Patches\MechLabPanelGetNonFieldableErrorStringPatch.cs" />
     <Compile Include="Patches\MechValidationRulesValidateMechCanBeFieldedPatch.cs" />
+    <Compile Include="Patches\SimGameStateMoveWorkOrderItemsToQueuePatch.cs" />
+    <Compile Include="Patches\SimGameStateReturnWorkOrderItemsToInventoryPatch.cs" />
     <Compile Include="Patches\SimGameStateML_InstallComponentPatch.cs" />
     <Compile Include="Patches\SkirmishMechBayPanelLanceConfiguratorDataLoadedPatch.cs" />
     <Compile Include="Patches\SkirmishSettings_BetaLanceConfiguratorDataLoadedPatch.cs" />

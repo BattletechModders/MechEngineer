@@ -124,5 +124,22 @@ namespace MechEngineMod
 
             return false;
         }
+
+        internal static bool RemoveItemStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
+        {
+            var engineRef = mechComponentRef.GetEngineRef();
+            if (engineRef == null)
+            {
+                return true;
+            }
+            
+            sim.RemoveItemStat(id, type, damaged);
+            foreach (var componentDefID in engineRef.GetInternalComponents())
+            {
+                sim.RemoveItemStat(componentDefID, typeof(HeatSinkDef), damaged);
+            }
+
+            return false;
+        }
     }
 }
