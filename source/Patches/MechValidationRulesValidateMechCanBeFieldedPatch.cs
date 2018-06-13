@@ -23,7 +23,7 @@ namespace MechEngineMod
                         .GetValue();
                 MechValidationRulesMods.Validate(mechDef, ref errorMessages);
 
-                __result = errorMessages.Count == 0;
+                __result = errorMessages[MechValidationType.InvalidInventorySlots].Count == 0;
             }
             catch (Exception e)
             {

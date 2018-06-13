@@ -14,17 +14,9 @@ namespace MechEngineMod
         // auto strip engine when put back to inventory
         internal static void InventoryWidgetOnAddItem(MechLabInventoryWidget widget, MechLabPanel panel,  IMechLabDraggableItem item)
         {
-            if (StripEngine(panel, item))
-            {
-                widget.RefreshFilterToggles();
-            }
-        }
-
-        internal static bool StripEngine(MechLabPanel panel, IMechLabDraggableItem item)
-        {
             if (item.ItemType != MechLabDraggableItemType.MechComponentItem)
             {
-                return false;
+                return;
             }
 
             var componentRef = item.ComponentRef;
@@ -32,7 +24,7 @@ namespace MechEngineMod
             var engineRef = componentRef.GetEngineRef();
             if (engineRef == null)
             {
-                return false;
+                return;
             }
 
             //Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem " + componentRef.Def.Description.Id + " UID=" + componentRef.SimGameUID);
@@ -42,15 +34,14 @@ namespace MechEngineMod
                 //Control.mod.Logger.LogDebug("MechLabInventoryWidget.OnAddItem extracting componentDefID=" + componentDefID);
                 var @ref = CreateMechComponentRef(componentDefID, panel.sim, panel.dataManager);
 
-                var mechLabItemSlotElement = panel.CreateMechComponentItem(@ref, false, item.MountedLocation, item.DropParent);
-                mechLabItemSlotElement.gameObject.transform.localScale = Vector3.one;
-                panel.OnAddItem(mechLabItemSlotElement, false);
+                var mechLabItemSlotElement = panel.CreateMechComponentItem(@ref, false, ChassisLocations.None, null);
+                widget.OnAddItem(mechLabItemSlotElement, false);
             }
-            engineRef.ClearInternalComponents();
+            //engineRef.ClearInternalComponents();
 
-            SaveEngineState(engineRef, panel);
+            //SaveEngineState(engineRef, panel);
 
-            return true;
+            widget.RefreshFilterToggles();
         }
 
         internal static MechComponentRef CreateMechComponentRef(string id, SimGameState sim, DataManager dataManager)

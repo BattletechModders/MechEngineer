@@ -19,27 +19,50 @@ namespace MechEngineMod
             }
 
             bool hasSingle = false, hasDouble = false;
-            var mixed = mechDef.Inventory
-                .Where(c => c.ComponentDefType == ComponentType.HeatSink)
-                .Select(c => c.Def as HeatSinkDef)
-                .Where(c => c != null)
-                .Select(cd =>
+            foreach (var componentRef in mechDef.Inventory)
+            {
+                if (componentRef == null)
                 {
-                    if (cd.IsSingle())
+                    continue;
+                }
+
+                var componentDef = componentRef.Def as HeatSinkDef;
+                if (componentDef == null)
+                {
+                    continue;
+                }
+
+                if (componentDef.IsDouble())
+                {
+                    hasDouble = true;
+                }
+                else if (componentDef.IsSingle())
+                {
+                    hasSingle = true;
+                }
+                else if (componentDef.IsMainEngine())
+                {
+                    var engineRef = componentRef.GetEngineRef();
+                    if (engineRef == null)
                     {
-                        hasSingle = true;
+                        continue;
                     }
-                    else if (cd.IsDouble())
+
+                    if (engineRef.IsDHS)
                     {
                         hasDouble = true;
                     }
-                    return cd;
-                })
-                .Any(c => hasSingle && hasDouble);
+                    else
+                    {
+                        hasSingle = true;
+                    }
+                }
 
-            if (mixed)
-            {
-                errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Standard and Double Heat Sinks cannot be mixed");
+                if (hasSingle && hasDouble)
+                {
+                    errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Standard and Double Heat Sinks cannot be mixed");
+                    return;
+                }
             }
         }
 
@@ -102,6 +125,20 @@ namespace MechEngineMod
                 {
                     return null;
                 }
+            }
+
+            if (dragItem.OriginalDropParentType != MechLabDropTargetType.InventoryList)
+            {
+                return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                    string.Format("Cannot add {0}: Item has to be from inventory", newComponentDef.Description.Name)
+                );
+            }
+
+            if (mechLab.activeMechDef.Inventory.Contains(existingEngine))
+            {
+                return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                    string.Format("Cannot add {0}: Engine cannot be modified once installed, remove engine first", newComponentDef.Description.Name)
+                );
             }
 
             var engineRef = existingEngine.GetEngineRef();
