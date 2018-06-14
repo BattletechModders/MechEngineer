@@ -54,11 +54,21 @@ namespace MechEngineMod
 
             var location = (ChassisLocations)mechComponent.Location;
 
+            var crits = 1;
             if (mech.IsLocationDestroyed(location))
             {
                 damageLevel = ComponentDamageLevel.Destroyed;
+                crits = mechComponent.componentDef.InventorySize;
+
+                mechComponent.StatCollection.ModifyStat(
+                    hitInfo.attackerId,
+                    hitInfo.stackItemUID,
+                    "DamageLevel",
+                    StatCollection.StatOperation.Set,
+                    damageLevel);
             }
-            else
+
+            for (var i = 0; i < crits; i++)
             {
                 switch (mainEngineComponent.StatCollection.GetStatistic("DamageLevel").Value<ComponentDamageLevel>())
                 {
@@ -71,36 +81,34 @@ namespace MechEngineMod
                     case ComponentDamageLevel.Penalized: // 3. CRIT
                         damageLevel = ComponentDamageLevel.Destroyed;
                         break;
+                    default:
+                        continue;
                 }
-            }
-            
-            // sync damage level to all engine parts
-            foreach (var component in mech.allComponents.Where(c => c != null && c.componentDef != null && c.componentDef.IsEnginePart()))
-            {
-                component.StatCollection.ModifyStat(
+
+                mainEngineComponent.StatCollection.ModifyStat(
                     hitInfo.attackerId,
                     hitInfo.stackItemUID,
                     "DamageLevel",
                     StatCollection.StatOperation.Set,
                     damageLevel);
-            }
-
-            // do on CRIT
-            if (damageLevel < ComponentDamageLevel.NonFunctional)
-            {
-                Control.mod.Logger.LogDebug(mainEngineComponent.Name + " " + damageLevel);
-
-                var walkSpeed = mech.StatCollection.GetStatistic("WalkSpeed");
-                var runSpeed = mech.StatCollection.GetStatistic("RunSpeed");
-                mech.StatCollection.Float_Multiply(walkSpeed, Control.settings.SpeedMultiplierPerDamagedEnginePart);
-                mech.StatCollection.Float_Multiply(runSpeed, Control.settings.SpeedMultiplierPerDamagedEnginePart);
 
                 var heatSink = mech.StatCollection.GetStatistic("HeatSinkCapacity");
                 mech.StatCollection.Int_Add(heatSink, Control.settings.HeatSinkCapacityAdjustmentPerCrit);
             }
-            else
+
+            if (damageLevel >= ComponentDamageLevel.NonFunctional)
             {
                 Control.mod.Logger.LogDebug(mainEngineComponent.Name + " " + damageLevel);
+
+                foreach (var component in mech.allComponents.Where(c => c != null && c.componentDef != null && c.componentDef.IsEnginePart()))
+                {
+                    component.StatCollection.ModifyStat(
+                        hitInfo.attackerId,
+                        hitInfo.stackItemUID,
+                        "DamageLevel",
+                        StatCollection.StatOperation.Set,
+                        damageLevel);
+                }
 
                 mech.FlagForDeath(
                     "Engine destroyed: " + mainEngineComponent.Description.Name,
