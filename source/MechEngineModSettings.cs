@@ -5,10 +5,10 @@ namespace MechEngineMod
     public class MechEngineModSettings : ModSettings
     {
         public int TechCostPerEngineTon = 1;
-        public int FallbackHeatSinkCount = 10; // for stuff that wasn't auto fixed
+        public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine
 
         public bool EngineCritsEnabled = true;
-        public int HeatSinkCapacityAdjustmentPerCrit = -15;
+        public int EngineHeatSinkCapacityAdjustmentPerCrit = -15;
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
         public string AutoFixEnginePrefix = "emod_engine_std";

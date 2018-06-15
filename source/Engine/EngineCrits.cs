@@ -93,7 +93,7 @@ namespace MechEngineMod
                     damageLevel);
 
                 var heatSink = mech.StatCollection.GetStatistic("HeatSinkCapacity");
-                mech.StatCollection.Int_Add(heatSink, Control.settings.HeatSinkCapacityAdjustmentPerCrit);
+                mech.StatCollection.Int_Add(heatSink, Control.settings.EngineHeatSinkCapacityAdjustmentPerCrit);
             }
 
             if (damageLevel >= ComponentDamageLevel.NonFunctional)

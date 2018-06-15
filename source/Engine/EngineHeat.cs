@@ -75,7 +75,7 @@ namespace MechEngineMod
 
             if (engineRef == null)
             {
-                return Control.settings.FallbackHeatSinkCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
+                return Control.settings.EngineMissingFallbackHeatSinkCapacity;
             }
 
             return engineRef.GetEngineHeatDissipation();
