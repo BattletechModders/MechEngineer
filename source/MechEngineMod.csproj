@@ -70,9 +70,10 @@
     <Compile Include="Misc\Cockpit.cs" />
     <Compile Include="Misc\MechDefMods.cs" />
     <Compile Include="Misc\MechValidationRulesMods.cs" />
+    <Compile Include="Misc\WeightSavingSlotCalculator.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
-    <Compile Include="Misc\EndoSteel.cs" />
-    <Compile Include="Misc\FerrosFibrous.cs" />
+    <Compile Include="Misc\Structure.cs" />
+    <Compile Include="Misc\Armor.cs" />
     <Compile Include="Misc\Chassis.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="AssemblyInfo.cs" />

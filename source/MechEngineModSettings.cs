@@ -8,28 +8,56 @@ namespace MechEngineMod
         public int FallbackHeatSinkCount = 10; // for stuff that wasn't auto fixed
 
         public bool EngineCritsEnabled = true;
-        public float SpeedMultiplierPerDamagedEnginePart = 1.0f; // no speed reduction
         public int HeatSinkCapacityAdjustmentPerCrit = -15;
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
+        public string AutoFixEnginePrefix = "emod_engine_std";
+
         public bool AutoFixMechDefGyro = true; // adds missing gyro
+        public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
+        public bool AutoFixGyroUpgrades = true; // shrinks gyro upgrades
+
         public bool AutoFixMechDefCockpit = true; // adds missing cockpit
-        public string[] AutoFixMechDefSkip = {};
+        public string AutoFixMechDefCockpitId = "Gear_Cockpit_Generic_Standard";
+        public bool AutoFixCockpitUpgrades = true; // adds tonnage to cockpit upgrades
+
+        public string[] AutoFixMechDefSkip = { };
         public bool AutoFixChassisDefInitialTonnage = true;
         public bool AutoFixChassisDefSlots = true; // add 2 torso slots at a cost of 2 leg slots per side
-        public string[] AutoFixChassisDefSkip = {};
+
+        public string[] AutoFixChassisDefSkip = { };
         public float AutoFixInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
-        public float AutoFixInitialFixedAddedTonnage = 0; //
-        public bool AutoFixGyroUpgrades = true; // shrinks gyro upgrades
-        public bool AutoFixCockpitUpgrades = true; // adds tonange to cockpit upgrades
+        public float AutoFixInitialFixedAddedTonnage = 0; // not used anymore, was for cockpit 3 ton
 
-        public bool EndoSteelRequireAllSlots = true;
-        public int EndoSteelRequiredCriticals = 14;
-        public float EndoSteelStructureWeightSavingsFactor = 0.5f; // based on initial tonnage
+        public string GearGryoPrefix = "Gear_Gyro_";
+        public string GearCockpitPrefix = "Gear_Cockpit_";
 
-        public bool FerroFibrousRequireAllSlots = true;
-        public int FerrosFibrousRequiredCriticals = 14;
-        public float FerrosFibrousArmorWeightSavingsFactor = 1f - 1f / 1.12f;
+        public string GearHeatSinkDouble = "Gear_HeatSink_Generic_Double";
+        public string GearHeatSinkStandard = "Gear_HeatSink_Generic_Standard";
+        public string EngineKitDHS = "emod_kit_dhs";
+
+        public string EnginePartPrefix = "emod_engine";
+        public string MainEnginePrefix = "emod_engine_";
+        public EngineType[] EngineTypes = {
+            new EngineType { Prefix = "emod_engine_std", Requirements = new string[] {} },
+            new EngineType { Prefix = "emod_engine_xl", Requirements = new[] {"emod_engineslots_xl_left", "emod_engineslots_xl_right"} },
+            //new EngineType { Prefix = "emod_engine_cxl", Requirements = new[] {"emod_engineslots_cxl_left", "emod_engineslots_cxl_right"} },
+            //new EngineType { Prefix = "emod_engine_light", Requirements = new[] {"emod_engineslots_light_left", "emod_engineslots_light_right"} }
+        };
+        
+        public string StructurePrefix = "emod_structureslots_";
+        public WeightSavingSlotType[] StuctureTypes = {
+            new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endosteel", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 0.5f },
+            //new StuctureType { componentDefId = "emod_structureslots_clanendosteel", requiredCriticals = 7, weightSavingsFactor = 0.5f },
+        };
+        
+        public string ArmorPrefix = "emod_armorslots_";
+        public WeightSavingSlotType[] ArmorTypes = {
+            //new ArmorType { componentDefId = "emod_armorslots_lightferrosfibrous", requiredCriticals = 7, weightSavingsFactor = 1f - 1f / 1.06f },
+            new WeightSavingSlotType { ComponentDefId = "emod_armorslots_ferrosfibrous", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 1f - 1f / 1.12f },
+            //new ArmorType { componentDefId = "emod_armorslots_clanferrosfibrous", requiredCriticals = 7, weightSavingsFactor = 1f - 1f / 1.2f },
+            //new ArmorType { componentDefId = "emod_armorslots_heavyferrosfibrous", requiredCriticals = 21, weightSavingsFactor = 1f - 1f / 1.24f },
+        };
 
         public bool AllowMixingDoubleAndSingleHeatSinks = false;
 
@@ -46,18 +74,18 @@ namespace MechEngineMod
 			Walk 8 210 / 350
 		*/
         public bool UseGameWalkValues = true;
-		
+
         // set to false to only allow engines that produce integer walk values
         public bool AllowNonIntWalkValues = true;
-		
+
         // this setting controls if the allowed number of jump jets is rounded up or down
         // example: if false, TT walk speed of 2.1 allows 2 jump jets, if true, it allows 3 jump jets
         public bool JJRoundUp = false;
-		
+
         // this controls the maximum (global) allowed jump jets.
         // currently set to 8 in case the game can't handle anymore
         public int const_MaxNumberOfJJ = 8;
-		
+
         /*
 		these numbers determine how fast and slow mechs are allowed to go
 		They are given in tabletop walk numbers.
@@ -68,7 +96,7 @@ namespace MechEngineMod
 		*/
         public int const_MinTTWalk = 2;
         public int const_MaxTTWalk = 8;
-		
+
         /*
 		not sure why you would want to change these, but they are set here
 		they are the multiples that translate TT movement values to game movement values
@@ -78,6 +106,18 @@ namespace MechEngineMod
 		*/
         public float const_TTWalkMultiplier = 30f;
         public float const_TTSprintMultiplier = 50f;
-		
+    }
+
+    public class EngineType
+    {
+        public string Prefix;
+        public string[] Requirements;
+    }
+
+    public class WeightSavingSlotType
+    {
+        public string ComponentDefId;
+        public int RequiredCriticalSlotCount;
+        public float WeightSavingsFactor;
     }
 }

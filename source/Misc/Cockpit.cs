@@ -23,12 +23,12 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (!newComponentDef.IsHeadUpgrade())
+                if (!newComponentDef.IsCockpit())
                 {
                     return;
                 }
                 
-                if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsHeadUpgrade()))
+                if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsCockpit()))
                 {
                     return;
                 }
@@ -52,7 +52,7 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (!upgradeDef.IsHeadUpgrade())
+                if (!upgradeDef.IsCockpit())
                 {
                     return;
                 }
@@ -75,7 +75,7 @@ namespace MechEngineMod
 
         internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsHeadUpgrade()))
+            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCockpit()))
             {
                 return;
             }
@@ -90,14 +90,14 @@ namespace MechEngineMod
                 return;
             }
 
-            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsHeadUpgrade()))
+            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCockpit()))
             {
                 return;
             }
 
             var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
-            var componentRef = new MechComponentRef(Control.GearCockpitGeneric, null, ComponentType.Upgrade, ChassisLocations.Head);
+            var componentRef = new MechComponentRef(Control.settings.AutoFixMechDefCockpitId, null, ComponentType.Upgrade, ChassisLocations.Head);
             componentRefs.Add(componentRef);
 
             mechDef.SetInventory(componentRefs.ToArray());

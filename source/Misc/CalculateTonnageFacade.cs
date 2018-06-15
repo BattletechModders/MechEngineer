@@ -9,8 +9,8 @@ namespace MechEngineMod
         {
             float tonnage = 0;
             tonnage += Engine.AdditionalHeatSinkTonnage(mechDef);
-            tonnage -= EndoSteel.WeightSavings(mechDef);
-            tonnage -= FerrosFibrous.WeightSavings(mechDef);
+            tonnage -= Structure.WeightSavings(mechDef);
+            tonnage -= Armor.WeightSavings(mechDef);
             return tonnage;
         }
     }

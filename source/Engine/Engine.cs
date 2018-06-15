@@ -138,9 +138,13 @@ namespace MechEngineMod
                 return;
             }
 
-            if (mainEngine.engineDef.Type == EngineDef.EngineType.XL && engineRefs.Count(x => x.DamageLevel == ComponentDamageLevel.Functional) != 3)
+            var type = mainEngine.engineDef.Type;
+            var requirements = type.Requirements;
+
+            if (engineRefs.Where(x => x.DamageLevel == ComponentDamageLevel.Functional).Select(c => c.ComponentDefID).Intersect(requirements).Count() != requirements.Length)
             {
-                errorMessages[MechValidationType.InvalidInventorySlots].Add("XL ENGINE: Requires XL left and right slots");
+                var engineName = mainEngine.engineDef.Def.Description.UIName.ToUpper();
+                errorMessages[MechValidationType.InvalidInventorySlots].Add(engineName + ": Requires left and right torso slots");
             }
 
             // jump jets
@@ -149,7 +153,7 @@ namespace MechEngineMod
                 var maxCount = Control.calc.CalcJumpJetCount(mainEngine.engineDef, mechDef.Chassis.Tonnage);
                 if (currentCount > maxCount)
                 {
-                    errorMessages[MechValidationType.InvalidJumpjets].Add(String.Format("JUMPJETS: This Mech mounts too many jumpjets ({0} out of {1})", currentCount, maxCount));
+                    errorMessages[MechValidationType.InvalidJumpjets].Add(string.Format("JUMPJETS: This Mech mounts too many jumpjets ({0} out of {1})", currentCount, maxCount));
                 }
             }
         }
@@ -271,13 +275,13 @@ namespace MechEngineMod
                     continue;
                 }
 
-                var engineDef = heatSinkDef.GetEngineDef();
-                if (engineDef == null)
+                if (!heatSinkDef.IsAutoFixEngine())
                 {
                     continue;
                 }
 
-                if (engineDef.Type != EngineDef.EngineType.Std)
+                var engineDef = heatSinkDef.GetEngineDef();
+                if (engineDef == null)
                 {
                     continue;
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 using BattleTech;
 
@@ -6,11 +7,6 @@ namespace MechEngineMod
 {
     internal class EngineDef
     {
-        internal enum EngineType
-        {
-            Std, XL
-        }
-
         internal readonly EngineType Type;
         internal readonly int Rating;
         internal readonly MechComponentDef Def;
@@ -19,15 +15,16 @@ namespace MechEngineMod
 
         internal EngineDef(MechComponentDef componentDef)
         {
-            var match = EngineNameRegex.Match(componentDef.Description.Id);
-            Type = (EngineType) Enum.Parse(typeof(EngineType), match.Groups[1].Value, true);
+            var id = componentDef.Description.Id;
+            var match = EngineNameRegex.Match(id);
+            Type = Control.settings.EngineTypes.FirstOrDefault(c => id.StartsWith(c.Prefix));
             Rating = int.Parse(match.Groups[2].Value);
             Def = componentDef;
         }
 
         public override string ToString()
         {
-            return Def.Description.Id + " Type=" + Type + " Rating=" + Rating;
+            return Def.Description.Id + " Rating=" + Rating;
         }
     }
 }

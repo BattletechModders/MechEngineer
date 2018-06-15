@@ -9,39 +9,49 @@ namespace MechEngineMod
         // main engine + engine slots
         internal static bool IsEnginePart(this MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.EnginePartPrefix);
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.EnginePartPrefix);
         }
 
         // only main engine
         internal static bool IsMainEngine(this MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.MainEnginePrefix);
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.MainEnginePrefix);
+        }
+
+        // engine category to use for auto fixing chassis
+        internal static bool IsAutoFixEngine(this MechComponentDef componentDef)
+        {
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.AutoFixEnginePrefix);
         }
 
         // we want to know about center torso upgrade (gyros), since we reduce their size
-        internal static bool IsCenterTorsoUpgrade(this MechComponentDef componentDef)
+        internal static bool IsGyro(this MechComponentDef componentDef)
         {
-            return componentDef.AllowedLocations == ChassisLocations.CenterTorso && componentDef.ComponentType == ComponentType.Upgrade;
+            return componentDef.AllowedLocations == ChassisLocations.CenterTorso
+                   && componentDef.ComponentType == ComponentType.Upgrade
+                   && componentDef.Description.Id.StartsWith(Control.settings.GearGryoPrefix);
         }
 
         // we want to know about center torso upgrade (gyros), since we reduce their size
-        internal static bool IsHeadUpgrade(this MechComponentDef componentDef)
+        internal static bool IsCockpit(this MechComponentDef componentDef)
         {
-            return componentDef.AllowedLocations == ChassisLocations.Head && componentDef.ComponentType == ComponentType.Upgrade;
+            return componentDef.AllowedLocations == ChassisLocations.Head
+                   && componentDef.ComponentType == ComponentType.Upgrade
+                   && componentDef.Description.Id.StartsWith(Control.settings.GearCockpitPrefix);
         }
 
         // endo steel has some calculations behind it
-        internal static bool IsEndoSteel(this MechComponentDef componentDef)
+        internal static bool IsStructure(this MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.EndoSteelPrefix);
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.StructurePrefix);
         }
 
         // ferros fibrous has some calculations behind it
-        internal static bool IsFerrosFibrous(this MechComponentDef componentDef)
+        internal static bool IsArmor(this MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.FerrosFibrousPrefix);
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.ArmorPrefix);
         }
-
+        
         private static bool CheckComponentDef(MechComponentDef def, ComponentType type, string prefix)
         {
             if (def.ComponentType != type)
@@ -70,17 +80,17 @@ namespace MechEngineMod
 
         internal static bool IsDouble(this HeatSinkDef def)
         {
-            return def.Description.Id == Control.GearHeatSinkGenericDouble;
+            return def.Description.Id == Control.settings.GearHeatSinkDouble;
         }
 
         internal static bool IsSingle(this HeatSinkDef def)
         {
-            return def.Description.Id == Control.GearHeatSinkGenericStandard;
+            return def.Description.Id == Control.settings.GearHeatSinkStandard;
         }
 
         internal static bool IsDHSKit(this HeatSinkDef def)
         {
-            return def.Description.Id == Control.EngineKitDHS;
+            return def.Description.Id == Control.settings.EngineKitDHS;
         }
 
 

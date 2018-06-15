@@ -14,7 +14,21 @@ namespace MechEngineMod
         {
             try
             {
-                EngineCrits.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects);
+                if (!EngineCrits.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
+                {
+                    return false;
+                }
+                
+                if (!Structure.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
+                {
+                    return false;
+                }
+
+                if (!Armor.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
+                {
+                    return false;
+                }
+
             }
             catch (Exception e)
             {

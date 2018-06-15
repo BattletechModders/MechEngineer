@@ -10,6 +10,13 @@ namespace MechEngineMod
     [HarmonyPatch(typeof(MechLabPanel), "GetCantSaveErrorString")]
     public static class MechLabPanelGetCantSaveErrorStringPatch
     {
+        private static bool _isSimGame;
+
+        public static void Prefix(MechLabPanel __instance)
+        {
+            _isSimGame = __instance.IsSimGame;
+        }
+
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
@@ -20,7 +27,10 @@ namespace MechEngineMod
 
         public static List<string> GetValidationErrors(Dictionary<MechValidationType, List<string>> errorMessages, List<MechValidationType> validationTypes)
         {
-            validationTypes.Remove(MechValidationType.InvalidInventorySlots);
+            if (_isSimGame)
+            {
+                validationTypes.Remove(MechValidationType.InvalidInventorySlots);
+            }
             return MechValidationRules.GetValidationErrors(errorMessages, validationTypes);
         }
     }

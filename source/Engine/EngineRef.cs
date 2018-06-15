@@ -60,17 +60,17 @@ namespace MechEngineMod
         {
             if (IsDHS)
             {
-                yield return Control.EngineKitDHS;
+                yield return Control.settings.EngineKitDHS;
             }
 
             for (var i = 0; i < AdditionalSHSCount; i++)
             {
-                yield return Control.GearHeatSinkGenericStandard;
+                yield return Control.settings.GearHeatSinkStandard;
             }
 
             for (var i = 0; i < AdditionalDHSCount; i++)
             {
-                yield return Control.GearHeatSinkGenericDouble;
+                yield return Control.settings.GearHeatSinkDouble;
             }
         }
 

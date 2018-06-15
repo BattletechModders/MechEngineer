@@ -23,12 +23,12 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (!newComponentDef.IsCenterTorsoUpgrade())
+                if (!newComponentDef.IsGyro())
                 {
                     return;
                 }
                 
-                if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsCenterTorsoUpgrade()))
+                if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !x.Def.IsGyro()))
                 {
                     return;
                 }
@@ -52,7 +52,7 @@ namespace MechEngineMod
                     return;
                 }
 
-                if (!upgradeDef.IsCenterTorsoUpgrade())
+                if (!upgradeDef.IsGyro())
                 {
                     return;
                 }
@@ -75,7 +75,7 @@ namespace MechEngineMod
 
         internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCenterTorsoUpgrade()))
+            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsGyro()))
             {
                 return;
             }
@@ -90,14 +90,14 @@ namespace MechEngineMod
                 return;
             }
 
-            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCenterTorsoUpgrade()))
+            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsGyro()))
             {
                 return;
             }
 
             var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
-            var componentRef = new MechComponentRef(Control.GearGyroGeneric, null, ComponentType.Upgrade, ChassisLocations.CenterTorso);
+            var componentRef = new MechComponentRef(Control.settings.AutoFixMechDefGyroId, null, ComponentType.Upgrade, ChassisLocations.CenterTorso);
             componentRefs.Add(componentRef);
 
             mechDef.SetInventory(componentRefs.ToArray());
