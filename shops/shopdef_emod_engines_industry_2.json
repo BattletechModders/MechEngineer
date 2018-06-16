@@ -87,6 +87,18 @@
             "DiscountModifier": 1,
             "Count" : 0,
 			"Weight": 2
+      },
+      {
+         "ID" : "emod_engineslots_light_left",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_light_right",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
       }
    ],
    "Specials" : [
