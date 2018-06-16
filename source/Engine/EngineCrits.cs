@@ -6,7 +6,7 @@ namespace MechEngineMod
 {
     internal static class EngineCrits
     {
-        internal static bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
+        internal static bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects, List<MessageAddition> messages)
         {
             if (!Control.settings.EngineCritsEnabled)
             {
@@ -117,6 +117,14 @@ namespace MechEngineMod
                     hitInfo.stackItemUID,
                     hitInfo.attackerId,
                     false);
+
+                // FlagForDeath already outputs a message
+                //messages.Add(new MessageAddition { Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = mainEngineComponent.UIName + " DESTROYED" });
+            }
+            else
+            {
+                var text = crits == 1 ? "ENGINE CRIT" : "ENGINE CRIT X" + crits;
+                messages.Add(new MessageAddition { Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = text });
             }
 
             return false;
