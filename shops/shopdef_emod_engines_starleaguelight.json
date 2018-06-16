@@ -2,7 +2,6 @@
     "ID": "shopdef_emod_engines_starleaguelight",
     "RequirementTags": {
         "items": [
-            "planet_other_blackmarket",
             "planet_other_starleague",
 			"planet_industry_manufacturing",
 			"planet_industry_rich",
