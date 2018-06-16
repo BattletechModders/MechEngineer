@@ -6,9 +6,9 @@
         "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "Light Fusion",
-        "UIName" : "Light Fusion Engine 350",
+        "UIName" : "Light Engine 350",
         "Id" : "emod_engine_light_350",
-        "Name" : "Light Fusion Engine 350",
+        "Name" : "Light Engine 350",
         "Details" : "The Light Fusion Engine is mechanically similar to an XL Engine, but uses Lostech energy shielding to allow a mech to survive the destruction of a side torso. The Light Fusion engine is 75% the mass for the same performance, but intrudes into the side torso bays of a BattleMech.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
