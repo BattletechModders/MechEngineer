@@ -131,7 +131,49 @@
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
-      }
+      },
+		{
+            "ID": "emod_engine_light_400",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_light_350",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_light_300",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_light_250",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_light_150",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_light_100",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
    ],
    "Specials" : []
 }
