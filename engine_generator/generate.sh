@@ -6,6 +6,7 @@ use warnings;
 my $table_file = 'engine_tables.txt';
 my $std_template = slurp('emod_engine_std_template.json');
 my $xl_template = slurp('emod_engine_xl_template.json');
+my $light_template = slurp('emod_engine_light_template.json');
 my $engine_base_dir = '../engines';
 
 open my $info, $table_file or die "Could not open $table_file: $!";
@@ -25,10 +26,12 @@ while (my $line = <$info>)  {
 	my $gyro_tons = int($rating / 100 + 0.5);
 	my $std_tons = $cols[5] + $gyro_tons;
 	my $xl_tons = $cols[7] + $gyro_tons;
+    my $light_tons = $cols[6] + $gyro_tons;
 	
 	my $gyro_cost = 300000 * $gyro_tons;
 	my $std_cost = 5000 * $rating + $gyro_cost; # we assume 75 ton mech
 	my $xl_cost = 20000 * $rating + $gyro_cost;
+    my $light_cost = 10000 * $rating + $gyro_cost;
 	
 	my $rating_string = sprintf('%03s', $rating);
 	print($rating_string, " ");
@@ -48,6 +51,12 @@ while (my $line = <$info>)  {
 	$xl =~ s/\{\{TONNAGE}}/$xl_tons/g;
 	$xl =~ s/\{\{COST}}/$xl_cost/g;
 	write_to_file("$engine_base_dir/emod_engine_xl_$rating_string.json", $xl);
+
+    my $light = $light_template;
+	$light =~ s/\{\{RATING}}/$rating_string/g;
+	$light =~ s/\{\{TONNAGE}}/$light_tons/g;
+	$light =~ s/\{\{COST}}/$light_cost/g;
+	write_to_file("$engine_base_dir/emod_engine_light_$rating_string.json", $light);
 }
 
 close $info;
