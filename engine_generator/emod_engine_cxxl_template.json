@@ -5,7 +5,7 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Clan Extra-Extra Light Fusion",
+        "Model" : "Dagda XXL",
         "UIName" : "Clan XXL {{RATING}}",
         "Id" : "emod_engine_cxxl_{{RATING}}",
         "Name" : "Clan XXL Engine {{RATING}}",

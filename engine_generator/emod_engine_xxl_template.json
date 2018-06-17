@@ -5,7 +5,7 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Extra-Extra Light Fusion",
+        "Model" : "Vlar XXL",
         "UIName" : "XXL {{RATING}}",
         "Id" : "emod_engine_xxl_{{RATING}}",
         "Name" : "XXL Engine {{RATING}}",

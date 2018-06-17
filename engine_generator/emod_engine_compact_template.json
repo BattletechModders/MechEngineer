@@ -5,7 +5,7 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Compact Fusion",
+        "Model" : "Vlar Compact",
         "UIName" : "Compact {{RATING}}",
         "Id" : "emod_engine_compact_{{RATING}}",
         "Name" : "Compact Engine {{RATING}}",

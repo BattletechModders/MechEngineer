@@ -5,7 +5,7 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Clan Extra-light Fusion",
+        "Model" : "Starfire Clan XL",
         "UIName" : "Clan XL {{RATING}}",
         "Id" : "emod_engine_cxl_{{RATING}}",
         "Name" : "Clan XL Engine {{RATING}}",
