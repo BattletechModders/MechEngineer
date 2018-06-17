@@ -6,9 +6,9 @@
         "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "LFE Critical Slots",
-        "UIName" : "Light Fusion Engine Left",
+        "UIName" : "Light Engine Left",
         "Id" : "emod_engineslots_light_left",
-        "Name" : "Light Fusion Engine Left",
+        "Name" : "Light Engine Left",
         "Details" : "To mount a Light Fusion engine both left and right torso engine parts are needed",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
