@@ -5,12 +5,12 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Vlar Light",
-        "UIName" : "Light Engine {{RATING}}",
+        "Model" : "Light Fusion",
+        "UIName" : "LFE {{RATING}}",
         "Id" : "emod_engine_light_{{RATING}}",
-        "Name" : "Light Engine {{RATING}}",
-        "Details" : "The <b>Light Fusion Engine</b> is mechanically similar to an XL Engine, but uses Lostech energy shielding to allow a mech to survive the destruction of a side torso. The Light Fusion engine is 75% the mass for the same performance, but intrudes into the side torso bays of a BattleMech.",
-        "Icon" : "{{ICON}}"
+        "Name" : "Light Fusion Engine {{RATING}}",
+        "Details" : "The Light Fusion Engine is mechanically similar to an XL Engine, but uses Lostech energy shielding to allow a mech to survive the destruction of a side torso. The Light Fusion engine is 75% the mass for the same performance, but intrudes into the side torso bays of a BattleMech.",
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : "",
     "BonusValueB" : "",
