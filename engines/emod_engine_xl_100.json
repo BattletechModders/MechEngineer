@@ -5,11 +5,11 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Extra-light Fusion",
+        "Model" : "Vlar Extra-light",
         "UIName" : "XL Engine 100",
         "Id" : "emod_engine_xl_100",
         "Name" : "XL Engine 100",
-        "Details" : "The Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The XL fusion engine is half the mass for the same performance. The XL fusion engine is twice as large as the standard fusion engine and intrudes into the side torso bays of a BattleMech.",
+        "Details" : "The <b>Extra-light Fusion Engine</b> is mechanically similar to a standard military fusion engine but uses much lighter radiation shielding. The XL fusion engine is half the mass for the same performance. The XL fusion engine is twice as large as the standard fusion engine and intrudes into the side torso bays of a BattleMech.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : "",

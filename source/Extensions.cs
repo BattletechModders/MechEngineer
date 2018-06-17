@@ -43,13 +43,13 @@ namespace MechEngineMod
         // endo steel has some calculations behind it
         internal static bool IsStructure(this MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.StructurePrefix);
+            return CheckComponentDef(componentDef, ComponentType.Upgrade, Control.settings.StructurePrefix);
         }
 
         // ferros fibrous has some calculations behind it
         internal static bool IsArmor(this MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.ArmorPrefix);
+            return CheckComponentDef(componentDef, ComponentType.Upgrade, Control.settings.ArmorPrefix);
         }
         
         private static bool CheckComponentDef(MechComponentDef def, ComponentType type, string prefix)

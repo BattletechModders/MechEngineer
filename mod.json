@@ -11,6 +11,11 @@
 	"Manifest": [
 		{
 			"Type": "HeatSinkDef",
+			"Path": "engineparts/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
 			"Path": "engines/",
 			"ShouldMergeJSON": false
 		},

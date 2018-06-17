@@ -7,7 +7,7 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Kite",
+        "Model" : "Standard Gyro",
         "UIName" : "Gyro",
         "Id" : "Gear_Gyro_Generic_Standard",
         "Name" : "Standard Gyro",

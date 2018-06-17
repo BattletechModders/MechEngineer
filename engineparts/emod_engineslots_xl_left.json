@@ -1,14 +1,14 @@
 {
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : 300000,
+        "Cost" : 450000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "XL Critical Slots",
-        "UIName" : "XL Engine Right",
-        "Id" : "emod_engineslots_xl_right",
-        "Name" : "XL Engine Right",
+        "Model" : "XL Left Torso Slots",
+        "UIName" : "XL Engine LT",
+        "Id" : "emod_engineslots_xl_left",
+        "Name" : "XL Engine Left",
         "Details" : "To mount an XL engine both left and right torso engine parts are needed",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
@@ -20,7 +20,7 @@
     "BattleValue" : 0,
     "InventorySize" : 3,
     "Tonnage" : 0,
-    "AllowedLocations" : "RightTorso",
+    "AllowedLocations" : "LeftTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,
     "statusEffects" : null,
