@@ -50,7 +50,7 @@
             "Description" : {
                 "Id" : "StealthArmor",
                 "Name" : "Stealth Armor",
-                "Details" : "Active Stealth Armor.",
+                "Details" : "Provides a +2 difficulty to hit bonus.",
                 "Icon" : "uixSvgIcon_equipment_Gyro"
             },
             "nature" : "Buff",
@@ -100,7 +100,7 @@
             "effectType" : "StatisticEffect",
             "Description" : {
                 "Id" : "StatusEffect-Heat_Stealth",
-                "Name" : "Stealth Heatsinks",
+                "Name" : "Stealth Heatsink Baffles",
                 "Details" : "Generates an additional 10 heat per turn.",
                 "Icon" : "uixSvgIcon_equipment_ThermalExchanger"
             },

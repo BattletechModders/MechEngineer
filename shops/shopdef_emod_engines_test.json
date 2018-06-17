@@ -384,6 +384,48 @@
             "Count" : 0,
 			"Weight": 2
         },
+		{
+            "ID": "emod_engine_compact_400",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_compact_350",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_compact_300",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_compact_250",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_compact_150",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_compact_100",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
    ],
    "Specials" : []
 }
