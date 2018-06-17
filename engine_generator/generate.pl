@@ -48,39 +48,38 @@ while (my $line = <$info>)  {
 	my $gyro_tons = int($rating / 100 + 0.5);
 	my $gyro_cost = 300000 * $gyro_tons;
 
-	{
+	my $generate_engine_sub = sub {
+		my $prefix = shift;
+		my $engine_tonnage = shift;
+		my $engine_cost_per_rating = shift;
+		
 		my $engine = {
-			ID => "emod_engine_std_$rating_string",
+			ID => "${prefix}_${rating_string}",
 			RATING => $rating_string,
-			TONNAGE => $cols[5] + $gyro_tons,
-			COST => 5000 * $rating + $gyro_cost, # we assume 75 ton mech
+			TONNAGE => $engine_tonnage + $gyro_tons,
+			COST => $engine_cost_per_rating * $rating + $gyro_cost, # we assume 75 ton mech
 			ICON => next_icon()
-		}; 
+		};
 
-		my $json = $tache->render('emod_engine_std_template.json', $engine);
+		my $json = $tache->render("${prefix}_template.json", $engine);
 		write_to_file("$engine_base_dir/$engine->{ID}.json", $json);
 
 		push(@ENGINES, $engine);
-	}
+	};
+	
+	$generate_engine_sub->("emod_engine_std", $cols[5], 5000);
 
 	if ($rating % 100 != 0) {
 		next;
 	}
 
-	{
-		my $engine = {
-			ID => "emod_engine_xl_$rating_string",
-			RATING => $rating_string,
-			TONNAGE => $cols[7] + $gyro_tons,
-			COST => 20000 * $rating + $gyro_cost, # we assume 75 ton mech
-			ICON => next_icon()
-		};
-
-		my $json = $tache->render('emod_engine_xl_template.json', $engine);
-		write_to_file("$engine_base_dir/$engine->{ID}.json", $json);
-
-		push(@ENGINES, $engine);
-	}
+	$generate_engine_sub->("emod_engine_xl", $cols[7], 20000);
+	$generate_engine_sub->("emod_engine_cxl", $cols[7], 30000);
+	$generate_engine_sub->("emod_engine_light", $cols[6], 10000);
+	$generate_engine_sub->("emod_engine_compact", $cols[4], 5000);
+	$generate_engine_sub->("emod_engine_xxl", $cols[8], 25000);
+	$generate_engine_sub->("emod_engine_cxxl", $cols[8], 40000);
+	$generate_engine_sub->("emod_engine_xl", $cols[7], 20000);
 }
 
 close $info;
