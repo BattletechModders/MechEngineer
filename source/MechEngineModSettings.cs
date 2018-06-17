@@ -41,22 +41,22 @@ namespace MechEngineMod
         public EngineType[] EngineTypes = {
             new EngineType { Prefix = "emod_engine_std", Requirements = new string[] {} },
             new EngineType { Prefix = "emod_engine_xl", Requirements = new[] {"emod_engineslots_xl_left", "emod_engineslots_xl_right"} },
-            //new EngineType { Prefix = "emod_engine_cxl", Requirements = new[] {"emod_engineslots_cxl_left", "emod_engineslots_cxl_right"} },
+            new EngineType { Prefix = "emod_engine_cxl", Requirements = new[] {"emod_engineslots_cxl_left", "emod_engineslots_cxl_right"} },
             new EngineType { Prefix = "emod_engine_light", Requirements = new[] {"emod_engineslots_light_left", "emod_engineslots_light_right"} }
         };
         
         public string StructurePrefix = "emod_structureslots_";
         public WeightSavingSlotType[] StuctureTypes = {
             new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endosteel", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 0.5f },
-            new StuctureType { componentDefId = "emod_structureslots_endocomposite", requiredCriticals = 7, weightSavingsFactor = 0.75f },
-            //new StuctureType { componentDefId = "emod_structureslots_clanendosteel", requiredCriticals = 7, weightSavingsFactor = 0.5f },
+            new StructureType { componentDefId = "emod_structureslots_endocomposite", requiredCriticals = 7, weightSavingsFactor = 0.75f },
+            new StructureType { componentDefId = "emod_structureslots_clanendosteel", requiredCriticals = 7, weightSavingsFactor = 0.5f },
         };
         
         public string ArmorPrefix = "emod_armorslots_";
         public WeightSavingSlotType[] ArmorTypes = {
             new ArmorType { componentDefId = "emod_armorslots_lightferrosfibrous", requiredCriticals = 7, weightSavingsFactor = 1f - 1f / 1.06f },
             new WeightSavingSlotType { ComponentDefId = "emod_armorslots_ferrosfibrous", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 1f - 1f / 1.12f },
-            //new ArmorType { componentDefId = "emod_armorslots_clanferrosfibrous", requiredCriticals = 7, weightSavingsFactor = 1f - 1f / 1.2f },
+            new ArmorType { componentDefId = "emod_armorslots_clanferrosfibrous", requiredCriticals = 7, weightSavingsFactor = 1f - 1f / 1.2f },
             new ArmorType { componentDefId = "emod_armorslots_stealth", requiredCriticals = 6, weightSavingsFactor = 1f },
             new ArmorType { componentDefId = "emod_armorslots_heavyferrosfibrous", requiredCriticals = 21, weightSavingsFactor = 1f - 1f / 1.24f },
         };

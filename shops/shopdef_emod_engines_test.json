@@ -30,8 +30,44 @@
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
+	  {
+         "ID" : "emod_structureslots_clanendosteel",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+	  {
+         "ID" : "emod_structureslots_endocomposite",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
       {
          "ID" : "emod_structureslots_ferrosfibrous",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+	  {
+         "ID" : "emod_structureslots_lightferrosfibrous",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+	  {
+         "ID" : "emod_structureslots_heavyferrosfibrous",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+	  {
+         "ID" : "emod_structureslots_clanferrosfibrous",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+	  {
+         "ID" : "emod_structureslots_stealth",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
@@ -44,6 +80,54 @@
       },
       {
          "ID" : "emod_engineslots_xl_right",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_light_left",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_light_right",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+	  {
+         "ID" : "emod_engineslots_cxl_left",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_cxl_right",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+	  {
+         "ID" : "emod_engineslots_xxl_left",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_xxl_right",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+	  {
+         "ID" : "emod_engineslots_cxxl_left",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_cxxl_right",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
@@ -169,6 +253,132 @@
         },
         {
             "ID": "emod_engine_light_100",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+				{
+            "ID": "emod_engine_cxl_400",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxl_350",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxl_300",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxl_250",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxl_150",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxl_100",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+		{
+            "ID": "emod_engine_xxl_400",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xxl_350",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xxl_300",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xxl_250",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xxl_150",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_xxl_100",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+		{
+            "ID": "emod_engine_cxxl_400",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxxl_350",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxxl_300",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxxl_250",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxxl_150",
+            "Type": "HeatSink",
+            "DiscountModifier": 1,
+            "Count" : 0,
+			"Weight": 2
+        },
+        {
+            "ID": "emod_engine_cxxl_100",
             "Type": "HeatSink",
             "DiscountModifier": 1,
             "Count" : 0,
