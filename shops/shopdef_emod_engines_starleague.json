@@ -15,71 +15,7 @@
         "tagSetSourceFile": ""
     },
    "Inventory" : [
-      {
-         "ID" : "Gear_HeatSink_Generic_Double",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_kit_dhs",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_structureslots_endosteel",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_structureslots_ferrosfibrous",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engineslots_xl_left",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engineslots_xl_right",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      }
    ],
     "Specials": [
-        {
-            "ID": "emod_engine_xl_400",
-            "Type": "HeatSink",
-            "DiscountModifier": 1,
-            "Count" : 0,
-			"Weight": 2
-        },
-        {
-            "ID": "emod_engine_xl_300",
-            "Type": "HeatSink",
-            "DiscountModifier": 1,
-            "Count" : 0,
-			"Weight": 2
-        },
-        {
-            "ID": "emod_engine_xl_200",
-            "Type": "HeatSink",
-            "DiscountModifier": 1,
-            "Count" : 0,
-			"Weight": 2
-        },
-        {
-            "ID": "emod_engine_xl_100",
-            "Type": "HeatSink",
-            "DiscountModifier": 1,
-            "Count" : 0,
-			"Weight": 2
-        },
 	]
 }

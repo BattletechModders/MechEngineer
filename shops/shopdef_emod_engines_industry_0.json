@@ -14,36 +14,6 @@
       "tagSetSourceFile" : ""
    },
    "Inventory" : [
-      {
-         "ID" : "emod_engine_std_300",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_std_250",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_std_200",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_std_150",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_std_100",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      }
    ],
    "Specials" : [
    ]
