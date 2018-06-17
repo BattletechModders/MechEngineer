@@ -61,13 +61,6 @@
 			"Weight": 2
         },
         {
-            "ID": "emod_engine_xl_350",
-            "Type": "HeatSink",
-            "DiscountModifier": 1,
-            "Count" : 0,
-			"Weight": 2
-        },
-        {
             "ID": "emod_engine_xl_300",
             "Type": "HeatSink",
             "DiscountModifier": 1,
@@ -75,14 +68,7 @@
 			"Weight": 2
         },
         {
-            "ID": "emod_engine_xl_250",
-            "Type": "HeatSink",
-            "DiscountModifier": 1,
-            "Count" : 0,
-			"Weight": 2
-        },
-        {
-            "ID": "emod_engine_xl_150",
+            "ID": "emod_engine_xl_200",
             "Type": "HeatSink",
             "DiscountModifier": 1,
             "Count" : 0,
