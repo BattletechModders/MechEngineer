@@ -1,0 +1,33 @@
+{
+    "DissipationCapacity" : 0,
+    "Description" : {
+        "Cost" : 4100000,
+        "Rarity" : 0,
+        "Purchasable" : true,
+        "Manufacturer" : "Generic",
+        "Model" : "Vlar Extra-light",
+        "UIName" : "XL Engine 175",
+        "Id" : "emod_engine_xl_175",
+        "Name" : "XL Engine 175",
+        "Details" : "The Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The XL fusion engine is half the mass for the same performance. The XL fusion engine is twice as large as the standard fusion engine and intrudes into the side torso bays of a BattleMech.",
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
+    },
+    "BonusValueA" : "",
+    "BonusValueB" : "",
+    "ComponentType" : "HeatSink",
+    "ComponentSubType" : "Heatsink",
+    "PrefabIdentifier" : "",
+    "BattleValue" : 0,
+    "InventorySize" : 6,
+    "Tonnage" : 5.5,
+    "AllowedLocations" : "CenterTorso",
+    "DisallowedLocations" : "All",
+    "CriticalComponent" : false,
+    "statusEffects" : null,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile" : ""
+    }
+}

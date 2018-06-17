@@ -1,0 +1,33 @@
+{
+   "ID" : "shopdef_emod_internals_test",
+   "RequirementTags" : {
+      "items" : [],
+      "tagSetSourceFile" : ""
+   },
+   "ExclusionTags" : {
+      "items" : [
+      ],
+      "tagSetSourceFile" : ""
+   },
+   "Inventory" : [
+      {
+         "ID" : "Gear_Cockpit_Generic_Small",
+         "Type" : "Upgrade",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_structureslots_endosteel",
+         "Type" : "Upgrade",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_structureslots_ferrosfibrous",
+         "Type" : "Upgrade",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+   ],
+   "Specials" : []
+}

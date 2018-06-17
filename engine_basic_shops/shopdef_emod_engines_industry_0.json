@@ -1,0 +1,19 @@
+{
+   "ID" : "shopdef_emod_engines_industry_0",
+   "RequirementTags" : {
+      "items" : [
+		 "planet_industry_manufacturing"
+	  ],
+      "tagSetSourceFile" : ""
+   },
+   "ExclusionTags" : {
+      "items" : [
+		"planet_other_empty"
+      ],
+      "tagSetSourceFile" : ""
+   },
+   "Inventory" : [
+   ],
+   "Specials" : [
+   ]
+}

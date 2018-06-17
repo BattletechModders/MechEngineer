@@ -1,0 +1,33 @@
+{
+    "DissipationCapacity" : 0,
+    "Description" : {
+        "Cost" : 3650000,
+        "Rarity" : 0,
+        "Purchasable" : true,
+        "Manufacturer" : "Generic",
+        "Model" : "Defiance Light",
+        "UIName" : "LFE 275",
+        "Id" : "emod_engine_light_275",
+        "Name" : "Light Engine 275",
+        "Details" : "The Light Fusion Engine is mechanically similar to an XL Engine, but uses Lostech energy shielding to allow a mech to survive the destruction of a side torso. The Light Fusion engine is 75% the mass for the same performance, but intrudes into the side torso bays of a BattleMech.",
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
+    },
+    "BonusValueA" : "",
+    "BonusValueB" : "",
+    "ComponentType" : "HeatSink",
+    "ComponentSubType" : "Heatsink",
+    "PrefabIdentifier" : "",
+    "BattleValue" : 0,
+    "InventorySize" : 6,
+    "Tonnage" : 15,
+    "AllowedLocations" : "CenterTorso",
+    "DisallowedLocations" : "All",
+    "CriticalComponent" : false,
+    "statusEffects" : null,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile" : ""
+    }
+}
