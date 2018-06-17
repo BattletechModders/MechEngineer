@@ -51,7 +51,7 @@ namespace MechEngineMod
         {
             internal float WeightSavings { get; private set; }
 
-            internal StructureWeightSavingCalculator(MechDef mechDef) : base(mechDef.Inventory.Where(c => c.Def.IsStructure()).ToList(), Control.settings.StuctureTypes)
+            internal StructureWeightSavingCalculator(MechDef mechDef) : base(mechDef.Inventory.Where(c => c.Def.IsStructure()).ToList(), Control.settings.StructureTypes)
             {
                 var tonnage = mechDef.Chassis.Tonnage / 10f;
                 WeightSavings = Count == 0 ? 0 : WeightSavingForTonnage(tonnage);

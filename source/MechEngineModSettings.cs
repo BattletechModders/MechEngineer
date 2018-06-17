@@ -49,7 +49,7 @@ namespace MechEngineMod
         };
         
         public string StructurePrefix = "emod_structureslots_";
-        public WeightSavingSlotType[] StuctureTypes = {
+        public WeightSavingSlotType[] StructureTypes = {
             new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endosteel", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 0.5f },
             new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endocomposite", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.25f },
             new WeightSavingSlotType { ComponentDefId = "emod_structureslots_clanendosteel", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.5f },
