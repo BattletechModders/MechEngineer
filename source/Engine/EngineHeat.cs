@@ -127,18 +127,21 @@ namespace MechEngineMod
                 }
             }
 
-            if (dragItem.OriginalDropParentType != MechLabDropTargetType.InventoryList)
+            if (mechLab.IsSimGame)
             {
-                return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                    string.Format("Cannot add {0}: Item has to be from inventory", newComponentDef.Description.Name)
-                );
-            }
+                if (dragItem.OriginalDropParentType != MechLabDropTargetType.InventoryList)
+                {
+                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                        string.Format("Cannot add {0}: Item has to be from inventory", newComponentDef.Description.Name)
+                    );
+                }
 
-            if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == existingEngine.SimGameUID))
-            {
-                return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                    string.Format("Cannot add {0}: Engine cannot be modified once installed, remove engine first", newComponentDef.Description.Name)
-                );
+                if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == existingEngine.SimGameUID))
+                {
+                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                        string.Format("Cannot add {0}: Engine cannot be modified once installed, remove engine first", newComponentDef.Description.Name)
+                    );
+                }
             }
 
             var engineRef = existingEngine.GetEngineRef();
