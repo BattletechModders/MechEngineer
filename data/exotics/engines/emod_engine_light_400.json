@@ -1,16 +1,16 @@
 {
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : {{COST}},
+        "Cost" : 5200000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "Defiance Light",
-        "UIName" : "Light Engine {{RATING}}",
-        "Id" : "emod_engine_light_{{RATING}}",
-        "Name" : "Light Engine {{RATING}}",
+        "UIName" : "Light Engine 400",
+        "Id" : "emod_engine_light_400",
+        "Name" : "Light Engine 400",
         "Details" : "The Light Fusion Engine is mechanically similar to an XL Engine, but uses Lostech energy shielding to allow a mech to survive the destruction of a side torso. The Light Fusion engine is 75% the mass for the same performance, but intrudes into the side torso bays of a BattleMech.",
-        "Icon" : "{{ICON}}"
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : "",
     "BonusValueB" : "",
@@ -19,7 +19,7 @@
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 6,
-    "Tonnage" : {{TONNAGE}},
+    "Tonnage" : 43.5,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,

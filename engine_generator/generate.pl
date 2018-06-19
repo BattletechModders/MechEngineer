@@ -12,11 +12,6 @@ my $tache = new Mustache::Simple(
 	throw => 1
 );
 
-my $engine_base_dir = '../engine_basic';
-my $engine_more_dir = '../engine_more';
-my $shops_base_dir = '../engine_basic_shops_test';
-my $shops_more_dir = '../engine_more_shops_test';
-
 open my $handle, '<', "icons.txt";
 chomp(my @icons = <$handle>);
 close $handle;
@@ -31,20 +26,20 @@ sub next_icon {
 
 open my $info, $table_file or die "Could not open $table_file: $!";
 
-my @ENGINES = ();
-my @MORE_ENGINES = ();
+my $categories = {
+	"basic" => [],
+	"exotics" => []
+};
 
 my $header = <$info>;
 while (my $line = <$info>)  {
 	my @cols = split(' ', $line);
 	my $rating = $cols[0];
 
-	my $more = 0;
+	my $category = "ignore";
 
 	if ($rating == 60) {
 	} elsif ($rating < 100) {
-		next;
-	} elsif ($rating % 25 != 0) {
 		next;
 	}
 
@@ -68,61 +63,57 @@ while (my $line = <$info>)  {
 
 		my $json = $tache->render("${prefix}_template.json", $engine);
 
-		if ($more) {
-			write_to_file("$engine_more_dir/$engine->{ID}.json", $json);
-			push(@MORE_ENGINES, $engine);
-		} else {
-			write_to_file("$engine_base_dir/$engine->{ID}.json", $json);
-			push(@ENGINES, $engine);
-		}
+		write_to_file("../data/$category/engines/$engine->{ID}.json", $json);
+		my $engines = $categories->{$category};
+		push(@$engines, $engine);
 	};
 
-	if ($rating % 50 != 0) {
-		$more = 1;
-	}
-
 	if ($rating == 60) {
-		$more = 0;
+		$category = "basic";
 	}
 
+	if ($rating == 60 || $rating % 25 == 0) {
+		$category = "basic";
+	} else {
+		#$category = "full";
+		next;
+	}
+	
 	$generate_engine_sub->("emod_engine_std", $cols[5], 5000);
 
-	if ($rating % 100 != 0) {
-		$more = 1;
+	if ($rating % 100 == 0) {
+		$category = "basic";
+	} else {
+		#$category = "full";
+		next;
 	}
 
 	$generate_engine_sub->("emod_engine_xl", $cols[7], 20000);
 
-	$more = 1;
+	if ($rating % 100 == 0) {
+		$category = "exotics";
+	} else {
+		#$category = "full";
+		next;
+	}
 
-	$generate_engine_sub->("emod_engine_cxl", $cols[7], 30000);
 	$generate_engine_sub->("emod_engine_light", $cols[6], 10000);
 	$generate_engine_sub->("emod_engine_compact", $cols[4], 5000);
+	$generate_engine_sub->("emod_engine_cxl", $cols[7], 30000);
 	$generate_engine_sub->("emod_engine_xxl", $cols[8], 25000);
 	$generate_engine_sub->("emod_engine_cxxl", $cols[8], 40000);
-	$generate_engine_sub->("emod_engine_xl", $cols[7], 20000);
 }
 
 close $info;
 
-{
+while ((my $category, my $engines) = each(%{$categories})) {
 	my $shop = {
-		ID => "shopdef_emod_engines_test_generated",
-		ENGINES => \@ENGINES
+		ID => "shopdef_emod_engines_${category}_test_generated",
+		ENGINES => $engines
 	};
 
 	my $json = $tache->render('shopdef_emod_engines_template.json', $shop);
-	write_to_file("$shops_base_dir/$shop->{ID}.json", $json);
-}
-
-{
-	my $shop = {
-		ID => "shopdef_emod_engines_more_test_generated",
-		ENGINES => \@ENGINES
-	};
-
-	my $json = $tache->render('shopdef_emod_engines_template.json', $shop);
-	write_to_file("$shops_more_dir/$shop->{ID}.json", $json);
+	write_to_file("../data/${category}/shops_test/$shop->{ID}.json", $json);
 }
 
 sub write_to_file {

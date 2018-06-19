@@ -1,6 +1,6 @@
 {
 	"Name": "MechEngineMod-advanced",
-	"Author": "Calculations by Crusher Bob and Coding by CptMoore",
+	"Author": "TT walk Calculations by Crusher Bob, Exotics by Aliencreature and Coding by CptMoore",
 	"Website": "https://github.com/CptMoore/MechEngineMod",
 
 	"Enabled": true,
@@ -11,57 +11,47 @@
 	"Manifest": [
 		{
 			"Type": "UpgradeDef",
-			"Path": "internals_basic/",
+			"Path": "data/basic/internals/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "data/basic/engines/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "data/basic/engine_parts/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "ShopDef",
-			"Path": "internals_basic_shops/",
+			"Path": "data/basic/shops/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "ShopDef",
-			"Path": "internals_basic_shops_test/",
+			"Path": "data/basic/shops_test/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "UpgradeDef",
-			"Path": "disabled_internals_more/",
+			"Path": "disabled data/exotics/internals/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "HeatSinkDef",
-			"Path": "engine_basic/",
+			"Path": "disabled data/exotics/engines/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "HeatSinkDef",
-			"Path": "engine_basic_parts/",
+			"Path": "disabled data/exotics/engine_parts/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "ShopDef",
-			"Path": "engine_basic_shops/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "ShopDef",
-			"Path": "engine_basic_shops_test/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "disabled_engine_more/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "disabled_engine_more_parts/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "ShopDef",
-			"Path": "disabled_engine_more_shops_test/",
+			"Path": "disabled data/exotics/shops_test/",
 			"ShouldMergeJSON": false
 		},
 	]
