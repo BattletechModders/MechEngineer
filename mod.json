@@ -11,17 +11,22 @@
 	"Manifest": [
 		{
 			"Type": "UpgradeDef",
-			"Path": "internals/",
+			"Path": "internals_basic/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "ShopDef",
-			"Path": "internals_shops/",
+			"Path": "internals_basic_shops/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "ShopDef",
-			"Path": "internals_shops_test/",
+			"Path": "internals_basic_shops_test/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "UpgradeDef",
+			"Path": "internals_more/",
 			"ShouldMergeJSON": false
 		},
 		{
