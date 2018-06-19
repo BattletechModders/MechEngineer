@@ -20,13 +20,7 @@ namespace MechEngineMod
                     return false;
                 }
 
-                if (!Structure.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
-                {
-                    MechCheckForCritPatch.Message = null;
-                    return false;
-                }
-
-                if (!Armor.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
+                if (!ArmorStructure.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
                 {
                     MechCheckForCritPatch.Message = null;
                     return false;

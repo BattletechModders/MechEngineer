@@ -49,8 +49,7 @@ namespace MechEngineMod
 
                 var mechComponentDef = (MechComponentDef)data;
                 EngineTooltip.AdjustTooltip(adapter, panel, mechComponentDef);
-                Structure.AdjustTooltip(adapter, panel, mechComponentDef);
-                Armor.AdjustTooltip(adapter, panel, mechComponentDef);
+                ArmorStructure.AdjustTooltip(adapter, panel, mechComponentDef);
             }
             catch (Exception e)
             {
