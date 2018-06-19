@@ -1,16 +1,16 @@
 {
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : {{COST}},
+        "Cost" : 11700000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Vlar Fusion Engine",
-        "UIName" : "Std. Engine {{RATING}}",
-        "Id" : "emod_engine_std_{{RATING}}",
-        "Name" : "Standard Engine {{RATING}}",
-        "Details" : "Fusion engines function by harnessing the power of a fusion reaction, running on light hydrogen and protium.\r\nFusion engines are defined by their <b>engine rating</b>. For 'Mechs, the engine rating is the mathematical product of the mass of the vehicle and its desired maximum walking or cruising velocity.",
-        "Icon" : "{{ICON}}"
+        "Model" : "Starfire Clan XL",
+        "UIName" : "Clan XL 350",
+        "Id" : "emod_engine_cxl_350",
+        "Name" : "Clan XL Engine 350",
+        "Details" : "The Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The XL fusion engine is half the mass for the same performance. The Clan XL fusion engine is 66% larger than the standard fusion engine and intrudes into the side torso bays of a BattleMech.",
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : "",
     "BonusValueB" : "",
@@ -19,7 +19,7 @@
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 6,
-    "Tonnage" : {{TONNAGE}},
+    "Tonnage" : 19,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,

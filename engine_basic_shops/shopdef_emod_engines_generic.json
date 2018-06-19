@@ -1,0 +1,17 @@
+{
+   "ID" : "shopdef_emod_engines_generic",
+   "RequirementTags" : {
+      "items" : [],
+      "tagSetSourceFile" : ""
+   },
+   "ExclusionTags" : {
+      "items" : [
+		"planet_other_empty"
+      ],
+      "tagSetSourceFile" : ""
+   },
+   "Inventory" : [
+   ],
+   "Specials" : [
+   ]
+}

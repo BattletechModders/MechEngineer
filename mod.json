@@ -1,5 +1,5 @@
 {
-	"Name": "MechEngineMod",
+	"Name": "MechEngineMod-advanced",
 	"Author": "Calculations by Crusher Bob and Coding by CptMoore",
 	"Website": "https://github.com/CptMoore/MechEngineMod",
 
@@ -10,24 +10,54 @@
 	
 	"Manifest": [
 		{
-			"Type": "HeatSinkDef",
-			"Path": "engineparts/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "engines/",
-			"ShouldMergeJSON": false
-		},
-		{
 			"Type": "UpgradeDef",
 			"Path": "internals/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "ShopDef",
-			"Path": "shops/",
+			"Path": "internals_shops/",
 			"ShouldMergeJSON": false
-		}
+		},
+		{
+			"Type": "ShopDef",
+			"Path": "internals_shops_test/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "engine_basic/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "engine_basic_parts/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "ShopDef",
+			"Path": "engine_basic_shops/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "ShopDef",
+			"Path": "engine_basic_shops_test/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "disabled_engine_more/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "disabled_engine_more_parts/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "ShopDef",
+			"Path": "disabled_engine_more_shops_test/",
+			"ShouldMergeJSON": false
+		},
 	]
 }

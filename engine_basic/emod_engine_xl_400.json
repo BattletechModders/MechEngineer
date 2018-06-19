@@ -1,16 +1,16 @@
 {
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : {{COST}},
+        "Cost" : 9200000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Vlar Fusion Engine",
-        "UIName" : "Std. Engine {{RATING}}",
-        "Id" : "emod_engine_std_{{RATING}}",
-        "Name" : "Standard Engine {{RATING}}",
-        "Details" : "Fusion engines function by harnessing the power of a fusion reaction, running on light hydrogen and protium.\r\nFusion engines are defined by their <b>engine rating</b>. For 'Mechs, the engine rating is the mathematical product of the mass of the vehicle and its desired maximum walking or cruising velocity.",
-        "Icon" : "{{ICON}}"
+        "Model" : "Vlar Extra-light",
+        "UIName" : "XL Engine 400",
+        "Id" : "emod_engine_xl_400",
+        "Name" : "XL Engine 400",
+        "Details" : "The Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The XL fusion engine is half the mass for the same performance. The XL fusion engine is twice as large as the standard fusion engine and intrudes into the side torso bays of a BattleMech.",
+        "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : "",
     "BonusValueB" : "",
@@ -19,7 +19,7 @@
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 6,
-    "Tonnage" : {{TONNAGE}},
+    "Tonnage" : 30.5,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,

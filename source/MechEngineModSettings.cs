@@ -42,9 +42,9 @@ namespace MechEngineMod
             new EngineType { Prefix = "emod_engine_std", Requirements = new string[] {} },
             new EngineType { Prefix = "emod_engine_compact", Requirements = new string[] {} },
             new EngineType { Prefix = "emod_engine_xl", Requirements = new[] {"emod_engineslots_xl_left", "emod_engineslots_xl_right"} },
-            new EngineType { Prefix = "emod_engine_xxl", Requirements = new[] {"emod_engineslots_xxl_left", "emod_engineslots_xxl_right"} },
+			new EngineType { Prefix = "emod_engine_xxl", Requirements = new[] {"emod_engineslots_xxl_left", "emod_engineslots_xxl_right"} },
             new EngineType { Prefix = "emod_engine_cxl", Requirements = new[] {"emod_engineslots_cxl_left", "emod_engineslots_cxl_right"} },
-            new EngineType { Prefix = "emod_engine_cxxl", Requirements = new[] {"emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"} },
+			new EngineType { Prefix = "emod_engine_cxxl", Requirements = new[] {"emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"} },
             new EngineType { Prefix = "emod_engine_light", Requirements = new[] {"emod_engineslots_light_left", "emod_engineslots_light_right"} }
         };
         
