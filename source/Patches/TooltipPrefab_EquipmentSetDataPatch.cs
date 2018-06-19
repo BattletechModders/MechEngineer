@@ -1,12 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
+using DynModLib;
 using Harmony;
+using TMPro;
 
 namespace MechEngineMod
 {
+    public class TooltipPrefab_EquipmentAdapter : Adapter<TooltipPrefab_Equipment>
+    {
+        public TooltipPrefab_EquipmentAdapter(TooltipPrefab_Equipment instance) : base(instance)
+        {
+        }
+        
+        public TextMeshProUGUI bonusesText
+        {
+            get { return traverse.Field("bonusesText").GetValue<TextMeshProUGUI>(); }
+        }
+        
+        public TextMeshProUGUI detailText
+        {
+            get { return traverse.Field("detailText").GetValue<TextMeshProUGUI>(); }
+        }
+    }
+
     [HarmonyPatch(typeof(TooltipPrefab_Equipment), "SetData")]
     public static class TooltipPrefab_EquipmentSetDataPatch
     {
@@ -27,10 +45,12 @@ namespace MechEngineMod
                     return;
                 }
 
+                var adapter = new TooltipPrefab_EquipmentAdapter(__instance);
+
                 var mechComponentDef = (MechComponentDef)data;
-                EngineTooltip.AdjustTooltip(__instance, panel, mechComponentDef);
-                Structure.AdjustTooltip(__instance, panel, mechComponentDef);
-                Armor.AdjustTooltip(__instance, panel, mechComponentDef);
+                EngineTooltip.AdjustTooltip(adapter, panel, mechComponentDef);
+                Structure.AdjustTooltip(adapter, panel, mechComponentDef);
+                Armor.AdjustTooltip(adapter, panel, mechComponentDef);
             }
             catch (Exception e)
             {
@@ -45,7 +65,7 @@ namespace MechEngineMod
             {
                 try
                 {
-                    panelReference = new WeakReference(__instance);
+                    panelReference.Target = __instance;
                 }
                 catch (Exception e)
                 {
@@ -61,7 +81,7 @@ namespace MechEngineMod
             {
                 try
                 {
-                    panelReference = new WeakReference(null);
+                    panelReference.Target = null;
                 }
                 catch (Exception e)
                 {

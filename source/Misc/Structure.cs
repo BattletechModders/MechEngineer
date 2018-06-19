@@ -34,7 +34,7 @@ namespace MechEngineMod
             return calculator.WeightSavings;
         }
         
-        internal static void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
+        internal static void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
             if (!mechComponentDef.IsStructure())
             {
@@ -45,6 +45,7 @@ namespace MechEngineMod
             var tonnage = calculator.WeightSavings;
 
             tooltip.bonusesText.text = string.Format("- {0} ton,  {1} / {2}", tonnage, calculator.Count, calculator.RequiredCount);
+            tooltip.bonusesText.SetAllDirty();
         }
 
         internal class StructureWeightSavingCalculator : WeightSavingSlotCalculator

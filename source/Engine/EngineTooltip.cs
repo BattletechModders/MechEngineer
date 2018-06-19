@@ -9,7 +9,7 @@ namespace MechEngineMod
     internal static class EngineTooltip
     {
         // show extended engine information (as its now shown anywhere else)
-        internal static void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
+        internal static void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
             var engineDef = mechComponentDef.GetEngineDef();
             if (engineDef == null)
@@ -56,8 +56,11 @@ namespace MechEngineMod
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += originalText;
+            tooltip.detailText.SetAllDirty();
 
-            tooltip.bonusesText.text = string.Format("- {0} Heat / Turn + {1} Top Speed", heatDissipation, additionalRunSpeed);
+            //tooltip.bonusesText.text = string.Format("- {0} Heat / Turn + {1} Top Speed", heatDissipation, additionalRunSpeed);
+            tooltip.bonusesText.text = string.Format("- {0} Heat / Turn", (object)heatDissipation);
+            tooltip.bonusesText.SetAllDirty();
         }
     }
 }

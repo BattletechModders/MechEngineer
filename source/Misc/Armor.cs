@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
-using BattleTech.UI.Tooltips;
 
 namespace MechEngineMod
 {
@@ -34,7 +33,7 @@ namespace MechEngineMod
             return calculator.WeightSavings;
         }
         
-        internal static void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
+        internal static void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
             if (!mechComponentDef.IsArmor())
             {
@@ -45,6 +44,7 @@ namespace MechEngineMod
             var tonnage = calculator.WeightSavings;
 
             tooltip.bonusesText.text = string.Format("- {0} ton,  {1} / {2}", tonnage, calculator.Count, calculator.RequiredCount);
+            tooltip.bonusesText.SetAllDirty();
         }
 
         internal class ArmorWeightSavingCalculator : WeightSavingSlotCalculator
