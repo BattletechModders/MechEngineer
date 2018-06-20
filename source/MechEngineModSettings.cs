@@ -89,7 +89,7 @@ namespace MechEngineMod
 
         // this controls the maximum (global) allowed jump jets.
         // currently set to 8 in case the game can't handle anymore
-        public int const_MaxNumberOfJJ = 8;
+        //public int const_MaxNumberOfJJ = 8;
 
         /*
 		these numbers determine how fast and slow mechs are allowed to go
@@ -99,8 +99,8 @@ namespace MechEngineMod
 			griffin walk = 5
 			spider walk = 8
 		*/
-        public int const_MinTTWalk = 2;
-        public int const_MaxTTWalk = 8;
+        //public int const_MinTTWalk = 2;
+        //public int const_MaxTTWalk = 8;
 
         /*
 		not sure why you would want to change these, but they are set here

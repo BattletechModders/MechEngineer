@@ -91,6 +91,8 @@
     <Compile Include="Patches\SkirmishMechBayPanelRequestResourcesPatch.cs" />
     <Compile Include="Patches\SimGameStateCreateComponentInstallWorkOrderPatch.cs" />
     <Compile Include="Patches\SimGameStateRespondToDefsLoadCompletePatch.cs" />
+    <Compile Include="Patches\StatTooltipDataSetHeatDataPatch.cs" />
+    <Compile Include="Patches\StatTooltipDataSetMovementDataPatch.cs" />
     <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatch.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />

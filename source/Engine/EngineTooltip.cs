@@ -29,8 +29,8 @@ namespace MechEngineMod
             Control.calc.CalcHeatSinks(engineDef, out minHeatSinks, out maxHeatSinks);
             var maxAdditionalHeatSinks = maxHeatSinks - minHeatSinks;
 
-            float walkSpeed, runSpeed, TTwalkSpeed;
-            Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out walkSpeed, out runSpeed, out TTwalkSpeed);
+            float walkSpeed, runSpeed;
+            Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out walkSpeed, out runSpeed);
             var additionalRunSpeed = runSpeed - UnityGameInstance.BattleTechGame.MechStatisticsConstants.MinSprintFactor;
             var gyroWeight = Control.calc.CalcGyroWeight(engineDef);
             var engineWeight = mechComponentDef.Tonnage - gyroWeight;

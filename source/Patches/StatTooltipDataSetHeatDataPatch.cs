@@ -4,34 +4,34 @@ using Harmony;
 
 namespace MechEngineMod
 {
-    [HarmonyPatch(typeof(MechStatisticsRules), "CalculateHeatEfficiencyStat")]
-    public static class MechStatisticsRulesCalculateHeatEfficiencyStatPatch
+    [HarmonyPatch(typeof(StatTooltipData), "SetHeatData")]
+    public static class StatTooltipDataSetHeatDataPatch
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
                 AccessTools.Method(typeof(HeatSinkDef), "get_DissipationCapacity"),
-                AccessTools.Method(typeof(MechStatisticsRulesCalculateHeatEfficiencyStatPatch), "DissipationCapacity")
+                AccessTools.Method(typeof(StatTooltipDataSetHeatDataPatch), "DissipationCapacity")
             );
         }
 
-        private static MechDef def;
+        private static MechDef mechDef;
 
-        public static void Prefix(MechDef mechDef)
+        public static void Prefix(MechDef def)
         {
-            def = mechDef;
+            mechDef = def;
         }
 
         public static void Postfix()
         {
-            def = null;
+            mechDef = null;
         }
 
         public static float DissipationCapacity(this HeatSinkDef @this)
         {
             if (@this.IsMainEngine())
             {
-                return EngineHeat.GetEngineHeatDissipation(def.Inventory);
+                return EngineHeat.GetEngineHeatDissipation(mechDef.Inventory);
             }
             return @this.DissipationCapacity;
         }

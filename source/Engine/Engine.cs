@@ -22,8 +22,8 @@ namespace MechEngineMod
 
             var tonnage = mech.tonnage;
 
-            float walkSpeed, runSpeed, TTWalkSpeed;
-            Control.calc.CalcSpeeds(engine.engineDef, tonnage, out walkSpeed, out runSpeed, out TTWalkSpeed);
+            float walkSpeed, runSpeed;
+            Control.calc.CalcSpeeds(engine.engineDef, tonnage, out walkSpeed, out runSpeed);
 
             mech.StatCollection.GetStatistic("WalkSpeed").SetValue(walkSpeed);
             mech.StatCollection.GetStatistic("RunSpeed").SetValue(runSpeed);
@@ -38,7 +38,8 @@ namespace MechEngineMod
             }
 
             var maxTonnage = mechDef.Chassis.Tonnage;
-            Control.calc.CalcSpeeds(engine.engineDef, maxTonnage, out walkSpeed, out runSpeed, out TTWalkSpeed);
+            Control.calc.CalcSpeeds(engine.engineDef, maxTonnage, out walkSpeed, out runSpeed);
+            TTWalkSpeed = Control.calc.CalcMovementPoints(engine.engineDef, maxTonnage);
 
             return true;
         }
