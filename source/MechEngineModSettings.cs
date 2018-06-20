@@ -47,14 +47,17 @@ namespace MechEngineMod
 			new EngineType { Prefix = "emod_engine_cxxl", Requirements = new[] {"emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"} },
             new EngineType { Prefix = "emod_engine_light", Requirements = new[] {"emod_engineslots_light_left", "emod_engineslots_light_right"} }
         };
-        
+
+        public bool FractionalAccounting = true; // not applied for engines and might not match 100% due to based on non-fractional accounting numbers
+        public bool AllowPartialWeightSavings = true; // similar to patchwork armor without any penalties and location requirements, also works for structure
+
         public string StructurePrefix = "emod_structureslots_";
         public WeightSavingSlotType[] StructureTypes = {
             new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endosteel", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 0.5f },
             new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endocomposite", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.25f },
             new WeightSavingSlotType { ComponentDefId = "emod_structureslots_clanendosteel", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.5f },
         };
-        
+
         public string ArmorPrefix = "emod_armorslots_";
         public WeightSavingSlotType[] ArmorTypes = {
             new WeightSavingSlotType { ComponentDefId = "emod_armorslots_lightferrosfibrous", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 1f - 1f / 1.06f },
@@ -80,27 +83,12 @@ namespace MechEngineMod
 		*/
         public bool UseGameWalkValues = true;
 
-        // set to false to only allow engines that produce integer walk values
-        public bool AllowNonIntWalkValues = true;
+        //// set to false to only allow engines that produce integer walk values
+        //public bool AllowNonIntWalkValues = true;
 
         // this setting controls if the allowed number of jump jets is rounded up or down
         // example: if false, TT walk speed of 2.1 allows 2 jump jets, if true, it allows 3 jump jets
         public bool JJRoundUp = false;
-
-        // this controls the maximum (global) allowed jump jets.
-        // currently set to 8 in case the game can't handle anymore
-        //public int const_MaxNumberOfJJ = 8;
-
-        /*
-		these numbers determine how fast and slow mechs are allowed to go
-		They are given in tabletop walk numbers.
-		Examples: 
-			urbanmech walk = 2
-			griffin walk = 5
-			spider walk = 8
-		*/
-        //public int const_MinTTWalk = 2;
-        //public int const_MaxTTWalk = 8;
 
         /*
 		not sure why you would want to change these, but they are set here

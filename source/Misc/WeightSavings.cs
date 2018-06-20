@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using UnityEngine;
 
 namespace MechEngineMod
 {
@@ -61,16 +63,39 @@ namespace MechEngineMod
                 return savings;
             }
 
-            savings.TonnageSaved = (tonnage * savings.SlotType.WeightSavingsFactor).RoundToHalf();
+            {
+                var tonnageSaved = tonnage * savings.SlotType.WeightSavingsFactor;
+                if (Control.settings.AllowPartialWeightSavings)
+                {
+                    var factor = (float)Mathf.Min(savings.Count, savings.RequiredCount) / savings.RequiredCount;
+                    tonnageSaved = tonnageSaved * factor;
+                }
+                savings.TonnageSaved = tonnageSaved.RoundStandard();
+            }
 
             if (mixed)
             {
                 savings.ErrorMessages.Add(slotName + ": Cannot mix-match different critical slot types");
             }
 
-            if (savings.Count > 0 && savings.Count != savings.RequiredCount)
+            // AllowPartialWeightSavings
+
+            if (savings.Count > 0)
             {
-                savings.ErrorMessages.Add(string.Format(slotName + ": Critical slots count does not match ({0} instead of {1})", savings.Count, savings.RequiredCount));
+                if (Control.settings.AllowPartialWeightSavings)
+                {
+                    if (savings.Count > savings.RequiredCount)
+                    {
+                        savings.ErrorMessages.Add(string.Format(slotName + ": Critical slots count exceeded ({0} / {1})", savings.Count, savings.RequiredCount));
+                    }
+                }
+                else
+                {
+                    if (savings.Count != savings.RequiredCount)
+                    {
+                        savings.ErrorMessages.Add(string.Format(slotName + ": Critical slots count does not match ({0} / {1})", savings.Count, savings.RequiredCount));
+                    }
+                }
             }
 
             return savings;

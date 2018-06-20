@@ -130,9 +130,18 @@ namespace MechEngineMod
             collection.PerformOperation(statistic, data.operation, variant);
         }
 
-        internal static float RoundToHalf(this float @this)
+        internal static float RoundStandard(this float @this)
         {
-            return Mathf.Round(@this * 2) / 2;
+            if (Control.settings.FractionalAccounting)
+            {
+                // kg rounding
+                return Mathf.Round(@this * 1000) / 1000;
+            }
+            else
+            {
+                // half ton rounding
+                return Mathf.Round(@this * 2) / 2;
+            }
         }
 
         internal static float RoundBy5(this float @this)
