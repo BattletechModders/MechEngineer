@@ -16,6 +16,15 @@ open my $handle, '<', "icons.txt";
 chomp(my @icons = <$handle>);
 close $handle;
 
+my %stockratings;
+{
+	open my $handle, '<', "stock_std_ratings.txt";
+	chomp(my @stockstdratings = <$handle>);
+	close $handle;
+	@stockratings{@stockstdratings} = ();
+}
+
+
 my $icon = "uixSvgIcon_equipment_Heatsink";
 # useful to browse icons
 sub next_icon {
@@ -72,7 +81,7 @@ while (my $line = <$info>)  {
 		$category = "basic";
 	}
 
-	if ($rating == 60 || $rating % 25 == 0) {
+	if ($rating == 60 || $rating % 100 == 0 || exists $stockratings{$rating}) {
 		$category = "basic";
 	} else {
 		#$category = "full";
