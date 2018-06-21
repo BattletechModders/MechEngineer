@@ -13,6 +13,10 @@ namespace MechEngineMod
         {
             try
             {
+                if (!Control.settings.EnableAvailabilityChecks)
+                {
+                    return;
+                }
                 Engine.RefreshAvailability(__instance, ___mechTonnage);
             }
             catch (Exception e)

@@ -29,6 +29,8 @@ namespace MechEngineMod
         public float AutoFixInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
         public float AutoFixInitialFixedAddedTonnage = 0; // not used anymore, was for cockpit 3 ton
 
+        public bool EnableAvailabilityChecks = true; // set this to true to have a faster mechlab experience on large engine counts 
+
         public string GearGryoPrefix = "Gear_Gyro_";
         public string GearCockpitPrefix = "Gear_Cockpit_";
 
