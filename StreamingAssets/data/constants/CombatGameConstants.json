@@ -2,5 +2,9 @@
     "Heat":
     {
         "InternalHeatSinkCount": 0
+    },
+    "ResolutionConstants":
+    {
+        "DefaultUnsteadyThreshold": 1
     }
 }
