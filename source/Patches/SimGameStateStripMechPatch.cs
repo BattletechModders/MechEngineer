@@ -6,8 +6,8 @@ using Harmony;
 
 namespace MechEngineMod
 {
-    [HarmonyPatch(typeof(SimGameState), "ReturnWorkOrderItemsToInventory")]
-    public static class SimGameStateReturnWorkOrderItemsToInventoryPatch
+    [HarmonyPatch(typeof(SimGameState), "StripMech")]
+    public static class SimGameStateStripMechPatch
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {

@@ -71,6 +71,7 @@
     <Compile Include="Misc\MechDefMods.cs" />
     <Compile Include="Misc\MechValidationRulesMods.cs" />
     <Compile Include="Misc\WeightSavings.cs" />
+    <Compile Include="Engine\EnginePersistanceSimGameState.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
     <Compile Include="Misc\ArmorStructure.cs" />
     <Compile Include="Misc\Chassis.cs" />
@@ -82,7 +83,9 @@
     <Compile Include="Patches\MechLabPanelGetCantSaveErrorStringPatch.cs" />
     <Compile Include="Patches\MechLabPanelGetNonFieldableErrorStringPatch.cs" />
     <Compile Include="Patches\MechValidationRulesValidateMechCanBeFieldedPatch.cs" />
+    <Compile Include="Patches\SimGameStateML_RepairComponentPatch.cs" />
     <Compile Include="Patches\SimGameStateMoveWorkOrderItemsToQueuePatch.cs" />
+    <Compile Include="Patches\SimGameStateStripMechPatch.cs" />
     <Compile Include="Patches\SimGameStateReturnWorkOrderItemsToInventoryPatch.cs" />
     <Compile Include="Patches\SimGameStateML_InstallComponentPatch.cs" />
     <Compile Include="Patches\SkirmishMechBayPanelLanceConfiguratorDataLoadedPatch.cs" />

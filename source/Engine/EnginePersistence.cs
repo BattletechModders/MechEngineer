@@ -108,38 +108,32 @@ namespace MechEngineMod
             }
         }
 
-        internal static bool AddItemStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
+        internal static void AddInternalItemsStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
         {
             var engineRef = mechComponentRef.GetEngineRef();
             if (engineRef == null)
             {
-                return true;
+                return;
             }
             
-            sim.AddItemStat(id, type, damaged);
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
                 sim.AddItemStat(componentDefID, typeof(HeatSinkDef), damaged);
             }
-
-            return false;
         }
 
-        internal static bool RemoveItemStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
+        internal static void RemoveInternalItemsStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
         {
             var engineRef = mechComponentRef.GetEngineRef();
             if (engineRef == null)
             {
-                return true;
+                return;
             }
             
-            sim.RemoveItemStat(id, type, damaged);
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
                 sim.RemoveItemStat(componentDefID, typeof(HeatSinkDef), damaged);
             }
-
-            return false;
         }
     }
 }
