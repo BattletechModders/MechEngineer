@@ -5,31 +5,31 @@ namespace MechEngineMod
     public class MechEngineModSettings : ModSettings
     {
         public int TechCostPerEngineTon = 1;
-        public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine
+        public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
 
         public bool EngineCritsEnabled = true;
         public int EngineHeatSinkCapacityAdjustmentPerCrit = -15;
+        
+        public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
-        public string AutoFixEnginePrefix = "emod_engine_std";
+        public string AutoFixEnginePrefix = "emod_engine_std"; // use these types of engines for the autofix
 
         public bool AutoFixMechDefGyro = true; // adds missing gyro
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
-        public bool AutoFixGyroUpgrades = true; // shrinks gyro upgrades
+        public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades that are size 3 to size 4
 
         public bool AutoFixMechDefCockpit = true; // adds missing cockpit
         public string AutoFixMechDefCockpitId = "Gear_Cockpit_Generic_Standard";
-        public bool AutoFixCockpitUpgrades = true; // adds tonnage to cockpit upgrades
-
-        public string[] AutoFixMechDefSkip = { };
-        public bool AutoFixChassisDefInitialTonnage = true;
-        public bool AutoFixChassisDefSlots = true; // add 2 torso slots at a cost of 2 leg slots per side
-
+        public bool AutoFixCockpitUpgrades = true; // adds 3 tons to cockpit upgrades that weigh 0 tons
+        
         public string[] AutoFixChassisDefSkip = { };
+        public bool AutoFixChassisDefSlots = true; // adds 2 torso slots at a cost of 2 leg slots per side if they match stock slot layouts
+        public bool AutoFixChassisDefInitialTonnage = true;
         public float AutoFixInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
-        public float AutoFixInitialFixedAddedTonnage = 0; // not used anymore, was for cockpit 3 ton
+        public float AutoFixInitialFixedAddedTonnage = 0; // not used anymore, was for cockpit 3 ton before cockpit became own item
 
-        public bool EnableAvailabilityChecks = true; // set this to true to have a faster mechlab experience on large engine counts 
+        public bool EnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts 
 
         public string GearGryoPrefix = "Gear_Gyro_";
         public string GearCockpitPrefix = "Gear_Cockpit_";
@@ -49,9 +49,10 @@ namespace MechEngineMod
             new EngineType { Prefix = "emod_engine_cxxl", Requirements = new[] {"emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"} },
             new EngineType { Prefix = "emod_engine_light", Requirements = new[] {"emod_engineslots_light_left", "emod_engineslots_light_right"} }
         };
-
-        public bool FractionalAccounting = true; // not applied for engines and might not match 100% due to based on non-fractional accounting numbers
-        public bool AllowPartialWeightSavings = true; // similar to patchwork armor without any penalties and location requirements, also works for structure
+        
+        public bool AllowMixingDoubleAndSingleHeatSinks = false; // only useful for patchwork like behavior
+        public bool FractionalAccounting = false; // not applied for engines and might not match 100% due to based on non-fractional accounting numbers
+        public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
 
         public string StructurePrefix = "emod_structureslots_";
         public WeightSavingSlotType[] StructureTypes = {
@@ -68,8 +69,6 @@ namespace MechEngineMod
             new WeightSavingSlotType { ComponentDefId = "emod_armorslots_stealth", RequiredCriticalSlotCount = 6, WeightSavingsFactor = 1f },
             new WeightSavingSlotType { ComponentDefId = "emod_armorslots_heavyferrosfibrous", RequiredCriticalSlotCount = 21, WeightSavingsFactor = 1f - 1f / 1.24f },
         };
-
-        public bool AllowMixingDoubleAndSingleHeatSinks = false;
 
         /* 
 		set to false to use TT walk values
