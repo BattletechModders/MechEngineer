@@ -31,10 +31,19 @@ namespace MechEngineMod
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
 
-            var htype = engineRef.IsDHS ? "Double Heat Sinks" : "Standard Heat Sinks";
-            tooltip.detailText.text += "<i>" + htype + "</i>" +
-                                       "   Internal: <b>" + engineDef.MinHeatSinks + "</b>" +
-                                       "   Additional: <b>" + engineRef.AdditionalHeatSinkCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
+            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks || engineRef.IsSHS)
+            {
+                tooltip.detailText.text += "<i>Standard Heat Sinks</i>" +
+                                           "   Internal: <b>" + engineRef.InternalSHSCount + "</b>" +
+                                           "   Additional: <b>" + engineRef.AdditionalSHSCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
+            }
+
+            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks || engineRef.IsDHS)
+            {
+                tooltip.detailText.text += "<i>Double Heat Sinks</i>" +
+                                           "   Internal: <b>" + engineRef.InternalDHSCount + "</b>" +
+                                           "   Additional: <b>" + engineRef.AdditionalDHSCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
+            }
 
             tooltip.detailText.text += "\r\n" +
                                        "<i>Speeds</i>" +

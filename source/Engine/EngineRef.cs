@@ -14,6 +14,15 @@ namespace MechEngineMod
             get { return !IsDHS; }
         }
 
+        internal int InternalSHSCount
+        {
+            get { return IsSHS ? engineDef.MinHeatSinks : 0; }
+        }
+        internal int InternalDHSCount
+        {
+            get { return IsDHS ? engineDef.MinHeatSinks : 0; }
+        }
+
         internal int AdditionalDHSCount;
         internal int AdditionalSHSCount;
         internal int AdditionalHeatSinkCount
@@ -115,12 +124,22 @@ namespace MechEngineMod
 
         internal string BonusValueA
         {
-            get { return string.Format("- {0} Heat / Turn", EngineHeatDissipation); }
+            get { return string.Format("- {0} Heat", EngineHeatDissipation); }
         }
 
         internal string BonusValueB
         {
-            get { return string.Format("{0} / {1} Slots", AdditionalHeatSinkCount, engineDef.MaxAdditionalHeatSinks); }
+            get
+            {
+                if (engineDef.MaxAdditionalHeatSinks == 0)
+                {
+                    return "";
+                }
+                else
+                {
+                    return string.Format("{0} {1} / {2}", IsDHS ? "DHS" : "SHS", engineDef.MinHeatSinks + AdditionalHeatSinkCount, engineDef.MaxHeatSinks);
+                }
+            }
         }
     }
 }
