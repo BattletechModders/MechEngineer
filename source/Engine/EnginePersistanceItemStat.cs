@@ -5,26 +5,26 @@ using Harmony;
 
 namespace MechEngineMod
 {
-    public static class EnginePersistanceSimGameState
+    public static class EnginePersistanceItemStat
     {
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions
                 .MethodReplacer(
                     AccessTools.Method(typeof(BaseComponentRef), "get_Def"),
-                    AccessTools.Method(typeof(EnginePersistanceSimGameState), "Def")
+                    AccessTools.Method(typeof(EnginePersistanceItemStat), "Def")
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(BaseComponentRef), "get_ComponentDefID"),
-                    AccessTools.Method(typeof(EnginePersistanceSimGameState), "ComponentDefID")
+                    AccessTools.Method(typeof(EnginePersistanceItemStat), "ComponentDefID")
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(SimGameState), "AddItemStat", new[] { typeof(string), typeof(Type), typeof(bool) }),
-                    AccessTools.Method(typeof(EnginePersistanceSimGameState), "AddItemStat")
+                    AccessTools.Method(typeof(EnginePersistanceItemStat), "AddItemStat")
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(SimGameState), "RemoveItemStat", new[] { typeof(string), typeof(Type), typeof(bool) }),
-                    AccessTools.Method(typeof(EnginePersistanceSimGameState), "RemoveItemStat")
+                    AccessTools.Method(typeof(EnginePersistanceItemStat), "RemoveItemStat")
                 );
         }
 

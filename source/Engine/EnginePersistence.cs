@@ -135,5 +135,30 @@ namespace MechEngineMod
                 sim.RemoveItemStat(componentDefID, typeof(HeatSinkDef), damaged);
             }
         }
+
+        internal static void FixSimGameUID(SimGameState sim, MechComponentRef componentRef)
+        {
+            var engineRef = componentRef.GetEngineRef();
+            if (engineRef == null)
+            {
+                return;
+            }
+
+            if (engineRef.UUID != null)
+            {
+                return;
+            }
+
+            engineRef.UUID = sim.GenerateSimGameUID();
+            componentRef.SetSimGameUID(engineRef.GetNewSimGameUID());
+        }
+
+        internal static void FixSimGameUID(SimGameState sim, MechDef mechDef)
+        {
+            foreach (var componentRef in mechDef.Inventory)
+            {
+                FixSimGameUID(sim, componentRef);
+            }
+        }
     }
 }

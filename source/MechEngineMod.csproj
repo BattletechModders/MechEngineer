@@ -67,12 +67,15 @@
     <Compile Include="Engine\EngineCrits.cs" />
     <Compile Include="Engine\EnginePersistence.cs" />
     <Compile Include="Engine\EngineTooltip.cs" />
+    <Compile Include="Patches\MechBayPanelOnGotoMechLabPatch.cs" />
+    <Compile Include="Patches\MechBayPaneOnRepairMechPatch.cs" />
+    <Compile Include="Patches\MechLabPanelCreateMechComponentItemPatch.cs" />
     <Compile Include="Patches\MechLabItemSlotElementRefreshInfoPatch.cs" />
     <Compile Include="Misc\Cockpit.cs" />
     <Compile Include="Misc\MechDefMods.cs" />
     <Compile Include="Misc\MechValidationRulesMods.cs" />
     <Compile Include="Misc\WeightSavings.cs" />
-    <Compile Include="Engine\EnginePersistanceSimGameState.cs" />
+    <Compile Include="Engine\EnginePersistanceItemStat.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
     <Compile Include="Misc\ArmorStructure.cs" />
     <Compile Include="Misc\Chassis.cs" />

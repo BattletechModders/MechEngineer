@@ -11,7 +11,7 @@ namespace MechEngineMod
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return EnginePersistanceSimGameState.Transpiler(instructions);
+            return EnginePersistanceItemStat.Transpiler(instructions);
         }
     }
 }
