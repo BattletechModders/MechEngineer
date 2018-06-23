@@ -99,18 +99,28 @@ namespace MechEngineMod
                    + (AdditionalDHSCount > 0 ? "+" + AdditionalDHSCount + "dhs": "");
         }
 
-        internal float GetEngineHeatDissipation()
+        internal float EngineHeatDissipation
         {
-            int minHeatSinks, maxHeatSinks;
-            Control.calc.CalcHeatSinks(engineDef, out minHeatSinks, out maxHeatSinks);
+            get
+            {
+                var dissipation = AdditionalDHSCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity * 2;
+                dissipation += AdditionalSHSCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
+                dissipation += (IsDHS ? 2 : 1) * engineDef.MinHeatSinks * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
 
-            var dissipation = AdditionalDHSCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity * 2;
-            dissipation += AdditionalSHSCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
-            dissipation += (IsDHS ? 2 : 1) * minHeatSinks * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
+                //Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engineDef.Rating + " minHeatSinks=" + minHeatSinks + " additionalHeatSinks=" + engineProps.AdditionalHeatSinkCount + " dissipation=" + dissipation);
 
-            //Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engineDef.Rating + " minHeatSinks=" + minHeatSinks + " additionalHeatSinks=" + engineProps.AdditionalHeatSinkCount + " dissipation=" + dissipation);
+                return dissipation;
+            }
+        }
 
-            return dissipation;
+        internal string BonusValueA
+        {
+            get { return string.Format("- {0} Heat / Turn", EngineHeatDissipation); }
+        }
+
+        internal string BonusValueB
+        {
+            get { return string.Format("{0} / {1} Slots", AdditionalHeatSinkCount, engineDef.MaxAdditionalHeatSinks); }
         }
     }
 }

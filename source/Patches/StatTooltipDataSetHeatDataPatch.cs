@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
@@ -29,9 +30,16 @@ namespace MechEngineMod
 
         public static float DissipationCapacity(this HeatSinkDef @this)
         {
-            if (@this.IsMainEngine())
+            try
             {
-                return EngineHeat.GetEngineHeatDissipation(mechDef.Inventory);
+                if (@this.IsMainEngine())
+                {
+                    return EngineHeat.GetEngineHeatDissipation(mechDef.Inventory);
+                }
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
             }
             return @this.DissipationCapacity;
         }

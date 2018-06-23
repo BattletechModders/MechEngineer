@@ -67,6 +67,7 @@
     <Compile Include="Engine\EngineCrits.cs" />
     <Compile Include="Engine\EnginePersistence.cs" />
     <Compile Include="Engine\EngineTooltip.cs" />
+    <Compile Include="Patches\MechLabItemSlotElementRefreshInfoPatch.cs" />
     <Compile Include="Misc\Cockpit.cs" />
     <Compile Include="Misc\MechDefMods.cs" />
     <Compile Include="Misc\MechValidationRulesMods.cs" />

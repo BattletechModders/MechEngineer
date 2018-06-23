@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
-using UnityEngine;
-using UnityEngine.EventSystems;
+using Harmony;
 
 namespace MechEngineMod
 {
@@ -78,7 +76,7 @@ namespace MechEngineMod
                 return Control.settings.EngineMissingFallbackHeatSinkCapacity;
             }
 
-            return engineRef.GetEngineHeatDissipation();
+            return engineRef.EngineHeatDissipation;
         }
 
         // only allow one engine part per specific location
@@ -108,12 +106,10 @@ namespace MechEngineMod
                 return null;
             }
 
-            var existingEngine = localInventory
-                .Where(x => x != null)
-                .Select(x => x.ComponentRef)
-                .FirstOrDefault(x => x != null && x.Def != null && x.Def.IsMainEngine());
+            var engineSlotElement = localInventory
+                .FirstOrDefault(x => x != null && x.ComponentRef != null && x.ComponentRef.Def != null && x.ComponentRef.Def.IsMainEngine());
 
-            if (existingEngine == null)
+            if (engineSlotElement == null)
             {
                 if (headSinkDef.IsDHSKit())
                 {
@@ -127,6 +123,8 @@ namespace MechEngineMod
                 }
             }
 
+            var engineRef = engineSlotElement.ComponentRef.GetEngineRef();
+
             if (mechLab.IsSimGame)
             {
                 if (dragItem.OriginalDropParentType != MechLabDropTargetType.InventoryList)
@@ -136,15 +134,13 @@ namespace MechEngineMod
                     );
                 }
 
-                if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == existingEngine.SimGameUID))
+                if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == engineRef.mechComponentRef.SimGameUID))
                 {
                     return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
                         string.Format("Cannot add {0}: Engine cannot be modified once installed, remove engine first", newComponentDef.Description.Name)
                     );
                 }
             }
-
-            var engineRef = existingEngine.GetEngineRef();
 
             if (headSinkDef.IsDHSKit())
             {
@@ -157,10 +153,9 @@ namespace MechEngineMod
 
                 if (!Control.settings.AllowMixingDoubleAndSingleHeatSinks && engineRef.AdditionalSHSCount > 0)
                 {
-                    return null;
-                    //return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                    //    string.Format("Cannot add {0}: Reinstall engine to remove additional heat sinks before converting", newComponentDef.Description.Name)
-                    //);
+                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
+                        string.Format("Cannot add {0}: Reinstall engine to remove additional heat sinks before converting", newComponentDef.Description.Name)
+                    );
                 }
 
                 engineRef.IsDHS = true;
@@ -200,6 +195,8 @@ namespace MechEngineMod
 
             EnginePersistence.SaveEngineState(engineRef, mechLab);
             mechLab.ValidateLoadout(false);
+
+            Traverse.Create(engineSlotElement).Method("RefreshInfo").GetValue();
 
             return new MechLabLocationWidgetOnMechLabDropPatch.RemoveItemResult();
         }

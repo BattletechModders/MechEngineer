@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
@@ -12,11 +13,11 @@ namespace MechEngineMod
             return instructions
                 .MethodReplacer(
                     AccessTools.Method(typeof(MovementCapabilitiesDef), "get_MaxWalkDistance"),
-                    AccessTools.Method(typeof(StatTooltipDataSetMovementDataPatch), "MaxWalkDistance")
+                    AccessTools.Method(typeof(StatTooltipDataSetMovementDataPatch), "OverrideMaxWalkDistance")
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(MovementCapabilitiesDef), "get_MaxSprintDistance"),
-                    AccessTools.Method(typeof(StatTooltipDataSetMovementDataPatch), "MaxSprintDistance")
+                    AccessTools.Method(typeof(StatTooltipDataSetMovementDataPatch), "OverrideMaxSprintDistance")
                 );
         }
 
@@ -36,16 +37,32 @@ namespace MechEngineMod
             __instance.dataList.Add("TT Walk MP", string.Format("{0}", TTWalkSpeed));
         }
 
-        public static float MaxWalkDistance(this MovementCapabilitiesDef @this)
+        public static float OverrideMaxWalkDistance(this MovementCapabilitiesDef @this)
         {
-            Engine.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
-            return walkSpeed;
+            try
+            {
+                Engine.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
+                return walkSpeed;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+                return @this.MaxWalkDistance;
+            }
         }
 
-        public static float MaxSprintDistance(this MovementCapabilitiesDef @this)
+        public static float OverrideMaxSprintDistance(this MovementCapabilitiesDef @this)
         {
-            Engine.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
-            return runSpeed;
+            try
+            {
+                Engine.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
+                return runSpeed;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+                return @this.MaxSprintDistance;
+            }
         }
     }
 }

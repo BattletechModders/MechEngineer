@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
@@ -11,7 +12,7 @@ namespace MechEngineMod
         {
             return instructions.MethodReplacer(
                 AccessTools.Method(typeof(HeatSinkDef), "get_DissipationCapacity"),
-                AccessTools.Method(typeof(MechStatisticsRulesCalculateHeatEfficiencyStatPatch), "DissipationCapacity")
+                AccessTools.Method(typeof(MechStatisticsRulesCalculateHeatEfficiencyStatPatch), "OverrideDissipationCapacity")
             );
         }
 
@@ -27,11 +28,18 @@ namespace MechEngineMod
             def = null;
         }
 
-        public static float DissipationCapacity(this HeatSinkDef @this)
+        public static float OverrideDissipationCapacity(this HeatSinkDef @this)
         {
-            if (@this.IsMainEngine())
+            try
             {
-                return EngineHeat.GetEngineHeatDissipation(def.Inventory);
+                if (@this.IsMainEngine())
+                {
+                    return EngineHeat.GetEngineHeatDissipation(def.Inventory);
+                }
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
             }
             return @this.DissipationCapacity;
         }

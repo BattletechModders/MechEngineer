@@ -23,15 +23,8 @@ namespace MechEngineMod
                 return;
             }
 
-            var heatDissipation = engineRef.GetEngineHeatDissipation();
-
-            int minHeatSinks, maxHeatSinks;
-            Control.calc.CalcHeatSinks(engineDef, out minHeatSinks, out maxHeatSinks);
-            var maxAdditionalHeatSinks = maxHeatSinks - minHeatSinks;
-
             float walkSpeed, runSpeed;
             Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out walkSpeed, out runSpeed);
-            var additionalRunSpeed = runSpeed - UnityGameInstance.BattleTechGame.MechStatisticsConstants.MinSprintFactor;
             var gyroWeight = Control.calc.CalcGyroWeight(engineDef);
             var engineWeight = mechComponentDef.Tonnage - gyroWeight;
 
@@ -40,8 +33,8 @@ namespace MechEngineMod
 
             var htype = engineRef.IsDHS ? "Double Heat Sinks" : "Standard Heat Sinks";
             tooltip.detailText.text += "<i>" + htype + "</i>" +
-                                       "   Internal: <b>" + minHeatSinks + "</b>" +
-                                       "   Additional: <b>" + engineRef.AdditionalHeatSinkCount + "</b> / <b>" + maxAdditionalHeatSinks + "</b>";
+                                       "   Internal: <b>" + engineDef.MinHeatSinks + "</b>" +
+                                       "   Additional: <b>" + engineRef.AdditionalHeatSinkCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
 
             tooltip.detailText.text += "\r\n" +
                                        "<i>Speeds</i>" +
@@ -58,8 +51,7 @@ namespace MechEngineMod
             tooltip.detailText.text += originalText;
             tooltip.detailText.SetAllDirty();
 
-            //tooltip.bonusesText.text = string.Format("- {0} Heat / Turn + {1} Top Speed", heatDissipation, additionalRunSpeed);
-            tooltip.bonusesText.text = string.Format("- {0} Heat / Turn", (object)heatDissipation);
+            tooltip.bonusesText.text = engineRef.BonusValueA;
             tooltip.bonusesText.SetAllDirty();
         }
     }

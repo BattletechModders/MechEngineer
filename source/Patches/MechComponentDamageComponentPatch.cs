@@ -67,18 +67,25 @@ namespace MechEngineMod
 
         public static void Postfix(Mech __instance)
         {
-            if (Message != null)
+            try
             {
-                __instance.Combat.MessageCenter.PublishMessage(Message);
-                Message = null;
-            }
+                if (Message != null)
+                {
+                    __instance.Combat.MessageCenter.PublishMessage(Message);
+                    Message = null;
+                }
 
-            foreach (var addition in MessageAdditions)
-            {
-                var message = new AddSequenceToStackMessage(new ShowActorInfoSequence(__instance, addition.Text, addition.Nature, true));
-                __instance.Combat.MessageCenter.PublishMessage(message);
+                foreach (var addition in MessageAdditions)
+                {
+                    var message = new AddSequenceToStackMessage(new ShowActorInfoSequence(__instance, addition.Text, addition.Nature, true));
+                    __instance.Combat.MessageCenter.PublishMessage(message);
+                }
+                MessageAdditions.Clear();
             }
-            MessageAdditions.Clear();
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
     }
 }

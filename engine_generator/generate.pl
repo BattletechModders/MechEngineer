@@ -4,6 +4,8 @@ use strict;
 use warnings;
 
 use lib qw(lib);
+use List::Util qw[min max];
+use POSIX;
 use Mustache::Simple;
 
 my $table_file = 'engine_tables.txt';
@@ -56,6 +58,8 @@ while (my $line = <$info>)  {
 	print($rating_string, " ");
 	my $gyro_tons = int($rating / 100 + 0.5);
 	my $gyro_cost = 300000 * $gyro_tons;
+	my $heat_dissipation = min(floor($rating / 25), 10) * 3;
+	my $additional_slots = max(floor($rating / 25 - 10), 0);
 
 	my $generate_engine_sub = sub {
 		my $prefix = shift;
@@ -67,7 +71,9 @@ while (my $line = <$info>)  {
 			RATING => $rating_string,
 			TONNAGE => $engine_tonnage + $gyro_tons,
 			COST => $engine_cost_per_rating * $rating + $gyro_cost, # we assume 75 ton mech
-			ICON => next_icon()
+			ICON => next_icon(),
+			BONUSA => "- ${heat_dissipation} Heat / Turn",
+			BONUSB => $additional_slots == 0 ? "" : "+ $additional_slots Slots"
 		};
 
 		my $json = $tache->render("${prefix}_template.json", $engine);

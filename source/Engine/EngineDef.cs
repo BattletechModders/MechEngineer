@@ -20,11 +20,20 @@ namespace MechEngineMod
             Type = Control.settings.EngineTypes.FirstOrDefault(c => id.StartsWith(c.Prefix));
             Rating = int.Parse(match.Groups[2].Value);
             Def = componentDef;
+
+            Control.calc.CalcHeatSinks(this, out MinHeatSinks, out MaxHeatSinks);
         }
 
         public override string ToString()
         {
             return Def.Description.Id + " Rating=" + Rating;
+        }
+
+        internal int MinHeatSinks, MaxHeatSinks;
+
+        internal int MaxAdditionalHeatSinks
+        {
+            get { return MaxHeatSinks - MinHeatSinks; }
         }
     }
 }
