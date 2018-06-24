@@ -8,7 +8,7 @@ namespace MechEngineMod
         internal static float AdditionalTonnage(MechDef mechDef)
         {
             float tonnage = 0;
-            tonnage += Engine.AdditionalHeatSinkTonnage(mechDef);
+            tonnage += EngineMisc.TonnageChanges(mechDef);
             tonnage -= ArmorStructure.TonnageSavings(mechDef);
             return tonnage;
         }

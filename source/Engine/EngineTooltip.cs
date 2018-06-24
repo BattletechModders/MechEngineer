@@ -11,13 +11,13 @@ namespace MechEngineMod
         // show extended engine information (as its now shown anywhere else)
         internal static void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
-            var engineDef = mechComponentDef.GetEngineDef();
+            var engineDef = mechComponentDef.GetEngineCoreDef();
             if (engineDef == null)
             {
                 return;
             }
 
-            var engineRef = panel.activeMechInventory.Select(x => x.GetEngineRef()).FirstOrDefault(x => x != null);
+            var engineRef = panel.activeMechInventory.GetEngineCoreRef();
             if (engineRef == null)
             {
                 return;
@@ -25,8 +25,6 @@ namespace MechEngineMod
 
             float walkSpeed, runSpeed;
             Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out walkSpeed, out runSpeed);
-            var gyroWeight = Control.calc.CalcGyroWeight(engineDef);
-            var engineWeight = mechComponentDef.Tonnage - gyroWeight;
 
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
@@ -52,8 +50,9 @@ namespace MechEngineMod
 
             tooltip.detailText.text += "\r\n" +
                                        "<i>Weights</i>" +
-                                       "   Engine: <b>" + engineWeight + "</b> Ton" +
-                                       "   Gyro: <b>" + gyroWeight + "</b> Ton";
+                                       "   Engine: <b>" + engineRef.EngineTonnage + "</b> Ton" +
+                                       "   Gyro: <b>" + engineRef.CoreDef.GyroTonnage + "</b> Ton" +
+                                       "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b> Ton";
 
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += "\r\n";

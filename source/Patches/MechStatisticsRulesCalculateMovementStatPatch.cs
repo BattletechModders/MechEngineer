@@ -39,7 +39,7 @@ namespace MechEngineMod
             {
 
                 float walkSpeed = 0, runSpeed = 0, TTWalkSpeed = 0;
-                Engine.CalculateMovementStat(def, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
+                EngineMisc.CalculateMovementStat(def, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
                 return runSpeed;
             }
             catch (Exception e)

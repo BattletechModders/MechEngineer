@@ -17,7 +17,7 @@ namespace MechEngineMod
                 {
                     return;
                 }
-                Engine.RefreshAvailability(__instance, ___mechTonnage);
+                EngineMisc.RefreshAvailability(__instance, ___mechTonnage);
             }
             catch (Exception e)
             {

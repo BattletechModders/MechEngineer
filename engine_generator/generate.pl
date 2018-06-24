@@ -65,15 +65,18 @@ while (my $line = <$info>)  {
 		my $prefix = shift;
 		my $engine_tonnage = shift;
 		my $engine_cost_per_rating = shift;
-
+		
+		my $engine_cost = $engine_cost_per_rating * $rating; # we assume 75 ton mech
+		$engine_cost = $engine_cost / 2; # this is only the cost of the core, shielding is an extra component
+		
 		my $engine = {
 			ID => "${prefix}_${rating_string}",
 			RATING => $rating_string,
 			TONNAGE => $engine_tonnage + $gyro_tons,
-			COST => $engine_cost_per_rating * $rating + $gyro_cost, # we assume 75 ton mech
+			COST => $engine_cost + $gyro_cost,
 			ICON => next_icon(),
 			BONUSA => "- ${heat_dissipation} Heat / Turn",
-			BONUSB => $additional_slots == 0 ? "" : "+ $additional_slots Slots"
+			BONUSB => $additional_slots == 0 ? " " : "+ $additional_slots Slots"
 		};
 
 		my $json = $tache->render("${prefix}_template.json", $engine);
@@ -94,29 +97,7 @@ while (my $line = <$info>)  {
 		next;
 	}
 	
-	$generate_engine_sub->("emod_engine_std", $cols[5], 5000);
-
-	if ($rating % 100 == 0) {
-		$category = "basic";
-	} else {
-		#$category = "full";
-		next;
-	}
-
-	$generate_engine_sub->("emod_engine_xl", $cols[7], 20000);
-
-	if ($rating % 100 == 0) {
-		$category = "exotics";
-	} else {
-		#$category = "full";
-		next;
-	}
-
-	$generate_engine_sub->("emod_engine_light", $cols[6], 10000);
-	$generate_engine_sub->("emod_engine_compact", $cols[4], 5000);
-	$generate_engine_sub->("emod_engine_cxl", $cols[7], 30000);
-	$generate_engine_sub->("emod_engine_xxl", $cols[8], 25000);
-	$generate_engine_sub->("emod_engine_cxxl", $cols[8], 40000);
+	$generate_engine_sub->("emod_engine", $cols[5], 5000);
 }
 
 close $info;

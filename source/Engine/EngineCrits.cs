@@ -46,7 +46,7 @@ namespace MechEngineMod
             }
 
             var mech = (Mech)mechComponent.parent;
-            var mainEngineComponent = mech.allComponents.FirstOrDefault(c => c != null && c.componentDef != null && c.componentDef.IsMainEngine());
+            var mainEngineComponent = mech.allComponents.FirstOrDefault(c => c != null && c.componentDef != null && c.componentDef.IsEngineCore());
             if (mainEngineComponent == null) // no main engine left
             {
                 return true;
