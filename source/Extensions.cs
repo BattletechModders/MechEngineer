@@ -20,6 +20,12 @@ namespace MechEngineMod
             return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.EngineSlotPrefix);
         }
 
+        // engine center slots
+        internal static bool IsEngineCenterSlots(this MechComponentDef componentDef)
+        {
+            return componentDef.AllowedLocations == ChassisLocations.CenterTorso && IsEngineSlots(componentDef);
+        }
+
         // only main engine
         internal static bool IsEngineCore(this MechComponentDef componentDef)
         {

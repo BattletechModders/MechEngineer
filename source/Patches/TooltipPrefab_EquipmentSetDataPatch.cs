@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech;
-using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using DynModLib;
 using Harmony;
@@ -23,13 +22,16 @@ namespace MechEngineMod
         {
             get { return traverse.Field("detailText").GetValue<TextMeshProUGUI>(); }
         }
+
+        public TextMeshProUGUI tonnageText
+        {
+            get { return traverse.Field("tonnageText").GetValue<TextMeshProUGUI>(); }
+        }
     }
 
     [HarmonyPatch(typeof(TooltipPrefab_Equipment), "SetData")]
     public static class TooltipPrefab_EquipmentSetDataPatch
     {
-        public static WeakReference panelReference = new WeakReference(null);
-
         public static void Postfix(TooltipPrefab_Equipment __instance, object data)
         {
             try
@@ -39,7 +41,7 @@ namespace MechEngineMod
                     return;
                 }
 
-                var panel = panelReference.Target as MechLabPanel;
+                var panel = MechLab.Current;
                 if (panel == null)
                 {
                     return;
@@ -54,38 +56,6 @@ namespace MechEngineMod
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
-            }
-        }
-
-        [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
-        public static class MechLabPanelLoadMechPatch
-        {
-            public static void Postfix(MechLabPanel __instance)
-            {
-                try
-                {
-                    panelReference.Target = __instance;
-                }
-                catch (Exception e)
-                {
-                    Control.mod.Logger.LogError(e);
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(MechLabPanel), "ExitMechLab")]
-        public static class MechLabPanelExitMechLabPatch
-        {
-            public static void Postfix(MechLabPanel __instance)
-            {
-                try
-                {
-                    panelReference.Target = null;
-                }
-                catch (Exception e)
-                {
-                    Control.mod.Logger.LogError(e);
-                }
             }
         }
     }

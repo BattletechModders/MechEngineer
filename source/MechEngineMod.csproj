@@ -74,6 +74,7 @@
     <Compile Include="Engine\EngineTooltip.cs" />
     <Compile Include="Patches\MechBayPanelOnGotoMechLabPatch.cs" />
     <Compile Include="Patches\MechBayPaneOnRepairMechPatch.cs" />
+    <Compile Include="Patches\MechLab.cs" />
     <Compile Include="Patches\MechLabPanelCreateMechComponentItemPatch.cs" />
     <Compile Include="Patches\MechLabItemSlotElementRefreshInfoPatch.cs" />
     <Compile Include="Misc\Cockpit.cs" />

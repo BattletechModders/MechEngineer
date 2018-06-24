@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
@@ -53,6 +54,8 @@ namespace MechEngineMod
                                        "   Engine: <b>" + engineRef.EngineTonnage + "</b> Ton" +
                                        "   Gyro: <b>" + engineRef.CoreDef.GyroTonnage + "</b> Ton" +
                                        "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b> Ton";
+
+            tooltip.tonnageText.text = string.Format("{0}", engineRef.Tonnage);
 
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += "\r\n";
