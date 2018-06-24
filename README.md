@@ -11,33 +11,68 @@ or
 * install [ModTek](https://github.com/Mpstark/ModTek/releases) using [instructions here](https://github.com/Mpstark/ModTek)
 * install [DynModLib](https://github.com/CptMoore/DynModLib/releases) using [instructions here](https://github.com/CptMoore/DynModLib)
 
+## Suggested Mods
+
+Use these mods to maximize enjoyment
+* [CBT Heat](https://github.com/McFistyBuns/CBTHeat) - replaces overheat damage to be crit rolls
+* [CBT Movement](https://github.com/McFistyBuns/CBTMovement) - movement reduces accuracy
+* [CBT Piloting](https://github.com/McFistyBuns/CBTPiloting) - mech can stumble by chance
+* [Pansar](https://github.com/hokvel/pansar) - applies armor ratio enforcement according to CBT rules
+
 ## Features
 
-* added std engine type
-* mechlab enforces to use an engine
-* added xl engine type and side torso xl engine parts
-* mechlab enforces side torso parts for xl engines
-* crit engine parts reduce speed, destroyed engine parts destroy mech
-* calculate walk and run speeds based on engine rating and mech tonnage
-* adjust movement speed summary stat based on engine rating
-* jump jets should now be limited to the integer distance of the mech's TT walk speed
-* added endo-steel critical slots to reduce structure weight by half
-* mechlab enforces the use of all 14 critical slots when choosing endo-steel
-* added ferros-fibrous critical slots to reduce armor weight by 1/12
-* mechlab enforces the use of all 14 critical slots when choosing ferros-fibrous
-* add all free heat sinks an engine supports, select type of heat sinks for engine by installing either double or single heatsinks on mech
-* mechlab enforces either single or double heat sink types but no mix
-* adjust heat performance summary stat based on engine rating
-* mechlab enforces only one gyro for center torso, also gryo to be 1 crit high
-* hide incompatible engines for mech
-* engine tooltip now gives info on speed and heatsink capability in mechlab
-* auto-adds engines to all newly bought and salvaged mechs that are missing them otherwise
-* internal structure of mechs weights 10% of maximum chassis weight
-* initial tonnage is the weight of internal structure + the cockpit weight of 3 tons
+* Engine ratings
+  * defines the walk and sprint speeds of a mech
+  * determines the amount of jump jets a mech can mount
+* Engine types
+  * defines the weight and space use of an engine
+  * Standard, XL, Light, Compact, XXL, Clan XL and XXL variants
+* Engine crits
+  * each crit reduces heat sink dissipation
+  * on third crit, destroy engine
+  * each destroyed slot of an engine counts as a critical hit
+* Engine heat sinks
+  * global heat dissipation removed
+  * engines come with internal heat sinks already installed
+  * can add additional heat sinks to an engine through drag & drop
+  * can convert an engine to use DHS heat sinks instead of SHS through drag & drop of an DHS conversion kit
+* Armor and Structure components
+  * these provide weight savings and in turn require critical slots
+  * Endo Steel, Endo Composite, Clan Endo Steel
+  * Ferros Fibrous, Heavy FF, Light FF, Clan FF
+* MechLab enhancements
+  * fixes to have a better approximation of slot count in a mech (12 torso slots, 2 leg slots, 2 head due to cockpit etc..)
+  * enforces that gyro, cockpit and engine parts are mounted
+  * enforce engine side torso requirements
+  * does not allow to mix heat sink types (can be disabled)
+  * updated summary and enhanced tooltip info for movement and heat management 
+  * hide engine ratings that would make the mech slower or faster than allowed
+* Auto fixes existing mechs on load
+  * reduces initial tonnage to 10% structure
+  * auto adds cockpit and gyro
+  * auto adds engine components
+  * auto fix chassis to have inventory sizes that match the CBT standard implemented in this mod (* actuators are still missing)
+  * fun fact, the atlas is perfectly auto-fixed
+* Prepared item packs
+  * enabled by modifying the mod.json and removing the "disabled_" prefixes
+  * standard package, that provides lore* and time appropiate items to the game (*lore as the game sees fit, so LosTech is OK)
+  * exotic package, adds in stuff like clan tech
+  * test package, to play around in skirmish mechlab with everythig
+* Settings
+  * modders can add more components
+  * players can disable some of the restritions
+  * there are additional settings like factional accounting or partical weight savings for structre and armor components
+  * see [Settings Source Code](https://github.com/CptMoore/MechEngineMod/blob/master/source/MechEngineModSettings.cs) for all available settings
 
 TODO
-
 * see [issues list](https://github.com/CptMoore/MechEngineMod/issues)
+
+## Contributors
+
+* Aliencreature - ideas, lore and rules, item variants, testing
+* CptMoore - ideas, rules, coding, testing, core items
+* CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
+* TotalMeltdown - ideas, lore and rules
 
 ## Download
 

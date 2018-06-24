@@ -11,9 +11,7 @@ namespace MechEngineMod
         public int EngineHeatSinkCapacityAdjustmentPerCrit = -15;
         
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
-
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
-
         public bool AutoFixMechDefGyro = true; // adds missing gyro
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
         public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades that are size 3 to size 4
