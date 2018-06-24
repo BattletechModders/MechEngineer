@@ -32,7 +32,7 @@ namespace MechEngineMod
         {
             try
             {
-                if (@this.IsMainEngine())
+                if (@this.IsEngineCore())
                 {
                     return EngineHeat.GetEngineHeatDissipation(mechDef.Inventory);
                 }

@@ -41,7 +41,7 @@ namespace MechEngineMod
         {
             try
             {
-                Engine.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
+                EngineMisc.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
                 return walkSpeed;
             }
             catch (Exception e)
@@ -55,7 +55,7 @@ namespace MechEngineMod
         {
             try
             {
-                Engine.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
+                EngineMisc.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
                 return runSpeed;
             }
             catch (Exception e)

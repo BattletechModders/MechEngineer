@@ -38,9 +38,9 @@ namespace MechEngineMod
                 {
                     hasSingle = true;
                 }
-                else if (componentDef.IsMainEngine())
+                else if (componentDef.IsEngineCore())
                 {
-                    var engineRef = componentRef.GetEngineRef();
+                    var engineRef = componentRef.GetEngineCoreRef(null);
                     if (engineRef == null)
                     {
                         continue;
@@ -66,11 +66,7 @@ namespace MechEngineMod
 
         internal static float GetEngineHeatDissipation(MechComponentRef[] inventory)
         {
-            var engineRef = inventory
-                .Where(x => x != null)
-                .Select(x => x.GetEngineRef())
-                .FirstOrDefault(x => x != null);
-
+            var engineRef = inventory.GetEngineCoreRef();
             if (engineRef == null)
             {
                 return Control.settings.EngineMissingFallbackHeatSinkCapacity;
@@ -107,7 +103,7 @@ namespace MechEngineMod
             }
 
             var engineSlotElement = localInventory
-                .FirstOrDefault(x => x != null && x.ComponentRef != null && x.ComponentRef.Def != null && x.ComponentRef.Def.IsMainEngine());
+                .FirstOrDefault(x => x != null && x.ComponentRef != null && x.ComponentRef.Def != null && x.ComponentRef.Def.IsEngineCore());
 
             if (engineSlotElement == null)
             {
@@ -123,7 +119,7 @@ namespace MechEngineMod
                 }
             }
 
-            var engineRef = engineSlotElement.ComponentRef.GetEngineRef();
+            var engineRef = localInventory.Where(c => c != null).Select(c => c.ComponentRef).GetEngineCoreRef();
 
             if (mechLab.IsSimGame)
             {
@@ -134,7 +130,7 @@ namespace MechEngineMod
                     );
                 }
 
-                if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == engineRef.mechComponentRef.SimGameUID))
+                if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == engineRef.ComponentRef.SimGameUID))
                 {
                     return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
                         string.Format("Cannot add {0}: Engine cannot be modified once installed, remove engine first", newComponentDef.Description.Name)
@@ -163,7 +159,7 @@ namespace MechEngineMod
             else
             {
                 int minHeatSinks, maxHeatSinks;
-                Control.calc.CalcHeatSinks(engineRef.engineDef, out minHeatSinks, out maxHeatSinks);
+                Control.calc.CalcHeatSinks(engineRef.CoreDef, out minHeatSinks, out maxHeatSinks);
 
                 if (engineRef.AdditionalHeatSinkCount >= maxHeatSinks - minHeatSinks)
                 {

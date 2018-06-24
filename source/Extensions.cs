@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using UnityEngine;
 
@@ -12,16 +14,16 @@ namespace MechEngineMod
             return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.EnginePartPrefix);
         }
 
-        // only main engine
-        internal static bool IsMainEngine(this MechComponentDef componentDef)
+        // engine slots
+        internal static bool IsEngineSlots(this MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.MainEnginePrefix);
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.EngineSlotPrefix);
         }
 
-        // engine category to use for auto fixing chassis
-        internal static bool IsAutoFixEngine(this MechComponentDef componentDef)
+        // only main engine
+        internal static bool IsEngineCore(this MechComponentDef componentDef)
         {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.AutoFixEnginePrefix);
+            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.EngineCorePrefix);
         }
 
         // we want to know about center torso upgrade (gyros), since we reduce their size
@@ -94,31 +96,77 @@ namespace MechEngineMod
         }
 
 
-        internal static EngineDef GetEngineDef(this MechComponentDef @this)
+        internal static EngineCoreDef GetEngineCoreDef(this MechComponentDef @this)
         {
-            if (@this == null || !@this.IsMainEngine())
+            if (@this == null || !@this.IsEngineCore())
             {
                 return null;
             }
 
-            return new EngineDef(@this);
+            return new EngineCoreDef(@this);
         }
 
+        internal static EngineCoreRef GetEngineCoreRef(this MechDef @this)
+        {
+            return GetEngineCoreRef(@this.Inventory);
+        }
 
-        internal static EngineRef GetEngineRef(this MechComponentRef @this)
+        internal static EngineCoreRef GetEngineCoreRef(this IEnumerable<MechComponentRef> componentRefs)
+        {
+            EngineCoreDef engineDef = null;
+            MechComponentRef enginComponentRef = null;
+            EngineType engineType = null;
+            foreach (var componentRef in componentRefs)
+            {
+                var componentDef = componentRef.Def;
+
+                if (!componentDef.IsEnginePart())
+                {
+                    continue;
+                }
+
+                if (engineDef == null)
+                {
+                    engineDef = componentDef.GetEngineCoreDef();
+                    if (engineDef != null)
+                    {
+                        enginComponentRef = componentRef;
+                    }
+                }
+
+                if (engineType == null)
+                {
+                    engineType = Control.settings.EngineTypes.FirstOrDefault(c => componentDef.Description.Id == c.ComponentTypeID);
+                }
+
+                if (engineDef != null && engineType != null)
+                {
+                    break;
+                }
+            }
+
+            if (engineDef == null)
+            {
+                return null;
+            }
+
+            return new EngineCoreRef(enginComponentRef, engineDef, engineType);
+        }
+
+        internal static EngineCoreRef GetEngineCoreRef(this MechComponentRef @this, EngineType engineType)
         {
             if (@this == null || @this.Def == null)
             {
                 return null;
             }
 
-            var engineDef = @this.Def.GetEngineDef();
+            var engineDef = @this.Def.GetEngineCoreDef();
             if (engineDef == null)
             {
                 return null;
             }
 
-            return new EngineRef(@this, engineDef);
+            return new EngineCoreRef(@this, engineDef, engineType);
         }
 
         internal static void PerformOperation(this StatCollection collection, Statistic statistic, StatisticEffectData data)

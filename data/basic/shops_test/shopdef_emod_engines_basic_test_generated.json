@@ -11,205 +11,181 @@
    },
    "Inventory" : [
       {
-         "ID" : "emod_engine_std_060",
+         "ID" : "emod_engine_060",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_100",
+         "ID" : "emod_engine_100",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_xl_100",
+         "ID" : "emod_engine_145",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_145",
+         "ID" : "emod_engine_155",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_155",
+         "ID" : "emod_engine_170",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_170",
+         "ID" : "emod_engine_180",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_180",
+         "ID" : "emod_engine_200",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_200",
+         "ID" : "emod_engine_205",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_xl_200",
+         "ID" : "emod_engine_210",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_205",
+         "ID" : "emod_engine_225",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_210",
+         "ID" : "emod_engine_230",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_225",
+         "ID" : "emod_engine_240",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_230",
+         "ID" : "emod_engine_245",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_240",
+         "ID" : "emod_engine_250",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_245",
+         "ID" : "emod_engine_255",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_250",
+         "ID" : "emod_engine_260",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_255",
+         "ID" : "emod_engine_265",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_260",
+         "ID" : "emod_engine_270",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_265",
+         "ID" : "emod_engine_275",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_270",
+         "ID" : "emod_engine_280",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_275",
+         "ID" : "emod_engine_285",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_280",
+         "ID" : "emod_engine_300",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_285",
+         "ID" : "emod_engine_305",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_300",
+         "ID" : "emod_engine_325",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_xl_300",
+         "ID" : "emod_engine_340",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_305",
+         "ID" : "emod_engine_345",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_325",
+         "ID" : "emod_engine_370",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_340",
+         "ID" : "emod_engine_380",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_345",
+         "ID" : "emod_engine_390",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_std_370",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_std_380",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_std_390",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_std_400",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_xl_400",
+         "ID" : "emod_engine_400",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0

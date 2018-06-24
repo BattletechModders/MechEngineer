@@ -23,6 +23,18 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engineslots_std_center",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engineslots_xl_center",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engineslots_xl_left",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,

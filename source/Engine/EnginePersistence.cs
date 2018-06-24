@@ -21,7 +21,7 @@ namespace MechEngineMod
 
             var componentRef = item.ComponentRef;
 
-            var engineRef = componentRef.GetEngineRef();
+            var engineRef = componentRef.GetEngineCoreRef(null);
             if (engineRef == null)
             {
                 return;
@@ -55,15 +55,15 @@ namespace MechEngineMod
             return @ref;
         }
 
-        internal static void SaveEngineState(EngineRef engineRef, MechLabPanel panel)
+        internal static void SaveEngineState(EngineCoreRef engineCoreRef, MechLabPanel panel)
         {
-            var oldSimGameUID = engineRef.mechComponentRef.SimGameUID;
-            var newSimGameUID = engineRef.GetNewSimGameUID();
+            var oldSimGameUID = engineCoreRef.ComponentRef.SimGameUID;
+            var newSimGameUID = engineCoreRef.GetNewSimGameUID();
             if (oldSimGameUID != newSimGameUID)
             {
                 // Control.mod.Logger.LogDebug("saving new state of engine=" + engineRef.engineDef.Def.Description.Id + " old=" + oldSimGameUID + " new=" + newSimGameUID);
 
-                engineRef.mechComponentRef.SetSimGameUID(newSimGameUID);
+                engineCoreRef.ComponentRef.SetSimGameUID(newSimGameUID);
                 // the only ones actually relying on SimGameUID are these work orders, so we have to change them
                 // hopefully no previous or other working order lists are affected
                 ChangeWorkOrderSimGameUID(panel, oldSimGameUID, newSimGameUID);
@@ -110,7 +110,7 @@ namespace MechEngineMod
 
         internal static void AddInternalItemsStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
         {
-            var engineRef = mechComponentRef.GetEngineRef();
+            var engineRef = mechComponentRef.GetEngineCoreRef(null);
             if (engineRef == null)
             {
                 return;
@@ -124,7 +124,7 @@ namespace MechEngineMod
 
         internal static void RemoveInternalItemsStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
         {
-            var engineRef = mechComponentRef.GetEngineRef();
+            var engineRef = mechComponentRef.GetEngineCoreRef(null);
             if (engineRef == null)
             {
                 return;
@@ -133,6 +133,31 @@ namespace MechEngineMod
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
                 sim.RemoveItemStat(componentDefID, typeof(HeatSinkDef), damaged);
+            }
+        }
+
+        internal static void FixSimGameUID(SimGameState sim, MechComponentRef componentRef)
+        {
+            var engineRef = componentRef.GetEngineCoreRef(null);
+            if (engineRef == null)
+            {
+                return;
+            }
+
+            if (engineRef.UUID != null)
+            {
+                return;
+            }
+
+            engineRef.UUID = sim.GenerateSimGameUID();
+            componentRef.SetSimGameUID(engineRef.GetNewSimGameUID());
+        }
+
+        internal static void FixSimGameUID(SimGameState sim, MechDef mechDef)
+        {
+            foreach (var componentRef in mechDef.Inventory)
+            {
+                FixSimGameUID(sim, componentRef);
             }
         }
     }

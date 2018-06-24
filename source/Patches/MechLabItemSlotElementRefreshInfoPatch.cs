@@ -1,76 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using BattleTech;
 using BattleTech.UI;
 using Harmony;
+using TMPro;
 
 namespace MechEngineMod
 {
     [HarmonyPatch(typeof(MechLabItemSlotElement), "RefreshInfo")]
     internal static class MechLabItemSlotElementRefreshInfoPatch
     {
-        private static EngineRef engineRef;
-
-        internal static void Prefix(this MechLabItemSlotElement __instance)
+        internal static void Postfix(this MechLabItemSlotElement __instance, TextMeshProUGUI ___nameText, TextMeshProUGUI ___bonusTextA, TextMeshProUGUI ___bonusTextB)
         {
             try
             {
-                engineRef = __instance.ComponentRef.GetEngineRef();
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-        }
-
-        internal static void Postfix()
-        {
-            engineRef = null;
-        }
-
-        internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return instructions
-                .MethodReplacer(
-                    AccessTools.Method(typeof(MechComponentDef), "get_BonusValueA"),
-                    AccessTools.Method(typeof(MechLabItemSlotElementRefreshInfoPatch), "OverrideBonusValueA")
-                )
-                .MethodReplacer(
-                    AccessTools.Method(typeof(MechComponentDef), "get_BonusValueB"),
-                    AccessTools.Method(typeof(MechLabItemSlotElementRefreshInfoPatch), "OverrideBonusValueB")
-                );
-        }
-
-        internal static string OverrideBonusValueA(this MechComponentDef @this)
-        {
-            try
-            {
-                if (engineRef != null)
+                var engineRef = __instance.ComponentRef.GetEngineCoreRef(null);
+                if (engineRef == null)
                 {
-                    return engineRef.BonusValueA;
+                    return;
                 }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-            return @this.BonusValueA;
-        }
 
-        internal static string OverrideBonusValueB(this MechComponentDef @this)
-        {
-            try
-            {
-                if (engineRef != null)
-                {
-                    return engineRef.BonusValueB;
-                }
+                ___bonusTextA.text = engineRef.BonusValueA;
+                ___bonusTextB.text = engineRef.BonusValueB;
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
-            return @this.BonusValueB;
         }
     }
 }

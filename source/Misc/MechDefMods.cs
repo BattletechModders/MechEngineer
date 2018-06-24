@@ -23,7 +23,7 @@ namespace MechEngineMod
 
                 Cockpit.AddCockpitIfPossible(mechDef);
                 Gyro.AddGyroIfPossible(mechDef);
-                Engine.AddEngineIfPossible(mechDef);
+                EngineMisc.AddEngineIfPossible(mechDef);
             }
         }
     }

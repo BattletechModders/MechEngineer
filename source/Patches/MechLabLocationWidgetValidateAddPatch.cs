@@ -31,7 +31,13 @@ namespace MechEngineMod
                     return;
                 }
 
-                Engine.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                EngineMisc.EngineSlotsValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                if (!__result)
+                {
+                    return;
+                }
+
+                EngineMisc.EngineCoreValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
                 if (!__result)
                 {
                     return;

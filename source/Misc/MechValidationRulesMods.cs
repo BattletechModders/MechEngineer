@@ -12,7 +12,7 @@ namespace MechEngineMod
         {
             ArmorStructure.ValidationRulesCheck(mechDef, ref errorMessages);
             EngineHeat.ValidationRulesCheck(mechDef, ref errorMessages);
-            Engine.ValidationRulesCheck(mechDef, ref errorMessages);
+            EngineMisc.ValidationRulesCheck(mechDef, ref errorMessages);
             Gyro.ValidationRulesCheck(mechDef, ref errorMessages);
             Cockpit.ValidationRulesCheck(mechDef, ref errorMessages);
         }

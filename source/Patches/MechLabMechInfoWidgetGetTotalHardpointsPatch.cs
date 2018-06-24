@@ -14,7 +14,7 @@ namespace MechEngineMod
         {
             try
             {
-                Engine.SetJumpJetHardpointCount(__instance, ___mechLab, ___hardpoints);
+                EngineMisc.SetJumpJetHardpointCount(__instance, ___mechLab, ___hardpoints);
             }
             catch (Exception e)
             {

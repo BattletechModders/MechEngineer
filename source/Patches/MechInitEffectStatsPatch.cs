@@ -12,7 +12,7 @@ namespace MechEngineMod
         {
             try
             {
-                Engine.InitEffectstats(__instance);
+                EngineMisc.InitEffectstats(__instance);
             }
             catch (Exception e)
             {

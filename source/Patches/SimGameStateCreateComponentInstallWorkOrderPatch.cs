@@ -12,7 +12,7 @@ namespace MechEngineMod
         {
             try
             {
-                Engine.ChangeInstallationCosts(mechComponent, __result);
+                EngineMisc.ChangeInstallationCosts(mechComponent, __result);
             }
             catch (Exception e)
             {

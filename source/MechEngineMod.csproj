@@ -46,6 +46,10 @@
     <Reference Include="DynModLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\DynModLib\DynModLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\BattleTech_Data\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,15 +68,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DictionarySerializer.cs" />
     <Compile Include="Engine\EngineCrits.cs" />
     <Compile Include="Engine\EnginePersistence.cs" />
     <Compile Include="Engine\EngineTooltip.cs" />
+    <Compile Include="Patches\MechBayPanelOnGotoMechLabPatch.cs" />
+    <Compile Include="Patches\MechBayPaneOnRepairMechPatch.cs" />
+    <Compile Include="Patches\MechLabPanelCreateMechComponentItemPatch.cs" />
     <Compile Include="Patches\MechLabItemSlotElementRefreshInfoPatch.cs" />
     <Compile Include="Misc\Cockpit.cs" />
     <Compile Include="Misc\MechDefMods.cs" />
     <Compile Include="Misc\MechValidationRulesMods.cs" />
     <Compile Include="Misc\WeightSavings.cs" />
-    <Compile Include="Engine\EnginePersistanceSimGameState.cs" />
+    <Compile Include="Engine\EnginePersistanceItemStat.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
     <Compile Include="Misc\ArmorStructure.cs" />
     <Compile Include="Misc\Chassis.cs" />
@@ -80,7 +88,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MechLabSlotPatches.cs" />
     <Compile Include="Patches\MechLabLocationWidgetOnMechLabDropPatch.cs" />
-    <Compile Include="Engine\EngineRef.cs" />
+    <Compile Include="Engine\EngineCoreRef.cs" />
     <Compile Include="Patches\MechLabPanelGetCantSaveErrorStringPatch.cs" />
     <Compile Include="Patches\MechLabPanelGetNonFieldableErrorStringPatch.cs" />
     <Compile Include="Patches\MechValidationRulesValidateMechCanBeFieldedPatch.cs" />
@@ -98,7 +106,7 @@
     <Compile Include="Patches\StatTooltipDataSetHeatDataPatch.cs" />
     <Compile Include="Patches\StatTooltipDataSetMovementDataPatch.cs" />
     <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatch.cs" />
-    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Engine\EngineMisc.cs" />
     <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />
     <Compile Include="Misc\CalculateTonnageFacade.cs" />
     <Compile Include="Patches\MechLabMechInfoWidgetCalculateTonnagePatch.cs" />
@@ -115,7 +123,7 @@
     <Compile Include="Misc\Gyro.cs" />
     <Compile Include="Patches\UpgradeDefFromJSONPatch.cs" />
     <Compile Include="Patches\ChassisDefFromJSONPatch.cs" />
-    <Compile Include="Engine\EngineDef.cs" />
+    <Compile Include="Engine\EngineCoreDef.cs" />
     <Compile Include="Engine\EngineCalculator.cs" />
     <Compile Include="MechEngineModSettings.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateHeatEfficiencyStatPatch.cs" />
