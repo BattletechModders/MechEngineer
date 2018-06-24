@@ -127,6 +127,13 @@ namespace MechEngineMod
                 dissipation += AdditionalSHSCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
                 dissipation += (IsDHS ? 2 : 1) * CoreDef.MinHeatSinks * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
 
+                // can't enforce heatsinkdef earlier as apparently in same cases the Def is a generic one and does not derive from HeatSinkDef (Tooltips)
+                var heatSinkDef = CoreDef.Def as HeatSinkDef;
+                if (heatSinkDef != null)
+                {
+                    dissipation += heatSinkDef.DissipationCapacity;
+                }
+
                 //Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engineDef.Rating + " minHeatSinks=" + minHeatSinks + " additionalHeatSinks=" + engineProps.AdditionalHeatSinkCount + " dissipation=" + dissipation);
 
                 return dissipation;
