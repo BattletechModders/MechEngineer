@@ -9,9 +9,9 @@
         "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "Dagda XXL",
-        "UIName" : "CXXL Engine",
+        "UIName" : "CXXL Engine CT",
         "Id" : "emod_engineslots_cxxl_center",
-        "Name" : "Clan XXL Engine",
+        "Name" : "Clan XXL Engine CT",
         "Details" : "The Clan Extra-Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The cXXL fusion engine is one third the mass for the same performance, but extrudes into the side torsos of a Battlemech and produces additional waste heat.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
