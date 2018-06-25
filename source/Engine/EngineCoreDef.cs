@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using BattleTech;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal class EngineCoreDef
     {

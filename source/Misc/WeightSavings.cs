@@ -4,7 +4,7 @@ using System.Linq;
 using BattleTech;
 using UnityEngine;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal class WeightSavings
     {

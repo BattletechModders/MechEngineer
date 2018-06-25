@@ -3,7 +3,7 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal static class ArmorStructure
     {

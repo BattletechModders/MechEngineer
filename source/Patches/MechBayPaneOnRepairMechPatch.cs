@@ -2,7 +2,7 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechBayPanel), "OnRepairMech")]
     internal static class MechBayPaneOnRepairMechPatch

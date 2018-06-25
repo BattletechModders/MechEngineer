@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(SimGameState), "RespondToDefsLoadComplete")]
     public static class SimGameStateRespondToDefsLoadCompletePatch

@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using Object = System.Object;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), "OnMechLabDrop")]
     public static class MechLabLocationWidgetOnMechLabDropPatch

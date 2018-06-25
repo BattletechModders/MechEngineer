@@ -3,7 +3,7 @@ using BattleTech.Data;
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabInventoryWidget), "OnAddItem")]
     public static class MechLabInventoryWidgetOnAddItemPatch

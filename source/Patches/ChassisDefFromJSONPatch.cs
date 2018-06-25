@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(ChassisDef), "FromJSON")]
     public static class ChassisDefFromJSONPatch

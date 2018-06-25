@@ -2,7 +2,7 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     public static class MechLab
     {

@@ -5,7 +5,7 @@ using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), "ValidateAdd", new[] { typeof(MechComponentDef) })]
     public static class MechLabLocationWidgetValidateAddPatch

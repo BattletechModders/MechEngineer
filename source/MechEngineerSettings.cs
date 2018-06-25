@@ -1,8 +1,8 @@
 ﻿using DynModLib;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
-    public class MechEngineModSettings : ModSettings
+    public class MechEngineerSettings : ModSettings
     {
         public int TechCostPerEngineTon = 1;
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback

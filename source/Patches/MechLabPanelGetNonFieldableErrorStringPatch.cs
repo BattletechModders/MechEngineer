@@ -5,7 +5,7 @@ using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabPanel), "GetNonFieldableErrorString")]
     public static class MechLabPanelGetNonFieldableErrorStringPatch

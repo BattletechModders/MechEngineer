@@ -7,8 +7,8 @@
     <ProjectGuid>{599517CB-3973-4D93-8DAF-47AEF02209CB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MechEngineMod</RootNamespace>
-    <AssemblyName>MechEngineMod</AssemblyName>
+    <RootNamespace>MechEngineer</RootNamespace>
+    <AssemblyName>MechEngineer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -126,7 +126,7 @@
     <Compile Include="Patches\ChassisDefFromJSONPatch.cs" />
     <Compile Include="Engine\EngineCoreDef.cs" />
     <Compile Include="Engine\EngineCalculator.cs" />
-    <Compile Include="MechEngineModSettings.cs" />
+    <Compile Include="MechEngineerSettings.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateHeatEfficiencyStatPatch.cs" />
     <Compile Include="Extensions.cs" />
   </ItemGroup>

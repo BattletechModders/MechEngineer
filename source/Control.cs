@@ -7,13 +7,13 @@ using BattleTech;
 using DynModLib;
 using Logger = HBS.Logging.Logger;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     public static class Control
     {
         internal static Mod mod;
 
-        internal static MechEngineModSettings settings = new MechEngineModSettings();
+        internal static MechEngineerSettings settings = new MechEngineerSettings();
         internal static EngineCalculator calc = new EngineCalculator();
 
         public static void Start(string modDirectory, string json)

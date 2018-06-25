@@ -1,11 +1,11 @@
 {
-	"Name": "MechEngineMod-advanced",
+	"Name": "MechEngineer",
 	"Author": "TT walk Calculations by Crusher Bob, Exotics by Aliencreature and Coding by CptMoore",
-	"Website": "https://github.com/CptMoore/MechEngineMod",
+	"Website": "https://github.com/CptMoore/MechEngineer",
 
 	"Enabled": true,
 	"DependsOn": ["DynModLib"],
-	"DLL": "MechEngineMod.dll",
+	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineMod.Control.Start",
 	
 	"Manifest": [

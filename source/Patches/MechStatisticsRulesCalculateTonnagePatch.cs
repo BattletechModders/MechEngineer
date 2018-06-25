@@ -3,7 +3,7 @@ using BattleTech;
 using Harmony;
 using UnityEngine;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateTonnage")]
     public static class MechStatisticsRulesCalculateTonnagePatch

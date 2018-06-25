@@ -4,7 +4,7 @@ using System.Linq;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(SimGameState), "ML_RepairComponent")]
     public static class SimGameStateML_RepairComponentPatch

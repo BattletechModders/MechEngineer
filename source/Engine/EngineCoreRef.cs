@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using BattleTech;
 using Newtonsoft.Json;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal partial class EngineCoreRef
     {

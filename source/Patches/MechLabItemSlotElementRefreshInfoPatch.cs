@@ -3,7 +3,7 @@ using BattleTech.UI;
 using Harmony;
 using TMPro;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabItemSlotElement), "RefreshInfo")]
     internal static class MechLabItemSlotElementRefreshInfoPatch

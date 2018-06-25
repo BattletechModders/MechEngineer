@@ -3,7 +3,7 @@ using System.Linq;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal static class Chassis
     {

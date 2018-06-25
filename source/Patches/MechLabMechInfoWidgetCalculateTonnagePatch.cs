@@ -6,7 +6,7 @@ using Harmony;
 using TMPro;
 using UnityEngine;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabMechInfoWidget), "CalculateTonnage")]
     public static class MechLabMechInfoWidgetCalculateTonnagePatch

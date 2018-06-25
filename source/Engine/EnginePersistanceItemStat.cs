@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     public static class EnginePersistanceItemStat
     {

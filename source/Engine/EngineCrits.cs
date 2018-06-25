@@ -2,7 +2,7 @@
 using System.Linq;
 using BattleTech;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal static class EngineCrits
     {

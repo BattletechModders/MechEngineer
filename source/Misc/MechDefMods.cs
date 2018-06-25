@@ -4,7 +4,7 @@ using System.Linq;
 using BattleTech;
 using BattleTech.Data;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal static class MechDefMods
     {

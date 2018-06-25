@@ -5,7 +5,7 @@ using DynModLib;
 using Harmony;
 using TMPro;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     public class TooltipPrefab_EquipmentAdapter : Adapter<TooltipPrefab_Equipment>
     {

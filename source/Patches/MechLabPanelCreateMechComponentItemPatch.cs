@@ -3,7 +3,7 @@ using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabPanel), "CreateMechComponentItem")]
     internal static class MechLabPanelCreateMechComponentItemPatch

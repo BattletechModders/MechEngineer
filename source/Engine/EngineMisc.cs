@@ -5,7 +5,7 @@ using BattleTech;
 using BattleTech.UI;
 using UnityEngine;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal static class EngineMisc
     {

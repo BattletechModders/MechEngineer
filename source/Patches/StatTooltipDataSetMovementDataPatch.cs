@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(StatTooltipData), "SetMovementData")]
     public static class StatTooltipDataSetMovementDataPatch

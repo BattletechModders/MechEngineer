@@ -9,7 +9,7 @@ using BattleTech.DataObjects;
 using HBS.Logging;
 using Object = System.Object;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
     public static class MechLabPanelLoadMechPatch

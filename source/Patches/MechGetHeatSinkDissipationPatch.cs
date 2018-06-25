@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(Mech), "GetHeatSinkDissipation")]
     public static class MechGetHeatSinkDissipationPatch

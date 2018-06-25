@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     internal partial class EngineCoreRef
     {

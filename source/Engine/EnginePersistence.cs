@@ -6,7 +6,7 @@ using BattleTech.UI;
 using Harmony;
 using UnityEngine;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     // methods that are used for inv -> mech and mech -> inv
     internal static class EnginePersistence

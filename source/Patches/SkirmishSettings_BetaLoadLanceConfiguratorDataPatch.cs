@@ -3,7 +3,7 @@ using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineMod
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(SkirmishSettings_Beta), "LoadLanceConfiguratorData")]
     public static class SkirmishSettings_BetaLoadLanceConfiguratorDataPatch
