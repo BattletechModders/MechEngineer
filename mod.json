@@ -6,7 +6,7 @@
 	"Enabled": true,
 	"DependsOn": ["DynModLib"],
 	"DLL": "MechEngineer.dll",
-	"DLLEntryPoint": "MechEngineMod.Control.Start",
+	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
 	"Manifest": [
 		{

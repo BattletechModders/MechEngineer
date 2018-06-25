@@ -1,4 +1,4 @@
-# MechEngineMod
+# MechEngineer
 BattleTech mod that adds engines and other components to mechs based on TT rules.
 
 ## Requirements
@@ -62,10 +62,10 @@ Use these mods to maximize enjoyment
   * modders can add more components
   * players can disable some of the restritions
   * there are additional settings like factional accounting or partical weight savings for structre and armor components
-  * see [Settings Source Code](https://github.com/CptMoore/MechEngineMod/blob/master/source/MechEngineModSettings.cs) for all available settings
+  * see [Settings Source Code](https://github.com/CptMoore/MechEngineer/blob/master/source/MechEngineerSettings.cs) for all available settings
 
 TODO
-* see [issues list](https://github.com/CptMoore/MechEngineMod/issues)
+* see [issues list](https://github.com/CptMoore/MechEngineer/issues)
 
 ## Contributors
 
@@ -76,7 +76,7 @@ TODO
 
 ## Download
 
-Downloads can be found on [github](https://github.com/CptMoore/MechEngineMod/releases).
+Downloads can be found on [github](https://github.com/CptMoore/MechEngineer/releases).
 
 ## Install
 
