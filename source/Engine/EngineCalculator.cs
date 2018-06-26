@@ -36,9 +36,10 @@ namespace MechEngineer
             runSpeed = CalcSprintDistance(mp);
         }
 
-        internal int CalcInstallTechCost(EngineCoreDef engineCoreDef)
+        internal void CalcInstallCosts(EngineCoreDef engineCoreDef, ref int cbillCost, ref int techCost)
         {
-            return Mathf.CeilToInt(Control.settings.TechCostPerEngineTon * engineCoreDef.Def.Tonnage);
+            cbillCost += Mathf.CeilToInt(engineCoreDef.Def.Tonnage * 10000);
+            techCost += Mathf.CeilToInt(engineCoreDef.Def.Tonnage);
         }
 
         internal void CalcHeatSinks(EngineCoreDef engineCoreDef, out int minHeatSinks, out int maxHeatSinks)

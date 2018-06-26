@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using Harmony;
 using UnityEngine;
 
 namespace MechEngineer
@@ -49,6 +50,7 @@ namespace MechEngineer
                 return;
             }
 
+            // removing is always fast and cheap
             if (workOrderEntry.DesiredLocation == ChassisLocations.None)
             {
                 return;
@@ -60,7 +62,14 @@ namespace MechEngineer
                 return;
             }
 
-            workOrderEntry.SetCost(Control.calc.CalcInstallTechCost(engine.CoreDef));
+            var cbillCost = workOrderEntry.GetCBillCost();
+            var techCost = workOrderEntry.GetCost();
+
+            Control.calc.CalcInstallCosts(engine.CoreDef, ref cbillCost, ref techCost);
+
+            var traverse = Traverse.Create(workOrderEntry);
+            traverse.Field("CBillCost").SetValue(cbillCost);
+            traverse.Field("Cost").SetValue(techCost);
         }
 
         // only allow one engine slot per specific location
