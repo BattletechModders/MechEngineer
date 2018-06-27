@@ -154,6 +154,10 @@ namespace MechEngineer
                 {
                     bonusText += string.Format(" {0} / {1}", CoreDef.MinHeatSinks + AdditionalHeatSinkCount, CoreDef.MaxHeatSinks);
                 }
+                else
+                {
+                    bonusText += string.Format(" {0}", CoreDef.MinHeatSinks);
+                }
                 return bonusText;
             }
         }
