@@ -13,6 +13,7 @@ namespace MechEngineer
             try
             {
                 Gyro.AdjustGyroUpgrade(__instance);
+                LegUpgrade.AdjustLegUpgrade(__instance);
                 Cockpit.AdjustCockpitUpgrade(__instance);
             }
             catch (Exception e)

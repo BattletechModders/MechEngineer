@@ -40,6 +40,19 @@ namespace MechEngineer
                    && componentDef.Description.Id.StartsWith(Control.settings.GearGryoPrefix);
         }
 
+        // we want to know about leg upgrades, since we reduce their size
+        internal static bool IsLegUpgrade(this MechComponentDef componentDef)
+        {
+            return componentDef.OnlyAllowedIn(ChassisLocations.Legs)
+                   && componentDef.ComponentType == ComponentType.Upgrade;
+        }
+
+        internal static bool OnlyAllowedIn(this MechComponentDef componentDef, ChassisLocations locations)
+        {
+            return (componentDef.AllowedLocations & locations) != 0 // can be inserted in locations
+                   && (componentDef.AllowedLocations & locations) == 0; // can't be inserted anywhere outside of locations
+        }
+
         // we want to know about center torso upgrade (gyros), since we reduce their size
         internal static bool IsCockpit(this MechComponentDef componentDef)
         {

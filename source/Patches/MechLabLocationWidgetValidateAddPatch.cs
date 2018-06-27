@@ -10,7 +10,6 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechLabLocationWidget), "ValidateAdd", new[] { typeof(MechComponentDef) })]
     public static class MechLabLocationWidgetValidateAddPatch
     {
-        // allow gyro upgrades to be 1 slot and still only be added once
         public static void Postfix(
             MechLabLocationWidget __instance,
             MechComponentDef newComponentDef,
@@ -26,6 +25,12 @@ namespace MechEngineer
                 }
 
                 Gyro.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                if (!__result)
+                {
+                    return;
+                }
+
+                LegUpgrade.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
                 if (!__result)
                 {
                     return;
