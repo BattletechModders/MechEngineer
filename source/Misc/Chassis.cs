@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using Harmony;
@@ -18,6 +19,28 @@ namespace MechEngineer
             AutoFixSlots(chassisDef);
         }
 
+        private static readonly Dictionary<string, float> OriginalInitialTonnages = new Dictionary<string, float>();
+
+        public static float? GetOriginalTonnage(ChassisDef chassisDef)
+        {
+            float value;
+            if (OriginalInitialTonnages.TryGetValue(chassisDef.Description.Id, out value))
+            {
+                return value;
+            }
+            return null;
+        }
+
+        private static void SetOriginalTonnage(this ChassisDef chassisDef)
+        {
+            if (OriginalInitialTonnages.ContainsKey(chassisDef.Description.Id))
+            {
+                return;
+            }
+
+            OriginalInitialTonnages[chassisDef.Description.Id] = chassisDef.InitialTonnage;
+        }
+
         internal static void AutoFixInitialTonnage(ChassisDef chassisDef)
         {
             if (!Control.settings.AutoFixChassisDefInitialTonnage)
@@ -26,7 +49,8 @@ namespace MechEngineer
             }
 
             {
-                var tonnage = chassisDef.Tonnage * Control.settings.AutoFixInitialToTotalTonnageFactor + Control.settings.AutoFixInitialFixedAddedTonnage;
+                SetOriginalTonnage(chassisDef);
+                var tonnage = chassisDef.Tonnage * Control.settings.AutoFixChassisDefInitialToTotalTonnageFactor;
                 var info = typeof(ChassisDef).GetProperty("InitialTonnage");
                 var value = Convert.ChangeType(tonnage, info.PropertyType);
                 info.SetValue(chassisDef, value, null);

@@ -1,0 +1,10 @@
+{
+    "MechTags" : {
+        "items" : [
+            "unit_mech",
+            "unit_medium",
+            "unit_release",
+            "unit_ready",
+        ]
+    }
+}

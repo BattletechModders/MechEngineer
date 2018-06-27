@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.Data;
+using UnityEngine;
 
 namespace MechEngineer
 {
@@ -21,9 +22,14 @@ namespace MechEngineer
                     continue;
                 }
 
+                mechDef.Refresh();
+
+                float originalTotalTonnage = 0, maxValue = 0;
+                MechStatisticsRules.CalculateTonnage(mechDef, ref originalTotalTonnage, ref maxValue);
+
                 Cockpit.AddCockpitIfPossible(mechDef);
                 Gyro.AddGyroIfPossible(mechDef);
-                EngineMisc.AddEngineIfPossible(mechDef);
+                EngineMisc.AddEngineIfPossible(mechDef, originalTotalTonnage);
             }
         }
     }

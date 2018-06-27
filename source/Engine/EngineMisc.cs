@@ -255,29 +255,36 @@ namespace MechEngineer
         }
 
 
-        internal static void AddEngineIfPossible(MechDef mechDef)
+        internal static void AddEngineIfPossible(MechDef mechDef, float originalTotalTonnage)
         {
             if (!Control.settings.AutoFixMechDefEngine)
             {
                 return;
             }
 
-            //Control.mod.Logger.LogDebug("A Id=" + mechDef.Description.Id);
-
-            mechDef.Refresh();
-
-            //Control.mod.Logger.LogDebug("B DataManager=" + mechDef.DataManager);
-
             if (mechDef.Inventory.GetEngineCoreRef() != null)
             {
                 return;
             }
 
-            float currentValue = 0, maxValue = 0;
-            MechStatisticsRules.CalculateTonnage(mechDef, ref currentValue, ref maxValue);
+            float freeTonnage;
+            {
+                float currentTotalTonnage = 0, maxValue = 0;
+                MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
+                
+                var originalInitialTonnage = Chassis.GetOriginalTonnage(mechDef.Chassis);
+                if (originalInitialTonnage.HasValue) // either use the freed up tonnage from the initial tonnage fix
+                {
+                    freeTonnage = originalInitialTonnage.Value - mechDef.Chassis.InitialTonnage;
+                    freeTonnage -= currentTotalTonnage - originalTotalTonnage;
+                }
+                
+                else // or use up available total tonnage
+                {
+                    freeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
+                }
+            }
 
-            var tonnage = mechDef.Chassis.Tonnage;
-            var maxEngineTonnage = tonnage - currentValue;
             var maxEngine = (EngineCoreDef) null;
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
@@ -286,7 +293,7 @@ namespace MechEngineer
             {
                 var heatSinkDef = keyvalue.Value;
 
-                if (heatSinkDef.Tonnage > maxEngineTonnage)
+                if (heatSinkDef.Tonnage > freeTonnage)
                 {
                     continue;
                 }
@@ -315,7 +322,7 @@ namespace MechEngineer
             var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
             { // remove superfluous jump jets
-                var maxJetCount = Control.calc.CalcJumpJetCount(maxEngine, tonnage);
+                var maxJetCount = Control.calc.CalcJumpJetCount(maxEngine, mechDef.Chassis.Tonnage);
                 var jumpJetList = componentRefs.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
                 for (var i = 0; i < jumpJetList.Count - maxJetCount; i++)
                 {

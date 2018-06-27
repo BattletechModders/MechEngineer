@@ -14,7 +14,6 @@ namespace MechEngineer
         public bool AutoFixMechDefGyro = true; // adds missing gyro
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
         public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades that are size 3 to size 4
-
         public bool AutoFixMechDefCockpit = true; // adds missing cockpit
         public string AutoFixMechDefCockpitId = "Gear_Cockpit_Generic_Standard";
         public bool AutoFixCockpitUpgrades = true; // adds 3 tons to cockpit upgrades that weigh 0 tons
@@ -22,8 +21,7 @@ namespace MechEngineer
         public string[] AutoFixChassisDefSkip = { };
         public bool AutoFixChassisDefSlots = true; // adds 2 torso slots at a cost of 2 leg slots per side if they match stock slot layouts
         public bool AutoFixChassisDefInitialTonnage = true;
-        public float AutoFixInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
-        public float AutoFixInitialFixedAddedTonnage = 0; // not used anymore, was for cockpit 3 ton before cockpit became own item
+        public float AutoFixChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
 
         public bool EnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts 
 
