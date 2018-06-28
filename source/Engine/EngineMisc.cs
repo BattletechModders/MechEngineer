@@ -153,7 +153,6 @@ namespace MechEngineer
 
             if (mainEngine == null || mainEngine.Type == null)
             {
-                errorMessages[MechValidationType.InvalidInventorySlots].Add("MISSING ENGINE: Must mount a functional Engine with a Fusion Core");
                 return;
             }
 

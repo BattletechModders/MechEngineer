@@ -2,7 +2,7 @@
 
 namespace MechEngineer
 {
-    public class MechEngineerSettings : ModSettings
+    public partial class MechEngineerSettings : ModSettings
     {
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    internal static class Extensions
+    internal static partial class Extensions
     {
         // main engine + engine slots
         internal static bool IsEnginePart(this MechComponentDef componentDef)
