@@ -75,12 +75,6 @@ namespace MechEngineer
 
         internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsGyro()))
-            {
-                return;
-            }
-
-            errorMessages[MechValidationType.InvalidInventorySlots].Add("MISSING GYRO: This Mech must mount a gyro");
         }
 
         internal static void AddGyroIfPossible(MechDef mechDef)

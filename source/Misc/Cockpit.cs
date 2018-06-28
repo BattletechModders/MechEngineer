@@ -75,12 +75,6 @@ namespace MechEngineer
 
         internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            if (mechDef.Inventory.Any(x => x.Def != null && x.Def.IsCockpit()))
-            {
-                return;
-            }
-
-            errorMessages[MechValidationType.InvalidInventorySlots].Add("MISSING COCKPIT: This Mech must mount a cockpit");
         }
 
         internal static void AddCockpitIfPossible(MechDef mechDef)

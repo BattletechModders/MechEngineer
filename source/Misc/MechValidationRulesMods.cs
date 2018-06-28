@@ -10,6 +10,7 @@ namespace MechEngineer
     {
         public static void Validate(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
         {
+            UniqueController.ValidationRulesCheck(mechDef, ref errorMessages);
             ArmorStructure.ValidationRulesCheck(mechDef, ref errorMessages);
             EngineHeat.ValidationRulesCheck(mechDef, ref errorMessages);
             EngineMisc.ValidationRulesCheck(mechDef, ref errorMessages);

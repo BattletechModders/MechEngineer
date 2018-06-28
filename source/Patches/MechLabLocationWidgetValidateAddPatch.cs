@@ -24,11 +24,11 @@ namespace MechEngineer
                     return;
                 }
 
-                Gyro.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
-                if (!__result)
-                {
-                    return;
-                }
+                //Gyro.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                //if (!__result)
+                //{
+                //    return;
+                //}
 
                 LegUpgrade.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
                 if (!__result)
@@ -36,23 +36,23 @@ namespace MechEngineer
                     return;
                 }
 
-                EngineMisc.EngineSlotsValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
-                if (!__result)
-                {
-                    return;
-                }
+                //EngineMisc.EngineSlotsValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                //if (!__result)
+                //{
+                //    return;
+                //}
 
-                EngineMisc.EngineCoreValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
-                if (!__result)
-                {
-                    return;
-                }
+                //EngineMisc.EngineCoreValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                //if (!__result)
+                //{
+                //    return;
+                //}
 
-                Cockpit.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
-                if (!__result)
-                {
-                    return;
-                }
+                //Cockpit.ValidateAdd(newComponentDef, ___localInventory, ref ___dropErrorMessage, ref __result);
+                //if (!__result)
+                //{
+                //    return;
+                //}
             }
             catch (Exception e)
             {
