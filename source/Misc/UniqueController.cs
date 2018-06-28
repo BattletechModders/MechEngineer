@@ -17,7 +17,7 @@ namespace MechEngineer
                 from itemRef in mechDef.Inventory
                 let info = itemRef.GetUniqueItem()
                 where info != null
-                group info by info.ReplaceTag
+                group info by info.Category
                 into g
                 select new {tag = g.Key, count = g.Count()}
             ).ToDictionary(i => i.tag, i => i.count);
@@ -25,19 +25,19 @@ namespace MechEngineer
             foreach (var category in Control.settings.UniqueCategories)
             {
                 int n = 0;
-                if (items_by_category.TryGetValue(category.Tag, out n))
+                if (items_by_category.TryGetValue(category.Name, out n))
                 {
                     if (n > 1)
                     {
                         errorMessages[MechValidationType.InvalidInventorySlots]
-                            .Add(string.Format(category.ErrorToMany, category.Tag.ToUpper(), category.Tag));
+                            .Add(string.Format(category.ErrorToMany, category.Name.ToUpper(), category.Name));
                     }
                 }
                 else
                 {
                     if (category.Required)
                         errorMessages[MechValidationType.InvalidInventorySlots]
-                            .Add(string.Format(category.ErrorMissing, category.Tag.ToUpper(), category.Tag));
+                            .Add(string.Format(category.ErrorMissing, category.Name.ToUpper(), category.Name));
                 }
             }
         }
