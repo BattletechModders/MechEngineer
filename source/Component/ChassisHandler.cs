@@ -17,7 +17,7 @@ namespace MechEngineer
                 return;
             }
 
-            AutoFixInitialTonnage(chassisDef);
+            AutoFixChassisDef(chassisDef);
             AutoFixSlots(chassisDef);
         }
 
@@ -42,7 +42,7 @@ namespace MechEngineer
             OriginalInitialTonnages[chassisDef.Description.Id] = chassisDef.InitialTonnage;
         }
 
-        private static void AutoFixInitialTonnage(ChassisDef chassisDef)
+        private static void AutoFixChassisDef(ChassisDef chassisDef)
         {
             if (!Control.settings.AutoFixChassisDefInitialTonnage)
             {
@@ -58,8 +58,10 @@ namespace MechEngineer
             }
 
             {
+                // TODO: make engine calculation independent of def/refs again, to allow reuse of calc here
+                var maxCount = Math.Min(8, Math.Ceiling(400 / chassisDef.Tonnage));
                 var info = typeof(ChassisDef).GetProperty("MaxJumpjets");
-                var value = Convert.ChangeType(8, info.PropertyType);
+                var value = Convert.ChangeType(maxCount, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
             }
         }

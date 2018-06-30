@@ -30,14 +30,14 @@ namespace MechEngineer
         {
             return instructions
                 .MethodReplacer(
-                    AccessTools.Method(typeof(ChassisDef), "get_Tonnage"),
-                    AccessTools.Method(typeof(MechLabMechInfoWidgetCalculateTonnagePatch), "OverrideTonnage")
+                    AccessTools.Method(typeof(ChassisDef), "get_InitialTonnage"),
+                    AccessTools.Method(typeof(MechLabMechInfoWidgetCalculateTonnagePatch), "OverrideInitialTonnage")
                 );
         }
 
-        public static float OverrideTonnage(this ChassisDef chassisDef)
+        public static float OverrideInitialTonnage(this ChassisDef chassisDef)
         {
-            var tonnage = chassisDef.Tonnage;
+            var tonnage = chassisDef.InitialTonnage;
             try
             {
                 tonnage += CalculateTonnageFacade.AdditionalTonnage(mechDef);
