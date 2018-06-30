@@ -48,47 +48,53 @@
       <HintPath>..\..\DynModLib\DynModLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\BattleTech_Data\Managed\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.Networking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DictionarySerializer.cs" />
-    <Compile Include="Engine\EngineCrits.cs" />
-    <Compile Include="Engine\EnginePersistence.cs" />
-    <Compile Include="Engine\EngineTooltip.cs" />
-    <Compile Include="Misc\LegUpgrade.cs" />
+    <Compile Include="Engine\Helper\EngineConstructExtensions.cs" />
+    <Compile Include="Engine\Helper\EngineSearcher.cs" />
+    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Engine\Handler\EngineCoreRefHandler.cs" />
+    <Compile Include="Engine\Handler\EngineCoreDefHandler.cs" />
+    <Compile Include="Engine\Handler\EngineHandler.cs" />
+    <Compile Include="Engine\Handler\EngineSlotsHandler.cs" />
+    <Compile Include="Engine\Handler\EngineSlotsCenterHandler.cs" />
+    <Compile Include="Engine\EngineTypeDef.cs" />
+    <Compile Include="Helper\IdentityHelper.cs" />
+    <Compile Include="Helper\AdjustCompDefTonnageHelper.cs" />
+    <Compile Include="Helper\AdjustCompDefInvSizeHelper.cs" />
+    <Compile Include="Component\ArmorHandler.cs" />
+    <Compile Include="Helper\AutoFixMechDefHelper.cs" />
+    <Compile Include="Helper\ArmorStructureBase.cs" />
+    <Compile Include="Component\StructureHandler.cs" />
+    <Compile Include="Misc\DictionarySerializer.cs" />
+    <Compile Include="Engine\StaticHandler\EngineCrits.cs" />
+    <Compile Include="Engine\StaticHandler\EnginePersistence.cs" />
+    <Compile Include="Component\LegUpgradeHandler.cs" />
+    <Compile Include="Helper\ValidationHelper.cs" />
     <Compile Include="Patches\MechBayPanelOnGotoMechLabPatch.cs" />
     <Compile Include="Patches\MechBayPaneOnRepairMechPatch.cs" />
     <Compile Include="Patches\MechLab.cs" />
     <Compile Include="Patches\MechLabPanelCreateMechComponentItemPatch.cs" />
     <Compile Include="Patches\MechLabItemSlotElementRefreshInfoPatch.cs" />
-    <Compile Include="Misc\Cockpit.cs" />
-    <Compile Include="Misc\MechDefMods.cs" />
-    <Compile Include="Misc\MechValidationRulesMods.cs" />
-    <Compile Include="Misc\WeightSavings.cs" />
-    <Compile Include="Engine\EnginePersistanceItemStat.cs" />
+    <Compile Include="Component\CockpitHandler.cs" />
+    <Compile Include="Facade\MechDefAutoFixFacade.cs" />
+    <Compile Include="Facade\ValidationFacade.cs" />
+    <Compile Include="Helper\WeightSavings.cs" />
+    <Compile Include="Engine\StaticHandler\EnginePersistanceItemStat.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
-    <Compile Include="Misc\ArmorStructure.cs" />
-    <Compile Include="Misc\Chassis.cs" />
+    <Compile Include="Misc\Interfaces.cs" />
+    <Compile Include="Component\ChassisHandler.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="MechLabSlotPatches.cs" />
+    <Compile Include="Misc\MechLabSlotPatches.cs" />
     <Compile Include="Patches\MechLabLocationWidgetOnMechLabDropPatch.cs" />
     <Compile Include="Engine\EngineCoreRef.cs" />
     <Compile Include="Patches\MechLabPanelGetCantSaveErrorStringPatch.cs" />
@@ -107,10 +113,11 @@
     <Compile Include="Patches\SimGameStateRespondToDefsLoadCompletePatch.cs" />
     <Compile Include="Patches\StatTooltipDataSetHeatDataPatch.cs" />
     <Compile Include="Patches\StatTooltipDataSetMovementDataPatch.cs" />
+    <Compile Include="Helper\TooltipPrefab_EquipmentAdapter.cs" />
     <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatch.cs" />
-    <Compile Include="Engine\EngineMisc.cs" />
+    <Compile Include="Engine\StaticHandler\EngineMisc.cs" />
     <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />
-    <Compile Include="Misc\CalculateTonnageFacade.cs" />
+    <Compile Include="Facade\CalculateTonnageFacade.cs" />
     <Compile Include="Patches\MechLabMechInfoWidgetCalculateTonnagePatch.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateTonnagePatch.cs" />
     <Compile Include="Patches\MechGetHeatSinkDissipationPatch.cs" />
@@ -120,16 +127,16 @@
     <Compile Include="Patches\MechLabInventoryWidgetRefreshJumpJetOptionsPatch.cs" />
     <Compile Include="Patches\MechLabMechInfoWidgetGetTotalHardpointsPatch.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateMovementStatPatch.cs" />
-    <Compile Include="Engine\EngineHeat.cs" />
+    <Compile Include="Engine\StaticHandler\EngineHeat.cs" />
     <Compile Include="Patches\SimGameStateRequestDataManagerResourcesPatch.cs" />
-    <Compile Include="Misc\Gyro.cs" />
+    <Compile Include="Component\GyroHandler.cs" />
     <Compile Include="Patches\UpgradeDefFromJSONPatch.cs" />
     <Compile Include="Patches\ChassisDefFromJSONPatch.cs" />
     <Compile Include="Engine\EngineCoreDef.cs" />
-    <Compile Include="Engine\EngineCalculator.cs" />
+    <Compile Include="Engine\Helper\EngineCalculator.cs" />
     <Compile Include="MechEngineerSettings.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateHeatEfficiencyStatPatch.cs" />
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Misc\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\mod.json" />

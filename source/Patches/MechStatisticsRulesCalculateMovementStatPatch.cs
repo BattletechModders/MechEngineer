@@ -8,20 +8,23 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateMovementStat")]
     public static class MechStatisticsRulesCalculateMovementStatPatch
     {
+        private static MechDef def;
+
+        // disable jump jet calculations
+        private static readonly MechComponentRef[] Empty = { };
+
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions
                 .MethodReplacer(
                     AccessTools.Method(typeof(MovementCapabilitiesDef), "get_MaxSprintDistance"),
                     AccessTools.Method(typeof(MechStatisticsRulesCalculateMovementStatPatch), "OverrideMaxSprintDistance")
-                    )
+                )
                 .MethodReplacer(
                     AccessTools.Method(typeof(MechDef), "get_Inventory"),
                     AccessTools.Method(typeof(MechStatisticsRulesCalculateMovementStatPatch), "OverrideInventory")
-                    );
+                );
         }
-
-        private static MechDef def;
 
         public static void Prefix(MechDef mechDef)
         {
@@ -37,7 +40,6 @@ namespace MechEngineer
         {
             try
             {
-
                 float walkSpeed = 0, runSpeed = 0, TTWalkSpeed = 0;
                 EngineMisc.CalculateMovementStat(def, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
                 return runSpeed;
@@ -46,16 +48,13 @@ namespace MechEngineer
             {
                 Control.mod.Logger.LogError(e);
             }
+
             return @this.MaxSprintDistance;
         }
-        
-        // disable jump jet calculations
-        private static readonly MechComponentRef[] Empty = { };
+
         public static MechComponentRef[] OverrideInventory(this MechDef @this)
         {
             return Empty;
         }
     }
 }
-
-

@@ -1,16 +1,30 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using BattleTech;
+﻿using BattleTech;
 using BattleTech.UI;
-using BattleTech.UI.Tooltips;
 
 namespace MechEngineer
 {
-    internal static class EngineTooltip
+    internal partial class EngineHandler
     {
-        // show extended engine information (as its now shown anywhere else)
-        internal static void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
+        internal static EngineHandler Shared = new EngineHandler();
+    }
+
+    internal partial class EngineHandler : ITonnageChanges
+    {
+        public float TonnageChanges(MechDef mechDef)
+        {
+            var engineCoreRef = mechDef.GetEngineConstruct();
+            if (engineCoreRef == null)
+            {
+                return 0;
+            }
+
+            return engineCoreRef.TonnageChanges;
+        }
+    }
+
+    internal partial class EngineHandler : IAdjustTooltip
+    {
+        public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
             var engineDef = mechComponentDef.GetEngineCoreDef();
             if (engineDef == null)
@@ -18,7 +32,8 @@ namespace MechEngineer
                 return;
             }
 
-            var engineRef = panel.activeMechInventory.GetEngineCoreRef();
+            var engine = panel.activeMechInventory.GetEngineConstruct();
+            var engineRef = engine.CoreRef;
             if (engineRef == null)
             {
                 return;
@@ -51,11 +66,11 @@ namespace MechEngineer
 
             tooltip.detailText.text += "\r\n" +
                                        "<i>Weights</i>" +
-                                       "   Engine: <b>" + engineRef.EngineTonnage + "</b> Ton" +
+                                       "   Engine: <b>" + engine.EngineTonnage + "</b> Ton" +
                                        "   Gyro: <b>" + engineRef.CoreDef.GyroTonnage + "</b> Ton" +
                                        "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b> Ton";
 
-            tooltip.tonnageText.text = string.Format("{0}", engineRef.Tonnage);
+            tooltip.tonnageText.text = string.Format("{0}", engine.Tonnage);
 
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += "\r\n";

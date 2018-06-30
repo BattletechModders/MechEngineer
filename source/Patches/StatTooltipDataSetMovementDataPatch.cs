@@ -8,6 +8,11 @@ namespace MechEngineer
     [HarmonyPatch(typeof(StatTooltipData), "SetMovementData")]
     public static class StatTooltipDataSetMovementDataPatch
     {
+        private static MechDef mechDef;
+        private static float walkSpeed;
+        private static float runSpeed;
+        private static float TTWalkSpeed;
+
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions
@@ -20,11 +25,6 @@ namespace MechEngineer
                     AccessTools.Method(typeof(StatTooltipDataSetMovementDataPatch), "OverrideMaxSprintDistance")
                 );
         }
-
-        private static MechDef mechDef;
-        private static float walkSpeed;
-        private static float runSpeed;
-        private static float TTWalkSpeed;
 
         public static void Prefix(MechDef def)
         {

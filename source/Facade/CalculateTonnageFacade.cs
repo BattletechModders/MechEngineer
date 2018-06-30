@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer
 {
@@ -8,8 +7,9 @@ namespace MechEngineer
         internal static float AdditionalTonnage(MechDef mechDef)
         {
             float tonnage = 0;
-            tonnage += EngineMisc.TonnageChanges(mechDef);
-            tonnage -= ArmorStructure.TonnageSavings(mechDef);
+            tonnage += EngineHandler.Shared.TonnageChanges(mechDef);
+            tonnage += ArmorHandler.Shared.TonnageChanges(mechDef);
+            tonnage += StructureHandler.Shared.TonnageChanges(mechDef);
             return tonnage;
         }
     }

@@ -6,8 +6,10 @@ using Harmony;
 
 namespace MechEngineer
 {
-    internal static class Chassis
+    internal static class ChassisHandler
     {
+        private static readonly Dictionary<string, float> OriginalInitialTonnages = new Dictionary<string, float>();
+
         internal static void OverrideChassisSettings(ChassisDef chassisDef)
         {
             if (Control.settings.AutoFixChassisDefSkip.Contains(chassisDef.Description.Id))
@@ -19,8 +21,6 @@ namespace MechEngineer
             AutoFixSlots(chassisDef);
         }
 
-        private static readonly Dictionary<string, float> OriginalInitialTonnages = new Dictionary<string, float>();
-
         public static float? GetOriginalTonnage(ChassisDef chassisDef)
         {
             float value;
@@ -28,6 +28,7 @@ namespace MechEngineer
             {
                 return value;
             }
+
             return null;
         }
 
@@ -41,7 +42,7 @@ namespace MechEngineer
             OriginalInitialTonnages[chassisDef.Description.Id] = chassisDef.InitialTonnage;
         }
 
-        internal static void AutoFixInitialTonnage(ChassisDef chassisDef)
+        private static void AutoFixInitialTonnage(ChassisDef chassisDef)
         {
             if (!Control.settings.AutoFixChassisDefInitialTonnage)
             {
@@ -63,7 +64,7 @@ namespace MechEngineer
             }
         }
 
-        internal static void AutoFixSlots(ChassisDef chassisDef)
+        private static void AutoFixSlots(ChassisDef chassisDef)
         {
             if (!Control.settings.AutoFixChassisDefSlots)
             {
@@ -72,7 +73,7 @@ namespace MechEngineer
 
             var traverse = Traverse.Create(chassisDef);
             var locations = traverse.Field("Locations").GetValue<LocationDef[]>();
-            for (var i=0; i<locations.Length; i++)
+            for (var i = 0; i < locations.Length; i++)
             {
                 ModifyInventorySlots(ref locations[i], ChassisLocations.LeftTorso, 10, 12);
                 ModifyInventorySlots(ref locations[i], ChassisLocations.RightTorso, 10, 12);
@@ -87,7 +88,7 @@ namespace MechEngineer
             //Control.mod.Logger.LogDebug("AutoFixSlots InventorySlots=" + chassisDef.LeftTorso.InventorySlots);
         }
 
-        internal static void ModifyInventorySlots(ref LocationDef locationDef, ChassisLocations location, int currentSlots, int newSlots)
+        private static void ModifyInventorySlots(ref LocationDef locationDef, ChassisLocations location, int currentSlots, int newSlots)
         {
             if (locationDef.Location != location)
             {
@@ -104,7 +105,7 @@ namespace MechEngineer
             var box = (object) locationDef;
             info.SetValue(box, value);
             locationDef = (LocationDef) box;
-            
+
             //Control.mod.Logger.LogDebug("ModifyInventorySlots InventorySlots=" + locationDef.InventorySlots);
         }
     }

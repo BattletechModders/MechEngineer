@@ -1,11 +1,8 @@
-﻿
-using System;
-using HBS.Logging;
-using Harmony;
+﻿using System;
 using System.Reflection;
 using BattleTech;
 using DynModLib;
-using Logger = HBS.Logging.Logger;
+using Harmony;
 
 namespace MechEngineer
 {
@@ -16,13 +13,20 @@ namespace MechEngineer
         internal static MechEngineerSettings settings = new MechEngineerSettings();
         internal static EngineCalculator calc = new EngineCalculator();
 
+        private static CombatGameConstants _combat;
+
+        public static CombatGameConstants Combat
+        {
+            get { return _combat ?? (_combat = CombatGameConstants.CreateFromSaved(UnityGameInstance.BattleTechGame)); }
+        }
+
         public static void Start(string modDirectory, string json)
         {
             mod = new Mod(modDirectory);
             try
             {
                 mod.LoadSettings(settings);
-                
+
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
 
@@ -34,13 +38,6 @@ namespace MechEngineer
             {
                 mod.Logger.LogError(e);
             }
-        }
-
-        private static CombatGameConstants _combat;
-
-        public static CombatGameConstants Combat
-        {
-            get { return _combat ?? (_combat = CombatGameConstants.CreateFromSaved(UnityGameInstance.BattleTechGame)); }
         }
     }
 }

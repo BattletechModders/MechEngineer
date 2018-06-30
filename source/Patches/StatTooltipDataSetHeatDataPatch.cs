@@ -8,6 +8,8 @@ namespace MechEngineer
     [HarmonyPatch(typeof(StatTooltipData), "SetHeatData")]
     public static class StatTooltipDataSetHeatDataPatch
     {
+        private static MechDef mechDef;
+
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
@@ -15,8 +17,6 @@ namespace MechEngineer
                 AccessTools.Method(typeof(StatTooltipDataSetHeatDataPatch), "DissipationCapacity")
             );
         }
-
-        private static MechDef mechDef;
 
         public static void Prefix(MechDef def)
         {
@@ -41,6 +41,7 @@ namespace MechEngineer
             {
                 Control.mod.Logger.LogError(e);
             }
+
             return @this.DissipationCapacity;
         }
     }

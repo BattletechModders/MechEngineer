@@ -12,7 +12,7 @@ namespace MechEngineer
         {
             try
             {
-                MechValidationRulesMods.Validate(mechDef, ref errorMessages);
+                ValidationFacade.ValidationRulesCheck(mechDef, ref errorMessages);
             }
             catch (Exception e)
             {

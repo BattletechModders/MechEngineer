@@ -8,7 +8,6 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateTonnage")]
     public static class MechStatisticsRulesCalculateTonnagePatch
     {
-        // endo-steel and ferros-fibrous calculations for validation
         public static void Postfix(MechDef mechDef, ref float currentValue, ref float maxValue)
         {
             try

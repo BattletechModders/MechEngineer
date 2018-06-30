@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
@@ -12,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                MechDefMods.PostProcessAfterLoading(__instance.dataManager);
+                MechDefAutoFixFacade.PostProcessAfterLoading(__instance.dataManager);
             }
             catch (Exception e)
             {

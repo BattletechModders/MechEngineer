@@ -6,13 +6,13 @@ namespace MechEngineer
 {
     public static class MechLab
     {
+        private static readonly WeakReference GlobalReference = new WeakReference(null);
+
         public static MechLabPanel Current
         {
             set { GlobalReference.Target = value; }
             get { return GlobalReference.Target as MechLabPanel; }
         }
-
-        private static readonly WeakReference GlobalReference = new WeakReference(null);
 
         [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
         public static class MechLabPanelLoadMechPatch

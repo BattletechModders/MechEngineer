@@ -17,7 +17,7 @@ namespace MechEngineer
             {
                 return true;
             }
-            
+
             if (mechComponent == null)
             {
                 return true;
@@ -45,14 +45,14 @@ namespace MechEngineer
                 return true;
             }
 
-            var mech = (Mech)mechComponent.parent;
+            var mech = (Mech) mechComponent.parent;
             var mainEngineComponent = mech.allComponents.FirstOrDefault(c => c != null && c.componentDef != null && c.componentDef.IsEngineCore());
             if (mainEngineComponent == null) // no main engine left
             {
                 return true;
             }
 
-            var location = (ChassisLocations)mechComponent.Location;
+            var location = (ChassisLocations) mechComponent.Location;
 
             var crits = 1;
             if (mech.IsLocationDestroyed(location))
@@ -124,7 +124,7 @@ namespace MechEngineer
             else
             {
                 var text = crits == 1 ? "ENGINE CRIT" : "ENGINE CRIT X" + crits;
-                messages.Add(new MessageAddition { Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = text });
+                messages.Add(new MessageAddition {Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = text});
             }
 
             return false;

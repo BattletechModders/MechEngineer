@@ -11,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                MechDefMods.PostProcessAfterLoading(__instance.DataManager);
+                MechDefAutoFixFacade.PostProcessAfterLoading(__instance.DataManager);
             }
             catch (Exception e)
             {

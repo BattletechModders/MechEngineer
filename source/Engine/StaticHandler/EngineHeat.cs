@@ -8,62 +8,6 @@ namespace MechEngineer
 {
     internal static class EngineHeat
     {
-        // invalidate mech loadouts that mix double and single heatsinks
-        internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
-        {
-            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks)
-            {
-                return;
-            }
-
-            bool hasSingle = false, hasDouble = false;
-            foreach (var componentRef in mechDef.Inventory)
-            {
-                if (componentRef == null)
-                {
-                    continue;
-                }
-
-                var componentDef = componentRef.Def as HeatSinkDef;
-                if (componentDef == null)
-                {
-                    continue;
-                }
-
-                if (componentDef.IsDouble())
-                {
-                    hasDouble = true;
-                }
-                else if (componentDef.IsSingle())
-                {
-                    hasSingle = true;
-                }
-                else if (componentDef.IsEngineCore())
-                {
-                    var engineRef = componentRef.GetEngineCoreRef(null);
-                    if (engineRef == null)
-                    {
-                        continue;
-                    }
-
-                    if (engineRef.IsDHS)
-                    {
-                        hasDouble = true;
-                    }
-                    else
-                    {
-                        hasSingle = true;
-                    }
-                }
-
-                if (hasSingle && hasDouble)
-                {
-                    errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Standard and Double Heat Sinks cannot be mixed");
-                    return;
-                }
-            }
-        }
-
         internal static float GetEngineHeatDissipation(MechComponentRef[] inventory)
         {
             var engineRef = inventory.GetEngineCoreRef();
@@ -113,13 +57,12 @@ namespace MechEngineer
                         string.Format("Cannot add {0}: No Engine found", newComponentDef.Description.Name)
                     );
                 }
-                else
-                {
-                    return null;
-                }
+
+                return null;
             }
 
             var engineRef = localInventory.Where(c => c != null).Select(c => c.ComponentRef).GetEngineCoreRef();
+            var engineDef = engineRef.CoreDef;
 
             if (mechLab.IsSimGame)
             {
@@ -158,15 +101,9 @@ namespace MechEngineer
             }
             else
             {
-                int minHeatSinks, maxHeatSinks;
-                Control.calc.CalcHeatSinks(engineRef.CoreDef, out minHeatSinks, out maxHeatSinks);
-
-                if (engineRef.AdditionalHeatSinkCount >= maxHeatSinks - minHeatSinks)
+                if (engineRef.AdditionalHeatSinkCount >= engineDef.MaxHeatSinks - engineDef.MinHeatSinks)
                 {
                     return null;
-                    //return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                    //    string.Format("Cannot add {0}: Maximum additional heat sinks reached for engine", newComponentDef.Description.Name)
-                    //);
                 }
 
                 if (!Control.settings.AllowMixingDoubleAndSingleHeatSinks)

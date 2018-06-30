@@ -7,6 +7,8 @@ namespace MechEngineer
 {
     public static class EnginePersistanceItemStat
     {
+        internal static MechComponentRef mechComponentRef;
+
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions
@@ -19,16 +21,14 @@ namespace MechEngineer
                     AccessTools.Method(typeof(EnginePersistanceItemStat), "ComponentDefID")
                 )
                 .MethodReplacer(
-                    AccessTools.Method(typeof(SimGameState), "AddItemStat", new[] { typeof(string), typeof(Type), typeof(bool) }),
+                    AccessTools.Method(typeof(SimGameState), "AddItemStat", new[] {typeof(string), typeof(Type), typeof(bool)}),
                     AccessTools.Method(typeof(EnginePersistanceItemStat), "AddItemStat")
                 )
                 .MethodReplacer(
-                    AccessTools.Method(typeof(SimGameState), "RemoveItemStat", new[] { typeof(string), typeof(Type), typeof(bool) }),
+                    AccessTools.Method(typeof(SimGameState), "RemoveItemStat", new[] {typeof(string), typeof(Type), typeof(bool)}),
                     AccessTools.Method(typeof(EnginePersistanceItemStat), "RemoveItemStat")
                 );
         }
-
-        internal static MechComponentRef mechComponentRef;
 
         internal static string ComponentDefID(this BaseComponentRef @this)
         {
@@ -50,12 +50,14 @@ namespace MechEngineer
                 {
                     EnginePersistence.AddInternalItemsStat(sim, mechComponentRef, id, type, damaged);
                 }
+
                 mechComponentRef = null;
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
+
             sim.AddItemStat(id, type, damaged);
         }
 
@@ -67,12 +69,14 @@ namespace MechEngineer
                 {
                     EnginePersistence.RemoveInternalItemsStat(sim, mechComponentRef, id, type, damaged);
                 }
+
                 mechComponentRef = null;
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
+
             sim.RemoveItemStat(id, type, damaged);
         }
     }

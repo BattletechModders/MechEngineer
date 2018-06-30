@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using BattleTech;
 using BattleTech.Data;
 using BattleTech.UI;
 using Harmony;
-using UnityEngine;
 
 namespace MechEngineer
 {
@@ -12,7 +10,7 @@ namespace MechEngineer
     internal static class EnginePersistence
     {
         // auto strip engine when put back to inventory
-        internal static void InventoryWidgetOnAddItem(MechLabInventoryWidget widget, MechLabPanel panel,  IMechLabDraggableItem item)
+        internal static void InventoryWidgetOnAddItem(MechLabInventoryWidget widget, MechLabPanel panel, IMechLabDraggableItem item)
         {
             if (item.ItemType != MechLabDraggableItemType.MechComponentItem)
             {
@@ -21,7 +19,7 @@ namespace MechEngineer
 
             var componentRef = item.ComponentRef;
 
-            var engineRef = componentRef.GetEngineCoreRef(null);
+            var engineRef = componentRef.GetEngineCoreRef();
             if (engineRef == null)
             {
                 return;
@@ -110,12 +108,12 @@ namespace MechEngineer
 
         internal static void AddInternalItemsStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
         {
-            var engineRef = mechComponentRef.GetEngineCoreRef(null);
+            var engineRef = mechComponentRef.GetEngineCoreRef();
             if (engineRef == null)
             {
                 return;
             }
-            
+
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
                 sim.AddItemStat(componentDefID, typeof(HeatSinkDef), damaged);
@@ -124,12 +122,12 @@ namespace MechEngineer
 
         internal static void RemoveInternalItemsStat(SimGameState sim, MechComponentRef mechComponentRef, string id, Type type, bool damaged)
         {
-            var engineRef = mechComponentRef.GetEngineCoreRef(null);
+            var engineRef = mechComponentRef.GetEngineCoreRef();
             if (engineRef == null)
             {
                 return;
             }
-            
+
             foreach (var componentDefID in engineRef.GetInternalComponents())
             {
                 sim.RemoveItemStat(componentDefID, typeof(HeatSinkDef), damaged);
@@ -138,7 +136,7 @@ namespace MechEngineer
 
         internal static void FixSimGameUID(SimGameState sim, MechComponentRef componentRef)
         {
-            var engineRef = componentRef.GetEngineCoreRef(null);
+            var engineRef = componentRef.GetEngineCoreRef();
             if (engineRef == null)
             {
                 return;

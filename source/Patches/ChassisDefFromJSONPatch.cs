@@ -11,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                Chassis.OverrideChassisSettings(__instance);
+                ChassisHandler.OverrideChassisSettings(__instance);
             }
             catch (Exception e)
             {

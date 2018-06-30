@@ -12,9 +12,9 @@ namespace MechEngineer
         {
             try
             {
-                Gyro.AdjustGyroUpgrade(__instance);
-                LegUpgrade.AdjustLegUpgrade(__instance);
-                Cockpit.AdjustCockpitUpgrade(__instance);
+                GyroHandler.Shared.AdjustUpgradeDef(__instance);
+                LegUpgradeHandler.Shared.AdjustUpgradeDef(__instance);
+                CockpitHandler.Shared.AdjustUpgradeDef(__instance);
             }
             catch (Exception e)
             {

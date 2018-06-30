@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
@@ -31,6 +29,7 @@ namespace MechEngineer
             {
                 validationTypes.Remove(MechValidationType.InvalidInventorySlots);
             }
+
             return MechValidationRules.GetValidationErrors(errorMessages, validationTypes);
         }
     }

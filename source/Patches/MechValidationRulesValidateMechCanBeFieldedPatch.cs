@@ -21,7 +21,7 @@ namespace MechEngineer
                     Traverse.Create<MechValidationRules>()
                         .Method("InitializeValidationResults")
                         .GetValue();
-                MechValidationRulesMods.Validate(mechDef, ref errorMessages);
+                ValidationFacade.ValidationRulesCheck(mechDef, ref errorMessages);
 
                 __result = errorMessages[MechValidationType.InvalidInventorySlots].Count == 0;
             }

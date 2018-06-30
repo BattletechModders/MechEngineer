@@ -50,8 +50,7 @@ namespace MechEngineer
 
         internal float CalcGyroWeight(EngineCoreDef engineCoreDef)
         {
-            // for now only used for engine details text, not for any actual tonnage calculations
-            return (int)(engineCoreDef.Rating / 100);
+            return (engineCoreDef.Rating / 100.0f).RoundStandard();
         }
 
         internal int CalcJumpJetCount(EngineCoreDef engineCoreDef, float tonnage)
@@ -61,29 +60,31 @@ namespace MechEngineer
         }
 
         private static float CalcWalkDistance(float TTWalkSpeed)
-            // numbers the result of the best fit line for the game movement
         {
+            // numbers the result of the best fit line for the game movement
             var WalkSpeedFixed = 26.05f;
             var WalkSpeedMult = 23.14f;
-		
+
             if (Control.settings.UseGameWalkValues)
+            {
                 return (WalkSpeedFixed + TTWalkSpeed * WalkSpeedMult).RoundBy5();
-            else
-                return (TTWalkSpeed * Control.settings.const_TTWalkMultiplier).RoundBy5();
-			
+            }
+
+            return (TTWalkSpeed * Control.settings.const_TTWalkMultiplier).RoundBy5();
         }
-		
+
         private static float CalcSprintDistance(float TTWalkSpeed)
-            // numbers the result of the best fit line for the game movement
         {
+            // numbers the result of the best fit line for the game movement
             var RunSpeedFixed = 52.43f;
             var RunSpeedMult = 37.29f;
-			
+
             if (Control.settings.UseGameWalkValues)
+            {
                 return (RunSpeedFixed + TTWalkSpeed * RunSpeedMult).RoundBy5();
-            else
-                return (TTWalkSpeed * Control.settings.const_TTSprintMultiplier).RoundBy5();
+            }
+
+            return (TTWalkSpeed * Control.settings.const_TTSprintMultiplier).RoundBy5();
         }
-		
     }
 }

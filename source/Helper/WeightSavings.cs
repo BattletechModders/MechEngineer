@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using UnityEngine;
@@ -8,9 +7,15 @@ namespace MechEngineer
 {
     internal class WeightSavings
     {
+        private WeightSavings()
+        {
+            ErrorMessages = new List<string>();
+        }
+
         internal WeightSavingSlotType SlotType { get; private set; }
-            
+
         internal int Count { get; private set; }
+
         internal int RequiredCount
         {
             get { return SlotType == null ? 0 : SlotType.RequiredCriticalSlotCount; }
@@ -19,11 +24,6 @@ namespace MechEngineer
         internal float TonnageSaved { get; private set; }
 
         internal List<string> ErrorMessages { get; private set; }
-
-        private WeightSavings()
-        {
-            ErrorMessages = new List<string>();
-        }
 
         internal static WeightSavings Create(float tonnage, IEnumerable<MechComponentDef> slots, WeightSavingSlotType[] slotTypes, MechComponentDef def)
         {
@@ -57,7 +57,7 @@ namespace MechEngineer
 
                 savings.Count++;
             }
-            
+
             if (savings.SlotType == null)
             {
                 return savings;
@@ -67,9 +67,10 @@ namespace MechEngineer
                 var tonnageSaved = tonnage * savings.SlotType.WeightSavingsFactor;
                 if (Control.settings.AllowPartialWeightSavings)
                 {
-                    var factor = (float)Mathf.Min(savings.Count, savings.RequiredCount) / savings.RequiredCount;
+                    var factor = (float) Mathf.Min(savings.Count, savings.RequiredCount) / savings.RequiredCount;
                     tonnageSaved = tonnageSaved * factor;
                 }
+
                 savings.TonnageSaved = tonnageSaved.RoundStandard();
             }
 

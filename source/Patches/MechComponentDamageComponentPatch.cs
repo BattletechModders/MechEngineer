@@ -20,7 +20,13 @@ namespace MechEngineer
                     return false;
                 }
 
-                if (!ArmorStructure.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
+                if (!ArmorHandler.Shared.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
+                {
+                    MechCheckForCritPatch.Message = null;
+                    return false;
+                }
+
+                if (!StructureHandler.Shared.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
                 {
                     MechCheckForCritPatch.Message = null;
                     return false;
@@ -44,13 +50,13 @@ namespace MechEngineer
     [HarmonyPatch(typeof(Mech), "CheckForCrit")]
     public static class MechCheckForCritPatch
     {
-        public static MessageCenterMessage Message { get; set; }
-        public static List<MessageAddition> MessageAdditions { get; set; }
-
         static MechCheckForCritPatch()
         {
             MessageAdditions = new List<MessageAddition>();
         }
+
+        public static MessageCenterMessage Message { get; set; }
+        public static List<MessageAddition> MessageAdditions { get; set; }
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -80,6 +86,7 @@ namespace MechEngineer
                     var message = new AddSequenceToStackMessage(new ShowActorInfoSequence(__instance, addition.Text, addition.Nature, true));
                     __instance.Combat.MessageCenter.PublishMessage(message);
                 }
+
                 MessageAdditions.Clear();
             }
             catch (Exception e)

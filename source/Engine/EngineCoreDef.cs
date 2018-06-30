@@ -5,10 +5,11 @@ namespace MechEngineer
 {
     internal class EngineCoreDef
     {
-        internal readonly int Rating;
-        internal readonly MechComponentDef Def;
-
         private static readonly Regex EngineNameRegex = new Regex(@"^emod_engine_(\d+)$", RegexOptions.Compiled);
+        internal readonly MechComponentDef Def;
+        internal readonly int Rating;
+
+        internal int MinHeatSinks, MaxHeatSinks;
 
         internal EngineCoreDef(MechComponentDef componentDef)
         {
@@ -19,13 +20,6 @@ namespace MechEngineer
 
             Control.calc.CalcHeatSinks(this, out MinHeatSinks, out MaxHeatSinks);
         }
-
-        public override string ToString()
-        {
-            return Def.Description.Id + " Rating=" + Rating;
-        }
-
-        internal int MinHeatSinks, MaxHeatSinks;
 
         internal int MaxAdditionalHeatSinks
         {
@@ -40,6 +34,11 @@ namespace MechEngineer
         public float StandardEngineTonnage
         {
             get { return Def.Tonnage - GyroTonnage; }
+        }
+
+        public override string ToString()
+        {
+            return Def.Description.Id + " Rating=" + Rating;
         }
     }
 }

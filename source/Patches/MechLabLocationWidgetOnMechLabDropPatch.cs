@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
-using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Linq;
-using Object = System.Object;
 
 namespace MechEngineer
 {
@@ -45,7 +42,8 @@ namespace MechEngineer
                     ___mechLab.OnDrop(eventData);
                     return false;
                 }
-                else if (remove != null)
+
+                if (remove != null)
                 {
                     // remove item and delete it
                     dragItem.thisCanvasGroup.blocksRaycasts = true;
@@ -69,12 +67,12 @@ namespace MechEngineer
 
         internal class ErrorResult : Result
         {
+            internal string errorMessage;
+
             internal ErrorResult(string errorMessage)
             {
                 this.errorMessage = errorMessage;
             }
-
-            internal string errorMessage;
         }
 
         internal class RemoveItemResult : Result

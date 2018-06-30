@@ -8,6 +8,8 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateHeatEfficiencyStat")]
     public static class MechStatisticsRulesCalculateHeatEfficiencyStatPatch
     {
+        private static MechDef def;
+
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
@@ -15,8 +17,6 @@ namespace MechEngineer
                 AccessTools.Method(typeof(MechStatisticsRulesCalculateHeatEfficiencyStatPatch), "OverrideDissipationCapacity")
             );
         }
-
-        private static MechDef def;
 
         public static void Prefix(MechDef mechDef)
         {
@@ -41,6 +41,7 @@ namespace MechEngineer
             {
                 Control.mod.Logger.LogError(e);
             }
+
             return @this.DissipationCapacity;
         }
     }

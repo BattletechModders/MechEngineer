@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
@@ -17,6 +16,7 @@ namespace MechEngineer
                 {
                     return;
                 }
+
                 EngineMisc.RefreshAvailability(__instance, ___mechTonnage);
             }
             catch (Exception e)

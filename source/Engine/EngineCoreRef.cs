@@ -1,48 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using BattleTech;
-using Newtonsoft.Json;
 
 namespace MechEngineer
 {
-    internal partial class EngineCoreRef
+    internal class EngineCoreRef
     {
-        internal bool IsDHS;
-        internal bool IsSHS
-        {
-            get { return !IsDHS; }
-        }
-
-        internal int InternalSHSCount
-        {
-            get { return IsSHS ? CoreDef.MinHeatSinks : 0; }
-        }
-        internal int InternalDHSCount
-        {
-            get { return IsDHS ? CoreDef.MinHeatSinks : 0; }
-        }
-
-        internal int AdditionalDHSCount;
-        internal int AdditionalSHSCount;
-        internal int AdditionalHeatSinkCount
-        {
-            get { return AdditionalSHSCount + AdditionalDHSCount; }
-        }
-
-        internal EngineType Type;
-
-        internal string UUID;
+        private static readonly Regex Regex = new Regex(@"^(?:([^/]*))(?:/([^/]+))?$", RegexOptions.Singleline | RegexOptions.Compiled);
 
         internal readonly MechComponentRef ComponentRef;
         internal readonly EngineCoreDef CoreDef;
 
-        private static readonly Regex Regex = new Regex(@"^(?:([^/]*))(?:/([^/]+))?$", RegexOptions.Singleline | RegexOptions.Compiled);
+        internal int AdditionalDHSCount;
+        internal int AdditionalSHSCount;
+        internal bool IsDHS;
 
-        internal EngineCoreRef(MechComponentRef componentRef, EngineCoreDef coreDef, EngineType engineType)
+        internal string UUID;
+
+        internal EngineCoreRef(MechComponentRef componentRef, EngineCoreDef coreDef)
         {
             ComponentRef = componentRef;
             CoreDef = coreDef;
-            Type = engineType;
 
             var text = componentRef.SimGameUID;
 
@@ -52,6 +30,7 @@ namespace MechEngineer
                 {
                     componentRef.SetSimGameUID(null);
                 }
+
                 return;
             }
 
@@ -63,6 +42,26 @@ namespace MechEngineer
 
             UUID = string.IsNullOrEmpty(match.Groups[1].Value) ? null : match.Groups[1].Value;
             Properties = match.Groups[2].Value;
+        }
+
+        internal bool IsSHS
+        {
+            get { return !IsDHS; }
+        }
+
+        internal int InternalSHSCount
+        {
+            get { return IsSHS ? CoreDef.MinHeatSinks : 0; }
+        }
+
+        internal int InternalDHSCount
+        {
+            get { return IsDHS ? CoreDef.MinHeatSinks : 0; }
+        }
+
+        internal int AdditionalHeatSinkCount
+        {
+            get { return AdditionalSHSCount + AdditionalDHSCount; }
         }
 
         private string Properties
@@ -93,29 +92,6 @@ namespace MechEngineer
                 }
 
                 return DictionarySerializer.ToString(dictionary);
-            }
-        }
-
-        internal string GetNewSimGameUID()
-        {
-            return (string.IsNullOrEmpty(UUID) ? "" : UUID) + "/" + Properties;
-        }
-
-        internal IEnumerable<string> GetInternalComponents()
-        {
-            if (IsDHS)
-            {
-                yield return Control.settings.EngineKitDHS;
-            }
-
-            for (var i = 0; i < AdditionalSHSCount; i++)
-            {
-                yield return Control.settings.GearHeatSinkStandard;
-            }
-
-            for (var i = 0; i < AdditionalDHSCount; i++)
-            {
-                yield return Control.settings.GearHeatSinkDouble;
             }
         }
 
@@ -158,6 +134,7 @@ namespace MechEngineer
                 {
                     bonusText += string.Format(" {0}", CoreDef.MinHeatSinks);
                 }
+
                 return bonusText;
             }
         }
@@ -167,19 +144,27 @@ namespace MechEngineer
             get { return AdditionalHeatSinkCount * 1; }
         }
 
-        internal float EngineTonnage
+        internal string GetNewSimGameUID()
         {
-            get { return (CoreDef.StandardEngineTonnage * (Type == null ? 1.0f : Type.WeightMultiplier)).RoundStandard();}
+            return (string.IsNullOrEmpty(UUID) ? "" : UUID) + "/" + Properties;
         }
 
-        internal float Tonnage
+        internal IEnumerable<string> GetInternalComponents()
         {
-            get { return HeatSinkTonnage + EngineTonnage + CoreDef.GyroTonnage; }
-        }
+            if (IsDHS)
+            {
+                yield return Control.settings.EngineKitDHS;
+            }
 
-        public float TonnageChanges
-        {
-            get { return - CoreDef.Def.Tonnage + Tonnage; }
+            for (var i = 0; i < AdditionalSHSCount; i++)
+            {
+                yield return Control.settings.GearHeatSinkStandard;
+            }
+
+            for (var i = 0; i < AdditionalDHSCount; i++)
+            {
+                yield return Control.settings.GearHeatSinkDouble;
+            }
         }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
 using UnityEngine;
-using System.Linq;
-using BattleTech.DataObjects;
-using HBS.Logging;
-using Object = System.Object;
+using Object = UnityEngine.Object;
 
 namespace MechEngineer
 {
@@ -22,7 +20,7 @@ namespace MechEngineer
 
                 var Representation = __instance.transform.GetChild("Representation");
                 var OBJ_mech = Representation.GetChild("OBJ_mech");
-                
+
                 var Centerline = OBJ_mech.GetChild("Centerline");
                 {
                     var layout_details = Centerline.GetChild("layout_details");
@@ -30,6 +28,7 @@ namespace MechEngineer
                     {
                         layout_details = Representation.GetChild("layout_details");
                     }
+
                     if (layout_details != null)
                     {
                         var OBJ_value = Representation.GetChild("OBJ_value");
@@ -87,6 +86,8 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechLabLocationWidget), "SetData")]
     public static class MechLabLocationWidgetSetDataPatch
     {
+        private const int SlotHeight = 32;
+
         public static void Postfix(MechLabLocationWidget __instance, int ___maxSlots, LocationLoadoutDef ___loadout)
         {
             try
@@ -127,16 +128,16 @@ namespace MechEngineer
                 // add missing
                 for (var i = slots.Count; i < ___maxSlots; i++)
                 {
-                    var newSlot = UnityEngine.Object.Instantiate(templateSlot, layout);
-                    newSlot.localPosition = new Vector3(0, - (1 + i * SlotHeight), 0);
+                    var newSlot = Object.Instantiate(templateSlot, layout);
+                    newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
                     newSlot.SetSiblingIndex(templateSlot.GetSiblingIndex());
                     newSlot.name = "slot (" + i + ")";
                 }
-                
+
                 // remove abundant
                 for (var i = ___maxSlots; i < slots.Count; i++)
                 {
-                    UnityEngine.Object.Destroy(slots[i].gameObject);
+                    Object.Destroy(slots[i].gameObject);
                 }
 
                 var changedHeight = changedSlotCount * SlotHeight;
@@ -149,8 +150,6 @@ namespace MechEngineer
                 Control.mod.Logger.LogError(e);
             }
         }
-
-        private const int SlotHeight = 32;
     }
 
     public static class Utils
@@ -225,7 +224,7 @@ namespace MechEngineer
         {
             return @this.GetChildren().Where(x => x.name == name).Skip(index).FirstOrDefault();
         }
-        
+
         public static void LogTransform(Transform transform)
         {
             Control.mod.Logger.LogDebug("");
@@ -250,8 +249,8 @@ namespace MechEngineer
             {
                 text += "  ";
             }
-            
-            string rectText = "";
+
+            var rectText = "";
             {
                 var rect = transform.GetComponent<RectTransform>();
                 if (rect != null)
