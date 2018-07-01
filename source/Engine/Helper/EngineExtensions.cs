@@ -3,14 +3,14 @@ using BattleTech;
 
 namespace MechEngineer
 {
-    internal static class EngineConstructExtensions
+    internal static class EngineExtensions
     {
-        internal static Engine GetEngineConstruct(this MechDef @this)
+        internal static Engine GetEngine(this MechDef @this)
         {
-            return GetEngineConstruct(@this.Inventory);
+            return GetEngine(@this.Inventory);
         }
 
-        internal static Engine GetEngineConstruct(this IEnumerable<MechComponentRef> componentRefs)
+        internal static Engine GetEngine(this IEnumerable<MechComponentRef> componentRefs)
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
 

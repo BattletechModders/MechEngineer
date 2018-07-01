@@ -12,13 +12,13 @@ namespace MechEngineer
     {
         public float TonnageChanges(MechDef mechDef)
         {
-            var engineCoreRef = mechDef.GetEngineConstruct();
-            if (engineCoreRef == null)
+            var engine = mechDef.GetEngine();
+            if (engine == null)
             {
                 return 0;
             }
 
-            return engineCoreRef.TonnageChanges;
+            return engine.TonnageChanges;
         }
     }
 
@@ -32,7 +32,7 @@ namespace MechEngineer
                 return;
             }
 
-            var engine = panel.activeMechInventory.GetEngineConstruct();
+            var engine = panel.activeMechInventory.GetEngine();
             if (engine == null)
             {
                 return;
