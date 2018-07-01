@@ -19,7 +19,7 @@ namespace MechEngineer
             this.description = description;
         }
 
-        public void ValidationRulesCheck(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
             var count = mechDef.Inventory
                 .Where(x => x.DamageLevel == ComponentDamageLevel.Functional)

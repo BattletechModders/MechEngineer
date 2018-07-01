@@ -48,7 +48,7 @@ namespace MechEngineer
             return -tonnageSaved;
         }
 
-        public void ValidationRulesCheck(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
             var errors = new List<string>();
 

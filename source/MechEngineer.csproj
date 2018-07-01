@@ -122,7 +122,7 @@
     <Compile Include="Patches\MechStatisticsRulesCalculateTonnagePatch.cs" />
     <Compile Include="Patches\MechGetHeatSinkDissipationPatch.cs" />
     <Compile Include="Patches\MechComponentDamageComponentPatch.cs" />
-    <Compile Include="Patches\MechValidationRulesValidateMechPosessesWeaponsPatch.cs" />
+    <Compile Include="Patches\MechValidationRulesValidateMechDefPatch.cs" />
     <Compile Include="Patches\MechInitEffectStatsPatch.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetRefreshJumpJetOptionsPatch.cs" />
     <Compile Include="Patches\MechLabMechInfoWidgetGetTotalHardpointsPatch.cs" />

@@ -104,7 +104,7 @@ namespace MechEngineer
             mechDef.SetInventory(componentRefs.ToArray());
         }
 
-        public void ValidationRulesCheck(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
             if (Control.settings.AllowMixingDoubleAndSingleHeatSinks)
             {

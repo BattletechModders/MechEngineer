@@ -6,15 +6,15 @@ namespace MechEngineer
 {
     internal static class ValidationFacade
     {
-        internal static void ValidationRulesCheck(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
+        internal static void ValidateMech(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            ArmorHandler.Shared.ValidationRulesCheck(mechDef, errorMessages);
-            StructureHandler.Shared.ValidationRulesCheck(mechDef, errorMessages);
-            EngineCoreRefHandler.Shared.ValidationRulesCheck(mechDef, errorMessages);
-            EngineCoreDefHandler.Shared.ValidationRulesCheck(mechDef, errorMessages);
-            EngineSlotsCenterHandler.Shared.ValidationRulesCheck(mechDef, errorMessages);
-            GyroHandler.Shared.ValidationRulesCheck(mechDef, errorMessages);
-            CockpitHandler.Shared.ValidationRulesCheck(mechDef, errorMessages);
+            ArmorHandler.Shared.ValidateMech(mechDef, errorMessages);
+            StructureHandler.Shared.ValidateMech(mechDef, errorMessages);
+            EngineCoreRefHandler.Shared.ValidateMech(mechDef, errorMessages);
+            EngineCoreDefHandler.Shared.ValidateMech(mechDef, errorMessages);
+            EngineSlotsCenterHandler.Shared.ValidateMech(mechDef, errorMessages);
+            GyroHandler.Shared.ValidateMech(mechDef, errorMessages);
+            CockpitHandler.Shared.ValidateMech(mechDef, errorMessages);
         }
 
         internal static void ValidateAdd(

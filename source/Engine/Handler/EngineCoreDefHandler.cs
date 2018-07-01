@@ -32,9 +32,9 @@ namespace MechEngineer
             checker.ValidateAdd(newComponentDef, localInventory, ref dropErrorMessage, ref result);
         }
 
-        public void ValidationRulesCheck(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            checker.ValidationRulesCheck(mechDef, errorMessages);
+            checker.ValidateMech(mechDef, errorMessages);
 
             var mainEngine = mechDef.Inventory.GetEngineCoreDef();
             if (mainEngine == null)
