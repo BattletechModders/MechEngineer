@@ -34,7 +34,7 @@ namespace MechEngineer
 
         public void ValidationRulesCheck(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            checker.Check(mechDef, errorMessages);
+            checker.ValidationRulesCheck(mechDef, errorMessages);
 
             var mainEngine = mechDef.Inventory.GetEngineCoreDef();
             if (mainEngine == null)

@@ -5,7 +5,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class ValidationHelper
+    internal class ValidationHelper : IValidateAdd, IValidationRulesCheck
     {
         private readonly IDescription description;
         private readonly IIdentifier identifier;
@@ -19,7 +19,7 @@ namespace MechEngineer
             this.description = description;
         }
 
-        internal void Check(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        public void ValidationRulesCheck(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
             var count = mechDef.Inventory
                 .Where(x => x.DamageLevel == ComponentDamageLevel.Functional)
@@ -40,7 +40,7 @@ namespace MechEngineer
             }
         }
 
-        internal void ValidateAdd(
+        public void ValidateAdd(
             MechComponentDef newComponentDef,
             List<MechLabItemSlotElement> localInventory,
             ref string dropErrorMessage,
