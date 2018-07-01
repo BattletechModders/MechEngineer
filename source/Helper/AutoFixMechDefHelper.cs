@@ -4,7 +4,7 @@ using BattleTech;
 
 namespace MechEngineer
 {
-    internal class AutoFixMechDefHelper
+    internal class AutoFixMechDefHelper : IAutoFixMechDef
     {
         private readonly string defId;
         private readonly IIdentifier identifier;
@@ -19,7 +19,7 @@ namespace MechEngineer
             this.location = location;
         }
 
-        internal void AutoFixMechDef(MechDef mechDef)
+        public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
             if (mechDef.Inventory.Any(x => x.Def != null && identifier.IsCustomType(x.Def)))
             {

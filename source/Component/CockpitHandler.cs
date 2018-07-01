@@ -50,7 +50,7 @@ namespace MechEngineer
                 return;
             }
 
-            fixer.AutoFixMechDef(mechDef);
+            fixer.AutoFixMechDef(mechDef, originalTotalTonnage);
         }
 
         public string CategoryName
