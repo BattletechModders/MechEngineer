@@ -16,7 +16,7 @@ namespace MechEngineer
 
         internal void AdjustComponentDef(MechComponentDef def)
         {
-            if (!identifier.IsComponentDef(def))
+            if (!identifier.IsCustomType(def))
             {
                 return;
             }

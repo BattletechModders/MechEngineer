@@ -21,7 +21,7 @@ namespace MechEngineer
 
         internal void AutoFixMechDef(MechDef mechDef)
         {
-            if (mechDef.Inventory.Any(x => x.Def != null && identifier.IsComponentDef(x.Def)))
+            if (mechDef.Inventory.Any(x => x.Def != null && identifier.IsCustomType(x.Def)))
             {
                 return;
             }

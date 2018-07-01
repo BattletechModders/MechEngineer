@@ -7,7 +7,7 @@ namespace MechEngineer
     {
         internal static StructureHandler Shared = new StructureHandler();
 
-        public override bool IsComponentDef(MechComponentDef def)
+        public override bool IsCustomType(MechComponentDef def)
         {
             return def.CheckComponentDef(ComponentType.Upgrade, Control.settings.StructurePrefix);
         }
@@ -16,7 +16,7 @@ namespace MechEngineer
         {
             var tonnage = mechDef.Chassis.Tonnage / 10f;
 
-            var slots = mechDef.Inventory.Select(c => c.Def).Where(IsComponentDef).ToList();
+            var slots = mechDef.Inventory.Select(c => c.Def).Where(IsCustomType).ToList();
 
             return WeightSavings.Create(tonnage, slots, Control.settings.StructureTypes, def);
         }

@@ -8,7 +8,7 @@ namespace MechEngineer
         public ChassisLocations AllowedLocations { get; set; }
         public ComponentType ComponentType { get; set; }
 
-        public bool IsComponentDef(MechComponentDef def)
+        public bool IsCustomType(MechComponentDef def)
         {
             if (ComponentType != ComponentType.NotSet && def.ComponentType != ComponentType)
             {

@@ -6,7 +6,7 @@ namespace MechEngineer
 {
     internal interface IIdentifier
     {
-        bool IsComponentDef(MechComponentDef def);
+        bool IsCustomType(MechComponentDef def);
     }
 
     internal interface IDescription

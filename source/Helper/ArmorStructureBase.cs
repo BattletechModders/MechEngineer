@@ -10,7 +10,7 @@ namespace MechEngineer
         {
             var mechDef = panel.activeMechDef;
             WeightSavings savings;
-            if (IsComponentDef(mechComponentDef))
+            if (IsCustomType(mechComponentDef))
             {
                 savings = CalculateWeightSavings(mechDef, mechComponentDef);
             }
@@ -25,11 +25,11 @@ namespace MechEngineer
             tooltip.bonusesText.SetAllDirty();
         }
 
-        public abstract bool IsComponentDef(MechComponentDef def);
+        public abstract bool IsCustomType(MechComponentDef def);
 
         public bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
         {
-            if (IsComponentDef(mechComponent.componentDef))
+            if (IsCustomType(mechComponent.componentDef))
             {
                 return false;
             }

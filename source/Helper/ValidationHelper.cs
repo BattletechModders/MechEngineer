@@ -23,7 +23,7 @@ namespace MechEngineer
         {
             var count = mechDef.Inventory
                 .Where(x => x.DamageLevel == ComponentDamageLevel.Functional)
-                .Count(x => x.Def != null && identifier.IsComponentDef(x.Def));
+                .Count(x => x.Def != null && identifier.IsCustomType(x.Def));
 
             if (Required && count == 0)
             {
@@ -46,17 +46,22 @@ namespace MechEngineer
             ref string dropErrorMessage,
             ref bool result)
         {
+            if (!Unique)
+            {
+                return;
+            }
+
             if (!result)
             {
                 return;
             }
 
-            if (!identifier.IsComponentDef(newComponentDef))
+            if (!identifier.IsCustomType(newComponentDef))
             {
                 return;
             }
 
-            if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !identifier.IsComponentDef(x.Def)))
+            if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !identifier.IsCustomType(x.Def)))
             {
                 return;
             }

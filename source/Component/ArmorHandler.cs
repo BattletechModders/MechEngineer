@@ -7,7 +7,7 @@ namespace MechEngineer
     {
         internal static ArmorHandler Shared = new ArmorHandler();
 
-        public override bool IsComponentDef(MechComponentDef def)
+        public override bool IsCustomType(MechComponentDef def)
         {
             return def.CheckComponentDef(ComponentType.Upgrade, Control.settings.ArmorPrefix);
         }
@@ -28,7 +28,7 @@ namespace MechEngineer
             num += mechDef.RightLeg.AssignedArmor;
             var tonnage = num / (UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f);
 
-            var slots = mechDef.Inventory.Select(c => c.Def).Where(IsComponentDef).ToList();
+            var slots = mechDef.Inventory.Select(c => c.Def).Where(IsCustomType).ToList();
 
             return WeightSavings.Create(tonnage, slots, Control.settings.ArmorTypes, def);
         }
