@@ -6,10 +6,10 @@
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Clan XL Critical Slots",
+        "Model" : "Critical Slots",
         "UIName" : "Clan XL RT",
         "Id" : "emod_engineslots_cxl_right",
-        "Name" : "Clan XL Engine Right",
+        "Name" : "Clan XL Engine RT",
         "Details" : "To mount a Clan XL engine both left and right torso engine parts are needed",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },

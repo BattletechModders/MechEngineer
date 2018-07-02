@@ -55,7 +55,7 @@ namespace MechEngineer
                 return null;
             }
 
-            var engineRef = localInventory.Where(c => c != null).Select(c => c.ComponentRef).GetEngineCoreRef();
+            var engineRef = engineSlotElement.ComponentRef.GetEngineCoreRef();
             var engineDef = engineRef.CoreDef;
 
             if (mechLab.IsSimGame)
