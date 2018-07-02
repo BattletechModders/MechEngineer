@@ -20,7 +20,7 @@ namespace MechEngineer
 
                 result.Parts.Add(componentRef);
 
-                if (result.CoreRef == null && componentDef is EngineTypeDef)
+                if (result.CoreRef == null && componentDef is EngineCoreDef)
                 {
                     result.CoreRef = componentRef.GetEngineCoreRef();
                     continue;
