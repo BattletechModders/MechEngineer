@@ -34,8 +34,6 @@ namespace MechEngineer
         public bool EnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts (300+ item types)
 
         public string GearHeatSinkStandard = "Gear_HeatSink_Generic_Standard";
-        public string GearHeatSinkDouble = "Gear_HeatSink_Generic_Double";
-        public string GearHeatSinkDoubleClan = "Gear_HeatSink_Generic_Double_Clan";
         public string EngineKitDHS = "emod_kit_dhs";
         public string EngineKitCDHS = "emod_kit_cdhs";
         

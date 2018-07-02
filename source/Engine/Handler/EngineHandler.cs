@@ -1,4 +1,5 @@
-﻿using BattleTech;
+﻿using System.Collections.Generic;
+using BattleTech;
 using BattleTech.UI;
 
 namespace MechEngineer
@@ -40,20 +41,24 @@ namespace MechEngineer
             engine.CoreDef = engineDef; // overwrite the core def for better tooltip
             var engineRef = engine.CoreRef;
 
-            float walkSpeed, runSpeed;
-            Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out walkSpeed, out runSpeed);
+            Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out var walkSpeed, out var runSpeed);
 
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
 
-            foreach (var hstype in HeatSinkTypeExtensions.Types())
+            foreach (var heatSinkDef in mechComponentDef.DataManager.GetAllEngineHeatSinkDefs())
             {
-                var query = engineRef.Query(hstype);
+                var query = engineRef.Query(heatSinkDef);
+
+                if (query.Count == 0)
+                {
+                    continue;
+                }
 
                 if (Control.settings.AllowMixingHeatSinkTypes || query.IsType)
                 {
                     
-                    tooltip.detailText.text += "<i>" + hstype.Full() + "</i>" +
+                    tooltip.detailText.text += "<i>" + heatSinkDef.FullName + "</i>" +
                                                "   Internal: <b>" + query.InternalCount + "</b>" +
                                                "   Additional: <b>" + query.AdditionalCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
                 }
@@ -70,7 +75,7 @@ namespace MechEngineer
                                        "   Gyro: <b>" + engine.CoreDef.GyroTonnage + "</b> Ton" +
                                        "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b> Ton";
 
-            tooltip.tonnageText.text = string.Format("{0}", engine.Tonnage);
+            tooltip.tonnageText.text = $"{engine.Tonnage}";
 
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += "\r\n";

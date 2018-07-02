@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -64,6 +65,8 @@
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />
+    <Compile Include="Engine\EngineHeatSinkKitDef.cs" />
+    <Compile Include="Engine\EngineHeatSinkDef.cs" />
     <Compile Include="Engine\EngineSideDef.cs" />
     <Compile Include="Engine\Helper\EngineExtensions.cs" />
     <Compile Include="Engine\Helper\EngineSearcher.cs" />

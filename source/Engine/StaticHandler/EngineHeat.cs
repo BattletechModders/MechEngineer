@@ -28,15 +28,12 @@ namespace MechEngineer
         {
             var newComponentRef = dragItem.ComponentRef;
             var newComponentDef = newComponentRef.Def;
-            var heatSinkDef = newComponentDef as HeatSinkDef;
 
-            if (heatSinkDef == null)
-            {
-                return null;
-            }
+            var heatSinkDef = newComponentDef as EngineHeatSinkDef;
+            var heatSinkKitDef = newComponentDef as EngineHeatSinkKitDef;
 
             // check if we can work with it
-            if (!heatSinkDef.IsDHSKit() && !heatSinkDef.IsCDHSKit() && !heatSinkDef.IsSingle() && !heatSinkDef.IsDouble() && !heatSinkDef.IsDoubleClan())
+            if (heatSinkDef == null && heatSinkKitDef == null)
             {
                 return null;
             }
@@ -45,10 +42,10 @@ namespace MechEngineer
 
             if (engineSlotElement == null)
             {
-                if (heatSinkDef.IsDHSKit() || heatSinkDef.IsCDHSKit())
+                if (heatSinkKitDef != null)
                 {
                     return new MechLabDropErrorResult(
-                        string.Format("Cannot add {0}: No Engine found", newComponentDef.Description.Name)
+                        $"Cannot add {newComponentDef.Description.Name}: No Engine found"
                     );
                 }
 
@@ -63,42 +60,35 @@ namespace MechEngineer
                 if (dragItem.OriginalDropParentType != MechLabDropTargetType.InventoryList)
                 {
                     return new MechLabDropErrorResult(
-                        string.Format("Cannot add {0}: Item has to be from inventory", newComponentDef.Description.Name)
+                        $"Cannot add {newComponentDef.Description.Name}: Item has to be from inventory"
                     );
                 }
 
                 if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == engineRef.ComponentRef.SimGameUID))
                 {
                     return new MechLabDropErrorResult(
-                        string.Format("Cannot add {0}: Engine cannot be modified once installed, remove engine first", newComponentDef.Description.Name)
+                        $"Cannot add {newComponentDef.Description.Name}: Engine cannot be modified once installed, remove engine first"
                     );
                 }
             }
 
-            if (heatSinkDef.IsDHSKit() || heatSinkDef.IsCDHSKit())
+            if (heatSinkKitDef != null)
             {
-                if (!engineRef.Is(HeatSinkType.SHS))
+                if (engineRef.HeatSinkDef != newComponentDef.DataManager.GetStandardHeatSinkDef())
                 {
                     return new MechLabDropErrorResult(
-                        string.Format("Cannot add {0}: Reinstall engine to remove internal heat sinks", newComponentDef.Description.Name)
+                        $"Cannot add {newComponentDef.Description.Name}: Reinstall engine to remove internal heat sinks"
                     );
                 }
 
-                if (!Control.settings.AllowMixingHeatSinkTypes && engineRef.Query(HeatSinkType.SHS).AdditionalCount > 0)
+                if (engineRef.AdditionalHeatSinkCount > 0)
                 {
                     return new MechLabDropErrorResult(
-                        string.Format("Cannot add {0}: Reinstall engine to remove additional heat sinks before converting", newComponentDef.Description.Name)
+                        $"Cannot add {newComponentDef.Description.Name}: Reinstall engine to remove additional heat sinks before converting"
                     );
                 }
 
-                if (heatSinkDef.IsCDHSKit())
-                {
-                    engineRef.HSType = HeatSinkType.CDHS;
-                }
-                else if (heatSinkDef.IsDHSKit())
-                {
-                    engineRef.HSType = HeatSinkType.DHS;
-                }
+                engineRef.HeatSinkDef = heatSinkKitDef.HeatSinkDef;
             }
             else
             {
@@ -107,30 +97,17 @@ namespace MechEngineer
                     return null;
                 }
 
-                HeatSinkType hstype;
-                if (heatSinkDef.IsDouble())
-                {
-                    hstype = HeatSinkType.DHS;
-                }
-                else if (heatSinkDef.IsDoubleClan())
-                {
-                    hstype = HeatSinkType.CDHS;
-                }
-                else
-                {
-                    hstype = HeatSinkType.SHS;
-                }
-
                 if (!Control.settings.AllowMixingHeatSinkTypes)
                 {
-                    if (!engineRef.Is(hstype))
+                    if (engineRef.HeatSinkDef.HSCategory != heatSinkDef.HSCategory)
                     {
                         return new MechLabDropErrorResult(
-                            string.Format("Cannot add {0}: Mixing heat sink types is not allowed", newComponentDef.Description.Name)
+                            $"Cannot add {newComponentDef.Description.Name}: Mixing heat sink types is not allowed"
                         );
                     }
                 }
-                engineRef.Query(hstype).AdditionalCount++;
+
+                engineRef.Query(heatSinkDef).AdditionalCount++;
             }
 
             EnginePersistence.SaveEngineState(engineRef, mechLab);

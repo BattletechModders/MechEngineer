@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 
@@ -85,9 +86,9 @@ namespace MechEngineer
 
             {
                 // add engine core
-                var isDHS = componentRefs.Select(c => c.Def as HeatSinkDef).Where(c => c != null).Any(c => c.IsDouble());
+                var nonStandardHeatSinkDef = componentRefs.Select(c => c.Def as EngineHeatSinkDef).FirstOrDefault(c => c != null && !c.IsSingle());
 
-                var simGameUID = isDHS ? "/ihstype=dhs" : null;
+                var simGameUID = nonStandardHeatSinkDef != null ? "/ihstype=" + nonStandardHeatSinkDef.Description.Id : null;
 
                 var componentRef = new MechComponentRef(maxEngine.Description.Id, simGameUID, maxEngine.ComponentType, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
@@ -109,34 +110,21 @@ namespace MechEngineer
                 return;
             }
 
-            var set = new HashSet<HeatSinkType>();
+            var set = new HashSet<string>();
             foreach (var componentRef in mechDef.Inventory)
             {
-                if (!(componentRef?.Def is HeatSinkDef componentDef))
+                if (componentRef?.Def is EngineHeatSinkDef componentDef)
                 {
-                    continue;
+                    set.Add(componentDef.HSCategory);
                 }
-
-                if (componentDef.IsSingle())
-                {
-                    set.Add(HeatSinkType.SHS);
-                }
-                else if (componentDef.IsDouble())
-                {
-                    set.Add(HeatSinkType.DHS);
-                }
-                else if (componentDef.IsDoubleClan())
-                {
-                    set.Add(HeatSinkType.CDHS);
-                }
-                else if (componentDef is EngineCoreDef)
+                else if (componentRef?.Def is EngineCoreDef)
                 {
                     var engineRef = componentRef.GetEngineCoreRef();
-                    if (engineRef == null)
-                    {
-                        continue;
-                    }
-                    set.Add(engineRef.HSType);
+                    set.Add(engineRef.HeatSinkDef.HSCategory);
+                }
+                else
+                {
+                    continue;
                 }
 
                 if (set.Count > 1)

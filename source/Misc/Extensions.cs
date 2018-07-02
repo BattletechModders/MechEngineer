@@ -26,26 +26,6 @@ namespace MechEngineer
             return def.Description.Id == Control.settings.GearHeatSinkStandard;
         }
 
-        internal static bool IsDouble(this HeatSinkDef def)
-        {
-            return def.Description.Id == Control.settings.GearHeatSinkDouble;
-        }
-
-        internal static bool IsDoubleClan(this HeatSinkDef def)
-        {
-            return def.Description.Id == Control.settings.GearHeatSinkDoubleClan;
-        }
-
-        internal static bool IsDHSKit(this HeatSinkDef def)
-        {
-            return def.Description.Id == Control.settings.EngineKitDHS;
-        }
-
-        internal static bool IsCDHSKit(this HeatSinkDef def)
-        {
-            return def.Description.Id == Control.settings.EngineKitCDHS;
-        }
-
         internal static void PerformOperation(this StatCollection collection, Statistic statistic, StatisticEffectData data)
         {
             var type = Type.GetType(data.modType);
