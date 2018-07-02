@@ -40,13 +40,13 @@ namespace MechEngineer
             var typeDef = result.TypeDef;
             if (typeDef != null)
             {
-                var requirements = typeDef.Type.Requirements;
+                var requirements = typeDef.Requirements;
 
                 if (result.Parts
                         .Where(x => x.DamageLevel == ComponentDamageLevel.Functional)
                         .Select(c => c.ComponentDefID).Intersect(requirements).Count() != requirements.Length)
                 {
-                    var engineName = typeDef.Def.Description.UIName.ToUpper();
+                    var engineName = typeDef.Description.UIName.ToUpper();
                     errorMessages[MechValidationType.InvalidInventorySlots].Add(engineName + ": Requires left and right torso slots");
                 }
             }

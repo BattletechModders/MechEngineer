@@ -28,11 +28,7 @@ namespace MechEngineer
 
                 if (result.TypeDef == null)
                 {
-                    var engineType = Control.settings.EngineTypes.FirstOrDefault(c => componentDef.Description.Id == c.ComponentTypeID);
-                    if (engineType != null)
-                    {
-                        result.TypeDef = new EngineTypeDef(componentDef, engineType);
-                    }
+                    result.TypeDef = componentDef as EngineTypeDef;
                 }
             }
 

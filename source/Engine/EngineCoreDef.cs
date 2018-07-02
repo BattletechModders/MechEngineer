@@ -1,44 +1,31 @@
-﻿using System.Text.RegularExpressions;
-using BattleTech;
+﻿using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class EngineCoreDef
+    [Custom("EngineCoreDef")]
+    public class EngineCoreDef : CustomHeatSinkDef<EngineCoreDef>
     {
-        private static readonly Regex EngineNameRegex = new Regex(@"^emod_engine_(\d+)$", RegexOptions.Compiled);
-        internal readonly MechComponentDef Def;
-        internal readonly int Rating;
+        private int _rating;
 
-        internal int MinHeatSinks, MaxHeatSinks;
-
-        internal EngineCoreDef(MechComponentDef componentDef)
+        public int Rating
         {
-            var id = componentDef.Description.Id;
-            var match = EngineNameRegex.Match(id);
-            Rating = int.Parse(match.Groups[1].Value);
-            Def = componentDef;
-
-            Control.calc.CalcHeatSinks(this, out MinHeatSinks, out MaxHeatSinks);
+            get { return _rating; }
+            set { _rating = value;
+                Control.calc.CalcHeatSinks(this, out MinHeatSinks, out MaxHeatSinks);
+            }
         }
 
-        internal int MaxAdditionalHeatSinks
-        {
-            get { return MaxHeatSinks - MinHeatSinks; }
-        }
+        public int MinHeatSinks, MaxHeatSinks;
 
-        internal float GyroTonnage
-        {
-            get { return Control.calc.CalcGyroWeight(this); }
-        }
+        public int MaxAdditionalHeatSinks => MaxHeatSinks - MinHeatSinks;
 
-        public float StandardEngineTonnage
-        {
-            get { return Def.Tonnage - GyroTonnage; }
-        }
+        public float GyroTonnage => Control.calc.CalcGyroWeight(this);
+
+        public float StandardEngineTonnage => Tonnage - GyroTonnage;
 
         public override string ToString()
         {
-            return Def.Description.Id + " Rating=" + Rating;
+            return Description.Id + " Rating=" + Rating;
         }
     }
 }

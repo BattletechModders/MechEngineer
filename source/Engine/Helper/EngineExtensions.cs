@@ -52,12 +52,7 @@ namespace MechEngineer
 
         internal static EngineCoreDef GetEngineCoreDef(this MechComponentDef @this)
         {
-            if (@this == null || !@this.IsEngineCore())
-            {
-                return null;
-            }
-
-            return new EngineCoreDef(@this);
+            return @this as EngineCoreDef;
         }
 
         internal static bool IsEnginePart(this MechComponentDef componentDef)

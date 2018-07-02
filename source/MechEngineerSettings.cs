@@ -1,5 +1,4 @@
-﻿using DynModLib;
-
+﻿
 namespace MechEngineer
 {
     public class MechEngineerSettings : ModSettings
@@ -11,6 +10,7 @@ namespace MechEngineer
         
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
+        public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center";
         public bool AutoFixMechDefGyro = true; // adds missing gyro
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
         public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades that are size 3 to size 4
@@ -36,48 +36,48 @@ namespace MechEngineer
         public string EnginePartPrefix = "emod_engine";
         public string EngineSlotPrefix = "emod_engineslots";
         public string EngineCorePrefix = "emod_engine_";
-        public EngineType[] EngineTypes = {
-            new EngineType
-            {
-                ComponentTypeID = "emod_engineslots_std_center",
-                WeightMultiplier = 1.0f,
-            },
-            new EngineType
-            {
-                ComponentTypeID = "emod_engineslots_compact_center",
-                WeightMultiplier = 1.5f,
-            },
-            new EngineType
-            {
-                ComponentTypeID = "emod_engineslots_light_center",
-                WeightMultiplier = 0.75f,
-                Requirements = new[] {"emod_engineslots_light_left", "emod_engineslots_light_right"}
-            },
-            new EngineType
-            {
-                ComponentTypeID = "emod_engineslots_xl_center",
-                WeightMultiplier = 0.5f,
-                Requirements = new[] {"emod_engineslots_xl_left", "emod_engineslots_xl_right"}
-            },
-            new EngineType
-            {
-                ComponentTypeID = "emod_engineslots_cxl_center",
-                WeightMultiplier = 0.5f,
-                Requirements = new[] {"emod_engineslots_cxl_left", "emod_engineslots_cxl_right"}
-            },
-            new EngineType
-            {
-                ComponentTypeID = "emod_engineslots_xxl_center",
-                WeightMultiplier = 0.333f,
-                Requirements = new[] {"emod_engineslots_xxl_left", "emod_engineslots_xxl_right"}
-            },
-            new EngineType
-            {
-                ComponentTypeID = "emod_engineslots_cxxl_center",
-                WeightMultiplier = 0.333f,
-                Requirements = new[] {"emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"}
-            }
-        };
+        //public EngineType[] EngineTypes = {
+        //    new EngineType
+        //    {
+        //        ComponentTypeID = "emod_engineslots_std_center",
+        //        WeightMultiplier = 1.0f,
+        //    },
+        //    new EngineType
+        //    {
+        //        ComponentTypeID = "emod_engineslots_compact_center",
+        //        WeightMultiplier = 1.5f,
+        //    },
+        //    new EngineType
+        //    {
+        //        ComponentTypeID = "emod_engineslots_light_center",
+        //        WeightMultiplier = 0.75f,
+        //        Requirements = new[] {"emod_engineslots_light_left", "emod_engineslots_light_right"}
+        //    },
+        //    new EngineType
+        //    {
+        //        ComponentTypeID = "emod_engineslots_xl_center",
+        //        WeightMultiplier = 0.5f,
+        //        Requirements = new[] {"emod_engineslots_xl_left", "emod_engineslots_xl_right"}
+        //    },
+        //    new EngineType
+        //    {
+        //        ComponentTypeID = "emod_engineslots_cxl_center",
+        //        WeightMultiplier = 0.5f,
+        //        Requirements = new[] {"emod_engineslots_cxl_left", "emod_engineslots_cxl_right"}
+        //    },
+        //    new EngineType
+        //    {
+        //        ComponentTypeID = "emod_engineslots_xxl_center",
+        //        WeightMultiplier = 0.333f,
+        //        Requirements = new[] {"emod_engineslots_xxl_left", "emod_engineslots_xxl_right"}
+        //    },
+        //    new EngineType
+        //    {
+        //        ComponentTypeID = "emod_engineslots_cxxl_center",
+        //        WeightMultiplier = 0.333f,
+        //        Requirements = new[] {"emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"}
+        //    }
+        //};
         
         public bool AllowMixingDoubleAndSingleHeatSinks = false; // only useful for patchwork like behavior
         public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations
@@ -129,13 +129,6 @@ namespace MechEngineer
 		*/
         public float const_TTWalkMultiplier = 30f;
         public float const_TTSprintMultiplier = 50f;
-    }
-
-    public class EngineType
-    {
-        public string ComponentTypeID;
-        public float WeightMultiplier;
-        public string[] Requirements = { };
     }
 
     public class WeightSavingSlotType

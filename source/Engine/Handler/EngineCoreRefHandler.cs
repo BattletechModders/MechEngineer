@@ -90,14 +90,13 @@ namespace MechEngineer
 
                 var simGameUID = isDHS ? "/ihstype=dhs" : null;
 
-                var componentRef = new MechComponentRef(maxEngine.Def.Description.Id, simGameUID, maxEngine.Def.ComponentType, ChassisLocations.CenterTorso);
+                var componentRef = new MechComponentRef(maxEngine.Description.Id, simGameUID, maxEngine.ComponentType, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
             }
 
             {
                 // add standard shielding
-                var engineType = Control.settings.EngineTypes.First();
-                var componentRef = new MechComponentRef(engineType.ComponentTypeID, null, ComponentType.HeatSink, ChassisLocations.CenterTorso);
+                var componentRef = new MechComponentRef(Control.settings.AutoFixMechDefEngineTypeDef, null, ComponentType.HeatSink, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
             }
 

@@ -1,7 +1,7 @@
 {
-    "StatName" : null,
-    "RelativeModifier" : 0,
-    "AbsoluteModifier" : 0,
+	"CustomType": "EngineTypeDef",
+	"WeightMultiplier": 0.5,
+	"Requirements": ["emod_engineslots_xl_left", "emod_engineslots_xl_right"],
     "Description" : {
         "Cost" : 2500000,
         "Rarity" : 0,

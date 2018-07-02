@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reflection;
 using BattleTech;
-using DynModLib;
 using Harmony;
 
 namespace MechEngineer
@@ -26,9 +25,12 @@ namespace MechEngineer
             try
             {
                 mod.LoadSettings(settings);
+                mod.SetupLogging();
 
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+                CustomComponents.Control.RegisterCustomTypes(Assembly.GetExecutingAssembly());
 
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
