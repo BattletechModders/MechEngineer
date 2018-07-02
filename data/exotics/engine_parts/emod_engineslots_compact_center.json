@@ -1,7 +1,6 @@
 {
-    "StatName" : null,
-    "RelativeModifier" : 0,
-    "AbsoluteModifier" : 0,
+	"CustomType": "EngineTypeDef",
+	"WeightMultiplier": 1.5,
     "Description" : {
         "Cost" : 1250000,
         "Rarity" : 0,

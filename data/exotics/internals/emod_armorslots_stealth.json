@@ -1,7 +1,7 @@
 {
-    "StatName" : null,
-    "RelativeModifier" : 0,
-    "AbsoluteModifier" : 0,
+	"CustomType": "ArmorDef",
+	"RequiredCriticalSlotCount": 6,
+	"WeightSavingsFactor": 0,
     "Description" : {
         "Cost" : 240000,
         "Rarity" : 0,

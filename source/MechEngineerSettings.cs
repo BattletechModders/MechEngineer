@@ -10,7 +10,7 @@ namespace MechEngineer
         
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
-        public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center";
+        public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center"; // always assumes weight factor 1.0
         public bool AutoFixMechDefGyro = true; // adds missing gyro
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
         public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades that are size 3 to size 4
@@ -24,7 +24,7 @@ namespace MechEngineer
         public bool AutoFixChassisDefInitialTonnage = true;
         public float AutoFixChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
 
-        public bool EnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts 
+        public bool EnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts (300+ item types)
 
         public string GearGryoPrefix = "Gear_Gyro_";
         public string GearCockpitPrefix = "Gear_Cockpit_";
@@ -32,69 +32,10 @@ namespace MechEngineer
         public string GearHeatSinkDouble = "Gear_HeatSink_Generic_Double";
         public string GearHeatSinkStandard = "Gear_HeatSink_Generic_Standard";
         public string EngineKitDHS = "emod_kit_dhs";
-
-        //public EngineType[] EngineTypes = {
-        //    new EngineType
-        //    {
-        //        ComponentTypeID = "emod_engineslots_std_center",
-        //        WeightMultiplier = 1.0f,
-        //    },
-        //    new EngineType
-        //    {
-        //        ComponentTypeID = "emod_engineslots_compact_center",
-        //        WeightMultiplier = 1.5f,
-        //    },
-        //    new EngineType
-        //    {
-        //        ComponentTypeID = "emod_engineslots_light_center",
-        //        WeightMultiplier = 0.75f,
-        //        Requirements = new[] {"emod_engineslots_light_left", "emod_engineslots_light_right"}
-        //    },
-        //    new EngineType
-        //    {
-        //        ComponentTypeID = "emod_engineslots_xl_center",
-        //        WeightMultiplier = 0.5f,
-        //        Requirements = new[] {"emod_engineslots_xl_left", "emod_engineslots_xl_right"}
-        //    },
-        //    new EngineType
-        //    {
-        //        ComponentTypeID = "emod_engineslots_cxl_center",
-        //        WeightMultiplier = 0.5f,
-        //        Requirements = new[] {"emod_engineslots_cxl_left", "emod_engineslots_cxl_right"}
-        //    },
-        //    new EngineType
-        //    {
-        //        ComponentTypeID = "emod_engineslots_xxl_center",
-        //        WeightMultiplier = 0.333f,
-        //        Requirements = new[] {"emod_engineslots_xxl_left", "emod_engineslots_xxl_right"}
-        //    },
-        //    new EngineType
-        //    {
-        //        ComponentTypeID = "emod_engineslots_cxxl_center",
-        //        WeightMultiplier = 0.333f,
-        //        Requirements = new[] {"emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"}
-        //    }
-        //};
         
         public bool AllowMixingDoubleAndSingleHeatSinks = false; // only useful for patchwork like behavior
         public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations
         public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
-
-        //public string StructurePrefix = "emod_structureslots_";
-        //public WeightSavingSlotType[] StructureTypes = {
-        //    new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endosteel", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 0.5f },
-        //    new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endocomposite", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.25f },
-        //    new WeightSavingSlotType { ComponentDefId = "emod_structureslots_clanendosteel", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.5f }
-        //};
-
-        //public string ArmorPrefix = "emod_armorslots_";
-        //public WeightSavingSlotType[] ArmorTypes = {
-        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_lightferrosfibrous", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 1f - 1f / 1.06f },
-        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_ferrosfibrous", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 1f - 1f / 1.12f },
-        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_clanferrosfibrous", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 1f - 1f / 1.2f },
-        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_stealth", RequiredCriticalSlotCount = 6, WeightSavingsFactor = 0f },
-        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_heavyferrosfibrous", RequiredCriticalSlotCount = 21, WeightSavingsFactor = 1f - 1f / 1.24f }
-        //};
 
         /* 
 		set to false to use TT walk values

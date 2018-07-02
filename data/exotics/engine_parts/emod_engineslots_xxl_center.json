@@ -1,7 +1,7 @@
 {
-    "StatName" : null,
-    "RelativeModifier" : 0,
-    "AbsoluteModifier" : 0,
+	"CustomType": "EngineTypeDef",
+	"WeightMultiplier": 0.333,
+	"Requirements": ["emod_engineslots_xxl_left", "emod_engineslots_xxl_right"],
     "DissipationCapacity" : -15,
     "Description" : {
         "Cost" : 12500000,

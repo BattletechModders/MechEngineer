@@ -9,6 +9,7 @@ either
 or
 * install [BattleTechModLoader](https://github.com/Mpstark/BattleTechModLoader/releases) using [instructions here](https://github.com/Mpstark/BattleTechModLoader)
 * install [ModTek](https://github.com/Mpstark/ModTek/releases) using [instructions here](https://github.com/Mpstark/ModTek)
+* install [CustomComponents](https://github.com/Denadan/CustomComponents/releases) using [instructions here](https://github.com/Denadan/CustomComponents)
 * install [DynModLib](https://github.com/CptMoore/DynModLib/releases) using [instructions here](https://github.com/CptMoore/DynModLib)
 
 ## Suggested Mods
@@ -72,6 +73,7 @@ TODO
 * Aliencreature - ideas, lore and rules, item variants, testing
 * CptMoore - ideas, rules, coding, testing, core items
 * CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
+* Denadan - ideas, coding
 * TotalMeltdown - ideas, lore and rules
 
 ## Download
@@ -80,9 +82,9 @@ Downloads can be found on [github](https://github.com/CptMoore/MechEngineer/rele
 
 ## Install
 
-After installing BTML, ModTek and DynModLib, put the mod into the \BATTLETECH\Mods\ folder and launch the game.
+After installing BTML, ModTek, CustomComponents and DynModLib, put the mod into the \BATTLETECH\Mods\ folder and launch the game.
 
 ## Development
 
 * Use git
-* Use Visual Studio or DynModLib to compile the project
+* Use Visual Studio to compile the project
