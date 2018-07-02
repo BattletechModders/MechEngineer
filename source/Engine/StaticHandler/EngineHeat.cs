@@ -28,15 +28,15 @@ namespace MechEngineer
         {
             var newComponentRef = dragItem.ComponentRef;
             var newComponentDef = newComponentRef.Def;
-            var headSinkDef = newComponentDef as HeatSinkDef;
+            var heatSinkDef = newComponentDef as HeatSinkDef;
 
-            if (headSinkDef == null)
+            if (heatSinkDef == null)
             {
                 return null;
             }
 
             // check if we can work with it
-            if (!headSinkDef.IsDHSKit() && !headSinkDef.IsSingle() && !headSinkDef.IsDouble())
+            if (!heatSinkDef.IsDHSKit() && !heatSinkDef.IsCDHSKit() && !heatSinkDef.IsSingle() && !heatSinkDef.IsDouble() && !heatSinkDef.IsDoubleClan())
             {
                 return null;
             }
@@ -45,7 +45,7 @@ namespace MechEngineer
 
             if (engineSlotElement == null)
             {
-                if (headSinkDef.IsDHSKit())
+                if (heatSinkDef.IsDHSKit() || heatSinkDef.IsCDHSKit())
                 {
                     return new MechLabDropErrorResult(
                         string.Format("Cannot add {0}: No Engine found", newComponentDef.Description.Name)
@@ -75,23 +75,30 @@ namespace MechEngineer
                 }
             }
 
-            if (headSinkDef.IsDHSKit())
+            if (heatSinkDef.IsDHSKit() || heatSinkDef.IsCDHSKit())
             {
-                if (engineRef.IsDHS)
+                if (!engineRef.Is(HeatSinkType.SHS))
                 {
                     return new MechLabDropErrorResult(
-                        string.Format("Cannot add {0}: Already a DHS engine", newComponentDef.Description.Name)
+                        string.Format("Cannot add {0}: Reinstall engine to remove internal heat sinks", newComponentDef.Description.Name)
                     );
                 }
 
-                if (!Control.settings.AllowMixingDoubleAndSingleHeatSinks && engineRef.AdditionalSHSCount > 0)
+                if (!Control.settings.AllowMixingHeatSinkTypes && engineRef.Query(HeatSinkType.SHS).AdditionalCount > 0)
                 {
                     return new MechLabDropErrorResult(
                         string.Format("Cannot add {0}: Reinstall engine to remove additional heat sinks before converting", newComponentDef.Description.Name)
                     );
                 }
 
-                engineRef.IsDHS = true;
+                if (heatSinkDef.IsCDHSKit())
+                {
+                    engineRef.HSType = HeatSinkType.CDHS;
+                }
+                else if (heatSinkDef.IsDHSKit())
+                {
+                    engineRef.HSType = HeatSinkType.DHS;
+                }
             }
             else
             {
@@ -100,24 +107,30 @@ namespace MechEngineer
                     return null;
                 }
 
-                if (!Control.settings.AllowMixingDoubleAndSingleHeatSinks)
+                HeatSinkType hstype;
+                if (heatSinkDef.IsDouble())
                 {
-                    if (engineRef.IsDHS && headSinkDef.IsSingle() || engineRef.IsSHS && headSinkDef.IsDouble())
+                    hstype = HeatSinkType.DHS;
+                }
+                else if (heatSinkDef.IsDoubleClan())
+                {
+                    hstype = HeatSinkType.CDHS;
+                }
+                else
+                {
+                    hstype = HeatSinkType.SHS;
+                }
+
+                if (!Control.settings.AllowMixingHeatSinkTypes)
+                {
+                    if (!engineRef.Is(hstype))
                     {
                         return new MechLabDropErrorResult(
-                            string.Format("Cannot add {0}: Mixing DHS and SHS is not allowed", newComponentDef.Description.Name)
+                            string.Format("Cannot add {0}: Mixing heat sink types is not allowed", newComponentDef.Description.Name)
                         );
                     }
                 }
-
-                if (headSinkDef.IsDouble())
-                {
-                    engineRef.AdditionalDHSCount++;
-                }
-                else if (headSinkDef.IsSingle())
-                {
-                    engineRef.AdditionalSHSCount++;
-                }
+                engineRef.Query(hstype).AdditionalCount++;
             }
 
             EnginePersistence.SaveEngineState(engineRef, mechLab);

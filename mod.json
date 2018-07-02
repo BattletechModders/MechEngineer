@@ -41,6 +41,11 @@
 		},
 		{
 			"Type": "HeatSinkDef",
+			"Path": "disabled data/exotics/heatsinks/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
 			"Path": "disabled data/exotics/engines/",
 			"ShouldMergeJSON": false
 		},

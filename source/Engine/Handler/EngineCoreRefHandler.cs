@@ -104,32 +104,30 @@ namespace MechEngineer
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks)
+            if (Control.settings.AllowMixingHeatSinkTypes)
             {
                 return;
             }
 
-            bool hasSingle = false, hasDouble = false;
+            var set = new HashSet<HeatSinkType>();
             foreach (var componentRef in mechDef.Inventory)
             {
-                if (componentRef == null)
+                if (!(componentRef?.Def is HeatSinkDef componentDef))
                 {
                     continue;
                 }
 
-                var componentDef = componentRef.Def as HeatSinkDef;
-                if (componentDef == null)
+                if (componentDef.IsSingle())
                 {
-                    continue;
+                    set.Add(HeatSinkType.SHS);
                 }
-
-                if (componentDef.IsDouble())
+                else if (componentDef.IsDouble())
                 {
-                    hasDouble = true;
+                    set.Add(HeatSinkType.DHS);
                 }
-                else if (componentDef.IsSingle())
+                else if (componentDef.IsDoubleClan())
                 {
-                    hasSingle = true;
+                    set.Add(HeatSinkType.CDHS);
                 }
                 else if (componentDef is EngineCoreDef)
                 {
@@ -138,20 +136,12 @@ namespace MechEngineer
                     {
                         continue;
                     }
-
-                    if (engineRef.IsDHS)
-                    {
-                        hasDouble = true;
-                    }
-                    else
-                    {
-                        hasSingle = true;
-                    }
+                    set.Add(engineRef.HSType);
                 }
 
-                if (hasSingle && hasDouble)
+                if (set.Count > 1)
                 {
-                    errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Standard and Double Heat Sinks cannot be mixed");
+                    errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Heat Sink types cannot be mixed");
                     return;
                 }
             }

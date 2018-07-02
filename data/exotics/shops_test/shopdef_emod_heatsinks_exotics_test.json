@@ -1,0 +1,21 @@
+{
+   "ID" : "shopdef_emod_heatsinks_exotics_test",
+   "RequirementTags" : {
+      "items" : [],
+      "tagSetSourceFile" : ""
+   },
+   "ExclusionTags" : {
+      "items" : [
+      ],
+      "tagSetSourceFile" : ""
+   },
+   "Inventory" : [
+      {
+         "ID" : "Gear_HeatSink_Generic_Double_Clan",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+   ],
+   "Specials" : []
+}

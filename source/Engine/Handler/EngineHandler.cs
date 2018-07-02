@@ -46,18 +46,17 @@ namespace MechEngineer
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
 
-            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks || engineRef.IsSHS)
+            foreach (var hstype in HeatSinkTypeExtensions.Types())
             {
-                tooltip.detailText.text += "<i>Standard Heat Sinks</i>" +
-                                           "   Internal: <b>" + engineRef.InternalSHSCount + "</b>" +
-                                           "   Additional: <b>" + engineRef.AdditionalSHSCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
-            }
+                var query = engineRef.Query(hstype);
 
-            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks || engineRef.IsDHS)
-            {
-                tooltip.detailText.text += "<i>Double Heat Sinks</i>" +
-                                           "   Internal: <b>" + engineRef.InternalDHSCount + "</b>" +
-                                           "   Additional: <b>" + engineRef.AdditionalDHSCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
+                if (Control.settings.AllowMixingHeatSinkTypes || query.IsType)
+                {
+                    
+                    tooltip.detailText.text += "<i>" + hstype.Full() + "</i>" +
+                                               "   Internal: <b>" + query.InternalCount + "</b>" +
+                                               "   Additional: <b>" + query.AdditionalCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
+                }
             }
 
             tooltip.detailText.text += "\r\n" +
