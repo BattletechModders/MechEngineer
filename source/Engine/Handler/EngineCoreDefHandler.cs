@@ -5,7 +5,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class EngineCoreDefHandler : IValidateAdd, IDescription, IValidationRulesCheck
+    internal class EngineCoreDefHandler : IValidateAdd, IDescription, IValidateMech
     {
         internal static EngineCoreDefHandler Shared = new EngineCoreDefHandler();
 

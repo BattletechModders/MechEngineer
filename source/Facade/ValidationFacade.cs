@@ -12,7 +12,7 @@ namespace MechEngineer
             StructureHandler.Shared.ValidateMech(mechDef, errorMessages);
             EngineCoreRefHandler.Shared.ValidateMech(mechDef, errorMessages);
             EngineCoreDefHandler.Shared.ValidateMech(mechDef, errorMessages);
-            EngineSlotsCenterHandler.Shared.ValidateMech(mechDef, errorMessages);
+            EngineTypeDefHandler.Shared.ValidateMech(mechDef, errorMessages);
             GyroHandler.Shared.ValidateMech(mechDef, errorMessages);
             CockpitHandler.Shared.ValidateMech(mechDef, errorMessages);
         }
@@ -27,7 +27,7 @@ namespace MechEngineer
             {
                 GyroHandler.Shared,
                 LegUpgradeHandler.Shared,
-                EngineSlotsHandler.Shared,
+                EngineSideDefHandler.Shared,
                 EngineCoreDefHandler.Shared,
                 CockpitHandler.Shared
             };

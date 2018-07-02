@@ -14,7 +14,7 @@ namespace MechEngineer
         string CategoryName { get; }
     }
 
-    internal interface IValidationRulesCheck
+    internal interface IValidateMech
     {
         void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages);
     }

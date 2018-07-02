@@ -4,7 +4,7 @@ using BattleTech;
 
 namespace MechEngineer
 {
-    internal class EngineCoreRefHandler : IAutoFixMechDef, IValidationRulesCheck
+    internal class EngineCoreRefHandler : IAutoFixMechDef, IValidateMech
     {
         internal static EngineCoreRefHandler Shared = new EngineCoreRefHandler();
 

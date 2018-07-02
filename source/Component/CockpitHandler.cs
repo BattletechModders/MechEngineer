@@ -4,7 +4,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class CockpitHandler : IDescription, IValidateAdd, IAdjustUpgradeDef, IAutoFixMechDef, IValidationRulesCheck
+    internal class CockpitHandler : IDescription, IValidateAdd, IAdjustUpgradeDef, IAutoFixMechDef, IValidateMech
     {
         internal static CockpitHandler Shared = new CockpitHandler();
 

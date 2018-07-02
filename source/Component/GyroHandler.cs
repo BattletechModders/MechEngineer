@@ -4,7 +4,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class GyroHandler : IDescription, IValidateAdd, IAdjustUpgradeDef, IAutoFixMechDef, IValidationRulesCheck
+    internal class GyroHandler : IDescription, IValidateAdd, IAdjustUpgradeDef, IAutoFixMechDef, IValidateMech
     {
         internal static GyroHandler Shared = new GyroHandler();
 

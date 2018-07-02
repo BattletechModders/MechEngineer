@@ -5,7 +5,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class ValidationHelper : IValidateAdd, IValidationRulesCheck
+    internal class ValidationHelper : IValidateAdd, IValidateMech
     {
         private readonly IDescription description;
         private readonly IIdentifier identifier;

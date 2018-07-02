@@ -5,13 +5,13 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class EngineSlotsCenterHandler : IDescription, IValidateAdd, IValidationRulesCheck
+    internal class EngineTypeDefHandler : IDescription, IValidateAdd, IValidateMech
     {
-        internal static EngineSlotsCenterHandler Shared = new EngineSlotsCenterHandler();
+        internal static EngineTypeDefHandler Shared = new EngineTypeDefHandler();
 
         private readonly ValidationHelper checker;
 
-        private EngineSlotsCenterHandler()
+        private EngineTypeDefHandler()
         {
             var identifier = new IdentityFuncHelper(def => def is EngineTypeDef);
             checker = new ValidationHelper(identifier, this);

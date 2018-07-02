@@ -4,7 +4,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal abstract class ArmorStructureBase : IValidationRulesCheck, IProcessWeaponHit, ITonnageChanges, IAdjustTooltip, IIdentifier
+    internal abstract class ArmorStructureBase : IValidateMech, IProcessWeaponHit, ITonnageChanges, IAdjustTooltip, IIdentifier
     {
         public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
