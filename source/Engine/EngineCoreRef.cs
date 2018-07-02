@@ -67,7 +67,10 @@ namespace MechEngineer
                 {
                     dictionary.Remove("ihstype");
                     HeatSinkDef = DataManager.GetEngineHeatSinkDef(defId);
-                    Control.mod.Logger.LogError("ihstype - can't find EngineHeatSinkDef with id=" + defId);
+                    if (HeatSinkDef == null)
+                    {
+                        Control.mod.Logger.LogError("ihstype - can't find EngineHeatSinkDef with id=" + defId);
+                    }
                 }
 
                 foreach (var keyvalue in dictionary)

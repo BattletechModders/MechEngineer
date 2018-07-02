@@ -6,21 +6,6 @@ namespace MechEngineer
 {
     internal static class Extensions
     {
-        public static bool CheckComponentDef(this MechComponentDef def, ComponentType type, string prefix)
-        {
-            if (def.ComponentType != type)
-            {
-                return false;
-            }
-
-            if (def.Description == null || def.Description.Id == null)
-            {
-                return false;
-            }
-
-            return def.Description.Id.StartsWith(prefix);
-        }
-
         internal static void PerformOperation(this StatCollection collection, Statistic statistic, StatisticEffectData data)
         {
             var type = Type.GetType(data.modType);
