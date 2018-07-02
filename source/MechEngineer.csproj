@@ -122,6 +122,8 @@
     <Compile Include="Patches\MechValidationRulesValidateMechCanBeFieldedPatch.cs" />
     <Compile Include="Patches\SimGameStateML_RepairComponentPatch.cs" />
     <Compile Include="Patches\SimGameStateMoveWorkOrderItemsToQueuePatch.cs" />
+    <Compile Include="Patches\SimGameStateInitCompanyStatsPatch.cs" />
+    <Compile Include="Patches\SimGameStateRehydratePatch.cs" />
     <Compile Include="Patches\SimGameStateStripMechPatch.cs" />
     <Compile Include="Patches\SimGameStateReturnWorkOrderItemsToInventoryPatch.cs" />
     <Compile Include="Patches\SimGameStateML_InstallComponentPatch.cs" />

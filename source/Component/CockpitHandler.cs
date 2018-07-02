@@ -45,11 +45,6 @@ namespace MechEngineer
 
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
-            if (!Control.settings.AutoFixMechDefCockpit)
-            {
-                return;
-            }
-
             fixer.AutoFixMechDef(mechDef, originalTotalTonnage);
         }
 
