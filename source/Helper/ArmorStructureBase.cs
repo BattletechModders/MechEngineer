@@ -4,6 +4,12 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
+    public interface IWeightSavingSlotType
+    {
+        int RequiredCriticalSlotCount { get; }
+        float WeightSavingsFactor { get; }
+    }
+
     internal abstract class ArmorStructureBase : IValidateMech, IProcessWeaponHit, ITonnageChanges, IAdjustTooltip, IIdentifier
     {
         public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)

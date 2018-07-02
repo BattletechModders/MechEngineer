@@ -9,7 +9,7 @@ namespace MechEngineer
 
         public override bool IsCustomType(MechComponentDef def)
         {
-            return def.CheckComponentDef(ComponentType.Upgrade, Control.settings.StructurePrefix);
+            return def is StructureDef;
         }
 
         protected override WeightSavings CalculateWeightSavings(MechDef mechDef, MechComponentDef def = null)
@@ -18,7 +18,7 @@ namespace MechEngineer
 
             var slots = mechDef.Inventory.Select(c => c.Def).Where(IsCustomType).ToList();
 
-            return WeightSavings.Create(tonnage, slots, Control.settings.StructureTypes, def);
+            return WeightSavings.Create(tonnage, slots, def);
         }
     }
 }

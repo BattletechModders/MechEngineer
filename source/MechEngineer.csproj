@@ -59,6 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Component\StructureDef.cs" />
+    <Compile Include="Component\ArmorDef.cs" />
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />

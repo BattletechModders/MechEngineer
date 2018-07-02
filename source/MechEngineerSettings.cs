@@ -33,7 +33,6 @@ namespace MechEngineer
         public string GearHeatSinkStandard = "Gear_HeatSink_Generic_Standard";
         public string EngineKitDHS = "emod_kit_dhs";
 
-        public string EngineCorePrefix = "emod_engine_";
         //public EngineType[] EngineTypes = {
         //    new EngineType
         //    {
@@ -81,21 +80,21 @@ namespace MechEngineer
         public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations
         public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
 
-        public string StructurePrefix = "emod_structureslots_";
-        public WeightSavingSlotType[] StructureTypes = {
-            new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endosteel", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 0.5f },
-            new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endocomposite", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.25f },
-            new WeightSavingSlotType { ComponentDefId = "emod_structureslots_clanendosteel", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.5f }
-        };
+        //public string StructurePrefix = "emod_structureslots_";
+        //public WeightSavingSlotType[] StructureTypes = {
+        //    new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endosteel", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 0.5f },
+        //    new WeightSavingSlotType { ComponentDefId = "emod_structureslots_endocomposite", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.25f },
+        //    new WeightSavingSlotType { ComponentDefId = "emod_structureslots_clanendosteel", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 0.5f }
+        //};
 
-        public string ArmorPrefix = "emod_armorslots_";
-        public WeightSavingSlotType[] ArmorTypes = {
-            new WeightSavingSlotType { ComponentDefId = "emod_armorslots_lightferrosfibrous", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 1f - 1f / 1.06f },
-            new WeightSavingSlotType { ComponentDefId = "emod_armorslots_ferrosfibrous", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 1f - 1f / 1.12f },
-            new WeightSavingSlotType { ComponentDefId = "emod_armorslots_clanferrosfibrous", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 1f - 1f / 1.2f },
-            new WeightSavingSlotType { ComponentDefId = "emod_armorslots_stealth", RequiredCriticalSlotCount = 6, WeightSavingsFactor = 0f },
-            new WeightSavingSlotType { ComponentDefId = "emod_armorslots_heavyferrosfibrous", RequiredCriticalSlotCount = 21, WeightSavingsFactor = 1f - 1f / 1.24f }
-        };
+        //public string ArmorPrefix = "emod_armorslots_";
+        //public WeightSavingSlotType[] ArmorTypes = {
+        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_lightferrosfibrous", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 1f - 1f / 1.06f },
+        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_ferrosfibrous", RequiredCriticalSlotCount = 14, WeightSavingsFactor = 1f - 1f / 1.12f },
+        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_clanferrosfibrous", RequiredCriticalSlotCount = 7, WeightSavingsFactor = 1f - 1f / 1.2f },
+        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_stealth", RequiredCriticalSlotCount = 6, WeightSavingsFactor = 0f },
+        //    new WeightSavingSlotType { ComponentDefId = "emod_armorslots_heavyferrosfibrous", RequiredCriticalSlotCount = 21, WeightSavingsFactor = 1f - 1f / 1.24f }
+        //};
 
         /* 
 		set to false to use TT walk values
@@ -127,12 +126,5 @@ namespace MechEngineer
 		*/
         public float const_TTWalkMultiplier = 30f;
         public float const_TTSprintMultiplier = 50f;
-    }
-
-    public class WeightSavingSlotType
-    {
-        public string ComponentDefId;
-        public int RequiredCriticalSlotCount;
-        public float WeightSavingsFactor;
     }
 }
