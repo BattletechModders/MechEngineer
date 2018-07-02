@@ -26,8 +26,8 @@ namespace MechEngineer
 
         public bool EnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts (300+ item types)
 
-        public string GearGryoPrefix = "Gear_Gyro_";
-        public string GearCockpitPrefix = "Gear_Cockpit_";
+        //public string GearGryoPrefix = "Gear_Gyro_";
+        //public string GearCockpitPrefix = "Gear_Cockpit_";
 
         public string GearHeatSinkDouble = "Gear_HeatSink_Generic_Double";
         public string GearHeatSinkStandard = "Gear_HeatSink_Generic_Standard";

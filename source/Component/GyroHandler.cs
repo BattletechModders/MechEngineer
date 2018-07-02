@@ -18,7 +18,7 @@ namespace MechEngineer
             {
                 AllowedLocations = ChassisLocations.CenterTorso,
                 ComponentType = ComponentType.Upgrade,
-                Prefix = Control.settings.GearGryoPrefix,
+                //Prefix = Control.settings.GearGryoPrefix,
             };
 
             checker = new ValidationHelper(identity, this);
