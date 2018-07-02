@@ -1,10 +1,13 @@
-﻿using CustomComponents;
+﻿using BattleTech.UI;
+using CustomComponents;
 
 namespace MechEngineer
 {
     [Custom("EngineSideDef")]
-    public class EngineSideDef : CustomHeatSinkDef<EngineSideDef>, IEnginePart
+    public class EngineSideDef : CustomHeatSinkDef<EngineSideDef>, IEnginePart//, ICategory
     {
-        // only used to allow identification via IEnginePart during Crit calculations
+        //public string CategoryID { get; } = null;
+        //public string Tag { get; } = null;
+        //public CategoryDescriptor CategoryDescriptor { get; set; }
     }
 }
