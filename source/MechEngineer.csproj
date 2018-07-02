@@ -11,6 +11,7 @@
     <AssemblyName>MechEngineer</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,6 +63,9 @@
   <ItemGroup>
     <Compile Include="Component\StructureDef.cs" />
     <Compile Include="Component\ArmorDef.cs" />
+    <Compile Include="DynamicSlots\DynamicSlotController.cs" />
+    <Compile Include="DynamicSlots\IDynamicSlots.cs" />
+    <Compile Include="DynamicSlots\MechEngineerSettings.DynamicSlots.cs" />
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />

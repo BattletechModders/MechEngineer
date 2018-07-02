@@ -35,6 +35,10 @@ namespace MechEngineer
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
                 mod.Logger.Log("Loaded " + mod.Name);
+
+                CustomComponents.Validator.RegisterAddValidator(DynamicSlotController.ValidateAdd);
+                CustomComponents.Validator.RegisterMechValidator(DynamicSlotController.ValidateMech, DynamicSlotController.ValidateMechCanBeFielded);
+
             }
             catch (Exception e)
             {

@@ -5,6 +5,7 @@ using BattleTech;
 using BattleTech.UI;
 using Harmony;
 using UnityEngine;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 namespace MechEngineer
@@ -112,33 +113,37 @@ namespace MechEngineer
                     .OrderByDescending(x => x.localPosition.y)
                     .ToList();
 
-                //foreach (var slot in slots)
-                //{
-                //    Control.mod.Logger.LogDebug(slot.name);
-                //}
-
                 var changedSlotCount = ___maxSlots - slots.Count;
+
+
                 if (changedSlotCount == 0)
                 {
+                    AddFillersToSlot(slots, ___loadout, __instance);
                     return;
                 }
 
                 var templateSlot = slots[0];
 
                 // add missing
+                int index = slots[0].GetSiblingIndex();
                 for (var i = slots.Count; i < ___maxSlots; i++)
                 {
-                    var newSlot = Object.Instantiate(templateSlot, layout);
+                    var newSlot = UnityEngine.Object.Instantiate(templateSlot, layout);
                     newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
-                    newSlot.SetSiblingIndex(templateSlot.GetSiblingIndex());
+                    newSlot.SetSiblingIndex(index + i);
                     newSlot.name = "slot (" + i + ")";
+                    slots.Add(newSlot);
                 }
 
                 // remove abundant
-                for (var i = ___maxSlots; i < slots.Count; i++)
+                while (slots.Count > ___maxSlots)
                 {
-                    Object.Destroy(slots[i].gameObject);
+                    var slot = slots.Last();
+                    slots.RemoveAt(slots.Count - 1);
+                    UnityEngine.GameObject.Destroy(slot.gameObject);
                 }
+
+                AddFillersToSlot(slots, ___loadout, __instance);
 
                 var changedHeight = changedSlotCount * SlotHeight;
 
@@ -150,6 +155,35 @@ namespace MechEngineer
                 Control.mod.Logger.LogError(e);
             }
         }
+
+        private static void AddFillersToSlot(List<Transform> slots, LocationLoadoutDef loadout, MechLabLocationWidget instance)
+        {
+            List<Image> images = new List<Image>();
+
+
+
+            foreach (var slot in slots)
+            {
+                var go = new GameObject();
+                var rect = go.AddComponent<RectTransform>();
+                rect.pivot = new Vector2(0.5f, 0.5f);
+                rect.anchorMin = new Vector2(0, 0);
+                rect.anchorMax = new Vector2(1, 1);
+                rect.anchoredPosition = Vector2.zero;
+                rect.sizeDelta = new Vector2(-6, -6);
+                go.AddComponent<CanvasRenderer>();
+
+                var image = go.AddComponent<Image>();
+                image.color = Color.red;
+                images.Add(image);
+
+                rect.SetParent(slot, false);
+            }
+
+            DynamicSlotController.RegisterLocation(instance, images, loadout);
+        }
+
+
     }
 
     public static class Utils
