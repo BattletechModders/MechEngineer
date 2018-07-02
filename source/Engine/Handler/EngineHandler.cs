@@ -57,23 +57,23 @@ namespace MechEngineer
 
                 if (Control.settings.AllowMixingHeatSinkTypes || query.IsType)
                 {
-                    
+
                     tooltip.detailText.text += "<i>" + heatSinkDef.FullName + "</i>" +
                                                "   Internal: <b>" + query.InternalCount + "</b>" +
-                                               "   Additional: <b>" + query.AdditionalCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
+                                               "   Additional: <b>" + query.AdditionalCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>" +
+                                               "\r\n";
                 }
             }
 
-            tooltip.detailText.text += "\r\n" +
-                                       "<i>Speeds</i>" +
+            tooltip.detailText.text += "<i>Speeds</i>" +
                                        "   Cruise <b>" + walkSpeed + "</b>" +
                                        " / Top <b>" + runSpeed + "</b>";
 
             tooltip.detailText.text += "\r\n" +
-                                       "<i>Weights</i>" +
-                                       "   Engine: <b>" + engine.EngineTonnage + "</b> Ton" +
-                                       "   Gyro: <b>" + engine.CoreDef.GyroTonnage + "</b> Ton" +
-                                       "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b> Ton";
+                                       "<i>Weights [Ton]</i>" +
+                                       "   Engine: <b>" + engine.EngineTonnage + "</b>" +
+                                       "   Gyro: <b>" + engine.CoreDef.GyroTonnage + "</b>" +
+                                       "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b>";
 
             tooltip.tonnageText.text = $"{engine.Tonnage}";
 
