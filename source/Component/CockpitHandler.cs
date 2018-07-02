@@ -4,7 +4,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class CockpitHandler : IDescription, IValidateAdd, IAdjustUpgradeDef, IAutoFixMechDef, IValidateMech
+    internal class CockpitHandler : IDescription, IValidateDrop, IAdjustUpgradeDef, IAutoFixMechDef, IValidateMech
     {
         internal static CockpitHandler Shared = new CockpitHandler();
 
@@ -58,12 +58,9 @@ namespace MechEngineer
             get { return "Cockpit"; }
         }
 
-        public void ValidateAdd(MechComponentDef newComponentDef,
-            List<MechLabItemSlotElement> localInventory,
-            ref string dropErrorMessage,
-            ref bool result)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
         {
-            checker.ValidateAdd(newComponentDef, localInventory, ref dropErrorMessage, ref result);
+            return checker.ValidateDrop(dragItem, localInventory);
         }
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)

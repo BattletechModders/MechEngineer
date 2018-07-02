@@ -17,6 +17,8 @@ namespace MechEngineer
             MechLabDropTargetType addToType,
             MechLabPanel ___mechLab,
             List<MechLabItemSlotElement> ___localInventory,
+            int ___usedSlots,
+            int ___maxSlots,
             ref string ___dropErrorMessage)
         {
             try
@@ -32,24 +34,42 @@ namespace MechEngineer
                     return false;
                 }
 
-                var result = EngineHeat.DropCheck(__instance, ___mechLab, dragItem, ___localInventory);
-                var error = result as ErrorResult;
-                var remove = result as RemoveItemResult;
-                if (error != null)
+                var result = EngineHeat.ValidateDrop(___mechLab, dragItem, ___localInventory);
+
+                var newComponentDef = dragItem.ComponentRef.Def;
+                if (result == null)
                 {
-                    ___dropErrorMessage = error.errorMessage;
-                    ___mechLab.ShowDropErrorMessage(___dropErrorMessage);
-                    ___mechLab.OnDrop(eventData);
-                    return false;
+                    result = ValidationFacade.ValidateDrop(dragItem, ___localInventory);
                 }
 
-                if (remove != null)
+                if (result is MechLabDropRemoveDragItemResult)
                 {
                     // remove item and delete it
                     dragItem.thisCanvasGroup.blocksRaycasts = true;
                     dragItem.MountedLocation = ChassisLocations.None;
                     ___mechLab.dataManager.PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, dragItem.gameObject);
                     ___mechLab.ClearDragItem(true);
+                    return false;
+                }
+
+                if (result is MechLabDropReplaceItemResult replace)
+                {
+                    var element = replace.ToReplaceElement;
+                    if (___usedSlots - element.ComponentRef.Def.InventorySize + newComponentDef.InventorySize <= ___maxSlots)
+                    {
+                        __instance.OnRemoveItem(element, true);
+                        ___mechLab.ForceItemDrop(element);
+                        Traverse.Create(___mechLab).Field("dragItem").SetValue(dragItem);
+                    }
+                    return true;
+                    //result = new MechLabDropErrorResult($"Cannot add {newComponentDef.Description.Name}: Type is already installed");
+                }
+
+                if (result is MechLabDropErrorResult error)
+                {
+                    ___dropErrorMessage = error.errorMessage;
+                    ___mechLab.ShowDropErrorMessage(___dropErrorMessage);
+                    ___mechLab.OnDrop(eventData);
                     return false;
                 }
             }
@@ -60,23 +80,28 @@ namespace MechEngineer
 
             return true;
         }
+    }
 
-        internal class Result
+    internal class MechLabDropResult
+    {
+    }
+
+    internal class MechLabDropReplaceItemResult : MechLabDropResult
+    {
+        internal MechLabItemSlotElement ToReplaceElement;
+    }
+
+    internal class MechLabDropRemoveDragItemResult : MechLabDropResult
+    {
+    }
+
+    internal class MechLabDropErrorResult : MechLabDropResult
+    {
+        internal string errorMessage;
+
+        internal MechLabDropErrorResult(string errorMessage)
         {
-        }
-
-        internal class ErrorResult : Result
-        {
-            internal string errorMessage;
-
-            internal ErrorResult(string errorMessage)
-            {
-                this.errorMessage = errorMessage;
-            }
-        }
-
-        internal class RemoveItemResult : Result
-        {
+            this.errorMessage = errorMessage;
         }
     }
 }

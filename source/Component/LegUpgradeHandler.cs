@@ -6,7 +6,7 @@ using BattleTech.UI;
 namespace MechEngineer
 {
     // this isn't yet leg actuators, but we still did reduce the legs size
-    internal class LegUpgradeHandler : IDescription, IValidateAdd, IAdjustUpgradeDef
+    internal class LegUpgradeHandler : IDescription, IValidateDrop, IAdjustUpgradeDef
     {
         internal static LegUpgradeHandler Shared = new LegUpgradeHandler();
 
@@ -44,12 +44,9 @@ namespace MechEngineer
             get { return "Leg Upgrade"; }
         }
 
-        public void ValidateAdd(MechComponentDef newComponentDef,
-            List<MechLabItemSlotElement> localInventory,
-            ref string dropErrorMessage,
-            ref bool result)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
         {
-            checker.ValidateAdd(newComponentDef, localInventory, ref dropErrorMessage, ref result);
+            return checker.ValidateDrop(dragItem, localInventory);
         }
     }
 }

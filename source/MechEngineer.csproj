@@ -122,7 +122,6 @@
     <Compile Include="Helper\TooltipPrefab_EquipmentAdapter.cs" />
     <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatch.cs" />
     <Compile Include="Engine\StaticHandler\EngineMisc.cs" />
-    <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />
     <Compile Include="Facade\CalculateTonnageFacade.cs" />
     <Compile Include="Patches\MechLabMechInfoWidgetCalculateTonnagePatch.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateTonnagePatch.cs" />

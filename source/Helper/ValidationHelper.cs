@@ -5,7 +5,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class ValidationHelper : IValidateAdd, IValidateMech
+    internal class ValidationHelper : IValidateDrop, IValidateMech
     {
         private readonly IDescription description;
         private readonly IIdentifier identifier;
@@ -40,34 +40,25 @@ namespace MechEngineer
             }
         }
 
-        public void ValidateAdd(
-            MechComponentDef newComponentDef,
-            List<MechLabItemSlotElement> localInventory,
-            ref string dropErrorMessage,
-            ref bool result)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
         {
             if (!Unique)
             {
-                return;
+                return null;
             }
 
-            if (!result)
+            if (!identifier.IsCustomType(dragItem.ComponentRef.Def))
             {
-                return;
+                return null;
             }
 
-            if (!identifier.IsCustomType(newComponentDef))
+            var localComponent = localInventory.FirstOrDefault(s => identifier.IsCustomType(s.ComponentRef.Def));
+            if (localComponent == null)
             {
-                return;
+                return null;
             }
 
-            if (localInventory.Select(x => x.ComponentRef).All(x => x == null || !identifier.IsCustomType(x.Def)))
-            {
-                return;
-            }
-
-            dropErrorMessage = string.Format("Cannot add {0}: {1} is already installed", newComponentDef.Description.Name, description.CategoryName);
-            result = false;
+            return new MechLabDropReplaceItemResult {ToReplaceElement = localComponent};
         }
     }
 }

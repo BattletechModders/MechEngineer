@@ -34,12 +34,9 @@ namespace MechEngineer
         void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef);
     }
 
-    internal interface IValidateAdd
+    internal interface IValidateDrop
     {
-        void ValidateAdd(MechComponentDef newComponentDef,
-            List<MechLabItemSlotElement> localInventory,
-            ref string dropErrorMessage,
-            ref bool result);
+        MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory);
     }
 
     internal interface IAdjustUpgradeDef

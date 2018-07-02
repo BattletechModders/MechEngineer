@@ -4,7 +4,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class EngineSideDefHandler : IValidateAdd, IDescription
+    internal class EngineSideDefHandler : IValidateDrop, IDescription
     {
         internal static EngineSideDefHandler Shared = new EngineSideDefHandler();
 
@@ -21,9 +21,9 @@ namespace MechEngineer
             get { return "Engine Shielding"; }
         }
 
-        public void ValidateAdd(MechComponentDef newComponentDef, List<MechLabItemSlotElement> localInventory, ref string dropErrorMessage, ref bool result)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
         {
-            checker.ValidateAdd(newComponentDef, localInventory, ref dropErrorMessage, ref result);
+            return checker.ValidateDrop(dragItem, localInventory);
         }
     }
 }
