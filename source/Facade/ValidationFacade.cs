@@ -25,11 +25,12 @@ namespace MechEngineer
         {
             var validators = new IValidateAdd[]
             {
-                GyroHandler.Shared,
                 LegUpgradeHandler.Shared,
                 EngineSideDefHandler.Shared,
                 EngineCoreDefHandler.Shared,
-                CockpitHandler.Shared
+                EngineTypeDefHandler.Shared,
+                GyroHandler.Shared,
+                CockpitHandler.Shared,
             };
             foreach (var validator in validators)
             {

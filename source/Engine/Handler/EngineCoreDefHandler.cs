@@ -13,12 +13,7 @@ namespace MechEngineer
 
         private EngineCoreDefHandler()
         {
-            var identifier = new IdentityHelper
-            {
-                AllowedLocations = ChassisLocations.CenterTorso,
-                ComponentType = ComponentType.HeatSink,
-                Prefix = Control.settings.EngineCorePrefix,
-            };
+            var identifier = new IdentityFuncHelper(def => def is EngineCoreDef);
             checker = new ValidationHelper(identifier, this);
         }
 

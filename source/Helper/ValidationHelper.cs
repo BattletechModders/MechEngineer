@@ -21,18 +21,18 @@ namespace MechEngineer
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            var count = mechDef.Inventory
-                .Where(x => x.DamageLevel == ComponentDamageLevel.Functional)
-                .Count(x => x.Def != null && identifier.IsCustomType(x.Def));
+            var types = mechDef.Inventory
+                .Where(x => x.Def != null && identifier.IsCustomType(x.Def))
+                .ToList();
 
-            if (Required && count == 0)
+            if (Required && types.Count(x => x.DamageLevel == ComponentDamageLevel.Functional) == 0)
             {
                 errorMessages[MechValidationType.InvalidInventorySlots].Add(
                     string.Format("MISSING: Must mount a functional {0}", description.CategoryName)
                 );
             }
 
-            if (Unique && count > 1)
+            if (Unique && types.Count > 1)
             {
                 errorMessages[MechValidationType.InvalidInventorySlots].Add(
                     string.Format("UNIQUE: Can't mount more than one {0}", description.CategoryName)
