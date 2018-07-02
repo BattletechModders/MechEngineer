@@ -9,15 +9,22 @@ namespace MechEngineer
         public int EngineHeatSinkCapacityAdjustmentPerCrit = -15;
         
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
+
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
         public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center"; // always assumes weight factor 1.0
+
         public bool AutoFixMechDefGyro = true; // adds missing gyro
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
         public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades that are size 3 to size 4
+        public string AutoFixGyroPrefix = null; // "Gear_Gyro_";
+
         public bool AutoFixMechDefCockpit = true; // adds missing cockpit
         public string AutoFixMechDefCockpitId = "Gear_Cockpit_Generic_Standard";
         public bool AutoFixCockpitUpgrades = true; // adds 3 tons to cockpit upgrades that weigh 0 tons
+        public string AutoFixCockpitPrefix = null; // "Gear_Cockpit_";
+
         public bool AutoFixLegUpgrades = true; // reduces leg upgrades from 3 to 1 size
+        public string AutoFixLegUpgradesPrefix = null; //"Gear_Actuator_";
         
         public string[] AutoFixChassisDefSkip = { };
         public bool AutoFixChassisDefSlots = true; // adds 2 torso slots at a cost of 2 leg slots per side if they match stock slot layouts
@@ -25,9 +32,6 @@ namespace MechEngineer
         public float AutoFixChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
 
         public bool EnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts (300+ item types)
-
-        //public string GearGryoPrefix = "Gear_Gyro_";
-        //public string GearCockpitPrefix = "Gear_Cockpit_";
 
         public string GearHeatSinkDouble = "Gear_HeatSink_Generic_Double";
         public string GearHeatSinkStandard = "Gear_HeatSink_Generic_Standard";

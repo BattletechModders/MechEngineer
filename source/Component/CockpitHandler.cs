@@ -18,7 +18,7 @@ namespace MechEngineer
             {
                 AllowedLocations = ChassisLocations.Head,
                 ComponentType = ComponentType.Upgrade,
-                //Prefix = Control.settings.GearCockpitPrefix,
+                Prefix = Control.settings.AutoFixCockpitPrefix,
             };
 
             checker = new ValidationHelper(identity, this);

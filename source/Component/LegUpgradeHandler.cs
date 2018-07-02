@@ -18,7 +18,8 @@ namespace MechEngineer
             var identity = new IdentityHelper
             {
                 AllowedLocations = ChassisLocations.Legs,
-                ComponentType = ComponentType.Upgrade
+                ComponentType = ComponentType.Upgrade,
+                Prefix = Control.settings.AutoFixLegUpgradesPrefix,
             };
 
             checker = new ValidationHelper(identity, this)
