@@ -6,12 +6,6 @@ namespace MechEngineer
 {
     internal static class Extensions
     {
-        // only main engine
-        internal static bool IsEngineCore(this MechComponentDef componentDef)
-        {
-            return CheckComponentDef(componentDef, ComponentType.HeatSink, Control.settings.EngineCorePrefix);
-        }
-
         public static bool CheckComponentDef(this MechComponentDef def, ComponentType type, string prefix)
         {
             if (def.ComponentType != type)

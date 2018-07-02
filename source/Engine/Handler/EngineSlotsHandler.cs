@@ -12,11 +12,7 @@ namespace MechEngineer
 
         private EngineSlotsHandler()
         {
-            var identifier = new IdentityHelper
-            {
-                ComponentType = ComponentType.HeatSink,
-                Prefix = Control.settings.EngineSlotPrefix,
-            };
+            var identifier = new IdentityFuncHelper(def => def is EngineSideDef);
             checker = new ValidationHelper(identifier, this) {Required = false};
         }
 

@@ -13,14 +13,14 @@ namespace MechEngineer
             {
                 var componentDef = componentRef.Def;
 
-                if (!componentDef.IsEnginePart())
+                if (!(componentDef is IEnginePart))
                 {
                     continue;
                 }
 
                 result.Parts.Add(componentRef);
 
-                if (result.CoreRef == null && componentDef.IsEngineCore())
+                if (result.CoreRef == null && componentDef is EngineTypeDef)
                 {
                     result.CoreRef = componentRef.GetEngineCoreRef();
                     continue;

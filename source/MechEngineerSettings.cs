@@ -33,8 +33,6 @@ namespace MechEngineer
         public string GearHeatSinkStandard = "Gear_HeatSink_Generic_Standard";
         public string EngineKitDHS = "emod_kit_dhs";
 
-        public string EnginePartPrefix = "emod_engine";
-        public string EngineSlotPrefix = "emod_engineslots";
         public string EngineCorePrefix = "emod_engine_";
         //public EngineType[] EngineTypes = {
         //    new EngineType

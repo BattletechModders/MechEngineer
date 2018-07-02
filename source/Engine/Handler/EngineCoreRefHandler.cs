@@ -15,7 +15,7 @@ namespace MechEngineer
                 return;
             }
 
-            if (mechDef.Inventory.Any(c => c.Def.IsEngineCore()))
+            if (mechDef.Inventory.Any(c => c.Def is EngineCoreDef))
             {
                 return;
             }
@@ -51,8 +51,7 @@ namespace MechEngineer
                     continue;
                 }
 
-                var engineDef = heatSinkDef.GetEngineCoreDef();
-                if (engineDef == null)
+                if (!(heatSinkDef is EngineCoreDef engineDef))
                 {
                     continue;
                 }
@@ -132,7 +131,7 @@ namespace MechEngineer
                 {
                     hasSingle = true;
                 }
-                else if (componentDef.IsEngineCore())
+                else if (componentDef is EngineCoreDef)
                 {
                     var engineRef = componentRef.GetEngineCoreRef();
                     if (engineRef == null)

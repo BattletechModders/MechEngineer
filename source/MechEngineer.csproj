@@ -62,6 +62,7 @@
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />
+    <Compile Include="Engine\EngineSideDef.cs" />
     <Compile Include="Engine\Helper\EngineExtensions.cs" />
     <Compile Include="Engine\Helper\EngineSearcher.cs" />
     <Compile Include="Engine\Engine.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Engine\Handler\EngineSlotsHandler.cs" />
     <Compile Include="Engine\Handler\EngineSlotsCenterHandler.cs" />
     <Compile Include="Engine\EngineTypeDef.cs" />
+    <Compile Include="Engine\IEnginePart.cs" />
     <Compile Include="Helper\IdentityHelper.cs" />
     <Compile Include="Helper\AdjustCompDefTonnageHelper.cs" />
     <Compile Include="Helper\AdjustCompDefInvSizeHelper.cs" />

@@ -131,8 +131,7 @@ namespace MechEngineer
                     continue;
                 }
 
-                var engine = componentDef.GetEngineCoreDef();
-                if (engine == null)
+                if (!(componentDef is EngineCoreDef engine))
                 {
                     continue;
                 }

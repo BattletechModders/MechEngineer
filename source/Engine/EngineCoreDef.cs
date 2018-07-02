@@ -3,7 +3,7 @@
 namespace MechEngineer
 {
     [Custom("EngineCoreDef")]
-    public class EngineCoreDef : CustomHeatSinkDef<EngineCoreDef>
+    public class EngineCoreDef : CustomHeatSinkDef<EngineCoreDef>, IEnginePart
     {
         private int _rating;
 

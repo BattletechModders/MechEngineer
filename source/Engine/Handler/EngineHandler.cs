@@ -26,8 +26,7 @@ namespace MechEngineer
     {
         public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
-            var engineDef = mechComponentDef.GetEngineCoreDef();
-            if (engineDef == null)
+            if (!(mechComponentDef is EngineCoreDef engineDef))
             {
                 return;
             }

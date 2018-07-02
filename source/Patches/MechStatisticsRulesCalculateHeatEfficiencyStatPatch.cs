@@ -32,7 +32,7 @@ namespace MechEngineer
         {
             try
             {
-                if (@this.IsEngineCore())
+                if (@this is EngineCoreDef)
                 {
                     return EngineHeat.GetEngineHeatDissipation(def.Inventory);
                 }

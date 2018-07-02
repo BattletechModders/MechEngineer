@@ -46,8 +46,7 @@ namespace MechEngineer
                 return null;
             }
 
-            var engineSlotElement = localInventory
-                .FirstOrDefault(x => x != null && x.ComponentRef != null && x.ComponentRef.Def != null && x.ComponentRef.Def.IsEngineCore());
+            var engineSlotElement = localInventory.FirstOrDefault(x => x?.ComponentRef?.Def is EngineCoreDef);
 
             if (engineSlotElement == null)
             {

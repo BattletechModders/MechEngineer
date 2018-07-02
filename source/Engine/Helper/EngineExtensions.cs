@@ -30,13 +30,7 @@ namespace MechEngineer
 
         internal static EngineCoreRef GetEngineCoreRef(this MechComponentRef @this)
         {
-            if (@this == null || @this.Def == null)
-            {
-                return null;
-            }
-
-            var engineDef = @this.Def.GetEngineCoreDef();
-            if (engineDef == null)
+            if (!(@this?.Def is EngineCoreDef engineDef))
             {
                 return null;
             }
@@ -47,17 +41,7 @@ namespace MechEngineer
         internal static EngineCoreDef GetEngineCoreDef(this IEnumerable<MechComponentRef> componentRefs)
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
-            return result.CoreRef == null ? null : result.CoreRef.CoreDef;
-        }
-
-        internal static EngineCoreDef GetEngineCoreDef(this MechComponentDef @this)
-        {
-            return @this as EngineCoreDef;
-        }
-
-        internal static bool IsEnginePart(this MechComponentDef componentDef)
-        {
-            return componentDef.CheckComponentDef(ComponentType.HeatSink, Control.settings.EnginePartPrefix);
+            return result.CoreRef?.CoreDef;
         }
     }
 }
