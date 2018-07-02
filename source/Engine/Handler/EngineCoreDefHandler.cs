@@ -5,7 +5,7 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class EngineCoreDefHandler : IValidateAdd, IDescription, IValidationRulesCheck
+    internal class EngineCoreDefHandler : IValidateDrop, IDescription, IValidateMech
     {
         internal static EngineCoreDefHandler Shared = new EngineCoreDefHandler();
 
@@ -13,12 +13,7 @@ namespace MechEngineer
 
         private EngineCoreDefHandler()
         {
-            var identifier = new IdentityHelper
-            {
-                AllowedLocations = ChassisLocations.CenterTorso,
-                ComponentType = ComponentType.HeatSink,
-                Prefix = Control.settings.EngineCorePrefix,
-            };
+            var identifier = new IdentityFuncHelper(def => def is EngineCoreDef);
             checker = new ValidationHelper(identifier, this);
         }
 
@@ -27,9 +22,9 @@ namespace MechEngineer
             get { return "Engine Core"; }
         }
 
-        public void ValidateAdd(MechComponentDef newComponentDef, List<MechLabItemSlotElement> localInventory, ref string dropErrorMessage, ref bool result)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
         {
-            checker.ValidateAdd(newComponentDef, localInventory, ref dropErrorMessage, ref result);
+            return checker.ValidateDrop(dragItem, localInventory);
         }
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)

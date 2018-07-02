@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using BattleTech;
+using BattleTech.Data;
 
 namespace MechEngineer
 {
@@ -10,10 +13,17 @@ namespace MechEngineer
 
         internal readonly MechComponentRef ComponentRef;
         internal readonly EngineCoreDef CoreDef;
+        
+        internal EngineHeatSinkDef HeatSinkDef;
+        
+        private readonly Dictionary<EngineHeatSinkDef, int> additionalHSCounts = new Dictionary<EngineHeatSinkDef, int>();
+        
+        internal HSQuery Query(EngineHeatSinkDef type)
+        {
+            return new HSQuery(this, type);
+        }
 
-        internal int AdditionalDHSCount;
-        internal int AdditionalSHSCount;
-        internal bool IsDHS;
+        internal int AdditionalHeatSinkCount => additionalHSCounts.Values.Sum();
 
         internal string UUID;
 
@@ -23,72 +33,71 @@ namespace MechEngineer
             CoreDef = coreDef;
 
             var text = componentRef.SimGameUID;
-
             if (string.IsNullOrEmpty(text))
             {
                 if (text != null)
                 {
                     componentRef.SetSimGameUID(null);
                 }
-
-                return;
             }
-
-            var match = Regex.Match(text);
-            if (!match.Success)
+            else
             {
-                return;
+                var match = Regex.Match(text);
+                if (match.Success)
+                {
+                    UUID = string.IsNullOrEmpty(match.Groups[1].Value) ? null : match.Groups[1].Value;
+                    Properties = match.Groups[2].Value;
+                }
             }
 
-            UUID = string.IsNullOrEmpty(match.Groups[1].Value) ? null : match.Groups[1].Value;
-            Properties = match.Groups[2].Value;
+            if (HeatSinkDef == null)
+            {
+                HeatSinkDef = DataManager.GetDefaultEngineHeatSinkDef();
+            }
         }
 
-        internal bool IsSHS
-        {
-            get { return !IsDHS; }
-        }
-
-        internal int InternalSHSCount
-        {
-            get { return IsSHS ? CoreDef.MinHeatSinks : 0; }
-        }
-
-        internal int InternalDHSCount
-        {
-            get { return IsDHS ? CoreDef.MinHeatSinks : 0; }
-        }
-
-        internal int AdditionalHeatSinkCount
-        {
-            get { return AdditionalSHSCount + AdditionalDHSCount; }
-        }
+        internal DataManager DataManager => ComponentRef.DataManager;
 
         private string Properties
         {
             set
             {
                 var dictionary = DictionarySerializer.FromString(value);
-                IsDHS = dictionary.ContainsKey("ihstype") && dictionary["ihstype"] == "dhs";
-                AdditionalSHSCount = dictionary.ContainsKey("ashs") ? int.Parse(dictionary["ashs"]) : 0;
-                AdditionalDHSCount = dictionary.ContainsKey("adhs") ? int.Parse(dictionary["adhs"]) : 0;
+                if (dictionary.TryGetValue("ihstype", out var defId))
+                {
+                    dictionary.Remove("ihstype");
+                    HeatSinkDef = DataManager.GetEngineHeatSinkDef(defId);
+                    if (HeatSinkDef == null)
+                    {
+                        Control.mod.Logger.LogError("ihstype - can't find EngineHeatSinkDef with id=" + defId);
+                    }
+                }
+
+                foreach (var keyvalue in dictionary)
+                {
+                    if (!(DataManager.Get(BattleTechResourceType.HeatSinkDef, keyvalue.Key) is EngineHeatSinkDef type))
+                    {
+                        Control.mod.Logger.LogError("can't find EngineHeatSinkDef with id=" + keyvalue.Key);
+                        continue;
+                    }
+                    Query(type).AdditionalCount = int.Parse(keyvalue.Value);
+                }
             }
             get
             {
                 var dictionary = new Dictionary<string, string>();
-                if (IsDHS)
+                if (HeatSinkDef != DataManager.GetDefaultEngineHeatSinkDef())
                 {
-                    dictionary["ihstype"] = "dhs";
+                    dictionary["ihstype"] = HeatSinkDef.Description.Id;
                 }
 
-                if (AdditionalSHSCount > 0)
+                foreach (var type in additionalHSCounts.Keys)
                 {
-                    dictionary["ashs"] = AdditionalSHSCount.ToString();
-                }
-
-                if (AdditionalDHSCount > 0)
-                {
-                    dictionary["adhs"] = AdditionalDHSCount.ToString();
+                    var count = Query(type).AdditionalCount;
+                    if (count > 0)
+                    {
+                        dictionary[type.Description.Id] = count.ToString();
+                    }
                 }
 
                 return DictionarySerializer.ToString(dictionary);
@@ -99,16 +108,15 @@ namespace MechEngineer
         {
             get
             {
-                var dissipation = AdditionalDHSCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity * 2;
-                dissipation += AdditionalSHSCount * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
-                dissipation += (IsDHS ? 2 : 1) * CoreDef.MinHeatSinks * Control.Combat.Heat.DefaultHeatSinkDissipationCapacity;
+                float dissipation = 0;
+                foreach (var keyvalue in additionalHSCounts)
+                {
+                    dissipation += keyvalue.Key.DissipationCapacity * keyvalue.Value;
+                }
+                dissipation += HeatSinkDef.DissipationCapacity * CoreDef.MinHeatSinks;
 
                 // can't enforce heatsinkdef earlier as apparently in same cases the Def is a generic one and does not derive from HeatSinkDef (Tooltips)
-                var heatSinkDef = CoreDef.Def as HeatSinkDef;
-                if (heatSinkDef != null)
-                {
-                    dissipation += heatSinkDef.DissipationCapacity;
-                }
+                dissipation += CoreDef.DissipationCapacity;
 
                 //Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engineDef.Rating + " minHeatSinks=" + minHeatSinks + " additionalHeatSinks=" + engineProps.AdditionalHeatSinkCount + " dissipation=" + dissipation);
 
@@ -116,33 +124,24 @@ namespace MechEngineer
             }
         }
 
-        internal string BonusValueA
-        {
-            get { return string.Format("- {0} Heat", EngineHeatDissipation); }
-        }
+        internal string BonusValueA => $"- {EngineHeatDissipation} Heat";
 
         internal string BonusValueB
         {
             get
             {
-                var bonusText = IsDHS ? "DHS" : "SHS";
                 if (CoreDef.MaxAdditionalHeatSinks > 0)
                 {
-                    bonusText += string.Format(" {0} / {1}", CoreDef.MinHeatSinks + AdditionalHeatSinkCount, CoreDef.MaxHeatSinks);
+                    return $"{HeatSinkDef.Abbreviation} {CoreDef.MinHeatSinks + AdditionalHeatSinkCount} / {CoreDef.MaxHeatSinks}";
                 }
                 else
                 {
-                    bonusText += string.Format(" {0}", CoreDef.MinHeatSinks);
+                    return $"{HeatSinkDef.Abbreviation} {CoreDef.MinHeatSinks}";
                 }
-
-                return bonusText;
             }
         }
 
-        internal float HeatSinkTonnage
-        {
-            get { return AdditionalHeatSinkCount * 1; }
-        }
+        internal float HeatSinkTonnage => AdditionalHeatSinkCount * 1;
 
         internal string GetNewSimGameUID()
         {
@@ -151,20 +150,53 @@ namespace MechEngineer
 
         internal IEnumerable<string> GetInternalComponents()
         {
-            if (IsDHS)
+            var kit = DataManager.GetAllEngineHeatSinkKitDefDefs().FirstOrDefault(c => c.HeatSinkDef == HeatSinkDef);
+            if (kit != null)
             {
-                yield return Control.settings.EngineKitDHS;
+                yield return kit.Description.Id;
             }
 
-            for (var i = 0; i < AdditionalSHSCount; i++)
+            foreach (var type in additionalHSCounts.Keys)
             {
-                yield return Control.settings.GearHeatSinkStandard;
+                for (var i = 0; i < Query(type).AdditionalCount; i++)
+                {
+                    yield return type.Description.Id;
+                }
+            }
+        }
+        
+        internal class HSQuery
+        {
+            private readonly EngineCoreRef coreRef;
+            private readonly EngineHeatSinkDef heatSinkDef;
+
+            internal HSQuery(EngineCoreRef coreRef, EngineHeatSinkDef heatSinkDef)
+            {
+                this.coreRef = coreRef;
+                this.heatSinkDef = heatSinkDef;
             }
 
-            for (var i = 0; i < AdditionalDHSCount; i++)
+            internal bool IsType => coreRef.HeatSinkDef == heatSinkDef;
+
+            internal int InternalCount => IsType ? coreRef.CoreDef.MinHeatSinks : 0;
+
+            internal int AdditionalCount
             {
-                yield return Control.settings.GearHeatSinkDouble;
+                set
+                {
+                    if (value > 0)
+                    {
+                        coreRef.additionalHSCounts[heatSinkDef] = value;
+                    }
+                    else
+                    {
+                        coreRef.additionalHSCounts.Remove(heatSinkDef);
+                    } 
+                }
+                get => coreRef.additionalHSCounts.TryGetValue(heatSinkDef, out var value) ? value : 0;
             }
+
+            public int Count => InternalCount + AdditionalCount;
         }
     }
 }

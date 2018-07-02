@@ -4,7 +4,7 @@
 	"Website": "https://github.com/CptMoore/MechEngineer",
 
 	"Enabled": true,
-	"DependsOn": ["DynModLib"],
+	"DependsOn": ["CustomComponents"],
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
@@ -37,6 +37,11 @@
 		{
 			"Type": "UpgradeDef",
 			"Path": "disabled data/exotics/internals/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "HeatSinkDef",
+			"Path": "disabled data/exotics/heatsinks/",
 			"ShouldMergeJSON": false
 		},
 		{

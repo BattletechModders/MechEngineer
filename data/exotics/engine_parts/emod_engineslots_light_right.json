@@ -1,11 +1,12 @@
 {
+	"CustomType": "EngineSideDef",
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 300000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "LFE Right Torso Slots",
+        "Model" : "Critical Slots",
         "UIName" : "Light Engine RT",
         "Id" : "emod_engineslots_light_right",
         "Name" : "Light Engine Right",

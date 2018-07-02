@@ -12,44 +12,33 @@ namespace MechEngineer
             ErrorMessages = new List<string>();
         }
 
-        internal WeightSavingSlotType SlotType { get; private set; }
+        internal IWeightSavingSlotType SlotType => Def as IWeightSavingSlotType;
+
+        internal MechComponentDef Def { get; private set; }
+
+        internal string Name => Def?.Description.UIName.ToUpperInvariant();
 
         internal int Count { get; private set; }
 
-        internal int RequiredCount
-        {
-            get { return SlotType == null ? 0 : SlotType.RequiredCriticalSlotCount; }
-        }
+        internal int RequiredCount => SlotType?.RequiredCriticalSlotCount ?? 0;
 
         internal float TonnageSaved { get; private set; }
 
         internal List<string> ErrorMessages { get; private set; }
 
-        internal static WeightSavings Create(float tonnage, IEnumerable<MechComponentDef> slots, WeightSavingSlotType[] slotTypes, MechComponentDef def)
+        internal static WeightSavings Create(float tonnage, IEnumerable<MechComponentDef> slots, MechComponentDef def)
         {
-            var savings = new WeightSavings();
-
-            string slotTypeId = null;
-            string slotName = null;
-
-            if (def != null)
-            {
-                slotTypeId = def.Description.Id;
-                slotName = def.Description.UIName.ToUpper();
-                savings.SlotType = slotTypes.First(x => x.ComponentDefId == slotTypeId);
-            }
+            var savings = new WeightSavings {Def = def};
 
             var mixed = false;
 
             foreach (var slot in slots)
             {
-                if (slotTypeId == null)
+                if (savings.Def == null)
                 {
-                    slotTypeId = slot.Description.Id;
-                    slotName = slot.Description.UIName.ToUpper();
-                    savings.SlotType = slotTypes.First(x => x.ComponentDefId == slotTypeId);
+                    savings.Def = slot;
                 }
-                else if (slot.Description.Id != slotTypeId)
+                else if (slot.Description.Id != savings.Def.Description.Id)
                 {
                     mixed = true;
                     continue;
@@ -76,7 +65,7 @@ namespace MechEngineer
 
             if (mixed)
             {
-                savings.ErrorMessages.Add(slotName + ": Cannot mix-match different critical slot types");
+                savings.ErrorMessages.Add(savings.Name + ": Cannot mix-match different critical slot types");
             }
 
             // AllowPartialWeightSavings
@@ -87,14 +76,14 @@ namespace MechEngineer
                 {
                     if (savings.Count > savings.RequiredCount)
                     {
-                        savings.ErrorMessages.Add(string.Format(slotName + ": Critical slots count exceeded ({0} / {1})", savings.Count, savings.RequiredCount));
+                        savings.ErrorMessages.Add(string.Format(savings.Name + ": Critical slots count exceeded ({0} / {1})", savings.Count, savings.RequiredCount));
                     }
                 }
                 else
                 {
                     if (savings.Count != savings.RequiredCount)
                     {
-                        savings.ErrorMessages.Add(string.Format(slotName + ": Critical slots count does not match ({0} / {1})", savings.Count, savings.RequiredCount));
+                        savings.ErrorMessages.Add(string.Format(savings.Name + ": Critical slots count does not match ({0} / {1})", savings.Count, savings.RequiredCount));
                     }
                 }
             }

@@ -35,18 +35,13 @@ namespace MechEngineer
 
             var componentRef = mechComponent.mechComponentRef;
 
-            if (componentRef == null || componentRef.Def == null)
-            {
-                return true;
-            }
-
-            if (!componentRef.Def.IsEnginePart())
+            if (!(componentRef?.Def is IEnginePart))
             {
                 return true;
             }
 
             var mech = (Mech) mechComponent.parent;
-            var mainEngineComponent = mech.allComponents.FirstOrDefault(c => c != null && c.componentDef != null && c.componentDef.IsEngineCore());
+            var mainEngineComponent = mech.allComponents.FirstOrDefault(c => c?.componentDef is EngineCoreDef);
             if (mainEngineComponent == null) // no main engine left
             {
                 return true;
@@ -100,7 +95,7 @@ namespace MechEngineer
             {
                 Control.mod.Logger.LogDebug(mainEngineComponent.Name + " " + damageLevel);
 
-                foreach (var component in mech.allComponents.Where(c => c != null && c.componentDef != null && c.componentDef.IsEnginePart()))
+                foreach (var component in mech.allComponents.Where(c => c?.componentDef is IEnginePart))
                 {
                     component.StatCollection.ModifyStat(
                         hitInfo.attackerId,

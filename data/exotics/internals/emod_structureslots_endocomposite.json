@@ -1,7 +1,7 @@
 {
-    "StatName" : null,
-    "RelativeModifier" : 0,
-    "AbsoluteModifier" : 0,
+	"CustomType": "StructureDef",
+	"RequiredCriticalSlotCount": 7,
+	"WeightSavingsFactor": 0.25,
     "Description" : {
         "Cost" : 55000,
         "Rarity" : 0,

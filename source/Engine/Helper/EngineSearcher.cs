@@ -13,14 +13,14 @@ namespace MechEngineer
             {
                 var componentDef = componentRef.Def;
 
-                if (!componentDef.IsEnginePart())
+                if (!(componentDef is IEnginePart))
                 {
                     continue;
                 }
 
                 result.Parts.Add(componentRef);
 
-                if (result.CoreRef == null && componentDef.IsEngineCore())
+                if (result.CoreRef == null && componentDef is EngineCoreDef)
                 {
                     result.CoreRef = componentRef.GetEngineCoreRef();
                     continue;
@@ -28,11 +28,7 @@ namespace MechEngineer
 
                 if (result.TypeDef == null)
                 {
-                    var engineType = Control.settings.EngineTypes.FirstOrDefault(c => componentDef.Description.Id == c.ComponentTypeID);
-                    if (engineType != null)
-                    {
-                        result.TypeDef = new EngineTypeDef(componentDef, engineType);
-                    }
+                    result.TypeDef = componentDef as EngineTypeDef;
                 }
             }
 

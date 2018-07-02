@@ -1,12 +1,13 @@
 {
+	"CustomType": "EngineSideDef",
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 1800000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
-        "Model" : "Clan XXL Critical Slots",
-        "UIName" : "Clan XXL RT",
+        "Model" : "Critical Slots",
+        "UIName" : "CXXL Engine RT",
         "Id" : "emod_engineslots_cxxl_right",
         "Name" : "Clan XXL Engine Right",
         "Details" : "To mount a Clan XXL engine both left and right torso engine parts are needed",

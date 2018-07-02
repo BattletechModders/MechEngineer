@@ -20,84 +20,75 @@ namespace MechEngineer
         }
 
         // only allow one engine part per specific location
-        internal static MechLabLocationWidgetOnMechLabDropPatch.Result DropCheck(
-            MechLabLocationWidget widget,
+        internal static MechLabDropResult ValidateDrop(
             MechLabPanel mechLab,
             MechLabItemSlotElement dragItem,
-            List<MechLabItemSlotElement> localInventory)
+            List<MechLabItemSlotElement> localInventory
+            )
         {
-            if (widget.loadout.Location != ChassisLocations.CenterTorso)
-            {
-                return null;
-            }
-
             var newComponentRef = dragItem.ComponentRef;
             var newComponentDef = newComponentRef.Def;
-            var headSinkDef = newComponentDef as HeatSinkDef;
 
-            if (headSinkDef == null)
-            {
-                return null;
-            }
+            var heatSinkDef = newComponentDef as EngineHeatSinkDef;
+            var heatSinkKitDef = newComponentDef as EngineHeatSinkKitDef;
 
             // check if we can work with it
-            if (!headSinkDef.IsDHSKit() && !headSinkDef.IsSingle() && !headSinkDef.IsDouble())
+            if (heatSinkDef == null && heatSinkKitDef == null)
             {
                 return null;
             }
 
-            var engineSlotElement = localInventory
-                .FirstOrDefault(x => x != null && x.ComponentRef != null && x.ComponentRef.Def != null && x.ComponentRef.Def.IsEngineCore());
+            var engineSlotElement = localInventory.FirstOrDefault(x => x?.ComponentRef?.Def is EngineCoreDef);
 
             if (engineSlotElement == null)
             {
-                if (headSinkDef.IsDHSKit())
+                if (heatSinkKitDef != null)
                 {
-                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                        string.Format("Cannot add {0}: No Engine found", newComponentDef.Description.Name)
+                    return new MechLabDropErrorResult(
+                        $"Cannot add {newComponentDef.Description.Name}: No Engine found"
                     );
                 }
 
                 return null;
             }
 
-            var engineRef = localInventory.Where(c => c != null).Select(c => c.ComponentRef).GetEngineCoreRef();
+            var engineRef = engineSlotElement.ComponentRef.GetEngineCoreRef();
             var engineDef = engineRef.CoreDef;
 
             if (mechLab.IsSimGame)
             {
                 if (dragItem.OriginalDropParentType != MechLabDropTargetType.InventoryList)
                 {
-                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                        string.Format("Cannot add {0}: Item has to be from inventory", newComponentDef.Description.Name)
+                    return new MechLabDropErrorResult(
+                        $"Cannot add {newComponentDef.Description.Name}: Item has to be from inventory"
                     );
                 }
 
                 if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == engineRef.ComponentRef.SimGameUID))
                 {
-                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                        string.Format("Cannot add {0}: Engine cannot be modified once installed, remove engine first", newComponentDef.Description.Name)
+                    return new MechLabDropErrorResult(
+                        $"Cannot add {newComponentDef.Description.Name}: Engine cannot be modified once installed, remove engine first"
                     );
                 }
             }
 
-            if (headSinkDef.IsDHSKit())
+            if (heatSinkKitDef != null)
             {
-                if (engineRef.IsDHS)
+                if (engineRef.HeatSinkDef != newComponentDef.DataManager.GetDefaultEngineHeatSinkDef())
                 {
-                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                        string.Format("Cannot add {0}: Already a DHS engine", newComponentDef.Description.Name)
+                    return new MechLabDropErrorResult(
+                        $"Cannot add {newComponentDef.Description.Name}: Reinstall engine to remove internal heat sinks"
                     );
                 }
 
-                if (!Control.settings.AllowMixingDoubleAndSingleHeatSinks && engineRef.AdditionalSHSCount > 0)
+                if (engineRef.AdditionalHeatSinkCount > 0)
                 {
-                    return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                        string.Format("Cannot add {0}: Reinstall engine to remove additional heat sinks before converting", newComponentDef.Description.Name)
+                    return new MechLabDropErrorResult(
+                        $"Cannot add {newComponentDef.Description.Name}: Reinstall engine to remove additional heat sinks before converting"
                     );
                 }
 
-                engineRef.IsDHS = true;
+                engineRef.HeatSinkDef = heatSinkKitDef.HeatSinkDef;
             }
             else
             {
@@ -106,24 +97,17 @@ namespace MechEngineer
                     return null;
                 }
 
-                if (!Control.settings.AllowMixingDoubleAndSingleHeatSinks)
+                if (!Control.settings.AllowMixingHeatSinkTypes)
                 {
-                    if (engineRef.IsDHS && headSinkDef.IsSingle() || engineRef.IsSHS && headSinkDef.IsDouble())
+                    if (engineRef.HeatSinkDef.HSCategory != heatSinkDef.HSCategory)
                     {
-                        return new MechLabLocationWidgetOnMechLabDropPatch.ErrorResult(
-                            string.Format("Cannot add {0}: Mixing DHS and SHS is not allowed", newComponentDef.Description.Name)
+                        return new MechLabDropErrorResult(
+                            $"Cannot add {newComponentDef.Description.Name}: Mixing heat sink types is not allowed"
                         );
                     }
                 }
 
-                if (headSinkDef.IsDouble())
-                {
-                    engineRef.AdditionalDHSCount++;
-                }
-                else if (headSinkDef.IsSingle())
-                {
-                    engineRef.AdditionalSHSCount++;
-                }
+                engineRef.Query(heatSinkDef).AdditionalCount++;
             }
 
             EnginePersistence.SaveEngineState(engineRef, mechLab);
@@ -131,7 +115,7 @@ namespace MechEngineer
 
             Traverse.Create(engineSlotElement).Method("RefreshInfo").GetValue();
 
-            return new MechLabLocationWidgetOnMechLabDropPatch.RemoveItemResult();
+            return new MechLabDropRemoveDragItemResult();
         }
     }
 }

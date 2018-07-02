@@ -1,4 +1,5 @@
-﻿using BattleTech;
+﻿using System;
+using BattleTech;
 
 namespace MechEngineer
 {
@@ -35,6 +36,21 @@ namespace MechEngineer
         {
             return (componentDef.AllowedLocations & locations) != 0 // def can be inserted in locations
                    && (componentDef.AllowedLocations & ~locations) == 0; // def can't be inserted anywhere outside of locations
+        }
+    }
+
+    internal class IdentityFuncHelper : IIdentifier
+    {
+        private readonly Func<MechComponentDef, bool> func;
+
+        public IdentityFuncHelper(Func<MechComponentDef, bool> func)
+        {
+            this.func = func;
+        }
+
+        public bool IsCustomType(MechComponentDef def)
+        {
+            return func(def);
         }
     }
 }

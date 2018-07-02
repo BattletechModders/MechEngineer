@@ -1,4 +1,8 @@
 {
+	"CustomType": "EngineHeatSinkDef",
+	"FullName": "Double Heat Sinks",
+	"Abbreviation": "DHS",
+	"Tag": "DHS",
     "ComponentTags" : {
         "items" : [
             "component_type_stock"

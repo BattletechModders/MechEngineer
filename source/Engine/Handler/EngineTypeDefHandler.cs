@@ -5,20 +5,15 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class EngineSlotsCenterHandler : IDescription, IValidateAdd, IValidationRulesCheck
+    internal class EngineTypeDefHandler : IDescription, IValidateDrop, IValidateMech
     {
-        internal static EngineSlotsCenterHandler Shared = new EngineSlotsCenterHandler();
+        internal static EngineTypeDefHandler Shared = new EngineTypeDefHandler();
 
         private readonly ValidationHelper checker;
 
-        private EngineSlotsCenterHandler()
+        private EngineTypeDefHandler()
         {
-            var identifier = new IdentityHelper
-            {
-                AllowedLocations = ChassisLocations.CenterTorso,
-                ComponentType = ComponentType.HeatSink,
-                Prefix = Control.settings.EngineSlotPrefix,
-            };
+            var identifier = new IdentityFuncHelper(def => def is EngineTypeDef);
             checker = new ValidationHelper(identifier, this);
         }
 
@@ -27,9 +22,9 @@ namespace MechEngineer
             get { return "Engine Shielding"; }
         }
 
-        public void ValidateAdd(MechComponentDef newComponentDef, List<MechLabItemSlotElement> localInventory, ref string dropErrorMessage, ref bool result)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
         {
-            checker.ValidateAdd(newComponentDef, localInventory, ref dropErrorMessage, ref result);
+            return checker.ValidateDrop(dragItem, localInventory);
         }
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
@@ -40,13 +35,13 @@ namespace MechEngineer
             var typeDef = result.TypeDef;
             if (typeDef != null)
             {
-                var requirements = typeDef.Type.Requirements;
+                var requirements = typeDef.Requirements;
 
                 if (result.Parts
                         .Where(x => x.DamageLevel == ComponentDamageLevel.Functional)
                         .Select(c => c.ComponentDefID).Intersect(requirements).Count() != requirements.Length)
                 {
-                    var engineName = typeDef.Def.Description.UIName.ToUpper();
+                    var engineName = typeDef.Description.UIName.ToUpper();
                     errorMessages[MechValidationType.InvalidInventorySlots].Add(engineName + ": Requires left and right torso slots");
                 }
             }

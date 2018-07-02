@@ -14,22 +14,22 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>5</LangVersion>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>5</LangVersion>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
@@ -37,36 +37,56 @@
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\BattleTech_Data\Managed\0Harmony.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\BattleTech_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="DynModLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DynModLib\DynModLib.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="CustomComponents">
+      <HintPath>..\..\CustomComponents\CustomComponents.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System">
+      <HintPath>..\..\..\BattleTech_Data\Managed\System.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\..\BattleTech_Data\Managed\System.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>..\..\..\BattleTech_Data\Managed\System.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Component\StructureDef.cs" />
+    <Compile Include="Component\ArmorDef.cs" />
+    <Compile Include="DynModLibCopy\Adapter.cs" />
+    <Compile Include="DynModLibCopy\Mod.cs" />
+    <Compile Include="DynModLibCopy\ModSettings.cs" />
+    <Compile Include="Engine\EngineHeatSinkKitDef.cs" />
+    <Compile Include="Engine\EngineHeatSinkDef.cs" />
+    <Compile Include="Engine\EngineSideDef.cs" />
     <Compile Include="Engine\Helper\EngineExtensions.cs" />
     <Compile Include="Engine\Helper\EngineSearcher.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Engine\Handler\EngineCoreRefHandler.cs" />
     <Compile Include="Engine\Handler\EngineCoreDefHandler.cs" />
     <Compile Include="Engine\Handler\EngineHandler.cs" />
-    <Compile Include="Engine\Handler\EngineSlotsHandler.cs" />
-    <Compile Include="Engine\Handler\EngineSlotsCenterHandler.cs" />
+    <Compile Include="Engine\Handler\EngineSideDefHandler.cs" />
+    <Compile Include="Engine\Handler\EngineTypeDefHandler.cs" />
     <Compile Include="Engine\EngineTypeDef.cs" />
+    <Compile Include="Engine\IEnginePart.cs" />
     <Compile Include="Helper\IdentityHelper.cs" />
     <Compile Include="Helper\AdjustCompDefTonnageHelper.cs" />
     <Compile Include="Helper\AdjustCompDefInvSizeHelper.cs" />
@@ -116,7 +136,6 @@
     <Compile Include="Helper\TooltipPrefab_EquipmentAdapter.cs" />
     <Compile Include="Patches\TooltipPrefab_EquipmentSetDataPatch.cs" />
     <Compile Include="Engine\StaticHandler\EngineMisc.cs" />
-    <Compile Include="Patches\MechLabLocationWidgetValidateAddPatch.cs" />
     <Compile Include="Facade\CalculateTonnageFacade.cs" />
     <Compile Include="Patches\MechLabMechInfoWidgetCalculateTonnagePatch.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateTonnagePatch.cs" />

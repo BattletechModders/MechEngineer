@@ -12,33 +12,33 @@ namespace MechEngineer
             StructureHandler.Shared.ValidateMech(mechDef, errorMessages);
             EngineCoreRefHandler.Shared.ValidateMech(mechDef, errorMessages);
             EngineCoreDefHandler.Shared.ValidateMech(mechDef, errorMessages);
-            EngineSlotsCenterHandler.Shared.ValidateMech(mechDef, errorMessages);
+            EngineTypeDefHandler.Shared.ValidateMech(mechDef, errorMessages);
             GyroHandler.Shared.ValidateMech(mechDef, errorMessages);
             CockpitHandler.Shared.ValidateMech(mechDef, errorMessages);
         }
 
-        internal static void ValidateAdd(
-            MechComponentDef newComponentDef,
-            List<MechLabItemSlotElement> localInventory,
-            ref string ___dropErrorMessage,
-            ref bool __result)
+        internal static MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
         {
-            var validators = new IValidateAdd[]
+            var validators = new IValidateDrop[]
             {
-                GyroHandler.Shared,
                 LegUpgradeHandler.Shared,
-                EngineSlotsHandler.Shared,
+                EngineSideDefHandler.Shared,
                 EngineCoreDefHandler.Shared,
-                CockpitHandler.Shared
+                EngineTypeDefHandler.Shared,
+                GyroHandler.Shared,
+                CockpitHandler.Shared,
             };
+
             foreach (var validator in validators)
             {
-                validator.ValidateAdd(newComponentDef, localInventory, ref ___dropErrorMessage, ref __result);
-                if (!__result)
+                var result = validator.ValidateDrop(dragItem, localInventory);
+                if (result != null)
                 {
-                    return;
+                    return result;
                 }
             }
+
+            return null;
         }
     }
 }

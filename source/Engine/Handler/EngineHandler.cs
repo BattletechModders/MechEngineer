@@ -1,4 +1,5 @@
-﻿using BattleTech;
+﻿using System.Collections.Generic;
+using BattleTech;
 using BattleTech.UI;
 
 namespace MechEngineer
@@ -26,8 +27,7 @@ namespace MechEngineer
     {
         public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
-            var engineDef = mechComponentDef.GetEngineCoreDef();
-            if (engineDef == null)
+            if (!(mechComponentDef is EngineCoreDef engineDef))
             {
                 return;
             }
@@ -41,38 +41,41 @@ namespace MechEngineer
             engine.CoreDef = engineDef; // overwrite the core def for better tooltip
             var engineRef = engine.CoreRef;
 
-            float walkSpeed, runSpeed;
-            Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out walkSpeed, out runSpeed);
+            Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out var walkSpeed, out var runSpeed);
 
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
 
-            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks || engineRef.IsSHS)
+            foreach (var heatSinkDef in mechComponentDef.DataManager.GetAllEngineHeatSinkDefs())
             {
-                tooltip.detailText.text += "<i>Standard Heat Sinks</i>" +
-                                           "   Internal: <b>" + engineRef.InternalSHSCount + "</b>" +
-                                           "   Additional: <b>" + engineRef.AdditionalSHSCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
+                var query = engineRef.Query(heatSinkDef);
+
+                if (query.Count == 0)
+                {
+                    continue;
+                }
+
+                if (Control.settings.AllowMixingHeatSinkTypes || query.IsType)
+                {
+
+                    tooltip.detailText.text += "<i>" + heatSinkDef.FullName + "</i>" +
+                                               "   Internal: <b>" + query.InternalCount + "</b>" +
+                                               "   Additional: <b>" + query.AdditionalCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>" +
+                                               "\r\n";
+                }
             }
 
-            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks || engineRef.IsDHS)
-            {
-                tooltip.detailText.text += "<i>Double Heat Sinks</i>" +
-                                           "   Internal: <b>" + engineRef.InternalDHSCount + "</b>" +
-                                           "   Additional: <b>" + engineRef.AdditionalDHSCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>";
-            }
-
-            tooltip.detailText.text += "\r\n" +
-                                       "<i>Speeds</i>" +
+            tooltip.detailText.text += "<i>Speeds</i>" +
                                        "   Cruise <b>" + walkSpeed + "</b>" +
                                        " / Top <b>" + runSpeed + "</b>";
 
             tooltip.detailText.text += "\r\n" +
-                                       "<i>Weights</i>" +
-                                       "   Engine: <b>" + engine.EngineTonnage + "</b> Ton" +
-                                       "   Gyro: <b>" + engine.CoreDef.GyroTonnage + "</b> Ton" +
-                                       "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b> Ton";
+                                       "<i>Weights [Ton]</i>" +
+                                       "   Engine: <b>" + engine.EngineTonnage + "</b>" +
+                                       "   Gyro: <b>" + engine.CoreDef.GyroTonnage + "</b>" +
+                                       "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b>";
 
-            tooltip.tonnageText.text = string.Format("{0}", engine.Tonnage);
+            tooltip.tonnageText.text = $"{engine.Tonnage}";
 
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += "\r\n";

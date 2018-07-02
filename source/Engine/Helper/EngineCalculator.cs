@@ -38,8 +38,8 @@ namespace MechEngineer
 
         internal void CalcInstallCosts(EngineCoreDef engineCoreDef, ref int cbillCost, ref int techCost)
         {
-            cbillCost += Mathf.CeilToInt(engineCoreDef.Def.Tonnage * 10000);
-            techCost += Mathf.CeilToInt(engineCoreDef.Def.Tonnage);
+            cbillCost += Mathf.CeilToInt(engineCoreDef.Tonnage * 10000);
+            techCost += Mathf.CeilToInt(engineCoreDef.Tonnage);
         }
 
         internal void CalcHeatSinks(EngineCoreDef engineCoreDef, out int minHeatSinks, out int maxHeatSinks)

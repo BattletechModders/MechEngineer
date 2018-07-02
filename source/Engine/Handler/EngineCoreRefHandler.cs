@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 
 namespace MechEngineer
 {
-    internal class EngineCoreRefHandler : IAutoFixMechDef, IValidationRulesCheck
+    internal class EngineCoreRefHandler : IAutoFixMechDef, IValidateMech
     {
         internal static EngineCoreRefHandler Shared = new EngineCoreRefHandler();
 
@@ -15,7 +16,7 @@ namespace MechEngineer
                 return;
             }
 
-            if (mechDef.Inventory.Any(c => c.Def.IsEngineCore()))
+            if (mechDef.Inventory.Any(c => c.Def is EngineCoreDef))
             {
                 return;
             }
@@ -51,8 +52,7 @@ namespace MechEngineer
                     continue;
                 }
 
-                var engineDef = heatSinkDef.GetEngineCoreDef();
-                if (engineDef == null)
+                if (!(heatSinkDef is EngineCoreDef engineDef))
                 {
                     continue;
                 }
@@ -85,19 +85,21 @@ namespace MechEngineer
             }
 
             {
+                var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
                 // add engine core
-                var isDHS = componentRefs.Select(c => c.Def as HeatSinkDef).Where(c => c != null).Any(c => c.IsDouble());
+                var nonStandardHeatSinkDef = componentRefs
+                    .Select(r => r.Def as EngineHeatSinkDef)
+                    .FirstOrDefault(d => d != null && d != standardHeatSinkDef);
 
-                var simGameUID = isDHS ? "/ihstype=dhs" : null;
+                var simGameUID = nonStandardHeatSinkDef != null ? "/ihstype=" + nonStandardHeatSinkDef.Description.Id : null;
 
-                var componentRef = new MechComponentRef(maxEngine.Def.Description.Id, simGameUID, maxEngine.Def.ComponentType, ChassisLocations.CenterTorso);
+                var componentRef = new MechComponentRef(maxEngine.Description.Id, simGameUID, maxEngine.ComponentType, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
             }
 
             {
                 // add standard shielding
-                var engineType = Control.settings.EngineTypes.First();
-                var componentRef = new MechComponentRef(engineType.ComponentTypeID, null, ComponentType.HeatSink, ChassisLocations.CenterTorso);
+                var componentRef = new MechComponentRef(Control.settings.AutoFixMechDefEngineTypeDef, null, ComponentType.HeatSink, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
             }
 
@@ -106,54 +108,31 @@ namespace MechEngineer
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            if (Control.settings.AllowMixingDoubleAndSingleHeatSinks)
+            if (Control.settings.AllowMixingHeatSinkTypes)
             {
                 return;
             }
 
-            bool hasSingle = false, hasDouble = false;
+            var set = new HashSet<string>();
             foreach (var componentRef in mechDef.Inventory)
             {
-                if (componentRef == null)
+                if (componentRef?.Def is EngineHeatSinkDef componentDef)
                 {
-                    continue;
+                    set.Add(componentDef.HSCategory);
                 }
-
-                var componentDef = componentRef.Def as HeatSinkDef;
-                if (componentDef == null)
-                {
-                    continue;
-                }
-
-                if (componentDef.IsDouble())
-                {
-                    hasDouble = true;
-                }
-                else if (componentDef.IsSingle())
-                {
-                    hasSingle = true;
-                }
-                else if (componentDef.IsEngineCore())
+                else if (componentRef?.Def is EngineCoreDef)
                 {
                     var engineRef = componentRef.GetEngineCoreRef();
-                    if (engineRef == null)
-                    {
-                        continue;
-                    }
-
-                    if (engineRef.IsDHS)
-                    {
-                        hasDouble = true;
-                    }
-                    else
-                    {
-                        hasSingle = true;
-                    }
+                    set.Add(engineRef.HeatSinkDef.HSCategory);
+                }
+                else
+                {
+                    continue;
                 }
 
-                if (hasSingle && hasDouble)
+                if (set.Count > 1)
                 {
-                    errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Standard and Double Heat Sinks cannot be mixed");
+                    errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Heat Sink types cannot be mixed");
                     return;
                 }
             }

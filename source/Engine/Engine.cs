@@ -20,7 +20,7 @@ namespace MechEngineer
 
         internal float EngineTonnage
         {
-            get { return (CoreDef.StandardEngineTonnage * TypeDef.Type.WeightMultiplier).RoundStandard(); }
+            get { return (CoreDef.StandardEngineTonnage * TypeDef.WeightMultiplier).RoundStandard(); }
         }
 
         internal float Tonnage
@@ -33,7 +33,7 @@ namespace MechEngineer
             get
             {
                 //Control.mod.Logger.LogDebug(string.Format("get_Tonnage={0} CoreDef.Tonnage={1}", Tonnage, CoreDef.Def.Tonnage));
-                return Tonnage - CoreDef.Def.Tonnage;
+                return Tonnage - CoreDef.Tonnage;
             }
         }
     }
