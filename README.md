@@ -59,10 +59,10 @@ Use these mods to maximize enjoyment
   * standard package, that provides lore* and time appropiate items to the game (*lore as the game sees fit, so LosTech is OK)
   * exotic package, adds in stuff like clan tech
   * test package, to play around in skirmish mechlab with everythig
-* Settings
-  * modders can add more components
+* Settings and Modding
   * players can disable some of the restritions
-  * there are additional settings like factional accounting or partical weight savings for structre and armor components
+  * modders can add more components using CustomComponents
+  * there are additional settings like factional accounting or partical weight savings for structure and armor components
   * see [Settings Source Code](https://github.com/CptMoore/MechEngineer/blob/master/source/MechEngineerSettings.cs) for all available settings
 
 TODO
@@ -73,7 +73,7 @@ TODO
 * Aliencreature - ideas, lore and rules, item variants, testing
 * CptMoore - ideas, rules, coding, testing, core items
 * CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
-* Denadan - ideas, coding
+* Denadan - ideas, custom components lib
 * TotalMeltdown - ideas, lore and rules
 
 ## Download
