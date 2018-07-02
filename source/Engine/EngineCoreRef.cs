@@ -52,7 +52,7 @@ namespace MechEngineer
 
             if (HeatSinkDef == null)
             {
-                HeatSinkDef = DataManager.GetStandardHeatSinkDef();
+                HeatSinkDef = DataManager.GetDefaultEngineHeatSinkDef();
             }
         }
 
@@ -83,7 +83,7 @@ namespace MechEngineer
             get
             {
                 var dictionary = new Dictionary<string, string>();
-                if (HeatSinkDef != DataManager.GetStandardHeatSinkDef())
+                if (HeatSinkDef != DataManager.GetDefaultEngineHeatSinkDef())
                 {
                     dictionary["ihstype"] = HeatSinkDef.Description.Id;
                 }

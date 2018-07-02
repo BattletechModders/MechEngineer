@@ -85,8 +85,11 @@ namespace MechEngineer
             }
 
             {
+                var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
                 // add engine core
-                var nonStandardHeatSinkDef = componentRefs.Select(c => c.Def as EngineHeatSinkDef).FirstOrDefault(c => c != null && !c.IsSingle());
+                var nonStandardHeatSinkDef = componentRefs
+                    .Select(r => r.Def as EngineHeatSinkDef)
+                    .FirstOrDefault(d => d != null && d != standardHeatSinkDef);
 
                 var simGameUID = nonStandardHeatSinkDef != null ? "/ihstype=" + nonStandardHeatSinkDef.Description.Id : null;
 

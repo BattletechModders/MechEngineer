@@ -27,9 +27,9 @@ namespace MechEngineer
             return @this.HeatSinkDefs.Get(key) as EngineHeatSinkDef;
         }
 
-        internal static EngineHeatSinkDef GetStandardHeatSinkDef(this DataManager @this)
+        internal static EngineHeatSinkDef GetDefaultEngineHeatSinkDef(this DataManager @this)
         {
-            return GetEngineHeatSinkDef(@this, Control.settings.GearHeatSinkStandard);
+            return GetEngineHeatSinkDef(@this, Control.settings.DefaultEngineHeatSinkId);
         }
     }
 }

@@ -21,11 +21,6 @@ namespace MechEngineer
             return def.Description.Id.StartsWith(prefix);
         }
 
-        internal static bool IsSingle(this HeatSinkDef def)
-        {
-            return def.Description.Id == Control.settings.GearHeatSinkStandard;
-        }
-
         internal static void PerformOperation(this StatCollection collection, Statistic statistic, StatisticEffectData data)
         {
             var type = Type.GetType(data.modType);

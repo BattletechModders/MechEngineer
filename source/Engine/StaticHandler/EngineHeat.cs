@@ -74,7 +74,7 @@ namespace MechEngineer
 
             if (heatSinkKitDef != null)
             {
-                if (engineRef.HeatSinkDef != newComponentDef.DataManager.GetStandardHeatSinkDef())
+                if (engineRef.HeatSinkDef != newComponentDef.DataManager.GetDefaultEngineHeatSinkDef())
                 {
                     return new MechLabDropErrorResult(
                         $"Cannot add {newComponentDef.Description.Name}: Reinstall engine to remove internal heat sinks"
