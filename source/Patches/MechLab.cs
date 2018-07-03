@@ -22,6 +22,7 @@ namespace MechEngineer
                 try
                 {
                     Current = __instance;
+                    DynamicSlotController.MechLab = __instance;
                 }
                 catch (Exception e)
                 {
@@ -38,6 +39,7 @@ namespace MechEngineer
                 try
                 {
                     Current = null;
+                    DynamicSlotController.MechLab = null;
                 }
                 catch (Exception e)
                 {

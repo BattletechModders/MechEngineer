@@ -4,6 +4,7 @@ using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
 using Harmony;
+using UIWidgetsSamples;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -107,7 +108,7 @@ namespace MechEngineer
             return mechDef.Inventory.Length == 0 ? 0 : mechDef.Inventory.Sum(i => i.Def.InventorySize);
         }
 
-        public static void RegisterLocation(MechLabLocationWidget instance, List<Image> images, LocationLoadoutDef loadout)
+        internal static void RegisterLocation(MechLabLocationWidget instance, List<Image> images, LocationLoadoutDef loadout)
         {
             var location = new loc_info(instance, images, loadout);
 
@@ -122,7 +123,7 @@ namespace MechEngineer
                 locations.Add(location.ChassisLocation, location);
         }
 
-        public static void RefreshData(MechDef def)
+        internal static void RefreshData(MechDef def)
         {
             if (mech_lab == null)
                 return;
@@ -166,27 +167,20 @@ namespace MechEngineer
             var used = mechlab.activeMechDef.GetUsedSlots() + component.InventorySize;
             var need = mechlab.activeMechDef.GetReservedSlots() + (component as IDynamicSlots)?.ReserverdSlots ?? 0;
 
-            if (component is ICategory cat_component && cat_component.CategoryDescriptor.AutoReplace)
+
+            var state = Validator.GetState<CategoryValidatorState>();
+            if (state?.Replacement != null)
             {
-                var error = CategoryController.ValidateAdd(cat_component, widget, mechlab, out _, out _);
-                if (error == CategoryError.MaximumReached || error == CategoryError.MaximumReachedLocation)
-                {
-                    var helper = new LocationHelper(widget);
-                    var replace = helper.LocalInventory.FirstOrDefault(i =>
-                        i.Def is ICategory c && c.CategoryID == cat_component.CategoryID);
-                    if (replace != null)
-                    {
-                        used -= replace.Def.InventorySize;
-                        if (replace.Def is IDynamicSlots slots)
-                            need -= slots.ReserverdSlots;
-                    }
-                }
+                used -= state.Replacement.InventorySize;
+                if (state.Replacement is IDynamicSlots dyn)
+                    need -= dyn.ReserverdSlots;
             }
+
 
             if (used + need <= total)
                 return true;
 
-            errorMessage = "Cannot Add - not enough free slots";
+            errorMessage = $"Cannot Add {component.Description.Name} - Critital slots reserved";
             return false;
         }
 
