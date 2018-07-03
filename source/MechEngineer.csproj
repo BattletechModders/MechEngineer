@@ -151,6 +151,7 @@
     <Compile Include="Engine\StaticHandler\EngineHeat.cs" />
     <Compile Include="Patches\SimGameStateRequestDataManagerResourcesPatch.cs" />
     <Compile Include="Component\GyroHandler.cs" />
+    <Compile Include="Patches\MechShutdownSequenceCheckForHeatDamagePatch.cs" />
     <Compile Include="Patches\UpgradeDefFromJSONPatch.cs" />
     <Compile Include="Patches\ChassisDefFromJSONPatch.cs" />
     <Compile Include="Engine\EngineCoreDef.cs" />
