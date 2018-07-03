@@ -10,6 +10,7 @@ namespace MechEngineer
     {
         public static void Postfix(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> __result)
         {
+            Control.mod.Logger.Log($"{UnityEngine.Time.realtimeSinceStartup} EM.Validator start");
             try
             {
                 ValidationFacade.ValidateMech(mechDef, ref __result);
@@ -18,6 +19,7 @@ namespace MechEngineer
             {
                 Control.mod.Logger.LogError(e);
             }
+            Control.mod.Logger.Log($"{UnityEngine.Time.realtimeSinceStartup} EM.Validator end");
         }
     }
 }

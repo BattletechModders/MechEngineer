@@ -59,5 +59,10 @@
 			"Path": "disabled data/exotics/shops_test/",
 			"ShouldMergeJSON": false
 		},
+		{
+			"Type": "UpgradeDef",
+			"Path": "data/test/",
+			"ShouldMergeJSON": false
+		},
 	]
 }

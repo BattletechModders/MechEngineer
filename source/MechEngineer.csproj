@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MechEngineer</RootNamespace>
     <AssemblyName>MechEngineer</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -49,7 +49,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+      <HintPath>..\..\..\BattleTech_Data\Managed\System.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.dll</HintPath>
@@ -66,6 +68,8 @@
     <Compile Include="DynamicSlots\DynamicSlotController.cs" />
     <Compile Include="DynamicSlots\IDynamicSlots.cs" />
     <Compile Include="DynamicSlots\MechEngineerSettings.DynamicSlots.cs" />
+    <Compile Include="DynamicSlots\Test\TestArmor.cs" />
+    <Compile Include="DynamicSlots\Test\TestStructure.cs" />
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />
