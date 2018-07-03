@@ -15,9 +15,9 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,11 +48,18 @@
       <HintPath>..\..\CustomComponents\CustomComponents.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>..\..\..\BattleTech_Data\Managed\System.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Core">
       <HintPath>..\..\..\BattleTech_Data\Managed\System.Core.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="System.Data" />
+    <Reference Include="System.Data">
+      <HintPath>..\..\..\BattleTech_Data\Managed\System.Data.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -87,6 +94,7 @@
     <Compile Include="Engine\Handler\EngineTypeDefHandler.cs" />
     <Compile Include="Engine\EngineTypeDef.cs" />
     <Compile Include="Engine\IEnginePart.cs" />
+    <Compile Include="Misc\FormulaEvaluator.cs" />
     <Compile Include="Helper\IdentityHelper.cs" />
     <Compile Include="Helper\AdjustCompDefTonnageHelper.cs" />
     <Compile Include="Helper\AdjustCompDefInvSizeHelper.cs" />
@@ -122,6 +130,8 @@
     <Compile Include="Patches\MechValidationRulesValidateMechCanBeFieldedPatch.cs" />
     <Compile Include="Patches\SimGameStateML_RepairComponentPatch.cs" />
     <Compile Include="Patches\SimGameStateMoveWorkOrderItemsToQueuePatch.cs" />
+    <Compile Include="Patches\SimGameStateInitCompanyStatsPatch.cs" />
+    <Compile Include="Patches\SimGameStateRehydratePatch.cs" />
     <Compile Include="Patches\SimGameStateStripMechPatch.cs" />
     <Compile Include="Patches\SimGameStateReturnWorkOrderItemsToInventoryPatch.cs" />
     <Compile Include="Patches\SimGameStateML_InstallComponentPatch.cs" />
@@ -149,6 +159,7 @@
     <Compile Include="Engine\StaticHandler\EngineHeat.cs" />
     <Compile Include="Patches\SimGameStateRequestDataManagerResourcesPatch.cs" />
     <Compile Include="Component\GyroHandler.cs" />
+    <Compile Include="Patches\MechShutdownSequenceCheckForHeatDamagePatch.cs" />
     <Compile Include="Patches\UpgradeDefFromJSONPatch.cs" />
     <Compile Include="Patches\ChassisDefFromJSONPatch.cs" />
     <Compile Include="Engine\EngineCoreDef.cs" />

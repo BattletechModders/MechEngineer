@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 
@@ -7,14 +8,15 @@ namespace MechEngineer
     internal class CockpitHandler : IDescription, IValidateDrop, IAdjustUpgradeDef, IAutoFixMechDef, IValidateMech
     {
         internal static CockpitHandler Shared = new CockpitHandler();
-
+        
+        private readonly IdentityHelper identity;
         private readonly ValidationHelper checker;
         private readonly AutoFixMechDefHelper fixer;
         private readonly AdjustCompDefTonnageHelper resizer;
 
         private CockpitHandler()
         {
-            var identity = new IdentityHelper
+            identity = new IdentityHelper
             {
                 AllowedLocations = ChassisLocations.Head,
                 ComponentType = ComponentType.Upgrade,
@@ -33,6 +35,11 @@ namespace MechEngineer
             resizer = new AdjustCompDefTonnageHelper(identity, ton => ton < 0.1f ? 3 : -1);
         }
 
+        public bool ProtectsAgainstShutdownInjury(MechDef mechDef)
+        {
+            return mechDef.Inventory.Any(c => c.DamageLevel == ComponentDamageLevel.Functional && identity.IsCustomType(c.Def));
+        }
+
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
             if (!Control.settings.AutoFixCockpitUpgrades)
@@ -45,11 +52,6 @@ namespace MechEngineer
 
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
-            if (!Control.settings.AutoFixMechDefCockpit)
-            {
-                return;
-            }
-
             fixer.AutoFixMechDef(mechDef, originalTotalTonnage);
         }
 

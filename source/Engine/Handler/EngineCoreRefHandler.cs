@@ -11,11 +11,6 @@ namespace MechEngineer
 
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
-            if (!Control.settings.AutoFixMechDefEngine)
-            {
-                return;
-            }
-
             if (mechDef.Inventory.Any(c => c.Def is EngineCoreDef))
             {
                 return;
