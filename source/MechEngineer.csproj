@@ -70,6 +70,7 @@
     <Compile Include="DynamicSlots\MechEngineerSettings.DynamicSlots.cs" />
     <Compile Include="DynamicSlots\Test\TestArmor.cs" />
     <Compile Include="DynamicSlots\Test\TestStructure.cs" />
+    <Compile Include="DynamicSlots\Test\test_patch.cs" />
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />

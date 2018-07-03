@@ -23,6 +23,7 @@ namespace MechEngineer
                 {
                     Current = __instance;
                     DynamicSlotController.MechLab = __instance;
+                    DynamicSlotController.RefreshData(__instance.activeMechDef);
                 }
                 catch (Exception e)
                 {

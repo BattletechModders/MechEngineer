@@ -83,7 +83,7 @@ namespace MechEngineer
 
         public static int GetReservedSlots(this MechDef mechDef)
         {
-            return mechDef.Inventory.Select(i => i.Def).OfType<IDynamicSlots>().DefaultIfEmpty().Sum(i => i?.ReserverdSlots ?? 0);
+            return mechDef.Inventory.Select(i => i.Def).OfType<IDynamicSlots>().Sum(i => i.ReservedSlots );
         }
 
         public  static int GetTotalSlots(this MechDef mechDef)
@@ -135,7 +135,7 @@ namespace MechEngineer
             var need = def.GetReservedSlots();
             var slots = need;
 
-            //Control.mod.Logger.Log(string.Format("Refresh slots total:{0} used:{1} free:{2} need:{3}", total, used, total - used, need));
+            Control.mod.Logger.Log($"Refresh slots total:{total} used:{used} free:{total - used} need:{need}");
 
             foreach (var pair in locations)
             {
@@ -155,17 +155,24 @@ namespace MechEngineer
                 errors[MechValidationType.InvalidInventorySlots]
                     .Add($"RESERVED SLOTS: {need} criticals reserved, but have only {total - used}");
             }
+            RefreshData(mechDef);
         }
 
         public static bool ValidateAdd(MechComponentDef component, MechLabLocationWidget widget,
             bool current_result, ref string errorMessage, MechLabPanel mechlab)
         {
+
+            Control.mod.Logger.LogDebug($"========== Slot Check: start for {component.Description.Name} ==========");
+            Control.mod.Logger.LogDebug($"Result: {current_result} error: {errorMessage}");
             if (!current_result)
                 return false;
 
             var total = mechlab.activeMechDef.GetTotalSlots();
             var used = mechlab.activeMechDef.GetUsedSlots() + component.InventorySize;
-            var need = mechlab.activeMechDef.GetReservedSlots() + (component as IDynamicSlots)?.ReserverdSlots ?? 0;
+            var need = mechlab.activeMechDef.GetReservedSlots();
+            Control.mod.Logger.LogDebug($"Slot Check: {used} + {need} / {total}");
+
+            need += (component as IDynamicSlots)?.ReservedSlots ?? 0;
 
 
             var state = Validator.GetState<CategoryValidatorState>();
@@ -173,15 +180,21 @@ namespace MechEngineer
             {
                 used -= state.Replacement.InventorySize;
                 if (state.Replacement is IDynamicSlots dyn)
-                    need -= dyn.ReserverdSlots;
+                    need -= dyn.ReservedSlots;
             }
 
 
             if (used + need <= total)
+            {
+                Control.mod.Logger.LogDebug($"Slot Check: {used} + {need} / {total} - true");
                 return true;
-
-            errorMessage = $"Cannot Add {component.Description.Name} - Critital slots reserved";
-            return false;
+            }
+            else
+            {
+                Control.mod.Logger.LogDebug($"Slot Check: {used} + {need} / {total} - false");
+                errorMessage = $"Cannot Add {component.Description.Name} - Critital slots reserved";
+                return false;
+            }
         }
 
         internal static bool ValidateMechCanBeFielded(MechDef mechDef)

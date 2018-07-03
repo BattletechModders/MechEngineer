@@ -3,6 +3,6 @@ namespace MechEngineer
 {
     public interface IDynamicSlots
     {
-        int ReserverdSlots { get; }
+        int ReservedSlots { get; }
     }
 }

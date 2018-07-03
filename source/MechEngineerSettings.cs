@@ -16,12 +16,12 @@ namespace MechEngineer
         public bool AutoFixMechDefGyro = true; // adds missing gyro
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
         public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades that are size 3 to size 4
-        public string AutoFixGyroPrefix = null; // "Gear_Gyro_";
+        public string AutoFixGyroPrefix = "Gear_Gyro_"; // "Gear_Gyro_";
 
         public bool AutoFixMechDefCockpit = true; // adds missing cockpit
         public string AutoFixMechDefCockpitId = "Gear_Cockpit_Generic_Standard";
         public bool AutoFixCockpitUpgrades = true; // adds 3 tons to cockpit upgrades that weigh 0 tons
-        public string AutoFixCockpitPrefix = null; // "Gear_Cockpit_";
+        public string AutoFixCockpitPrefix = "Gear_Cockpit_"; // "Gear_Cockpit_";
 
         public bool AutoFixLegUpgrades = true; // reduces leg upgrades from 3 to 1 size
         public string AutoFixLegUpgradesPrefix = null; //"Gear_Actuator_";
