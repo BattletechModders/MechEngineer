@@ -122,55 +122,8 @@ namespace MechEngineer
             RefreshData(mechDef);
         }
 
-        /*
-        private static int CCHarmonyValidateDropPriorityFirst = Priority.Normal + 85;
-        public static int CCHarmonyValidateDropPriorityBegin = CCHarmonyValidateDropPriorityFirst - 1;
-        public static int CCHarmonyValidateDropPriorityEnd = CCHarmonyValidateDropPriorityBegin - 10;
-        private static int CCHarmonyValidateDropPriorityLast = CCHarmonyValidateDropPriorityEnd - 1;
-
-        [HarmonyPatch(typeof(MechLabLocationWidget), "OnMechLabDrop")]
-        public static class CCTransactionStart
-        {
-            [HarmonyPriority(CCHarmonyValidateDropPriorityFirst)]
-            public static void Prefix(...)
-            {
-                CustomComponents.CurrentValidationTransaction = new ValidationTransaction(...); // copy all necessary state like used slots, inventory, slot element
-            }
-        }
-
-        [HarmonyPatch(typeof(MechLabLocationWidget), "OnMechLabDrop")]
-        public static class CCTransactionEnd
-        {
-            [HarmonyPriority(CCHarmonyValidateDropPriorityLast)]
-            public static void Postfix(...)
-            {
-                ComitOrRollbackTransaction(CustomComponents.CurrentValidationTransaction);
-                CustomComponents.CurrentValidationTransaction = null;
-            }
-        }
-
-        [HarmonyPatch(typeof(MechLabLocationWidget), "OnMechLabDrop")]
-        public static class OnMechLabDropPatch
-        {
-            [HarmonyPriority(CustomComponents.CCHarmonyValidateDropPriorityBegin)]
-            public static bool Prefix()
-            {
-                // cross cutting concerns should be part of the transaction interface (cross-cutting: Identity via Category, Error, RemoveItem, Replacement, Size)
-                var validationTransaction = CustomComponents.CurrentValidationTransaction;
-                DynamicsSlotsController.ValidateDrop(validationTransaction);
-                if (validationTransaction.CanContinue)
-                {
-                    Engine.ValdiateDrop(validationTransaction);
-                }
-                return validationTransaction.CanContinue;
-            }
-        }
-        */
-        
-        // internal static IValidateDropResult ValidateDrop(ValidationTransaction validationTransaction)
         internal static IValidateDropResult ValidateDrop(MechLabItemSlotElement element, MechLabLocationWidget widget)
         {
-            // var component = validationTransaction.element.ComponentRef.Def;
             var component = element.ComponentRef.Def;
             Control.mod.Logger.LogDebug($"========== Slot Check: start for {component.Description.Name} ==========");
 
@@ -179,27 +132,15 @@ namespace MechEngineer
                 return null;
             }
 
-            // var slots = new MechDefSlots(validationTransaction.currentMechDef);
-            var slots = new MechDefSlots(widget.GetMechLab().activeMechDef);
+            var mechDef = widget.GetMechLab().activeMechDef;
 
+            var slots = new MechDefSlots(mechDef);
             var newReserved = dynamicsSlots.ReservedSlots;
-
-            // categories and also replacement is a cross-cutting concern, as every ValidateDrop could have different logic for replacement
-            // find replacement in this case uses CategoryController to find unique replacement as component implements ICategory and thats hooked up to use categories
-            //
-            // var toBeReplaced = validationTransaction.FindReplacement(component); 
-            // used += component.Def.Size - toBeReplaced?.Def?.Size ?? 0;
 
             if (slots.Used + newReserved > slots.Total)
             {
-                // validationTransaction.Result = ($"Cannot Add {component.Description.Name} - Critital slots reserved")
                 return new ValidateDropError($"Cannot Add {component.Description.Name} - Critital slots reserved");
             }
-
-            // if (toBeReplaced != null) {
-            //     validationTransaction.Replace(toBeReplaced, newReserved)
-            //     return;
-            // }
 
             return null;
         }
