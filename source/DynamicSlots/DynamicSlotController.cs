@@ -158,14 +158,12 @@ namespace MechEngineer
             RefreshData(mechDef);
         }
 
-        public static bool ValidateAdd(MechComponentDef component, MechLabLocationWidget widget,
-            bool current_result, ref string errorMessage, MechLabPanel mechlab)
+        public static IValidateDropResult ValidateDrop(MechLabItemSlotElement element, MechLabLocationWidget widget)
         {
-
+            var component = element.ComponentRef.Def;
             Control.mod.Logger.LogDebug($"========== Slot Check: start for {component.Description.Name} ==========");
-            Control.mod.Logger.LogDebug($"Result: {current_result} error: {errorMessage}");
-            if (!current_result)
-                return false;
+
+            var mechlab = widget.GetMechLab();
 
             var total = mechlab.activeMechDef.GetTotalSlots();
             var used = mechlab.activeMechDef.GetUsedSlots() + component.InventorySize;
@@ -174,26 +172,15 @@ namespace MechEngineer
 
             need += (component as IDynamicSlots)?.ReservedSlots ?? 0;
 
-
-            var state = Validator.GetState<CategoryValidatorState>();
-            if (state?.Replacement != null)
-            {
-                used -= state.Replacement.InventorySize;
-                if (state.Replacement is IDynamicSlots dyn)
-                    need -= dyn.ReservedSlots;
-            }
-
-
             if (used + need <= total)
             {
                 Control.mod.Logger.LogDebug($"Slot Check: {used} + {need} / {total} - true");
-                return true;
+                return null;
             }
             else
             {
                 Control.mod.Logger.LogDebug($"Slot Check: {used} + {need} / {total} - false");
-                errorMessage = $"Cannot Add {component.Description.Name} - Critital slots reserved";
-                return false;
+                return new ValidateDropError($"Cannot Add {component.Description.Name} - Critital slots reserved");
             }
         }
 
