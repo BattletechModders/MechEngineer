@@ -38,6 +38,8 @@ namespace MechEngineer
                 #region CustomComponents
 
                 CustomComponents.Control.RegisterCustomTypes(Assembly.GetExecutingAssembly());
+                
+                CustomComponents.Validator.RegisterDropValidator(DynamicSlotController.ValidateDrop);
                 CustomComponents.Validator.RegisterMechValidator(DynamicSlotController.ValidateMech, DynamicSlotController.ValidateMechCanBeFielded);
 
                 CustomComponents.Control.AddCategory(new CustomComponents.CategoryDescriptor

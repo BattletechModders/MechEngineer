@@ -33,7 +33,7 @@ namespace MechEngineer
                 {
                     return false;
                 }
-
+                
                 var result = EngineHeat.ValidateDrop(___mechLab, dragItem, ___localInventory);
 
                 var newComponentDef = dragItem.ComponentRef.Def;
