@@ -81,33 +81,6 @@ namespace MechEngineer
             }
         }
 
-        public  static int GetTotalSlots(this ChassisDef chassisDef)
-        {
-            var total = chassisDef.LeftArm.InventorySlots;
-            total += chassisDef.RightArm.InventorySlots;
-
-            total += chassisDef.LeftLeg.InventorySlots;
-            total += chassisDef.RightLeg.InventorySlots;
-
-            total += chassisDef.RightTorso.InventorySlots;
-            total += chassisDef.LeftTorso.InventorySlots;
-
-            total += chassisDef.CenterTorso.InventorySlots;
-            total += chassisDef.Head.InventorySlots;
-
-            return total;
-        }
-
-        public static int GetUsedSlots(this IEnumerable<MechComponentRef> inventory)
-        {
-            return inventory.Sum(i => i.Def.InventorySize);
-        }
-
-        public static int GetReservedSlots(this IEnumerable<MechComponentRef> inventory)
-        {
-            return inventory.Select(i => i.Def).OfType<IDynamicSlots>().Sum(i => i.ReservedSlots );
-        }
-
         internal static void RegisterLocation(MechLabLocationWidget instance, List<Image> images, LocationLoadoutDef loadout)
         {
             var location = new loc_info(instance, images, loadout);
@@ -128,30 +101,23 @@ namespace MechEngineer
             if (mech_lab == null)
                 return;
 
-            var total = def.Chassis.GetTotalSlots();
-            var used = def.Inventory.GetUsedSlots();
-            var need = def.Inventory.GetReservedSlots();
-            var slots = need;
-
-            Control.mod.Logger.Log($"Refresh slots total:{total} used:{used} free:{total - used} need:{need}");
-
+            var slots = new MechDefSlots(def);
+            var current = slots.Reserved;
+            
             foreach (var pair in locations)
             {
-                slots = pair.Value.Refresh(slots, need <= total - used);
+                current = pair.Value.Refresh(current, slots.IsFit);
             }
         }
 
         public static void ValidateMech(Dictionary<MechValidationType, List<string>> errors,
             MechValidationLevel validationLevel, MechDef mechDef)
         {
-            var total = mechDef.Chassis.GetTotalSlots();
-            var used = mechDef.Inventory.GetUsedSlots();
-            var need = mechDef.Inventory.GetReservedSlots();
-
-            if (used + need > total)
+            var slots = new MechDefSlots(mechDef);
+            if (slots.IsOverloaded)
             {
                 errors[MechValidationType.InvalidInventorySlots]
-                    .Add($"RESERVED SLOTS: {need} criticals reserved, but have only {total - used}");
+                    .Add($"RESERVED SLOTS: {slots.Reserved} criticals reserved, but have only {slots.Total - slots.Used}");
             }
             RefreshData(mechDef);
         }
@@ -162,32 +128,67 @@ namespace MechEngineer
             [HarmonyPriority(Priority.High)]
             public static void Prefix(MechLabLocationWidget __instance, MechLabPanel ___mechLab, ref int ___usedSlots, int ___maxSlots)
             {
-                var total = ___mechLab.activeMechDef.Chassis.GetTotalSlots();
-
-                var used = ___mechLab.activeMechInventory.GetUsedSlots();
-                var need = ___mechLab.activeMechInventory.GetReservedSlots();
-
-                var leftOver = Mathf.Max(total - (used + need), 0);
+                var slots = new MechDefSlots(___mechLab.activeMechDef);
+                var leftOver = Mathf.Max(slots.Total - (slots.Used + slots.Reserved), 0);
                 var free = Mathf.Min(leftOver, ___maxSlots - ___usedSlots);
 
                 ___usedSlots = ___maxSlots - free;
-
-                Control.mod.Logger.LogDebug($"total={total} used={used} need={need} leftOver={leftOver} free={free} ___usedSlots={___usedSlots} ___maxSlots={___maxSlots}");
             }
 
             public static void Postfix(List<MechLabItemSlotElement> ___localInventory, MechLabPanel ___mechLab, ref int ___usedSlots)
             {
-                ___usedSlots = ___localInventory.Select(s => s.ComponentRef).GetUsedSlots();
+                ___usedSlots = MechDefSlots.GetUsedSlots(___localInventory.Select(s => s.ComponentRef));
                 RefreshData(___mechLab.activeMechDef);
             }
         }
 
         internal static bool ValidateMechCanBeFielded(MechDef mechDef)
         {
-            var total = mechDef.Chassis.GetTotalSlots();
-            var used = mechDef.Inventory.GetUsedSlots();
-            var need = mechDef.Inventory.GetReservedSlots();
-            return used + need <= total;
+            return new MechDefSlots(mechDef).IsOverloaded;
+        }
+    }
+
+    internal class MechDefSlots
+    {
+        internal int Total { get; }
+        internal int Used { get; }
+        internal int Reserved { get; }
+
+        internal MechDefSlots(MechDef mechDef)
+        {
+            Total = GetTotalSlots(mechDef.Chassis);
+            Used = GetUsedSlots(mechDef.Inventory);
+            Reserved = GetReservedSlots(mechDef.Inventory);
+        }
+
+        internal bool IsFit => !IsOverloaded;
+        internal bool IsOverloaded => Used + Reserved > Total;
+
+        private static int GetTotalSlots(ChassisDef chassisDef)
+        {
+            var total = chassisDef.LeftArm.InventorySlots;
+            total += chassisDef.RightArm.InventorySlots;
+
+            total += chassisDef.LeftLeg.InventorySlots;
+            total += chassisDef.RightLeg.InventorySlots;
+
+            total += chassisDef.RightTorso.InventorySlots;
+            total += chassisDef.LeftTorso.InventorySlots;
+
+            total += chassisDef.CenterTorso.InventorySlots;
+            total += chassisDef.Head.InventorySlots;
+
+            return total;
+        }
+
+        internal static int GetUsedSlots(IEnumerable<MechComponentRef> inventory)
+        {
+            return inventory.Sum(i => i.Def.InventorySize);
+        }
+
+        private static int GetReservedSlots(IEnumerable<MechComponentRef> inventory)
+        {
+            return inventory.Select(i => i.Def).OfType<IDynamicSlots>().Sum(i => i.ReservedSlots );
         }
     }
 }
