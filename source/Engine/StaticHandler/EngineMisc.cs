@@ -70,7 +70,7 @@ namespace MechEngineer
 
         internal static void SetJumpJetHardpointCount(MechLabMechInfoWidget widget, MechLabPanel mechLab, MechLabHardpointElement[] hardpoints)
         {
-            if (mechLab == null || mechLab.activeMechDef == null || mechLab.activeMechDef.Inventory == null)
+            if (mechLab == null || mechLab.activeMechDef == null || mechLab.activeMechInventory == null)
             {
                 return;
             }
