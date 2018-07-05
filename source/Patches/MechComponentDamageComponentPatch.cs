@@ -10,7 +10,7 @@ namespace MechEngineer
     {
         // crit engine reduces speed
         // destroyed engine destroys CT
-        public static bool Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
+        public static bool Prefix(MechComponent __instance, CombatGameState ___combat, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
         {
             try
             {
@@ -27,6 +27,12 @@ namespace MechEngineer
                 }
 
                 if (!StructureHandler.Shared.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects))
+                {
+                    MechCheckForCritPatch.Message = null;
+                    return false;
+                }
+
+                if (!CirticalHitStatesHandler.Shared.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects, MechCheckForCritPatch.MessageAdditions))
                 {
                     MechCheckForCritPatch.Message = null;
                     return false;

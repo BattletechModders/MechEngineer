@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Component\StructureDef.cs" />
     <Compile Include="Component\ArmorDef.cs" />
+    <Compile Include="Crits\CriticalHitStatesHandler.cs" />
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Engine\Handler\EngineSideDefHandler.cs" />
     <Compile Include="Engine\Handler\EngineTypeDefHandler.cs" />
     <Compile Include="Engine\EngineTypeDef.cs" />
+    <Compile Include="Crits\ICriticalHitStates.cs" />
     <Compile Include="Engine\IEnginePart.cs" />
     <Compile Include="Misc\FormulaEvaluator.cs" />
     <Compile Include="Helper\IdentityHelper.cs" />

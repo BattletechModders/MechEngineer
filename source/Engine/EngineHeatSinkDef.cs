@@ -6,12 +6,15 @@ using CustomComponents;
 namespace MechEngineer
 {
     [Custom("EngineHeatSinkDef")]
-    public class EngineHeatSinkDef : CustomHeatSinkDef<EngineHeatSinkDef>
+    public class EngineHeatSinkDef : CustomHeatSinkDef<EngineHeatSinkDef>, ICriticalHitStates
     {
         public string FullName { get; set; }
         public string Abbreviation { get; set; }
         public string Tag { get; set; }
         public string HSCategory => Tag;
+
+        public int CriticalHitStatesMaxCount { get; set; }
+        public CriticalHitEffect[] CriticalHitEffects { get; set; }
     }
 
     internal static class DataManagerEngineHeatSinkDefExtensions
