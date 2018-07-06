@@ -181,9 +181,7 @@
     <None Include="..\README.md" />
     <None Include="..\Settings.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CCExtra\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>REM copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)..\$(TargetName).dll"</PostBuildEvent>
