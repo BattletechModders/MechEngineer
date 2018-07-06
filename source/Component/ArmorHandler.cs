@@ -7,6 +7,8 @@ namespace MechEngineer
     {
         internal static ArmorHandler Shared = new ArmorHandler();
 
+        public override string CategoryName { get; } = "Armor";
+
         public override bool IsCustomType(MechComponentDef def)
         {
             return def is ArmorDef;

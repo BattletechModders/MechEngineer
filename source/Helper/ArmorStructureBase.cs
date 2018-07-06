@@ -10,8 +10,22 @@ namespace MechEngineer
         float WeightSavingsFactor { get; }
     }
 
-    internal abstract class ArmorStructureBase : IValidateMech, IProcessWeaponHit, ITonnageChanges, IAdjustTooltip, IIdentifier
+    internal abstract class ArmorStructureBase : IValidateMech, IValidateDrop, IProcessWeaponHit, ITonnageChanges, IAdjustTooltip, IIdentifier, IDescription
     {
+        private readonly ValidationHelper checker;
+
+        protected ArmorStructureBase()
+        {
+            checker = new ValidationHelper(this, this) {Required = false, Unique = UniqueConstraint.Mech};
+        }
+
+        public abstract string CategoryName { get; }
+
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
+        {
+            return checker.ValidateDrop(dragItem, widget);
+        }
+
         public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
             var mechDef = panel.activeMechDef;
@@ -27,7 +41,7 @@ namespace MechEngineer
 
             var tonnage = savings.TonnageSaved;
 
-            tooltip.bonusesText.text = string.Format("- {0} ton,  {1} / {2}", tonnage, savings.Count, savings.RequiredCount);
+            tooltip.bonusesText.text = $"- {tonnage} ton, - {savings.RequiredCount} slots";
             tooltip.bonusesText.SetAllDirty();
         }
 
@@ -56,6 +70,8 @@ namespace MechEngineer
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
+            checker.ValidateMech(mechDef, errorMessages);
+
             var errors = new List<string>();
 
             {

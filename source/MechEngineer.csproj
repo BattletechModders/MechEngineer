@@ -44,10 +44,6 @@
       <HintPath>..\..\..\BattleTech_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="CustomComponents">
-      <HintPath>..\..\CustomComponents\CustomComponents.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\BattleTech_Data\Managed\System.dll</HintPath>
       <Private>False</Private>
@@ -70,15 +66,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CCLight\CustomAttribute.cs" />
+    <Compile Include="CCLight\Helpers\CustomComponentPatchHelper.cs" />
+    <Compile Include="CCLight\Registry.cs" />
+    <Compile Include="CCLight\Patches\TooltipManager_SetActiveTooltip.cs" />
+    <Compile Include="CCLight\Types\CustomHeatSinkDef.cs" />
+    <Compile Include="CCLight\Helpers\HarmonyNestedAttribute.cs" />
+    <Compile Include="CCLight\ICustomComponent.cs" />
+    <Compile Include="CCLight\Patches\DataManager_HeatSinkDefLoadRequest_OnLoadedWithJSON.cs" />
+    <Compile Include="CCLight\Patches\DataManager_UpgradeDefLoadRequest_OnLoadedWithJSON.cs" />
+    <Compile Include="CCLight\Patches\TooltipUtilities_MechComponentDefHandlerForTooltip.cs" />
+    <Compile Include="CCLight\Types\CustomUpgradeDef.cs" />
     <Compile Include="Component\StructureDef.cs" />
     <Compile Include="Component\ArmorDef.cs" />
     <Compile Include="Crits\CriticalHitStatesHandler.cs" />
     <Compile Include="DynamicSlots\DynamicSlotController.cs" />
     <Compile Include="DynamicSlots\IDynamicSlots.cs" />
+    <Compile Include="DynamicSlots\MechDefSlots.cs" />
     <Compile Include="DynamicSlots\MechEngineerSettings.DynamicSlots.cs" />
-    <Compile Include="DynamicSlots\Test\TestArmor.cs" />
-    <Compile Include="DynamicSlots\Test\TestStructure.cs" />
-    <Compile Include="DynamicSlots\Test\test_patch.cs" />
+    <Compile Include="DynamicSlots\MechLabLocationWidgetOnMechLabDropPatch_A23.cs" />
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />
@@ -175,7 +181,9 @@
     <None Include="..\README.md" />
     <None Include="..\Settings.json" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="CCExtra\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>REM copy /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)..\$(TargetName).dll"</PostBuildEvent>

@@ -11,7 +11,7 @@ namespace MechEngineer
         private readonly IIdentifier identifier;
 
         public bool Required = true;
-        public bool Unique = true;
+        public UniqueConstraint Unique = UniqueConstraint.Location;
 
         public ValidationHelper(IIdentifier identifier, IDescription description)
         {
@@ -28,21 +28,33 @@ namespace MechEngineer
             if (Required && types.Count(x => x.DamageLevel == ComponentDamageLevel.Functional) == 0)
             {
                 errorMessages[MechValidationType.InvalidInventorySlots].Add(
-                    string.Format("MISSING: Must mount a functional {0}", description.CategoryName)
+                    $"MISSING: Must mount a functional {description.CategoryName}"
                 );
             }
 
-            if (Unique && types.Count > 1)
+            if (types.Count == 0)
+            {
+                return;
+            }
+
+            if (Unique == UniqueConstraint.Mech && types.Count > 1)
             {
                 errorMessages[MechValidationType.InvalidInventorySlots].Add(
-                    string.Format("UNIQUE: Can't mount more than one {0}", description.CategoryName)
+                    $"UNIQUE: Cannot mount more than one {description.CategoryName}"
+                );
+            }
+
+            if (Unique == UniqueConstraint.Location && types.GroupBy(x => x.MountedLocation).Any(g => g.Count() > 1))
+            {
+                errorMessages[MechValidationType.InvalidInventorySlots].Add(
+                    $"UNIQUE: Cannot mount more than one {description.CategoryName} in the same location"
                 );
             }
         }
 
-        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
         {
-            if (!Unique)
+            if (Unique == UniqueConstraint.None)
             {
                 return null;
             }
@@ -51,14 +63,45 @@ namespace MechEngineer
             {
                 return null;
             }
+            
+            var adapter = new MechLabLocationWidgetAdapter(widget);
 
-            var localComponent = localInventory.FirstOrDefault(s => identifier.IsCustomType(s.ComponentRef.Def));
-            if (localComponent == null)
+            if (Unique == UniqueConstraint.Location || Unique == UniqueConstraint.Mech)
             {
-                return null;
+                var existingElement = adapter.localInventory.FirstOrDefault(s => identifier.IsCustomType(s.ComponentRef.Def));
+                if (existingElement != null)
+                {
+                    return new MechLabDropReplaceItemResult {ToReplaceElement = existingElement};
+                }
+            }
+            
+            if (Unique == UniqueConstraint.Mech)
+            {
+                if (adapter.mechLab.activeMechDef.Inventory.Any(s => identifier.IsCustomType(s.Def)))
+                {
+                    var componentDef = dragItem.ComponentRef.Def;
+                    return new MechLabDropErrorResult($"Cannot add {componentDef.Description.Name}: Cannot mount more than one {description.CategoryName}");
+                }
             }
 
-            return new MechLabDropReplaceItemResult {ToReplaceElement = localComponent};
+            return null;
         }
+    }
+
+    internal enum UniqueConstraint
+    {
+        None, Location, Mech
+    }
+
+    internal class MechLabLocationWidgetAdapter : Adapter<MechLabLocationWidget>
+    {
+        internal MechLabLocationWidgetAdapter(MechLabLocationWidget instance) : base(instance)
+        {
+        }
+
+        internal List<MechLabItemSlotElement> localInventory => traverse.Field("localInventory").GetValue<List<MechLabItemSlotElement>>();
+        internal MechLabPanel mechLab => traverse.Field("mechLab").GetValue<MechLabPanel>();
+        internal int usedSlots => traverse.Field("usedSlots").GetValue<int>();
+        internal int maxSlots => traverse.Field("maxSlots").GetValue<int>();
     }
 }

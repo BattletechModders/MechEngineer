@@ -30,33 +30,10 @@ namespace MechEngineer
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-
+                CustomComponents.Registry.RegisterCustomTypes(Assembly.GetExecutingAssembly());
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
-                mod.Logger.Log("Loaded " + mod.Name);
-
-                #region CustomComponents
-
-                CustomComponents.Control.RegisterCustomTypes(Assembly.GetExecutingAssembly());
-                
-                CustomComponents.Validator.RegisterDropValidator(DynamicSlotController.ValidateDrop);
-                CustomComponents.Validator.RegisterMechValidator(DynamicSlotController.ValidateMech, DynamicSlotController.ValidateMechCanBeFielded);
-
-                CustomComponents.Control.AddCategory(new CustomComponents.CategoryDescriptor
-                {
-                    Name = "TestArmor",
-                    MaxEquiped = 1,
-                    AutoReplace = true
-                });
-
-                CustomComponents.Control.AddCategory(new CustomComponents.CategoryDescriptor
-                {
-                    Name = "TestStructure",
-                    MaxEquiped = 1,
-                    AutoReplace = true
-                });
-
-                #endregion
+                mod.Logger.LogDebug("Loaded " + mod.Name);
             }
             catch (Exception e)
             {

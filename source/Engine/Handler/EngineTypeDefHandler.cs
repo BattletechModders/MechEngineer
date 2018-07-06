@@ -22,9 +22,9 @@ namespace MechEngineer
             get { return "Engine Shielding"; }
         }
 
-        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
         {
-            return checker.ValidateDrop(dragItem, localInventory);
+            return checker.ValidateDrop(dragItem, widget);
         }
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)

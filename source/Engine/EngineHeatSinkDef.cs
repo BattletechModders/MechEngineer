@@ -6,7 +6,7 @@ using CustomComponents;
 namespace MechEngineer
 {
     [Custom("EngineHeatSinkDef")]
-    public class EngineHeatSinkDef : CustomHeatSinkDef<EngineHeatSinkDef>, ICriticalHitStates
+    public class EngineHeatSinkDef : CustomHeatSinkDef, ICriticalHitStates
     {
         public string FullName { get; set; }
         public string Abbreviation { get; set; }

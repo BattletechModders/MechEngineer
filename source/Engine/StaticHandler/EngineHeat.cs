@@ -6,7 +6,7 @@ using Harmony;
 
 namespace MechEngineer
 {
-    internal static class EngineHeat
+    internal class EngineHeat : IValidateDrop
     {
         internal static float GetEngineHeatDissipation(MechComponentRef[] inventory)
         {
@@ -19,12 +19,10 @@ namespace MechEngineer
             return engineRef.EngineHeatDissipation;
         }
 
+        public static EngineHeat Shared = new EngineHeat();
+
         // only allow one engine part per specific location
-        internal static MechLabDropResult ValidateDrop(
-            MechLabPanel mechLab,
-            MechLabItemSlotElement dragItem,
-            List<MechLabItemSlotElement> localInventory
-            )
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
         {
             var newComponentRef = dragItem.ComponentRef;
             var newComponentDef = newComponentRef.Def;
@@ -37,6 +35,9 @@ namespace MechEngineer
             {
                 return null;
             }
+
+            var adapter = new MechLabLocationWidgetAdapter(widget);
+            var localInventory = adapter.localInventory;
 
             var engineSlotElement = localInventory.FirstOrDefault(x => x?.ComponentRef?.Def is EngineCoreDef);
 
@@ -54,7 +55,8 @@ namespace MechEngineer
 
             var engineRef = engineSlotElement.ComponentRef.GetEngineCoreRef();
             var engineDef = engineRef.CoreDef;
-
+            
+            var mechLab = adapter.mechLab;
             if (mechLab.IsSimGame)
             {
                 if (dragItem.OriginalDropParentType != MechLabDropTargetType.InventoryList)

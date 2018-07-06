@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using BattleTech.Save.SaveGameStructure;
 using BattleTech.UI;
 using Harmony;
+using HBS.Extensions;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
 namespace MechEngineer
 {
@@ -99,56 +100,14 @@ namespace MechEngineer
                     return;
                 }
 
-                var widget = __instance.transform;
-
-                var layout = widget.GetChild("layout_slots");
-
-                if (layout == null)
+                var widgetLayout = new WidgetLayout(__instance, ___loadout.Location);
+                if (widgetLayout.layout_slots == null)
                 {
                     return;
                 }
 
-                var slots = layout.GetChildren()
-                    .Where(x => x.name.StartsWith("slot"))
-                    .OrderByDescending(x => x.localPosition.y)
-                    .ToList();
-
-                var changedSlotCount = ___maxSlots - slots.Count;
-
-
-                if (changedSlotCount == 0)
-                {
-                    AddFillersToSlot(slots, ___loadout, __instance);
-                    return;
-                }
-
-                var templateSlot = slots[0];
-
-                // add missing
-                int index = slots[0].GetSiblingIndex();
-                for (var i = slots.Count; i < ___maxSlots; i++)
-                {
-                    var newSlot = UnityEngine.Object.Instantiate(templateSlot, layout);
-                    newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
-                    newSlot.SetSiblingIndex(index + i);
-                    newSlot.name = "slot (" + i + ")";
-                    slots.Add(newSlot);
-                }
-
-                // remove abundant
-                while (slots.Count > ___maxSlots)
-                {
-                    var slot = slots.Last();
-                    slots.RemoveAt(slots.Count - 1);
-                    UnityEngine.GameObject.Destroy(slot.gameObject);
-                }
-
-                AddFillersToSlot(slots, ___loadout, __instance);
-
-                var changedHeight = changedSlotCount * SlotHeight;
-
-                widget.AdjustHeight(changedHeight);
-                layout.AdjustHeight(changedHeight);
+                ModifySlotCount(widgetLayout, ___maxSlots);
+                AddFillersToSlots(widgetLayout);
             }
             catch (Exception e)
             {
@@ -156,34 +115,105 @@ namespace MechEngineer
             }
         }
 
-        private static void AddFillersToSlot(List<Transform> slots, LocationLoadoutDef loadout, MechLabLocationWidget instance)
+        private static void ModifySlotCount(WidgetLayout layout, int maxSlots)
         {
-            List<Image> images = new List<Image>();
+            var slots = layout.slots;
+            var changedSlotCount = maxSlots - slots.Count;
 
-
-
-            foreach (var slot in slots)
+            if (changedSlotCount == 0)
             {
-                var go = new GameObject();
-                var rect = go.AddComponent<RectTransform>();
-                rect.pivot = new Vector2(0.5f, 0.5f);
-                rect.anchorMin = new Vector2(0, 0);
-                rect.anchorMax = new Vector2(1, 1);
-                rect.anchoredPosition = Vector2.zero;
-                rect.sizeDelta = new Vector2(-6, -6);
-                go.AddComponent<CanvasRenderer>();
-
-                var image = go.AddComponent<Image>();
-                image.color = Color.red;
-                images.Add(image);
-
-                rect.SetParent(slot, false);
+                return;
             }
 
-            DynamicSlotController.RegisterLocation(instance, images, loadout);
+            var templateSlot = slots[0];
+
+            // add missing
+            int index = slots[0].GetSiblingIndex();
+            for (var i = slots.Count; i < maxSlots; i++)
+            {
+                var newSlot = UnityEngine.Object.Instantiate(templateSlot, layout.layout_slots);
+                newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
+                newSlot.SetSiblingIndex(index + i);
+                newSlot.name = "slot (" + i + ")";
+                slots.Add(newSlot);
+            }
+
+            // remove abundant
+            while (slots.Count > maxSlots)
+            {
+                var slot = slots.Last();
+                slots.RemoveAt(slots.Count - 1);
+                UnityEngine.Object.Destroy(slot.gameObject);
+            }
+
+            var changedHeight = changedSlotCount * SlotHeight;
+
+            layout.widget.transform.AdjustHeight(changedHeight);
+            layout.layout_slots.AdjustHeight(changedHeight);
         }
 
+        public static Dictionary<ChassisLocations, List<Image>> FillerImageCache = new Dictionary<ChassisLocations, List<Image>>();
 
+        private static void AddFillersToSlots(WidgetLayout layout)
+        {
+            var images = new List<Image>();
+
+            foreach (var slot in layout.slots)
+            {
+                Image image;
+
+                var go = slot.gameObject.FindFirstChildNamed("Filler");
+                if (go == null)
+                {
+                    go = new GameObject("Filler");
+
+                    var rect = go.AddComponent<RectTransform>();
+                    rect.pivot = new Vector2(0.5f, 0.5f);
+                    rect.anchorMin = new Vector2(0, 0);
+                    rect.anchorMax = new Vector2(1, 1);
+                    rect.anchoredPosition = Vector2.zero;
+                    rect.sizeDelta = new Vector2(-6, -6);
+                    go.AddComponent<CanvasRenderer>();
+
+                    image = go.AddComponent<Image>();
+
+                    rect.SetParent(slot, false);
+                }
+                else
+                {
+                    image = go.GetComponent<Image>();
+                }
+
+                go.SetActive(false);
+                image.color = Color.red;
+                images.Add(image);
+            }
+
+            FillerImageCache[layout.location] = images;
+        }
+
+        private class WidgetLayout
+        {
+            internal WidgetLayout(MechLabLocationWidget widget, ChassisLocations location)
+            {
+                this.location = location;
+                this.widget = widget;
+                layout_slots = widget.transform.GetChild("layout_slots");
+                if (layout_slots == null)
+                {
+                    return;
+                }
+                slots = layout_slots.GetChildren()
+                    .Where(x => x.name.StartsWith("slot"))
+                    .OrderByDescending(x => x.localPosition.y)
+                    .ToList();
+            }
+
+            internal ChassisLocations location { get; }
+            internal MechLabLocationWidget widget { get; }
+            internal Transform layout_slots { get; }
+            internal List<Transform> slots { get; }
+        }
     }
 
     public static class Utils

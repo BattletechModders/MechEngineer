@@ -1,9 +1,10 @@
-﻿using CustomComponents;
+﻿using BattleTech.UI;
+using CustomComponents;
 
 namespace MechEngineer
 {
     [Custom("EngineCoreDef")]
-    public class EngineCoreDef : CustomHeatSinkDef<EngineCoreDef>, IEnginePart
+    public class EngineCoreDef : CustomHeatSinkDef, IEnginePart
     {
         private int _rating;
 
@@ -27,5 +28,7 @@ namespace MechEngineer
         {
             return Description.Id + " Rating=" + Rating;
         }
+
+        //public UIColor Color { get; } = UIColor.GoldHalf;
     }
 }

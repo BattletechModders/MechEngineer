@@ -18,8 +18,6 @@ namespace MechEngineer
 
         internal string Name => Def?.Description.UIName.ToUpperInvariant();
 
-        internal int Count { get; private set; }
-
         internal int RequiredCount => SlotType?.RequiredCriticalSlotCount ?? 0;
 
         internal float TonnageSaved { get; private set; }
@@ -41,10 +39,7 @@ namespace MechEngineer
                 else if (slot.Description.Id != savings.Def.Description.Id)
                 {
                     mixed = true;
-                    continue;
                 }
-
-                savings.Count++;
             }
 
             if (savings.SlotType == null)
@@ -54,38 +49,12 @@ namespace MechEngineer
 
             {
                 var tonnageSaved = tonnage * savings.SlotType.WeightSavingsFactor;
-                if (Control.settings.AllowPartialWeightSavings)
-                {
-                    var factor = (float) Mathf.Min(savings.Count, savings.RequiredCount) / savings.RequiredCount;
-                    tonnageSaved = tonnageSaved * factor;
-                }
-
                 savings.TonnageSaved = tonnageSaved.RoundStandard();
             }
 
             if (mixed)
             {
                 savings.ErrorMessages.Add(savings.Name + ": Cannot mix-match different critical slot types");
-            }
-
-            // AllowPartialWeightSavings
-
-            if (savings.Count > 0)
-            {
-                if (Control.settings.AllowPartialWeightSavings)
-                {
-                    if (savings.Count > savings.RequiredCount)
-                    {
-                        savings.ErrorMessages.Add(string.Format(savings.Name + ": Critical slots count exceeded ({0} / {1})", savings.Count, savings.RequiredCount));
-                    }
-                }
-                else
-                {
-                    if (savings.Count != savings.RequiredCount)
-                    {
-                        savings.ErrorMessages.Add(string.Format(savings.Name + ": Critical slots count does not match ({0} / {1})", savings.Count, savings.RequiredCount));
-                    }
-                }
             }
 
             return savings;

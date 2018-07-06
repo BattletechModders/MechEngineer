@@ -36,7 +36,7 @@ namespace MechEngineer
 
     internal interface IValidateDrop
     {
-        MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory);
+        MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget);
     }
 
     internal interface IAdjustUpgradeDef

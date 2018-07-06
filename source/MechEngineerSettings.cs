@@ -37,7 +37,7 @@ namespace MechEngineer
         
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
         public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations
-        public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
+        //public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
 
         /* 
 		set to false to use TT walk values

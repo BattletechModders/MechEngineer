@@ -4,7 +4,7 @@
 	"Website": "https://github.com/CptMoore/MechEngineer",
 
 	"Enabled": true,
-	"DependsOn": ["CustomComponents"],
+	"DependsOn": [],
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
@@ -57,11 +57,6 @@
 		{
 			"Type": "ShopDef",
 			"Path": "disabled data/exotics/shops_test/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "UpgradeDef",
-			"Path": "data/test/",
 			"ShouldMergeJSON": false
 		},
 	]

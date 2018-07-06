@@ -10,8 +10,8 @@ namespace MechEngineer
 
         public static MechLabPanel Current
         {
-            set { GlobalReference.Target = value; }
-            get { return GlobalReference.Target as MechLabPanel; }
+            set => GlobalReference.Target = value;
+            get => GlobalReference.Target as MechLabPanel;
         }
 
         [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
@@ -22,8 +22,6 @@ namespace MechEngineer
                 try
                 {
                     Current = __instance;
-                    DynamicSlotController.MechLab = __instance;
-                    DynamicSlotController.RefreshData(__instance.activeMechDef);
                 }
                 catch (Exception e)
                 {
@@ -40,7 +38,6 @@ namespace MechEngineer
                 try
                 {
                     Current = null;
-                    DynamicSlotController.MechLab = null;
                 }
                 catch (Exception e)
                 {

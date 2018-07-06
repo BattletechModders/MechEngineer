@@ -34,13 +34,7 @@ namespace MechEngineer
                     return false;
                 }
                 
-                var result = EngineHeat.ValidateDrop(___mechLab, dragItem, ___localInventory);
-
-                var newComponentDef = dragItem.ComponentRef.Def;
-                if (result == null)
-                {
-                    result = ValidationFacade.ValidateDrop(dragItem, ___localInventory);
-                }
+                var result = ValidationFacade.ValidateDrop(dragItem, __instance);
 
                 if (result is MechLabDropRemoveDragItemResult)
                 {
@@ -55,6 +49,8 @@ namespace MechEngineer
                 if (result is MechLabDropReplaceItemResult replace)
                 {
                     var element = replace.ToReplaceElement;
+                    var newComponentDef = dragItem.ComponentRef.Def;
+
                     if (___usedSlots - element.ComponentRef.Def.InventorySize + newComponentDef.InventorySize <= ___maxSlots)
                     {
                         __instance.OnRemoveItem(element, true);
@@ -82,24 +78,24 @@ namespace MechEngineer
         }
     }
 
-    internal class MechLabDropResult
+    public class MechLabDropResult
     {
     }
 
-    internal class MechLabDropReplaceItemResult : MechLabDropResult
+    public class MechLabDropReplaceItemResult : MechLabDropResult
     {
         internal MechLabItemSlotElement ToReplaceElement;
     }
 
-    internal class MechLabDropRemoveDragItemResult : MechLabDropResult
+    public class MechLabDropRemoveDragItemResult : MechLabDropResult
     {
     }
 
-    internal class MechLabDropErrorResult : MechLabDropResult
+    public class MechLabDropErrorResult : MechLabDropResult
     {
-        internal string errorMessage;
+        public string errorMessage;
 
-        internal MechLabDropErrorResult(string errorMessage)
+        public MechLabDropErrorResult(string errorMessage)
         {
             this.errorMessage = errorMessage;
         }

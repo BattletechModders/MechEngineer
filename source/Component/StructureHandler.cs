@@ -7,6 +7,8 @@ namespace MechEngineer
     {
         internal static StructureHandler Shared = new StructureHandler();
 
+        public override string CategoryName { get; } = "Structure";
+
         public override bool IsCustomType(MechComponentDef def)
         {
             return def is StructureDef;

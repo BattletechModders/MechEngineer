@@ -5,7 +5,7 @@
         "Cost" : 300000,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "Generic",
+        "Manufacturer" : "Lostech",
         "Model" : "XL Right Torso Slots",
         "UIName" : "XL Engine RT",
         "Id" : "emod_engineslots_xl_right",

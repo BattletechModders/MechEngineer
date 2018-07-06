@@ -15,23 +15,28 @@ namespace MechEngineer
             EngineTypeDefHandler.Shared.ValidateMech(mechDef, errorMessages);
             GyroHandler.Shared.ValidateMech(mechDef, errorMessages);
             CockpitHandler.Shared.ValidateMech(mechDef, errorMessages);
+            DynamicSlotController.Shared.ValidateMech(mechDef, errorMessages);
         }
 
-        internal static MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
+        internal static MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
         {
             var validators = new IValidateDrop[]
             {
+                EngineHeat.Shared,
+                ArmorHandler.Shared,
+                StructureHandler.Shared,
                 LegUpgradeHandler.Shared,
                 EngineSideDefHandler.Shared,
                 EngineCoreDefHandler.Shared,
                 EngineTypeDefHandler.Shared,
                 GyroHandler.Shared,
                 CockpitHandler.Shared,
+                //DynamicSlotController.Shared // we dont want the drop check, we allow over use of inventory until save (similar to overtonnage)
             };
 
             foreach (var validator in validators)
             {
-                var result = validator.ValidateDrop(dragItem, localInventory);
+                var result = validator.ValidateDrop(dragItem, widget);
                 if (result != null)
                 {
                     return result;

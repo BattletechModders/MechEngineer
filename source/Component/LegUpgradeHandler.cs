@@ -45,9 +45,9 @@ namespace MechEngineer
             get { return "Leg Upgrade"; }
         }
 
-        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, List<MechLabItemSlotElement> localInventory)
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
         {
-            return checker.ValidateDrop(dragItem, localInventory);
+            return checker.ValidateDrop(dragItem, widget);
         }
     }
 }

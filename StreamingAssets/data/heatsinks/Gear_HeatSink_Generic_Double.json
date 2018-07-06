@@ -3,6 +3,9 @@
 	"FullName": "Double Heat Sinks",
 	"Abbreviation": "DHS",
 	"Tag": "DHS",
+    "Description" : {
+        "Manufacturer" : "Lostech",
+    },
     "ComponentTags" : {
         "items" : [
             "component_type_stock"
