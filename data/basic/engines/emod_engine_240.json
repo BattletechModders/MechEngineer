@@ -3,6 +3,12 @@
 		"EngineCore": {
 			"Rating": 240
 		},
+		"WorkOrderCosts": {
+			"Install": {
+				"TechCost": "0",
+				"CBillCost": "240 * [[Chassis.Tonnage]]"
+			}
+		},
 		"EnginePart": {
 		}
 	},

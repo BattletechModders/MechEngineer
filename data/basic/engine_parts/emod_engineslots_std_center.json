@@ -2,11 +2,17 @@
 	"Custom": {
 		"EngineType": {
 		},
+		"WorkOrderCosts": {
+			"Install": {
+				"TechCost": "[[Chassis.Tonnage]]/10",
+				"CBillCost": "[[Chassis.Tonnage]]"
+			}
+		},
 		"EnginePart": {
 		}
 	},
     "Description" : {
-        "Cost" : 600000,
+        "Cost" : 0,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Vlar",

@@ -2,6 +2,28 @@
 	"Custom": {
 		"EngineHeatSinkKit": {
 			"HeatSinkDefId": "Gear_HeatSink_Generic_Double"
+		},
+		"WorkOrderCosts": {
+			"Install": {
+				"TechCost": "0",
+				"CBillCost": "0"
+			},
+			"Repair": {
+				"TechCost": "0",
+				"CBillCost": "0"
+			},
+			"RepairDestroyed": {
+				"TechCost": "0",
+				"CBillCost": "0"
+			},
+			"Remove": {
+				"TechCost": "0",
+				"CBillCost": "0"
+			},
+			"RemoveDestroyed": {
+				"TechCost": "0",
+				"CBillCost": "0"
+			}
 		}
 	},
     "DissipationCapacity" : 0,

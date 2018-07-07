@@ -31,7 +31,7 @@ namespace MechEngineer
 
     internal interface IAdjustTooltip
     {
-        void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef);
+        void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechComponentDef mechComponentDef);
     }
 
     internal interface IValidateDrop

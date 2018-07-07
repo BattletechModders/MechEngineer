@@ -4,11 +4,17 @@
 			"WeightMultiplier": 0.5,
 			"Requirements": ["emod_engineslots_xl_left", "emod_engineslots_xl_right"],
 		},
+		"WorkOrderCosts": {
+			"Install": {
+				"TechCost": "[[Chassis.Tonnage]]/10",
+				"CBillCost": "[[Chassis.Tonnage]]"
+			}
+		},
 		"EnginePart": {
 		}
 	},
     "Description" : {
-        "Cost" : 2500000,
+        "Cost" : 0,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Lostech",

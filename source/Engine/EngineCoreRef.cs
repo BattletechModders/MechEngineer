@@ -63,6 +63,11 @@ namespace MechEngineer
         {
             set
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    return;
+                }
+
                 var dictionary = DictionarySerializer.FromString(value);
                 if (dictionary.TryGetValue("ihstype", out var defId))
                 {
@@ -148,7 +153,17 @@ namespace MechEngineer
 
         internal string GetNewSimGameUID()
         {
-            return (string.IsNullOrEmpty(UUID) ? "" : UUID) + "/" + Properties;
+            var prefix = UUID;
+            var postfix = Properties;
+            if (string.IsNullOrEmpty(prefix))
+            {
+                return postfix;
+            }
+            if (string.IsNullOrEmpty(postfix))
+            {
+                return prefix;
+            }
+            return prefix + "/" + postfix;
         }
 
         internal IEnumerable<string> GetInternalComponents()

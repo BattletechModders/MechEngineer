@@ -10,7 +10,7 @@ namespace MechEngineer
     {
         public static readonly WeightSavingsHandler Shared = new WeightSavingsHandler();
 
-        public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
+        public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechComponentDef mechComponentDef)
         {
             var weightSavings = mechComponentDef.GetComponent<WeightSavings>();
             if (weightSavings == null)
@@ -18,7 +18,13 @@ namespace MechEngineer
                 return;
             }
             
-            var mechDef = panel.activeMechDef;
+
+            var mechDef = Global.ActiveMechDef;
+            if (mechDef == null)
+            {
+                return;
+            }
+
             var tonnageSaved = CalculateWeightSavings(weightSavings, mechDef);
 
             tooltip.tonnageText.text = $"- {tonnageSaved}";
@@ -44,28 +50,12 @@ namespace MechEngineer
 
         private static float CalculateArmorWeightSavings(WeightSavings savings, MechDef mechDef)
         {
-            var num = 0f;
-            num += mechDef.Head.AssignedArmor;
-            num += mechDef.CenterTorso.AssignedArmor;
-            num += mechDef.CenterTorso.AssignedRearArmor;
-            num += mechDef.LeftTorso.AssignedArmor;
-            num += mechDef.LeftTorso.AssignedRearArmor;
-            num += mechDef.RightTorso.AssignedArmor;
-            num += mechDef.RightTorso.AssignedRearArmor;
-            num += mechDef.LeftArm.AssignedArmor;
-            num += mechDef.RightArm.AssignedArmor;
-            num += mechDef.LeftLeg.AssignedArmor;
-            num += mechDef.RightLeg.AssignedArmor;
-            var tonnage = num / (UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f);
-
-            return (tonnage * savings.ArmorWeightSavingsFactor).RoundStandard();
+            return (mechDef.ArmorTonnage() * savings.ArmorWeightSavingsFactor).RoundStandard();
         }
 
         private static float CalculateStructureWeightSavings(WeightSavings savings, MechDef mechDef)
         {
-            var tonnage = mechDef.Chassis.Tonnage / 10f;
-
-            return (tonnage * savings.StructureWeightSavingsFactor).RoundStandard();
+            return (mechDef.Chassis.DefaultStructureTonnage() * savings.StructureWeightSavingsFactor).RoundStandard();
         }
 
         public void MechLabItemRefreshInfo(MechLabItemSlotElement instance)
@@ -76,13 +66,12 @@ namespace MechEngineer
                 return;
             }
 
-            var panel = MechLab.Current;
-            if (panel == null)
+            var mechDef = Global.ActiveMechDef;
+            if (mechDef == null)
             {
                 return;
             }
 
-            var mechDef = panel.activeMechDef;
             var tonnageSaved = CalculateWeightSavings(weightSavings, mechDef);
             var adapter = new MechLabItemSlotElementAdapter(instance);
 

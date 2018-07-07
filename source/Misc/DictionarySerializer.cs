@@ -25,6 +25,10 @@ namespace MechEngineer
             foreach (var keyvalueText in values.Split('&'))
             {
                 var keyvalueArray = keyvalueText.Split('=');
+                if (keyvalueArray.Length < 2)
+                {
+                    continue;
+                }
                 var key = keyvalueArray[0];
                 var value = keyvalueArray[1];
                 dictionary.Add(key, value);

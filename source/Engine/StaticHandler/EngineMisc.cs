@@ -39,35 +39,6 @@ namespace MechEngineer
             return true;
         }
 
-        internal static void ChangeInstallationCosts(MechComponentRef mechComponent, WorkOrderEntry_InstallComponent workOrderEntry)
-        {
-            if (mechComponent == null)
-            {
-                return;
-            }
-
-            // removing is always fast and cheap
-            if (workOrderEntry.DesiredLocation == ChassisLocations.None)
-            {
-                return;
-            }
-
-            var engine = mechComponent.GetEngineCoreRef();
-            if (engine == null)
-            {
-                return;
-            }
-
-            var cbillCost = workOrderEntry.GetCBillCost();
-            var techCost = workOrderEntry.GetCost();
-
-            Control.calc.CalcInstallCosts(engine.CoreDef, ref cbillCost, ref techCost);
-
-            var traverse = Traverse.Create(workOrderEntry);
-            traverse.Field("CBillCost").SetValue(cbillCost);
-            traverse.Field("Cost").SetValue(techCost);
-        }
-
         internal static void SetJumpJetHardpointCount(MechLabMechInfoWidget widget, MechLabPanel mechLab, MechLabHardpointElement[] hardpoints)
         {
             if (mechLab == null || mechLab.activeMechDef == null || mechLab.activeMechInventory == null)

@@ -12,8 +12,6 @@ namespace MechEngineer
     {
         public static DynamicSlotHandler Shared = new DynamicSlotHandler();
 
-        public static MechLabPanel MechLab => MechEngineer.MechLab.Current;
-
         #region settings
         private static readonly Color DynamicSlotsSpaceMissingColor = new Color(0.5f, 0, 0); // color changes when slots dont fit
         private static readonly ChassisLocations[] Locations = // order of locations to fill up first
@@ -37,7 +35,7 @@ namespace MechEngineer
                 return;
             }
 
-            var mechLab = MechLab;
+            var mechLab = Global.ActiveMechLabPanel;
             if (mechLab == null)
             {
                 return;

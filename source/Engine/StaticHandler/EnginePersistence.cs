@@ -57,6 +57,7 @@ namespace MechEngineer
         {
             var oldSimGameUID = engineCoreRef.ComponentRef.SimGameUID;
             var newSimGameUID = engineCoreRef.GetNewSimGameUID();
+            //Control.mod.Logger.LogDebug($"oldUID={oldSimGameUID} newUID={newSimGameUID}");
             if (oldSimGameUID != newSimGameUID)
             {
                 // Control.mod.Logger.LogDebug("saving new state of engine=" + engineRef.engineDef.Def.Description.Id + " old=" + oldSimGameUID + " new=" + newSimGameUID);
@@ -139,13 +140,16 @@ namespace MechEngineer
                 return;
             }
 
+            //Control.mod.Logger.LogDebug($"mechDef={Global.ActiveMechDef?.Name}");
             if (engineRef.UUID != null)
             {
+                //Control.mod.Logger.LogDebug($"engineRef.GetNewSimGameUID={engineRef.GetNewSimGameUID()}");
                 return;
             }
 
             engineRef.UUID = sim.GenerateSimGameUID();
             componentRef.SetSimGameUID(engineRef.GetNewSimGameUID());
+            //Control.mod.Logger.LogDebug($"componentRef.SimGameUID={componentRef.SimGameUID}");
         }
 
         internal static void FixSimGameUID(SimGameState sim, MechDef mechDef)

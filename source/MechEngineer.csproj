@@ -76,6 +76,12 @@
     <Compile Include="CCLight\Extensions.cs" />
     <Compile Include="CCLight\Registry.cs" />
     <Compile Include="CCLight\Patches\JSONSerializationUtility_RehydrateObjectFromDictionary_Patch.cs" />
+    <Compile Include="Helper\ChassisExtensions.cs" />
+    <Compile Include="Helper\MechDefExtensions.cs" />
+    <Compile Include="Features\WorkOrderCosts\SimGameState_CreateComponentRepairWorkOrder_Patch.cs" />
+    <Compile Include="Features\WorkOrderCosts\WorkOrderCosts.cs" />
+    <Compile Include="Features\WorkOrderCosts\WorkOrderCostsHandler.cs" />
+    <Compile Include="Features\WorkOrderCosts\WorkOrderEntry_MechLabAdapter.cs" />
     <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
     <Compile Include="Features\CriticalHitStates\CriticalHitStatesHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
@@ -115,7 +121,7 @@
     <Compile Include="Helper\ValidationHelper.cs" />
     <Compile Include="Patches\MechBayPanelOnGotoMechLabPatch.cs" />
     <Compile Include="Patches\MechBayPaneOnRepairMechPatch.cs" />
-    <Compile Include="Patches\MechLab.cs" />
+    <Compile Include="Misc\Global.cs" />
     <Compile Include="Patches\MechLabPanelCreateMechComponentItemPatch.cs" />
     <Compile Include="Patches\MechLabItemSlotElementRefreshInfoPatch.cs" />
     <Compile Include="Component\CockpitHandler.cs" />
@@ -144,7 +150,7 @@
     <Compile Include="Patches\SkirmishSettings_BetaLanceConfiguratorDataLoadedPatch.cs" />
     <Compile Include="Patches\SkirmishSettings_BetaLoadLanceConfiguratorDataPatch.cs" />
     <Compile Include="Patches\SkirmishMechBayPanelRequestResourcesPatch.cs" />
-    <Compile Include="Patches\SimGameStateCreateComponentInstallWorkOrderPatch.cs" />
+    <Compile Include="Features\WorkOrderCosts\SimGameState_CreateComponentInstallWorkOrder_Patch.cs" />
     <Compile Include="Patches\SimGameStateRespondToDefsLoadCompletePatch.cs" />
     <Compile Include="Patches\StatTooltipDataSetHeatDataPatch.cs" />
     <Compile Include="Patches\StatTooltipDataSetMovementDataPatch.cs" />

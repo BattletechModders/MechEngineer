@@ -21,16 +21,22 @@ namespace MechEngineer
                 return 0;
             }
 
-            return engine.TonnageChanges;
+            return engine.TotalTonnageChanges;
         }
     }
 
     internal partial class EngineHandler : IAdjustTooltip
     {
-        public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
+        public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechComponentDef mechComponentDef)
         {
             var engineDef = mechComponentDef.GetComponent<EngineCoreDef>();
             if (engineDef == null)
+            {
+                return;
+            }
+
+            var panel = Global.ActiveMechLabPanel;
+            if (panel == null)
             {
                 return;
             }
@@ -78,7 +84,7 @@ namespace MechEngineer
                                        "   Gyro: <b>" + engine.CoreDef.GyroTonnage + "</b>" +
                                        "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b>";
 
-            tooltip.tonnageText.text = $"{engine.Tonnage}";
+            tooltip.tonnageText.text = $"{engine.TotalTonnage}";
 
             tooltip.detailText.text += "\r\n";
             tooltip.detailText.text += "\r\n";

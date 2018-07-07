@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace MechEngineer
 {
     public class FormulaEvaluator
     {
-        //public static FormulaEvaluator Shared = new FormulaEvaluator();
+        public static FormulaEvaluator Shared = new FormulaEvaluator();
 
         private readonly DataTable table;
         private FormulaEvaluator()
@@ -22,13 +23,28 @@ namespace MechEngineer
             return value != DBNull.Value ? value : null;
         }
 
-        public object Evaluate(string expression, Dictionary<string, object> variables = null)
+        private static readonly Regex Regex = new Regex(@"(?:\[\[([^\]]+)\]\])", RegexOptions.Singleline | RegexOptions.Compiled);
+
+        public object Evaluate(string expression, Dictionary<string, string> variables = null)
         {
             if (variables != null)
             {
-                foreach (var keyvalue in variables)
+                var keys = new HashSet<string>();
+                foreach (Match match in Regex.Matches(expression))
                 {
-                    expression = expression.Replace("{{" + keyvalue.Key + "}}", keyvalue.Value.ToString());
+                    var key = match.Groups[1].Value;
+                    keys.Add(key);
+                }
+
+                foreach (var key in keys)
+                {
+                    if (!variables.TryGetValue(key, out var value))
+                    {
+                        value = "1";
+                    }
+                    var placeholder = "[[" + key + "]]";
+                    //Control.mod.Logger.LogDebug($"key={key} value={value}");
+                    expression = expression.Replace(placeholder, value);
                 }
             }
 

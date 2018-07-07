@@ -7,7 +7,13 @@
 		"WeightSavings": {
 			"RequiredSlots": 14,
 			"ArmorWeightSavingsFactor": 0.10714,
-		}
+		},
+		"WorkOrderCosts": {
+			"Install": {
+				"TechCost": "0",
+				"CBillCost": "[[Chassis.Tonnage]]"
+			}
+		},
 	},
     "Description" : {
         "Cost" : 0,

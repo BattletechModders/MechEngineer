@@ -17,17 +17,11 @@ namespace MechEngineer
                     return;
                 }
 
-                var panel = MechLab.Current;
-                if (panel == null)
-                {
-                    return;
-                }
-
                 var adapter = new TooltipPrefab_EquipmentAdapter(__instance);
 
                 var mechComponentDef = (MechComponentDef) data;
-                EngineHandler.Shared.AdjustTooltip(adapter, panel, mechComponentDef);
-                WeightSavingsHandler.Shared.AdjustTooltip(adapter, panel, mechComponentDef);
+                EngineHandler.Shared.AdjustTooltip(adapter, mechComponentDef);
+                WeightSavingsHandler.Shared.AdjustTooltip(adapter, mechComponentDef);
             }
             catch (Exception e)
             {

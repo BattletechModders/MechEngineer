@@ -18,10 +18,11 @@ namespace MechEngineer
         internal EngineType Type { get; }
         internal List<MechComponentRef> Parts { get; }
 
+        internal int Rating => CoreDef.Rating;
         internal float EngineTonnage => (CoreDef.StandardEngineTonnage * Type.WeightMultiplier).RoundStandard();
 
-        internal float Tonnage => CoreRef.HeatSinkTonnage + EngineTonnage + CoreDef.GyroTonnage;
+        internal float TotalTonnage => CoreRef.HeatSinkTonnage + EngineTonnage + CoreDef.GyroTonnage;
 
-        public float TonnageChanges => Tonnage - CoreDef.Def.Tonnage;
+        public float TotalTonnageChanges => TotalTonnage - CoreDef.Def.Tonnage;
     }
 }
