@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
+using BattleTech.Data;
 using BattleTech.UI;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -27,7 +29,8 @@ namespace MechEngineer
     {
         public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechLabPanel panel, MechComponentDef mechComponentDef)
         {
-            if (!(mechComponentDef is EngineCoreDef engineDef))
+            var engineDef = mechComponentDef.GetComponent<EngineCoreDef>();
+            if (engineDef == null)
             {
                 return;
             }
@@ -46,7 +49,7 @@ namespace MechEngineer
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
 
-            foreach (var heatSinkDef in mechComponentDef.DataManager.GetAllEngineHeatSinkDefs())
+            foreach (var heatSinkDef in panel.dataManager.GetAllEngineHeatSinkDefs())
             {
                 var query = engineRef.Query(heatSinkDef);
 

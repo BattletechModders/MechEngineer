@@ -1,12 +1,19 @@
 {
-	"CustomType": "ArmorDef",
-	"RequiredCriticalSlotCount": 21,
-	"WeightSavingsFactor": 0.19354,
+	"Custom": {
+		"DynamicSlots": {
+			"ReservedSlots": 20,
+			"ReservedSlotColor": "ArmorDamaged",
+		},
+		"WeightSavings": {
+			"RequiredSlots": 21,
+			"ArmorWeightSavingsFactor": 0.19354,
+		}
+	},
     "Description" : {
         "Cost" : 60000,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "Generic",
+        "Manufacturer" : "Prototype",
         "Model" : "Armor Critical Slot",
         "UIName" : "Heavy Ferro",
         "Id" : "emod_armorslots_heavyferrosfibrous",

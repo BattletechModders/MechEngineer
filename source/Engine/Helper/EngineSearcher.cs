@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -13,22 +14,23 @@ namespace MechEngineer
             {
                 var componentDef = componentRef.Def;
 
-                if (!(componentDef is IEnginePart))
+                var enginePart = componentDef.GetComponent<EnginePart>();
+                if (enginePart == null)
                 {
                     continue;
                 }
 
                 result.Parts.Add(componentRef);
 
-                if (result.CoreRef == null && componentDef is EngineCoreDef)
+                if (result.CoreRef == null && componentDef.GetComponent<EngineCoreDef>() != null)
                 {
                     result.CoreRef = componentRef.GetEngineCoreRef();
                     continue;
                 }
 
-                if (result.TypeDef == null)
+                if (result.Type == null)
                 {
-                    result.TypeDef = componentDef as EngineTypeDef;
+                    result.Type = componentDef.GetComponent<EngineType>();
                 }
             }
 
@@ -39,7 +41,7 @@ namespace MechEngineer
         {
             internal EngineCoreRef CoreRef;
             internal List<MechComponentRef> Parts = new List<MechComponentRef>();
-            internal EngineTypeDef TypeDef;
+            internal EngineType Type;
         }
     }
 }

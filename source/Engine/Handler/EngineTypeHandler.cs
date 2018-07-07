@@ -2,18 +2,19 @@
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class EngineTypeDefHandler : IDescription, IValidateDrop, IValidateMech
+    internal class EngineTypeHandler : IDescription, IValidateDrop, IValidateMech
     {
-        internal static EngineTypeDefHandler Shared = new EngineTypeDefHandler();
+        internal static EngineTypeHandler Shared = new EngineTypeHandler();
 
         private readonly ValidationHelper checker;
 
-        private EngineTypeDefHandler()
+        private EngineTypeHandler()
         {
-            var identifier = new IdentityFuncHelper(def => def is EngineTypeDef);
+            var identifier = new IdentityFuncHelper(def => def.GetComponent<EngineType>() != null);
             checker = new ValidationHelper(identifier, this);
         }
 
@@ -32,7 +33,7 @@ namespace MechEngineer
             checker.ValidateMech(mechDef, errorMessages);
 
             var result = EngineSearcher.SearchInventory(mechDef.Inventory);
-            var typeDef = result.TypeDef;
+            var typeDef = result.Type;
             if (typeDef != null)
             {
                 var requirements = typeDef.Requirements;
@@ -41,7 +42,7 @@ namespace MechEngineer
                         .Where(x => x.DamageLevel == ComponentDamageLevel.Functional)
                         .Select(c => c.ComponentDefID).Intersect(requirements).Count() != requirements.Length)
                 {
-                    var engineName = typeDef.Description.UIName.ToUpper();
+                    var engineName = typeDef.Def.Description.UIName.ToUpper();
                     errorMessages[MechValidationType.InvalidInventorySlots].Add(engineName + ": Requires left and right torso slots");
                 }
             }
@@ -54,7 +55,7 @@ namespace MechEngineer
                 var maxCount = Control.calc.CalcJumpJetCount(coreDef, mechDef.Chassis.Tonnage);
                 if (currentCount > maxCount)
                 {
-                    errorMessages[MechValidationType.InvalidJumpjets].Add(string.Format("JUMPJETS: This Mech mounts too many jumpjets ({0} out of {1})", currentCount, maxCount));
+                    errorMessages[MechValidationType.InvalidJumpjets].Add($"JUMPJETS: This Mech mounts too many jumpjets ({currentCount} out of {maxCount})");
                 }
             }
         }

@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
+using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class EngineSideDefHandler : IValidateDrop, IDescription
+    internal class EngineSideHandler : IValidateDrop, IDescription
     {
-        internal static EngineSideDefHandler Shared = new EngineSideDefHandler();
+        internal static EngineSideHandler Shared = new EngineSideHandler();
 
         private readonly ValidationHelper checker;
 
-        private EngineSideDefHandler()
+        private EngineSideHandler()
         {
-            var identifier = new IdentityFuncHelper(def => def is EngineSideDef);
+            var identifier = new IdentityFuncHelper(def => def.GetComponent<EngineSide>() != null);
             checker = new ValidationHelper(identifier, this) {Required = false};
         }
 

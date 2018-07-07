@@ -23,8 +23,7 @@ namespace MechEngineer
 
         public static float? GetOriginalTonnage(ChassisDef chassisDef)
         {
-            float value;
-            if (OriginalInitialTonnages.TryGetValue(chassisDef.Description.Id, out value))
+            if (OriginalInitialTonnages.TryGetValue(chassisDef.Description.Id, out var value))
             {
                 return value;
             }

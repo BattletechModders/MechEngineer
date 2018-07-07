@@ -1,6 +1,11 @@
 {
-	"CustomType": "EngineTypeDef",
-	"WeightMultiplier": 1.5,
+	"Custom": {
+		"EngineType": {
+			"WeightMultiplier": 1.5,
+		},
+		"EnginePart": {
+		}
+	},
     "Description" : {
         "Cost" : 1250000,
         "Rarity" : 0,

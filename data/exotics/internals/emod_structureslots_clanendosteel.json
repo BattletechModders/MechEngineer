@@ -1,12 +1,19 @@
 {
-	"CustomType": "StructureDef",
-	"RequiredCriticalSlotCount": 7,
-	"WeightSavingsFactor": 0.5,
+	"Custom": {
+		"DynamicSlots": {
+			"ReservedSlots": 6,
+			"ReservedSlotColor": "OrangeHalf",
+		},
+		"WeightSavings": {
+			"RequiredSlots": 7,
+			"StructureWeightSavingsFactor": 0.5,
+		}
+	},
     "Description" : {
-        "Cost" : 220000,
+        "Cost" : 0,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "Generic",
+        "Manufacturer" : "Clan",
         "Model" : "Structure Critical Slot",
         "UIName" : "Clan Endo-Steel",
         "Id" : "emod_structureslots_clanendosteel",

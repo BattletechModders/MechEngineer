@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -35,13 +36,14 @@ namespace MechEngineer
 
             var componentRef = mechComponent.mechComponentRef;
 
-            if (!(componentRef?.Def is IEnginePart))
+            var enginePart = componentRef?.Def?.GetComponent<EnginePart>();
+            if (enginePart == null)
             {
                 return true;
             }
 
             var mech = (Mech) mechComponent.parent;
-            var mainEngineComponent = mech.allComponents.FirstOrDefault(c => c?.componentDef is EngineCoreDef);
+            var mainEngineComponent = mech.allComponents.FirstOrDefault(c => c?.componentDef?.GetComponent<EngineCoreDef>() != null);
             if (mainEngineComponent == null) // no main engine left
             {
                 return true;
@@ -94,8 +96,7 @@ namespace MechEngineer
             if (damageLevel >= ComponentDamageLevel.NonFunctional)
             {
                 Control.mod.Logger.LogDebug(mainEngineComponent.Name + " " + damageLevel);
-
-                foreach (var component in mech.allComponents.Where(c => c?.componentDef is IEnginePart))
+                foreach (var component in mech.allComponents.Where(c => c?.componentDef?.GetComponent<EnginePart>() != null))
                 {
                     component.StatCollection.ModifyStat(
                         hitInfo.attackerId,

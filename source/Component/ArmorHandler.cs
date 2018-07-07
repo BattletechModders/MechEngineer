@@ -1,38 +1,50 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
+using BattleTech.UI;
+using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class ArmorHandler : ArmorStructureBase
+    internal class ArmorHandler : IIdentifier, IDescription, IValidateDrop, IValidateMech, IProcessWeaponHit
     {
         internal static ArmorHandler Shared = new ArmorHandler();
 
-        public override string CategoryName { get; } = "Armor";
+        private readonly IdentityHelper identity;
+        private readonly ValidationHelper checker;
 
-        public override bool IsCustomType(MechComponentDef def)
+        private ArmorHandler()
         {
-            return def is ArmorDef;
+            identity = new IdentityHelper { Prefix = "emod_armorslots_" };
+
+            checker = new ValidationHelper(this, this) {Required = false, Unique = UniqueConstraint.Mech};
         }
 
-        protected override WeightSavings CalculateWeightSavings(MechDef mechDef, MechComponentDef def = null)
+        public string CategoryName { get; } = "Armor";
+
+        public bool IsCustomType(MechComponentDef def)
         {
-            var num = 0f;
-            num += mechDef.Head.AssignedArmor;
-            num += mechDef.CenterTorso.AssignedArmor;
-            num += mechDef.CenterTorso.AssignedRearArmor;
-            num += mechDef.LeftTorso.AssignedArmor;
-            num += mechDef.LeftTorso.AssignedRearArmor;
-            num += mechDef.RightTorso.AssignedArmor;
-            num += mechDef.RightTorso.AssignedRearArmor;
-            num += mechDef.LeftArm.AssignedArmor;
-            num += mechDef.RightArm.AssignedArmor;
-            num += mechDef.LeftLeg.AssignedArmor;
-            num += mechDef.RightLeg.AssignedArmor;
-            var tonnage = num / (UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f);
+            return identity.IsCustomType(def);
+        }
 
-            var slots = mechDef.Inventory.Select(c => c.Def).Where(IsCustomType).ToList();
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
+        {
+            return checker.ValidateDrop(dragItem, widget);
+        }
 
-            return WeightSavings.Create(tonnage, slots, def);
+        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        {
+            checker.ValidateMech(mechDef, errorMessages);
+        }
+
+        public bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
+        {
+            if (IsCustomType(mechComponent.componentDef))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

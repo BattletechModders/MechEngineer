@@ -1,9 +1,16 @@
 {
-	"CustomType": "StructureDef",
-	"RequiredCriticalSlotCount": 14,
-	"WeightSavingsFactor": 0.5,
+	"Custom": {
+		"DynamicSlots": {
+			"ReservedSlots": 13,
+			"ReservedSlotColor": "OrangeHalf",
+		},
+		"WeightSavings": {
+			"RequiredSlots": 14,
+			"StructureWeightSavingsFactor": 0.5,
+		}
+	},
     "Description" : {
-        "Cost" : 1500000,
+        "Cost" : 0,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Lostech",

@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using BattleTech.UI;
+using CustomComponents;
 using Harmony;
 
 namespace MechEngineer
@@ -17,8 +18,7 @@ namespace MechEngineer
 
             var tonnage = mech.tonnage;
 
-            float walkSpeed, runSpeed;
-            Control.calc.CalcSpeeds(engine.CoreDef, tonnage, out walkSpeed, out runSpeed);
+            Control.calc.CalcSpeeds(engine.CoreDef, tonnage, out var walkSpeed, out var runSpeed);
 
             mech.StatCollection.GetStatistic("WalkSpeed").SetValue(walkSpeed);
             mech.StatCollection.GetStatistic("RunSpeed").SetValue(runSpeed);
@@ -131,7 +131,8 @@ namespace MechEngineer
                     continue;
                 }
 
-                if (!(componentDef is EngineCoreDef engine))
+                var engine = componentDef.GetComponent<EngineCoreDef>();
+                if (engine == null)
                 {
                     continue;
                 }

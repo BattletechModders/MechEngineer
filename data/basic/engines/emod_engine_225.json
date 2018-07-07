@@ -1,6 +1,11 @@
 {
-	"CustomType": "EngineCoreDef",
-	"Rating": 225,
+	"Custom": {
+		"EngineCore": {
+			"Rating": 225
+		},
+		"EnginePart": {
+		}
+	},
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 1162500,

@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
+using CustomComponents;
 using HBS;
+using UnityEngine;
 
 namespace MechEngineer
 {
-    public class DynamicSlotController : IValidateMech, IValidateDrop
+    public class DynamicSlotHandler : IValidateMech, IValidateDrop
     {
-        public static DynamicSlotController Shared = new DynamicSlotController();
+        public static DynamicSlotHandler Shared = new DynamicSlotHandler();
 
-        public static MechLabPanel MechLab
-        {
-            get => MechEngineer.MechLab.Current;
-        }
+        public static MechLabPanel MechLab => MechEngineer.MechLab.Current;
 
-        private static readonly ChassisLocations[] Locations =
+        #region settings
+        private static readonly Color DynamicSlotsSpaceMissingColor = new Color(0.5f, 0, 0); // color changes when slots dont fit
+        private static readonly ChassisLocations[] Locations = // order of locations to fill up first
         {
             ChassisLocations.CenterTorso,
             ChassisLocations.Head,
@@ -26,6 +27,7 @@ namespace MechEngineer
             ChassisLocations.LeftArm,
             ChassisLocations.RightArm
         };
+        #endregion
 
         internal void RefreshData(MechDef def)
         {
@@ -44,8 +46,6 @@ namespace MechEngineer
             var slots = new MechDefSlots(def);
             using (var reservedSlots = slots.GetReservedSlots().GetEnumerator())
             {
-                var fit = slots.IsFit;
-
                 foreach (var location in Locations)
                 {
                     var fillerImages = fillerImageCache[location];
@@ -65,7 +65,7 @@ namespace MechEngineer
                             fillerImage.gameObject.SetActive(true);
                             var uicolor = reservedSlot.ReservedSlotColor;
                             var color = LazySingletonBehavior<UIManager>.Instance.UIColorRefs.GetUIColor(uicolor);
-                            fillerImage.color = fit ? color : Control.settings.DynamicSlotsSpaceMissingColor;
+                            fillerImage.color = slots.IsOverloaded ? DynamicSlotsSpaceMissingColor : color;
                         }
                         else
                         {
@@ -93,7 +93,8 @@ namespace MechEngineer
             var component = element.ComponentRef.Def;
             Control.mod.Logger.LogDebug($"========== Slot Check: start for {component.Description.Name} ==========");
 
-            if (!(component is IDynamicSlots dynamicsSlots))
+            var dynamicSlots = component.GetComponent<DynamicSlots>();
+            if (dynamicSlots == null)
             {
                 return null;
             }
@@ -102,7 +103,7 @@ namespace MechEngineer
             var mechDef = adapter.mechLab.activeMechDef;
 
             var slots = new MechDefSlots(mechDef);
-            var newReserved = dynamicsSlots.ReservedSlots;
+            var newReserved = dynamicSlots.ReservedSlots;
 
             if (slots.Used + newReserved > slots.Total)
             {

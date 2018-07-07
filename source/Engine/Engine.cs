@@ -5,22 +5,22 @@ namespace MechEngineer
 {
     internal class Engine
     {
-        internal Engine(EngineCoreRef coreRef, EngineTypeDef typeDef, List<MechComponentRef> parts)
+        internal Engine(EngineCoreRef coreRef, EngineType type, List<MechComponentRef> parts)
         {
             CoreRef = coreRef;
             CoreDef = coreRef.CoreDef;
-            TypeDef = typeDef;
+            Type = type;
             Parts = parts;
         }
 
         internal EngineCoreRef CoreRef { get; private set; }
         internal EngineCoreDef CoreDef { get; set; }
-        internal EngineTypeDef TypeDef { get; private set; }
+        internal EngineType Type { get; private set; }
         internal List<MechComponentRef> Parts { get; private set; }
 
         internal float EngineTonnage
         {
-            get { return (CoreDef.StandardEngineTonnage * TypeDef.WeightMultiplier).RoundStandard(); }
+            get { return (CoreDef.StandardEngineTonnage * Type.WeightMultiplier).RoundStandard(); }
         }
 
         internal float Tonnage
@@ -32,8 +32,8 @@ namespace MechEngineer
         {
             get
             {
-                //Control.mod.Logger.LogDebug(string.Format("get_Tonnage={0} CoreDef.Tonnage={1}", Tonnage, CoreDef.Def.Tonnage));
-                return Tonnage - CoreDef.Tonnage;
+                //Control.mod.Logger.LogDebug(string.Format("get_Tonnage={0} Core.Tonnage={1}", Tonnage, Core.Def.Tonnage));
+                return Tonnage - CoreDef.Def.Tonnage;
             }
         }
     }

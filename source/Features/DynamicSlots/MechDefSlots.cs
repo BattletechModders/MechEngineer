@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using CustomComponents;
 using UnityEngine;
 
 namespace MechEngineer
@@ -10,7 +11,10 @@ namespace MechEngineer
         internal int Total { get; }
         internal int Used { get; }
         internal int Reserved { get; }
-        internal List<IDynamicSlots> DynamicSlots { get; }
+        internal List<DynamicSlots> DynamicSlots { get; }
+
+        internal bool IsOverloaded { get; }
+        internal int Missing { get; }
 
         internal MechDefSlots(MechDef mechDef)
         {
@@ -18,11 +22,10 @@ namespace MechEngineer
             Used = GetUsedSlots(mechDef.Inventory);
             DynamicSlots = GetDynamicSlots(mechDef.Inventory);
             Reserved = DynamicSlots.Sum(c => c.ReservedSlots);
-        }
 
-        internal bool IsFit => Missing == 0;
-        internal bool IsOverloaded => Missing > 0;
-        internal int Missing => Mathf.Max(Used + Reserved - Total, 0);
+            Missing = Mathf.Max(Used + Reserved - Total, 0);
+            IsOverloaded = Missing > 0;
+        }
 
         private static int GetTotalSlots(ChassisDef chassisDef)
         {
@@ -46,16 +49,16 @@ namespace MechEngineer
             return inventory.Sum(i => i.Def.InventorySize);
         }
 
-        private static List<IDynamicSlots> GetDynamicSlots(IEnumerable<MechComponentRef> inventory)
+        private static List<DynamicSlots> GetDynamicSlots(IEnumerable<MechComponentRef> inventory)
         {
             return inventory
-                .Select(i => i.Def)
-                .OfType<IDynamicSlots>()
+                .Select(i => i?.Def?.GetComponent<DynamicSlots>())
+                .Where(d => d != null)
                 .Distinct()
                 .ToList();
         }
 
-        internal IEnumerable<IDynamicSlots> GetReservedSlots()
+        internal IEnumerable<DynamicSlots> GetReservedSlots()
         {
             foreach (var reservedSlot in DynamicSlots)
             {

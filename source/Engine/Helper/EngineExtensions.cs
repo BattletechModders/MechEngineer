@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -14,12 +15,12 @@ namespace MechEngineer
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
 
-            if (result.CoreRef == null || result.TypeDef == null)
+            if (result.CoreRef == null || result.Type == null)
             {
                 return null;
             }
 
-            return new Engine(result.CoreRef, result.TypeDef, result.Parts);
+            return new Engine(result.CoreRef, result.Type, result.Parts);
         }
 
         internal static EngineCoreRef GetEngineCoreRef(this IEnumerable<MechComponentRef> componentRefs)
@@ -30,7 +31,8 @@ namespace MechEngineer
 
         internal static EngineCoreRef GetEngineCoreRef(this MechComponentRef @this)
         {
-            if (!(@this?.Def is EngineCoreDef engineDef))
+            var engineDef = @this?.Def?.GetComponent<EngineCoreDef>();
+            if (engineDef == null)
             {
                 return null;
             }

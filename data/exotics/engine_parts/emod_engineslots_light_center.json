@@ -1,7 +1,12 @@
 {
-	"CustomType": "EngineTypeDef",
-	"WeightMultiplier": 0.75,
-	"Requirements": ["emod_engineslots_light_left", "emod_engineslots_light_right"],
+	"Custom": {
+		"EngineType": {
+			"WeightMultiplier": 0.75,
+			"Requirements": ["emod_engineslots_light_left", "emod_engineslots_light_right"],
+		},
+		"EnginePart": {
+		}
+	},
     "Description" : {
         "Cost" : 1875000,
         "Rarity" : 0,

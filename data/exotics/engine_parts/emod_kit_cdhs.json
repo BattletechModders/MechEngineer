@@ -1,12 +1,15 @@
 {
-	"CustomType" : "EngineHeatSinkKitDef",
-	"HeatSinkDefId": "Gear_HeatSink_Generic_Double_Clan",
+	"Custom": {
+		"EngineHeatSinkKit": {
+			"HeatSinkDefId": "Gear_HeatSink_Generic_Double_Clan"
+		}
+	},
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 6000000,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "Generic",
+        "Manufacturer" : "Clan",
         "Model" : "Conversion Kit",
         "UIName" : "CDHS Engine Kit",
         "Id" : "emod_kit_cdhs",

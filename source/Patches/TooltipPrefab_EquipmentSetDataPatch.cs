@@ -27,8 +27,7 @@ namespace MechEngineer
 
                 var mechComponentDef = (MechComponentDef) data;
                 EngineHandler.Shared.AdjustTooltip(adapter, panel, mechComponentDef);
-                ArmorHandler.Shared.AdjustTooltip(adapter, panel, mechComponentDef);
-                StructureHandler.Shared.AdjustTooltip(adapter, panel, mechComponentDef);
+                WeightSavingsHandler.Shared.AdjustTooltip(adapter, panel, mechComponentDef);
             }
             catch (Exception e)
             {

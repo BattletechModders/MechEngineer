@@ -6,7 +6,7 @@
         "Cost" : 240000,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "Generic",
+        "Manufacturer" : "Prototype",
         "Model" : "Kite",
         "UIName" : "Small Cockpit",
         "Id" : "Gear_Cockpit_Generic_Small",

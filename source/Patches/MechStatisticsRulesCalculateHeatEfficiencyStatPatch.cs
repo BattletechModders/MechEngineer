@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleTech;
+using CustomComponents;
 using Harmony;
 
 namespace MechEngineer
@@ -32,7 +33,8 @@ namespace MechEngineer
         {
             try
             {
-                if (@this is EngineCoreDef)
+                var engineCoreDef = @this.GetComponent<EngineCoreDef>();
+                if (engineCoreDef != null)
                 {
                     return EngineHeat.GetEngineHeatDissipation(def.Inventory);
                 }

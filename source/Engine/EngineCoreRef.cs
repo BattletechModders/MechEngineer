@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using BattleTech;
 using BattleTech.Data;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -14,11 +15,11 @@ namespace MechEngineer
         internal readonly MechComponentRef ComponentRef;
         internal readonly EngineCoreDef CoreDef;
         
-        internal EngineHeatSinkDef HeatSinkDef;
+        internal EngineHeatSink HeatSinkDef;
         
-        private readonly Dictionary<EngineHeatSinkDef, int> additionalHSCounts = new Dictionary<EngineHeatSinkDef, int>();
+        private readonly Dictionary<EngineHeatSink, int> additionalHSCounts = new Dictionary<EngineHeatSink, int>();
         
-        internal HSQuery Query(EngineHeatSinkDef type)
+        internal HSQuery Query(EngineHeatSink type)
         {
             return new HSQuery(this, type);
         }
@@ -69,15 +70,17 @@ namespace MechEngineer
                     HeatSinkDef = DataManager.GetEngineHeatSinkDef(defId);
                     if (HeatSinkDef == null)
                     {
-                        Control.mod.Logger.LogError("ihstype - can't find EngineHeatSinkDef with id=" + defId);
+                        Control.mod.Logger.LogError("ihstype - can't find EngineHeatSink with id=" + defId);
                     }
                 }
 
                 foreach (var keyvalue in dictionary)
                 {
-                    if (!(DataManager.Get(BattleTechResourceType.HeatSinkDef, keyvalue.Key) is EngineHeatSinkDef type))
+                    var heatSinkDef = DataManager.Get(BattleTechResourceType.HeatSinkDef, keyvalue.Key) as HeatSinkDef;
+                    var type = heatSinkDef?.GetComponent<EngineHeatSink>();
+                    if (type == null)
                     {
-                        Control.mod.Logger.LogError("can't find EngineHeatSinkDef with id=" + keyvalue.Key);
+                        Control.mod.Logger.LogError("can't find EngineHeatSink with id=" + keyvalue.Key);
                         continue;
                     }
                     Query(type).AdditionalCount = int.Parse(keyvalue.Value);
@@ -88,7 +91,7 @@ namespace MechEngineer
                 var dictionary = new Dictionary<string, string>();
                 if (HeatSinkDef != DataManager.GetDefaultEngineHeatSinkDef())
                 {
-                    dictionary["ihstype"] = HeatSinkDef.Description.Id;
+                    dictionary["ihstype"] = HeatSinkDef.Def.Description.Id;
                 }
 
                 foreach (var type in additionalHSCounts.Keys)
@@ -96,7 +99,7 @@ namespace MechEngineer
                     var count = Query(type).AdditionalCount;
                     if (count > 0)
                     {
-                        dictionary[type.Description.Id] = count.ToString();
+                        dictionary[type.Def.Description.Id] = count.ToString();
                     }
                 }
 
@@ -111,12 +114,12 @@ namespace MechEngineer
                 float dissipation = 0;
                 foreach (var keyvalue in additionalHSCounts)
                 {
-                    dissipation += keyvalue.Key.DissipationCapacity * keyvalue.Value;
+                    dissipation += keyvalue.Key.HeatSinkDef.DissipationCapacity * keyvalue.Value;
                 }
-                dissipation += HeatSinkDef.DissipationCapacity * CoreDef.MinHeatSinks;
+                dissipation += HeatSinkDef.HeatSinkDef.DissipationCapacity * CoreDef.MinHeatSinks;
 
                 // can't enforce heatsinkdef earlier as apparently in same cases the Def is a generic one and does not derive from HeatSinkDef (Tooltips)
-                dissipation += CoreDef.DissipationCapacity;
+                dissipation += CoreDef.HeatSinkDef.DissipationCapacity;
 
                 //Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engineDef.Rating + " minHeatSinks=" + minHeatSinks + " additionalHeatSinks=" + engineProps.AdditionalHeatSinkCount + " dissipation=" + dissipation);
 
@@ -150,17 +153,18 @@ namespace MechEngineer
 
         internal IEnumerable<string> GetInternalComponents()
         {
-            var kit = DataManager.GetAllEngineHeatSinkKitDefDefs().FirstOrDefault(c => c.HeatSinkDef == HeatSinkDef);
+            var heatSinkDefId = HeatSinkDef.Def.Description.Id;
+            var kit = DataManager.GetAllEngineHeatSinkKitDefs().FirstOrDefault(c => c.HeatSinkDefId == heatSinkDefId);
             if (kit != null)
             {
-                yield return kit.Description.Id;
+                yield return kit.Def.Description.Id;
             }
 
             foreach (var type in additionalHSCounts.Keys)
             {
                 for (var i = 0; i < Query(type).AdditionalCount; i++)
                 {
-                    yield return type.Description.Id;
+                    yield return type.Def.Description.Id;
                 }
             }
         }
@@ -168,9 +172,9 @@ namespace MechEngineer
         internal class HSQuery
         {
             private readonly EngineCoreRef coreRef;
-            private readonly EngineHeatSinkDef heatSinkDef;
+            private readonly EngineHeatSink heatSinkDef;
 
-            internal HSQuery(EngineCoreRef coreRef, EngineHeatSinkDef heatSinkDef)
+            internal HSQuery(EngineCoreRef coreRef, EngineHeatSink heatSinkDef)
             {
                 this.coreRef = coreRef;
                 this.heatSinkDef = heatSinkDef;

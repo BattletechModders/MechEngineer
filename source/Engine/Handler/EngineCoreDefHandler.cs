@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -13,7 +14,7 @@ namespace MechEngineer
 
         private EngineCoreDefHandler()
         {
-            var identifier = new IdentityFuncHelper(def => def is EngineCoreDef);
+            var identifier = new IdentityFuncHelper(def => def.GetComponent<EngineCoreDef>() != null);
             checker = new ValidationHelper(identifier, this);
         }
 

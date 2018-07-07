@@ -1,10 +1,11 @@
-﻿using BattleTech.UI;
+﻿using BattleTech;
+using BattleTech.UI;
 using CustomComponents;
 
 namespace MechEngineer
 {
-    [Custom("EngineCoreDef")]
-    public class EngineCoreDef : CustomHeatSinkDef, IEnginePart
+    [CustomComponent("EngineCore")]
+    public class EngineCoreDef : SimpleCustomComponent
     {
         private int _rating;
 
@@ -22,11 +23,13 @@ namespace MechEngineer
 
         public float GyroTonnage => Control.calc.CalcGyroWeight(this);
 
-        public float StandardEngineTonnage => Tonnage - GyroTonnage;
+        public float StandardEngineTonnage => Def.Tonnage - GyroTonnage;
+
+        public HeatSinkDef HeatSinkDef => Def as HeatSinkDef; // TODO reintroduce GenericCustomComponent
 
         public override string ToString()
         {
-            return Description.Id + " Rating=" + Rating;
+            return Def.Description.Id + " Rating=" + Rating;
         }
 
         //public UIColor Color { get; } = UIColor.GoldHalf;

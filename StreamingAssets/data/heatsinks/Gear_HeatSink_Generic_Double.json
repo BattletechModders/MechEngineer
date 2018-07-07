@@ -1,8 +1,11 @@
 {
-	"CustomType": "EngineHeatSinkDef",
-	"FullName": "Double Heat Sinks",
-	"Abbreviation": "DHS",
-	"Tag": "DHS",
+	"Custom": {
+		"EngineHeatSink": {
+			"FullName": "Double Heat Sinks",
+			"Abbreviation": "DHS",
+			"Tag": "DHS",
+		}
+	},
     "Description" : {
         "Manufacturer" : "Lostech",
     },

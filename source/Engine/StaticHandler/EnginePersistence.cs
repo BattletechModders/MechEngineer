@@ -77,15 +77,12 @@ namespace MechEngineer
 
             foreach (var entry in panel.baseWorkOrder.SubEntries)
             {
-                var install = entry as WorkOrderEntry_InstallComponent;
-                var repair = entry as WorkOrderEntry_RepairComponent;
-
                 Traverse traverse;
-                if (install != null)
+                if (entry is WorkOrderEntry_InstallComponent install)
                 {
                     traverse = Traverse.Create(install);
                 }
-                else if (repair != null)
+                else if (entry is WorkOrderEntry_RepairComponent repair)
                 {
                     traverse = Traverse.Create(repair);
                 }

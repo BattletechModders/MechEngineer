@@ -1,6 +1,9 @@
 {
-	"CustomType": "EngineHeatSinkDef",
-	"FullName": "Standard Heat Sinks",
-	"Abbreviation": "SHS",
-	"Tag": "SHS",
+	"Custom": {
+		"EngineHeatSink": {
+			"FullName": "Standard Heat Sinks",
+			"Abbreviation": "SHS",
+			"Tag": "SHS"
+		}
+	},
 }

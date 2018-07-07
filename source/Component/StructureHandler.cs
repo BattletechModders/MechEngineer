@@ -1,26 +1,50 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
+using BattleTech.UI;
+using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class StructureHandler : ArmorStructureBase
+    internal class StructureHandler : IIdentifier, IDescription, IValidateDrop, IValidateMech, IProcessWeaponHit
     {
         internal static StructureHandler Shared = new StructureHandler();
 
-        public override string CategoryName { get; } = "Structure";
+        private readonly IdentityHelper identity;
+        private readonly ValidationHelper checker;
 
-        public override bool IsCustomType(MechComponentDef def)
+        private StructureHandler()
         {
-            return def is StructureDef;
+            identity = new IdentityHelper { Prefix = "emod_structureslots_" };
+
+            checker = new ValidationHelper(this, this) {Required = false, Unique = UniqueConstraint.Mech};
         }
 
-        protected override WeightSavings CalculateWeightSavings(MechDef mechDef, MechComponentDef def = null)
+        public string CategoryName { get; } = "Structure";
+
+        public bool IsCustomType(MechComponentDef def)
         {
-            var tonnage = mechDef.Chassis.Tonnage / 10f;
+            return identity.IsCustomType(def);
+        }
 
-            var slots = mechDef.Inventory.Select(c => c.Def).Where(IsCustomType).ToList();
+        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
+        {
+            return checker.ValidateDrop(dragItem, widget);
+        }
 
-            return WeightSavings.Create(tonnage, slots, def);
+        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        {
+            checker.ValidateMech(mechDef, errorMessages);
+        }
+
+        public bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
+        {
+            if (IsCustomType(mechComponent.componentDef))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

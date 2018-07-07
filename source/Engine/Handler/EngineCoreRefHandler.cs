@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -11,7 +12,7 @@ namespace MechEngineer
 
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
-            if (mechDef.Inventory.Any(c => c.Def is EngineCoreDef))
+            if (mechDef.Inventory.Any(c => c.Def.GetComponent<EngineCoreDef>() != null))
             {
                 return;
             }
@@ -47,7 +48,8 @@ namespace MechEngineer
                     continue;
                 }
 
-                if (!(heatSinkDef is EngineCoreDef engineDef))
+                var engineDef = heatSinkDef.GetComponent<EngineCoreDef>();
+                if (engineDef == null)
                 {
                     continue;
                 }
@@ -83,12 +85,12 @@ namespace MechEngineer
                 var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
                 // add engine core
                 var nonStandardHeatSinkDef = componentRefs
-                    .Select(r => r.Def as EngineHeatSinkDef)
+                    .Select(r => r.Def.GetComponent<EngineHeatSink>())
                     .FirstOrDefault(d => d != null && d != standardHeatSinkDef);
 
-                var simGameUID = nonStandardHeatSinkDef != null ? "/ihstype=" + nonStandardHeatSinkDef.Description.Id : null;
+                var simGameUID = nonStandardHeatSinkDef != null ? "/ihstype=" + nonStandardHeatSinkDef.Def.Description.Id : null;
 
-                var componentRef = new MechComponentRef(maxEngine.Description.Id, simGameUID, maxEngine.ComponentType, ChassisLocations.CenterTorso);
+                var componentRef = new MechComponentRef(maxEngine.Def.Description.Id, simGameUID, maxEngine.Def.ComponentType, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
             }
 
@@ -111,11 +113,18 @@ namespace MechEngineer
             var set = new HashSet<string>();
             foreach (var componentRef in mechDef.Inventory)
             {
-                if (componentRef?.Def is EngineHeatSinkDef componentDef)
+                var def = componentRef?.Def;
+                if (def == null)
+                {
+                    continue;
+                }
+
+                var componentDef = def.GetComponent<EngineHeatSink>();
+                if (componentDef != null)
                 {
                     set.Add(componentDef.HSCategory);
                 }
-                else if (componentRef?.Def is EngineCoreDef)
+                else if (def.GetComponent<EngineCoreDef>() != null)
                 {
                     var engineRef = componentRef.GetEngineCoreRef();
                     set.Add(engineRef.HeatSinkDef.HSCategory);

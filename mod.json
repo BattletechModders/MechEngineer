@@ -7,7 +7,7 @@
 	"DependsOn": [],
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
-	
+
 	"Manifest": [
 		{
 			"Type": "UpgradeDef",

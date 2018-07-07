@@ -1,6 +1,9 @@
 {
-	"CustomType" : "EngineHeatSinkKitDef",
-	"HeatSinkDefId": "Gear_HeatSink_Generic_Double",
+	"Custom": {
+		"EngineHeatSinkKit": {
+			"HeatSinkDefId": "Gear_HeatSink_Generic_Double"
+		}
+	},
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 6000000,

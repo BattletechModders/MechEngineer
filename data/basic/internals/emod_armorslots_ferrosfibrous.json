@@ -1,9 +1,16 @@
 {
-	"CustomType": "ArmorDef",
-	"RequiredCriticalSlotCount": 14,
-	"WeightSavingsFactor": 0.10714,
+	"Custom": {
+		"DynamicSlots": {
+			"ReservedSlots": 13,
+			"ReservedSlotColor": "ArmorDamaged",
+		},
+		"WeightSavings": {
+			"RequiredSlots": 14,
+			"ArmorWeightSavingsFactor": 0.10714,
+		}
+	},
     "Description" : {
-        "Cost" : 420000,
+        "Cost" : 0,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Lostech",

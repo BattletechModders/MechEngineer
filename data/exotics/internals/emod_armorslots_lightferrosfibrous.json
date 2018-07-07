@@ -1,12 +1,19 @@
 {
-	"CustomType": "ArmorDef",
-	"RequiredCriticalSlotCount": 7,
-	"WeightSavingsFactor": 0.05660,
+	"Custom": {
+		"DynamicSlots": {
+			"ReservedSlots": 6,
+			"ReservedSlotColor": "ArmorDamaged",
+		},
+		"WeightSavings": {
+			"RequiredSlots": 7,
+			"ArmorWeightSavingsFactor": 0.05660,
+		}
+	},
     "Description" : {
-        "Cost" : 30000,
+        "Cost" : 0,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "Generic",
+        "Manufacturer" : "Prototype",
         "Model" : "Armor Critical Slot",
         "UIName" : "Light Ferro",
         "Id" : "emod_armorslots_lightferrosfibrous",

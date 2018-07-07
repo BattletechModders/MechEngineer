@@ -1,12 +1,19 @@
 {
-	"CustomType": "StructureDef",
-	"RequiredCriticalSlotCount": 7,
-	"WeightSavingsFactor": 0.25,
+	"Custom": {
+		"DynamicSlots": {
+			"ReservedSlots": 6,
+			"ReservedSlotColor": "OrangeHalf",
+		},
+		"WeightSavings": {
+			"RequiredSlots": 7,
+			"StructureWeightSavingsFactor": 0.25,
+		}
+	},
     "Description" : {
-        "Cost" : 55000,
+        "Cost" : 0,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "Generic",
+        "Manufacturer" : "Prototype",
         "Model" : "Structure Critical Slot",
         "UIName" : "Endo-Composite",
         "Id" : "emod_structureslots_endocomposite",

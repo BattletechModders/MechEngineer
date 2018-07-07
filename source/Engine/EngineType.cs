@@ -1,11 +1,10 @@
-﻿using BattleTech;
-using BattleTech.UI;
+﻿
 using CustomComponents;
 
 namespace MechEngineer
 {
-    [Custom("EngineTypeDef")]
-    public class EngineTypeDef : CustomHeatSinkDef, IEnginePart
+    [CustomComponent("EngineType")]
+    public class EngineType : SimpleCustomComponent
     {
         public float WeightMultiplier = 1.0f;
         public string[] Requirements = { };

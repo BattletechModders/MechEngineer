@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -14,7 +15,8 @@ namespace MechEngineer
 
         public bool ProcessWeaponHit(MechComponent mechComponent, CombatGameState combat, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects, List<MessageAddition> messages)
         {
-            if (!(mechComponent.componentDef is ICriticalHitStates criticalHitStates))
+            var criticalHitStates = mechComponent.componentDef?.GetComponent<CriticalHitStates>();
+            if (criticalHitStates == null)
             {
                 return true;
             }

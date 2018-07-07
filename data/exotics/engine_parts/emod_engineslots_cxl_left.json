@@ -1,5 +1,10 @@
 {
-	"CustomType": "EngineSideDef",
+	"Custom": {
+		"EngineSide": {
+		},
+		"EnginePart": {
+		}
+	},
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 600000,

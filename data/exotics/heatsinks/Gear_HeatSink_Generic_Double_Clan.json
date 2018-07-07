@@ -1,14 +1,17 @@
 {
-	"CustomType": "EngineHeatSinkDef",
-	"FullName": "Clan Double Heat Sinks",
-	"Abbreviation": "CDHS",
-	"Tag": "CDHS",
+	"Custom": {
+		"EngineHeatSink": {
+			"FullName": "Clan Double Heat Sinks",
+			"Abbreviation": "CDHS",
+			"Tag": "CDHS",
+		}
+	},
     "DissipationCapacity" : 6,
     "Description" : {
         "Cost" : 930000,
         "Rarity" : 20,
         "Purchasable" : false,
-        "Manufacturer" : "Generic",
+        "Manufacturer" : "Clan",
         "Model" : "Clan Double",
         "UIName" : "Heat Sink (CD)",
         "Id" : "Gear_HeatSink_Generic_Double_Clan",

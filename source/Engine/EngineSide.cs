@@ -3,8 +3,8 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    [Custom("EngineSideDef")]
-    public class EngineSideDef : CustomHeatSinkDef, IEnginePart
+    [CustomComponent("EngineSide")]
+    public class EngineSide : SimpleCustomComponent
     {
         //public UIColor Color { get; } = UIColor.GoldHalf;
     }

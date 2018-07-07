@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using CustomComponents;
 using Harmony;
 
 namespace MechEngineer
@@ -27,8 +28,8 @@ namespace MechEngineer
             var newComponentRef = dragItem.ComponentRef;
             var newComponentDef = newComponentRef.Def;
 
-            var heatSinkDef = newComponentDef as EngineHeatSinkDef;
-            var heatSinkKitDef = newComponentDef as EngineHeatSinkKitDef;
+            var heatSinkDef = newComponentDef.GetComponent<EngineHeatSink>();
+            var heatSinkKitDef = newComponentDef.GetComponent<EngineHeatSinkKit>();
 
             // check if we can work with it
             if (heatSinkDef == null && heatSinkKitDef == null)
@@ -39,7 +40,7 @@ namespace MechEngineer
             var adapter = new MechLabLocationWidgetAdapter(widget);
             var localInventory = adapter.localInventory;
 
-            var engineSlotElement = localInventory.FirstOrDefault(x => x?.ComponentRef?.Def is EngineCoreDef);
+            var engineSlotElement = localInventory.FirstOrDefault(x => x?.ComponentRef?.Def?.GetComponent<EngineCoreDef>() != null);
 
             if (engineSlotElement == null)
             {
@@ -90,7 +91,7 @@ namespace MechEngineer
                     );
                 }
 
-                engineRef.HeatSinkDef = heatSinkKitDef.HeatSinkDef;
+                engineRef.HeatSinkDef = mechLab.dataManager.GetEngineHeatSinkDef(heatSinkKitDef.HeatSinkDefId);
             }
             else
             {
