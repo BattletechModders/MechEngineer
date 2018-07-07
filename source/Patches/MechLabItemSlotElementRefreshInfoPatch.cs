@@ -12,14 +12,8 @@ namespace MechEngineer
         {
             try
             {
-                {
-                    var engineRef = __instance.ComponentRef.GetEngineCoreRef();
-                    if (engineRef != null)
-                    {
-                        ___bonusTextA.text = engineRef.BonusValueA;
-                        ___bonusTextB.text = engineRef.BonusValueB;
-                    }
-                }
+                EngineCoreRefHandler.Shared.MechLabItemRefreshInfo(__instance);
+                WeightSavingsHandler.Shared.MechLabItemRefreshInfo(__instance);
             }
             catch (Exception e)
             {

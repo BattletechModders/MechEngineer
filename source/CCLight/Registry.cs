@@ -29,7 +29,7 @@ namespace CustomComponents
             }
         }
 
-        public static void ProcessCustomCompontentFactories(object target, Dictionary<string, object> values)
+        internal static void ProcessCustomCompontentFactories(object target, Dictionary<string, object> values)
         {
             if (!(target is MechComponentDef componentDef))
             {

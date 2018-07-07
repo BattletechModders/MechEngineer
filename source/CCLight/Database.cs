@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 
 namespace CustomComponents
 {
     internal static class Database
     {
-        internal static readonly Dictionary<string, Dictionary<Type, ICustomComponent>> CustomComponents
-            = new Dictionary<string, Dictionary<Type, ICustomComponent>>();
+        internal static readonly Dictionary<string, List<ICustomComponent>> CustomComponents
+            = new Dictionary<string, List<ICustomComponent>>();
 
-        internal static ICustomComponent GetCustomComponent(MechComponentDef def, Type ccType)
+        internal static T GetCustomComponent<T>(MechComponentDef def) where T: class, ICustomComponent
         {
             var key = Key(def);
 
@@ -18,12 +19,7 @@ namespace CustomComponents
                 return null;
             }
 
-            if (!ccs.TryGetValue(ccType, out var cc))
-            {
-                return null;
-            }
-
-            return cc;
+            return ccs.OfType<T>().FirstOrDefault();
         }
 
         internal static void SetCustomComponent(MechComponentDef def, ICustomComponent cc)
@@ -32,12 +28,11 @@ namespace CustomComponents
 
             if (!CustomComponents.TryGetValue(key, out var ccs))
             {
-                ccs = new Dictionary<Type, ICustomComponent>();
+                ccs = new List<ICustomComponent>();
                 CustomComponents[key] = ccs;
             }
 
-            var ccType = cc.GetType();
-            ccs[ccType] = cc;
+            ccs.Add(cc);
         }
 
         private static string Key(MechComponentDef def)

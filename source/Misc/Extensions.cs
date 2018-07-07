@@ -19,15 +19,35 @@ namespace MechEngineer
         {
             if (Control.settings.FractionalAccounting)
             {
-                return Mathf.Round(@this * 1000) / 1000;
+                return Mathf.Round(@this * 1000f) / 1000f;
             }
 
-            return Mathf.Round(@this * 2) / 2;
+            return Mathf.Round(@this * 2f) / 2f;
         }
 
         internal static float RoundBy5(this float @this)
         {
             return Mathf.Round(@this / 5) * 5;
+        }
+    }
+
+    internal static class StringUtils
+    {
+        internal static bool IsNullOrWhiteSpace(string value)
+        {
+            if (value == null)
+            {
+                return true;
+            }
+
+            foreach (var v in value)
+            {
+                if(!char.IsWhiteSpace(v))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

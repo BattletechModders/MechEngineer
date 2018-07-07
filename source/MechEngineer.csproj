@@ -76,6 +76,7 @@
     <Compile Include="CCLight\Extensions.cs" />
     <Compile Include="CCLight\Registry.cs" />
     <Compile Include="CCLight\Patches\JSONSerializationUtility_RehydrateObjectFromDictionary_Patch.cs" />
+    <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
     <Compile Include="Features\CriticalHitStates\CriticalHitStatesHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />

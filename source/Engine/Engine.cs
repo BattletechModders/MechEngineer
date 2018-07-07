@@ -13,28 +13,15 @@ namespace MechEngineer
             Parts = parts;
         }
 
-        internal EngineCoreRef CoreRef { get; private set; }
+        internal EngineCoreRef CoreRef { get; }
         internal EngineCoreDef CoreDef { get; set; }
-        internal EngineType Type { get; private set; }
-        internal List<MechComponentRef> Parts { get; private set; }
+        internal EngineType Type { get; }
+        internal List<MechComponentRef> Parts { get; }
 
-        internal float EngineTonnage
-        {
-            get { return (CoreDef.StandardEngineTonnage * Type.WeightMultiplier).RoundStandard(); }
-        }
+        internal float EngineTonnage => (CoreDef.StandardEngineTonnage * Type.WeightMultiplier).RoundStandard();
 
-        internal float Tonnage
-        {
-            get { return CoreRef.HeatSinkTonnage + EngineTonnage + CoreDef.GyroTonnage; }
-        }
+        internal float Tonnage => CoreRef.HeatSinkTonnage + EngineTonnage + CoreDef.GyroTonnage;
 
-        public float TonnageChanges
-        {
-            get
-            {
-                //Control.mod.Logger.LogDebug(string.Format("get_Tonnage={0} Core.Tonnage={1}", Tonnage, Core.Def.Tonnage));
-                return Tonnage - CoreDef.Def.Tonnage;
-            }
-        }
+        public float TonnageChanges => Tonnage - CoreDef.Def.Tonnage;
     }
 }

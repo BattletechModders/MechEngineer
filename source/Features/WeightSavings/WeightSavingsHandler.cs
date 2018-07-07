@@ -6,7 +6,7 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class WeightSavingsHandler : ITonnageChanges, IAdjustTooltip
+    internal class WeightSavingsHandler : ITonnageChanges, IAdjustTooltip, IMechLabItemRefreshInfo
     {
         public static readonly WeightSavingsHandler Shared = new WeightSavingsHandler();
 
@@ -21,7 +21,8 @@ namespace MechEngineer
             var mechDef = panel.activeMechDef;
             var tonnageSaved = CalculateWeightSavings(weightSavings, mechDef);
 
-            tooltip.bonusesText.text = $"- {tonnageSaved} ton, - {weightSavings.RequiredSlots} slots";
+            tooltip.tonnageText.text = $"- {tonnageSaved}";
+            tooltip.slotsText.text = weightSavings.RequiredSlots.ToString();
             tooltip.bonusesText.SetAllDirty();
         }
 
@@ -57,14 +58,52 @@ namespace MechEngineer
             num += mechDef.RightLeg.AssignedArmor;
             var tonnage = num / (UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f);
 
-            return tonnage * savings.ArmorWeightSavingsFactor;
+            return (tonnage * savings.ArmorWeightSavingsFactor).RoundStandard();
         }
 
         private static float CalculateStructureWeightSavings(WeightSavings savings, MechDef mechDef)
         {
             var tonnage = mechDef.Chassis.Tonnage / 10f;
 
-            return tonnage * savings.StructureWeightSavingsFactor;
+            return (tonnage * savings.StructureWeightSavingsFactor).RoundStandard();
+        }
+
+        public void MechLabItemRefreshInfo(MechLabItemSlotElement instance)
+        {
+            var weightSavings = instance.ComponentRef?.Def?.GetComponent<WeightSavings>();
+            if (weightSavings == null)
+            {
+                return;
+            }
+
+            var panel = MechLab.Current;
+            if (panel == null)
+            {
+                return;
+            }
+
+            var mechDef = panel.activeMechDef;
+            var tonnageSaved = CalculateWeightSavings(weightSavings, mechDef);
+            var adapter = new MechLabItemSlotElementAdapter(instance);
+
+            if (StringUtils.IsNullOrWhiteSpace(adapter.bonusTextA.text))
+            {
+                if (tonnageSaved > 0.1)
+                {
+                    adapter.bonusTextA.text = $"- {tonnageSaved} ton";
+                }
+            }
+
+            if (StringUtils.IsNullOrWhiteSpace(adapter.bonusTextB.text))
+            {
+                if (weightSavings.RequiredSlots > 0)
+                {
+                    adapter.bonusTextB.text = $"req. {weightSavings.RequiredSlots} slots";
+                }
+            }
+
+            adapter.bonusTextA.text = $"- {tonnageSaved} ton";
+            adapter.bonusTextB.text = $"req. {weightSavings.RequiredSlots} slots";
         }
     }
 }

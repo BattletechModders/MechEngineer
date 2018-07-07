@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using BattleTech.UI;
 using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class EngineCoreRefHandler : IAutoFixMechDef, IValidateMech
+    internal class EngineCoreRefHandler : IAutoFixMechDef, IValidateMech, IMechLabItemRefreshInfo
     {
         internal static EngineCoreRefHandler Shared = new EngineCoreRefHandler();
 
@@ -140,6 +141,19 @@ namespace MechEngineer
                     return;
                 }
             }
+        }
+
+        public void MechLabItemRefreshInfo(MechLabItemSlotElement instance)
+        {
+            var engineRef = instance.ComponentRef.GetEngineCoreRef();
+            if (engineRef == null)
+            {
+                return;
+            }
+
+            var adapter = new MechLabItemSlotElementAdapter(instance);
+            adapter.bonusTextA.text = engineRef.BonusValueA;
+            adapter.bonusTextB.text = engineRef.BonusValueB;
         }
     }
 }

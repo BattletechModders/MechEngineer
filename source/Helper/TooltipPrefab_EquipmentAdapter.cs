@@ -9,19 +9,12 @@ namespace MechEngineer
         {
         }
 
-        public TextMeshProUGUI bonusesText
-        {
-            get { return traverse.Field("bonusesText").GetValue<TextMeshProUGUI>(); }
-        }
+        public TextMeshProUGUI bonusesText => traverse.Field("bonusesText").GetValue<TextMeshProUGUI>();
 
-        public TextMeshProUGUI detailText
-        {
-            get { return traverse.Field("detailText").GetValue<TextMeshProUGUI>(); }
-        }
+        public TextMeshProUGUI detailText => traverse.Field("detailText").GetValue<TextMeshProUGUI>();
 
-        public TextMeshProUGUI tonnageText
-        {
-            get { return traverse.Field("tonnageText").GetValue<TextMeshProUGUI>(); }
-        }
+        public TextMeshProUGUI tonnageText => traverse.Field("tonnageText").GetValue<TextMeshProUGUI>();
+
+        public TextMeshProUGUI slotsText => traverse.Field("slotsText").GetValue<TextMeshProUGUI>();
     }
 }
