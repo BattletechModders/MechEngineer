@@ -13,8 +13,9 @@ namespace MechEngineer
         {
             try
             {
-                EngineCoreRefHandler.Shared.CreateMechComponentItem(__result, __instance);
-                WeightSavingsHandler.Shared.CreateMechComponentItem(__result, __instance);
+                EngineCoreRefHandler.Shared.ModifySlotElement(__result, __instance);
+                WeightSavingsHandler.Shared.ModifySlotElement(__result, __instance);
+                EnginePersistence.FixSimGameUID(__instance.sim, componentRef);
             }
             catch (Exception e)
             {

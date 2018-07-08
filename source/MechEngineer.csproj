@@ -128,7 +128,6 @@
     <Compile Include="Patches\MechBayPanelOnGotoMechLabPatch.cs" />
     <Compile Include="Patches\MechBayPaneOnRepairMechPatch.cs" />
     <Compile Include="Misc\Global.cs" />
-    <Compile Include="Patches\MechLabPanelCreateMechComponentItemPatch.cs" />
     <Compile Include="Patches\MechLabPanel_CreateMechComponentItem_Patch.cs" />
     <Compile Include="Component\CockpitHandler.cs" />
     <Compile Include="Facade\MechDefAutoFixFacade.cs" />

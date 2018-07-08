@@ -10,7 +10,7 @@ namespace MechEngineer
 {
     internal class EngineCoreRef
     {
-        private static readonly Regex Regex = new Regex(@"^(?:([^/]*))(?:/([^/]+))?$", RegexOptions.Singleline | RegexOptions.Compiled);
+        private static readonly Regex Regex = new Regex(@"^(?:([^/]*))?(?:/([^/]+))?$", RegexOptions.Singleline | RegexOptions.Compiled);
 
         internal readonly MechComponentRef ComponentRef;
         internal readonly EngineCoreDef CoreDef;
@@ -153,17 +153,12 @@ namespace MechEngineer
 
         internal string GetNewSimGameUID()
         {
-            var prefix = UUID;
-            var postfix = Properties;
-            if (string.IsNullOrEmpty(prefix))
+            var props = Properties;
+            if (!string.IsNullOrEmpty(props))
             {
-                return postfix;
+                props = "/" + props;
             }
-            if (string.IsNullOrEmpty(postfix))
-            {
-                return prefix;
-            }
-            return prefix + "/" + postfix;
+            return UUID + props;
         }
 
         internal IEnumerable<string> GetInternalComponents()

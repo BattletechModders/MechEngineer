@@ -49,8 +49,8 @@ namespace MechEngineer
         void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage);
     }
 
-    internal interface IMechLabItemRefreshInfo
+    internal interface IModifySlotElement
     {
-        void CreateMechComponentItem(MechLabItemSlotElement element, MechLabPanel panel);
+        void ModifySlotElement(MechLabItemSlotElement element, MechLabPanel panel);
     }
 }

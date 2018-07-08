@@ -6,7 +6,7 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class WeightSavingsHandler : ITonnageChanges, IAdjustTooltip, IMechLabItemRefreshInfo
+    internal class WeightSavingsHandler : ITonnageChanges, IAdjustTooltip, IModifySlotElement
     {
         public static readonly WeightSavingsHandler Shared = new WeightSavingsHandler();
 
@@ -58,7 +58,7 @@ namespace MechEngineer
             return (mechDef.Chassis.DefaultStructureTonnage() * savings.StructureWeightSavingsFactor).RoundStandard();
         }
 
-        public void CreateMechComponentItem(MechLabItemSlotElement instance, MechLabPanel panel)
+        public void ModifySlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
         {
             var weightSavings = instance.ComponentRef?.Def?.GetComponent<WeightSavings>();
             if (weightSavings == null)
