@@ -65,7 +65,7 @@ Use these mods to maximize enjoyment
   * there are additional settings like factional accounting or partical weight savings for structure and armor components
   * see [Settings Source Code](https://github.com/CptMoore/MechEngineer/blob/master/source/MechEngineerSettings.cs) for all available settings
 
-Included Components:
+### Components
 
 cockpit | exotic
 --- | ---
@@ -109,7 +109,8 @@ endo-steel | -
 clan endo-steel | yes
 endo-composite | yes
 
-TODO
+### TODO
+
 * see [issues list](https://github.com/CptMoore/MechEngineer/issues)
 
 ## Contributors
