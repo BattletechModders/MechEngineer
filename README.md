@@ -82,7 +82,12 @@ gryo upgrades* | -
 
 *\*upgrades are auto-converted to act as the actual item*
 
-engine | exotic
+engine core | exotic
+--- | ---
+rating 60 | -
+rating 100-400 | -
+
+engine type | exotic
 --- | ---
 std | -
 xl | -
