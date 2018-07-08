@@ -71,10 +71,16 @@ cockpit | exotic
 --- | ---
 standard | -
 small | yes
+cockpit upgrades* | -
+
+*\*upgrades are auto-converted to act as the actual item*
 
 gyro | exotic
 --- | ---
 standard | -
+gryo upgrades* | -
+
+*\*upgrades are auto-converted to act as the actual item*
 
 engine | exotic
 --- | ---
