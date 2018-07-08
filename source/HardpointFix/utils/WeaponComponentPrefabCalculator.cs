@@ -83,9 +83,9 @@ namespace MechEngineer
             List<string> compatibleTerms;
             if (prefabId.Contains("lrm"))
             {
-                var prefabIdFix = prefabId == "lrm20" ? "srm20" : prefabId; // yea sure, srm20 ...
-                var order = new[] {"lrm5", "lrm10", "lrm15", "srm20"};
-                var index = Array.IndexOf(order, prefabIdFix);
+                var prefabIdFix = prefabId == "srm20" ? "lrm20" : prefabId;
+                var order = new[] {"lrm5", "lrm10", "lrm15", "lrm20"};
+                var index = Array.IndexOf(order, prefabId);
 
                 compatibleTerms = new List<string> {prefabIdFix};
 
@@ -104,10 +104,30 @@ namespace MechEngineer
                         compatibleTerms.Add(order[i]);
                     }
                 }
+
+                var lrm20Index = compatibleTerms.IndexOf("lrm20");
+                if (lrm20Index > -1)
+                {
+                    compatibleTerms.Insert(lrm20Index, "srm20");
+                }
+            }
+            else if (prefabId.Contains("machinegun"))
+            {
+                compatibleTerms = new List<string> {prefabId, "mg"};
             }
             else if (prefabId.Contains("ac"))
             {
-                compatibleTerms = new List<string> {prefabId, "ac"}; // fix for hunchback ac hardpoint
+                compatibleTerms = new List<string>(5) {prefabId};
+                if (prefabId.Contains("ac5"))
+                {
+                    compatibleTerms.Add("uac5");
+                }
+                if (prefabId.Contains("ac10"))
+                {
+                    compatibleTerms.Add("lbx10");
+                }
+                compatibleTerms.Add("ac"); // fix for hunchback ac hardpoint
+                compatibleTerms.Add("lbx"); // ? don't like it but maybe solves stuff?
             }
             else
             {

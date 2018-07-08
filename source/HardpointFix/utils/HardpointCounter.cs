@@ -37,7 +37,7 @@ namespace MechEngineer
                         eh = true;
                     }
 
-                    if (prefab.Contains("_ah") || prefab.Contains("_laser_eh") || prefab.Contains("_flamer_eh") || prefab.Contains("_mg_bh"))
+                    if (prefab.Contains("_ah") || prefab.Contains("_laser_eh") || prefab.Contains("_flamer_eh") || prefab.Contains("_machinegun_bh") || prefab.Contains("_mg_bh"))
                     {
                         ah = true;
                     }
