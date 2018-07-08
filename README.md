@@ -65,6 +65,30 @@ Use these mods to maximize enjoyment
   * there are additional settings like factional accounting or partical weight savings for structure and armor components
   * see [Settings Source Code](https://github.com/CptMoore/MechEngineer/blob/master/source/MechEngineerSettings.cs) for all available settings
 
+Included Components
+component | exotic
+--- | ---
+cockpit | -
+small cockpit | yes
+gyro | -
+std engine | -
+xl engine | -
+compact engine | yes
+light engine | yes
+cxl engine | yes
+xxl engine | yes
+cxxl engine | yes
+ferros-fibrous | -
+clan ferros-fibrous | yes
+light ferros-fibrous | yes
+heavy ferros-fibrous | yes
+stealth armor | yes
+endo-steel | -
+clan endo-steel | yes
+endo-composite | yes
+DHS engine kit | -
+CDHS engine kit | yes
+
 TODO
 * see [issues list](https://github.com/CptMoore/MechEngineer/issues)
 
