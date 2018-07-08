@@ -71,5 +71,16 @@ namespace MechEngineer
 		*/
         public float const_TTWalkMultiplier = 30f;
         public float const_TTSprintMultiplier = 50f;
+
+        #region HardpointFix
+        
+        public bool AutoFixChassisDefWeaponHardpointCounts = false; // true = hardpoint counts derived from prefab hardpoints
+        public bool EnforceHardpointLimits = false; // true = use prefab hardpoints
+        public bool AllowDefaultLoadoutWeapons = false;
+        public bool AllowLRMInSmallerSlotsForAll = false;
+        public string[] AllowLRMInSmallerSlotsForMechs = { "atlas" };
+        public bool AllowLRMInLargerSlotsForAll = true;
+
+        #endregion
     }
 }

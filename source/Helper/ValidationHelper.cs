@@ -92,16 +92,4 @@ namespace MechEngineer
     {
         None, Location, Mech
     }
-
-    internal class MechLabLocationWidgetAdapter : Adapter<MechLabLocationWidget>
-    {
-        internal MechLabLocationWidgetAdapter(MechLabLocationWidget instance) : base(instance)
-        {
-        }
-
-        internal List<MechLabItemSlotElement> localInventory => traverse.Field("localInventory").GetValue<List<MechLabItemSlotElement>>();
-        internal MechLabPanel mechLab => traverse.Field("mechLab").GetValue<MechLabPanel>();
-        internal int usedSlots => traverse.Field("usedSlots").GetValue<int>();
-        internal int maxSlots => traverse.Field("maxSlots").GetValue<int>();
-    }
 }

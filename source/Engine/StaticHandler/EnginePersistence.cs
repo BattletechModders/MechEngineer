@@ -134,7 +134,7 @@ namespace MechEngineer
 
         internal static void FixSimGameUID(SimGameState sim, MechComponentRef componentRef)
         {
-            if (sim != null)
+            if (sim == null)
             {
                 return;
             }
