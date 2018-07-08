@@ -7,7 +7,7 @@ using UnityEngine;
 namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), "OnMechLabDrop")]
-    public static class MechLabLocationWidgetOnMechLabDropPatch_A23
+    public static class MechLabLocationWidget_OnMechLabDrop_Patch
     {
         [HarmonyPriority(Priority.High)]
         public static void Prefix(MechLabLocationWidget __instance, MechLabPanel ___mechLab, ref int ___usedSlots, int ___maxSlots)
@@ -22,7 +22,7 @@ namespace MechEngineer
         public static void Postfix(List<MechLabItemSlotElement> ___localInventory, MechLabPanel ___mechLab, ref int ___usedSlots)
         {
             ___usedSlots = MechDefSlots.GetUsedSlots(___localInventory.Select(s => s.ComponentRef));
-            DynamicSlotHandler.Shared.RefreshData(___mechLab.activeMechDef);
+            DynamicSlotHandler.Shared.RefreshData(___mechLab);
         }
     }
 }

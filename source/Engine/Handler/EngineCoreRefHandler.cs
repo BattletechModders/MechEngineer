@@ -143,7 +143,7 @@ namespace MechEngineer
             }
         }
 
-        public void MechLabItemRefreshInfo(MechLabItemSlotElement instance)
+        public void CreateMechComponentItem(MechLabItemSlotElement instance, MechLabPanel panel)
         {
             var engineRef = instance.ComponentRef.GetEngineCoreRef();
             if (engineRef == null)

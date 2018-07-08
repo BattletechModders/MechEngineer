@@ -1,5 +1,8 @@
 {
 	"Custom": {
+		"UIColor": {
+			"SlotElementUIColor": "OrangeHalf",
+		},
 		"DynamicSlots": {
 			"ReservedSlots": 13,
 			"ReservedSlotColor": "OrangeHalf",

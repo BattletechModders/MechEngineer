@@ -3,6 +3,8 @@ namespace MechEngineer
 {
     public class MechEngineerSettings : ModSettings
     {
+        public bool TestEnableAllTags = true;
+
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
 
         public bool EngineCritsEnabled = true;

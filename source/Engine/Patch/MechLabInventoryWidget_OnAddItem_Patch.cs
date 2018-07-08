@@ -6,7 +6,7 @@ using Harmony;
 namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabInventoryWidget), "OnAddItem")]
-    public static class MechLabInventoryWidgetOnAddItemPatch
+    public static class MechLabInventoryWidget_OnAddItem_Patch
     {
         public static void Prefix(MechLabInventoryWidget __instance, DataManager ___dataManager, IMechLabDraggableItem item)
         {

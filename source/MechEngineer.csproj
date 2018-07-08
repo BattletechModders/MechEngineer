@@ -76,6 +76,12 @@
     <Compile Include="CCLight\Extensions.cs" />
     <Compile Include="CCLight\Registry.cs" />
     <Compile Include="CCLight\Patches\JSONSerializationUtility_RehydrateObjectFromDictionary_Patch.cs" />
+    <Compile Include="Features\Color\MechComponentDef_GetUIColor_Patch.cs" />
+    <Compile Include="Features\Color\UIColorComponent.cs" />
+    <Compile Include="Features\Color\ListElementController_SalvageGear_NotListView_RefreshItemColor_Patch.cs" />
+    <Compile Include="Features\Color\ListElementController_SalvageGear_RefreshItemColor_Patch.cs" />
+    <Compile Include="Features\Color\MechComponentRef_GetUIColor_Patch.cs" />
+    <Compile Include="Features\DynamicSlots\MechLabPanel_LoadMech_Patch.cs" />
     <Compile Include="Helper\ChassisExtensions.cs" />
     <Compile Include="Helper\MechDefExtensions.cs" />
     <Compile Include="Features\WorkOrderCosts\SimGameState_CreateComponentRepairWorkOrder_Patch.cs" />
@@ -87,7 +93,7 @@
     <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
     <Compile Include="Features\DynamicSlots\MechDefSlots.cs" />
-    <Compile Include="Features\DynamicSlots\MechLabLocationWidgetOnMechLabDropPatch_A23.cs" />
+    <Compile Include="Features\DynamicSlots\MechLabLocationWidget_OnMechLabDrop_Patch.cs" />
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />
@@ -123,12 +129,12 @@
     <Compile Include="Patches\MechBayPaneOnRepairMechPatch.cs" />
     <Compile Include="Misc\Global.cs" />
     <Compile Include="Patches\MechLabPanelCreateMechComponentItemPatch.cs" />
-    <Compile Include="Patches\MechLabItemSlotElementRefreshInfoPatch.cs" />
+    <Compile Include="Patches\MechLabPanel_CreateMechComponentItem_Patch.cs" />
     <Compile Include="Component\CockpitHandler.cs" />
     <Compile Include="Facade\MechDefAutoFixFacade.cs" />
     <Compile Include="Facade\ValidationFacade.cs" />
     <Compile Include="Engine\StaticHandler\EnginePersistanceItemStat.cs" />
-    <Compile Include="Patches\MechLabInventoryWidgetOnAddItemPatch.cs" />
+    <Compile Include="Engine\Patch\MechLabInventoryWidget_OnAddItem_Patch.cs" />
     <Compile Include="Misc\Interfaces.cs" />
     <Compile Include="Component\ChassisHandler.cs" />
     <Compile Include="Control.cs" />
@@ -163,7 +169,7 @@
     <Compile Include="Patches\MechGetHeatSinkDissipationPatch.cs" />
     <Compile Include="Patches\MechComponentDamageComponentPatch.cs" />
     <Compile Include="Patches\MechValidationRulesValidateMechDefPatch.cs" />
-    <Compile Include="Patches\MechInitEffectStatsPatch.cs" />
+    <Compile Include="Engine\Patch\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Patches\MechLabInventoryWidgetRefreshJumpJetOptionsPatch.cs" />
     <Compile Include="Patches\MechLabMechInfoWidgetGetTotalHardpointsPatch.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateMovementStatPatch.cs" />

@@ -27,7 +27,7 @@ namespace MechEngineer
         };
         #endregion
 
-        internal void RefreshData(MechDef def)
+        internal void RefreshData(MechLabPanel mechLab)
         {
             var fillerImageCache = MechLabLocationWidgetSetDataPatch.FillerImageCache;
             if (fillerImageCache.Count < Locations.Length)
@@ -35,13 +35,7 @@ namespace MechEngineer
                 return;
             }
 
-            var mechLab = Global.ActiveMechLabPanel;
-            if (mechLab == null)
-            {
-                return;
-            }
-
-            var slots = new MechDefSlots(def);
+            var slots = new MechDefSlots(mechLab.activeMechDef);
             using (var reservedSlots = slots.GetReservedSlots().GetEnumerator())
             {
                 foreach (var location in Locations)
@@ -83,7 +77,6 @@ namespace MechEngineer
                 errorMessages[MechValidationType.InvalidInventorySlots]
                     .Add($"RESERVED SLOTS: Mech requires {missing} additional free slots");
             }
-            RefreshData(mechDef);
         }
         
         public MechLabDropResult ValidateDrop(MechLabItemSlotElement element, MechLabLocationWidget widget)

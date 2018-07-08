@@ -51,6 +51,6 @@ namespace MechEngineer
 
     internal interface IMechLabItemRefreshInfo
     {
-        void MechLabItemRefreshInfo(MechLabItemSlotElement element);
+        void CreateMechComponentItem(MechLabItemSlotElement element, MechLabPanel panel);
     }
 }

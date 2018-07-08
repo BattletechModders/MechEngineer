@@ -1,5 +1,8 @@
 {
 	"Custom": {
+		"UIColor": {
+			"SlotElementUIColor": "ArmorDamaged",
+		},
 		"DynamicSlots": {
 			"ReservedSlots": 13,
 			"ReservedSlotColor": "ArmorDamaged",

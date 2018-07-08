@@ -58,7 +58,7 @@ namespace MechEngineer
             return (mechDef.Chassis.DefaultStructureTonnage() * savings.StructureWeightSavingsFactor).RoundStandard();
         }
 
-        public void MechLabItemRefreshInfo(MechLabItemSlotElement instance)
+        public void CreateMechComponentItem(MechLabItemSlotElement instance, MechLabPanel panel)
         {
             var weightSavings = instance.ComponentRef?.Def?.GetComponent<WeightSavings>();
             if (weightSavings == null)
@@ -66,7 +66,7 @@ namespace MechEngineer
                 return;
             }
 
-            var mechDef = Global.ActiveMechDef;
+            var mechDef = panel.activeMechDef;
             if (mechDef == null)
             {
                 return;
