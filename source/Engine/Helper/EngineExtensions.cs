@@ -20,7 +20,7 @@ namespace MechEngineer
                 return null;
             }
 
-            return new Engine(result.CoreRef, result.Type, result.ExternalHeatSinkTonnage);
+            return new Engine(result.CoreRef, result.Type, result.HeatSinks);
         }
 
         internal static EngineCoreRef GetEngineCoreRef(this IEnumerable<MechComponentRef> componentRefs)

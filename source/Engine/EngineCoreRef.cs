@@ -28,13 +28,15 @@ namespace MechEngineer
 
         internal string UUID;
 
-        internal EngineCoreRef(EngineCoreDef coreDef) // only used for autofix, not fully supported
+        internal EngineCoreRef(EngineHeatSink heatSinkDef, EngineCoreDef coreDef) // only used for autofix, not fully supported
         {
             CoreDef = coreDef;
+            HeatSinkDef = heatSinkDef;
         }
 
-        internal EngineCoreRef(MechComponentRef componentRef, EngineCoreDef coreDef) : this(coreDef)
+        internal EngineCoreRef(MechComponentRef componentRef, EngineCoreDef coreDef)
         {
+            CoreDef = coreDef;
             ComponentRef = componentRef;
 
             var text = componentRef.SimGameUID;
@@ -153,7 +155,7 @@ namespace MechEngineer
             }
         }
 
-        internal float InternalHeatSinkTonnage => AdditionalHeatSinkCount * 1;
+        internal float InternalHeatSinkTonnage => AdditionalHeatSinkCount * HeatSinkDef.HeatSinkDef.Tonnage;
 
         internal string GetNewSimGameUID()
         {

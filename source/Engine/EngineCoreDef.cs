@@ -27,7 +27,7 @@ namespace MechEngineer
             var total = Rating / 25;
             InternalHeatSinks = Mathf.Min(free, total);
             MaxAdditionalHeatSinks = Mathf.Max(0, total - free);
-            MaxFreeExternalHeatSinkTonnage = free - InternalHeatSinks;
+            MaxFreeExternalHeatSinks = free - InternalHeatSinks;
         }
 
         [JsonIgnore]
@@ -35,7 +35,7 @@ namespace MechEngineer
         [JsonIgnore]
         internal int MaxAdditionalHeatSinks { get; private set; }
         [JsonIgnore]
-        internal int MaxFreeExternalHeatSinkTonnage { get; private set; }
+        internal int MaxFreeExternalHeatSinks { get; private set; }
 
         internal float MaxInternalHeatSinks => InternalHeatSinks + MaxAdditionalHeatSinks;
         internal float GyroTonnage => (Rating / 100f).RoundStandard();

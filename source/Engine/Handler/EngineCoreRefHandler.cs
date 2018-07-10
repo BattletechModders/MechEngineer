@@ -39,12 +39,16 @@ namespace MechEngineer
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
 
-            var externalHeatSinkTonnage = mechDef.Inventory
-                .Select(r => r.Def)
-                .Where(d => d.GetComponent<EngineHeatSink>() != null)
-                .Sum(d => d.Tonnage);
+            var heatSinks = mechDef.Inventory
+                .Where(r => r.Def.GetComponent<EngineHeatSink>() != null)
+                .ToList();
 
-            var type = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef).GetComponent<EngineType>();
+            var standardEngineType = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef).GetComponent<EngineType>();
+            var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
+
+            var engineHeatSinkdef = mechDef.Inventory
+                .Select(r => r.Def.GetComponent<EngineHeatSink>())
+                .FirstOrDefault(d => d != null && d != standardHeatSinkDef) ?? standardHeatSinkDef;
 
             foreach (var keyvalue in mechDef.DataManager.HeatSinkDefs)
             {
@@ -56,8 +60,8 @@ namespace MechEngineer
                     continue;
                 }
 
-                var coreRef = new EngineCoreRef(coreDef);
-                var engine = new Engine(coreRef, type, externalHeatSinkTonnage);
+                var coreRef = new EngineCoreRef(engineHeatSinkdef, coreDef);
+                var engine = new Engine(coreRef, standardEngineType, heatSinks);
                 if (engine.TotalTonnage > freeTonnage)
                 {
                     continue;
@@ -91,13 +95,8 @@ namespace MechEngineer
             }
 
             {
-                var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
                 // add engine core
-                var nonStandardHeatSinkDef = componentRefs
-                    .Select(r => r.Def.GetComponent<EngineHeatSink>())
-                    .FirstOrDefault(d => d != null && d != standardHeatSinkDef);
-
-                var simGameUID = nonStandardHeatSinkDef != null ? "/ihstype=" + nonStandardHeatSinkDef.Def.Description.Id : null;
+                var simGameUID = engineHeatSinkdef != standardHeatSinkDef ? "/ihstype=" + engineHeatSinkdef.Def.Description.Id : null;
 
                 var componentRef = new MechComponentRef(maxEngine.Def.Description.Id, simGameUID, maxEngine.Def.ComponentType, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
@@ -105,7 +104,7 @@ namespace MechEngineer
 
             {
                 // add standard shielding
-                var componentRef = new MechComponentRef(type.Def.Description.Id, null, type.Def.ComponentType, ChassisLocations.CenterTorso);
+                var componentRef = new MechComponentRef(standardEngineType.Def.Description.Id, null, standardEngineType.Def.ComponentType, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
             }
 
