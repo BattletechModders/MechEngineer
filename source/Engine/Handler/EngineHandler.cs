@@ -50,7 +50,7 @@ namespace MechEngineer
             engine.CoreDef = engineDef; // overwrite the core def for better tooltip
             var engineRef = engine.CoreRef;
 
-            Control.calc.CalcSpeeds(engineDef, panel.activeMechDef.Chassis.Tonnage, out var walkSpeed, out var runSpeed);
+            var movement = engineDef.GetMovement(panel.activeMechDef.Chassis.Tonnage);
 
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
@@ -75,14 +75,14 @@ namespace MechEngineer
             }
 
             tooltip.detailText.text += "<i>Speeds</i>" +
-                                       "   Cruise <b>" + walkSpeed + "</b>" +
-                                       " / Top <b>" + runSpeed + "</b>";
+                                       "   Cruise <b>" + movement.WalkSpeed + "</b>" +
+                                       " / Top <b>" + movement.RunSpeed + "</b>";
 
             tooltip.detailText.text += "\r\n" +
                                        "<i>Weights [Ton]</i>" +
                                        "   Engine: <b>" + engine.EngineTonnage + "</b>" +
                                        "   Gyro: <b>" + engine.CoreDef.GyroTonnage + "</b>" +
-                                       "   Sinks: <b>" + engineRef.HeatSinkTonnage + "</b>";
+                                       "   Sinks: <b>" + engine.HeatSinkTonnage + "</b>";
 
             tooltip.tonnageText.text = $"{engine.TotalTonnage}";
 

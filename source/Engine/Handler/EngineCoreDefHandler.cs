@@ -41,10 +41,10 @@ namespace MechEngineer
             // jump jets
             {
                 var currentCount = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
-                var maxCount = Control.calc.CalcJumpJetCount(mainEngine, mechDef.Chassis.Tonnage);
+                var maxCount = mainEngine.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
                 if (currentCount > maxCount)
                 {
-                    errorMessages[MechValidationType.InvalidJumpjets].Add(string.Format("JUMPJETS: This Mech mounts too many jumpjets ({0} out of {1})", currentCount, maxCount));
+                    errorMessages[MechValidationType.InvalidJumpjets].Add($"JUMPJETS: This Mech mounts too many jumpjets ({currentCount} out of {maxCount})");
                 }
             }
         }

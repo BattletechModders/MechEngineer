@@ -191,10 +191,11 @@
     <Compile Include="Patches\UpgradeDefFromJSONPatch.cs" />
     <Compile Include="Patches\ChassisDefFromJSONPatch.cs" />
     <Compile Include="Engine\EngineCoreDef.cs" />
-    <Compile Include="Engine\Helper\EngineCalculator.cs" />
+    <Compile Include="Engine\Helper\EngineMovement.cs" />
     <Compile Include="MechEngineerSettings.cs" />
     <Compile Include="Patches\MechStatisticsRulesCalculateHeatEfficiencyStatPatch.cs" />
     <Compile Include="Misc\Extensions.cs" />
+    <Compile Include="Misc\ValueChange.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\mod.json" />

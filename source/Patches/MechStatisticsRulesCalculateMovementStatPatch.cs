@@ -40,15 +40,16 @@ namespace MechEngineer
         {
             try
             {
-                float walkSpeed = 0, runSpeed = 0, TTWalkSpeed = 0;
-                EngineMisc.CalculateMovementStat(def, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
-                return runSpeed;
+                var movement = def?.GetEngineMovement();
+                if (movement != null)
+                {
+                    return movement.RunSpeed;
+                }
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
-
             return @this.MaxSprintDistance;
         }
 

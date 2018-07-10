@@ -1,37 +1,55 @@
 ﻿using BattleTech;
-using BattleTech.UI;
 using CustomComponents;
+using fastJSON;
+using UnityEngine;
 
 namespace MechEngineer
 {
     [CustomComponent("EngineCore")]
     public class EngineCoreDef : SimpleCustomComponent
     {
+        [JsonIgnore]
         private int _rating;
 
         public int Rating
         {
-            get { return _rating; }
-            set { _rating = value;
-                Control.calc.CalcHeatSinks(this, out MinHeatSinks, out MaxHeatSinks);
+            get => _rating;
+            set
+            {
+                _rating = value;
+                CalcHeatSinks();
             }
         }
 
-        public int MinHeatSinks, MaxHeatSinks;
+        private void CalcHeatSinks()
+        {
+            var free = 10;
+            var total = Rating / 25;
+            InternalHeatSinks = Mathf.Min(free, total);
+            MaxAdditionalHeatSinks = Mathf.Max(0, total - free);
+            MaxFreeExternalHeatSinkTonnage = free - InternalHeatSinks;
+        }
 
-        public int MaxAdditionalHeatSinks => MaxHeatSinks - MinHeatSinks;
+        [JsonIgnore]
+        internal int InternalHeatSinks { get; private set; }
+        [JsonIgnore]
+        internal int MaxAdditionalHeatSinks { get; private set; }
+        [JsonIgnore]
+        internal int MaxFreeExternalHeatSinkTonnage { get; private set; }
 
-        public float GyroTonnage => Control.calc.CalcGyroWeight(this);
+        internal float MaxInternalHeatSinks => InternalHeatSinks + MaxAdditionalHeatSinks;
+        internal float GyroTonnage => (Rating / 100f).RoundStandard();
+        internal float StandardEngineTonnage => Def.Tonnage - GyroTonnage;
+        internal HeatSinkDef HeatSinkDef => Def as HeatSinkDef; // TODO reintroduce GenericCustomComponent
 
-        public float StandardEngineTonnage => Def.Tonnage - GyroTonnage;
-
-        public HeatSinkDef HeatSinkDef => Def as HeatSinkDef; // TODO reintroduce GenericCustomComponent
+        internal EngineMovement GetMovement(float tonnage)
+        {
+            return new EngineMovement(Rating, tonnage);
+        }
 
         public override string ToString()
         {
             return Def.Description.Id + " Rating=" + Rating;
         }
-
-        //public UIColor Color { get; } = UIColor.GoldHalf;
     }
 }

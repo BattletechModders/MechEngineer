@@ -5,13 +5,13 @@ namespace MechEngineer
 {
     internal class AdjustCompDefInvSizeHelper
     {
-        private readonly Func<int, int> func;
         private readonly IIdentifier identifier;
+        private readonly ValueChange<int> change;
 
-        internal AdjustCompDefInvSizeHelper(IIdentifier identifier, Func<int, int> func)
+        internal AdjustCompDefInvSizeHelper(IIdentifier identifier, ValueChange<int> change)
         {
             this.identifier = identifier;
-            this.func = func;
+            this.change = change;
         }
 
         internal void AdjustComponentDef(MechComponentDef def)
@@ -21,8 +21,8 @@ namespace MechEngineer
                 return;
             }
 
-            var newSize = func(def.InventorySize);
-            if (newSize < 0)
+            var newSize = change.Change(def.InventorySize);
+            if (newSize < 1)
             {
                 return;
             }

@@ -1,4 +1,7 @@
-﻿
+﻿using System.Collections.Generic;
+using BattleTech;
+using HBS.Animation.StateMachine;
+
 namespace MechEngineer
 {
     public class MechEngineerSettings : ModSettings
@@ -9,7 +12,7 @@ namespace MechEngineer
 
         public bool EngineCritsEnabled = true;
         public int EngineHeatSinkCapacityAdjustmentPerCrit = -15;
-        
+
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
@@ -17,19 +20,32 @@ namespace MechEngineer
 
         public bool AutoFixMechDefGyro = true; // adds missing gyro
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
-        public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades that are size 3 to size 4
+        public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades
         public string AutoFixGyroPrefix = "Gear_Gyro_"; // "Gear_Gyro_";
+        public ValueChange<int> AutoFixGyroSlotChange = new ValueChange<int> {From = 3, By = 1};
 
         public bool AutoFixMechDefCockpit = true; // adds missing cockpit
         public string AutoFixMechDefCockpitId = "Gear_Cockpit_Generic_Standard";
         public bool AutoFixCockpitUpgrades = true; // adds 3 tons to cockpit upgrades that weigh 0 tons
         public string AutoFixCockpitPrefix = "Gear_Cockpit_"; // "Gear_Cockpit_";
+        public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
 
         public bool AutoFixLegUpgrades = true; // reduces leg upgrades from 3 to 1 size
         public string AutoFixLegUpgradesPrefix = null; //"Gear_Actuator_";
-        
+        public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int> {From = 3, By = -2, FromIsMin = true, NewMin = 1};
+
         public string[] AutoFixChassisDefSkip = { };
         public bool AutoFixChassisDefSlots = true; // adds 2 torso slots at a cost of 2 leg slots per side if they match stock slot layouts
+        public Dictionary<ChassisLocations, ValueChange<int>> AutoFixChassisDefSlotsChanges = new Dictionary<ChassisLocations, ValueChange<int>>
+        {
+            [ChassisLocations.LeftTorso] = new ValueChange<int> {From = 10, By = 2},
+            [ChassisLocations.RightTorso] = new ValueChange<int> {From = 10, By = 2},
+            [ChassisLocations.LeftLeg] = new ValueChange<int> {From = 4, By = -2},
+            [ChassisLocations.RightLeg] = new ValueChange<int> {From = 4, By = -2},
+            [ChassisLocations.Head] = new ValueChange<int> {From = 1, By = 1},
+            [ChassisLocations.CenterTorso] = new ValueChange<int> {From = 4, By = 8},
+        };
+
         public bool AutoFixChassisDefInitialTonnage = true;
         public float AutoFixChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
 

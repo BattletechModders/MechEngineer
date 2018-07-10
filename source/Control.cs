@@ -10,8 +10,6 @@ namespace MechEngineer
         internal static Mod mod;
 
         internal static MechEngineerSettings settings = new MechEngineerSettings();
-        internal static EngineCalculator calc = new EngineCalculator();
-
         private static CombatGameConstants _combat;
 
         public static CombatGameConstants Combat

@@ -72,37 +72,39 @@ namespace MechEngineer
                 return;
             }
 
-            var traverse = Traverse.Create(chassisDef);
-            var locations = traverse.Field("Locations").GetValue<LocationDef[]>();
+            var adapter = new ChassisDefAdapter(chassisDef);
+            var locations = adapter.Locations;
+
+            var changes = Control.settings.AutoFixChassisDefSlotsChanges;
             for (var i = 0; i < locations.Length; i++)
             {
-                ModifyInventorySlots(ref locations[i], ChassisLocations.LeftTorso, 10, 12);
-                ModifyInventorySlots(ref locations[i], ChassisLocations.RightTorso, 10, 12);
-                ModifyInventorySlots(ref locations[i], ChassisLocations.LeftLeg, 4, 2);
-                ModifyInventorySlots(ref locations[i], ChassisLocations.RightLeg, 4, 2);
-                ModifyInventorySlots(ref locations[i], ChassisLocations.Head, 1, 2);
-                ModifyInventorySlots(ref locations[i], ChassisLocations.CenterTorso, 4, 12);
+                var location = locations[i].Location;
+                if (changes.TryGetValue(location, out var change))
+                {
+                    ModifyInventorySlots(ref locations[i], location, change);
+                }
             }
-
-            traverse.Method("refreshLocationReferences").GetValue();
+            
+            adapter.refreshLocationReferences();
 
             //Control.mod.Logger.LogDebug("AutoFixSlots InventorySlots=" + chassisDef.LeftTorso.InventorySlots);
         }
 
-        private static void ModifyInventorySlots(ref LocationDef locationDef, ChassisLocations location, int currentSlots, int newSlots)
+        private static void ModifyInventorySlots(ref LocationDef locationDef, ChassisLocations location, ValueChange<int> change)
         {
             if (locationDef.Location != location)
             {
                 return;
             }
 
-            if (locationDef.InventorySlots != currentSlots)
+            var newValue = change.Change(locationDef.InventorySlots);
+            if (newValue < 1)
             {
                 return;
             }
 
             var info = typeof(LocationDef).GetField("InventorySlots");
-            var value = Convert.ChangeType(newSlots, info.FieldType);
+            var value = Convert.ChangeType(newValue, info.FieldType);
             var box = (object) locationDef;
             info.SetValue(box, value);
             locationDef = (LocationDef) box;

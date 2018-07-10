@@ -28,10 +28,14 @@ namespace MechEngineer
 
         internal string UUID;
 
-        internal EngineCoreRef(MechComponentRef componentRef, EngineCoreDef coreDef)
+        internal EngineCoreRef(EngineCoreDef coreDef) // only used for autofix, not fully supported
+        {
+            CoreDef = coreDef;
+        }
+
+        internal EngineCoreRef(MechComponentRef componentRef, EngineCoreDef coreDef) : this(coreDef)
         {
             ComponentRef = componentRef;
-            CoreDef = coreDef;
 
             var text = componentRef.SimGameUID;
             if (string.IsNullOrEmpty(text))
@@ -121,7 +125,7 @@ namespace MechEngineer
                 {
                     dissipation += keyvalue.Key.HeatSinkDef.DissipationCapacity * keyvalue.Value;
                 }
-                dissipation += HeatSinkDef.HeatSinkDef.DissipationCapacity * CoreDef.MinHeatSinks;
+                dissipation += HeatSinkDef.HeatSinkDef.DissipationCapacity * CoreDef.InternalHeatSinks;
 
                 // can't enforce heatsinkdef earlier as apparently in same cases the Def is a generic one and does not derive from HeatSinkDef (Tooltips)
                 dissipation += CoreDef.HeatSinkDef.DissipationCapacity;
@@ -140,16 +144,16 @@ namespace MechEngineer
             {
                 if (CoreDef.MaxAdditionalHeatSinks > 0)
                 {
-                    return $"{HeatSinkDef.Abbreviation} {CoreDef.MinHeatSinks + AdditionalHeatSinkCount} / {CoreDef.MaxHeatSinks}";
+                    return $"{HeatSinkDef.Abbreviation} {CoreDef.InternalHeatSinks + AdditionalHeatSinkCount} / {CoreDef.MaxInternalHeatSinks}";
                 }
                 else
                 {
-                    return $"{HeatSinkDef.Abbreviation} {CoreDef.MinHeatSinks}";
+                    return $"{HeatSinkDef.Abbreviation} {CoreDef.InternalHeatSinks}";
                 }
             }
         }
 
-        internal float HeatSinkTonnage => AdditionalHeatSinkCount * 1;
+        internal float InternalHeatSinkTonnage => AdditionalHeatSinkCount * 1;
 
         internal string GetNewSimGameUID()
         {
@@ -192,7 +196,7 @@ namespace MechEngineer
 
             internal bool IsType => coreRef.HeatSinkDef == heatSinkDef;
 
-            internal int InternalCount => IsType ? coreRef.CoreDef.MinHeatSinks : 0;
+            internal int InternalCount => IsType ? coreRef.CoreDef.InternalHeatSinks : 0;
 
             internal int AdditionalCount
             {

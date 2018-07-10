@@ -27,7 +27,7 @@ namespace MechEngineer
                 Required = false
             };
 
-            resizer = new AdjustCompDefInvSizeHelper(identity, size => size > 2 ? Math.Max(1, size - 2) : -1);
+            resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixLegUpgradesSlotChange);
         }
 
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)

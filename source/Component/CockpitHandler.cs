@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using UnityEngine;
 
 namespace MechEngineer
 {
@@ -32,7 +33,7 @@ namespace MechEngineer
                 ChassisLocations.Head
             );
 
-            resizer = new AdjustCompDefTonnageHelper(identity, ton => ton < 0.1f ? 3 : -1);
+            resizer = new AdjustCompDefTonnageHelper(identity, Control.settings.AutoFixCockpitTonnageChange);
         }
 
         public bool ProtectsAgainstShutdownInjury(MechDef mechDef)

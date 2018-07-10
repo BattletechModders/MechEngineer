@@ -5,13 +5,13 @@ namespace MechEngineer
 {
     internal class AdjustCompDefTonnageHelper
     {
-        private readonly Func<float, float> func;
         private readonly IIdentifier identifier;
+        private readonly ValueChange<float> change;
 
-        internal AdjustCompDefTonnageHelper(IIdentifier identifier, Func<float, float> func)
+        internal AdjustCompDefTonnageHelper(IIdentifier identifier, ValueChange<float> change)
         {
             this.identifier = identifier;
-            this.func = func;
+            this.change = change;
         }
 
         internal void AdjustComponentDef(MechComponentDef def)
@@ -20,8 +20,8 @@ namespace MechEngineer
             {
                 return;
             }
-
-            var newTonnage = func(def.Tonnage);
+            
+            var newTonnage = change.Change(def.Tonnage);
             if (newTonnage < 0)
             {
                 return;

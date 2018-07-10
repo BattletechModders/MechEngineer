@@ -14,6 +14,13 @@ namespace MechEngineer
             {
                 var componentDef = componentRef.Def;
 
+                var heatsink = componentDef.GetComponent<EngineHeatSink>();
+                if (heatsink != null)
+                {
+                    result.ExternalHeatSinkTonnage += componentDef.Tonnage;
+                    continue;
+                }
+
                 var enginePart = componentDef.GetComponent<EnginePart>();
                 if (enginePart == null)
                 {
@@ -42,6 +49,7 @@ namespace MechEngineer
             internal EngineCoreRef CoreRef;
             internal List<MechComponentRef> Parts = new List<MechComponentRef>();
             internal EngineType Type;
+            internal float ExternalHeatSinkTonnage;
         }
     }
 }

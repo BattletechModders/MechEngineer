@@ -18,25 +18,16 @@ namespace MechEngineer
 
             var tonnage = mech.tonnage;
 
-            Control.calc.CalcSpeeds(engine.CoreDef, tonnage, out var walkSpeed, out var runSpeed);
+            var movement = engine.CoreDef.GetMovement(tonnage);
 
-            mech.StatCollection.GetStatistic("WalkSpeed").SetValue(walkSpeed);
-            mech.StatCollection.GetStatistic("RunSpeed").SetValue(runSpeed);
+            mech.StatCollection.GetStatistic("WalkSpeed").SetValue(movement.WalkSpeed);
+            mech.StatCollection.GetStatistic("RunSpeed").SetValue(movement.RunSpeed);
         }
 
-        internal static bool CalculateMovementStat(MechDef mechDef, ref float walkSpeed, ref float runSpeed, ref float TTWalkSpeed)
+        internal static EngineMovement GetEngineMovement(this MechDef mechDef)
         {
             var engine = mechDef.Inventory.GetEngineCoreRef();
-            if (engine == null)
-            {
-                return false;
-            }
-
-            var maxTonnage = mechDef.Chassis.Tonnage;
-            Control.calc.CalcSpeeds(engine.CoreDef, maxTonnage, out walkSpeed, out runSpeed);
-            TTWalkSpeed = Control.calc.CalcMovementPoints(engine.CoreDef, maxTonnage);
-
-            return true;
+            return engine?.CoreDef.GetMovement(mechDef.Chassis.Tonnage);
         }
 
         internal static void SetJumpJetHardpointCount(MechLabMechInfoWidget widget, MechLabPanel mechLab, MechLabHardpointElement[] hardpoints)
@@ -68,7 +59,7 @@ namespace MechEngineer
             }
             else
             {
-                widget.totalJumpjets = Control.calc.CalcJumpJetCount(engine.CoreDef, mechLab.activeMechDef.Chassis.Tonnage);
+                widget.totalJumpjets = engine.CoreDef.GetMovement(mechLab.activeMechDef.Chassis.Tonnage).JumpJetCount;
             }
 
             if (hardpoints == null || hardpoints[4] == null)
@@ -108,7 +99,8 @@ namespace MechEngineer
                     continue;
                 }
 
-                if (Control.calc.CalcAvailability(engine, tonnage))
+                var movement = engine.GetMovement(tonnage);
+                if (movement.Mountable)
                 {
                     continue;
                 }

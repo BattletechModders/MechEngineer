@@ -9,9 +9,7 @@ namespace MechEngineer
     public static class StatTooltipDataSetMovementDataPatch
     {
         private static MechDef mechDef;
-        private static float walkSpeed;
-        private static float runSpeed;
-        private static float TTWalkSpeed;
+        private static EngineMovement movement;
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -34,35 +32,45 @@ namespace MechEngineer
         public static void Postfix(StatTooltipData __instance)
         {
             mechDef = null;
-            __instance.dataList.Add("TT Walk MP", string.Format("{0}", TTWalkSpeed));
+            if (movement != null)
+            {
+                __instance.dataList.Add("TT Walk MP", movement.MovementPoint.ToString());
+                movement = null;
+            }
         }
 
         public static float OverrideMaxWalkDistance(this MovementCapabilitiesDef @this)
         {
             try
             {
-                EngineMisc.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
-                return walkSpeed;
+                movement = mechDef?.GetEngineMovement();
+                if (movement != null)
+                {
+                    return movement.WalkSpeed;
+                }
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
-                return @this.MaxWalkDistance;
             }
+            return @this.MaxWalkDistance;
         }
 
         public static float OverrideMaxSprintDistance(this MovementCapabilitiesDef @this)
         {
             try
             {
-                EngineMisc.CalculateMovementStat(mechDef, ref walkSpeed, ref runSpeed, ref TTWalkSpeed);
-                return runSpeed;
+                movement = mechDef?.GetEngineMovement();
+                if (movement != null)
+                {
+                    return movement.RunSpeed;
+                }
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
-                return @this.MaxSprintDistance;
             }
+            return @this.MaxSprintDistance;
         }
     }
 }

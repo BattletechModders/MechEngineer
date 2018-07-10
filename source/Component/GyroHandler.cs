@@ -30,7 +30,7 @@ namespace MechEngineer
                 ChassisLocations.CenterTorso
             );
 
-            resizer = new AdjustCompDefInvSizeHelper(identity, size => size == 3 ? 4 : -1);
+            resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixGyroSlotChange);
         }
 
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)

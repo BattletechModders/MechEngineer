@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
@@ -40,41 +39,50 @@ namespace MechEngineer
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
 
+            var externalHeatSinkTonnage = mechDef.Inventory
+                .Select(r => r.Def)
+                .Where(d => d.GetComponent<EngineHeatSink>() != null)
+                .Sum(d => d.Tonnage);
+
+            var type = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef).GetComponent<EngineType>();
+
             foreach (var keyvalue in mechDef.DataManager.HeatSinkDefs)
             {
                 var heatSinkDef = keyvalue.Value;
 
-                if (heatSinkDef.Tonnage > freeTonnage)
+                var coreDef = heatSinkDef.GetComponent<EngineCoreDef>();
+                if (coreDef == null)
                 {
                     continue;
                 }
 
-                var engineDef = heatSinkDef.GetComponent<EngineCoreDef>();
-                if (engineDef == null)
+                var coreRef = new EngineCoreRef(coreDef);
+                var engine = new Engine(coreRef, type, externalHeatSinkTonnage);
+                if (engine.TotalTonnage > freeTonnage)
                 {
                     continue;
                 }
 
-                if (maxEngine != null && maxEngine.Rating >= engineDef.Rating)
+                if (maxEngine != null && maxEngine.Rating >= coreDef.Rating)
                 {
                     continue;
                 }
 
-                maxEngine = engineDef;
+                maxEngine = coreDef;
             }
-
-            //Control.mod.Logger.LogDebug("D maxEngine=" + maxEngine);
 
             if (maxEngine == null)
             {
                 return;
             }
 
+            // Control.mod.Logger.LogDebug("D maxEngine=" + maxEngine);
+
             var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
             {
                 // remove superfluous jump jets
-                var maxJetCount = Control.calc.CalcJumpJetCount(maxEngine, mechDef.Chassis.Tonnage);
+                var maxJetCount = maxEngine.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
                 var jumpJetList = componentRefs.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
                 for (var i = 0; i < jumpJetList.Count - maxJetCount; i++)
                 {
@@ -97,7 +105,7 @@ namespace MechEngineer
 
             {
                 // add standard shielding
-                var componentRef = new MechComponentRef(Control.settings.AutoFixMechDefEngineTypeDef, null, ComponentType.HeatSink, ChassisLocations.CenterTorso);
+                var componentRef = new MechComponentRef(type.Def.Description.Id, null, type.Def.ComponentType, ChassisLocations.CenterTorso);
                 componentRefs.Add(componentRef);
             }
 

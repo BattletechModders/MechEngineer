@@ -95,7 +95,7 @@ namespace MechEngineer
             }
             else
             {
-                if (engineRef.AdditionalHeatSinkCount >= engineDef.MaxHeatSinks - engineDef.MinHeatSinks)
+                if (engineRef.AdditionalHeatSinkCount >= engineDef.MaxAdditionalHeatSinks)
                 {
                     return null;
                 }

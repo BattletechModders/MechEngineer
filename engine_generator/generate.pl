@@ -47,12 +47,9 @@ while (my $line = <$info>)  {
 	my @cols = split(' ', $line);
 	my $rating = $cols[0];
 
-	my $category = "ignore";
+	my $category = "basic";
 
-	if ($rating == 60) {
-	} elsif ($rating < 100) {
-		next;
-	}
+	next unless (exists $stockratings{$rating});
 
 	my $rating_string = sprintf('%03s', $rating);
 	print($rating_string, " ");
@@ -85,17 +82,6 @@ while (my $line = <$info>)  {
 		my $engines = $categories->{$category};
 		push(@$engines, $engine);
 	};
-
-	if ($rating == 60) {
-		$category = "basic";
-	}
-
-	if ($rating == 60 || $rating % 100 == 0 || exists $stockratings{$rating}) {
-		$category = "basic";
-	} else {
-		#$category = "full";
-		next;
-	}
 	
 	$generate_engine_sub->("emod_engine", $cols[5], 5000);
 }
