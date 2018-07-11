@@ -81,7 +81,7 @@
     <Compile Include="Features\Color\ListElementController_SalvageGear_NotListView_RefreshItemColor_Patch.cs" />
     <Compile Include="Features\Color\ListElementController_SalvageGear_RefreshItemColor_Patch.cs" />
     <Compile Include="Features\Color\MechComponentRef_GetUIColor_Patch.cs" />
-    <Compile Include="Features\DynamicSlots\MechLabPanel_LoadMech_Patch.cs" />
+    <Compile Include="Features\DynamicSlots\MechLabPanel_ValidateLoadout_Patch.cs" />
     <Compile Include="HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />
     <Compile Include="Helper\MechLabLocationWidgetAdapter.cs" />
     <Compile Include="HardpointFix\limits\MechLabLocationWidgetPatch.cs" />
@@ -105,7 +105,6 @@
     <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
     <Compile Include="Features\DynamicSlots\MechDefSlots.cs" />
-    <Compile Include="Features\DynamicSlots\MechLabLocationWidget_OnMechLabDrop_Patch.cs" />
     <Compile Include="DynModLibCopy\Adapter.cs" />
     <Compile Include="DynModLibCopy\Mod.cs" />
     <Compile Include="DynModLibCopy\ModSettings.cs" />

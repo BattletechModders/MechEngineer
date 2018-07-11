@@ -25,6 +25,8 @@ namespace MechEngineer
 
             Missing = Mathf.Max(Used + Reserved - Total, 0);
             IsOverloaded = Missing > 0;
+
+            //Control.mod.Logger.LogDebug($"Total={Total} Used={Used} Reserved={Reserved} Missing={Missing}");
         }
 
         private static int GetTotalSlots(ChassisDef chassisDef)
