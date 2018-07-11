@@ -6,7 +6,7 @@ namespace MechEngineer
 {
     public class MechEngineerSettings : ModSettings
     {
-        public bool TestEnableAllTags = true;
+        public bool TestEnableAllTags = false;
 
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
 
@@ -48,6 +48,17 @@ namespace MechEngineer
 
         public bool AutoFixChassisDefInitialTonnage = true;
         public float AutoFixChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
+
+        public bool AutoFixWeaponDefSlots = true;
+        public Dictionary<WeaponSubType, ValueChange<int>> AutoFixWeaponDefSlotsChanges = new Dictionary<WeaponSubType, ValueChange<int>>
+        {
+            [WeaponSubType.AC5] = new ValueChange<int> {From = 2, By = 2},
+            [WeaponSubType.AC10] = new ValueChange<int> {From = 3, By = 4},
+            [WeaponSubType.AC20] = new ValueChange<int> {From = 4, By = 4}, //6
+            [WeaponSubType.Gauss] = new ValueChange<int> {From = 5, By = 2},
+            [WeaponSubType.LargeLaserPulse] = new ValueChange<int> {From = 2, By = 1},
+            [WeaponSubType.LRM20] = new ValueChange<int> {From = 4, By = 1},
+        };
 
         public bool EnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts (300+ item types)
 
