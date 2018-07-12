@@ -81,6 +81,7 @@
     <Compile Include="Features\Color\ListElementController_SalvageGear_NotListView_RefreshItemColor_Patch.cs" />
     <Compile Include="Features\Color\ListElementController_SalvageGear_RefreshItemColor_Patch.cs" />
     <Compile Include="Features\Color\MechComponentRef_GetUIColor_Patch.cs" />
+    <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
     <Compile Include="Features\DynamicSlots\MechLabPanel_ValidateLoadout_Patch.cs" />
     <Compile Include="HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />
     <Compile Include="Helper\MechLabLocationWidgetAdapter.cs" />

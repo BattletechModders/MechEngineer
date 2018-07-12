@@ -7,16 +7,6 @@ namespace MechEngineer
 {
     internal class WeaponComponentPrefabCalculator
     {
-        internal static readonly ChassisLocations[] SupportedLocations =
-        {
-            ChassisLocations.Head,
-            ChassisLocations.MainBody,
-            ChassisLocations.LeftArm,
-            ChassisLocations.LeftTorso,
-            ChassisLocations.RightArm,
-            ChassisLocations.RightTorso
-        };
-
         private readonly ChassisDef chassisDef;
         private readonly IDictionary<MechComponentRef, string> mapping = new Dictionary<MechComponentRef, string>();
 
@@ -28,16 +18,14 @@ namespace MechEngineer
                 .ThenByDescending(c => ((WeaponDef) c.Def).Tonnage)
                 .ToList();
 
-            if (!SupportedLocations.Contains(location))
+            if (!MechDefSlots.Locations.Contains(location))
             {
                 location = ChassisLocations.All;
             }
 
             if (location == ChassisLocations.All)
             {
-                var locations = SupportedLocations;
-
-                foreach (var tlocation in locations)
+                foreach (var tlocation in MechDefSlots.Locations)
                 {
                     var locationComponentRefs = componentRefs.Where(c => c.MountedLocation == tlocation).ToList();
                     CalculateMappingForLocation(tlocation, locationComponentRefs);

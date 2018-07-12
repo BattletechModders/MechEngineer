@@ -12,12 +12,12 @@ namespace MechEngineer
             CoreRef = coreRef;
             CoreDef = coreRef.CoreDef;
             Type = type;
-            FreeExternalHeatSinkCount = MatchingCount(externalHeatSinks, CoreDef);
+            FreeExternalHeatSinkCount = MatchingCount(externalHeatSinks, CoreRef.HeatSinkDef.HeatSinkDef);
         }
 
-        public static float MatchingCount(IEnumerable<MechComponentRef> heatSinks, EngineCoreDef coreRef)
+        public static float MatchingCount(IEnumerable<MechComponentRef> heatSinks, HeatSinkDef heatSinkDef)
         {
-            return heatSinks.Select(c => c.Def).Count(d => d == coreRef.HeatSinkDef);
+            return heatSinks.Select(r => r.Def).Count(d => d == heatSinkDef);
         }
 
         internal EngineCoreRef CoreRef { get; }

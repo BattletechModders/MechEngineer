@@ -8,5 +8,11 @@ namespace CustomComponents
         {
             return Database.GetCustomComponent<T>(def);
         }
+
+        public static bool Is<T>(this MechComponentDef def, out T res) where T: class, ICustomComponent
+        {
+            res = Database.GetCustomComponent<T>(def);
+            return res != null;
+        }
     }
 }

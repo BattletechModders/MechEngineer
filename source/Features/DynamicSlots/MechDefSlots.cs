@@ -8,56 +8,33 @@ namespace MechEngineer
 {
     internal class MechDefSlots
     {
-        internal int Total { get; }
-        internal int Used { get; }
-        internal int Reserved { get; }
-        internal List<DynamicSlots> DynamicSlots { get; }
+        internal readonly int Total;
+        internal readonly int Used;
+        internal readonly int Reserved;
+        internal readonly DynamicSlots[] DynamicSlots;
 
-        internal bool IsOverloaded { get; }
-        internal int Missing { get; }
+        internal readonly bool IsOverloaded;
+        internal readonly int Missing;
 
-        internal MechDefSlots(MechDef mechDef)
+        internal readonly ChassisDef Chassis;
+
+        internal MechDefSlots(MechDef mechDef) : this (mechDef.Chassis, mechDef.Inventory.ToList())
         {
-            Total = GetTotalSlots(mechDef.Chassis);
-            Used = GetUsedSlots(mechDef.Inventory);
-            DynamicSlots = GetDynamicSlots(mechDef.Inventory);
+        }
+        
+        internal MechDefSlots(ChassisDef chassisDef, List<MechComponentRef> inventory)
+        {
+            Chassis = chassisDef;
+
+            Total = Locations.Select(chassisDef.GetLocationDef).Sum(d => d.InventorySlots);
+            Used = inventory.Sum(r => r.Def.InventorySize);
+            DynamicSlots = inventory.Select(r => r.Def.GetComponent<DynamicSlots>()).Where(s => s != null).ToArray();
             Reserved = DynamicSlots.Sum(c => c.ReservedSlots);
 
             Missing = Mathf.Max(Used + Reserved - Total, 0);
             IsOverloaded = Missing > 0;
 
             //Control.mod.Logger.LogDebug($"Total={Total} Used={Used} Reserved={Reserved} Missing={Missing}");
-        }
-
-        private static int GetTotalSlots(ChassisDef chassisDef)
-        {
-            var total = chassisDef.LeftArm.InventorySlots;
-            total += chassisDef.RightArm.InventorySlots;
-
-            total += chassisDef.LeftLeg.InventorySlots;
-            total += chassisDef.RightLeg.InventorySlots;
-
-            total += chassisDef.RightTorso.InventorySlots;
-            total += chassisDef.LeftTorso.InventorySlots;
-
-            total += chassisDef.CenterTorso.InventorySlots;
-            total += chassisDef.Head.InventorySlots;
-
-            return total;
-        }
-
-        internal static int GetUsedSlots(IEnumerable<MechComponentRef> inventory)
-        {
-            return inventory.Sum(i => i.Def.InventorySize);
-        }
-
-        private static List<DynamicSlots> GetDynamicSlots(IEnumerable<MechComponentRef> inventory)
-        {
-            return inventory
-                .Select(i => i?.Def?.GetComponent<DynamicSlots>())
-                .Where(d => d != null)
-                .Distinct()
-                .ToList();
         }
 
         internal IEnumerable<DynamicSlots> GetReservedSlots()
@@ -75,5 +52,17 @@ namespace MechEngineer
         {
             return $"MechDefSlots: use={Used} + res={Reserved} / tot={Total}";
         }
+
+        internal static readonly ChassisLocations[] Locations =
+        {
+            ChassisLocations.CenterTorso,
+            ChassisLocations.Head,
+            ChassisLocations.LeftTorso,
+            ChassisLocations.LeftLeg,
+            ChassisLocations.RightTorso,
+            ChassisLocations.RightLeg,
+            ChassisLocations.LeftArm,
+            ChassisLocations.RightArm,
+        };
     }
 }

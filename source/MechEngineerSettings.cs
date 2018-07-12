@@ -6,12 +6,12 @@ namespace MechEngineer
 {
     public class MechEngineerSettings : ModSettings
     {
-        public bool TestEnableAllTags = false;
+        public bool TestEnableAllTags = false; // add all blacklisted items to the skirmish mechlab
 
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
 
-        public bool EngineCritsEnabled = true;
-        public int EngineHeatSinkCapacityAdjustmentPerCrit = -15;
+        public bool EngineCritsEnabled = true; // TODO move to new json based crit system
+        public int EngineHeatSinkCapacityAdjustmentPerCrit = -15; // TODO move to new json based crit system
 
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
 
@@ -101,6 +101,8 @@ namespace MechEngineer
 
         #region HardpointFix
         
+        // TODO add set to 4 slots per chassis location autofix variant
+        // TODO make enum so we have: set to 4, set to encountered prefabs, disabled
         public bool AutoFixChassisDefWeaponHardpointCounts = false; // true = hardpoint counts derived from prefab hardpoints
         public bool EnforceHardpointLimits = false; // true = use prefab hardpoints
         public bool AllowDefaultLoadoutWeapons = false;

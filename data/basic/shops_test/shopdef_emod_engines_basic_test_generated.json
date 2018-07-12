@@ -35,7 +35,7 @@
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_195",
+         "ID" : "emod_engine_180",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
@@ -47,19 +47,13 @@
          "Count" : 0
       },
       {
-         "ID" : "emod_engine_210",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
-         "ID" : "emod_engine_220",
-         "Type" : "HeatSink",
-         "DiscountModifier" : 1.0,
-         "Count" : 0
-      },
-      {
          "ID" : "emod_engine_225",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_230",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0

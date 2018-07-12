@@ -14,17 +14,7 @@ namespace MechEngineer
 
         #region settings
         private static readonly Color DynamicSlotsSpaceMissingColor = new Color(0.5f, 0, 0); // color changes when slots dont fit
-        private static readonly ChassisLocations[] Locations = // order of locations to fill up first
-        {
-            ChassisLocations.CenterTorso,
-            ChassisLocations.Head,
-            ChassisLocations.LeftLeg,
-            ChassisLocations.RightLeg,
-            ChassisLocations.LeftTorso,
-            ChassisLocations.RightTorso,
-            ChassisLocations.LeftArm,
-            ChassisLocations.RightArm
-        };
+        private static readonly ChassisLocations[] Locations = MechDefSlots.Locations; // order of locations to fill up first
         #endregion
 
         internal void RefreshData(MechLabPanel mechLab)

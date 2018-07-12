@@ -48,12 +48,15 @@ Use these mods to maximize enjoyment
   * does not allow to mix heat sink types (can be disabled)
   * updated summary and enhanced tooltip info for movement and heat management 
   * hide engine ratings that would make the mech slower or faster than allowed
-* Auto fixes existing mechs on load
+* Auto-fixes existing mechs and weapons on load
   * reduces initial tonnage to 10% structure
   * auto adds cockpit and gyro
   * auto adds engine components
   * auto fix chassis to have inventory sizes that match the CBT standard implemented in this mod (* actuators are still missing)
   * fun fact, the atlas is perfectly auto-fixed
+  * also auto-fixes existing save games
+  * weapons resized to CBT spec
+  * AC20 is not full size until crit splitting is implemented
 * Prepared item packs
   * enabled by modifying the mod.json and removing the "disabled_" prefixes
   * standard package, that provides lore* and time appropiate items to the game (*lore as the game sees fit, so LosTech is OK)

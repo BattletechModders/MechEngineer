@@ -35,7 +35,7 @@ namespace MechEngineer
                 }
             }
 
-            var maxEngine = (EngineCoreDef) null;
+            var maxEngine = (Engine) null;
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
 
@@ -61,18 +61,18 @@ namespace MechEngineer
                 }
 
                 var coreRef = new EngineCoreRef(engineHeatSinkdef, coreDef);
-                var engine = new Engine(coreRef, standardEngineType, heatSinks);
+                var engine = new Engine(coreRef, standardEngineType, Enumerable.Empty<MechComponentRef>());
                 if (engine.TotalTonnage > freeTonnage)
                 {
                     continue;
                 }
 
-                if (maxEngine != null && maxEngine.Rating >= coreDef.Rating)
+                if (maxEngine != null && maxEngine.CoreDef.Rating >= coreDef.Rating)
                 {
                     continue;
                 }
 
-                maxEngine = coreDef;
+                maxEngine = engine;
             }
 
             if (maxEngine == null)
@@ -80,13 +80,13 @@ namespace MechEngineer
                 return;
             }
 
-            // Control.mod.Logger.LogDebug("D maxEngine=" + maxEngine);
+            Control.mod.Logger.LogDebug("D maxEngine=" + maxEngine.CoreDef);
 
             var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
             {
                 // remove superfluous jump jets
-                var maxJetCount = maxEngine.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
+                var maxJetCount = maxEngine.CoreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
                 var jumpJetList = componentRefs.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
                 for (var i = 0; i < jumpJetList.Count - maxJetCount; i++)
                 {
@@ -94,18 +94,32 @@ namespace MechEngineer
                 }
             }
 
-            {
-                // add engine core
-                var simGameUID = engineHeatSinkdef != standardHeatSinkDef ? "/ihstype=" + engineHeatSinkdef.Def.Description.Id : null;
+            var builder = new MechDefBuilder(mechDef.Chassis, componentRefs);
 
-                var componentRef = new MechComponentRef(maxEngine.Def.Description.Id, simGameUID, maxEngine.Def.ComponentType, ChassisLocations.CenterTorso);
-                componentRefs.Add(componentRef);
-            }
+            // add engine
+            builder.Add(
+                maxEngine.CoreDef.Def,
+                ChassisLocations.CenterTorso,
+                engineHeatSinkdef != standardHeatSinkDef ? "/ihstype=" + engineHeatSinkdef.Def.Description.Id : null
+            );
 
+            // add standard shielding
+            builder.Add(standardEngineType.Def, ChassisLocations.CenterTorso);
+
+            // add free heatsinks
             {
-                // add standard shielding
-                var componentRef = new MechComponentRef(standardEngineType.Def.Description.Id, null, standardEngineType.Def.ComponentType, ChassisLocations.CenterTorso);
-                componentRefs.Add(componentRef);
+                var count = 0;
+                while (count < maxEngine.CoreDef.MaxFreeExternalHeatSinks)
+                {
+                    if (builder.Add(engineHeatSinkdef.Def))
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
             }
 
             mechDef.SetInventory(componentRefs.ToArray());

@@ -48,7 +48,7 @@ while (my $line = <$info>)  {
 	my $rating = $cols[0];
 
 	my $category = "basic";
-
+	
 	next unless (exists $stockratings{$rating});
 
 	my $rating_string = sprintf('%03s', $rating);
