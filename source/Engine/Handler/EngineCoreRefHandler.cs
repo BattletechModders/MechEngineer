@@ -80,7 +80,7 @@ namespace MechEngineer
                 return;
             }
 
-            Control.mod.Logger.LogDebug("D maxEngine=" + maxEngine.CoreDef);
+            // Control.mod.Logger.LogDebug("D maxEngine=" + maxEngine.CoreDef);
 
             var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
