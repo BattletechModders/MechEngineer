@@ -21,11 +21,16 @@ close $handle;
 my %stockratings;
 {
 	open my $handle, '<', "stock_std_ratings.txt";
-	chomp(my @stockstdratings = <$handle>);
+	chomp(my @ratings = <$handle>);
 	close $handle;
-	@stockratings{@stockstdratings} = ();
+	@stockratings{@ratings} = ();
 }
-
+{
+	open my $handle, '<', "lore_ratings.txt";
+	chomp(my @ratings = <$handle>);
+	close $handle;
+	@stockratings{@ratings} = ();
+}
 
 my $icon = "uixSvgIcon_equipment_Heatsink";
 # useful to browse icons
