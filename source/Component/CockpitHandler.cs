@@ -2,11 +2,12 @@
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using CustomComponents;
 using UnityEngine;
 
 namespace MechEngineer
 {
-    internal class CockpitHandler : IDescription, IAdjustUpgradeDef, IAutoFixMechDef
+    internal class CockpitHandler : IAdjustUpgradeDef, IAutoFixMechDef, IPreProcessor
     {
         internal static CockpitHandler Shared = new CockpitHandler();
         
@@ -21,6 +22,7 @@ namespace MechEngineer
                 AllowedLocations = ChassisLocations.Head,
                 ComponentType = ComponentType.Upgrade,
                 Prefix = Control.settings.AutoFixCockpitPrefix,
+                CategoryId = Control.settings.AutoFixCockpitCategoryId,
             };
 
 
@@ -32,6 +34,11 @@ namespace MechEngineer
             );
 
             resizer = new AdjustCompDefTonnageHelper(identity, Control.settings.AutoFixCockpitTonnageChange);
+        }
+
+        public void PreProcess(MechComponentDef target, Dictionary<string, object> values)
+        {
+            identity.PreProcess(target, values);
         }
 
         public bool ProtectsAgainstShutdownInjury(MechDef mechDef)
@@ -52,11 +59,6 @@ namespace MechEngineer
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
             fixer.AutoFixMechDef(mechDef, originalTotalTonnage);
-        }
-
-        public string CategoryName
-        {
-            get { return "Cockpit"; }
         }
     }
 }

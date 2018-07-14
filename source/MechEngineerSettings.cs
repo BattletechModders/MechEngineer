@@ -23,16 +23,19 @@ namespace MechEngineer
         public string AutoFixMechDefGyroId = "Gear_Gyro_Generic_Standard";
         public bool AutoFixGyroUpgrades = true; // enlarges gyro upgrades
         public string AutoFixGyroPrefix = "Gear_Gyro_"; // "Gear_Gyro_";
+        public string AutoFixGyroCategoryId = "Gyro";
         public ValueChange<int> AutoFixGyroSlotChange = new ValueChange<int> {From = 3, By = 1};
 
         public bool AutoFixMechDefCockpit = true; // adds missing cockpit
         public string AutoFixMechDefCockpitId = "Gear_Cockpit_Generic_Standard";
         public bool AutoFixCockpitUpgrades = true; // adds 3 tons to cockpit upgrades that weigh 0 tons
         public string AutoFixCockpitPrefix = "Gear_Cockpit_"; // "Gear_Cockpit_";
+        public string AutoFixCockpitCategoryId = "Cockpit";
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
 
         public bool AutoFixLegUpgrades = true; // reduces leg upgrades from 3 to 1 size
         public string AutoFixLegUpgradesPrefix = null; //"Gear_Actuator_";
+        public string AutoFixLegUpgradesCategoryId = "LegUpgrade";
         public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int> {From = 3, By = -2, FromIsMin = true, NewMin = 1};
 
         public string[] AutoFixChassisDefSkip = { };
@@ -114,8 +117,7 @@ namespace MechEngineer
         #endregion
 
         #region Categories
-        public CategoryDescriptor[] Categories = new CategoryDescriptor[]
-        {
+        public CategoryDescriptor[] Categories = {
             new CategoryDescriptor
             {
                 Name = "Armor",
@@ -141,7 +143,7 @@ namespace MechEngineer
             new CategoryDescriptor
             {
                 Name = "EngineShield",
-                displayName = "Engine Sheilding",
+                displayName = "Engine Shielding",
                 MaxEquiped =  1,
                 MinEquiped =  1,
                 AutoReplace = true
@@ -160,6 +162,13 @@ namespace MechEngineer
                 displayName = "Gyro",
                 MaxEquiped =  1,
                 MinEquiped =  1,
+                AutoReplace = true
+            },
+            new CategoryDescriptor
+            {
+                Name = "LegUpgrade",
+                displayName = "Leg Upgrade",
+                MaxEquiped =  1,
                 AutoReplace = true
             }
         };

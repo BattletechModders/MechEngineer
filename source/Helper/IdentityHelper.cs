@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using BattleTech;
+using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class IdentityHelper : IIdentifier
+    internal class IdentityHelper : IIdentifier, IPreProcessor
     {
         public string Prefix { get; set; }
         public ChassisLocations AllowedLocations { get; set; }
         public ComponentType ComponentType { get; set; }
+        public string CategoryId { get; set; }
 
         public bool IsCustomType(MechComponentDef def)
         {
@@ -36,6 +39,44 @@ namespace MechEngineer
         {
             return (componentDef.AllowedLocations & locations) != 0 // def can be inserted in locations
                    && (componentDef.AllowedLocations & ~locations) == 0; // def can't be inserted anywhere outside of locations
+        }
+
+        public void PreProcess(MechComponentDef target, Dictionary<string, object> values)
+        {
+            if (string.IsNullOrEmpty(CategoryId))
+            {
+                return;
+            }
+
+            if (!IsCustomType(target))
+            {
+                return;
+            }
+
+            // TODO: copy structure from standard object
+
+            values.TryGetValue("Custom", out var customObject);
+            var custom = customObject as Dictionary<string, object>;
+            if (custom == null)
+            {
+                custom = new Dictionary<string, object>();
+                values["Custom"] = custom;
+            }
+
+            custom.TryGetValue("Category", out var categoryObject);
+            var category = categoryObject as Dictionary<string, object>;
+            if (category == null)
+            {
+                category = new Dictionary<string, object>();
+                custom["Category"] = category;
+            }
+
+            if (category.ContainsKey("CategoryID"))
+            {
+                return;
+            }
+
+            category["CategoryID"] = CategoryId;
         }
     }
 

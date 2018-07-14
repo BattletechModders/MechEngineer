@@ -29,6 +29,18 @@ namespace MechEngineer
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
 
                 CustomComponents.Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
+                if (settings.AutoFixCockpitUpgrades)
+                {
+                    CustomComponents.Registry.RegisterPreProcessor(CockpitHandler.Shared);
+                }
+                if (settings.AutoFixGyroUpgrades)
+                {
+                    CustomComponents.Registry.RegisterPreProcessor(GyroHandler.Shared);
+                }
+                if (settings.AutoFixLegUpgrades)
+                {
+                    CustomComponents.Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
+                }
                 foreach (var categoryDescriptor in settings.Categories)
                 {
                     CustomComponents.Control.AddCategory(categoryDescriptor);
