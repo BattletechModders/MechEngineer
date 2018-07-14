@@ -6,12 +6,11 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    internal class CockpitHandler : IDescription, IValidateDrop, IAdjustUpgradeDef, IAutoFixMechDef, IValidateMech
+    internal class CockpitHandler : IDescription, IAdjustUpgradeDef, IAutoFixMechDef
     {
         internal static CockpitHandler Shared = new CockpitHandler();
         
         private readonly IdentityHelper identity;
-        private readonly ValidationHelper checker;
         private readonly AutoFixMechDefHelper fixer;
         private readonly AdjustCompDefTonnageHelper resizer;
 
@@ -24,7 +23,6 @@ namespace MechEngineer
                 Prefix = Control.settings.AutoFixCockpitPrefix,
             };
 
-            checker = new ValidationHelper(identity, this);
 
             fixer = new AutoFixMechDefHelper(
                 identity,
@@ -59,16 +57,6 @@ namespace MechEngineer
         public string CategoryName
         {
             get { return "Cockpit"; }
-        }
-
-        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
-        {
-            return checker.ValidateDrop(dragItem, widget);
-        }
-
-        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
-        {
-            checker.ValidateMech(mechDef, errorMessages);
         }
     }
 }

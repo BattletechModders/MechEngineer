@@ -4,6 +4,9 @@
 			"WeightMultiplier": 1.5,
 		},
 		"EnginePart": {
+		},
+		"Category" : { 
+			"CategoryID" : "EngineShield" 
 		}
 	},
     "Description" : {

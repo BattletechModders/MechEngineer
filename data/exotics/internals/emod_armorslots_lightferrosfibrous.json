@@ -7,6 +7,9 @@
 		"WeightSavings": {
 			"RequiredSlots": 7,
 			"ArmorWeightSavingsFactor": 0.05660,
+		},
+		"Category" : { 
+			"CategoryID" : "Armor" 
 		}
 	},
     "Description" : {

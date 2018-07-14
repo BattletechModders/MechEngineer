@@ -29,6 +29,11 @@ namespace MechEngineer
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
 
                 CustomComponents.Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
+                foreach (var categoryDescriptor in settings.Categories)
+                {
+                    CustomComponents.Control.AddCategory(categoryDescriptor);
+                }
+
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
                 mod.Logger.LogDebug("Loaded " + mod.Name);

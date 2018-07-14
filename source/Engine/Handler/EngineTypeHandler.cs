@@ -6,16 +6,14 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class EngineTypeHandler : IDescription, IValidateDrop, IValidateMech
+    internal class EngineTypeHandler : IDescription, IValidateMech
     {
         internal static EngineTypeHandler Shared = new EngineTypeHandler();
 
-        private readonly ValidationHelper checker;
 
         private EngineTypeHandler()
         {
             var identifier = new IdentityFuncHelper(def => def.GetComponent<EngineType>() != null);
-            checker = new ValidationHelper(identifier, this);
         }
 
         public string CategoryName
@@ -23,14 +21,9 @@ namespace MechEngineer
             get { return "Engine Shielding"; }
         }
 
-        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
-        {
-            return checker.ValidateDrop(dragItem, widget);
-        }
 
         public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
-            checker.ValidateMech(mechDef, errorMessages);
 
             var result = EngineSearcher.SearchInventory(mechDef.Inventory);
             var typeDef = result.Type;

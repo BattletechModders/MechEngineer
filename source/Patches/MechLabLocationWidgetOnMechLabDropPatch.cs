@@ -46,21 +46,6 @@ namespace MechEngineer
                     return false;
                 }
 
-                if (result is MechLabDropReplaceItemResult replace)
-                {
-                    var element = replace.ToReplaceElement;
-                    var newComponentDef = dragItem.ComponentRef.Def;
-
-                    if (___usedSlots - element.ComponentRef.Def.InventorySize + newComponentDef.InventorySize <= ___maxSlots)
-                    {
-                        __instance.OnRemoveItem(element, true);
-                        ___mechLab.ForceItemDrop(element);
-                        Traverse.Create(___mechLab).Field("dragItem").SetValue(dragItem);
-                    }
-                    return true;
-                    //result = new MechLabDropErrorResult($"Cannot add {newComponentDef.Description.Name}: Type is already installed");
-                }
-
                 if (result is MechLabDropErrorResult error)
                 {
                     ___dropErrorMessage = error.errorMessage;
@@ -80,11 +65,6 @@ namespace MechEngineer
 
     public class MechLabDropResult
     {
-    }
-
-    public class MechLabDropReplaceItemResult : MechLabDropResult
-    {
-        internal MechLabItemSlotElement ToReplaceElement;
     }
 
     public class MechLabDropRemoveDragItemResult : MechLabDropResult

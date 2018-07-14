@@ -1,4 +1,9 @@
 {
+	"Custom": {
+		"Category" : { 
+			"CategoryID" : "Cockpit" 
+		}
+	},
     "StatName" : null,
     "RelativeModifier" : 0,
     "AbsoluteModifier" : 0,

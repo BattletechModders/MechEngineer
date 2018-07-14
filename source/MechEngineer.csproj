@@ -44,6 +44,9 @@
       <HintPath>..\..\..\BattleTech_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CustomComponents">
+      <HintPath>..\..\CustomComponents\CustomComponents.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <HintPath>..\..\..\BattleTech_Data\Managed\System.dll</HintPath>
       <Private>False</Private>
@@ -66,16 +69,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CCLight\CustomComponentAttribute.cs" />
-    <Compile Include="CCLight\Factories\CustomComponentFactory.cs" />
-    <Compile Include="CCLight\Database.cs" />
-    <Compile Include="CCLight\Factories\SimpleCustomComponent.cs" />
-    <Compile Include="CCLight\Factories\SimpleCustomComponentFactory.cs" />
-    <Compile Include="CCLight\Factories\ICustomComponent.cs" />
-    <Compile Include="CCLight\Factories\ICustomComponentFactory.cs" />
-    <Compile Include="CCLight\Extensions.cs" />
-    <Compile Include="CCLight\Registry.cs" />
-    <Compile Include="CCLight\Patches\JSONSerializationUtility_RehydrateObjectFromDictionary_Patch.cs" />
     <Compile Include="Features\Color\MechComponentDef_GetUIColor_Patch.cs" />
     <Compile Include="Features\Color\UIColorComponent.cs" />
     <Compile Include="Features\Color\ListElementController_SalvageGear_NotListView_RefreshItemColor_Patch.cs" />
@@ -136,7 +129,6 @@
     <Compile Include="Engine\StaticHandler\EngineCrits.cs" />
     <Compile Include="Engine\StaticHandler\EnginePersistence.cs" />
     <Compile Include="Component\LegUpgradeHandler.cs" />
-    <Compile Include="Helper\ValidationHelper.cs" />
     <Compile Include="Patches\WeaponDef_FromJSON_Patch.cs" />
     <Compile Include="Patches\MechBayPanelOnGotoMechLabPatch.cs" />
     <Compile Include="Patches\MechBayPaneOnRepairMechPatch.cs" />

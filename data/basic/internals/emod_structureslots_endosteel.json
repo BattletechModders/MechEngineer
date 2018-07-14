@@ -17,6 +17,9 @@
 				"CBillCost": "[[Chassis.Tonnage]]"
 			}
 		},
+		"Category" : { 
+			"CategoryID" : "Structure" 
+		}
 	},
     "Description" : {
         "Cost" : 0,

@@ -7,6 +7,9 @@
 		"WeightSavings": {
 			"RequiredSlots": 7,
 			"StructureWeightSavingsFactor": 0.5,
+		},
+		"Category" : { 
+			"CategoryID" : "Structure" 
 		}
 	},
     "Description" : {

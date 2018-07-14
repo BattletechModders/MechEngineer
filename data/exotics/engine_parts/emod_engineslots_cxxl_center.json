@@ -5,6 +5,9 @@
 			"Requirements": ["emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"],
 		},
 		"EnginePart": {
+		},
+		"Category" : { 
+			"CategoryID" : "EngineShield" 
 		}
 	},
     "DissipationCapacity" : -15,

@@ -5,6 +5,9 @@
 			"Requirements": ["emod_engineslots_cxl_left", "emod_engineslots_cxl_right"],
 		},
 		"EnginePart": {
+		},
+		"Category" : { 
+			"CategoryID" : "EngineShield" 
 		}
 	},
     "Description" : {

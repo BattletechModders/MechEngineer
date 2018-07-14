@@ -17,6 +17,9 @@
 				"CBillCost": "[[Chassis.Tonnage]]"
 			}
 		},
+		"Category" : { 
+			"CategoryID" : "Armor" 
+		}
 	},
     "Description" : {
         "Cost" : 0,

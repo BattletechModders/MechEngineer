@@ -4,7 +4,7 @@
 	"Website": "https://github.com/CptMoore/MechEngineer",
 
 	"Enabled": true,
-	"DependsOn": [],
+	"DependsOn": ["CustomComponents"],
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 

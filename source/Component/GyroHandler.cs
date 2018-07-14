@@ -4,11 +4,10 @@ using BattleTech.UI;
 
 namespace MechEngineer
 {
-    internal class GyroHandler : IDescription, IValidateDrop, IAdjustUpgradeDef, IAutoFixMechDef, IValidateMech
+    internal class GyroHandler : IDescription, IAdjustUpgradeDef, IAutoFixMechDef
     {
         internal static GyroHandler Shared = new GyroHandler();
 
-        private readonly ValidationHelper checker;
         private readonly AutoFixMechDefHelper fixer;
         private readonly AdjustCompDefInvSizeHelper resizer;
 
@@ -21,7 +20,6 @@ namespace MechEngineer
                 Prefix = Control.settings.AutoFixGyroPrefix,
             };
 
-            checker = new ValidationHelper(identity, this);
 
             fixer = new AutoFixMechDefHelper(
                 identity,
@@ -51,16 +49,6 @@ namespace MechEngineer
         public string CategoryName
         {
             get { return "Gyro"; }
-        }
-
-        public MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
-        {
-            return checker.ValidateDrop(dragItem, widget);
-        }
-
-        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
-        {
-            checker.ValidateMech(mechDef, errorMessages);
         }
     }
 }

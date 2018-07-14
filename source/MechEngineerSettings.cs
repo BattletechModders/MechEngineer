@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
+using CustomComponents;
 using HBS.Animation.StateMachine;
 
 namespace MechEngineer
@@ -111,5 +112,57 @@ namespace MechEngineer
         public bool AllowLRMInLargerSlotsForAll = true;
 
         #endregion
+
+        #region Categories
+        public CategoryDescriptor[] Categories = new CategoryDescriptor[]
+        {
+            new CategoryDescriptor
+            {
+                Name = "Armor",
+                displayName = "Armor",
+                MaxEquiped =  1,
+                AutoReplace = true
+            },
+            new CategoryDescriptor
+            {
+                Name = "Structure",
+                displayName = "Structure",
+                MaxEquiped =  1,
+                AutoReplace = true
+            },
+            new CategoryDescriptor
+            {
+                Name = "EngineCore",
+                displayName = "Engine Core",
+                MaxEquiped =  1,
+                MinEquiped =  1,
+                AutoReplace = true
+            },
+            new CategoryDescriptor
+            {
+                Name = "EngineShield",
+                displayName = "Engine Sheilding",
+                MaxEquiped =  1,
+                MinEquiped =  1,
+                AutoReplace = true
+            },
+            new CategoryDescriptor
+            {
+                Name = "Cockpit",
+                displayName = "Cockpit",
+                MaxEquiped =  1,
+                MinEquiped =  1,
+                AutoReplace = true
+            },
+            new CategoryDescriptor
+            {
+                Name = "Gyro",
+                displayName = "Gyro",
+                MaxEquiped =  1,
+                MinEquiped =  1,
+                AutoReplace = true
+            }
+        };
+#endregion
     }
 }

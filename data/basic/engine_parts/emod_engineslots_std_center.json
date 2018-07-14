@@ -9,6 +9,9 @@
 			}
 		},
 		"EnginePart": {
+		},
+		"Category" : { 
+			"CategoryID" : "EngineShield" 
 		}
 	},
     "Description" : {
