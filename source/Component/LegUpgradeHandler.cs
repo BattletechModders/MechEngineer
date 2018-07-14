@@ -16,13 +16,7 @@ namespace MechEngineer
 
         private LegUpgradeHandler()
         {
-            identity = new IdentityHelper
-            {
-                AllowedLocations = ChassisLocations.Legs,
-                ComponentType = ComponentType.Upgrade,
-                Prefix = Control.settings.AutoFixLegUpgradesPrefix,
-                CategoryId = Control.settings.AutoFixLegUpgradesCategoryId,
-            };
+            identity = Control.settings.AutoFixLegUpgradesCategorizer;
 
             resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixLegUpgradesSlotChange);
         }
@@ -34,11 +28,6 @@ namespace MechEngineer
 
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
-            if (!Control.settings.AutoFixLegUpgrades)
-            {
-                return;
-            }
-
             resizer.AdjustComponentDef(upgradeDef);
         }
     }

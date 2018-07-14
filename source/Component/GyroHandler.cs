@@ -15,20 +15,11 @@ namespace MechEngineer
 
         private GyroHandler()
         {
-            identity = new IdentityHelper
-            {
-                AllowedLocations = ChassisLocations.CenterTorso,
-                ComponentType = ComponentType.Upgrade,
-                Prefix = Control.settings.AutoFixGyroPrefix,
-                CategoryId = Control.settings.AutoFixGyroCategoryId,
-            };
-
+            identity = Control.settings.AutoFixGyroCategorizer;
 
             fixer = new AutoFixMechDefHelper(
                 identity,
-                Control.settings.AutoFixMechDefGyroId,
-                ComponentType.Upgrade,
-                ChassisLocations.CenterTorso
+                Control.settings.AutoFixMechDefGyroAdder
             );
 
             resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixGyroSlotChange);
@@ -41,11 +32,6 @@ namespace MechEngineer
 
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
-            if (!Control.settings.AutoFixGyroUpgrades)
-            {
-                return;
-            }
-
             resizer.AdjustComponentDef(upgradeDef);
         }
 

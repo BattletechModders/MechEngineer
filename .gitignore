@@ -5,6 +5,7 @@
 log.txt
 /*.dll
 /*.zip
+Settings.defaults.json
 
 # User-specific files
 *.suo

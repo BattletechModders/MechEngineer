@@ -31,7 +31,7 @@ namespace MechEngineer
         {
             try
             {
-                if (!Control.settings.AutoFixChassisDefWeaponHardpointCounts)
+                if (!Control.settings.HardpointFix.AutoFixChassisDefWeaponHardpointCounts)
                 {
                     return;
                 }
@@ -58,7 +58,7 @@ namespace MechEngineer
         {
             try
             {
-                if (!Control.settings.AutoFixChassisDefWeaponHardpointCounts)
+                if (!Control.settings.HardpointFix.AutoFixChassisDefWeaponHardpointCounts)
                 {
                     return;
                 }

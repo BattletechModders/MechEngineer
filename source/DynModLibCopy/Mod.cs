@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using HBS.Util;
 using BattleTech;
+using fastJSON;
 using HBS.Logging;
 
 namespace MechEngineer
@@ -19,6 +20,7 @@ namespace MechEngineer
 
         public string SourcePath => Path.Combine(Directory, "source");
         public string SettingsPath => Path.Combine(Directory, "Settings.json");
+        public string DefaultsSettingsPath => Path.Combine(Directory, "Settings.defaults.json");
         public string ModsPath => Path.GetDirectoryName(Directory);
         public string InfoPath => Path.Combine(Directory, "mod.json");
 
@@ -47,11 +49,20 @@ namespace MechEngineer
             HBS.Logging.Logger.SetLoggerLevel(Name, level);
         }
 
-        public void SaveSettings<T>(T settings) where T : ModSettings
+        public void SaveSettings<T>(T settings, string path) where T : ModSettings
         {
-            using (var writer = new StreamWriter(SettingsPath))
+            using (var writer = new StreamWriter(path))
             {
-                var json = JSONSerializationUtility.ToJSON(settings);
+                var p = new JSONParameters
+                {
+                    EnableAnonymousTypes = true,
+                    SerializeToLowerCaseNames = false,
+                    UseFastGuid = false,
+                    KVStyleStringDictionary = false,
+                    SerializeNullValues = false
+                };
+
+                var json = JSON.ToNiceJSON(settings, p);
                 writer.Write(json);
             }
         }

@@ -39,7 +39,7 @@ namespace MechEngineer
 
         private int CalcJumpJets()
         {
-            return Control.settings.JJRoundUp ? Mathf.CeilToInt(MovementPoint) : Mathf.FloorToInt(MovementPoint);
+            return Control.settings.CBTMovement.JJRoundUp ? Mathf.CeilToInt(MovementPoint) : Mathf.FloorToInt(MovementPoint);
         }
 
         private float CalcWalkDistance()
@@ -48,12 +48,12 @@ namespace MechEngineer
             var WalkSpeedFixed = 26.05f;
             var WalkSpeedMult = 23.14f;
 
-            if (Control.settings.UseGameWalkValues)
+            if (Control.settings.CBTMovement.UseGameWalkValues)
             {
                 return (WalkSpeedFixed + MovementPoint * WalkSpeedMult).RoundBy5();
             }
 
-            return (MovementPoint * Control.settings.const_TTWalkMultiplier).RoundBy5();
+            return (MovementPoint * Control.settings.CBTMovement.TTWalkMultiplier).RoundBy5();
         }
 
         private float CalcSprintDistance()
@@ -62,12 +62,12 @@ namespace MechEngineer
             var RunSpeedFixed = 52.43f;
             var RunSpeedMult = 37.29f;
 
-            if (Control.settings.UseGameWalkValues)
+            if (Control.settings.CBTMovement.UseGameWalkValues)
             {
                 return (RunSpeedFixed + MovementPoint * RunSpeedMult).RoundBy5();
             }
 
-            return (MovementPoint * Control.settings.const_TTSprintMultiplier).RoundBy5();
+            return (MovementPoint * Control.settings.CBTMovement.TTSprintMultiplier).RoundBy5();
         }
     }
 }

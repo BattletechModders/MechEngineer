@@ -27,13 +27,13 @@ namespace MechEngineer
             new MechDefAutoFixCategory
             {
                 AutoFixMechDef = CockpitHandler.Shared,
-                AutoFixSetting = Control.settings.AutoFixMechDefCockpit,
+                AutoFixSetting = Control.settings.AutoFixMechDefCockpitAdder != null,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefCockpit"
             },
             new MechDefAutoFixCategory
             {
                 AutoFixMechDef = GyroHandler.Shared,
-                AutoFixSetting = Control.settings.AutoFixMechDefGyro,
+                AutoFixSetting = Control.settings.AutoFixMechDefGyroAdder != null,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefGyro"
             },
             new MechDefAutoFixCategory

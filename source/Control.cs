@@ -24,23 +24,17 @@ namespace MechEngineer
             {
                 mod.LoadSettings(settings);
                 mod.SetupLogging();
+                mod.SaveSettings(settings, mod.DefaultsSettingsPath);
 
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
 
                 CustomComponents.Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
-                if (settings.AutoFixCockpitUpgrades)
-                {
-                    CustomComponents.Registry.RegisterPreProcessor(CockpitHandler.Shared);
-                }
-                if (settings.AutoFixGyroUpgrades)
-                {
-                    CustomComponents.Registry.RegisterPreProcessor(GyroHandler.Shared);
-                }
-                if (settings.AutoFixLegUpgrades)
-                {
-                    CustomComponents.Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
-                }
+
+                CustomComponents.Registry.RegisterPreProcessor(CockpitHandler.Shared);
+                CustomComponents.Registry.RegisterPreProcessor(GyroHandler.Shared);
+                CustomComponents.Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
+
                 foreach (var categoryDescriptor in settings.Categories)
                 {
                     CustomComponents.Control.AddCategory(categoryDescriptor);

@@ -34,7 +34,7 @@ namespace MechEngineer
                 return true;
             }
 
-            if (Control.settings.AllowDefaultLoadoutWeapons && ComponentIsPartOfDefaultLoadout(componentRef))
+            if (Control.settings.HardpointFix.AllowDefaultLoadoutWeapons && ComponentIsPartOfDefaultLoadout(componentRef))
             {
                 return true;
             }

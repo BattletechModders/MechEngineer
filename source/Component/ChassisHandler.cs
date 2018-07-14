@@ -79,7 +79,7 @@ namespace MechEngineer
             for (var i = 0; i < locations.Length; i++)
             {
                 var location = locations[i].Location;
-                if (changes.TryGetValue(location, out var change))
+                if (changes.TryGetValue(location.ToString(), out var change))
                 {
                     ModifyInventorySlots(ref locations[i], location, change);
                 }

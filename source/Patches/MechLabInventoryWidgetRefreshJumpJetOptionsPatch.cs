@@ -12,7 +12,7 @@ namespace MechEngineer
         {
             try
             {
-                if (!Control.settings.EnableAvailabilityChecks)
+                if (!Control.settings.PerformanceEnableAvailabilityChecks)
                 {
                     return;
                 }

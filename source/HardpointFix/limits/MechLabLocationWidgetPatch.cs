@@ -13,7 +13,7 @@ namespace MechEngineer
         {
             try
             {
-                if (!Control.settings.EnforceHardpointLimits)
+                if (!Control.settings.HardpointFix.EnforceHardpointLimits)
                 {
                     return true;
                 }

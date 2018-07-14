@@ -6,17 +6,13 @@ namespace MechEngineer
 {
     internal class AutoFixMechDefHelper : IAutoFixMechDef
     {
-        private readonly string defId;
         private readonly IIdentifier identifier;
-        private readonly ChassisLocations location;
-        private readonly ComponentType type;
+        private readonly AddHelper adder;
 
-        internal AutoFixMechDefHelper(IIdentifier identifier, string defId, ComponentType type, ChassisLocations location)
+        public AutoFixMechDefHelper(IdentityHelper identifier, AddHelper adder)
         {
             this.identifier = identifier;
-            this.defId = defId;
-            this.type = type;
-            this.location = location;
+            this.adder = adder;
         }
 
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
@@ -28,7 +24,7 @@ namespace MechEngineer
 
             var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
-            var componentRef = new MechComponentRef(defId, null, type, location);
+            var componentRef = new MechComponentRef(adder.ComponentDefId, null, adder.ComponentType, adder.ChassisLocation);
             componentRefs.Add(componentRef);
 
             mechDef.SetInventory(componentRefs.ToArray());

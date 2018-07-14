@@ -77,7 +77,7 @@ namespace MechEngineer
 
                 compatibleTerms = new List<string> {prefabIdFix};
 
-                if (Control.settings.AllowLRMInLargerSlotsForAll)
+                if (Control.settings.HardpointFix.AllowLRMInLargerSlotsForAll)
                 {
                     for (var i = index + 1; i < order.Length; i++)
                     {
@@ -85,7 +85,7 @@ namespace MechEngineer
                     }
                 }
 
-                if (Control.settings.AllowLRMInSmallerSlotsForAll || Control.settings.AllowLRMInSmallerSlotsForMechs.Contains(prefabBase))
+                if (Control.settings.HardpointFix.AllowLRMInSmallerSlotsForAll || Control.settings.HardpointFix.AllowLRMInSmallerSlotsForMechs.Contains(prefabBase))
                 {
                     for (var i = index - 1; i >= 0; i--)
                     {

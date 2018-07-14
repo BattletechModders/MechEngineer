@@ -16,7 +16,7 @@ namespace MechEngineer
                     return;
                 }
 
-                if (!Control.settings.AutoFixWeaponDefSlotsChanges.TryGetValue(__instance.WeaponSubType, out var change))
+                if (!Control.settings.AutoFixWeaponDefSlotsChanges.TryGetValue(__instance.WeaponSubType.ToString(), out var change))
                 {
                     return;
                 }

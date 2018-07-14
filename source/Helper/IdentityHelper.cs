@@ -5,14 +5,20 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class IdentityHelper : IIdentifier, IPreProcessor
+    public class IdentityHelper : IIdentifier, IPreProcessor
     {
         public string Prefix { get; set; }
         public ChassisLocations AllowedLocations { get; set; }
         public ComponentType ComponentType { get; set; }
         public string CategoryId { get; set; }
+        public bool AutoAddCategoryIdIfMissing { get; set; }
 
         public bool IsCustomType(MechComponentDef def)
+        {
+            return def.Is<Category>(out var category) && category.CategoryID == CategoryId;
+        }
+
+        public bool IsMatch(MechComponentDef def)
         {
             if (ComponentType != ComponentType.NotSet && def.ComponentType != ComponentType)
             {
@@ -43,12 +49,12 @@ namespace MechEngineer
 
         public void PreProcess(MechComponentDef target, Dictionary<string, object> values)
         {
-            if (string.IsNullOrEmpty(CategoryId))
+            if (!AutoAddCategoryIdIfMissing)
             {
                 return;
             }
 
-            if (!IsCustomType(target))
+            if (!IsMatch(target))
             {
                 return;
             }

@@ -17,20 +17,11 @@ namespace MechEngineer
 
         private CockpitHandler()
         {
-            identity = new IdentityHelper
-            {
-                AllowedLocations = ChassisLocations.Head,
-                ComponentType = ComponentType.Upgrade,
-                Prefix = Control.settings.AutoFixCockpitPrefix,
-                CategoryId = Control.settings.AutoFixCockpitCategoryId,
-            };
-
+            identity = Control.settings.AutoFixCockpitCategorizer;
 
             fixer = new AutoFixMechDefHelper(
                 identity,
-                Control.settings.AutoFixMechDefCockpitId,
-                ComponentType.Upgrade,
-                ChassisLocations.Head
+                Control.settings.AutoFixMechDefCockpitAdder
             );
 
             resizer = new AdjustCompDefTonnageHelper(identity, Control.settings.AutoFixCockpitTonnageChange);
@@ -48,11 +39,6 @@ namespace MechEngineer
 
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
-            if (!Control.settings.AutoFixCockpitUpgrades)
-            {
-                return;
-            }
-
             resizer.AdjustComponentDef(upgradeDef);
         }
 
