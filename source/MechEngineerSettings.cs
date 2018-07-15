@@ -15,6 +15,11 @@ namespace MechEngineer
     {
         #region misc
 
+        /// <summary>
+        /// Allow wrong dynamic slot state during mech edit
+        /// </summary>
+        public bool AllowWrongDynamicsEdit = false; 
+
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
         public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations
         //public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure

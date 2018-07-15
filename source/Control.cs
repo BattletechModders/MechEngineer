@@ -35,6 +35,11 @@ namespace MechEngineer
                 CustomComponents.Registry.RegisterPreProcessor(GyroHandler.Shared);
                 CustomComponents.Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
 
+                CustomComponents.Validator.RegisterMechValidator(DynamicSlotHandler.Shared.ValidateMech, DynamicSlotHandler.Shared.ValidateMechCanBeFielded);
+
+                if(!settings.AllowWrongDynamicsEdit)
+                    CustomComponents.Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.PostValidateDrop);
+
                 foreach (var categoryDescriptor in settings.Categories)
                 {
                     CustomComponents.Control.AddCategory(categoryDescriptor);

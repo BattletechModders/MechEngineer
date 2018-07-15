@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    public class DynamicSlotHandler : IValidateMech
+    public class DynamicSlotHandler
     {
         public static DynamicSlotHandler Shared = new DynamicSlotHandler();
 
@@ -58,7 +58,7 @@ namespace MechEngineer
             }
         }
 
-        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        public void ValidateMech_old(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
             var slots = new MechDefSlots(mechDef);
             var missing = slots.Missing;
@@ -68,5 +68,38 @@ namespace MechEngineer
                     .Add($"RESERVED SLOTS: Mech requires {missing} additional free slots");
             }
         }
+
+        public void ValidateMech(Dictionary<MechValidationType, List<string>> errors,
+            MechValidationLevel validationLevel, MechDef mechDef)
+        {
+            var slots = new MechDefSlots(mechDef);
+            var missing = slots.Missing;
+            if (missing > 0)
+            {
+                errors[MechValidationType.InvalidInventorySlots]
+                    .Add($"RESERVED SLOTS: Mech requires {missing} additional free slots");
+            }
+        }
+
+        public bool ValidateMechCanBeFielded(MechDef mechDef)
+        {
+            var slots = new MechDefSlots(mechDef);
+            return slots.Missing <= 0;
+        }
+
+        public string PostValidateDrop(MechLabItemSlotElement drop_item, MechDef mech, List<InvItem> new_inventory,
+            List<IChange> changes)
+        {
+            var slots = new MechDefSlots(mech.Chassis, new_inventory);
+            var missing = slots.Missing;
+            if (missing > 0)
+            {
+                return
+                    $"Cannot add {drop_item.ComponentRef.Def.Description.Name}: Mech requires {missing} additional free slots";
+            }
+
+            return string.Empty;
+        }
+
     }
 }
