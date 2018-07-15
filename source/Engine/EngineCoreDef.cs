@@ -1,4 +1,6 @@
-﻿using BattleTech;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BattleTech;
 using CustomComponents;
 using fastJSON;
 using UnityEngine;
@@ -6,7 +8,7 @@ using UnityEngine;
 namespace MechEngineer
 {
     [CustomComponent("EngineCore")]
-    public class EngineCoreDef : SimpleCustomComponent
+    public class EngineCoreDef : SimpleCustomComponent, IMechValidate
     {
         [JsonIgnore]
         private int _rating;
@@ -50,6 +52,56 @@ namespace MechEngineer
         public override string ToString()
         {
             return Def.Description.Id + " Rating=" + Rating;
+        }
+
+        private bool JumpJetCheck(MechDef mechDef, out int count, out int max)
+        {
+            count = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
+            max = GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
+            return count <= max;
+        }
+
+
+        private bool MixedHSCheck(MechDef def, MechComponentRef componentRef)
+        {
+            var engineRef = componentRef.GetEngineCoreRef();
+            if (engineRef == null)
+            {
+                Control.mod.Logger.LogError("No core ref!");
+                return true;
+            }
+
+            var enginehs = engineRef.HeatSinkDef.HSCategory;
+
+            return def.Inventory.Any(d => d.Is<EngineHeatSink>(out var hs) && hs.HSCategory != enginehs);
+        }
+
+        public void ValidateMech(Dictionary<MechValidationType, List<string>> errors,
+            MechValidationLevel validationLevel, MechDef mechDef,
+            MechComponentRef componentRef)
+        {
+            if (!JumpJetCheck(mechDef, out var count, out var max))
+            {
+                errors[MechValidationType.InvalidJumpjets].Add($"JUMPJETS: This Mech mounts too many jumpjets ({count} out of {max})");
+            }
+
+            if (!Control.settings.AllowMixingHeatSinkTypes && MixedHSCheck(mechDef, componentRef))
+            {
+                errors[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Heat Sink types cannot be mixed");
+            }
+        }
+
+        public bool ValidateMechCanBeFielded(MechDef mechDef, MechComponentRef componentRef)
+        {
+            if (!JumpJetCheck(mechDef, out _, out _))
+                return false;
+
+            if (!Control.settings.AllowMixingHeatSinkTypes && MixedHSCheck(mechDef, componentRef))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

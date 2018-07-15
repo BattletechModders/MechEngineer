@@ -6,7 +6,7 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class EngineCoreDefHandler : IDescription, IValidateMech
+    internal class EngineCoreDefHandler : IDescription
     {
         internal static EngineCoreDefHandler Shared = new EngineCoreDefHandler();
 
@@ -22,24 +22,24 @@ namespace MechEngineer
         }
 
 
-        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
-        {
+        //public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        //{
 
-            var mainEngine = mechDef.Inventory.GetEngineCoreDef();
-            if (mainEngine == null)
-            {
-                return;
-            }
+        //    var mainEngine = mechDef.Inventory.GetEngineCoreDef();
+        //    if (mainEngine == null)
+        //    {
+        //        return;
+        //    }
 
-            // jump jets
-            {
-                var currentCount = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
-                var maxCount = mainEngine.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
-                if (currentCount > maxCount)
-                {
-                    errorMessages[MechValidationType.InvalidJumpjets].Add($"JUMPJETS: This Mech mounts too many jumpjets ({currentCount} out of {maxCount})");
-                }
-            }
-        }
+        //    // jump jets
+        //    {
+        //        var currentCount = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
+        //        var maxCount = mainEngine.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
+        //        if (currentCount > maxCount)
+        //        {
+        //            errorMessages[MechValidationType.InvalidJumpjets].Add($"JUMPJETS: This Mech mounts too many jumpjets ({currentCount} out of {maxCount})");
+        //        }
+        //    }
+        //}
     }
 }

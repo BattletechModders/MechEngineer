@@ -6,13 +6,13 @@ namespace MechEngineer
 {
     internal static class ValidationFacade
     {
-        internal static void ValidateMech(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
-        {
-            EngineCoreRefHandler.Shared.ValidateMech(mechDef, errorMessages);
-            EngineCoreDefHandler.Shared.ValidateMech(mechDef, errorMessages);
-            EngineTypeHandler.Shared.ValidateMech(mechDef, errorMessages);
- //           DynamicSlotHandler.Shared.ValidateMech(mechDef, errorMessages);
-        }
+ //       internal static void ValidateMech(MechDef mechDef, ref Dictionary<MechValidationType, List<string>> errorMessages)
+ //       {
+ //           //EngineCoreRefHandler.Shared.ValidateMech(mechDef, errorMessages);
+ //           //EngineCoreDefHandler.Shared.ValidateMech(mechDef, errorMessages);
+ //           //EngineTypeHandler.Shared.ValidateMech(mechDef, errorMessages);
+ ////           DynamicSlotHandler.Shared.ValidateMech(mechDef, errorMessages);
+ //       }
 
         internal static MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget)
         {

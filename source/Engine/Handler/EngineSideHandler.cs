@@ -5,14 +5,14 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class EngineSideHandler 
-    {
-        internal static EngineSideHandler Shared = new EngineSideHandler();
+    //internal class EngineSideHandler 
+    //{
+    //    internal static EngineSideHandler Shared = new EngineSideHandler();
 
 
-        private EngineSideHandler()
-        {
-        }
+    //    private EngineSideHandler()
+    //    {
+    //    }
 
-    }
+    //}
 }

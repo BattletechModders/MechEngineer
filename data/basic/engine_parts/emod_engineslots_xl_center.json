@@ -14,6 +14,12 @@
 		},
 		"Category" : { 
 			"CategoryID" : "EngineShield" 
+		},
+		"Linked" : {
+			"Links" : [
+				{ "ComponentDefId" : "emod_engineslots_xl_left", "Location" : "LeftTorso" },
+				{ "ComponentDefId" : "emod_engineslots_xl_right", "Location" : "RightTorso" }
+			]
 		}
 	},
     "Description" : {
