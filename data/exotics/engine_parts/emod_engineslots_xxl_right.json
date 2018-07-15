@@ -1,9 +1,9 @@
 {
 	"Custom": {
-		"EngineSide": {
-		},
 		"EnginePart": {
-		}
+		},
+		"Sorter" : { "Order" : 0 },
+		"Flags" : { "flags" : [ "default" ] }
 	},
     "DissipationCapacity" : 0,
     "Description" : {

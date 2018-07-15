@@ -1,13 +1,18 @@
 {
 	"Custom": {
 		"EngineType": {
-			"WeightMultiplier": 0.333,
-			"Requirements": ["emod_engineslots_cxxl_left", "emod_engineslots_cxxl_right"],
+			"WeightMultiplier": 0.333
 		},
 		"EnginePart": {
 		},
 		"Category" : { 
 			"CategoryID" : "EngineShield" 
+		},
+		"Linked" : {
+			"Links" : [
+				{ "ComponentDefId" : "emod_engineslots_cxxl_left", "Location" : "LeftTorso" },
+				{ "ComponentDefId" : "emod_engineslots_cxxl_right", "Location" : "RightTorso" }
+			]
 		}
 	},
     "DissipationCapacity" : -15,

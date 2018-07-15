@@ -1,5 +1,8 @@
 {
 	"Custom": {
+		"Color": {
+			"UIColor": "OrangeHalf",
+		},
 		"DynamicSlots": {
 			"ReservedSlots": 6,
 			"ReservedSlotColor": "OrangeHalf",
@@ -10,7 +13,8 @@
 		},
 		"Category" : { 
 			"CategoryID" : "Structure" 
-		}
+		},
+		"Flags" : { "flags" : [ "ignore_damage" ] }
 	},
     "Description" : {
         "Cost" : 0,

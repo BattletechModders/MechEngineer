@@ -1,10 +1,15 @@
 {
 	"Custom": {
 		"EngineType": {
-			"WeightMultiplier": 0.75,
-			"Requirements": ["emod_engineslots_light_left", "emod_engineslots_light_right"],
+			"WeightMultiplier": 0.75
 		},
 		"EnginePart": {
+		},
+		"Linked" : {
+			"Links" : [
+				{ "ComponentDefId" : "emod_engineslots_light_left", "Location" : "LeftTorso" },
+				{ "ComponentDefId" : "emod_engineslots_light_right", "Location" : "RightTorso" }
+			]
 		}
 	},
     "Description" : {
