@@ -154,7 +154,7 @@
     <Compile Include="Engine\Patches\StatTooltipData_SetHeatData_Patch.cs" />
     <Compile Include="Engine\Patches\StatTooltipData_SetMovementData_Patch.cs" />
     <Compile Include="Helper\TooltipPrefab_EquipmentAdapter.cs" />
-    <Compile Include="Features\WeightSavings\Patches\TooltipPrefab_EquipmentSetDataPatch.cs" />
+    <Compile Include="Features\WeightSavings\Patches\TooltipPrefab_EquipmentSetData_Patch.cs" />
     <Compile Include="Engine\StaticHandler\EngineMisc.cs" />
     <Compile Include="Features\WeightSavings\CalculateTonnageFacade.cs" />
     <Compile Include="Features\WeightSavings\Patches\MechLabMechInfoWidget_CalculateTonnage_Patch.cs" />

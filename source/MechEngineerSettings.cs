@@ -15,11 +15,6 @@ namespace MechEngineer
     {
         #region misc
 
-        /// <summary>
-        /// Allow wrong dynamic slot state during mech edit
-        /// </summary>
-        public bool AllowWrongDynamicsEdit = false; 
-
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
         public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations
         //public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
@@ -32,6 +27,11 @@ namespace MechEngineer
 
         public bool EngineCritsEnabled = true; // TODO move to new json based crit system
         public int EngineHeatSinkCapacityAdjustmentPerCrit = -15; // TODO move to new json based crit system
+
+        // MWO does not allow to drop if that would mean to go overweight
+        // battletech allows overweight, to stay consistent so we also allow overspace usage by default
+        // set to true to switch to MWO style
+        public bool MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics = false;
 
         #endregion
 

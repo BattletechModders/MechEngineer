@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
@@ -90,7 +91,7 @@ namespace MechEngineer
         public string PostValidateDrop(MechLabItemSlotElement drop_item, MechDef mech, List<InvItem> new_inventory,
             List<IChange> changes)
         {
-            var slots = new MechDefSlots(mech.Chassis, new_inventory);
+            var slots = new MechDefSlots(mech.Chassis, new_inventory.Select(x => x.item).ToList());
             var missing = slots.Missing;
             if (missing > 0)
             {

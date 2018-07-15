@@ -37,21 +37,6 @@ namespace MechEngineer
             //Control.mod.Logger.LogDebug($"Total={Total} Used={Used} Reserved={Reserved} Missing={Missing}");
         }
 
-        internal MechDefSlots(ChassisDef chassisDef, List<InvItem> new_inventory)
-        {
-            Chassis = chassisDef;
-
-            Total = Locations.Select(chassisDef.GetLocationDef).Sum(d => d.InventorySlots);
-            Used = new_inventory.Sum(r => r.item.Def.InventorySize);
-            DynamicSlots = new_inventory.Select(r => r.item.Def.GetComponent<DynamicSlots>()).Where(s => s != null).ToArray();
-            Reserved = DynamicSlots.Sum(c => c.ReservedSlots);
-
-            Missing = Mathf.Max(Used + Reserved - Total, 0);
-            IsOverloaded = Missing > 0;
-        }
-
-
-
         internal IEnumerable<DynamicSlots> GetReservedSlots()
         {
             foreach (var reservedSlot in DynamicSlots)

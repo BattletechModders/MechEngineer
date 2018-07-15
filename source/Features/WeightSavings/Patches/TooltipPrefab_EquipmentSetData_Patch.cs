@@ -6,7 +6,7 @@ using Harmony;
 namespace MechEngineer
 {
     [HarmonyPatch(typeof(TooltipPrefab_Equipment), "SetData")]
-    public static class TooltipPrefab_EquipmentSetDataPatch
+    public static class TooltipPrefab_EquipmentSetData_Patch
     {
         public static void Postfix(TooltipPrefab_Equipment __instance, object data)
         {
