@@ -9,11 +9,6 @@ namespace MechEngineer
         bool IsCustomType(MechComponentDef def);
     }
 
-    internal interface IDescription
-    {
-        string CategoryName { get; }
-    }
-
     internal interface IValidateMech
     {
         void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages);

@@ -39,10 +39,6 @@ namespace MechEngineer
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
 
-            var heatSinks = mechDef.Inventory
-                .Where(r => r.Def.GetComponent<EngineHeatSink>() != null)
-                .ToList();
-
             var standardEngineType = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef).GetComponent<EngineType>();
             var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
 

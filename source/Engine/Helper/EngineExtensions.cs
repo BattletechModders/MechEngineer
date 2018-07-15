@@ -39,11 +39,5 @@ namespace MechEngineer
 
             return new EngineCoreRef(@this, engineDef);
         }
-
-        internal static EngineCoreDef GetEngineCoreDef(this IEnumerable<MechComponentRef> componentRefs)
-        {
-            var result = EngineSearcher.SearchInventory(componentRefs);
-            return result.CoreRef?.CoreDef;
-        }
     }
 }

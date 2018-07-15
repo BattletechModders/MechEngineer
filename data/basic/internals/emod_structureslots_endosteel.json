@@ -19,7 +19,8 @@
 		},
 		"Category" : { 
 			"CategoryID" : "Structure" 
-		}
+		},
+		"Flags" : { "flags" : [ "ignore_damage" ] }
 	},
     "Description" : {
         "Cost" : 0,
