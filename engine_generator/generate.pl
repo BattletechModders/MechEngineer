@@ -58,7 +58,7 @@ while (my $line = <$info>)  {
 
 	my $rating_string = sprintf('%03s', $rating);
 	print($rating_string, " ");
-	my $gyro_tons = int($rating / 100 + 0.5);
+	my $gyro_tons = ceil($rating / 100);
 	my $gyro_cost = 300000 * $gyro_tons;
 	my $heat_dissipation = min(floor($rating / 25), 10) * 3;
 	my $additional_slots = max(floor($rating / 25 - 10), 0);

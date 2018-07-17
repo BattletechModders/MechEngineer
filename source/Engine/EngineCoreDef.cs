@@ -20,6 +20,7 @@ namespace MechEngineer
             {
                 _rating = value;
                 CalcHeatSinks();
+                CalcTonnages();
             }
         }
 
@@ -40,9 +41,17 @@ namespace MechEngineer
         internal int MaxFreeExternalHeatSinks { get; private set; }
 
         internal float MaxInternalHeatSinks => InternalHeatSinks + MaxAdditionalHeatSinks;
-        internal float GyroTonnage => (Rating / 100f).RoundStandard();
-        internal float StandardEngineTonnage => Def.Tonnage - GyroTonnage;
         internal HeatSinkDef HeatSinkDef => Def as HeatSinkDef; // TODO reintroduce GenericCustomComponent
+
+        private void CalcTonnages()
+        {
+            GyroTonnage = Mathf.Ceil(Rating / 100f);
+        }
+
+        [JsonIgnore]
+        internal float GyroTonnage { get; private set; }
+
+        internal float StandardEngineTonnage => Def.Tonnage - GyroTonnage;
 
         internal EngineMovement GetMovement(float tonnage)
         {
