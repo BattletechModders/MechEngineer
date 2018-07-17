@@ -17,7 +17,7 @@
 	},
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : 1125000,
+        "Cost" : 1425000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Vlar",
@@ -35,7 +35,7 @@
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 2,
-    "Tonnage" : 11,
+    "Tonnage" : 12,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,

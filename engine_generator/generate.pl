@@ -20,15 +20,8 @@ close $handle;
 
 my %stockratings;
 {
-	open my $handle, '<', "stock_std_ratings.txt";
-	chomp(my @ratings = <$handle>);
-	close $handle;
-	@stockratings{@ratings} = ();
-}
-{
-	open my $handle, '<', "lore_ratings.txt";
-	chomp(my @ratings = <$handle>);
-	close $handle;
+	my @ratings = get_lines_from_file("stock_std_ratings.txt");
+	push(@ratings, get_lines_from_file("lore_ratings.txt"));
 	@stockratings{@ratings} = ();
 }
 
@@ -109,4 +102,13 @@ sub write_to_file {
 	open(my $fh, '>', $filename) or die "Could not open file '$filename' $!";
 	print {$fh} $content;
 	close $fh;
+}
+
+sub get_lines_from_file {
+	local $/ = "\r\n";
+	my $filename = shift;
+	open my $handle, '<', $filename;
+	chomp(my @lines = <$handle>);
+	close $handle;
+	return @lines;
 }
