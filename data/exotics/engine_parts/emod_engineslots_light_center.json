@@ -1,16 +1,16 @@
 {
 	"Custom": {
-		"EngineType": {
-			"WeightMultiplier": 0.75
-		},
-		"EnginePart": {
+		"Weights": {
+			"ReservedSlots": 4,
+			"EngineFactor": 0.25
 		},
 		"Linked" : {
 			"Links" : [
 				{ "ComponentDefId" : "emod_engineslots_light_left", "Location" : "LeftTorso" },
 				{ "ComponentDefId" : "emod_engineslots_light_right", "Location" : "RightTorso" }
 			]
-		}
+		},
+		"Flags" : { "flags" : [ "engine_part" ] }
 	},
     "Description" : {
         "Cost" : 1875000,
@@ -24,7 +24,7 @@
         "Details" : "The Light Fusion Engine is mechanically similar to an XL Engine, but uses Lostech energy shielding to allow a mech to survive the destruction of a side torso. The Light Fusion engine is 75% the mass for the same performance, but intrudes into the side torso bays of a BattleMech.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
-    "BonusValueA" : "- 0.25 x Ton",
+    "BonusValueA" : "- 0.25 x ETon",
     "BonusValueB" : "- 4 Slots",
     "ComponentType" : "HeatSink",
     "ComponentSubType" : "Heatsink",

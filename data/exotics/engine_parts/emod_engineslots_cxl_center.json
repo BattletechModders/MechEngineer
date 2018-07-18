@@ -1,9 +1,8 @@
 {
 	"Custom": {
-		"EngineType": {
-			"WeightMultiplier": 0.5
-		},
-		"EnginePart": {
+		"Weights": {
+			"ReservedSlots": 4,
+			"EngineFactor": 0.5
 		},
 		"Category" : { 
 			"CategoryID" : "EngineShield" 
@@ -13,7 +12,8 @@
 				{ "ComponentDefId" : "emod_engineslots_cxl_left", "Location" : "LeftTorso" },
 				{ "ComponentDefId" : "emod_engineslots_cxl_right", "Location" : "RightTorso" }
 			]
-		}
+		},
+		"Flags" : { "flags" : [ "engine_part" ] }
 	},
     "Description" : {
         "Cost" : 2500000,
@@ -27,7 +27,7 @@
         "Details" : "The Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The XL fusion engine is half the mass for the same performance. The Clan XL fusion engine is 66% larger than the standard fusion engine and intrudes into the side torso bays of a BattleMech.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
-    "BonusValueA" : "- 0.5 x Ton",
+    "BonusValueA" : "- 0.5 x ETon",
     "BonusValueB" : "- 4 Slots",
     "ComponentType" : "HeatSink",
     "ComponentSubType" : "Heatsink",

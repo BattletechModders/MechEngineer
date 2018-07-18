@@ -81,7 +81,7 @@ namespace MechEngineer
             tooltip.detailText.text += "\r\n" +
                                        "<i>Weights [Ton]</i>" +
                                        "   Engine: <b>" + engine.EngineTonnage + "</b>" +
-                                       "   Gyro: <b>" + engine.CoreDef.GyroTonnage + "</b>" +
+                                       "   Gyro: <b>" + engine.GyroTonnage + "</b>" +
                                        "   Sinks: <b>" + engine.HeatSinkTonnage + "</b>";
 
             tooltip.tonnageText.text = $"{engine.TotalTonnage}";

@@ -35,9 +35,7 @@ namespace MechEngineer
             }
 
             var componentRef = mechComponent.mechComponentRef;
-
-            var enginePart = componentRef?.Def?.GetComponent<EnginePart>();
-            if (enginePart == null)
+            if (!componentRef.Def.IsEnginePart())
             {
                 return true;
             }
@@ -96,7 +94,7 @@ namespace MechEngineer
             if (damageLevel >= ComponentDamageLevel.NonFunctional)
             {
                 Control.mod.Logger.LogDebug(mainEngineComponent.Name + " " + damageLevel);
-                foreach (var component in mech.allComponents.Where(c => c?.componentDef?.GetComponent<EnginePart>() != null))
+                foreach (var component in mech.allComponents.Where(c => c.componentDef.IsEnginePart()))
                 {
                     component.StatCollection.ModifyStat(
                         hitInfo.attackerId,

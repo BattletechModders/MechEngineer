@@ -1,9 +1,8 @@
 {
 	"Custom": {
-		"EngineType": {
-			"WeightMultiplier": 0.333
-		},
-		"EnginePart": {
+		"Weights": {
+			"ReservedSlots": 8,
+			"EngineFactor": 0.666
 		},
 		"Category" : { 
 			"CategoryID" : "EngineShield" 
@@ -13,7 +12,8 @@
 				{ "ComponentDefId" : "emod_engineslots_cxxl_left", "Location" : "LeftTorso" },
 				{ "ComponentDefId" : "emod_engineslots_cxxl_right", "Location" : "RightTorso" }
 			]
-		}
+		},
+		"Flags" : { "flags" : [ "engine_part" ] }
 	},
     "DissipationCapacity" : -15,
     "Description" : {
@@ -28,7 +28,7 @@
         "Details" : "The Clan Extra-Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The cXXL fusion engine is one third the mass for the same performance, but extrudes into the side torsos of a Battlemech and produces additional waste heat.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
-    "BonusValueA" : "- 2/3 x Ton",
+    "BonusValueA" : "- 2/3 x ETon",
     "BonusValueB" : "- 8 Slots + 15 Heat / Turn",
     "ComponentType" : "HeatSink",
     "ComponentSubType" : "Heatsink",

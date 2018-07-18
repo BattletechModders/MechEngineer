@@ -15,12 +15,12 @@ namespace MechEngineer
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
 
-            if (result.CoreRef == null || result.Type == null)
+            if (result.CoreRef == null)
             {
                 return null;
             }
 
-            return new Engine(result.CoreRef, result.Type, result.HeatSinks);
+            return new Engine(result.CoreRef, result.Weights, result.HeatSinks);
         }
 
         internal static EngineCoreRef GetEngineCoreRef(this IEnumerable<MechComponentRef> componentRefs)
@@ -38,6 +38,11 @@ namespace MechEngineer
             }
 
             return new EngineCoreRef(@this, engineDef);
+        }
+
+        internal static bool IsEnginePart(this MechComponentDef componentDef)
+        {
+            return componentDef.Is<Flags>(out var flags) && flags.IsSet("engine_part");
         }
     }
 }

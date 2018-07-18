@@ -65,6 +65,7 @@ Use these mods to maximize enjoyment
 * Settings and Modding
   * players can disable some of the restritions
   * modders can add more components using CustomComponents
+  * add engines using the generate.pl script in engine_generator
   * there are additional settings like factional accounting or partical weight savings for structure and armor components
   * see [Settings Source Code](https://github.com/CptMoore/MechEngineer/blob/master/source/MechEngineerSettings.cs) for all available settings
 
@@ -123,6 +124,11 @@ endo-steel | -
 clan endo-steel | yes
 endo-composite | yes
 
+Ratings are chosen by what the base game requires + JK chassis variants needed.
+The engine generator can be used to quickly add more engine ratings:
+* edit engine_generator/stock_std_ratings.txt
+* right click on folder -> git bash here -> type in "./generate.pl"
+
 ### TODO
 
 * see [issues list](https://github.com/CptMoore/MechEngineer/issues)
@@ -132,7 +138,8 @@ endo-composite | yes
 * Aliencreature - ideas, lore and rules, item variants, testing
 * CptMoore - ideas, rules, coding, testing, core items
 * CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
-* Denadan - ideas, custom components lib
+* Denadan - ideas, custom components lib, coding
+* Gentleman Reaper - ideas, lore and rules, testing
 * TotalMeltdown - ideas, lore and rules
 
 ## Download

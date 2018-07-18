@@ -7,9 +7,8 @@
 			"ReservedSlots": 6,
 			"ReservedSlotColor": "OrangeHalf",
 		},
-		"WeightSavings": {
-			"RequiredSlots": 7,
-			"StructureWeightSavingsFactor": 0.25,
+		"Weights": {
+			"StructureFactor": 0.75
 		},
 		"Category" : { 
 			"CategoryID" : "Structure" 
@@ -28,8 +27,8 @@
         "Details" : "A Lyran attempt to replicate Clan Endo-Steel in 2067, Endo-Composite uses a mix of standard and Endo-Steel components to produce a chassis that weighs only 75% of the original, at an increase in overall bulk.\r\n\r\nAdd exactly <b>7</b> Endo-Composite slots to reduce your internal structure weight to <b>75%</b>.",
         "Icon" : "uixSvgIcon_quantity"
     },
-    "BonusValueA" : "",
-    "BonusValueB" : "",
+    "BonusValueA" : "- 0.25 x STon",
+    "BonusValueB" : "- 6 Slots",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",

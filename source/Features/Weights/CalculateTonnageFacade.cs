@@ -8,7 +8,7 @@ namespace MechEngineer
         {
             float tonnage = 0;
             tonnage += EngineHandler.Shared.TonnageChanges(mechDef);
-            tonnage += WeightSavingsHandler.Shared.TonnageChanges(mechDef);
+            tonnage += WeightsHandler.Shared.TonnageChanges(mechDef);
             return tonnage;
         }
     }

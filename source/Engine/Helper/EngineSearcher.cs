@@ -21,8 +21,12 @@ namespace MechEngineer
                     continue;
                 }
 
-                var enginePart = componentDef.GetComponent<EnginePart>();
-                if (enginePart == null)
+                if (componentDef.Is<Weights>(out var weightSavings))
+                {
+                    result.Weights.Combine(weightSavings);
+                }
+                
+                if (!componentDef.IsEnginePart())
                 {
                     continue;
                 }
@@ -32,12 +36,6 @@ namespace MechEngineer
                 if (result.CoreRef == null && componentDef.GetComponent<EngineCoreDef>() != null)
                 {
                     result.CoreRef = componentRef.GetEngineCoreRef();
-                    continue;
-                }
-
-                if (result.Type == null)
-                {
-                    result.Type = componentDef.GetComponent<EngineType>();
                 }
             }
 
@@ -48,7 +46,7 @@ namespace MechEngineer
         {
             internal EngineCoreRef CoreRef;
             internal List<MechComponentRef> Parts = new List<MechComponentRef>();
-            internal EngineType Type;
+            internal Weights Weights = new Weights();
             internal List<MechComponentRef> HeatSinks = new List<MechComponentRef>();
         }
     }

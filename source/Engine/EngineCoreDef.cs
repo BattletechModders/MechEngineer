@@ -45,13 +45,13 @@ namespace MechEngineer
 
         private void CalcTonnages()
         {
-            GyroTonnage = Mathf.Ceil(Rating / 100f);
+            StandardGyroTonnage = Mathf.Ceil(Rating / 100f);
         }
 
         [JsonIgnore]
-        internal float GyroTonnage { get; private set; }
+        internal float StandardGyroTonnage { get; private set; }
 
-        internal float StandardEngineTonnage => Def.Tonnage - GyroTonnage;
+        internal float StandardEngineTonnage => Def.Tonnage - StandardGyroTonnage;
 
         internal EngineMovement GetMovement(float tonnage)
         {

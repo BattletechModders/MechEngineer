@@ -7,8 +7,8 @@
 			"ReservedSlots": 5,
 			"ReservedSlotColor": "ArmorDamaged",
 		},
-		"WeightSavings": {
-			"RequiredSlots": 6
+		"Weights": {
+			"RequiredSlots": 5
 		},
 		"Category" : { 
 			"CategoryID" : "Armor" 

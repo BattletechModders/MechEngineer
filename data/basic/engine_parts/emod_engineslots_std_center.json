@@ -1,18 +1,15 @@
 {
 	"Custom": {
-		"EngineType": {
-		},
 		"WorkOrderCosts": {
 			"Install": {
 				"TechCost": "[[Chassis.Tonnage]]/10",
 				"CBillCost": "[[Chassis.Tonnage]]"
 			}
 		},
-		"EnginePart": {
-		},
 		"Category" : { 
 			"CategoryID" : "EngineShield" 
-		}
+		},
+		"Flags" : { "flags" : [ "engine_part" ] }
 	},
     "Description" : {
         "Cost" : 0,

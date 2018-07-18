@@ -7,11 +7,11 @@ namespace MechEngineer
 {
     internal class Engine
     {
-        internal Engine(EngineCoreRef coreRef, EngineType type, IEnumerable<MechComponentRef> externalHeatSinks)
+        internal Engine(EngineCoreRef coreRef, Weights weights, IEnumerable<MechComponentRef> externalHeatSinks)
         {
             CoreRef = coreRef;
             CoreDef = coreRef.CoreDef;
-            Type = type;
+            Weights = weights;
             FreeExternalHeatSinkCount = MatchingCount(externalHeatSinks, CoreRef.HeatSinkDef.HeatSinkDef);
         }
 
@@ -21,20 +21,25 @@ namespace MechEngineer
         }
 
         internal EngineCoreRef CoreRef { get; }
-        internal EngineCoreDef CoreDef { get; set; }
-        internal EngineType Type { get; }
+        internal Weights Weights { get; }
         internal float FreeExternalHeatSinkCount { get; }
         
+        /* dynamic stuff below */
+        
+        internal EngineCoreDef CoreDef { get; set; }
+
         internal float FreeExternalHeatSinkTonnage
             => Mathf.Min(FreeExternalHeatSinkCount, CoreDef.MaxFreeExternalHeatSinks)
             * CoreRef.HeatSinkDef.Def.Tonnage;
 
-        internal float EngineTonnage => (CoreDef.StandardEngineTonnage * Type.WeightMultiplier).RoundStandard();
+        internal float GyroTonnage => (CoreDef.StandardGyroTonnage * Weights.GyroFactor).RoundStandard();
+
+        internal float EngineTonnage => (CoreDef.StandardEngineTonnage * Weights.EngineFactor).RoundStandard();
 
         internal float HeatSinkTonnage => CoreRef.InternalHeatSinkTonnage - FreeExternalHeatSinkTonnage;
 
-        internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + CoreDef.GyroTonnage;
+        internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;
 
-        public float TotalTonnageChanges => TotalTonnage - CoreDef.Def.Tonnage;
+        internal float TotalTonnageChanges => TotalTonnage - CoreDef.Def.Tonnage;
     }
 }

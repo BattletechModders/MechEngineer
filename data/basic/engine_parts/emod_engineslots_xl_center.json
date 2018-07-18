@@ -1,16 +1,14 @@
 {
 	"Custom": {
-		"EngineType": {
-			"WeightMultiplier": 0.5,
-			"Requirements": ["emod_engineslots_xl_left", "emod_engineslots_xl_right"],
+		"Weights": {
+			"ReservedSlots": 6,
+			"EngineFactor": 0.5
 		},
 		"WorkOrderCosts": {
 			"Install": {
 				"TechCost": "[[Chassis.Tonnage]]/10",
 				"CBillCost": "[[Chassis.Tonnage]]"
 			}
-		},
-		"EnginePart": {
 		},
 		"Category" : { 
 			"CategoryID" : "EngineShield" 
@@ -20,7 +18,8 @@
 				{ "ComponentDefId" : "emod_engineslots_xl_left", "Location" : "LeftTorso" },
 				{ "ComponentDefId" : "emod_engineslots_xl_right", "Location" : "RightTorso" }
 			]
-		}
+		},
+		"Flags" : { "flags" : [ "engine_part" ] }
 	},
     "Description" : {
         "Cost" : 0,
@@ -34,7 +33,7 @@
         "Details" : "The Extralight Fusion Engine is mechanically similar to a Fusion Engine but uses much lighter radiation shielding. The XL fusion engine is half the mass for the same performance. The XL fusion engine is twice as large as the standard fusion engine and intrudes into the side torso bays of a BattleMech.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
-    "BonusValueA" : "- 0.5 x Ton",
+    "BonusValueA" : "- 0.5 x ETon",
     "BonusValueB" : "- 6 Slots",
     "ComponentType" : "HeatSink",
     "ComponentSubType" : "Heatsink",

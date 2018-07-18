@@ -7,9 +7,8 @@
 			"ReservedSlots": 20,
 			"ReservedSlotColor": "ArmorDamaged",
 		},
-		"WeightSavings": {
-			"RequiredSlots": 21,
-			"ArmorWeightSavingsFactor": 0.19354,
+		"Weights": {
+			"ArmorFactor": 0.80646
 		},
 		"Category" : { 
 			"CategoryID" : "Armor" 
@@ -28,8 +27,8 @@
         "Details" : "Heavy Ferro-Fibrous armor was developed by Durallex for the Lyran Alliance based on the Inner Sphere's attempts at Light Ferro-Fibrous. Utilizing a weave of ferro-steel, ferro-titanium, and diamond weave fibers which boosts the tensile strength of the plating, it provides more protection per ton than standard armor, but takes up more space on the 'Mech or vehicle.\r\n\r\nAdd exactly <b>21</b> Light Ferro-Fibrous slots to reduce the armor tonnage by <b>1/6</b>.",
         "Icon" : "uixSvgIcon_action_end"
     },
-    "BonusValueA" : " ",
-    "BonusValueB" : " ",
+    "BonusValueA" : "- 0.2 x ATon",
+    "BonusValueB" : "- 20 Slots",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",

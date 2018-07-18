@@ -7,9 +7,8 @@
 			"ReservedSlots": 6,
 			"ReservedSlotColor": "OrangeHalf",
 		},
-		"WeightSavings": {
-			"RequiredSlots": 7,
-			"StructureWeightSavingsFactor": 0.5,
+		"Weights": {
+			"StructureFactor": 0.5
 		},
 		"Category" : { 
 			"CategoryID" : "Structure" 
@@ -28,8 +27,8 @@
         "Details" : "Developed by the Terran Hegemony in 2487 and improved by the Clans after their Exodus, Clan Endo Steel was designed especially for use in BattleMech skeletons. Using zero-G manufacturing techniques that uniformly mix high-density steel with lower-density titanium and aluminum, the process produces a metal twice as strong per unit of weight as standard skeleton materials thus halving the weight of the chassis, but at an increase in overall bulk.\r\n\r\nAdd exactly <b>7</b> Endo-Steel slots to <b>half</b> your internal structure weight.",
         "Icon" : "uixSvgIcon_quantity"
     },
-    "BonusValueA" : "",
-    "BonusValueB" : "",
+    "BonusValueA" : "- 0.5 x STon",
+    "BonusValueB" : "- 6 Slots",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",

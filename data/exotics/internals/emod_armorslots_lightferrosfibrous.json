@@ -7,9 +7,8 @@
 			"ReservedSlots": 6,
 			"ReservedSlotColor": "ArmorDamaged",
 		},
-		"WeightSavings": {
-			"RequiredSlots": 7,
-			"ArmorWeightSavingsFactor": 0.05660,
+		"Weights": {
+			"ArmorFactor": 0.94340
 		},
 		"Category" : { 
 			"CategoryID" : "Armor" 
@@ -28,8 +27,8 @@
         "Details" : "Light Ferro-Fibrous armor (FF) is an attempt by the Inner Sphere to mimic Clan Ferro-Fibrous armor. Utilizing a weave of ferro-steel, ferro-titanium, and diamond weave fibers which boosts the tensile strength of the plating, it provides more protection per ton than standard armor, but takes up more space on the 'Mech or vehicle.\r\n\r\nAdd exactly <b>7</b> Light Ferro-Fibrous slots to reduce the armor tonnage by <b>1/24</b>.",
         "Icon" : "uixSvgIcon_action_end"
     },
-    "BonusValueA" : " ",
-    "BonusValueB" : " ",
+    "BonusValueA" : "- 0.06 x ATon",
+    "BonusValueB" : "- 6 Slots",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",

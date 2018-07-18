@@ -38,9 +38,9 @@ namespace MechEngineer
             var maxEngine = (Engine) null;
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
-
-            var standardEngineType = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef).GetComponent<EngineType>();
             var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
+            var standardWeights = new Weights(); // use default gyro and weights
+            var stanardEngineType = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef);
 
             var engineHeatSinkdef = mechDef.Inventory
                 .Select(r => r.Def.GetComponent<EngineHeatSink>())
@@ -57,7 +57,7 @@ namespace MechEngineer
                 }
 
                 var coreRef = new EngineCoreRef(engineHeatSinkdef, coreDef);
-                var engine = new Engine(coreRef, standardEngineType, Enumerable.Empty<MechComponentRef>());
+                var engine = new Engine(coreRef, standardWeights, Enumerable.Empty<MechComponentRef>());
                 if (engine.TotalTonnage > freeTonnage)
                 {
                     continue;
@@ -100,7 +100,7 @@ namespace MechEngineer
             );
 
             // add standard shielding
-            builder.Add(standardEngineType.Def, ChassisLocations.CenterTorso);
+            builder.Add(stanardEngineType, ChassisLocations.CenterTorso);
 
             // add free heatsinks
             {

@@ -7,9 +7,8 @@
 			"ReservedSlots": 13,
 			"ReservedSlotColor": "OrangeHalf",
 		},
-		"WeightSavings": {
-			"RequiredSlots": 14,
-			"StructureWeightSavingsFactor": 0.5,
+		"Weights": {
+			"StructureFactor": 0.5
 		},
 		"WorkOrderCosts": {
 			"Install": {
@@ -34,8 +33,8 @@
         "Details" : "Developed by the Terran Hegemony in 2487, Endo Steel was designed especially for use in BattleMech skeletons. Using zero-G manufacturing techniques that uniformly mix high-density steel with lower-density titanium and aluminum, the process produces a metal twice as strong per unit of weight as standard skeleton materials thus halving the weight of the chassis, but at an increase in overall bulk.\r\n\r\nAdd exactly <b>14</b> Endo-Steel slots to <b>half</b> your internal structure weight.",
         "Icon" : "uixSvgIcon_quantity"
     },
-    "BonusValueA" : " ",
-    "BonusValueB" : " ",
+    "BonusValueA" : "- 0.5 x STon",
+    "BonusValueB" : "- 13 Slots",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",

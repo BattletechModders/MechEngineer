@@ -9,11 +9,10 @@
 				"CBillCost": "230 * [[Chassis.Tonnage]]"
 			}
 		},
-		"EnginePart": {
-		},
 		"Category" : { 
 			"CategoryID" : "EngineCore" 
-		}
+		},
+		"Flags" : { "flags" : [ "engine_part" ] }
 	},
     "DissipationCapacity" : 0,
     "Description" : {
