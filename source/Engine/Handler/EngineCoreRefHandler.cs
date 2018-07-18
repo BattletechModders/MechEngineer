@@ -121,45 +121,6 @@ namespace MechEngineer
             mechDef.SetInventory(componentRefs.ToArray());
         }
 
-        //public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
-        //{
-        //    if (Control.settings.AllowMixingHeatSinkTypes)
-        //    {
-        //        return;
-        //    }
-
-        //    var set = new HashSet<string>();
-        //    foreach (var componentRef in mechDef.Inventory)
-        //    {
-        //        var def = componentRef?.Def;
-        //        if (def == null)
-        //        {
-        //            continue;
-        //        }
-
-        //        var componentDef = def.GetComponent<EngineHeatSink>();
-        //        if (componentDef != null)
-        //        {
-        //            set.Add(componentDef.HSCategory);
-        //        }
-        //        else if (def.GetComponent<EngineCoreDef>() != null)
-        //        {
-        //            var engineRef = componentRef.GetEngineCoreRef();
-        //            set.Add(engineRef.HeatSinkDef.HSCategory);
-        //        }
-        //        else
-        //        {
-        //            continue;
-        //        }
-
-        //        if (set.Count > 1)
-        //        {
-        //            errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEATSINKS: Heat Sink types cannot be mixed");
-        //            return;
-        //        }
-        //    }
-        //}
-
         public void ModifySlotElement(MechLabItemSlotElement instance, MechLabPanel panel = null)
         {
             var engineRef = instance.ComponentRef.GetEngineCoreRef();
