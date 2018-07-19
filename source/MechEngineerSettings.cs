@@ -150,6 +150,20 @@ namespace MechEngineer
         };
         public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int> {From = 3, By = -2, FromIsMin = true, NewMin = 1};
 
+        public IdentityHelper AutoFixArmorCategorizer = new IdentityHelper
+        {
+            CategoryId = "Armor",
+            AutoAddCategoryIdIfMissing = true
+        };
+        public AddHelper AutoFixMechDefArmorAdder = new AddHelper
+        {
+            ChassisLocation = ChassisLocations.CenterTorso,
+            ComponentDefId = "emod_armorslots_standard",
+            ComponentType = ComponentType.Upgrade,
+        };
+
+
+
         public string[] AutoFixChassisDefSkip = { };
         public bool AutoFixChassisDefSlots = true; // adds 2 torso slots at a cost of 2 leg slots per side if they match stock slot layouts
         public Dictionary<string, ValueChange<int>> AutoFixChassisDefSlotsChanges = new Dictionary<string, ValueChange<int>>
@@ -159,7 +173,7 @@ namespace MechEngineer
             [ChassisLocations.LeftLeg.ToString()] = new ValueChange<int> {From = 4, By = -2},
             [ChassisLocations.RightLeg.ToString()] = new ValueChange<int> {From = 4, By = -2},
             [ChassisLocations.Head.ToString()] = new ValueChange<int> {From = 1, By = 1},
-            [ChassisLocations.CenterTorso.ToString()] = new ValueChange<int> {From = 4, By = 8},
+            [ChassisLocations.CenterTorso.ToString()] = new ValueChange<int> {From = 4, By = 9},
         };
 
         public bool AutoFixChassisDefInitialTonnage = true;
@@ -242,6 +256,7 @@ namespace MechEngineer
                 Name = "Armor",
                 displayName = "Armor",
                 MaxEquiped =  1,
+                MinEquiped =  1,
                 AutoReplace = true
             },
             new CategoryDescriptor

@@ -4,7 +4,7 @@
 			"UIColor": "ArmorDamaged",
 		},
 		"DynamicSlots": {
-			"ReservedSlots": 20,
+			"ReservedSlots": 21,
 			"ReservedSlotColor": "ArmorDamaged",
 		},
 		"Weights": {
@@ -13,7 +13,9 @@
 		"Category" : { 
 			"CategoryID" : "Armor" 
 		},
-		"Flags" : { "flags" : [ "ignore_damage" ] }
+		"Flags" : { "flags" : [ "ignore_damage", "autorepair" ] },
+		"Replace" : { "ComponentDefId" : "emod_armorslots_standard" },
+		"Sorter" : { "Order" : 0 }
 	},
     "Description" : {
         "Cost" : 60000,

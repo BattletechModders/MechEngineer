@@ -1,0 +1,39 @@
+{
+	"Custom": {
+		"Category" : { 
+			"CategoryID" : "Armor" 
+		},
+		"Flags" : { "flags" : [ "ignore_damage", "default" ] },
+		"Sorter" : { "Order" : 0 }
+	},
+    "Description" : {
+        "Cost" : 0,
+        "Rarity" : 0,
+        "Purchasable" : true,
+        "Manufacturer" : "Lostech",
+        "Model" : "Armor",
+        "UIName" : "Standard Armor",
+        "Id" : "emod_armorslots_standard",
+        "Name" : "Standard Armor",
+        "Details" : "Ferro-Fibrous armor (FF) is a special type of armor used by vehicles and BattleMechs. Utilizing a weave of ferro-steel, ferro-titanium, and diamond weave fibers which boosts the tensile strength of the plating, it provides more protection per ton than standard armor, but takes up more space on the 'Mech or vehicle.\r\n\r\nAdd exactly <b>14</b> Ferro-Fibrous slots to reduce the armor tonnage by <b>1/12</b>.",
+        "Icon" : "uixSvgIcon_action_end"
+    },
+    "BonusValueA" : "",
+    "BonusValueB" : "",
+    "ComponentType" : "Upgrade",
+    "ComponentSubType" : "NotSet",
+    "PrefabIdentifier" : "",
+    "BattleValue" : 0,
+    "InventorySize" : 1,
+    "Tonnage" : 0,
+    "AllowedLocations" : "CenterTorso",
+    "DisallowedLocations" : "All",
+    "CriticalComponent" : false,
+    "statusEffects" : null,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile" : ""
+    }
+}
