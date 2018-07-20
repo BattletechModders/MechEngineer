@@ -9,8 +9,6 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechComponent), "DamageComponent")]
     public static class MechComponent_DamageComponent_Patch
     {
-        // crit engine reduces speed
-        // destroyed engine destroys CT
         public static bool Prefix(MechComponent __instance, CombatGameState ___combat, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
         {
             try
@@ -27,7 +25,7 @@ namespace MechEngineer
                     return false;
                 }
 
-                if (!EngineCrits.ProcessWeaponHit(__instance, hitInfo, damageLevel, applyEffects, MechCheckForCritPatch.MessageAdditions))
+                if (!EngineCrits.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects, MechCheckForCritPatch.MessageAdditions))
                 {
                     MechCheckForCritPatch.Message = null;
                     return false;

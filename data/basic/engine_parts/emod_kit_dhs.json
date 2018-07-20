@@ -24,6 +24,38 @@
 				"TechCost": "0",
 				"CBillCost": "0"
 			}
+		},
+		"CriticalHitStates": {
+			"MaxStates" : 1,
+			"DeathMethod" : "GyroDestroyed",
+			"HitEffects" : [
+				{
+					"State" : 1,
+					"StatusEffect" : {
+						"durationData" : {
+						},
+						"targetingData" : {
+							"effectTargetsCreator" : true,
+							"effectTriggerType" : "Passive",
+							"effectTargetType" : "Creator"
+						},
+						"effectType" : "StatisticEffect",
+						"Description" : {
+							"Id" : "StatusEffect-Test12",
+							"Name" : "Engine Crit (1)",
+							"Details" : "Engine was hit, additional 15 Heat / Turn",
+							"Icon" : "uixSvgIcon_equipment_ThermalExchanger"
+						},
+						"nature" : "Debuff",
+						"statisticData" : {
+							"statName" : "HeatSinkCapacity",
+							"operation" : "Int_Subtract",
+							"modValue" : "15",
+							"modType" : "System.Int32"
+						}
+					}
+				}
+			]
 		}
 	},
     "DissipationCapacity" : 0,

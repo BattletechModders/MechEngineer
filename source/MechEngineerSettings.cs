@@ -25,8 +25,74 @@ namespace MechEngineer
 
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
 
-        public bool EngineCritsEnabled = true; // TODO move to new json based crit system
-        public int EngineHeatSinkCapacityAdjustmentPerCrit = -15; // TODO move to new json based crit system
+        public CriticalHitStates EngineCriticalHitStates = new CriticalHitStates
+        {
+            MaxStates = 2,
+            DeathMethod = DeathMethod.EngineDestroyed,
+            HitEffects = new[]
+            {
+                new CriticalHitEffect
+                {
+                    State = 1,
+                    StatusEffect = new EffectData
+                    {
+                        durationData = new EffectDurationData(),
+                        targetingData = new EffectTargetingData
+                        {
+                            effectTriggerType = EffectTriggerType.Passive,
+                            effectTargetType = EffectTargetType.Creator,
+                            showInTargetPreview = true,
+                            showInStatusPanel = true
+                        },
+                        effectType = EffectType.StatisticEffect,
+                        Description = new BaseDescriptionDef(
+                            Id:"StatusEffect-EngineCrit1",
+                            Name:"Engine Crit (1)",
+                            Details:"Engine was hit, additional 15 Heat / Turn",
+                            Icon:"uixSvgIcon_equipment_ThermalExchanger"
+                            ),
+                        nature = EffectNature.Debuff,
+                        statisticData = new StatisticEffectData
+                        {
+                            statName = "HeatSinkCapacity",
+                            operation = StatCollection.StatOperation.Int_Subtract,
+                            modValue = "15",
+                            modType = "System.Int32"
+                        }
+                    }
+                },
+                new CriticalHitEffect
+                {
+                    State = 2,
+                    StatusEffect = new EffectData
+                    {
+                        durationData = new EffectDurationData(),
+                        targetingData = new EffectTargetingData
+                        {
+                            effectTriggerType = EffectTriggerType.Passive,
+                            effectTargetType = EffectTargetType.Creator,
+                            showInTargetPreview = true,
+                            showInStatusPanel = true
+                        },
+                        effectType = EffectType.StatisticEffect,
+                        Description = new BaseDescriptionDef(
+                            Id:"StatusEffect-EngineCrit2",
+                            Name:"Engine Crit (2)",
+                            Details:"Engine was hit, additional 30 Heat / Turn",
+                            Icon:"uixSvgIcon_equipment_ThermalExchanger"
+                        ),
+                        nature = EffectNature.Debuff,
+                        statisticData = new StatisticEffectData
+                        {
+                            statName = "HeatSinkCapacity",
+                            operation = StatCollection.StatOperation.Int_Subtract,
+                            modValue = "30",
+                            modType = "System.Int32"
+                        }
+                    }
+                }
+            }
+        };
 
         // MWO does not allow to drop if that would mean to go overweight
         // battletech allows overweight, to stay consistent so we also allow overspace usage by default

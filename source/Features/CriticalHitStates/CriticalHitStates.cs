@@ -7,13 +7,14 @@ namespace MechEngineer
     [CustomComponent("CriticalHitStates")]
     public class CriticalHitStates : SimpleCustomComponent
     {
-        public int CriticalHitStatesMaxCount { get; set; }
-        public CriticalHitEffect[] CriticalHitEffects { get; set; }
+        public int MaxStates { get; set; }
+        public DeathMethod DeathMethod { get; set; }
+        public CriticalHitEffect[] HitEffects { get; set; }
     }
 
     public class CriticalHitEffect
     {
-        public int CriticalHitState = 1;
+        public int State = 1;
         public EffectData StatusEffect = null;
     }
 }

@@ -13,15 +13,27 @@ namespace MechEngineer
         {
         }
 
-        public bool ProcessWeaponHit(MechComponent mechComponent, CombatGameState combat, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects, List<MessageAddition> messages)
+        public bool ProcessWeaponHit(
+            MechComponent mechComponent,
+            CombatGameState combat,
+            WeaponHitInfo hitInfo,
+            ComponentDamageLevel damageLevel,
+            bool applyEffects,
+            List<MessageAddition> messages,
+            CriticalHitStates criticalHitStates = null,
+            int? hits = null)
         {
-            var criticalHitStates = mechComponent.componentDef?.GetComponent<CriticalHitStates>();
+            if (criticalHitStates == null)
+            {
+                criticalHitStates = mechComponent.componentDef?.GetComponent<CriticalHitStates>();
+            }
+
             if (criticalHitStates == null)
             {
                 return true;
             }
 
-            if (criticalHitStates.CriticalHitStatesMaxCount <= 0)
+            if (criticalHitStates.MaxStates <= 0)
             {
                 return true;
             }
@@ -36,18 +48,21 @@ namespace MechEngineer
                 return true;
             }
 
-            if (!(mechComponent.parent is Mech))
+            if (!(mechComponent.parent is Mech mech))
             {
                 return true;
             }
 
             var componentRef = mechComponent.mechComponentRef;
-            var mech = (Mech) mechComponent.parent;
             var location = (ChassisLocations) mechComponent.Location;
+            var mechLocationDestroyed = mech.IsLocationDestroyed(location);
 
             var crits = 1;
-            var mechLocationDestroyed = mech.IsLocationDestroyed(location);
-            if (mechLocationDestroyed)
+            if (hits.HasValue)
+            {
+                crits = hits.Value;
+            }
+            else if (mechLocationDestroyed)
             {
                 crits = mechComponent.componentDef.InventorySize;
             }
@@ -64,7 +79,7 @@ namespace MechEngineer
             }
 
             {
-                if (mechLocationDestroyed || critLevel > criticalHitStates.CriticalHitStatesMaxCount)
+                if (mechLocationDestroyed || critLevel > criticalHitStates.MaxStates)
                 {
                     damageLevel = ComponentDamageLevel.Destroyed;
                 }
@@ -81,34 +96,34 @@ namespace MechEngineer
                     damageLevel);
             }
 
-            if (damageLevel == ComponentDamageLevel.Destroyed)
-            {
-                return true; // cancel effects, etc..
-            }
+            //Control.mod.Logger.LogDebug($"oldCritLevel={oldCritLevel} critLevel={critLevel} damageLevel={damageLevel}");
 
             if (oldCritLevel > 0)
             {
                 var hitEffects = criticalHitStates
-                    .CriticalHitEffects
-                    .Where(e => e.CriticalHitState == oldCritLevel);
+                    .HitEffects
+                    .Where(e => e.State == oldCritLevel);
 
                 foreach (var hitEffect in hitEffects)
                 {
+                    var effectId = hitEffect.StatusEffect.IdForComponent(mechComponent);
+
                     var statusEffects = combat.EffectManager
-                        .GetAllEffectsWithID(hitEffect.StatusEffect.Description.Id)
+                        .GetAllEffectsWithID(effectId)
                         .Where(e => e.Target == mechComponent.parent);
 
                     foreach (var statusEffect in statusEffects)
                     {
                         mechComponent.parent.CancelEffect(statusEffect);
+                        mechComponent.createdEffectIDs.Remove(effectId);
                     }
                 }
             }
 
-            {
+            if (damageLevel < ComponentDamageLevel.Destroyed) {
                 var hitEffects = criticalHitStates
-                    .CriticalHitEffects
-                    .Where(e => e.CriticalHitState == critLevel);
+                    .HitEffects
+                    .Where(e => e.State == critLevel);
 
                 foreach (var hitEffect in hitEffects)
                 {
@@ -118,18 +133,45 @@ namespace MechEngineer
                         continue;
                     }
 
-                    var text = $"PassiveEffect_{mechComponent.parent.GUID}_{mechComponent.uid}";
-                    combat.EffectManager.CreateEffect(effectData, text, -1, mechComponent.parent, mechComponent.parent, default(WeaponHitInfo), 0, false);
-                    mechComponent.createdEffectIDs.Add(text);
+                    var effectId = hitEffect.StatusEffect.IdForComponent(mechComponent);
+                    combat.EffectManager.CreateEffect(effectData, effectId, -1, mechComponent.parent, mechComponent.parent, default(WeaponHitInfo), 0, false);
+                    mechComponent.createdEffectIDs.Add(effectId);
                 }
             }
 
+            if (damageLevel == ComponentDamageLevel.Destroyed)
             {
-                // this will also be called on engine crit, if side torso destroyed, does not necessarly mean CT is also detroyed
+                if (criticalHitStates.DeathMethod != DeathMethod.NOT_SET)
+                {
+                    mech.FlagForDeath(
+                        mechComponent.Description.Name + " DESTROYED",
+                        criticalHitStates.DeathMethod,
+                        mechComponent.Location,
+                        hitInfo.stackItemUID,
+                        hitInfo.attackerId,
+                        false);
+                }
+                else
+                {
+                    var text = componentRef.Def.Description.UIName + " DESTROYED";
+                    messages.Add(new MessageAddition {Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = text});
+                }
+            }
+            else
+            {
                 var text = componentRef.Def.Description.UIName + " " + (crits == 1 ? " CRIT" : " CRIT X" + crits);
                 messages.Add(new MessageAddition {Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = text});
             }
+
             return false;
         }
+    }
+
+    internal static class EffectDataExtensions
+    {
+        internal static string IdForComponent(this EffectData statusEffect, MechComponent mechComponent)
+        {
+            return $"{statusEffect.Description.Id}_{mechComponent.parent.GUID}_{mechComponent.uid}";
+        } 
     }
 }

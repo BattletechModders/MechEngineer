@@ -7,9 +7,15 @@ namespace MechEngineer
 {
     internal static class EngineCrits
     {
-        internal static bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects, List<MessageAddition> messages)
+        internal static bool ProcessWeaponHit(
+            MechComponent mechComponent,
+            CombatGameState combat,
+            WeaponHitInfo hitInfo,
+            ComponentDamageLevel damageLevel,
+            bool applyEffects,
+            List<MessageAddition> messages)
         {
-            if (!Control.settings.EngineCritsEnabled)
+            if (Control.settings.EngineCriticalHitStates == null)
             {
                 return true;
             }
@@ -29,7 +35,7 @@ namespace MechEngineer
                 return true;
             }
 
-            if (!(mechComponent.parent is Mech))
+            if (!(mechComponent.parent is Mech mech))
             {
                 return true;
             }
@@ -39,86 +45,60 @@ namespace MechEngineer
             {
                 return true;
             }
-
-            var mech = (Mech) mechComponent.parent;
+            
             var mainEngineComponent = mech.allComponents.FirstOrDefault(c => c?.componentDef?.GetComponent<EngineCoreDef>() != null);
             if (mainEngineComponent == null) // no main engine left
             {
                 return true;
             }
 
+            var hits = 1;
             var location = (ChassisLocations) mechComponent.Location;
-
-            var crits = 1;
-            if (mech.IsLocationDestroyed(location))
+            var mechLocationDestroyed = mech.IsLocationDestroyed(location);
+            if (mechLocationDestroyed)
             {
-                damageLevel = ComponentDamageLevel.Destroyed;
-                crits = mechComponent.componentDef.InventorySize;
+                hits = componentRef.Def.InventorySize;
+            }
 
+            if (CirticalHitStatesHandler.Shared.ProcessWeaponHit(
+                mainEngineComponent,
+                combat,
+                hitInfo,
+                damageLevel,
+                applyEffects,
+                messages,
+                Control.settings.EngineCriticalHitStates,
+                hits
+                ))
+            {
+                return true;
+            }
+
+            damageLevel = mainEngineComponent.DamageLevel;
+
+            if (mechLocationDestroyed)
+            {
                 mechComponent.StatCollection.ModifyStat(
                     hitInfo.attackerId,
                     hitInfo.stackItemUID,
                     "DamageLevel",
                     StatCollection.StatOperation.Set,
-                    damageLevel);
+                    ComponentDamageLevel.Destroyed);
             }
 
-            for (var i = 0; i < crits; i++)
+            foreach (var component in mech.allComponents.Where(c => c.componentDef.IsEnginePart()))
             {
-                switch (mainEngineComponent.StatCollection.GetStatistic("DamageLevel").Value<ComponentDamageLevel>())
+                if (component.DamageLevel >= damageLevel)
                 {
-                    case ComponentDamageLevel.Functional: // 1. CRIT
-                        damageLevel = ComponentDamageLevel.Misaligned;
-                        break;
-                    case ComponentDamageLevel.Misaligned: // 2. CRIT
-                        damageLevel = ComponentDamageLevel.Penalized;
-                        break;
-                    case ComponentDamageLevel.Penalized: // 3. CRIT
-                        damageLevel = ComponentDamageLevel.Destroyed;
-                        break;
-                    default:
-                        continue;
+                    continue;
                 }
 
-                mainEngineComponent.StatCollection.ModifyStat(
+                component.StatCollection.ModifyStat(
                     hitInfo.attackerId,
                     hitInfo.stackItemUID,
                     "DamageLevel",
                     StatCollection.StatOperation.Set,
                     damageLevel);
-
-                var heatSink = mech.StatCollection.GetStatistic("HeatSinkCapacity");
-                mech.StatCollection.Int_Add(heatSink, Control.settings.EngineHeatSinkCapacityAdjustmentPerCrit);
-            }
-
-            if (damageLevel >= ComponentDamageLevel.NonFunctional)
-            {
-                Control.mod.Logger.LogDebug(mainEngineComponent.Name + " " + damageLevel);
-                foreach (var component in mech.allComponents.Where(c => c.componentDef.IsEnginePart()))
-                {
-                    component.StatCollection.ModifyStat(
-                        hitInfo.attackerId,
-                        hitInfo.stackItemUID,
-                        "DamageLevel",
-                        StatCollection.StatOperation.Set,
-                        damageLevel);
-                }
-
-                mech.FlagForDeath(
-                    "Engine destroyed: " + mainEngineComponent.Description.Name,
-                    DeathMethod.EngineDestroyed,
-                    mainEngineComponent.Location,
-                    hitInfo.stackItemUID,
-                    hitInfo.attackerId,
-                    false);
-
-                // FlagForDeath already outputs a message
-                //messages.Add(new MessageAddition { Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = mainEngineComponent.UIName + " DESTROYED" });
-            }
-            else
-            {
-                var text = crits == 1 ? "ENGINE CRIT" : "ENGINE CRIT X" + crits;
-                messages.Add(new MessageAddition {Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = text});
             }
 
             return false;
