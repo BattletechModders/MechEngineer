@@ -4,7 +4,7 @@
 			"UIColor": "OrangeHalf",
 		},
 		"DynamicSlots": {
-			"ReservedSlots": 6,
+			"ReservedSlots": 7,
 			"ReservedSlotColor": "OrangeHalf",
 		},
 		"Weights": {
@@ -13,6 +13,8 @@
 		"Category" : { 
 			"CategoryID" : "Structure" 
 		},
+		"Sorter" : { "Order" : 1 },
+		"Replace" : { "ComponentDefId" : "emod_structureslots_standard" },
 		"Flags" : { "flags" : [ "ignore_damage" ] }
 	},
     "Description" : {
@@ -28,14 +30,14 @@
         "Icon" : "uixSvgIcon_quantity"
     },
     "BonusValueA" : "- 0.25 x STon",
-    "BonusValueB" : "- 6 Slots",
+    "BonusValueB" : "- 7 Slots",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 1,
     "Tonnage" : 0,
-    "AllowedLocations" : "All",
+    "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,
     "statusEffects" : null,

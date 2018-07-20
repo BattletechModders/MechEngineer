@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Features\AutoFix\ArmorHandler.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
+    <Compile Include="Features\AutoFix\StructureHandler.cs" />
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
     <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch.cs" />
     <Compile Include="Features\HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />

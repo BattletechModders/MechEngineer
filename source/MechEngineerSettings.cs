@@ -162,6 +162,19 @@ namespace MechEngineer
             ComponentType = ComponentType.Upgrade,
         };
 
+        public IdentityHelper AutoFixStructureCategorizer = new IdentityHelper
+        {
+            CategoryId = "Structure",
+            AutoAddCategoryIdIfMissing = true
+        };
+
+        public AddHelper AutoFixMechDefStructureAdder = new AddHelper
+        {
+            ChassisLocation = ChassisLocations.CenterTorso,
+            ComponentDefId = "emod_structureslots_standard",
+            ComponentType = ComponentType.Upgrade,
+        };
+
 
 
         public string[] AutoFixChassisDefSkip = { };
@@ -173,7 +186,7 @@ namespace MechEngineer
             [ChassisLocations.LeftLeg.ToString()] = new ValueChange<int> {From = 4, By = -2},
             [ChassisLocations.RightLeg.ToString()] = new ValueChange<int> {From = 4, By = -2},
             [ChassisLocations.Head.ToString()] = new ValueChange<int> {From = 1, By = 1},
-            [ChassisLocations.CenterTorso.ToString()] = new ValueChange<int> {From = 4, By = 9},
+            [ChassisLocations.CenterTorso.ToString()] = new ValueChange<int> {From = 4, By = 10},
         };
 
         public bool AutoFixChassisDefInitialTonnage = true;
@@ -264,6 +277,7 @@ namespace MechEngineer
                 Name = "Structure",
                 displayName = "Structure",
                 MaxEquiped =  1,
+                MinEquiped =  1,
                 AutoReplace = true
             },
             new CategoryDescriptor
@@ -304,7 +318,9 @@ namespace MechEngineer
                 displayName = "Leg Upgrade",
                 MaxEquiped =  1,
                 AutoReplace = true
-            }
+            },
+
+
         };
 
         #endregion
