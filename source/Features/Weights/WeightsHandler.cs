@@ -89,7 +89,10 @@ namespace MechEngineer
             {
                 return 0;
             }
-
+            
+            // TODO only way to get rid of this would be to fake replace using category restrictions
+            // then get a prepared mechdef and use that
+            // unfortunatly CC does not work on fake mechdefs or inventories in that sense yet
             if (savings != null)
             {
                 if (!Mathf.Approximately(savings.EngineFactor, 1))
