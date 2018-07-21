@@ -23,10 +23,12 @@
 			}
 		},
 		"Category" : { 
-			"CategoryID" : "EngineCore",
-			"Placeholder" : true
+			"CategoryID" : "EngineCore"
 		},
-		"Flags" : { "flags" : [ "default" ] }
+		"Flags" : { 
+			"ErrorInvalid": "{0} has to be replaced",
+			"flags" : [ "default", "invalid" ]
+		}
 	},
     "DissipationCapacity" : 0,
     "Description" : {
@@ -37,7 +39,7 @@
         "Model" : "Placeholder",
         "UIName" : "Fusion Core Placeholder",
         "Id" : "emod_engine_dummy",
-        "Name" : "Fusion Core ?",
+        "Name" : "Fusion Core Placeholder",
         "Details" : "Fusion engines function by harnessing the power of a fusion reaction, running on light hydrogen and protium.\r\nFusion engines are defined by their <b>engine rating</b>. For 'Mechs, the engine rating is the mathematical product of the mass of the vehicle and its desired maximum walking or cruising velocity.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
