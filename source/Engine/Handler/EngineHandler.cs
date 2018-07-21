@@ -11,20 +11,6 @@ namespace MechEngineer
         internal static EngineHandler Shared = new EngineHandler();
     }
 
-    internal partial class EngineHandler : ITonnageChanges
-    {
-        public float TonnageChanges(MechDef mechDef)
-        {
-            var engine = mechDef.GetEngine();
-            if (engine == null)
-            {
-                return 0;
-            }
-
-            return engine.TotalTonnageChanges;
-        }
-    }
-
     internal partial class EngineHandler : IAdjustTooltip
     {
         public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechComponentDef mechComponentDef)

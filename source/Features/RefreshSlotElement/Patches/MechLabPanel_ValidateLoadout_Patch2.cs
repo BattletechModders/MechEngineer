@@ -7,11 +7,11 @@ using UnityEngine;
 namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabPanel), "ValidateLoadout")]
-    public static class MechLabPanel_ValidateLoadout_Patch
+    public static class MechLabPanel_ValidateLoadout_Patch2
     {
         public static void Postfix(MechLabPanel __instance)
         {
-            DynamicSlotHandler.Shared.RefreshData(__instance);
+            RefreshSlotElementHandler.Shared.RefreshData(__instance);
         }
     }
 }

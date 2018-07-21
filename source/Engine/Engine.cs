@@ -21,11 +21,12 @@ namespace MechEngineer
         }
 
         internal EngineCoreRef CoreRef { get; }
-        internal Weights Weights { get; }
         internal float FreeExternalHeatSinkCount { get; }
-        
+
         /* dynamic stuff below */
         
+        internal Weights Weights { get; set;  }
+
         internal EngineCoreDef CoreDef { get; set; }
 
         internal float FreeExternalHeatSinkTonnage

@@ -9,12 +9,11 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechLabPanel), "CreateMechComponentItem")]
     internal static class MechLabPanel_CreateMechComponentItem_Patch
     {
-        internal static void Postfix(this MechLabPanel __instance, MechComponentRef componentRef, MechLabItemSlotElement __result)
+        internal static void Postfix(MechLabPanel __instance, MechComponentRef componentRef, MechLabItemSlotElement __result)
         {
             try
             {
-                EngineCoreRefHandler.Shared.ModifySlotElement(__result, __instance);
-                WeightsHandler.Shared.ModifySlotElement(__result, __instance);
+                RefreshSlotElementHandler.Shared.RefreshSlotElement(__result, __instance);
                 EnginePersistence.FixSimGameUID(__instance.sim, componentRef);
             }
             catch (Exception e)

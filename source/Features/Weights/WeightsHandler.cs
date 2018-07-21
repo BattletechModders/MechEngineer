@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    internal class WeightsHandler : ITonnageChanges, IAdjustTooltip, IModifySlotElement
+    internal class WeightsHandler : ITonnageChanges, IAdjustTooltip, IRefreshSlotElement
     {
         public static readonly WeightsHandler Shared = new WeightsHandler();
 
@@ -85,12 +85,11 @@ namespace MechEngineer
                 return 0;
             }
 
-            var totalSavings = engine.CoreDef.StandardEngineTonnage * (1 - savings.EngineFactor);
-            totalSavings += engine.CoreDef.StandardGyroTonnage * (1 - savings.GyroFactor);
-            return totalSavings;
+            engine.Weights = savings;
+            return - engine.TotalTonnageChanges;
         }
 
-        public void ModifySlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
+        public void RefreshSlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
         {
             var weights = instance.ComponentRef?.Def?.GetComponent<Weights>();
             if (weights == null)

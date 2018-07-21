@@ -74,8 +74,10 @@
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
     <Compile Include="Features\AutoFix\StructureHandler.cs" />
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
-    <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch.cs" />
+    <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch1.cs" />
     <Compile Include="Features\HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />
+    <Compile Include="Features\RefreshSlotElement\RefreshSlotElementHandler.cs" />
+    <Compile Include="Features\RefreshSlotElement\Patches\MechLabPanel_ValidateLoadout_Patch2.cs" />
     <Compile Include="Helper\MechLabLocationWidgetAdapter.cs" />
     <Compile Include="Features\HardpointFix\limits\MechLabLocationWidgetPatch.cs" />
     <Compile Include="Features\HardpointFix\limits\MechLabLocationWidgetPatchHelper.cs" />
@@ -120,7 +122,7 @@
     <Compile Include="Engine\StaticHandler\EngineCrits.cs" />
     <Compile Include="Engine\StaticHandler\EnginePersistence.cs" />
     <Compile Include="Features\AutoFix\LegUpgradeHandler.cs" />
-    <Compile Include="Features\MechLabItemManipulation\Patches\MechLabPanel_CreateMechComponentItem_Patch.cs" />
+    <Compile Include="Features\RefreshSlotElement\Patches\MechLabPanel_CreateMechComponentItem_Patch.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />
     <Compile Include="Engine\Patches\MechBayPanel_OnGotoMechLab_Patch.cs" />
     <Compile Include="Engine\Patches\MechBayPanel_OnRepairMech_Patch.cs" />
@@ -156,7 +158,6 @@
     <Compile Include="Helper\TooltipPrefab_EquipmentAdapter.cs" />
     <Compile Include="Features\Weights\Patches\TooltipPrefab_EquipmentSetData_Patch.cs" />
     <Compile Include="Engine\StaticHandler\EngineMisc.cs" />
-    <Compile Include="Features\Weights\CalculateTonnageFacade.cs" />
     <Compile Include="Features\Weights\Patches\MechLabMechInfoWidget_CalculateTonnage_Patch.cs" />
     <Compile Include="Features\Weights\Patches\MechStatisticsRules_CalculateTonnage_Patch.cs" />
     <Compile Include="Engine\Patches\Mech_GetHeatSinkDissipation_Patch.cs" />

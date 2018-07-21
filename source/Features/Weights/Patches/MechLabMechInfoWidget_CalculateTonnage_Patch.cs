@@ -40,7 +40,7 @@ namespace MechEngineer
             var tonnage = chassisDef.InitialTonnage;
             try
             {
-                tonnage += CalculateTonnageFacade.AdditionalTonnage(mechDef);
+                tonnage += WeightsHandler.Shared.TonnageChanges(mechDef);
             }
             catch (Exception e)
             {

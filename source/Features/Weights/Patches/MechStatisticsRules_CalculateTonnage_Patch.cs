@@ -12,7 +12,7 @@ namespace MechEngineer
         {
             try
             {
-                currentValue += CalculateTonnageFacade.AdditionalTonnage(mechDef);
+                currentValue += WeightsHandler.Shared.TonnageChanges(mechDef);
                 currentValue = Mathf.Min(currentValue, maxValue);
             }
             catch (Exception e)
