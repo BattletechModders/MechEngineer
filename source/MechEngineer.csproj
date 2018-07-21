@@ -78,6 +78,7 @@
     <Compile Include="Features\HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />
     <Compile Include="Features\RefreshSlotElement\RefreshSlotElementHandler.cs" />
     <Compile Include="Features\RefreshSlotElement\Patches\MechLabPanel_ValidateLoadout_Patch2.cs" />
+    <Compile Include="Features\SaveMechToFile\MechLabPanel_DoConfirmRefit_Patch.cs" />
     <Compile Include="Helper\MechLabLocationWidgetAdapter.cs" />
     <Compile Include="Features\HardpointFix\limits\MechLabLocationWidgetPatch.cs" />
     <Compile Include="Features\HardpointFix\limits\MechLabLocationWidgetPatchHelper.cs" />

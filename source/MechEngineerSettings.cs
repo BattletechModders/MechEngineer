@@ -19,6 +19,8 @@ namespace MechEngineer
         public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations
         //public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
 
+        public bool SaveMechDefOnMechLabConfirm = false;
+
         public bool PerformanceEnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts (300+ item types)
 
         public string DefaultEngineHeatSinkId = "Gear_HeatSink_Generic_Standard"; // default heat sink type for engines without a kit
