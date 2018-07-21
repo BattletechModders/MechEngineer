@@ -139,6 +139,7 @@ namespace MechEngineer
             ComponentType = ComponentType.Upgrade,
         };
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
+        public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 0}; // 1
 
         public IdentityHelper AutoFixLegUpgradesCategorizer = new IdentityHelper
         {
@@ -175,8 +176,6 @@ namespace MechEngineer
             ComponentType = ComponentType.Upgrade,
         };
 
-
-
         public string[] AutoFixChassisDefSkip = { };
         public bool AutoFixChassisDefSlots = true; // adds 2 torso slots at a cost of 2 leg slots per side if they match stock slot layouts
         public Dictionary<string, ValueChange<int>> AutoFixChassisDefSlotsChanges = new Dictionary<string, ValueChange<int>>
@@ -185,7 +184,7 @@ namespace MechEngineer
             [ChassisLocations.RightTorso.ToString()] = new ValueChange<int> {From = 10, By = 2},
             [ChassisLocations.LeftLeg.ToString()] = new ValueChange<int> {From = 4, By = -2},
             [ChassisLocations.RightLeg.ToString()] = new ValueChange<int> {From = 4, By = -2},
-            [ChassisLocations.Head.ToString()] = new ValueChange<int> {From = 1, By = 1},
+            [ChassisLocations.Head.ToString()] = new ValueChange<int> {From = 1, By = 1}, // 2
             [ChassisLocations.CenterTorso.ToString()] = new ValueChange<int> {From = 4, By = 10},
         };
 
@@ -270,7 +269,12 @@ namespace MechEngineer
                 displayName = "Armor",
                 MaxEquiped =  1,
                 MinEquiped =  1,
-                AutoReplace = true
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_armorslots_standard" }
+                }
             },
             new CategoryDescriptor
             {
@@ -278,23 +282,12 @@ namespace MechEngineer
                 displayName = "Structure",
                 MaxEquiped =  1,
                 MinEquiped =  1,
-                AutoReplace = true
-            },
-            new CategoryDescriptor
-            {
-                Name = "EngineCore",
-                displayName = "Engine Core",
-                MaxEquiped =  1,
-                MinEquiped =  1,
-                AutoReplace = true
-            },
-            new CategoryDescriptor
-            {
-                Name = "EngineShield",
-                displayName = "Engine Shielding",
-                MaxEquiped =  1,
-                MinEquiped =  1,
-                AutoReplace = true
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 1 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_structureslots_standard" }
+                }
             },
             new CategoryDescriptor
             {
@@ -302,7 +295,12 @@ namespace MechEngineer
                 displayName = "Cockpit",
                 MaxEquiped =  1,
                 MinEquiped =  1,
-                AutoReplace = true
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Cockpit_Generic_Standard" }
+                }
             },
             new CategoryDescriptor
             {
@@ -310,7 +308,39 @@ namespace MechEngineer
                 displayName = "Gyro",
                 MaxEquiped =  1,
                 MinEquiped =  1,
-                AutoReplace = true
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 2 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Gyro_Generic_Standard" }
+                }
+            },
+            new CategoryDescriptor
+            {
+                Name = "EngineShield",
+                displayName = "Engine Shielding",
+                MaxEquiped =  1,
+                MinEquiped =  1,
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 3 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engineslots_std_center" }
+                }
+            },
+            new CategoryDescriptor
+            {
+                Name = "EngineCore",
+                displayName = "Engine Core",
+                MaxEquiped =  1,
+                MinEquiped =  1,
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 4 },
+                    // how to do this? engine dummy is not engine core custom, but still in category, require another category?
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_dummy" }
+                }
             },
             new CategoryDescriptor
             {

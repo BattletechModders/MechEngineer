@@ -67,7 +67,7 @@ namespace MechEngineer
                 return;
             }
 
-            hardpoints[4].SetData(WeaponCategory.AMS, string.Format("{0} / {1}", current, widget.totalJumpjets));
+            hardpoints[4].SetData(WeaponCategory.AMS, $"{current} / {widget.totalJumpjets}");
         }
 
         internal static void RefreshAvailability(MechLabInventoryWidget widget, float tonnage)

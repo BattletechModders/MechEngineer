@@ -19,8 +19,6 @@
 		"Category" : { 
 			"CategoryID" : "Structure" 
 		},
-		"Sorter" : { "Order" : 1 },
-		"Replace" : { "ComponentDefId" : "emod_structureslots_standard" },
 		"Flags" : { "flags" : [ "ignore_damage", "autorepair" ] }
 	},
     "Description" : {

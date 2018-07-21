@@ -2,17 +2,15 @@
 	"Custom": {
 		"Category" : { 
 			"CategoryID" : "Gyro" 
-		}
+		},
+		"Flags" : { "flags" : [ "default" ] }
 	},
-    "StatName" : null,
-    "RelativeModifier" : 0,
-    "AbsoluteModifier" : 0,
     "Description" : {
-        "Cost" : 120000,
+        "Cost" : 0,
         "Rarity" : 0,
-        "Purchasable" : true,
+        "Purchasable" : false,
         "Manufacturer" : "Generic",
-        "Model" : "Standard Gyro",
+        "Model" : "Standard",
         "UIName" : "Gyro",
         "Id" : "Gear_Gyro_Generic_Standard",
         "Name" : "Standard Gyro",

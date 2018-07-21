@@ -3,7 +3,6 @@
 		"Category" : { 
 			"CategoryID" : "Structure" 
 		},
-		"Sorter" : { "Order" : 1 },
 		"Flags" : { "flags" : [ "ignore_damage", "default" ] }
 	},
     "Description" : {
@@ -11,8 +10,8 @@
         "Rarity" : 0,
         "Purchasable" : false,
         "Manufacturer" : "Generic",
-        "Model" : "Structure",
-        "UIName" : "Std. Structure",
+        "Model" : "Standard",
+        "UIName" : "Structure",
         "Id" : "emod_structureslots_standard",
         "Name" : "Standard Structure",
         "Details" : "The Internal Structure of a BattleMech forms the skeletal structure of the 'Mech to which all components are mounted. The Standard Internal Structure of a 'Mech weighs 10% of its max tonnage.",

@@ -19,20 +19,18 @@
 		"Category" : { 
 			"CategoryID" : "Armor" 
 		},
-		"Flags" : { "flags" : [ "ignore_damage", "autorepair" ] },
-		"Replace" : { "ComponentDefId" : "emod_armorslots_standard" },
-		"Sorter" : { "Order" : 0 }
+		"Flags" : { "flags" : [ "ignore_damage", "autorepair" ] }
 	},
     "Description" : {
         "Cost" : 0,
         "Rarity" : 0,
-        "Purchasable" : false,
-        "Manufacturer" : "Generic",
+        "Purchasable" : true,
+        "Manufacturer" : "Lostech",
         "Model" : "Armor",
         "UIName" : "Ferro-Fibrous",
         "Id" : "emod_armorslots_ferrosfibrous",
         "Name" : "Ferro-Fibrous Armor",
-        "Details" : "Standard BattleMech armor is composed of several layers providing various degrees of protection and support. The first layer is extremely strong titanium alloyed with steel, the result of crystal alignment and radiation treatment, which is also very brittle. The second layer is a ceramic, cubic boron nitride, which combined with a web of artificial diamond fibers acts as a backstop to the steel layer. These two layers rest atop a titanium alloy honeycomb structure which provides support, and a layer of self-sealing polymer sealant which allows for space and underwater operations",
+        "Details" : "Ferro-Fibrous armor (FF) is a special type of armor used by vehicles and BattleMechs. Utilizing a weave of ferro-steel, ferro-titanium, and diamond weave fibers which boosts the tensile strength of the plating, it provides more protection per ton than standard armor, but takes up more space on the 'Mech or vehicle.\r\n\r\nAdd exactly <b>14</b> Ferro-Fibrous slots to reduce the armor tonnage by <b>1/12</b>.",
         "Icon" : "uixSvgIcon_action_end"
     },
     "BonusValueA" : "- 0.11 x ATon",

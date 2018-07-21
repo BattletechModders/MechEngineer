@@ -8,12 +8,12 @@
 			"CategoryID" : "EngineShield" 
 		},
 		"Linked" : {
-			"Links": [
-				{ "ComponentDefId": "emod_engineslots_xxl_left", "Location": "LeftTorso" },
-				{ "ComponentDefId": "emod_engineslots_xxl_right", "Location": "RightTorso" }
+			"Links" : [
+				{ "ComponentDefId" : "emod_engineslots_size6", "Location": "LeftTorso" },
+				{ "ComponentDefId" : "emod_engineslots_size6", "Location": "RightTorso" }
 			]
 		},
-		"Flags" : { "flags": ["engine_part"] }
+		"Flags" : { "flags" : ["engine_part"] }
 	},
     "DissipationCapacity" : -15,
     "Description" : {

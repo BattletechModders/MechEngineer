@@ -9,8 +9,8 @@
 		},
 		"Linked" : {
 			"Links" : [
-				{ "ComponentDefId" : "emod_engineslots_cxl_left", "Location" : "LeftTorso" },
-				{ "ComponentDefId" : "emod_engineslots_cxl_right", "Location" : "RightTorso" }
+				{ "ComponentDefId" : "emod_engineslots_size2", "Location" : "LeftTorso" },
+				{ "ComponentDefId" : "emod_engineslots_size2", "Location" : "RightTorso" }
 			]
 		},
 		"Flags" : { "flags" : [ "engine_part" ] }

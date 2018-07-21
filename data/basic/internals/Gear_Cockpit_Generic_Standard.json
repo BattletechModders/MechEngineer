@@ -2,17 +2,15 @@
 	"Custom": {
 		"Category" : { 
 			"CategoryID" : "Cockpit" 
-		}
+		},
+		"Flags" : { "flags" : [ "default" ] }
 	},
-    "StatName" : null,
-    "RelativeModifier" : 0,
-    "AbsoluteModifier" : 0,
     "Description" : {
-        "Cost" : 120000,
+        "Cost" : 0,
         "Rarity" : 0,
-        "Purchasable" : true,
+        "Purchasable" : false,
         "Manufacturer" : "Generic",
-        "Model" : "Standard Cockpit",
+        "Model" : "Standard",
         "UIName" : "Cockpit",
         "Id" : "Gear_Cockpit_Generic_Standard",
         "Name" : "Standard Cockpit",

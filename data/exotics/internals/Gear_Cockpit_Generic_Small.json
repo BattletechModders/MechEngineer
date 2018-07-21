@@ -2,11 +2,10 @@
 	"Custom": {
 		"Category" : { 
 			"CategoryID" : "Cockpit" 
-		}
+		},
+		"Flags" : { "flags" : [ "autorepair" ] },
+		"Replace" : { "ComponentDefId" : "Gear_Cockpit_Generic_Standard" },
 	},
-    "StatName" : null,
-    "RelativeModifier" : 0,
-    "AbsoluteModifier" : 0,
     "Description" : {
         "Cost" : 240000,
         "Rarity" : 0,

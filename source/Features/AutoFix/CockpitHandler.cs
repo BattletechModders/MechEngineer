@@ -13,7 +13,8 @@ namespace MechEngineer
         
         private readonly IdentityHelper identity;
         private readonly AutoFixMechDefHelper fixer;
-        private readonly AdjustCompDefTonnageHelper resizer;
+        private readonly AdjustCompDefTonnageHelper reweighter;
+        private readonly AdjustCompDefInvSizeHelper resizer;
 
         private CockpitHandler()
         {
@@ -24,7 +25,8 @@ namespace MechEngineer
                 Control.settings.AutoFixMechDefCockpitAdder
             );
 
-            resizer = new AdjustCompDefTonnageHelper(identity, Control.settings.AutoFixCockpitTonnageChange);
+            reweighter = new AdjustCompDefTonnageHelper(identity, Control.settings.AutoFixCockpitTonnageChange);
+            resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixCockpitSlotChange);
         }
 
         public void PreProcess(MechComponentDef target, Dictionary<string, object> values)
@@ -39,6 +41,7 @@ namespace MechEngineer
 
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
+            reweighter.AdjustComponentDef(upgradeDef);
             resizer.AdjustComponentDef(upgradeDef);
         }
 
