@@ -24,8 +24,8 @@ namespace MechEngineer
         internal float FreeExternalHeatSinkCount { get; }
 
         /* dynamic stuff below */
-        
-        internal Weights Weights { get; set;  }
+
+        internal Weights Weights { get; set; }
 
         internal EngineCoreDef CoreDef { get; set; }
 
@@ -36,7 +36,7 @@ namespace MechEngineer
         internal float GyroTonnage => (CoreDef.StandardGyroTonnage * Weights.GyroFactor).RoundStandard();
 
         internal float EngineTonnage => (CoreDef.StandardEngineTonnage * Weights.EngineFactor).RoundStandard();
-
+ 
         internal float HeatSinkTonnage => CoreRef.InternalHeatSinkTonnage - FreeExternalHeatSinkTonnage;
 
         internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;

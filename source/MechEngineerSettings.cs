@@ -141,7 +141,7 @@ namespace MechEngineer
             ComponentType = ComponentType.Upgrade,
         };
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
-        public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 0}; // 1
+        public ValueChange<int> AutoFixCockpitSlotChange = null; //new ValueChange<int> {From = 1, By = 0};
 
         public IdentityHelper AutoFixLegUpgradesCategorizer = new IdentityHelper
         {

@@ -25,7 +25,8 @@ namespace MechEngineer
                 return;
             }
 
-            var tonnageSaved = CalculateWeightSavings(weights, mechDef);
+            var tonnageSaved = CalculateWeightSavings(mechDef, weights);
+            tonnageSaved -= CalculateEngineTonnageChanges(mechDef, weights);
 
             tooltip.tonnageText.text = $"- {tonnageSaved}";
 
@@ -46,47 +47,15 @@ namespace MechEngineer
 
         public float TonnageChanges(MechDef mechDef)
         {
-            var tonnageSaved = 0f;
+            var tonnageChanges = 0f;
             foreach (var savings in mechDef.Inventory.Select(r => r.Def.GetComponent<Weights>()).Where(w => w != null))
             {
-                tonnageSaved += CalculateWeightSavings(savings, mechDef);
+                tonnageChanges -= CalculateWeightSavings(mechDef, savings);
             }
 
-            return -tonnageSaved;
-        }
+            tonnageChanges += CalculateEngineTonnageChanges(mechDef);
 
-        private static float CalculateWeightSavings(Weights savings, MechDef mechDef)
-        {
-            return CalculateArmorWeightSavings(savings, mechDef)
-                   + CalculateStructureWeightSavings(savings, mechDef)
-                   + CalculateEngineWeightSavings(savings, mechDef);
-        }
-
-        private static float CalculateArmorWeightSavings(Weights savings, MechDef mechDef)
-        {
-            return (mechDef.ArmorTonnage() * (1 - savings.ArmorFactor)).RoundStandard();
-        }
-
-        private static float CalculateStructureWeightSavings(Weights savings, MechDef mechDef)
-        {
-            return (mechDef.Chassis.DefaultStructureTonnage() * (1 - savings.StructureFactor)).RoundStandard();
-        }
-
-        private static float CalculateEngineWeightSavings(Weights savings, MechDef mechDef)
-        {
-            if (Mathf.Approximately(savings.EngineFactor, 1) && Mathf.Approximately(savings.GyroFactor, 1))
-            {
-                return 0;
-            }
-            
-            var engine = mechDef.GetEngine();
-            if (engine == null)
-            {
-                return 0;
-            }
-
-            engine.Weights = savings;
-            return - engine.TotalTonnageChanges;
+            return tonnageChanges;
         }
 
         public void RefreshSlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
@@ -103,13 +72,54 @@ namespace MechEngineer
                 return;
             }
 
-            var tonnageSaved = CalculateWeightSavings(weights, mechDef);
+            var tonnageSaved = CalculateWeightSavings(mechDef, weights);
+            tonnageSaved -= CalculateEngineTonnageChanges(mechDef, weights);
             var adapter = new MechLabItemSlotElementAdapter(instance);
 
             if (!Mathf.Approximately(tonnageSaved, 0))
             {
                 adapter.bonusTextA.text = $"- {tonnageSaved} ton";
             }
+        }
+
+        private static float CalculateEngineTonnageChanges(MechDef mechDef, Weights savings = null)
+        {
+            var engine = mechDef.GetEngine();
+            if (engine == null)
+            {
+                return 0;
+            }
+
+            if (savings != null)
+            {
+                if (!Mathf.Approximately(savings.EngineFactor, 1))
+                {
+                    engine.Weights.EngineFactor = savings.EngineFactor;
+                }
+                
+                if (!Mathf.Approximately(savings.GyroFactor, 1))
+                {
+                    engine.Weights.GyroFactor = savings.GyroFactor;
+                }
+            }
+
+            return engine.TotalTonnageChanges;
+        }
+
+        private static float CalculateWeightSavings(MechDef mechDef, Weights savings)
+        {
+            return CalculateArmorWeightSavings(mechDef, savings)
+                   + CalculateStructureWeightSavings(mechDef, savings);
+        }
+
+        private static float CalculateArmorWeightSavings(MechDef mechDef, Weights savings)
+        {
+            return (mechDef.ArmorTonnage() * (1 - savings.ArmorFactor)).RoundStandard();
+        }
+
+        private static float CalculateStructureWeightSavings(MechDef mechDef, Weights savings)
+        {
+            return (mechDef.Chassis.DefaultStructureTonnage() * (1 - savings.StructureFactor)).RoundStandard();
         }
     }
 }

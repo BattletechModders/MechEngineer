@@ -1,9 +1,9 @@
 {
 	"Custom": {
 		"WorkOrderCosts": {
-			"Install": {
-				"TechCost": "[[Chassis.Tonnage]]/10",
-				"CBillCost": "[[Chassis.Tonnage]]"
+			"Default": {
+				"TechCost": "0",
+				"CBillCost": "0"
 			}
 		},
 		"Category" : { 
