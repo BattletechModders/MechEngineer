@@ -2,8 +2,11 @@
 	"Custom": {
 		"Weights": {
 			"ReservedSlots": 4,
-			"EngineFactor": 0.25
+			"EngineFactor": 0.75
 		},
+		"Category" : { 
+			"CategoryID" : "EngineShield" 
+		},		
 		"Linked" : {
 			"Links" : [
 				{ "ComponentDefId" : "emod_engineslots_size2", "Location" : "LeftTorso" },

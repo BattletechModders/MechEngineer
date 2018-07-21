@@ -7,9 +7,6 @@
 			"ReservedSlots": 5,
 			"ReservedSlotColor": "ArmorDamaged",
 		},
-		"Weights": {
-			"RequiredSlots": 5
-		},
 		"Category" : { 
 			"CategoryID" : "Armor" 
 		},
@@ -27,16 +24,16 @@
         "Details" : "TBD",
         "Icon" : "uixSvgIcon_action_end"
     },
-    "BonusValueA" : "+2 Difficulty to Hit",
+    "BonusValueA" : "+1 Difficulty to Hit|-50% Visbility|",
     "BonusValueB" : "+10 Heat/turn",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
-    "InventorySize" : 2,
+    "InventorySize" : 1,
     "Tonnage" : 0,
-    "AllowedLocations" : "All",
-    "DisallowedLocations" : "Head, CenterTorso",
+    "AllowedLocations" : "CenterTorso",
+    "DisallowedLocations" : "All",
     "CriticalComponent" : false,
     "statusEffects" : [
         {
@@ -65,7 +62,7 @@
             "Description" : {
                 "Id" : "StealthArmor",
                 "Name" : "Active Stealth Armor",
-                "Details" : "Provides a +2 difficulty to hit bonus.",
+                "Details" : "Provides a +1 difficulty to hit and reduced visibility.",
                 "Icon" : "uixSvgIcon_equipment_Gyro"
             },
             "nature" : "Buff",
@@ -74,7 +71,7 @@
                 "effectsPersistAfterDestruction" : false,
                 "statName" : "ToHitThisActor",
                 "operation" : "Float_Add",
-                "modValue" : "2.0",
+                "modValue" : "1.0",
                 "modType" : "System.Single",
                 "additionalRules" : "NotSet",
                 "targetCollection" : "NotSet",
@@ -90,6 +87,57 @@
             "instantModData" : null,
             "poorlyMaintainedEffectData" : null
         },
+        {
+            "durationData" : {
+                "duration" : -1,
+                "ticksOnActivations" : false,
+                "useActivationsOfTarget" : false,
+                "ticksOnEndOfRound" : false,
+                "ticksOnMovements" : false,
+                "stackLimit" : 1,
+                "clearedWhenAttacked" : false
+            },
+            "targetingData" : {
+                "effectTriggerType" : "Passive",
+                "triggerLimit" : 0,
+                "extendDurationOnTrigger" : 0,
+                "specialRules" : "NotSet",
+                "effectTargetType" : "Creator",
+                "range" : 0,
+                "forcePathRebuild" : false,
+                "forceVisRebuild" : false,
+                "showInTargetPreview" : false,
+                "showInStatusPanel" : false
+            },
+            "effectType" : "StatisticEffect",
+            "Description" : {
+                "Id" : "StealthArmor",
+                "Name" : "Active Stealth Armor",
+                "Details" : "Provides a +2 difficulty to hit bonus.",
+                "Icon" : "uixSvgIcon_equipment_Gyro"
+            },
+            "nature" : "Buff",
+            "statisticData" : {
+                "appliesEachTick" : false,
+                "effectsPersistAfterDestruction" : false,
+                "statName" : "SpottingVisibilityMultiplier",
+                "operation" : "Float_Multiply",
+                "modValue" : "0.5",
+                "modType" : "System.Single",
+                "additionalRules" : "NotSet",
+                "targetCollection" : "NotSet",
+                "targetWeaponCategory" : "NotSet",
+                "targetWeaponType" : "NotSet",
+                "targetAmmoCategory" : "NotSet",
+                "targetWeaponSubType" : "NotSet"
+            },
+            "tagData" : null,
+            "floatieData" : null,
+            "actorBurningData" : null,
+            "vfxData" : null,
+            "instantModData" : null,
+            "poorlyMaintainedEffectData" : null
+        },		
 {
             "durationData" : {
                 "duration" : -1,
