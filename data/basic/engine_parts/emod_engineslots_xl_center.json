@@ -5,9 +5,13 @@
 			"EngineFactor": 0.5
 		},
 		"WorkOrderCosts": {
+			"Default": {
+				"TechCost": "0",
+				"CBillCost": "0"
+			},
 			"Install": {
-				"TechCost": "[[Chassis.Tonnage]]/10",
-				"CBillCost": "[[Chassis.Tonnage]]"
+				"TechCost": "0",
+				"CBillCost": "20000 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 40"
 			}
 		},
 		"Category" : { 
@@ -22,7 +26,7 @@
 		"Flags" : { "flags" : [ "engine_part" ] }
 	},
     "Description" : {
-        "Cost" : 0,
+        "Cost" : 200000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Lostech",

@@ -1,23 +1,7 @@
 {
 	"Custom": {
 		"WorkOrderCosts": {
-			"Install": {
-				"TechCost": "0",
-				"CBillCost": "0"
-			},
-			"Repair": {
-				"TechCost": "0",
-				"CBillCost": "0"
-			},
-			"RepairDestroyed": {
-				"TechCost": "0",
-				"CBillCost": "0"
-			},
-			"Remove": {
-				"TechCost": "0",
-				"CBillCost": "0"
-			},
-			"RemoveDestroyed": {
+			"Default": {
 				"TechCost": "0",
 				"CBillCost": "0"
 			}

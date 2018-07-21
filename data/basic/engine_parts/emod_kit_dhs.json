@@ -4,6 +4,10 @@
 			"HeatSinkDefId": "Gear_HeatSink_Generic_Double"
 		},
 		"WorkOrderCosts": {
+			"Default": {
+				"TechCost": "0",
+				"CBillCost": "0"
+			},
 			"Install": {
 				"TechCost": "0",
 				"CBillCost": "0"

@@ -4,9 +4,13 @@
 			"Rating": 060
 		},
 		"WorkOrderCosts": {
+			"Default": {
+				"TechCost": "0",
+				"CBillCost": "0"
+			},
 			"Install": {
 				"TechCost": "0",
-				"CBillCost": "060 * [[Chassis.Tonnage]]"
+				"CBillCost": "060 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 4"
 			}
 		},
 		"Category" : { 
@@ -16,7 +20,7 @@
 	},
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : 450000,
+        "Cost" : 300000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Vlar",
