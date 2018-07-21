@@ -37,8 +37,10 @@ namespace MechEngineer
 
                 CustomComponents.Validator.RegisterMechValidator(DynamicSlotHandler.Shared.ValidateMech, DynamicSlotHandler.Shared.ValidateMechCanBeFielded);
 
-                if(settings.MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics)
+                if (settings.MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics)
+                {
                     CustomComponents.Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.PostValidateDrop);
+                }
 
                 foreach (var categoryDescriptor in settings.Categories)
                 {

@@ -338,7 +338,6 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 4 },
-                    // how to do this? engine dummy is not engine core custom, but still in category, require another category?
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_dummy" }
                 }
             },

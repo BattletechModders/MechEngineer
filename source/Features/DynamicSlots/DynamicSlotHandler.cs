@@ -59,17 +59,6 @@ namespace MechEngineer
             }
         }
 
-        public void ValidateMech_old(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
-        {
-            var slots = new MechDefSlots(mechDef);
-            var missing = slots.Missing;
-            if (missing > 0)
-            {
-                errorMessages[MechValidationType.InvalidInventorySlots]
-                    .Add($"RESERVED SLOTS: Mech requires {missing} additional free slots");
-            }
-        }
-
         public void ValidateMech(Dictionary<MechValidationType, List<string>> errors,
             MechValidationLevel validationLevel, MechDef mechDef)
         {
