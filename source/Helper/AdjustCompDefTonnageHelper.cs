@@ -27,12 +27,12 @@ namespace MechEngineer
             }
             
             var newTonnage = change.Change(def.Tonnage);
-            if (newTonnage < 0)
+            if (!newTonnage.HasValue)
             {
                 return;
             }
-
-            var value = newTonnage;
+            
+            var value = newTonnage.Value;
             var propInfo = typeof(UpgradeDef).GetProperty("Tonnage");
             var propValue = Convert.ChangeType(value, propInfo.PropertyType);
             propInfo.SetValue(def, propValue, null);

@@ -27,12 +27,12 @@ namespace MechEngineer
             }
 
             var newSize = change.Change(def.InventorySize);
-            if (newSize < 1)
+            if (!newSize.HasValue)
             {
                 return;
             }
 
-            var value = newSize;
+            var value = newSize.Value;
             var propInfo = typeof(UpgradeDef).GetProperty("InventorySize");
             var propValue = Convert.ChangeType(value, propInfo.PropertyType);
             propInfo.SetValue(def, propValue, null);

@@ -28,6 +28,7 @@ namespace MechEngineer
 
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
+                //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
 
                 CustomComponents.Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
 

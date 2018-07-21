@@ -95,6 +95,20 @@ namespace MechEngineer
             // unfortunatly CC does not work on fake mechdefs or inventories in that sense yet
             if (savings != null)
             {
+                //var originalTonnage = engine.TotalTonnage;
+
+                if (!Mathf.Approximately(savings.EngineFactor, 1))
+                {
+                    engine.Weights.EngineFactor = 1;
+                }
+                
+                if (!Mathf.Approximately(savings.GyroFactor, 1))
+                {
+                    engine.Weights.GyroFactor = 1;
+                }
+
+                var defaultTonnage = engine.TotalTonnage;
+
                 if (!Mathf.Approximately(savings.EngineFactor, 1))
                 {
                     engine.Weights.EngineFactor = savings.EngineFactor;
@@ -104,6 +118,12 @@ namespace MechEngineer
                 {
                     engine.Weights.GyroFactor = savings.GyroFactor;
                 }
+
+                var newTonnage = engine.TotalTonnage;
+
+                //Control.mod.Logger.LogDebug($"originalTonnage={originalTonnage} defaultTonnage={defaultTonnage} newTonnage={newTonnage}");
+
+                return newTonnage - defaultTonnage;
             }
 
             return engine.TotalTonnageChanges;

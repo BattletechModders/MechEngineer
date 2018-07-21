@@ -113,6 +113,7 @@
     <Compile Include="Engine\Handler\EngineHandler.cs" />
     <Compile Include="Features\CriticalHitStates\CriticalHitStates.cs" />
     <Compile Include="Features\Weights\Weights.cs" />
+    <Compile Include="Misc\HarmonyExtensions.cs" />
     <Compile Include="Misc\FormulaEvaluator.cs" />
     <Compile Include="Helper\IdentityHelper.cs" />
     <Compile Include="Helper\AdjustCompDefTonnageHelper.cs" />
