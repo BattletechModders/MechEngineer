@@ -41,7 +41,7 @@
     "Tonnage" : 12,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
-    "CriticalComponent" : false,
+    "CriticalComponent" : true,
     "statusEffects" : null,
     "ComponentTags" : {
         "items" : [
