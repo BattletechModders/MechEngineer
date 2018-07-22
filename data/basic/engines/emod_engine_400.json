@@ -1,7 +1,7 @@
 {
 	"Custom": {
 		"EngineCore": {
-			"Rating": 060
+			"Rating": 400
 		},
 		"WorkOrderCosts": {
 			"Default": {
@@ -10,7 +10,7 @@
 			},
 			"Install": {
 				"TechCost": "1",
-				"CBillCost": "060 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 4"
+				"CBillCost": "400 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 4"
 			}
 		},
 		"Category" : { 
@@ -20,25 +20,25 @@
 	},
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : 300000,
+        "Cost" : 3760000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Vlar",
         "Model" : "Fusion Core",
-        "UIName" : "Fusion Core 060",
-        "Id" : "emod_engine_060",
-        "Name" : "Fusion Core 060",
+        "UIName" : "Fusion Core 400",
+        "Id" : "emod_engine_400",
+        "Name" : "Fusion Core 400",
         "Details" : "Fusion engines function by harnessing the power of a fusion reaction, running on light hydrogen and protium.\r\nFusion engines are defined by their <b>engine rating</b>. For 'Mechs, the engine rating is the mathematical product of the mass of the vehicle and its desired maximum walking or cruising velocity.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
-    "BonusValueA" : "- 6 Heat / Turn",
-    "BonusValueB" : " ",
+    "BonusValueA" : "- 30 Heat / Turn",
+    "BonusValueB" : "+ 6 Slots",
     "ComponentType" : "HeatSink",
     "ComponentSubType" : "Heatsink",
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 2,
-    "Tonnage" : 2.5,
+    "Tonnage" : 56.5,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : true,

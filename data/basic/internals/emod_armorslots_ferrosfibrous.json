@@ -12,7 +12,7 @@
 		},
 		"WorkOrderCosts": {
 			"Install": {
-				"TechCost": "0",
+				"TechCost": "1",
 				"CBillCost": "[[Chassis.Tonnage]]"
 			}
 		},

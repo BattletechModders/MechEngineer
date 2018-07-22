@@ -22,6 +22,7 @@ my %stockratings;
 {
 	my @ratings = get_lines_from_file("stock_std_ratings.txt");
 	push(@ratings, get_lines_from_file("lore_ratings.txt"));
+	push(@ratings, get_lines_from_file("special_ratings.txt"));
 	@stockratings{@ratings} = ();
 }
 

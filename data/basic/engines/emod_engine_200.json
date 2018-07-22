@@ -9,7 +9,7 @@
 				"CBillCost": "0"
 			},
 			"Install": {
-				"TechCost": "0",
+				"TechCost": "1",
 				"CBillCost": "200 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 4"
 			}
 		},
