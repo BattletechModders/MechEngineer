@@ -2,7 +2,7 @@
 	"Custom": {
 		"Weights": {
 			"ReservedSlots": 8,
-			"EngineFactor": 0.666
+			"EngineFactor": 0.333
 		},
 		"WorkOrderCosts": {
 			"Default": {
