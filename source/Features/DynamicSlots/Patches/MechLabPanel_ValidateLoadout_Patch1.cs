@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech.UI;
 using Harmony;
@@ -11,7 +12,14 @@ namespace MechEngineer
     {
         public static void Postfix(MechLabPanel __instance)
         {
-            DynamicSlotHandler.Shared.RefreshData(__instance);
+            try
+            {
+                DynamicSlotHandler.Shared.RefreshData(__instance);
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
@@ -25,9 +26,16 @@ namespace MechEngineer
 
         public static List<string> GetValidationErrors(Dictionary<MechValidationType, List<string>> errorMessages, List<MechValidationType> validationTypes)
         {
-            if (_isSimGame)
+            try
             {
-                validationTypes.Add(MechValidationType.InvalidInventorySlots);
+                if (_isSimGame)
+                {
+                    validationTypes.Add(MechValidationType.InvalidInventorySlots);
+                }
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
             }
 
             return MechValidationRules.GetValidationErrors(errorMessages, validationTypes);
