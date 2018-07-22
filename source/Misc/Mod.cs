@@ -23,11 +23,11 @@ namespace MechEngineer
         public string DefaultsSettingsPath => Path.Combine(Directory, "Settings.defaults.json");
         public string ModsPath => Path.GetDirectoryName(Directory);
         public string InfoPath => Path.Combine(Directory, "mod.json");
+        public string LogPath => Path.Combine(Directory, "log.txt");
 
-        public ILog Logger => HBS.Logging.Logger.GetLogger(Name);
-        private FileLogAppender logAppender;
+        public ILog Logger => LogManager.GetLogger(Name);
 
-        public void LoadSettings<T>(T settings) where T : ModSettings
+        public void LoadSettings(object settings)
         {
             if (!File.Exists(SettingsPath))
             {
@@ -39,17 +39,9 @@ namespace MechEngineer
                 var json = reader.ReadToEnd();
                 JSONSerializationUtility.FromJSON(settings, json);
             }
-
-            var logLevelString = settings.logLevel;
-            DebugBridge.StringToLogLevel(logLevelString, out var level);
-            if (level == null)
-            {
-                level = LogLevel.Debug;
-            }
-            HBS.Logging.Logger.SetLoggerLevel(Name, level);
         }
 
-        public void SaveSettings<T>(T settings, string path) where T : ModSettings
+        public void SaveSettings(object settings, string path)
         {
             using (var writer = new StreamWriter(path))
             {
@@ -65,47 +57,6 @@ namespace MechEngineer
                 var json = JSON.ToNiceJSON(settings, p);
                 writer.Write(json);
             }
-        }
-
-        internal void SetupLogging()
-        {
-            var logFilePath = Path.Combine(Directory, "log.txt");
-            try
-            {
-                ShutdownLogging();
-                AddLogFileForLogger(Name, logFilePath);
-            }
-            catch (Exception e)
-            {
-                Logger.Log("DynModLib: can't create log file", e);
-            }
-        }
-
-        internal void ShutdownLogging()
-        {
-            if (logAppender == null)
-            {
-                return;
-            }
-
-            try
-            {
-                HBS.Logging.Logger.ClearAppender(Name);
-                logAppender.Flush();
-                logAppender.Close();
-            }
-            catch
-            {
-            }
-
-            logAppender = null;
-        }
-
-        private void AddLogFileForLogger(string name, string logFilePath)
-        {
-            logAppender = new FileLogAppender(logFilePath, FileLogAppender.WriteMode.INSTANT);
-
-            HBS.Logging.Logger.AddAppender(name, logAppender);
         }
 
         public override string ToString()

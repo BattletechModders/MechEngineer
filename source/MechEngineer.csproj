@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Misc\LogManager.cs" />
     <Compile Include="Features\AutoFix\ArmorHandler.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
     <Compile Include="Features\AutoFix\StructureHandler.cs" />
@@ -101,9 +102,8 @@
     <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
     <Compile Include="Features\DynamicSlots\MechDefSlots.cs" />
-    <Compile Include="DynModLibCopy\Adapter.cs" />
-    <Compile Include="DynModLibCopy\Mod.cs" />
-    <Compile Include="DynModLibCopy\ModSettings.cs" />
+    <Compile Include="Misc\Adapter.cs" />
+    <Compile Include="Misc\Mod.cs" />
     <Compile Include="Engine\EngineHeatSinkKit.cs" />
     <Compile Include="Engine\EngineHeatSink.cs" />
     <Compile Include="Engine\Helper\EngineExtensions.cs" />

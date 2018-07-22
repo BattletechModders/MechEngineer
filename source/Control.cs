@@ -10,12 +10,6 @@ namespace MechEngineer
         internal static Mod mod;
 
         internal static MechEngineerSettings settings = new MechEngineerSettings();
-        private static CombatGameConstants _combat;
-
-        public static CombatGameConstants Combat
-        {
-            get { return _combat ?? (_combat = CombatGameConstants.CreateFromSaved(UnityGameInstance.BattleTechGame)); }
-        }
 
         public static void Start(string modDirectory, string json)
         {
@@ -23,12 +17,18 @@ namespace MechEngineer
             try
             {
                 mod.LoadSettings(settings);
-                mod.SetupLogging();
+                LogManager.Setup(mod.LogPath, settings.LogLevels);
+                
+                mod.Logger.Log("settings loaded");
+                mod.Logger.LogDebug("debugging enabled");
+
                 mod.SaveSettings(settings, mod.DefaultsSettingsPath);
 
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
+
+                mod.Logger.LogDebug("game patched");
 
                 CustomComponents.Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
 
@@ -48,9 +48,11 @@ namespace MechEngineer
                     CustomComponents.Control.AddCategory(categoryDescriptor);
                 }
 
+                mod.Logger.LogDebug("CustomComponents setup");
+
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
-                mod.Logger.LogDebug("Loaded " + mod.Name);
+                mod.Logger.Log("Loaded " + mod.Name);
             }
             catch (Exception e)
             {

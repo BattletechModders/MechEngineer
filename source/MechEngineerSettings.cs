@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
+using HBS.Logging;
 
 namespace MechEngineer
 {
@@ -11,7 +12,7 @@ namespace MechEngineer
         public ComponentType ComponentType { get; set; }
     }
 
-    public class MechEngineerSettings : ModSettings
+    public class MechEngineerSettings
     {
         #region misc
 
@@ -100,6 +101,15 @@ namespace MechEngineer
         // battletech allows overweight, to stay consistent so we also allow overspace usage by default
         // set to true to switch to MWO style
         public bool MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics = false;
+
+        #endregion
+
+        #region logging
+
+        public Dictionary<string, LogLevel> LogLevels = new Dictionary<string, LogLevel>
+        {
+            ["MechEngineer"] = LogLevel.Debug
+        };
 
         #endregion
 
