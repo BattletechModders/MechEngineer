@@ -1,21 +1,14 @@
 {
 	"Custom": {
-		"Color": {
-			"UIColor": "OrangeHalf",
-		},
-		"DynamicSlots": {
-			"ReservedSlots": 7,
-			"ReservedSlotColor": "OrangeHalf",
-		},
-		"Weights": {
-			"StructureFactor": 0.75
-		},
 		"Category" : { 
 			"CategoryID" : "Structure" 
 		},
-		"Sorter" : { "Order" : 1 },
-		"Replace" : { "ComponentDefId" : "emod_structureslots_standard" },
-		"Flags" : { "flags" : [ "ignore_damage" ] }
+		"DynamicSlots": {
+			"ReservedSlots": 7
+		},
+		"Weights": {
+			"StructureFactor": 0.75
+		}
 	},
     "Description" : {
         "Cost" : 0,

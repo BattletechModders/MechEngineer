@@ -1,21 +1,14 @@
 {
 	"Custom": {
-		"Color": {
-			"UIColor": "ArmorDamaged",
-		},
-		"DynamicSlots": {
-			"ReservedSlots": 7,
-			"ReservedSlotColor": "ArmorDamaged",
-		},
-		"Weights": {
-			"ArmorFactor": 0.89286
-		},
 		"Category" : { 
 			"CategoryID" : "Armor" 
 		},
-		"Flags" : { "flags" : [ "ignore_damage", "autorepair" ] },
-		"Replace" : { "ComponentDefId" : "emod_armorslots_standard" },
-		"Sorter" : { "Order" : 0 }
+		"DynamicSlots": {
+			"ReservedSlots": 7
+		},
+		"Weights": {
+			"ArmorFactor": 0.89286
+		}
 	},
     "Description" : {
         "Cost" : 0,

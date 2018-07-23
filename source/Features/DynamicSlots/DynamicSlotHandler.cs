@@ -46,8 +46,8 @@ namespace MechEngineer
                                 throw new NullReferenceException();
                             }
                             fillerImage.gameObject.SetActive(true);
-                            var uicolor = reservedSlot.ReservedSlotColor;
-                            var color = LazySingletonBehavior<UIManager>.Instance.UIColorRefs.GetUIColor(uicolor);
+                            var uicolor = reservedSlot.ReservedSlotColor != UIColor.Custom ? reservedSlot.ReservedSlotColor : reservedSlot.Def?.GetComponent<ColorComponent>()?.UIColor;
+                            var color = LazySingletonBehavior<UIManager>.Instance.UIColorRefs.GetUIColor(uicolor ?? UIColor.White);
                             fillerImage.color = slots.IsOverloaded ? DynamicSlotsSpaceMissingColor : color;
                         }
                         else

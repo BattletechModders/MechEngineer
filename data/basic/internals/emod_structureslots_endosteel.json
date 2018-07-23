@@ -1,11 +1,10 @@
 {
 	"Custom": {
-		"Color": {
-			"UIColor": "OrangeHalf",
+		"Category" : { 
+			"CategoryID" : "Structure" 
 		},
 		"DynamicSlots": {
-			"ReservedSlots": 14,
-			"ReservedSlotColor": "OrangeHalf",
+			"ReservedSlots": 14
 		},
 		"Weights": {
 			"StructureFactor": 0.5
@@ -15,11 +14,7 @@
 				"TechCost": "1",
 				"CBillCost": "[[Chassis.Tonnage]]"
 			}
-		},
-		"Category" : { 
-			"CategoryID" : "Structure" 
-		},
-		"Flags" : { "flags" : [ "ignore_damage", "autorepair" ] }
+		}
 	},
     "Description" : {
         "Cost" : 0,

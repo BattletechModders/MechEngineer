@@ -1,11 +1,10 @@
 {
 	"Custom": {
-		"Color": {
-			"UIColor": "ArmorDamaged",
+		"Category" : { 
+			"CategoryID" : "Armor" 
 		},
 		"DynamicSlots": {
-			"ReservedSlots": 14,
-			"ReservedSlotColor": "ArmorDamaged",
+			"ReservedSlots": 14
 		},
 		"Weights": {
 			"ArmorFactor": 0.89286
@@ -15,11 +14,7 @@
 				"TechCost": "1",
 				"CBillCost": "[[Chassis.Tonnage]]"
 			}
-		},
-		"Category" : { 
-			"CategoryID" : "Armor" 
-		},
-		"Flags" : { "flags" : [ "ignore_damage", "autorepair" ] }
+		}
 	},
     "Description" : {
         "Cost" : 0,

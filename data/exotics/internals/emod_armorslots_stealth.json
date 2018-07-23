@@ -1,16 +1,11 @@
 {
 	"Custom": {
-		"Color": {
-			"UIColor": "ArmorDamaged",
-		},
-		"DynamicSlots": {
-			"ReservedSlots": 5,
-			"ReservedSlotColor": "ArmorDamaged",
-		},
 		"Category" : { 
 			"CategoryID" : "Armor" 
 		},
-		"Flags" : { "flags" : [ "ignore_damage" ] }
+		"DynamicSlots": {
+			"ReservedSlots": 5
+		}
 	},
     "Description" : {
         "Cost" : 0,

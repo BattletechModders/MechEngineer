@@ -284,8 +284,10 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "ArmorDamaged" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_armorslots_standard" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_armorslots_standard" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "autorepair"} },
                 }
             },
             new CategoryDescriptor
@@ -297,8 +299,10 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "OrangeHalf" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 1 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_structureslots_standard" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_structureslots_standard" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "autorepair"} },
                 }
             },
             new CategoryDescriptor

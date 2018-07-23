@@ -3,6 +3,9 @@
 		"Category" : { 
 			"CategoryID" : "Structure" 
 		},
+		"Color": {
+			"UIColor": "DarkGray"
+		},
 		"Flags" : { "flags" : [ "ignore_damage", "default" ] }
 	},
     "Description" : {
