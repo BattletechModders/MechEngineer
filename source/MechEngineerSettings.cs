@@ -202,6 +202,9 @@ namespace MechEngineer
 
         public bool AutoFixChassisDefInitialTonnage = true;
         public float AutoFixChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
+        public bool AutoFixChassisDefMaxJumpjets = true;
+        public int AutoFixChassisDefMaxJumpjetsCount = 8;
+        public int AutoFixChassisDefMaxJumpjetsRating = 400;
 
         public bool AutoFixWeaponDefSlots = true;
         public Dictionary<string, ValueChange<int>> AutoFixWeaponDefSlotsChanges = new Dictionary<string, ValueChange<int>>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
-using Harmony;
+using UnityEngine;
 
 namespace MechEngineer
 {
@@ -43,11 +43,7 @@ namespace MechEngineer
 
         private static void AutoFixChassisDef(ChassisDef chassisDef)
         {
-            if (!Control.settings.AutoFixChassisDefInitialTonnage)
-            {
-                return;
-            }
-
+            if (Control.settings.AutoFixChassisDefInitialTonnage)
             {
                 SetOriginalTonnage(chassisDef);
                 var tonnage = chassisDef.Tonnage * Control.settings.AutoFixChassisDefInitialToTotalTonnageFactor;
@@ -56,9 +52,13 @@ namespace MechEngineer
                 info.SetValue(chassisDef, value, null);
             }
 
+            if (Control.settings.AutoFixChassisDefMaxJumpjets)
             {
-                // TODO: make engine calculation independent of def/refs again, to allow reuse of calc here
-                var maxCount = Math.Min(8, Math.Ceiling(400 / chassisDef.Tonnage));
+                var coreDef = new EngineCoreDef {Rating = Control.settings.AutoFixChassisDefMaxJumpjetsRating };
+                var maxCount = Mathf.Min(
+                    Control.settings.AutoFixChassisDefMaxJumpjetsCount,
+                    coreDef.GetMovement(chassisDef.Tonnage).JumpJetCount
+                );
                 var info = typeof(ChassisDef).GetProperty("MaxJumpjets");
                 var value = Convert.ChangeType(maxCount, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
