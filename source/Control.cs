@@ -24,11 +24,14 @@ namespace MechEngineer
 
                 mod.SaveSettings(settings, mod.DefaultsSettingsPath);
 
+                
+                mod.Logger.LogDebug("patching game");
+
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
-
-                mod.Logger.LogDebug("game patched");
+                
+                mod.Logger.LogDebug("setting up CustomComponents");
 
                 CustomComponents.Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
 
@@ -47,9 +50,11 @@ namespace MechEngineer
                 {
                     CustomComponents.Control.AddCategory(categoryDescriptor);
                 }
+                
+                mod.Logger.LogDebug("setting up mechdef auto fixers");
 
-                mod.Logger.LogDebug("CustomComponents setup");
-
+                MechDefAutoFixCategory.SetMechDefAutoFixCategory();
+                
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
                 mod.Logger.Log("Loaded " + mod.Name);

@@ -23,38 +23,54 @@ namespace MechEngineer
             companyStats?.AddStatistic(CompanyStatKey, 1);
         }
 
-        internal static MechDefAutoFixCategory[] Fixers => new[] {
-            new MechDefAutoFixCategory
+        internal static void SetMechDefAutoFixCategory()
+        {
+            Fixers.Clear();
+            void Add(MechDefAutoFixCategory cat)
+            {
+                if (cat.AutoFixSetting)
+                {
+                    Fixers.Add(cat);
+                }
+            }
+
+            Add(new MechDefAutoFixCategory
             {
                 AutoFixMechDef = CockpitHandler.Shared,
                 AutoFixSetting = Control.settings.AutoFixMechDefCockpitAdder != null,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefCockpit"
-            },
-            new MechDefAutoFixCategory
+            });
+
+            Add(new MechDefAutoFixCategory
             {
                 AutoFixMechDef = GyroHandler.Shared,
                 AutoFixSetting = Control.settings.AutoFixMechDefGyroAdder != null,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefGyro"
-            },
-            new MechDefAutoFixCategory
+            });
+
+            Add(new MechDefAutoFixCategory
             {
                 AutoFixMechDef = ArmorHandler.Shared,
                 AutoFixSetting = Control.settings.AutoFixMechDefArmorAdder != null,
                 CompanyStatKey = "MechEngineer_AutoFixArmor"
-            },
-            new MechDefAutoFixCategory
+            });
+
+            Add(new MechDefAutoFixCategory
             {
                 AutoFixMechDef = StructureHandler.Shared,
                 AutoFixSetting = Control.settings.AutoFixMechDefStructureAdder != null,
                 CompanyStatKey = "MechEngineer_AutoFixStructure"
-            },
-            new MechDefAutoFixCategory
+            });
+
+            Add(new MechDefAutoFixCategory
             {
                 AutoFixMechDef = EngineCoreRefHandler.Shared,
                 AutoFixSetting = Control.settings.AutoFixMechDefEngine,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefEngine"
-            }
-        };
+            });
+        }
+
+        internal static List<MechDefAutoFixCategory> Fixers = new List<MechDefAutoFixCategory>();
     }
 
     internal static class MechDefAutoFixFacade
@@ -83,6 +99,11 @@ namespace MechEngineer
         internal static void PostProcessAfterLoading(DataManager dataManager)
         {
             var fixers = MechDefAutoFixCategory.Fixers;
+            if (fixers.Count == 0)
+            {
+                return;
+            }
+
             foreach (var fixer in fixers)
             {
                 fixer.SetShouldFix(null);
@@ -97,6 +118,11 @@ namespace MechEngineer
         internal static void InitCompanyStats(StatCollection companyStats)
         {
             var fixers = MechDefAutoFixCategory.Fixers;
+            if (fixers.Count == 0)
+            {
+                return;
+            }
+
             foreach (var fixer in fixers)
             {
                 fixer.SetShouldFix(companyStats);
@@ -110,6 +136,11 @@ namespace MechEngineer
         internal static void Rehydrate(StatCollection companyStats, List<MechDef> mechs)
         {
             var fixers = MechDefAutoFixCategory.Fixers;
+            if (fixers.Count == 0)
+            {
+                return;
+            }
+
             foreach (var fixer in fixers)
             {
                 fixer.SetShouldFix(companyStats);

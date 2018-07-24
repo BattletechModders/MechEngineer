@@ -13,12 +13,7 @@ namespace MechEngineer
 
         public static void Prefix(MechLabPanel ___mechLab)
         {
-            if (___mechLab == null)
-            {
-                return;
-            }
-
-            mechDef = ___mechLab.activeMechDef;
+            mechDef = ___mechLab?.activeMechDef;
         }
 
         public static void Postfix()
