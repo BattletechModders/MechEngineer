@@ -290,7 +290,7 @@ namespace MechEngineer
                 {
                     ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "ArmorDamaged" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_armorslots_standard" },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_armorslots_standard", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "autorepair"} },
                 }
             },
@@ -305,7 +305,7 @@ namespace MechEngineer
                 {
                     ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "OrangeHalf" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 1 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_structureslots_standard" },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_structureslots_standard", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "autorepair"} },
                 }
             },
@@ -319,7 +319,7 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Cockpit_Generic_Standard" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Cockpit_Generic_Standard", ["Location"] = "Head" }
                 }
             },
             new CategoryDescriptor
@@ -332,7 +332,7 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 2 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Gyro_Generic_Standard" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Gyro_Generic_Standard", ["Location"] = "CenterTorso" }
                 }
             },
             new CategoryDescriptor
@@ -345,7 +345,7 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 3 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engineslots_std_center" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engineslots_std_center", ["Location"] = "CenterTorso" }
                 }
             },
             new CategoryDescriptor
@@ -358,7 +358,7 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 4 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_dummy" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_dummy", ["Location"] = "CenterTorso" }
                 }
             },
             new CategoryDescriptor
@@ -368,8 +368,6 @@ namespace MechEngineer
                 MaxEquiped =  1,
                 AutoReplace = true
             },
-
-
         };
 
         #endregion
