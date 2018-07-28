@@ -6,13 +6,10 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal partial class EngineHandler
+    internal class EngineHandler : IAdjustTooltip
     {
         internal static EngineHandler Shared = new EngineHandler();
-    }
 
-    internal partial class EngineHandler : IAdjustTooltip
-    {
         public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechComponentDef mechComponentDef)
         {
             var engineDef = mechComponentDef.GetComponent<EngineCoreDef>();

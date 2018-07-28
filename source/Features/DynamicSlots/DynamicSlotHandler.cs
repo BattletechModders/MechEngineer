@@ -9,9 +9,15 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    public class DynamicSlotHandler
+    public class DynamicSlotHandler : IValidateMech
     {
         public static DynamicSlotHandler Shared = new DynamicSlotHandler();
+        internal CCValidationAdapter CCValidation;
+
+        public DynamicSlotHandler()
+        {
+            CCValidation = new CCValidationAdapter(this);
+        }
 
         #region settings
         private static readonly Color DynamicSlotsSpaceMissingColor = new Color(0.5f, 0, 0); // color changes when slots dont fit
@@ -59,22 +65,15 @@ namespace MechEngineer
             }
         }
 
-        public void ValidateMech(Dictionary<MechValidationType, List<string>> errors,
-            MechValidationLevel validationLevel, MechDef mechDef)
+        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
         {
+
             var slots = new MechDefSlots(mechDef);
             var missing = slots.Missing;
             if (missing > 0)
             {
-                errors[MechValidationType.InvalidInventorySlots]
-                    .Add($"RESERVED SLOTS: Mech requires {missing} additional free slots");
+                errorMessages[MechValidationType.InvalidInventorySlots].Add($"RESERVED SLOTS: Mech requires {missing} additional free slots");
             }
-        }
-
-        public bool ValidateMechCanBeFielded(MechDef mechDef)
-        {
-            var slots = new MechDefSlots(mechDef);
-            return slots.Missing <= 0;
         }
 
         public string PostValidateDrop(MechLabItemSlotElement drop_item, MechDef mech, List<InvItem> new_inventory,
@@ -90,6 +89,5 @@ namespace MechEngineer
 
             return string.Empty;
         }
-
     }
 }

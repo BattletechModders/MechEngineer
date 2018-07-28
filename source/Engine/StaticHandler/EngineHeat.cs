@@ -70,7 +70,7 @@ namespace MechEngineer
                 if (mechLab.originalMechDef.Inventory.Any(c => c.SimGameUID == engineRef.ComponentRef.SimGameUID))
                 {
                     return new MechLabDropErrorResult(
-                        $"Cannot add {newComponentDef.Description.Name}: Engine cannot be modified once installed, remove engine first"
+                        $"Cannot add {newComponentDef.Description.Name}: Installed Engine Core cannot be modified, remove it first"
                     );
                 }
             }
@@ -80,14 +80,14 @@ namespace MechEngineer
                 if (engineRef.HeatSinkDef != newComponentDef.DataManager.GetDefaultEngineHeatSinkDef())
                 {
                     return new MechLabDropErrorResult(
-                        $"Cannot add {newComponentDef.Description.Name}: Reinstall engine to remove internal heat sinks"
+                        $"Cannot add {newComponentDef.Description.Name}: Reinstall Engine Core to remove internal heat sinks"
                     );
                 }
 
                 if (engineRef.AdditionalHeatSinkCount > 0)
                 {
                     return new MechLabDropErrorResult(
-                        $"Cannot add {newComponentDef.Description.Name}: Reinstall engine to remove additional heat sinks before converting"
+                        $"Cannot add {newComponentDef.Description.Name}: Reinstall Engine Core to remove additional heat sinks before converting"
                     );
                 }
 

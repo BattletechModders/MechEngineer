@@ -39,7 +39,8 @@ namespace MechEngineer
                 CustomComponents.Registry.RegisterPreProcessor(GyroHandler.Shared);
                 CustomComponents.Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
 
-                CustomComponents.Validator.RegisterMechValidator(DynamicSlotHandler.Shared.ValidateMech, DynamicSlotHandler.Shared.ValidateMechCanBeFielded);
+                CustomComponents.Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
+                CustomComponents.Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
 
                 if (settings.MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics)
                 {

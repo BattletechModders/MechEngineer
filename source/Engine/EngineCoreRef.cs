@@ -184,6 +184,16 @@ namespace MechEngineer
                 }
             }
         }
+
+        internal IEnumerable<EngineHeatSink> GetInternalEngineHeatSinkTypes()
+        {
+            yield return HeatSinkDef;
+
+            foreach (var type in additionalHSCounts.Keys)
+            {
+                yield return type;
+            }
+        }
         
         internal class HSQuery
         {
