@@ -36,6 +36,11 @@
 		},
 		{
 			"Type": "UpgradeDef",
+			"Path": "disabled data/test/upgrades/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "UpgradeDef",
 			"Path": "disabled data/exotics/internals/",
 			"ShouldMergeJSON": false
 		},
