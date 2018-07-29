@@ -70,6 +70,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\ArmorStructureChanges\Patches\Mech_ToMechDef_Patch.cs" />
+    <Compile Include="Features\ArmorStructureChanges\Patches\Mech_get_ArmorMultiplier_Patch.cs" />
+    <Compile Include="Features\ArmorStructureChanges\Patches\Mech_get_StructureMultiplier_Patch.cs" />
+    <Compile Include="Features\ArmorStructureChanges\ArmorStructureChanges.cs" />
     <Compile Include="Misc\CCValidationAdapter.cs" />
     <Compile Include="Engine\Handler\EngineValidation.cs" />
     <Compile Include="Misc\LogManager.cs" />

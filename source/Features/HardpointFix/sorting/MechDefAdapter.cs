@@ -15,6 +15,8 @@ namespace MechEngineer
             _traverse = Traverse.Create(instance);
         }
 
+        internal LocationLoadoutDef[] Locations => _traverse.Field("Locations").GetValue() as LocationLoadoutDef[];
+
         internal MechComponentRef[] Inventory => _traverse.Field("inventory").GetValue() as MechComponentRef[];
 
         internal DataManager DataManager => _traverse.Field("dataManager").GetValue() as DataManager;
