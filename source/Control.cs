@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
-using BattleTech;
 using Harmony;
 
 namespace MechEngineer
@@ -17,7 +17,7 @@ namespace MechEngineer
             try
             {
                 mod.LoadSettings(settings);
-                LogManager.Setup(mod.LogPath, settings.LogLevels);
+                LogManager.Setup(mod.LogPath, settings.LogLevels.ToDictionary(x => x.Name, x => x.Level));
                 
                 mod.Logger.Log("settings loaded");
                 mod.Logger.LogDebug("debugging enabled");

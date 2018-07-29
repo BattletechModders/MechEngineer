@@ -110,9 +110,17 @@ namespace MechEngineer
 
         #region logging
 
-        public Dictionary<string, LogLevel> LogLevels = new Dictionary<string, LogLevel>
+        public class LoggerLogLevel
         {
-            ["MechEngineer"] = LogLevel.Debug
+            public string Name;
+            public LogLevel Level;
+        }
+        public LoggerLogLevel[] LogLevels = {
+            new LoggerLogLevel
+            {
+                Name = "MechEngineer",
+                Level = LogLevel.Debug
+            }
         };
 
         #endregion
@@ -193,16 +201,45 @@ namespace MechEngineer
         };
 
         public string[] AutoFixChassisDefSkip = { };
-        public bool AutoFixChassisDefSlots = true; // adds 2 torso slots at a cost of 2 leg slots per side if they match stock slot layouts
-        public Dictionary<string, ValueChange<int>> AutoFixChassisDefSlotsChanges = new Dictionary<string, ValueChange<int>>
+
+        public ChassisSlotsChange[] AutoFixChassisDefSlotsChanges =
         {
-            [ChassisLocations.LeftTorso.ToString()] = new ValueChange<int> {From = 10, By = 2},
-            [ChassisLocations.RightTorso.ToString()] = new ValueChange<int> {From = 10, By = 2},
-            [ChassisLocations.LeftLeg.ToString()] = new ValueChange<int> {From = 4, By = -2},
-            [ChassisLocations.RightLeg.ToString()] = new ValueChange<int> {From = 4, By = -2},
-            [ChassisLocations.Head.ToString()] = new ValueChange<int> {From = 1, By = 1}, // 2
-            [ChassisLocations.CenterTorso.ToString()] = new ValueChange<int> {From = 4, By = 10},
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.LeftTorso,
+                Change = new ValueChange<int> {From = 10, By = 2}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.RightTorso,
+                Change = new ValueChange<int> {From = 10, By = 2}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.LeftLeg,
+                Change = new ValueChange<int> {From = 4, By = -2}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.RightLeg,
+                Change = new ValueChange<int> {From = 4, By = -2}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.Head,
+                Change = new ValueChange<int> {From = 1, By = 1}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.CenterTorso,
+                Change = new ValueChange<int> {From = 4, By = 10}
+            }
         };
+        public class ChassisSlotsChange
+        {
+            public ChassisLocations Location;
+            public ValueChange<int> Change;
+        }
 
         public bool AutoFixChassisDefInitialTonnage = true;
         public float AutoFixChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
@@ -210,16 +247,44 @@ namespace MechEngineer
         public int AutoFixChassisDefMaxJumpjetsCount = 8;
         public int AutoFixChassisDefMaxJumpjetsRating = 400;
 
-        public bool AutoFixWeaponDefSlots = true;
-        public Dictionary<string, ValueChange<int>> AutoFixWeaponDefSlotsChanges = new Dictionary<string, ValueChange<int>>
+        public WeaponSlotChange[] AutoFixWeaponDefSlotsChanges =
         {
-            [WeaponSubType.AC5.ToString()] = new ValueChange<int> {From = 2, By = 2},
-            [WeaponSubType.AC10.ToString()] = new ValueChange<int> {From = 3, By = 4},
-            [WeaponSubType.AC20.ToString()] = new ValueChange<int> {From = 4, By = 4}, //6
-            [WeaponSubType.Gauss.ToString()] = new ValueChange<int> {From = 5, By = 2},
-            [WeaponSubType.LargeLaserPulse.ToString()] = new ValueChange<int> {From = 2, By = 1},
-            [WeaponSubType.LRM20.ToString()] = new ValueChange<int> {From = 4, By = 1},
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.AC5,
+                Change = new ValueChange<int> {From = 2, By = 2}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.AC10,
+                Change = new ValueChange<int> {From = 3, By = 4}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.AC20,
+                Change = new ValueChange<int> {From = 4, By = 4}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.Gauss,
+                Change = new ValueChange<int> {From = 5, By = 2}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.LargeLaserPulse,
+                Change = new ValueChange<int> {From = 2, By = 1}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.LRM20,
+                Change = new ValueChange<int> {From = 4, By = 1}
+            }
         };
+        public class WeaponSlotChange
+        {
+            public WeaponSubType Type;
+            public ValueChange<int> Change;
+        }
 
         #endregion
 
