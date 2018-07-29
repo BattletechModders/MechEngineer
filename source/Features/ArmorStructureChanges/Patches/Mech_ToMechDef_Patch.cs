@@ -1,4 +1,5 @@
-﻿using BattleTech;
+﻿using System;
+using BattleTech;
 using Harmony;
 using UnityEngine;
 
@@ -10,8 +11,18 @@ namespace MechEngineer
     {
         public static void Postfix(Mech __instance, MechDef __result)
         {
-            var mech = __instance;
-            var mechDef = __result;
+            try
+            {
+                UndoArmorStructureChanges(__instance, __result);
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
+        }
+
+        private static void UndoArmorStructureChanges(Mech mech, MechDef mechDef)
+        {
             var armorFactor = Mech_get_ArmorMultiplier_Patch.GetFactorForMech(mech);
             var structureFactor = Mech_get_StructureMultiplier_Patch.GetFactorForMech(mech);
 

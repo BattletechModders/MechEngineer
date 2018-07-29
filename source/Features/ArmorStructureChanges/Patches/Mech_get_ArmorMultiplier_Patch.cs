@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BattleTech;
 using CustomComponents;
 using Harmony;
@@ -10,7 +11,14 @@ namespace MechEngineer
     {
         public static void Postfix(Mech __instance, ref float __result)
         {
-            __result = __result * GetFactorForMech(__instance);
+            try
+            {
+                __result = __result * GetFactorForMech(__instance);
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
 
         internal static float GetFactorForMech(Mech mech)
