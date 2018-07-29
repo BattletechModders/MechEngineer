@@ -16,6 +16,9 @@ namespace MechEngineer
     {
         #region misc
 
+        public bool HeatDamageInjuryEnabled = true;
+        public bool ShutdownInjuryEnabled = true;
+
         public int MinimumHeatSinksOnMech = 10; // minimum heatsinks a mech requires
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
         public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations

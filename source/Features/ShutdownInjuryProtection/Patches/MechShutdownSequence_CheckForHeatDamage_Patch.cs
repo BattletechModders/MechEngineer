@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using BattleTech;
 using Harmony;
 
@@ -20,15 +19,23 @@ namespace MechEngineer
         public static HeatConstantsDef OverrideHeat(this CombatGameConstants @this)
         {
             var heat = @this.Heat;
-            heat.ShutdownCausesInjury = overrideShutdownCausesInjury || heat.ShutdownCausesInjury;
+            if (Control.settings.ShutdownInjuryEnabled)
+            {
+                heat.ShutdownCausesInjury = !protectedAgainstShutdownInjury;
+            }
             return heat;
         }
 
-        private static bool overrideShutdownCausesInjury = false;
+        private static bool protectedAgainstShutdownInjury = true;
         public static void Prefix(MechShutdownSequence __instance)
         {
             try
             {
+                if (!Control.settings.ShutdownInjuryEnabled)
+                {
+                    return;
+                }
+
                 var traverse = Traverse.Create(__instance);
                 var combat = traverse.Property("Combat").GetValue<CombatGameState>();
                 if (combat.Constants.Heat.ShutdownCausesInjury)
@@ -37,7 +44,8 @@ namespace MechEngineer
                 }
 
                 var mech = traverse.Property("OwningMech").GetValue<Mech>();
-                overrideShutdownCausesInjury = !CockpitHandler.Shared.ProtectsAgainstShutdownInjury(mech.MechDef);
+                var stat = mech.StatCollection.ProtectsAgainstShutdownInjury();
+                protectedAgainstShutdownInjury = stat != null && stat.Value<bool>();
             }
             catch (Exception e)
             {
@@ -47,7 +55,7 @@ namespace MechEngineer
 
         public static void Postfix()
         {
-            overrideShutdownCausesInjury = false;
+            protectedAgainstShutdownInjury = false;
         }
     }
 }

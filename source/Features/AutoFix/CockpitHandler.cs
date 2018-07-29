@@ -34,11 +34,6 @@ namespace MechEngineer
             identity.PreProcess(target, values);
         }
 
-        public bool ProtectsAgainstShutdownInjury(MechDef mechDef)
-        {
-            return mechDef.Inventory.Any(c => c.DamageLevel == ComponentDamageLevel.Functional && identity.IsCustomType(c.Def));
-        }
-
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
             reweighter.AdjustComponentDef(upgradeDef);
