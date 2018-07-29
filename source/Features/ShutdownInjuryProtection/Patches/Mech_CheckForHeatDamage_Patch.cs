@@ -21,13 +21,10 @@ namespace MechEngineer
                 {
                     return;
                 }
-                var stat = mech.StatCollection.ProtectsAgainstHeatDamageInjury();
-                if (stat != null && stat.Value<bool>())
+                if (mech.StatCollection.ReceiveHeatDamageInjury())
                 {
-                    return;
+                    mech.pilot?.SetNeedsInjury(InjuryReason.NotSet);
                 }
-
-                mech.pilot?.SetNeedsInjury(InjuryReason.NotSet);
             }
             catch (Exception e)
             {

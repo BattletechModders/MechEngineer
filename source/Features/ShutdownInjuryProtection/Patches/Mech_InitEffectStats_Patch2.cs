@@ -13,11 +13,11 @@ namespace MechEngineer
             {
                 if (Control.settings.ShutdownInjuryEnabled)
                 {
-                    __instance.StatCollection.ProtectsAgainstShutdownInjury();
+                    __instance.StatCollection.ReceiveShutdownInjury(true);
                 }
                 if (Control.settings.HeatDamageInjuryEnabled)
                 {
-                    __instance.StatCollection.ProtectsAgainstHeatDamageInjury();
+                    __instance.StatCollection.ReceiveHeatDamageInjury(true);
                 }
             }
             catch (Exception e)
@@ -29,16 +29,18 @@ namespace MechEngineer
 
     public static class StatCollectionExtension
     {
-        public static Statistic ProtectsAgainstShutdownInjury(this StatCollection statCollection) 
+        public static bool ReceiveShutdownInjury(this StatCollection statCollection, bool set = false) 
         {
-            const string key = "ProtectsAgainstShutdownInjury";
-            return statCollection.GetStatistic(key) ?? statCollection.AddStatistic(key, true);
+            const string key = "ReceiveShutdownInjury";
+            return statCollection.GetStatistic(key)?.Value<bool>()
+                   ?? set && statCollection.AddStatistic(key, false).Value<bool>();
         }
 
-        public static Statistic ProtectsAgainstHeatDamageInjury(this StatCollection statCollection) 
+        public static bool ReceiveHeatDamageInjury(this StatCollection statCollection, bool set = false) 
         {
-            const string key = "ProtectsAgainstHeatDamageInjury";
-            return statCollection.GetStatistic(key) ?? statCollection.AddStatistic(key, true);
+            const string key = "ReceiveHeatDamageInjury";
+            return statCollection.GetStatistic(key)?.Value<bool>()
+                   ?? set && statCollection.AddStatistic(key, false).Value<bool>();
         }
     }
 }

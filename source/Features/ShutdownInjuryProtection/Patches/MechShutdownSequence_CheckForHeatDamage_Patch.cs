@@ -21,12 +21,12 @@ namespace MechEngineer
             var heat = @this.Heat;
             if (Control.settings.ShutdownInjuryEnabled)
             {
-                heat.ShutdownCausesInjury = !protectedAgainstShutdownInjury;
+                heat.ShutdownCausesInjury = receiveShutdownInjury;
             }
             return heat;
         }
 
-        private static bool protectedAgainstShutdownInjury = true;
+        private static bool receiveShutdownInjury = true;
         public static void Prefix(MechShutdownSequence __instance)
         {
             try
@@ -44,8 +44,7 @@ namespace MechEngineer
                 }
 
                 var mech = traverse.Property("OwningMech").GetValue<Mech>();
-                var stat = mech.StatCollection.ProtectsAgainstShutdownInjury();
-                protectedAgainstShutdownInjury = stat != null && stat.Value<bool>();
+                receiveShutdownInjury = mech.StatCollection.ReceiveShutdownInjury();
             }
             catch (Exception e)
             {
@@ -55,7 +54,7 @@ namespace MechEngineer
 
         public static void Postfix()
         {
-            protectedAgainstShutdownInjury = false;
+            receiveShutdownInjury = false;
         }
     }
 }
