@@ -77,6 +77,12 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engine_220",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_225",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
@@ -156,6 +162,12 @@
       },
       {
          "ID" : "emod_engine_340",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_360",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
