@@ -13,21 +13,33 @@ namespace MechEngineer
         {
             try
             {
+                var messages = new List<MessageAddition>();
+                void ClearMessageAndPublishAdditions()
+                {
+                    MechCheckForCritPatch.Message = null;
+                    foreach (var message in messages)
+                    {
+                        var actor = __instance.parent;
+                        var stackMessage = new AddSequenceToStackMessage(new ShowActorInfoSequence(actor, message.Text, message.Nature, true));
+                        actor.Combat.MessageCenter.PublishMessage(stackMessage);
+                    }
+                }
+
                 if (__instance.mechComponentRef.Is<Flags>(out var f) && f.IsSet("ignore_damage"))
                 {
-                    MechCheckForCritPatch.Message = null;
+                    ClearMessageAndPublishAdditions();
                     return false;
                 }
 
-                if (!CirticalHitStatesHandler.Shared.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects, MechCheckForCritPatch.MessageAdditions))
+                if (!CirticalHitStatesHandler.Shared.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects, messages))
                 {
-                    MechCheckForCritPatch.Message = null;
+                    ClearMessageAndPublishAdditions();
                     return false;
                 }
 
-                if (!EngineCrits.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects, MechCheckForCritPatch.MessageAdditions))
+                if (!EngineCrits.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects, messages))
                 {
-                    MechCheckForCritPatch.Message = null;
+                    ClearMessageAndPublishAdditions();
                     return false;
                 }
             }
@@ -49,13 +61,7 @@ namespace MechEngineer
     [HarmonyPatch(typeof(Mech), "CheckForCrit")]
     public static class MechCheckForCritPatch
     {
-        static MechCheckForCritPatch()
-        {
-            MessageAdditions = new List<MessageAddition>();
-        }
-
         public static MessageCenterMessage Message { get; set; }
-        public static List<MessageAddition> MessageAdditions { get; set; }
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -79,14 +85,6 @@ namespace MechEngineer
                     __instance.Combat.MessageCenter.PublishMessage(Message);
                     Message = null;
                 }
-
-                foreach (var addition in MessageAdditions)
-                {
-                    var message = new AddSequenceToStackMessage(new ShowActorInfoSequence(__instance, addition.Text, addition.Nature, true));
-                    __instance.Combat.MessageCenter.PublishMessage(message);
-                }
-
-                MessageAdditions.Clear();
             }
             catch (Exception e)
             {

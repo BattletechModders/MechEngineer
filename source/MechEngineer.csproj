@@ -137,7 +137,7 @@
     <Compile Include="Engine\Patches\MechBayPanel_OnGotoMechLab_Patch.cs" />
     <Compile Include="Engine\Patches\MechBayPanel_OnRepairMech_Patch.cs" />
     <Compile Include="Misc\Global.cs" />
-    <Compile Include="Features\DamageManipulation\Patches\Mech_GetComponentInSlot_Patch.cs" />
+    <Compile Include="Features\CriticalHitStates\Patches\Mech_GetComponentInSlot_Patch.cs" />
     <Compile Include="Features\AutoFix\CockpitHandler.cs" />
     <Compile Include="Features\AutoFix\MechDefAutoFixFacade.cs" />
     <Compile Include="Engine\StaticHandler\EnginePersistanceItemStat.cs" />
@@ -171,7 +171,7 @@
     <Compile Include="Features\Weights\Patches\MechLabMechInfoWidget_CalculateTonnage_Patch.cs" />
     <Compile Include="Features\Weights\Patches\MechStatisticsRules_CalculateTonnage_Patch.cs" />
     <Compile Include="Engine\Patches\Mech_GetHeatSinkDissipation_Patch.cs" />
-    <Compile Include="Features\DamageManipulation\Patches\MechComponent_DamageComponent_Patch.cs" />
+    <Compile Include="Features\CriticalHitStates\Patches\MechComponent_DamageComponent_Patch.cs" />
     <Compile Include="Engine\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Engine\Patches\MechLabInventoryWidget_RefreshJumpJetOptions_Patch.cs" />
     <Compile Include="Engine\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
