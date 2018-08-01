@@ -8,7 +8,7 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateMovementStat")]
     public static class MechStatisticsRules_CalculateMovementStat_Patch
     {
-        private static MechDef def;
+        private static MechDef mechDef;
 
         // disable jump jet calculations
         private static readonly MechComponentRef[] Empty = { };
@@ -26,21 +26,35 @@ namespace MechEngineer
                 );
         }
 
-        public static void Prefix(MechDef mechDef)
+        public static void Prefix(MechDef def)
         {
-            def = mechDef;
+            try
+            {
+                mechDef = def;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
 
         public static void Postfix()
         {
-            def = null;
+            try
+            {
+                mechDef = null;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
 
         public static float OverrideMaxSprintDistance(this MovementCapabilitiesDef @this)
         {
             try
             {
-                var movement = def?.GetEngineMovement();
+                var movement = mechDef?.GetEngineMovement();
                 if (movement != null)
                 {
                     return movement.RunSpeed;

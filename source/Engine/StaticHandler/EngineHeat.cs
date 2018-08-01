@@ -11,7 +11,7 @@ namespace MechEngineer
     {
         internal static float GetEngineHeatDissipation(MechComponentRef[] inventory)
         {
-            var engineRef = inventory.GetEngineCoreRef();
+            var engineRef = inventory?.GetEngineCoreRef();
             if (engineRef == null)
             {
                 return Control.settings.EngineMissingFallbackHeatSinkCapacity;

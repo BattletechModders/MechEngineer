@@ -21,19 +21,33 @@ namespace MechEngineer
 
         public static void Prefix(MechDef def)
         {
-            mechDef = def;
+            try
+            {
+                mechDef = def;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
 
         public static void Postfix()
         {
-            mechDef = null;
+            try
+            {
+                mechDef = null;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
 
         public static float DissipationCapacity(this HeatSinkDef @this)
         {
             try
             {
-                if (@this.GetComponent<EngineCoreDef>() != null)
+                if (mechDef != null && @this.Is<EngineCoreDef>())
                 {
                     return EngineHeat.GetEngineHeatDissipation(mechDef.Inventory);
                 }

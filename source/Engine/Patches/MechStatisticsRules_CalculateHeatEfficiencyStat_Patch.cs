@@ -9,7 +9,7 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateHeatEfficiencyStat")]
     public static class MechStatisticsRules_CalculateHeatEfficiencyStat_Patch
     {
-        private static MechDef def;
+        private static MechDef mechDef;
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -19,24 +19,37 @@ namespace MechEngineer
             );
         }
 
-        public static void Prefix(MechDef mechDef)
+        public static void Prefix(MechDef def)
         {
-            def = mechDef;
+            try
+            {
+                mechDef = def;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
 
         public static void Postfix()
         {
-            def = null;
+            try
+            {
+                mechDef = null;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
 
         public static float OverrideDissipationCapacity(this HeatSinkDef @this)
         {
             try
             {
-                var engineCoreDef = @this.GetComponent<EngineCoreDef>();
-                if (engineCoreDef != null)
+                if (mechDef != null && @this.Is<EngineCoreDef>())
                 {
-                    return EngineHeat.GetEngineHeatDissipation(def.Inventory);
+                    return EngineHeat.GetEngineHeatDissipation(mechDef.Inventory);
                 }
             }
             catch (Exception e)
