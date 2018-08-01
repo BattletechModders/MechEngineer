@@ -40,17 +40,19 @@ namespace MechEngineer
         {
             try
             {
-                mechDef = null;
-                if (movement != null)
+                var addition = movement?.MovementPoint.ToString();
+                if (addition != null)
                 {
-                    __instance.dataList?.Add("TT Walk MP", movement.MovementPoint.ToString());
-                    movement = null;
+                    __instance.dataList.Add("TT Walk MP", addition);
                 }
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
+
+            mechDef = null;
+            movement = null;
         }
 
         public static float OverrideMaxWalkDistance(this MovementCapabilitiesDef @this)
