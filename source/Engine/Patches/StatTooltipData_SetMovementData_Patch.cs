@@ -26,16 +26,30 @@ namespace MechEngineer
 
         public static void Prefix(MechDef def)
         {
-            mechDef = def;
+            try
+            {
+                mechDef = def;
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
 
         public static void Postfix(StatTooltipData __instance)
         {
-            mechDef = null;
-            if (movement != null)
+            try
             {
-                __instance.dataList.Add("TT Walk MP", movement.MovementPoint.ToString());
-                movement = null;
+                mechDef = null;
+                if (movement != null)
+                {
+                    __instance.dataList?.Add("TT Walk MP", movement.MovementPoint.ToString());
+                    movement = null;
+                }
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
             }
         }
 
