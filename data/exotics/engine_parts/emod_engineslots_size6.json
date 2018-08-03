@@ -7,7 +7,7 @@
     "Description" : {
         "Cost" : 0,
         "Rarity" : 0,
-        "Purchasable" : true,
+        "Purchasable" : false,
         "Manufacturer" : "Generic",
         "Model" : "Reserved Slots",
         "UIName" : "Engine",
