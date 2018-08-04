@@ -68,6 +68,13 @@ namespace MechEngineer
                 AutoFixSetting = Control.settings.AutoFixMechDefEngine,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefEngine"
             });
+
+            //Add(new MechDefAutoFixCategory
+            //{
+            //    AutoFixMechDef = ChassisHandler.Shared,
+            //    AutoFixSetting = Control.settings.AutoFixChassisDefSlotsChanges != null,
+            //    CompanyStatKey = "MechEngineer_AutoFixMechDefByChassisDefSlotsChanges"
+            //});
         }
 
         internal static List<MechDefAutoFixCategory> Fixers = new List<MechDefAutoFixCategory>();

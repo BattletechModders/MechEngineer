@@ -72,12 +72,12 @@ namespace MechEngineer
             return false;
         }
 
-        private int GetUsedSlots(ChassisLocations location)
+        internal int GetUsedSlots(ChassisLocations location)
         {
             return LocationUsage.TryGetValue(location, out var count) ? count : 0;
         }
 
-        private int GetMaxSlots(ChassisLocations location)
+        internal int GetMaxSlots(ChassisLocations location)
         {
             return Slots.Chassis.GetLocationDef(location).InventorySlots;
         }

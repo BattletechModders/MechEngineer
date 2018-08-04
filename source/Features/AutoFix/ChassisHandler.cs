@@ -6,8 +6,10 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    internal static class ChassisHandler
+    internal class ChassisHandler : IAutoFixMechDef
     {
+        internal static ChassisHandler Shared = new ChassisHandler();
+
         private static readonly Dictionary<string, float> OriginalInitialTonnages = new Dictionary<string, float>();
 
         internal static void OverrideChassisSettings(ChassisDef chassisDef)
@@ -31,7 +33,7 @@ namespace MechEngineer
             return null;
         }
 
-        private static void SetOriginalTonnage(this ChassisDef chassisDef)
+        private static void SetOriginalTonnage(ChassisDef chassisDef)
         {
             if (OriginalInitialTonnages.ContainsKey(chassisDef.Description.Id))
             {
@@ -117,6 +119,67 @@ namespace MechEngineer
             locationDef = (LocationDef) box;
 
             //Control.mod.Logger.LogDebug("ModifyInventorySlots InventorySlots=" + locationDef.InventorySlots);
+        }
+
+        private static bool IsPowerOfTwo(int x) // or is a single value (not composite)
+        {
+            return Mathf.Approximately(Mathf.Log(x, 2) % 1, 0);
+        }
+
+        private static int LocationCount(ChassisLocations container)
+        {
+            var count = 0;
+            foreach (var location in MechDefSlots.Locations)
+            {
+                if ((container & location) == ChassisLocations.None)
+                {
+                    continue;
+                }
+
+                count++;
+            }
+            return count;
+        }
+
+        private static bool IsReorderable(MechComponentDef def)
+        {
+            return def.ComponentType >= ComponentType.AmmunitionBox
+                   && def.ComponentType <= ComponentType.Upgrade;
+        }
+
+        // TODO dont forget to uncomment part in MechDefAutoFixCategory
+        public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
+        {
+            //var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
+
+            //// find any overused location
+            //if (!(from location in MechDefSlots.Locations
+            //    let max = builder.GetMaxSlots(location)
+            //    let used = builder.GetUsedSlots(location)
+            //    where used > max select max).Any())
+            //{
+            //    return;
+            //}
+
+            //var itemsToBeReordered = mechDef.Inventory
+            //    .Where(c => IsReorderable(c.Def))
+            //    .Where(c => LocationCount(c.Def.AllowedLocations) > 1)
+            //    .OrderBy(c => LocationCount(c.Def.AllowedLocations))
+            //    .ThenByDescending(c => c.Def.InventorySize)
+            //    .ToList();
+
+            //foreach (var item in itemsToBeReordered)
+            //{
+            //    builder.Remove(item);
+            //}
+
+            // remove all items that can be reordered: heatsinks, upgrades
+
+            // then add largest items first (probably double head sinks)
+
+            // 2. reorder all items that can be reordered if overuse found
+            // 3. if reorder does not work perfectly, ignore
+
         }
     }
 }

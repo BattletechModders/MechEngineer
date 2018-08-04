@@ -35,41 +35,25 @@ namespace MechEngineer
                 }
             }
 
-            var maxEngine = (Engine) null;
-
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
             var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
             var standardWeights = new Weights(); // use default gyro and weights
             var stanardEngineType = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef);
 
+            var engineCoreDefs = mechDef.DataManager.HeatSinkDefs
+                .Select(hs => hs.Value)
+                .OrderByDescending(x => x.Tonnage)
+                .Select(hs => hs.GetComponent<EngineCoreDef>())
+                .Where(c => c != null);
+
             var engineHeatSinkdef = mechDef.Inventory
                 .Select(r => r.Def.GetComponent<EngineHeatSink>())
                 .FirstOrDefault(d => d != null && d != standardHeatSinkDef) ?? standardHeatSinkDef;
 
-            foreach (var keyvalue in mechDef.DataManager.HeatSinkDefs)
-            {
-                var heatSinkDef = keyvalue.Value;
-
-                var coreDef = heatSinkDef.GetComponent<EngineCoreDef>();
-                if (coreDef == null)
-                {
-                    continue;
-                }
-
-                var coreRef = new EngineCoreRef(engineHeatSinkdef, coreDef);
-                var engine = new Engine(coreRef, standardWeights, Enumerable.Empty<MechComponentRef>());
-                if (engine.TotalTonnage > freeTonnage)
-                {
-                    continue;
-                }
-
-                if (maxEngine != null && maxEngine.CoreDef.Rating >= coreDef.Rating)
-                {
-                    continue;
-                }
-
-                maxEngine = engine;
-            }
+            var maxEngine = engineCoreDefs
+                .Select(coreDef => new EngineCoreRef(engineHeatSinkdef, coreDef))
+                .Select(coreRef => new Engine(coreRef, standardWeights, Enumerable.Empty<MechComponentRef>()))
+                .FirstOrDefault(engine => !(engine.TotalTonnage > freeTonnage));
 
             if (maxEngine == null)
             {
