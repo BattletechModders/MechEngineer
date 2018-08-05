@@ -436,6 +436,28 @@ namespace MechEngineer
                 MaxEquiped =  1,
                 AutoReplace = true
             },
+            new CategoryDescriptor
+            {
+                Name = "CASE",
+                displayName = "CASE",
+                MaxEquipedPerLocation = 1,
+                Forbidden = new [] {"CASE2"},
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "explosion_containment"} },
+                }
+            },
+            new CategoryDescriptor
+            {
+                Name = "CASE2",
+                displayName = "CASE II",
+                MaxEquipedPerLocation = 1,
+                Forbidden = new [] {"CASE"},
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "explosion_redirection"} },
+                }
+            },
         };
 
         #endregion

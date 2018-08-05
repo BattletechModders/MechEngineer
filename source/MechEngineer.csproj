@@ -70,6 +70,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\ComponentExplosions\ComponentExplosionHandler.cs" />
+    <Compile Include="Features\ComponentExplosions\ComponentExplosion.cs" />
+    <Compile Include="Features\ComponentExplosions\Patches\MechComponent_DamageComponent_Patch2.cs" />
+    <Compile Include="Helper\MechExtensions.cs" />
+    <Compile Include="Features\ComponentExplosions\Patches\Mech_DamageLocation_Patch.cs" />
+    <Compile Include="Features\ComponentExplosions\Patches\AmmunitionBox_DamageComponent_Patch.cs" />
     <Compile Include="Features\ArmorStructureChanges\Patches\Mech_ToMechDef_Patch.cs" />
     <Compile Include="Features\ArmorStructureChanges\Patches\Mech_get_ArmorMultiplier_Patch.cs" />
     <Compile Include="Features\ArmorStructureChanges\Patches\Mech_get_StructureMultiplier_Patch.cs" />

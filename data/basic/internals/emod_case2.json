@@ -1,0 +1,37 @@
+{
+	"Custom": {
+		"Category" : { 
+			"CategoryID" : "CASE2" 
+		}
+	},
+    "Description" : {
+        "Cost" : 0,
+        "Rarity" : 0,
+        "Purchasable" : true,
+        "Manufacturer" : "Generic",
+        "Model" : "Standard",
+        "Id" : "emod_case2",
+        "UIName" : "CASE II",
+        "Name" : "C.A.S.E. II",
+        "Details" : "CASE II is an experimental version of standard CASE. When an internal explosion occurs, CASE II reduces the damage to the Internal Structure of the installed location, making it take only three points of damage.",
+        "Icon" : "uixSvgIcon_action_end"
+    },
+    "BonusValueA" : "",
+    "BonusValueB" : "",
+    "ComponentType" : "Upgrade",
+    "ComponentSubType" : "NotSet",
+    "PrefabIdentifier" : "",
+    "BattleValue" : 0,
+    "InventorySize" : 1,
+    "Tonnage" : 0,
+    "AllowedLocations" : "All",
+    "DisallowedLocations" : "All",
+    "CriticalComponent" : false,
+    "statusEffects" : null,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile" : ""
+    }
+}
