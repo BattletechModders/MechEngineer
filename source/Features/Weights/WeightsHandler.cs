@@ -78,7 +78,12 @@ namespace MechEngineer
 
             if (!Mathf.Approximately(tonnageSaved, 0))
             {
-                adapter.bonusTextA.text = $"- {tonnageSaved} ton";
+                var sign = tonnageSaved > 0 ? "- " : "";
+                adapter.bonusTextA.text = $"{sign}{tonnageSaved} ton";
+            }
+            else if (adapter.bonusTextA.text.EndsWith("ton"))
+            {
+                adapter.bonusTextA.text = instance.ComponentRef.Def.BonusValueA;
             }
         }
 
