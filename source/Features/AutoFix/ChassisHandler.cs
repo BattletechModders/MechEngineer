@@ -121,65 +121,54 @@ namespace MechEngineer
             //Control.mod.Logger.LogDebug("ModifyInventorySlots InventorySlots=" + locationDef.InventorySlots);
         }
 
-        private static bool IsPowerOfTwo(int x) // or is a single value (not composite)
-        {
-            return Mathf.Approximately(Mathf.Log(x, 2) % 1, 0);
-        }
-
-        private static int LocationCount(ChassisLocations container)
-        {
-            var count = 0;
-            foreach (var location in MechDefSlots.Locations)
-            {
-                if ((container & location) == ChassisLocations.None)
-                {
-                    continue;
-                }
-
-                count++;
-            }
-            return count;
-        }
-
         private static bool IsReorderable(MechComponentDef def)
         {
             return def.ComponentType >= ComponentType.AmmunitionBox
                    && def.ComponentType <= ComponentType.Upgrade;
         }
-
-        // TODO dont forget to uncomment part in MechDefAutoFixCategory
+        
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
-            //var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
+            var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
 
-            //// find any overused location
-            //if (!(from location in MechDefSlots.Locations
-            //    let max = builder.GetMaxSlots(location)
-            //    let used = builder.GetUsedSlots(location)
-            //    where used > max select max).Any())
-            //{
-            //    return;
-            //}
-
-            //var itemsToBeReordered = mechDef.Inventory
-            //    .Where(c => IsReorderable(c.Def))
-            //    .Where(c => LocationCount(c.Def.AllowedLocations) > 1)
-            //    .OrderBy(c => LocationCount(c.Def.AllowedLocations))
-            //    .ThenByDescending(c => c.Def.InventorySize)
-            //    .ToList();
-
-            //foreach (var item in itemsToBeReordered)
-            //{
-            //    builder.Remove(item);
-            //}
+            // find any overused location
+            if (!builder.HasOveruse())
+            {
+                return;
+            }
+            
+            // heatsinks, upgrades
+            var itemsToBeReordered = mechDef.Inventory
+                .Where(c => IsReorderable(c.Def))
+                .Where(c => MechDefBuilder.LocationCount(c.Def.AllowedLocations) > 1)
+                .OrderBy(c => MechDefBuilder.LocationCount(c.Def.AllowedLocations))
+                .ThenByDescending(c => c.Def.InventorySize)
+                .ToList();
 
             // remove all items that can be reordered: heatsinks, upgrades
+            foreach (var item in itemsToBeReordered)
+            {
+                builder.Remove(item);
+            }
 
-            // then add largest items first (probably double head sinks)
+            // then add most restricting, and then largest items first (probably double head sinks)
+            foreach (var item in itemsToBeReordered)
+            {
+                // couldn't add everything
+                if (!builder.Add(item.Def))
+                {
+                    return;
+                }
+            }
 
-            // 2. reorder all items that can be reordered if overuse found
-            // 3. if reorder does not work perfectly, ignore
+            // if reorder does not work perfectly, ignore
+            if (builder.HasOveruse())
+            {
+                return;
+            }
 
+            // save
+            mechDef.SetInventory(builder.Inventory.ToArray());
         }
     }
 }

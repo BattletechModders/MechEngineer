@@ -42,9 +42,9 @@ namespace MechEngineer
 
             var engineCoreDefs = mechDef.DataManager.HeatSinkDefs
                 .Select(hs => hs.Value)
-                .OrderByDescending(x => x.Tonnage)
                 .Select(hs => hs.GetComponent<EngineCoreDef>())
-                .Where(c => c != null);
+                .Where(c => c != null)
+                .OrderByDescending(x => x.Rating);
 
             var engineHeatSinkdef = mechDef.Inventory
                 .Select(r => r.Def.GetComponent<EngineHeatSink>())
