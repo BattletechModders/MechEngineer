@@ -68,6 +68,8 @@ namespace MechEngineer
 
                         if (backDamage > 0)
                         {
+                            currentMech.PublishFloatieMessage("EXPLOSION REDIRECTED");
+
                             if ((location & ChassisLocations.Torso) > 0)
                             {
                                 ArmorLocation armorLocation;
@@ -117,7 +119,10 @@ namespace MechEngineer
                     var properties = ComponentExplosionHandler.Shared.GetCASEProperties(currentMech, (int) chassisLocation);
                     if (properties.explosion_containment || properties.explosion_redirection)
                     {
-                        currentMech.PublishFloatieMessage(properties.explosion_containment ? "EXPLOSION CONTAINED" : "EXPLOSION REDIRECTED");
+                        if (properties.explosion_containment)
+                        {
+                            currentMech.PublishFloatieMessage("EXPLOSION CONTAINED");
+                        }
 
                         //Control.mod.Logger.LogDebug($"prevented explosion pass through from {Mech.GetAbbreviatedChassisLocation(chassisLocation)}");
 

@@ -5,7 +5,7 @@
 		}
 	},
     "Description" : {
-        "Cost" : 0,
+        "Cost" : 50000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Lostech",
@@ -23,7 +23,7 @@
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 1,
-    "Tonnage" : 0,
+    "Tonnage" : 0.5,
     "AllowedLocations" : "Torso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,

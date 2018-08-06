@@ -52,6 +52,13 @@
          "DiscountModifier" : 1.0,
          "Count" : 0
       },
+      {
+         "ID" : "emod_case2",
+         "Type" : "Upgrade",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
    ],
    "Specials" : []
 }
+
