@@ -15,8 +15,7 @@
 		},
 		"Category" : { 
 			"CategoryID" : "EngineShield" 
-		},
-		"Flags" : { "flags" : [ "engine_part" ] }
+		}
 	},
     "Description" : {
         "Cost" : 1250000,

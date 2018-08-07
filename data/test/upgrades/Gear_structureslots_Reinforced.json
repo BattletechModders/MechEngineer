@@ -15,8 +15,7 @@
 		"ArmorStructureChanges": { "StructureFactor": 1.5 },	
 		"Category" : { 
 			"CategoryID" : "Structure" 
-		},
-		"Flags" : { "flags" : [ "ignore_damage", "autorepair", "not_broken" ] }		
+		}
 	},
 
   

@@ -9,7 +9,7 @@
 		"Category" : { 
 			"CategoryID" : "EngineShield" 
 		},
-		"Flags" : { "flags" : [ "engine_part", "default" ] }
+		"Flags" : { "flags" : [ "engine_part", "default", "not_broken"  ] }
 	},
     "Description" : {
         "Cost" : 0,

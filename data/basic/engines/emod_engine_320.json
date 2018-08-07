@@ -15,8 +15,7 @@
 		},
 		"Category" : { 
 			"CategoryID" : "EngineCore" 
-		},
-		"Flags" : { "flags" : [ "engine_part" ] }
+		}
 	},
     "DissipationCapacity" : 0,
     "Description" : {

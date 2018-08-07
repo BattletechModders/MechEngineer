@@ -359,7 +359,7 @@ namespace MechEngineer
                     ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "ArmorDamaged" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_armorslots_standard", ["Location"] = "CenterTorso" },
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "autorepair"} },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
                 }
             },
             new CategoryDescriptor
@@ -374,7 +374,7 @@ namespace MechEngineer
                     ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "OrangeHalf" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 1 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_structureslots_standard", ["Location"] = "CenterTorso" },
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "autorepair"} },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
                 }
             },
             new CategoryDescriptor
@@ -387,7 +387,8 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Cockpit_Generic_Standard", ["Location"] = "Head" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Cockpit_Generic_Standard", ["Location"] = "Head" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"not_broken"} },
                 }
             },
             new CategoryDescriptor
@@ -400,7 +401,8 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 2 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Gyro_Generic_Standard", ["Location"] = "CenterTorso" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Gyro_Generic_Standard", ["Location"] = "CenterTorso" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"not_broken"} },
                 }
             },
             new CategoryDescriptor
@@ -413,7 +415,8 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 3 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engineslots_std_center", ["Location"] = "CenterTorso" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engineslots_std_center", ["Location"] = "CenterTorso" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
                 }
             },
             new CategoryDescriptor
@@ -426,7 +429,18 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 4 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_dummy", ["Location"] = "CenterTorso" }
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_dummy", ["Location"] = "CenterTorso" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
+                }
+            },
+            new CategoryDescriptor
+            {
+                Name = "EngineSlots",
+                displayName = "Engine Slots",
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken", "default"} },
                 }
             },
             new CategoryDescriptor

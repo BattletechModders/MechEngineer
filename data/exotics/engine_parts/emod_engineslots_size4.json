@@ -1,7 +1,8 @@
 {
 	"Custom": {
-		"Sorter" : { "Order" : 0 },
-		"Flags" : { "flags" : [ "engine_part", "default" ] }
+		"Category" : { 
+			"CategoryID" : "EngineSlots"
+		}
 	},
     "DissipationCapacity" : 0,
     "Description" : {

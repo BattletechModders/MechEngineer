@@ -22,8 +22,7 @@
 				{ "ComponentDefId" : "emod_engineslots_size6", "Location": "LeftTorso" },
 				{ "ComponentDefId" : "emod_engineslots_size6", "Location": "RightTorso" }
 			]
-		},
-		"Flags" : { "flags" : ["engine_part"] }
+		}
 	},
     "DissipationCapacity" : -15,
     "Description" : {

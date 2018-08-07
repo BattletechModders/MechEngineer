@@ -3,7 +3,7 @@
 		"Category" : { 
 			"CategoryID" : "Gyro" 
 		},
-		"Flags" : { "flags" : [ "default" ] }
+		"Flags" : { "flags" : [ "default", "not_broken" ] }
 	},
     "Description" : {
         "Cost" : 0,
