@@ -8,6 +8,9 @@
 		},
 		"Weights": {
 			"ArmorFactor": 0.89286
+		},
+		"CASE": {
+			"AllLocations": true
 		}
 	},
     "Description" : {
@@ -19,7 +22,7 @@
         "UIName" : "cFerro-Fibrous",
         "Id" : "emod_armorslots_clanferrosfibrous",
         "Name" : "Clan Ferro-Fibrous Armor",
-        "Details" : "Clan Ferro-Fibrous armor (cFF) is a special type of armor used by vehicles and BattleMechs. Utilizing a weave of ferro-steel, ferro-titanium, and diamond weave fibers which boosts the tensile strength of the plating, it provides more protection per ton than standard armor, but takes up more space on the 'Mech or vehicle.\r\n\r\nAdd exactly <b>7</b> Ferro-Fibrous slots to reduce the armor tonnage by <b>1/12</b>.",
+        "Details" : "Clan Ferro-Fibrous armor (cFF) is a special type of armor used by vehicles and BattleMechs. Utilizing a weave of ferro-steel, ferro-titanium, and diamond weave fibers which boosts the tensile strength of the plating, it provides more protection per ton than standard armor, but takes up more space on the 'Mech or vehicle.\r\n\r\nAdd exactly <b>7</b> Ferro-Fibrous slots to reduce the armor tonnage by <b>1/12</b>. Enables CASE I protection for the whole mech.",
         "Icon" : "uixSvgIcon_action_end"
     },
     "BonusValueA" : "- 0.5 x ATon",

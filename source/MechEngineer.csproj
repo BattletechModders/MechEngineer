@@ -70,6 +70,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\ComponentExplosions\CASEComponent.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosionHandler.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosion.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\MechComponent_DamageComponent_Patch2.cs" />

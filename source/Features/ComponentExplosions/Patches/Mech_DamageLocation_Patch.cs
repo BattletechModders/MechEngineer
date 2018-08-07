@@ -59,9 +59,9 @@ namespace MechEngineer
                 if (IsInternalExplosion)
                 {
                     var properties = ComponentExplosionHandler.Shared.GetCASEProperties(currentMech, (int) location);
-                    if (properties.explosion_redirection)
+                    if (properties.MaximumDamage.HasValue)
                     {
-                        var directDamage = Mathf.Min(damage, 3);
+                        var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
                         var backDamage = damage - directDamage;
                         //Control.mod.Logger.LogDebug($"reducing structure damage from {damage} to {directDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
                         damage = directDamage;
@@ -117,12 +117,9 @@ namespace MechEngineer
                 {
                     var chassisLocation = MechStructureRules.GetChassisLocationFromArmorLocation(location);
                     var properties = ComponentExplosionHandler.Shared.GetCASEProperties(currentMech, (int) chassisLocation);
-                    if (properties.explosion_containment || properties.explosion_redirection)
+                    if (properties != null)
                     {
-                        if (properties.explosion_containment)
-                        {
-                            currentMech.PublishFloatieMessage("EXPLOSION CONTAINED");
-                        }
+                        currentMech.PublishFloatieMessage("EXPLOSION CONTAINED");
 
                         //Control.mod.Logger.LogDebug($"prevented explosion pass through from {Mech.GetAbbreviatedChassisLocation(chassisLocation)}");
 

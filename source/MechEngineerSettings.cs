@@ -444,7 +444,8 @@ namespace MechEngineer
                 Forbidden = new [] {"CASE2"},
                 DefaultCustoms = new Dictionary<string, object>
                 {
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "explosion_containment"} },
+                    ["CASE"] = new Dictionary<string, object>(),
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
                 }
             },
             new CategoryDescriptor
@@ -455,7 +456,8 @@ namespace MechEngineer
                 Forbidden = new [] {"CASE"},
                 DefaultCustoms = new Dictionary<string, object>
                 {
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "explosion_redirection"} },
+                    ["CASE"] = new Dictionary<string, object>{ ["MaximumDamage"] = 3 },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
                 }
             },
         };

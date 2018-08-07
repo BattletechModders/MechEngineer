@@ -80,28 +80,16 @@ namespace MechEngineer
             }
         }
 
-        internal struct CASEProperties
+        internal CASEComponent GetCASEProperties(Mech mech, int location)
         {
-            internal CASEProperties(Flags flags)
-            {
-                explosion_containment = flags?.IsSet("explosion_containment") ?? false;
-                explosion_redirection = flags?.IsSet("explosion_redirection") ?? false;
-            }
-
-            internal bool explosion_containment;
-            internal bool explosion_redirection;
-        }
-
-        internal CASEProperties GetCASEProperties(Mech mech, int location)
-        {
-            var flags = mech.allComponents
-                .Where(c => c.Location == location)
+            return mech.allComponents
                 .Where(c => c.DamageLevel == ComponentDamageLevel.Functional)
-                .Select(c => c.componentDef.GetComponent<Flags>())
-                .FirstOrDefault(c => c != null);
-
-            var properties = new CASEProperties(flags);
-            return properties;
+                .Select(componentRef => new { componentRef, CASE = componentRef.componentDef.GetComponent<CASEComponent>() } )
+                .Where(t => t.CASE != null)
+                .Where(t => t.CASE.AllLocations || t.componentRef.Location == location)
+                .Select(t => t.CASE)
+                .OrderBy(CASE => CASE.AllLocations) // localized CASE always overrides global CASE
+                .FirstOrDefault();
         }
     }
 
