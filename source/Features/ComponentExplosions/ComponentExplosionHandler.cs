@@ -26,30 +26,43 @@ namespace MechEngineer
             {
                 return;
             }
-            
-            var explosionDamage = exp.ExplosionDamage;
 
-            if (component is AmmunitionBox box)
-            {
-                var adapter = new MechComponentAdapter(component);
-                var ammoCount = adapter.statCollection.GetValue<int>("CurrentAmmo");
-                explosionDamage += ammoCount * exp.ExplosionDamagePerAmmo;
-            }
-
-            if (component is Weapon w2)
-            {
-                var ammoCount = w2.InternalAmmo;
-                explosionDamage += ammoCount * exp.ExplosionDamagePerAmmo;
-            }
-
-            //Control.mod.Logger.LogDebug($"explosionDamage={explosionDamage}");
-
-            if (Mathf.Approximately(explosionDamage, 0))
+            if (!(component.parent is Mech mech))
             {
                 return;
             }
 
-            if (!(component.parent is Mech mech))
+            var ammoCount = 0;
+            if (component is AmmunitionBox box)
+            {
+                var adapter = new MechComponentAdapter(box);
+                ammoCount = adapter.statCollection.GetValue<int>("CurrentAmmo");
+            }
+            else if (component is Weapon w2)
+            {
+                ammoCount = w2.InternalAmmo;
+            }
+
+            var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
+            //Control.mod.Logger.LogDebug($"heatDamage={heatDamage}");
+            if (!Mathf.Approximately(heatDamage, 0))
+            {
+                mech.AddExternalHeat("AMMO EXPLOSION HEAT", (int)heatDamage);
+                var sequence = mech.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
+                sequence?.FlagAttackDidHeatDamage();
+            }
+
+            var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
+            //Control.mod.Logger.LogDebug($"stabilityDamage={stabilityDamage}");
+            if (!Mathf.Approximately(stabilityDamage, 0))
+            {
+                mech.AddAbsoluteInstability(stabilityDamage, StabilityChangeSource.Effect, hitInfo.targetId);
+            }
+
+            var explosionDamage = exp.ExplosionDamage + ammoCount * exp.ExplosionDamagePerAmmo;
+            //Control.mod.Logger.LogDebug($"explosionDamage={explosionDamage}");
+
+            if (Mathf.Approximately(explosionDamage, 0))
             {
                 return;
             }
