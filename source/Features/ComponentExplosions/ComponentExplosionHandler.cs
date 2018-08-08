@@ -43,13 +43,15 @@ namespace MechEngineer
                 ammoCount = w2.InternalAmmo;
             }
 
+            
+            var attackSequence = mech.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
+
             var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
             //Control.mod.Logger.LogDebug($"heatDamage={heatDamage}");
             if (!Mathf.Approximately(heatDamage, 0))
             {
                 mech.AddExternalHeat("AMMO EXPLOSION HEAT", (int)heatDamage);
-                var sequence = mech.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
-                sequence?.FlagAttackDidHeatDamage();
+                attackSequence?.FlagAttackDidHeatDamage();
             }
 
             var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
@@ -70,7 +72,6 @@ namespace MechEngineer
             Mech_DamageLocation_Patch.IsInternalExplosion = true;
             try
             {
-                var attackSequence = mech.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
                 attackSequence?.FlagAttackCausedAmmoExplosion();
 
                 mech.PublishFloatieMessage($"{component.Name} EXPLOSION");
