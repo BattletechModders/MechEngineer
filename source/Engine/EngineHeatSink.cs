@@ -8,14 +8,12 @@ using CustomComponents;
 namespace MechEngineer
 {
     [CustomComponent("EngineHeatSink")]
-    public class EngineHeatSink : SimpleCustomComponent
+    public class EngineHeatSink : SimpleCustom<HeatSinkDef>
     {
         public string FullName { get; set; }
         public string Abbreviation { get; set; }
         public string Tag { get; set; }
         public string HSCategory => Tag;
-
-        public HeatSinkDef HeatSinkDef => Def as HeatSinkDef; // TODO reintroduce GenericCustomComponent
     }
 
     internal static class DataManagerEngineHeatSinkDefExtensions

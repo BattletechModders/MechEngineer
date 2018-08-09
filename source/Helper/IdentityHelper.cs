@@ -47,14 +47,19 @@ namespace MechEngineer
                    && (componentDef.AllowedLocations & ~locations) == 0; // def can't be inserted anywhere outside of locations
         }
 
-        public void PreProcess(MechComponentDef target, Dictionary<string, object> values)
+        public void PreProcess(object target, Dictionary<string, object> values)
         {
             if (!AutoAddCategoryIdIfMissing)
             {
                 return;
             }
 
-            if (!IsMatch(target))
+            if (!(target is MechComponentDef def))
+            {
+                return;
+            }
+
+            if (!IsMatch(def))
             {
                 return;
             }
