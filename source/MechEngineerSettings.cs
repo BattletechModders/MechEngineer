@@ -128,6 +128,7 @@ namespace MechEngineer
         #region auto fixes
 
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
+        public string[] AutoFixUpgradeDefSkip = {"Gear_Cockpit_Generic_Small"}; // upgrades to not autofix
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
         public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center"; // always assumes weight factor 1.0
@@ -163,7 +164,7 @@ namespace MechEngineer
             ComponentType = ComponentType.Upgrade,
         };
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
-        public ValueChange<int> AutoFixCockpitSlotChange = null; //new ValueChange<int> {From = 1, By = 0};
+        public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 1};
 
         public IdentityHelper AutoFixLegUpgradesCategorizer = new IdentityHelper
         {
@@ -227,7 +228,7 @@ namespace MechEngineer
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.Head,
-                Change = new ValueChange<int> {From = 1, By = 1}
+                Change = new ValueChange<int> {From = 1, By = 2}
             },
             new ChassisSlotsChange
             {

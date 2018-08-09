@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleTech;
-using BattleTech.Data;
-using BattleTech.UI;
+﻿using BattleTech;
 using CustomComponents;
 
 namespace MechEngineer
@@ -30,7 +27,11 @@ namespace MechEngineer
                 return;
             }
 
-            engine.CoreDef = engineDef; // overwrite the core def for better tooltip
+            // use standard heat sinks for non-installed fusion core
+            if (engine.CoreRef.CoreDef.Def.Description.Id != engineDef.Def.Description.Id)
+            {
+                engine.CoreRef = new EngineCoreRef(panel.dataManager.GetDefaultEngineHeatSinkDef(), engineDef);
+            }
             var engineRef = engine.CoreRef;
 
             var movement = engineDef.GetMovement(panel.activeMechDef.Chassis.Tonnage);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BattleTech;
 using Harmony;
 
@@ -12,6 +13,10 @@ namespace MechEngineer
         {
             try
             {
+                if (Control.settings.AutoFixUpgradeDefSkip.Contains(__instance.Description.Id))
+                {
+                    return;
+                }
                 GyroHandler.Shared.AdjustUpgradeDef(__instance);
                 LegUpgradeHandler.Shared.AdjustUpgradeDef(__instance);
                 CockpitHandler.Shared.AdjustUpgradeDef(__instance);
