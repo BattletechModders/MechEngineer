@@ -11,7 +11,7 @@ namespace MechEngineer
 
     internal interface IValidateMech
     {
-        void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages);
+        void ValidateMech(MechDef mechDef, Errors errors);
     }
 
     internal interface IProcessWeaponHit

@@ -34,18 +34,22 @@ namespace MechEngineer
                 mod.Logger.LogDebug("setting up CustomComponents");
 
                 CustomComponents.Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
-
+                
+                CustomComponents.Registry.RegisterPreProcessor(ArmActuatorHandler.Shared);
                 CustomComponents.Registry.RegisterPreProcessor(CockpitHandler.Shared);
                 CustomComponents.Registry.RegisterPreProcessor(GyroHandler.Shared);
                 CustomComponents.Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
 
                 CustomComponents.Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                CustomComponents.Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
-
                 if (settings.MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics)
                 {
-                    CustomComponents.Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.PostValidateDrop);
+                    CustomComponents.Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.CCValidation.ValidateDrop);
                 }
+
+                CustomComponents.Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
+
+                CustomComponents.Validator.RegisterMechValidator(ArmActuatorHandler.Shared.CCValidation.ValidateMech, ArmActuatorHandler.Shared.CCValidation.ValidateMechCanBeFielded);
+                CustomComponents.Validator.RegisterDropValidator(check: ArmActuatorHandler.Shared.CCValidation.ValidateDrop);
 
                 foreach (var categoryDescriptor in settings.Categories)
                 {

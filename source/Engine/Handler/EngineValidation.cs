@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
-using BattleTech.Data;
-using BattleTech.UI;
 using CustomComponents;
 
 namespace MechEngineer
@@ -17,7 +15,7 @@ namespace MechEngineer
             CCValidation = new CCValidationAdapter(this);
         }
 
-        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        public void ValidateMech(MechDef mechDef, Errors errors)
         {
             var engine = mechDef.GetEngine();
             if (engine == null)
@@ -31,7 +29,10 @@ namespace MechEngineer
 
                 if (count > max)
                 {
-                    errorMessages[MechValidationType.InvalidJumpjets].Add($"JUMP JETS: This Mech mounts too many jumpjets ({count} / {max})");
+                    if (errors.Add(MechValidationType.InvalidJumpjets, $"JUMP JETS: This Mech mounts too many jumpjets ({count} / {max})"))
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -45,7 +46,10 @@ namespace MechEngineer
 
                 if (count < min)
                 {
-                    errorMessages[MechValidationType.InvalidInventorySlots].Add($"HEAT SINKS: This Mech has too few heat sinks ({count} / {min})");
+                    if (errors.Add(MechValidationType.InvalidInventorySlots, $"HEAT SINKS: This Mech has too few heat sinks ({count} / {min})"))
+                    {
+                        return;
+                    }
                 }
             }
 
@@ -59,7 +63,10 @@ namespace MechEngineer
                     types.Add(hs.HSCategory);
                     if (types.Count > 1)
                     {
-                        errorMessages[MechValidationType.InvalidInventorySlots].Add("MIXED HEAT SINKS: Heat Sink types cannot be mixed");
+                        if (errors.Add(MechValidationType.InvalidInventorySlots, "MIXED HEAT SINKS: Heat Sink types cannot be mixed"))
+                        {
+                            return;
+                        }
                         break;
                     }
                 }

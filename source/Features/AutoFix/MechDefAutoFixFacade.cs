@@ -36,6 +36,13 @@ namespace MechEngineer
 
             Add(new MechDefAutoFixCategory
             {
+                AutoFixMechDef = ArmActuatorHandler.Shared,
+                AutoFixSetting = Control.settings.AutoFixMechDefArmActuator,
+                CompanyStatKey = "MechEngineer_AutoFixMechDefArmActuator"
+            });
+
+            Add(new MechDefAutoFixCategory
+            {
                 AutoFixMechDef = CockpitHandler.Shared,
                 AutoFixSetting = Control.settings.AutoFixMechDefCockpitAdder != null,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefCockpit"

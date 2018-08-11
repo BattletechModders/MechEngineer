@@ -65,29 +65,14 @@ namespace MechEngineer
             }
         }
 
-        public void ValidateMech(MechDef mechDef, Dictionary<MechValidationType, List<string>> errorMessages)
+        public void ValidateMech(MechDef mechDef, Errors errors)
         {
-
             var slots = new MechDefSlots(mechDef);
             var missing = slots.Missing;
             if (missing > 0)
             {
-                errorMessages[MechValidationType.InvalidInventorySlots].Add($"RESERVED SLOTS: Mech requires {missing} additional free slots");
+                errors.Add(MechValidationType.InvalidInventorySlots, $"RESERVED SLOTS: Mech requires {missing} additional free slots");
             }
-        }
-
-        public string PostValidateDrop(MechLabItemSlotElement drop_item, MechDef mech, List<InvItem> new_inventory,
-            List<IChange> changes)
-        {
-            var slots = new MechDefSlots(mech.Chassis, new_inventory.Select(x => x.item).ToList());
-            var missing = slots.Missing;
-            if (missing > 0)
-            {
-                return
-                    $"Cannot add {drop_item.ComponentRef.Def.Description.Name}: Mech requires {missing} additional free slots";
-            }
-
-            return string.Empty;
         }
     }
 }
