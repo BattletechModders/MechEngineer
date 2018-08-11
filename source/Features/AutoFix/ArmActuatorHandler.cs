@@ -114,14 +114,6 @@ namespace MechEngineer
                     return;
                 }
             }
-
-            if (left == null || right == null)
-            {
-                if (errors.Add(MechValidationType.InvalidInventorySlots, "ARM ACTUATOR: A left and right arm actuator assembly is required."))
-                {
-                    return;
-                }
-            }
         }
     }
 }

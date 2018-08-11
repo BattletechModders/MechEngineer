@@ -470,12 +470,13 @@ namespace MechEngineer
                 Name = "ArmActuator",
                 displayName = "Arm Actuator",
                 MaxEquipedPerLocation = 1,
+                MinEquiped = 2,
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_arm_upper" },
-                    ["ArmActuator"] = new Dictionary<string, object>{ ["Type"] = "Hand" },
+                    ["ArmActuator"] = new Dictionary<string, object>{ ["AccuracyBonus"] = -1, ["Type"] = "Hand" },
                 }
             },
             new CategoryDescriptor

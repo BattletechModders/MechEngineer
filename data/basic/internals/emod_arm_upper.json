@@ -4,6 +4,7 @@
 			"CategoryID" : "ArmActuator" 
 		},
 		"ArmActuator" : {
+			"AccuracyBonus" : 0,
 			"Type" : "Upper"
 		},
 		"Flags" : { "flags" : [ "default" ] }
