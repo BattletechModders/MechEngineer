@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using CustomComponents;
 using UnityEngine;
 
 namespace MechEngineer
@@ -123,8 +124,22 @@ namespace MechEngineer
 
         private static bool IsReorderable(MechComponentDef def)
         {
-            return def.ComponentType >= ComponentType.AmmunitionBox
-                   && def.ComponentType <= ComponentType.Upgrade;
+            if (!(def.ComponentType >= ComponentType.AmmunitionBox && def.ComponentType <= ComponentType.Upgrade))
+            {
+                return false;
+            }
+
+            if (MechDefBuilder.LocationCount(def.AllowedLocations) == 1)
+            {
+                return false;
+            }
+
+            if (def.Is<Category>(out var category) && category.CategoryDescriptor.UniqueForLocation)
+            {
+                return false;
+            }
+
+            return true;
         }
         
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
@@ -140,9 +155,20 @@ namespace MechEngineer
             // heatsinks, upgrades
             var itemsToBeReordered = mechDef.Inventory
                 .Where(c => IsReorderable(c.Def))
-                .Where(c => MechDefBuilder.LocationCount(c.Def.AllowedLocations) > 1)
                 .OrderBy(c => MechDefBuilder.LocationCount(c.Def.AllowedLocations))
                 .ThenByDescending(c => c.Def.InventorySize)
+                .ThenByDescending(c =>
+                {
+                    switch (c.ComponentDefType)
+                    {
+                        case ComponentType.Upgrade:
+                            return 2;
+                        case ComponentType.AmmunitionBox:
+                            return 1;
+                        default:
+                            return 0;
+                    }
+                })
                 .ToList();
 
             // remove all items that can be reordered: heatsinks, upgrades
@@ -169,6 +195,12 @@ namespace MechEngineer
 
             // save
             mechDef.SetInventory(builder.Inventory.ToArray());
+
+            Control.mod.Logger.LogDebug($"Name={mechDef.Name} ChassisID={mechDef.ChassisID}");
+            foreach (var item in mechDef.Inventory)
+            {
+                Control.mod.Logger.LogDebug($" ComponentDefID={item.ComponentDefID} MountedLocation={item.MountedLocation}");
+            }
         }
     }
 }

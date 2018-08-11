@@ -125,12 +125,12 @@ namespace MechEngineer
                 float dissipation = 0;
                 foreach (var keyvalue in additionalHSCounts)
                 {
-                    dissipation += keyvalue.Key.HeatSinkDef.DissipationCapacity * keyvalue.Value;
+                    dissipation += keyvalue.Key.Def.DissipationCapacity * keyvalue.Value;
                 }
-                dissipation += HeatSinkDef.HeatSinkDef.DissipationCapacity * CoreDef.InternalHeatSinks;
+                dissipation += HeatSinkDef.Def.DissipationCapacity * CoreDef.InternalHeatSinks;
 
                 // can't enforce heatsinkdef earlier as apparently in same cases the Def is a generic one and does not derive from HeatSinkDef (Tooltips)
-                dissipation += CoreDef.HeatSinkDef.DissipationCapacity;
+                dissipation += CoreDef.Def.DissipationCapacity;
 
                 //Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engineDef.Rating + " minHeatSinks=" + minHeatSinks + " additionalHeatSinks=" + engineProps.AdditionalHeatSinkCount + " dissipation=" + dissipation);
 
@@ -155,7 +155,7 @@ namespace MechEngineer
             }
         }
 
-        internal float InternalHeatSinkTonnage => AdditionalHeatSinkCount * HeatSinkDef.HeatSinkDef.Tonnage;
+        internal float InternalHeatSinkTonnage => AdditionalHeatSinkCount * HeatSinkDef.Def.Tonnage;
 
         internal string GetNewSimGameUID()
         {

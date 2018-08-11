@@ -25,7 +25,7 @@ namespace MechEngineer
             resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixGyroSlotChange);
         }
 
-        public void PreProcess(MechComponentDef target, Dictionary<string, object> values)
+        public void PreProcess(object target, Dictionary<string, object> values)
         {
             identity.PreProcess(target, values);
         }

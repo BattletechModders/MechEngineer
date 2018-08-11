@@ -95,6 +95,11 @@ namespace MechEngineer
             return Slots.Chassis.GetLocationDef(location).InventorySlots;
         }
 
+        internal int GetFreeSlots(ChassisLocations location)
+        {
+            return GetMaxSlots(location) - GetUsedSlots(location);
+        }
+
         internal bool HasOveruse()
         {
             return (from location in MechDefSlots.Locations

@@ -8,7 +8,7 @@ using CustomComponents;
 namespace MechEngineer
 {
     [CustomComponent("EngineHeatSinkKit")]
-    public class EngineHeatSinkKit : SimpleCustomComponent
+    public class EngineHeatSinkKit : SimpleCustom<HeatSinkDef>
     {
         public string HeatSinkDefId { get; set; }
     }

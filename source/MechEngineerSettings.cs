@@ -128,6 +128,7 @@ namespace MechEngineer
         #region auto fixes
 
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
+        public string[] AutoFixUpgradeDefSkip = {"Gear_Cockpit_Generic_Small", "emod_arm_lower"}; // upgrades to not autofix
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
         public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center"; // always assumes weight factor 1.0
@@ -163,7 +164,18 @@ namespace MechEngineer
             ComponentType = ComponentType.Upgrade,
         };
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
-        public ValueChange<int> AutoFixCockpitSlotChange = null; //new ValueChange<int> {From = 1, By = 0};
+        public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 1};
+
+        public bool AutoFixMechDefArmActuator = true;
+        public IdentityHelper AutoFixArmActuatorCategorizer = new IdentityHelper
+        {
+            AllowedLocations = ChassisLocations.Arms,
+            ComponentType = ComponentType.Upgrade,
+            Prefix = null, //"Gear_Actuator_",
+            CategoryId = "ArmActuator",
+            AutoAddCategoryIdIfMissing = true
+        };
+        public ValueChange<int> AutoFixArmActuatorSlotChange = new ValueChange<int> {From = 2, By = 1};
 
         public IdentityHelper AutoFixLegUpgradesCategorizer = new IdentityHelper
         {
@@ -227,12 +239,22 @@ namespace MechEngineer
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.Head,
-                Change = new ValueChange<int> {From = 1, By = 1}
+                Change = new ValueChange<int> {From = 1, By = 2}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.CenterTorso,
                 Change = new ValueChange<int> {From = 4, By = 10}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.LeftArm,
+                Change = new ValueChange<int> {From = 8, By = 3}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.RightArm,
+                Change = new ValueChange<int> {From = 8, By = 3}
             }
         };
         public class ChassisSlotsChange
@@ -262,7 +284,7 @@ namespace MechEngineer
             new WeaponSlotChange
             {
                 Type = WeaponSubType.AC20,
-                Change = new ValueChange<int> {From = 4, By = 4}
+                Change = new ValueChange<int> {From = 4, By = 6}
             },
             new WeaponSlotChange
             {
@@ -441,6 +463,19 @@ namespace MechEngineer
                 {
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken", "default"} },
+                }
+            },
+            new CategoryDescriptor
+            {
+                Name = "ArmActuator",
+                displayName = "Arm Actuator",
+                MaxEquipedPerLocation = 1,
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_arm_upper" },
+                    ["ArmActuator"] = new Dictionary<string, object>{ ["Type"] = "Hand" },
                 }
             },
             new CategoryDescriptor

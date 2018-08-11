@@ -17,6 +17,18 @@ namespace MechEngineer
                 return;
             }
 
+            var inventory = new List<MechComponentRef>(mechDef.Inventory);
+            var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
+            var engineHeatSinkDef = inventory
+                                        .Select(r => r.Def.GetComponent<EngineHeatSink>())
+                                        .FirstOrDefault(d => d != null && d != standardHeatSinkDef) ?? standardHeatSinkDef;
+
+            if (!Control.settings.AllowMixingHeatSinkTypes)
+            {
+                // remove incompatible heat sinks
+                inventory.RemoveAll(r => r.Def.Is<EngineHeatSink>(out var engineHeatSink) && engineHeatSink.HSCategory != engineHeatSinkDef.HSCategory);
+            }
+
             float freeTonnage;
             {
                 float currentTotalTonnage = 0, maxValue = 0;
@@ -36,7 +48,6 @@ namespace MechEngineer
             }
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
-            var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
             var standardWeights = new Weights(); // use default gyro and weights
             var stanardEngineType = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef);
 
@@ -46,12 +57,8 @@ namespace MechEngineer
                 .Where(c => c != null)
                 .OrderByDescending(x => x.Rating);
 
-            var engineHeatSinkdef = mechDef.Inventory
-                .Select(r => r.Def.GetComponent<EngineHeatSink>())
-                .FirstOrDefault(d => d != null && d != standardHeatSinkDef) ?? standardHeatSinkDef;
-
             var maxEngine = engineCoreDefs
-                .Select(coreDef => new EngineCoreRef(engineHeatSinkdef, coreDef))
+                .Select(coreDef => new EngineCoreRef(engineHeatSinkDef, coreDef))
                 .Select(coreRef => new Engine(coreRef, standardWeights, Enumerable.Empty<MechComponentRef>()))
                 .FirstOrDefault(engine => !(engine.TotalTonnage > freeTonnage));
 
@@ -62,25 +69,23 @@ namespace MechEngineer
 
             // Control.mod.Logger.LogDebug("D maxEngine=" + maxEngine.CoreDef);
 
-            var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
-
             {
                 // remove superfluous jump jets
                 var maxJetCount = maxEngine.CoreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
-                var jumpJetList = componentRefs.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
+                var jumpJetList = inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
                 for (var i = 0; i < jumpJetList.Count - maxJetCount; i++)
                 {
-                    componentRefs.Remove(jumpJetList[i]);
+                    inventory.Remove(jumpJetList[i]);
                 }
             }
 
-            var builder = new MechDefBuilder(mechDef.Chassis, componentRefs);
+            var builder = new MechDefBuilder(mechDef.Chassis, inventory);
 
             // add engine
             builder.Add(
                 maxEngine.CoreDef.Def,
                 ChassisLocations.CenterTorso,
-                engineHeatSinkdef != standardHeatSinkDef ? "/ihstype=" + engineHeatSinkdef.Def.Description.Id : null
+                engineHeatSinkDef != standardHeatSinkDef ? "/ihstype=" + engineHeatSinkDef.Def.Description.Id : null
             );
 
             // add standard shielding
@@ -91,7 +96,7 @@ namespace MechEngineer
                 var count = 0;
                 while (count < maxEngine.CoreDef.MaxFreeExternalHeatSinks)
                 {
-                    if (builder.Add(engineHeatSinkdef.Def))
+                    if (builder.Add(engineHeatSinkDef.Def))
                     {
                         count++;
                     }
@@ -102,7 +107,7 @@ namespace MechEngineer
                 }
             }
 
-            mechDef.SetInventory(componentRefs.ToArray());
+            mechDef.SetInventory(inventory.ToArray());
         }
 
         public void RefreshSlotElement(MechLabItemSlotElement instance, MechLabPanel panel = null)

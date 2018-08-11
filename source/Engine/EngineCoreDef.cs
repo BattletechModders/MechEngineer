@@ -8,7 +8,7 @@ using UnityEngine;
 namespace MechEngineer
 {
     [CustomComponent("EngineCore")]
-    public class EngineCoreDef : SimpleCustomComponent
+    public class EngineCoreDef : SimpleCustom<HeatSinkDef>
     {
         [JsonIgnore]
         private int _rating;
@@ -41,7 +41,6 @@ namespace MechEngineer
         internal int MaxFreeExternalHeatSinks { get; private set; }
 
         internal float MaxInternalHeatSinks => InternalHeatSinks + MaxAdditionalHeatSinks;
-        internal HeatSinkDef HeatSinkDef => Def as HeatSinkDef; // TODO reintroduce GenericCustomComponent
 
         private void CalcTonnages()
         {
