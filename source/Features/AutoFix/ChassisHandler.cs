@@ -196,10 +196,10 @@ namespace MechEngineer
             // save
             mechDef.SetInventory(builder.Inventory.ToArray());
 
-            Control.mod.Logger.LogDebug($"Name={mechDef.Name} ChassisID={mechDef.ChassisID}");
+            //Control.mod.Logger.LogDebug($"Name={mechDef.Name} ChassisID={mechDef.ChassisID}");
             foreach (var item in mechDef.Inventory)
             {
-                Control.mod.Logger.LogDebug($" ComponentDefID={item.ComponentDefID} MountedLocation={item.MountedLocation}");
+                //Control.mod.Logger.LogDebug($" ComponentDefID={item.ComponentDefID} MountedLocation={item.MountedLocation}");
             }
         }
     }
