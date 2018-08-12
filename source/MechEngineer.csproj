@@ -44,6 +44,10 @@
       <HintPath>..\..\..\BattleTech_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\BattleTech_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="CustomComponents">
       <HintPath>..\..\CustomComponents\CustomComponents.dll</HintPath>
       <Private>False</Private>
@@ -78,6 +82,11 @@
     <Compile Include="Features\ComponentExplosions\ComponentExplosionHandler.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosion.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\MechComponent_DamageComponent_Patch2.cs" />
+    <Compile Include="Features\CriticalHitStates\DamageIgnoreHelper.cs" />
+    <Compile Include="Features\CriticalHitStates\Patches\Mech_OnLocationDestroyed_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\GUILogUtils.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_SetData_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_LoadMech_Patch.cs" />
     <Compile Include="Helper\MechExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_DamageLocation_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\AmmunitionBox_DamageComponent_Patch.cs" />
@@ -156,7 +165,6 @@
     <Compile Include="Misc\Interfaces.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Misc\MechLabSlotPatches.cs" />
     <Compile Include="Engine\Patches\MechLabLocationWidget_OnMechLabDrop_Patch.cs" />
     <Compile Include="Engine\EngineCoreRef.cs" />
     <Compile Include="Features\InvalidInventory\Patches\MechLabPanel_GetCantSaveErrorString_Patch.cs" />

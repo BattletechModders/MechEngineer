@@ -9,6 +9,10 @@ namespace MechEngineer
     {
         public int ReservedSlots { get; set; }
 
-        public UIColor ReservedSlotColor { get; set; }
+        public bool ShowIcon { get; set; } = false;
+        public string NameText { get; set; } = null; // null: use component name
+        public string BonusAText { get; set; } = "dynamic slot"; // null: use component bonus, "": dont show
+        public string BonusBText { get; set; } = ""; // null: use component bonus, "": dont show
+        public UIColor? BackgroundColor { get; set; } = null; // null: use component color
     }
 }

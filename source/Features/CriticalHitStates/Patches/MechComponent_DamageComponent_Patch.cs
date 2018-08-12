@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleTech;
-using CustomComponents;
 using Harmony;
 
 namespace MechEngineer
@@ -25,7 +24,7 @@ namespace MechEngineer
                     }
                 }
 
-                if (__instance.mechComponentRef.Is<Flags>(out var f) && f.IsSet("ignore_damage"))
+                if (__instance.mechComponentRef.Def.IsIgnoreDamage())
                 {
                     ClearMessageAndPublishAdditions();
                     return false;

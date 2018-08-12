@@ -4,8 +4,8 @@ using Harmony;
 
 namespace MechEngineer
 {
-    [HarmonyPatch(typeof(Mech), nameof(Mech.GetComponentInSlot))]
-    internal static class Mech_GetComponentInSlot_Patch
+    [HarmonyPatch(typeof(Mech), "OnLocationDestroyed")]
+    internal static class Mech_OnLocationDestroyed_Patch
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {

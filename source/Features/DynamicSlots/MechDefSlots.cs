@@ -64,5 +64,11 @@ namespace MechEngineer
             ChassisLocations.LeftArm,
             ChassisLocations.RightArm,
         };
+
+        //internal static ChassisLocations[] GetAdjacentLocations(ChassisLocations location)
+        //{
+        //    var armorLocations = MechStructureRules.GetAdjacentLocations((ArmorLocation) location);
+        //    return Locations.Where(chassisLocation => ((int) armorLocations & (int) chassisLocation) > 0).ToArray();
+        //}
     }
 }

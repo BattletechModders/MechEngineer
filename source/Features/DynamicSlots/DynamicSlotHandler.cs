@@ -26,8 +26,7 @@ namespace MechEngineer
 
         internal void RefreshData(MechLabPanel mechLab)
         {
-            var fillerImageCache = MechLabLocationWidgetSetDataPatch.FillerImageCache;
-            if (fillerImageCache.Count < Locations.Length)
+            if (MechLabLocationWidget_SetData_Patch.Fillers.Count < Locations.Length)
             {
                 return;
             }
@@ -37,13 +36,13 @@ namespace MechEngineer
             {
                 foreach (var location in Locations)
                 {
-                    var fillerImages = fillerImageCache[location];
+                    var fillers = MechLabLocationWidget_SetData_Patch.Fillers[location];
                     var widget = mechLab.GetLocationWidget((ArmorLocation)location); // by chance armorlocation = chassislocation for main locations
                     var adapter = new MechLabLocationWidgetAdapter(widget);
                     var used = adapter.usedSlots;
                     for (var i = 0; i < adapter.maxSlots; i++)
                     {
-                        var fillerImage = fillerImages[i];
+                        var filler = fillers[i];
                         if (i >= used && reservedSlots.MoveNext())
                         {
                             var reservedSlot = reservedSlots.Current;
@@ -51,14 +50,11 @@ namespace MechEngineer
                             {
                                 throw new NullReferenceException();
                             }
-                            fillerImage.gameObject.SetActive(true);
-                            var uicolor = reservedSlot.ReservedSlotColor != UIColor.Custom ? reservedSlot.ReservedSlotColor : reservedSlot.Def?.GetComponent<ColorComponent>()?.UIColor;
-                            var color = LazySingletonBehavior<UIManager>.Instance.UIColorRefs.GetUIColor(uicolor ?? UIColor.White);
-                            fillerImage.color = slots.IsOverloaded ? DynamicSlotsSpaceMissingColor : color;
+                            filler.Show(reservedSlot);
                         }
                         else
                         {
-                            fillerImage.gameObject.SetActive(false);
+                            filler.Hide();
                         }
                     }
                 }
