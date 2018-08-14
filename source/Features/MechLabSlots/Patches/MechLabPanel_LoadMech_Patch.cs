@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BattleTech.UI;
 using Harmony;
 using UnityEngine;
@@ -12,9 +13,10 @@ namespace MechEngineer
         {
             try
             {
-                //GUILogUtils.LogHierarchy(__instance.transform);
+                var mechLabPanel = __instance;
+                //GUILogUtils.LogHierarchy(mechLabPanel.transform);
 
-                var Representation = __instance.transform.GetChild("Representation");
+                var Representation = mechLabPanel.transform.GetChild("Representation");
                 var OBJ_mech = Representation.GetChild("OBJ_mech");
 
                 var Centerline = OBJ_mech.GetChild("Centerline");
@@ -76,6 +78,15 @@ namespace MechEngineer
                     LeftTorsoWidget.SetTop(LeftTorsoWidget.Top() + moveUp);
                     LeftLegWidget.SetTop(LeftTorsoWidget.Bottom() - space);
                 }
+
+                //if (Control.settings.MechLabPanelLocationRepairButtonsHidden)
+                //{
+                //    foreach (var button in mechLabPanel.transform.GetComponentsInChildren<Transform>()
+                //        .Where(t => t.name == "uixPrfBttn_BASE_repairButton-MANAGED"))
+                //    {
+                //        button.gameObject.SetActive(false);
+                //    }
+                //}
             }
             catch (Exception e)
             {
