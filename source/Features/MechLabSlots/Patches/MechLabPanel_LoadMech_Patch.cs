@@ -47,13 +47,16 @@ namespace MechEngineer
                     }
                 }
 
-                const float space = 20;
+                const float moveUp = 0;
+                const float space = 50;
+                const float spaceHeatCT = 20;
 
                 {
                     var headWidget = Centerline.GetChild("uixPrfPanl_ML_location-Widget-MANAGED");
                     var centerTorsoWidget = Centerline.GetChild("uixPrfPanl_ML_location-Widget-MANAGED", 1);
-
-                    centerTorsoWidget.SetTop(headWidget.Bottom() - space);
+                    
+                    headWidget.SetTop(headWidget.Top() + moveUp);
+                    centerTorsoWidget.SetTop(headWidget.Bottom() - spaceHeatCT);
                 }
 
                 {
@@ -61,6 +64,7 @@ namespace MechEngineer
                     var RightTorsoWidget = RightTorsoLeg.GetChild("uixPrfPanl_ML_location-Widget-MANAGED");
                     var RightLegWidget = RightTorsoLeg.GetChild("uixPrfPanl_ML_location-Widget-MANAGED", 1);
 
+                    RightTorsoWidget.SetTop(RightTorsoWidget.Top() + moveUp);
                     RightLegWidget.SetTop(RightTorsoWidget.Bottom() - space);
                 }
 
@@ -68,7 +72,8 @@ namespace MechEngineer
                     var LeftTorsoLeg = OBJ_mech.GetChild("LeftTorsoLeg");
                     var LeftTorsoWidget = LeftTorsoLeg.GetChild("uixPrfPanl_ML_location-Widget-MANAGED");
                     var LeftLegWidget = LeftTorsoLeg.GetChild("uixPrfPanl_ML_location-Widget-MANAGED", 1);
-
+                    
+                    LeftTorsoWidget.SetTop(LeftTorsoWidget.Top() + moveUp);
                     LeftLegWidget.SetTop(LeftTorsoWidget.Bottom() - space);
                 }
             }
