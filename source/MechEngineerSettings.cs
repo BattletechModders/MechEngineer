@@ -106,6 +106,8 @@ namespace MechEngineer
         // set to true to switch to MWO style
         public bool MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics = false;
 
+        public TagRestrictions[] TagRestrictions = new TagRestrictions[0];
+
         #endregion
 
         #region logging

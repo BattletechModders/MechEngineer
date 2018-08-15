@@ -171,7 +171,7 @@ namespace MechEngineer
     {
         internal static string IdForComponent(this EffectData statusEffect, MechComponent mechComponent)
         {
-            return $"{statusEffect.Description.Id}_{mechComponent.parent.GUID}_{mechComponent.uid}";
+            return $"CritialHitEffect_{statusEffect.Description.Id}_{mechComponent.parent.GUID}_{mechComponent.uid}";
         } 
     }
 }

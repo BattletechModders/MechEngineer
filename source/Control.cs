@@ -51,6 +51,14 @@ namespace MechEngineer
                 CustomComponents.Validator.RegisterMechValidator(ArmActuatorHandler.Shared.CCValidation.ValidateMech, ArmActuatorHandler.Shared.CCValidation.ValidateMechCanBeFielded);
                 CustomComponents.Validator.RegisterDropValidator(check: ArmActuatorHandler.Shared.CCValidation.ValidateDrop);
 
+                CustomComponents.Validator.RegisterMechValidator(TagRestrictionsHandler.Shared.CCValidation.ValidateMech, TagRestrictionsHandler.Shared.CCValidation.ValidateMechCanBeFielded);
+                CustomComponents.Validator.RegisterDropValidator(check: TagRestrictionsHandler.Shared.CCValidation.ValidateDrop);
+
+                foreach (var restriction in settings.TagRestrictions)
+                {
+                    TagRestrictionsHandler.Shared.Add(restriction);
+                }
+
                 foreach (var categoryDescriptor in settings.Categories)
                 {
                     CustomComponents.Control.AddCategory(categoryDescriptor);

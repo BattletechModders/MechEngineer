@@ -78,6 +78,9 @@
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
     <Compile Include="Features\ArmActuators\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
     <Compile Include="Features\AutoFix\ArmActuatorHandler.cs" />
+    <Compile Include="Features\ChassisStatusEffects\ChassisQuirks.cs" />
+    <Compile Include="Features\ChassisStatusEffects\Patches\Mech_InitEffectStats_Patch3.cs" />
+    <Compile Include="Features\TagRestrictions\TagRestrictions.cs" />
     <Compile Include="Features\ComponentExplosions\CASEComponent.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosionHandler.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosion.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="Features\MechLabSlots\GUILogUtils.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_SetData_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_LoadMech_Patch.cs" />
+    <Compile Include="Features\TagRestrictions\TagRestrictionsHandler.cs" />
     <Compile Include="Helper\MechExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_DamageLocation_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\AmmunitionBox_DamageComponent_Patch.cs" />
