@@ -32,6 +32,22 @@ namespace MechEngineer
 
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
 
+        // MWO does not allow to drop if that would mean to go overweight
+        // battletech allows overweight, to stay consistent so we also allow overspace usage by default
+        // set to true to switch to MWO style
+        public bool DynamicSlotsValidateDropEnabled = false;
+        
+        public bool TagRestrictionsValidateDropEnabled = false;
+        public bool TagRestrictionsUseDescriptionIds = true;
+        public TagRestrictions[] TagRestrictions = {
+            new TagRestrictions
+            {
+                Tag = "ExampleTag",
+                IncompatibleTags = new[] {"ExampleIncompatibleTag"},
+                MoreTagRestrictionsFrom = new[] {"OtherTag"},
+            }
+        };
+
         public CriticalHitStates EngineCriticalHitStates = new CriticalHitStates
         {
             MaxStates = 2,
@@ -100,13 +116,6 @@ namespace MechEngineer
                 }
             }
         };
-
-        // MWO does not allow to drop if that would mean to go overweight
-        // battletech allows overweight, to stay consistent so we also allow overspace usage by default
-        // set to true to switch to MWO style
-        public bool MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics = false;
-
-        public TagRestrictions[] TagRestrictions = new TagRestrictions[0];
 
         #endregion
 

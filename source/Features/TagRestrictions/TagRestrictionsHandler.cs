@@ -24,10 +24,24 @@ namespace MechEngineer
         public void ValidateMech(MechDef mechDef, Errors errors)
         {
             var tags = new HashSet<string>();
-            tags.UnionWith(mechDef.Chassis.ChassisTags);
-            foreach (var componentTags in mechDef.Inventory.Select(r => r.Def.ComponentTags))
+            if (mechDef.Chassis.ChassisTags != null)
             {
-                tags.UnionWith(componentTags);
+                tags.UnionWith(mechDef.Chassis.ChassisTags);
+            }
+            if (Control.settings.TagRestrictionsUseDescriptionIds)
+            {
+                tags.Add(mechDef.ChassisID);
+            }
+            foreach (var def in mechDef.Inventory.Select(r => r.Def))
+            {
+                if (def.ComponentTags != null)
+                {
+                    tags.UnionWith(def.ComponentTags);
+                }
+                if (Control.settings.TagRestrictionsUseDescriptionIds)
+                {
+                    tags.Add(def.Description.Id);
+                }
             }
 
             foreach (var tag in tags)
@@ -52,9 +66,19 @@ namespace MechEngineer
                 yield break;
             }
 
+            if (restriction.IncompatibleTags == null)
+            {
+                yield break;
+            }
+
             foreach (var incompatibleTag in restriction.IncompatibleTags)
             {
                 yield return incompatibleTag;
+            }
+
+            if (restriction.MoreTagRestrictionsFrom == null)
+            {
+                yield break;
             }
 
             foreach (var subTag in restriction.MoreTagRestrictionsFrom)

@@ -41,7 +41,7 @@ namespace MechEngineer
                 CustomComponents.Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
 
                 CustomComponents.Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                if (settings.MWOStyleDontAlowDropIfNotEnoughSpaceForDynamics)
+                if (settings.DynamicSlotsValidateDropEnabled)
                 {
                     CustomComponents.Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.CCValidation.ValidateDrop);
                 }
@@ -52,7 +52,10 @@ namespace MechEngineer
                 CustomComponents.Validator.RegisterDropValidator(check: ArmActuatorHandler.Shared.CCValidation.ValidateDrop);
 
                 CustomComponents.Validator.RegisterMechValidator(TagRestrictionsHandler.Shared.CCValidation.ValidateMech, TagRestrictionsHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                CustomComponents.Validator.RegisterDropValidator(check: TagRestrictionsHandler.Shared.CCValidation.ValidateDrop);
+                if (settings.TagRestrictionsValidateDropEnabled)
+                {
+                    CustomComponents.Validator.RegisterDropValidator(check: TagRestrictionsHandler.Shared.CCValidation.ValidateDrop);
+                }
 
                 foreach (var restriction in settings.TagRestrictions)
                 {
