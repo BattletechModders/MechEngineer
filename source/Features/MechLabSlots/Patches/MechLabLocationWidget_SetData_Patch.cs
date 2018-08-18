@@ -142,6 +142,7 @@ namespace MechEngineer
                 adapter.icon.gameObject.SetActive(dynamicSlots.ShowIcon);
                 
                 layout.SetActive(true);
+                element.SetDraggable(false);
             }
 
             internal void Hide()
