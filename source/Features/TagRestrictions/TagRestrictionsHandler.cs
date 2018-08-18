@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 
@@ -24,6 +25,17 @@ namespace MechEngineer
         public void ValidateMech(MechDef mechDef, Errors errors)
         {
             var tagsUINames = new Dictionary<string, string>();
+            void AddNameForTag(string tag, string UIName)
+            {
+                try
+                {
+                    tagsUINames.Add(tag, UIName);
+                }
+                catch (ArgumentException)
+                {
+                }
+            }
+
             string NameForTag(string tag)
             {
                 if (!tagsUINames.TryGetValue(tag, out var UIName))
@@ -44,7 +56,7 @@ namespace MechEngineer
                 if (Control.settings.TagRestrictionsUseDescriptionIds)
                 {
                     tags.Add(chassis.Description.Id);
-                    tagsUINames.Add(chassis.Description.Id, chassis.Description.UIName);
+                    AddNameForTag(chassis.Description.Id, chassis.Description.UIName);
                 }
             }
             foreach (var def in mechDef.Inventory.Select(r => r.Def))
@@ -56,7 +68,7 @@ namespace MechEngineer
                 if (Control.settings.TagRestrictionsUseDescriptionIds)
                 {
                     tags.Add(def.Description.Id);
-                    tagsUINames.Add(def.Description.Id, def.Description.UIName);
+                    AddNameForTag(def.Description.Id, def.Description.UIName);
                 }
             }
 
