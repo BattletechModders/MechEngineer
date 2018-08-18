@@ -140,6 +140,7 @@ The engine generator can be used to quickly add more engine ratings:
 * CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
 * Denadan - ideas, custom components lib, coding
 * Gentleman Reaper - ideas, lore and rules, testing
+* LadyAlekto - ideas, lore and rules, testing, items
 * TotalMeltdown - ideas, lore and rules
 
 ## Download
