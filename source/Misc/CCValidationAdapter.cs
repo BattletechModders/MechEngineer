@@ -52,7 +52,7 @@ namespace MechEngineer
 
     public class Errors: IEnumerable<Error>
     {
-        internal List<Error> Messages = new List<Error>();
+        internal OrderedSet<Error> Messages = new OrderedSet<Error>();
         internal bool FailOnFirstError = false;
 
         internal bool Add(MechValidationType type, string message)

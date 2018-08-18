@@ -23,14 +23,29 @@ namespace MechEngineer
 
         public void ValidateMech(MechDef mechDef, Errors errors)
         {
-            var tags = new HashSet<string>();
-            if (mechDef.Chassis.ChassisTags != null)
+            var tagsUINames = new Dictionary<string, string>();
+            string NameForTag(string tag)
             {
-                tags.UnionWith(mechDef.Chassis.ChassisTags);
+                if (!tagsUINames.TryGetValue(tag, out var UIName))
+                {
+                    UIName = tag;
+                }
+
+                return UIName;
             }
-            if (Control.settings.TagRestrictionsUseDescriptionIds)
+
+            var tags = new HashSet<string>();
             {
-                tags.Add(mechDef.ChassisID);
+                var chassis = mechDef.Chassis;
+                if (chassis.ChassisTags != null)
+                {
+                    tags.UnionWith(chassis.ChassisTags);
+                }
+                if (Control.settings.TagRestrictionsUseDescriptionIds)
+                {
+                    tags.Add(chassis.Description.Id);
+                    tagsUINames.Add(chassis.Description.Id, chassis.Description.UIName);
+                }
             }
             foreach (var def in mechDef.Inventory.Select(r => r.Def))
             {
@@ -41,6 +56,7 @@ namespace MechEngineer
                 if (Control.settings.TagRestrictionsUseDescriptionIds)
                 {
                     tags.Add(def.Description.Id);
+                    tagsUINames.Add(def.Description.Id, def.Description.UIName);
                 }
             }
 
@@ -48,12 +64,16 @@ namespace MechEngineer
             {
                 foreach (var incompatibleTag in IncompatibleTags(tag))
                 {
-                    if (tags.Contains(incompatibleTag))
+                    if (!tags.Contains(incompatibleTag))
                     {
-                        if (errors.Add(MechValidationType.InvalidInventorySlots, $"Can't use {tag} with {incompatibleTag}"))
-                        {
-                            return;
-                        }
+                        continue;
+                    }
+
+                    var tagName = NameForTag(tag);
+                    var incompatibleTagName = NameForTag(incompatibleTag);
+                    if (errors.Add(MechValidationType.InvalidInventorySlots, $"Can't use {tagName} with {incompatibleTagName}"))
+                    {
+                        return;
                     }
                 }
             }
