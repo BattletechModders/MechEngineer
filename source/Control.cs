@@ -27,6 +27,7 @@ namespace MechEngineer
                 
                 mod.Logger.LogDebug("patching game");
 
+                //HarmonyInstance.DEBUG = true;
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));

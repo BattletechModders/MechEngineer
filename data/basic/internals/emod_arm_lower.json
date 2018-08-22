@@ -17,7 +17,7 @@
         "UIName" : "Arm Lower",
         "Id" : "emod_arm_lower",
         "Name" : "Arm Lower Actuator",
-        "Details" : "An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units. The upper actuator requires the upper arm actuators to be installed and working.",
+        "Details" : "An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units. The lower actuator requires the upper arm actuators to be installed and working.",
         "Icon" : "uixSvgIcon_equipment_ActuatorArm"
     },
     "BonusValueA" : "+ 1 Acc.",
