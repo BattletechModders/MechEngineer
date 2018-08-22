@@ -6,6 +6,7 @@ using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
 using Harmony;
+using Localize;
 
 namespace MechEngineer
 {
@@ -17,7 +18,7 @@ namespace MechEngineer
             this.validator = validator;
         }
 
-        public void ValidateMech(Dictionary<MechValidationType, List<string>> errorMessages, MechValidationLevel validationLevel, MechDef mechDef)
+        public void ValidateMech(Dictionary<MechValidationType, List<Text>> errorMessages, MechValidationLevel validationLevel, MechDef mechDef)
         {
             var errors = new Errors();
             validator.ValidateMech(mechDef, errors);
@@ -62,11 +63,11 @@ namespace MechEngineer
             return FailOnFirstError;
         }
 
-        internal void Populate(Dictionary<MechValidationType, List<string>> errorMessages)
+        internal void Populate(Dictionary<MechValidationType, List<Text>> errorMessages)
         {
             foreach (var error in this)
             {
-                errorMessages[error.Type].Add(error.Message);
+                errorMessages[error.Type].Add(new Text(error.Message));
             }
         }
 

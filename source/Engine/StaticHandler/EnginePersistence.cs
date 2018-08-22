@@ -39,15 +39,14 @@ namespace MechEngineer
 
             //SaveEngineState(engineRef, panel);
 
-            widget.RefreshFilterToggles();
+            widget.ApplyFiltering();
         }
 
         internal static MechComponentRef CreateMechComponentRef(string id, SimGameState sim, DataManager dataManager)
         {
             var def = dataManager.GetObjectOfType<HeatSinkDef>(id, BattleTechResourceType.HeatSinkDef);
 
-            var @ref = new MechComponentRef(def.Description.Id, sim.GenerateSimGameUID(), def.ComponentType, ChassisLocations.None);
-            @ref.DataManager = dataManager;
+            var @ref = new MechComponentRef(def.Description.Id, sim.GenerateSimGameUID(), def.ComponentType, ChassisLocations.None) {DataManager = dataManager};
             @ref.SetComponentDef(def);
 
             return @ref;

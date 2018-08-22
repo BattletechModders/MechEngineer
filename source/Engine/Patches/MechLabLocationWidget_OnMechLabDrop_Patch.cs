@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
+using Localize;
 using UnityEngine.EventSystems;
 
 namespace MechEngineer
@@ -19,7 +20,7 @@ namespace MechEngineer
             List<MechLabItemSlotElement> ___localInventory,
             int ___usedSlots,
             int ___maxSlots,
-            ref string ___dropErrorMessage)
+            ref Text ____dropErrorMessage)
         {
             try
             {
@@ -48,8 +49,8 @@ namespace MechEngineer
 
                 if (result is MechLabDropErrorResult error)
                 {
-                    ___dropErrorMessage = error.errorMessage;
-                    ___mechLab.ShowDropErrorMessage(___dropErrorMessage);
+                    ____dropErrorMessage = new Text(error.errorMessage);
+                    ___mechLab.ShowDropErrorMessage(____dropErrorMessage);
                     ___mechLab.OnDrop(eventData);
                     return false;
                 }

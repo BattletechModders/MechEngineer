@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
+using Localize;
 
 namespace MechEngineer
 {
@@ -24,7 +25,7 @@ namespace MechEngineer
             );
         }
 
-        public static List<string> GetValidationErrors(Dictionary<MechValidationType, List<string>> errorMessages, List<MechValidationType> validationTypes)
+        public static List<Text> GetValidationErrors(Dictionary<MechValidationType, List<Text>> errorMessages, List<MechValidationType> validationTypes)
         {
             try
             {

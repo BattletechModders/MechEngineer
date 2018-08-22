@@ -41,12 +41,8 @@ namespace MechEngineer
 
             if (GetNotMappedPrefabNameCount(componentRef) > 0)
             {
-                var dropErrorMessage = string.Format("Cannot add {0} to {1}: There are no available {2} hardpoints.",
-                    componentRef.Def.Description.Name,
-                    _adapter.LocationName.text,
-                    componentRef.Def.PrefabIdentifier.ToUpper()
-                );
-                _adapter.MechLab.ShowDropErrorMessage(dropErrorMessage);
+                var dropErrorMessage = $"Cannot add {componentRef.Def.Description.Name} to {_adapter.LocationName.text}: There are no available {componentRef.Def.PrefabIdentifier.ToUpper()} hardpoints.";
+                _adapter.MechLab.ShowDropErrorMessage(new Localize.Text(dropErrorMessage));
                 _adapter.MechLab.OnDrop(eventData);
                 return false;
             }

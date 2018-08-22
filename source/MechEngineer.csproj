@@ -202,7 +202,6 @@
     <Compile Include="Engine\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
     <Compile Include="Engine\Patches\MechStatisticsRules_CalculateMovementStat_Patch.cs" />
     <Compile Include="Engine\StaticHandler\EngineHeat.cs" />
-    <Compile Include="Engine\BTLoadFix\SimGameState_RequestDataManagerResources_Patch.cs" />
     <Compile Include="Features\AutoFix\GyroHandler.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\MechShutdownSequence_CheckForHeatDamage_Patch.cs" />
     <Compile Include="Features\AutoFix\Patches\UpgradeDef_FromJSON_Patch.cs" />
