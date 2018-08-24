@@ -58,8 +58,8 @@ namespace MechEngineer
             {
                 if (IsInternalExplosion)
                 {
-                    var properties = ComponentExplosionHandler.Shared.GetCASEProperties(currentMech, (int) location);
-                    if (properties.MaximumDamage.HasValue)
+                    var properties = ComponentExplosionHandler.Shared.GetCASEProperties(mech, (int) location);
+                    if (properties?.MaximumDamage != null)
                     {
                         var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
                         var backDamage = damage - directDamage;
@@ -68,7 +68,7 @@ namespace MechEngineer
 
                         if (backDamage > 0)
                         {
-                            currentMech.PublishFloatieMessage("EXPLOSION REDIRECTED");
+                            mech.PublishFloatieMessage("EXPLOSION REDIRECTED");
 
                             if ((location & ChassisLocations.Torso) > 0)
                             {

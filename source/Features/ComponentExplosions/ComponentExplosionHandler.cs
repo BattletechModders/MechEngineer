@@ -85,7 +85,7 @@ namespace MechEngineer
                 var weapon = new Weapon(mech, mech.Combat, component.mechComponentRef, component.uid);
 
                 // bool DamageLocation(int originalHitLoc, WeaponHitInfo hitInfo, ArmorLocation aLoc, Weapon weapon, float totalDamage, int hitIndex, AttackImpactQuality impactQuality)
-                var args = new object[] {component.Location, hitInfo, (ArmorLocation) component.Location, weapon, explosionDamage, 0, AttackImpactQuality.Solid};
+                var args = new object[] {component.Location, hitInfo, (ArmorLocation) component.Location, weapon, explosionDamage, 0, AttackImpactQuality.Solid, DamageType.AmmoExplosion};
                 Traverse.Create(mech).Method("DamageLocation", args).GetValue();
             }
             finally
