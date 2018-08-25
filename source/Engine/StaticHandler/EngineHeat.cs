@@ -116,7 +116,7 @@ namespace MechEngineer
             EnginePersistence.SaveEngineState(engineRef, mechLab);
             mechLab.ValidateLoadout(false);
             
-            EngineCoreRefHandler.Shared.RefreshSlotElement(engineSlotElement);
+            EngineCoreRefHandler.Shared.AdjustSlotElement(engineSlotElement);
 
             return new MechLabDropRemoveDragItemResult();
         }

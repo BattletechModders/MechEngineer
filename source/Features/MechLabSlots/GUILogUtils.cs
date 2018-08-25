@@ -118,7 +118,8 @@ namespace MechEngineer
                 var textComponent = transform.GetComponent<TextMeshProUGUI>();
                 if (textComponent != null)
                 {
-                    textText = " fontSize=" + textComponent.fontSize + " fontName=" + textComponent.font.name + " text=" + textComponent.text;
+                    //textText = "OverflowMode=" + textComponent.OverflowMode + " fontSize=" + textComponent.fontSize + " fontName=" + textComponent.font.name + " text=" + textComponent.text;
+                    textText = " color=" + textComponent.color + " fontName=" + textComponent.font.name + " text=" + textComponent.text;
                 }
             }
 

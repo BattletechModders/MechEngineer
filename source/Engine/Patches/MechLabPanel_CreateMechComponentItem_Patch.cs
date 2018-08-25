@@ -2,7 +2,6 @@
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
-using TMPro;
 
 namespace MechEngineer
 {
@@ -13,7 +12,6 @@ namespace MechEngineer
         {
             try
             {
-                RefreshSlotElementHandler.Shared.RefreshSlotElement(__result, __instance);
                 EnginePersistence.FixSimGameUID(__instance.sim, componentRef);
             }
             catch (Exception e)

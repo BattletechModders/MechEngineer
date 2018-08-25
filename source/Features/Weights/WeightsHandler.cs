@@ -1,16 +1,17 @@
 ﻿using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using BattleTech.UI.Tooltips;
 using CustomComponents;
 using UnityEngine;
 
 namespace MechEngineer
 {
-    internal class WeightsHandler : ITonnageChanges, IAdjustTooltip, IRefreshSlotElement
+    internal class WeightsHandler : ITonnageChanges, IAdjustTooltip, IAdjustSlotElement
     {
         public static readonly WeightsHandler Shared = new WeightsHandler();
 
-        public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechComponentDef mechComponentDef)
+        public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
         {
             var weights = mechComponentDef.GetComponent<Weights>();
             if (weights == null)
@@ -27,7 +28,8 @@ namespace MechEngineer
 
             var tonnageSaved = CalculateWeightSavings(mechDef, weights);
             tonnageSaved -= CalculateEngineTonnageChanges(mechDef, weights);
-
+            
+            var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             tooltip.tonnageText.text = $"- {tonnageSaved}";
 
             // TODO move to own feature... SlotsHandler or SizeHandler
@@ -58,7 +60,7 @@ namespace MechEngineer
             return tonnageChanges;
         }
 
-        public void RefreshSlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
+        public void AdjustSlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
         {
             var weights = instance.ComponentRef?.Def?.GetComponent<Weights>();
             if (weights == null)

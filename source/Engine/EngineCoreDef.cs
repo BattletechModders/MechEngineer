@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleTech;
+﻿using BattleTech;
+using BattleTech.UI;
+using BattleTech.UI.Tooltips;
 using CustomComponents;
 using fastJSON;
 using UnityEngine;
@@ -8,7 +8,7 @@ using UnityEngine;
 namespace MechEngineer
 {
     [CustomComponent("EngineCore")]
-    public class EngineCoreDef : SimpleCustom<HeatSinkDef>
+    public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustSlotElement, IAdjustTooltip
     {
         [JsonIgnore]
         private int _rating;
@@ -60,6 +60,16 @@ namespace MechEngineer
         public override string ToString()
         {
             return Def.Description.Id + " Rating=" + Rating;
+        }
+
+        public void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
+        {
+            EngineHandler.Shared.AdjustTooltip(tooltip, componentDef);
+        }
+
+        public void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel)
+        {
+            EngineCoreRefHandler.Shared.AdjustSlotElement(element, panel);
         }
     }
 }

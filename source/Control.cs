@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using CustomComponents;
 using Harmony;
 
 namespace MechEngineer
@@ -33,29 +34,31 @@ namespace MechEngineer
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
                 
                 mod.Logger.LogDebug("setting up CustomComponents");
-
-                CustomComponents.Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
+                Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
+                Registry.RegisterSimpleCustomComponents(typeof(Weights));
+                Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
+                Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
                 
-                CustomComponents.Registry.RegisterPreProcessor(ArmActuatorHandler.Shared);
-                CustomComponents.Registry.RegisterPreProcessor(CockpitHandler.Shared);
-                CustomComponents.Registry.RegisterPreProcessor(GyroHandler.Shared);
-                CustomComponents.Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
+                Registry.RegisterPreProcessor(ArmActuatorHandler.Shared);
+                Registry.RegisterPreProcessor(CockpitHandler.Shared);
+                Registry.RegisterPreProcessor(GyroHandler.Shared);
+                Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
 
-                CustomComponents.Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
+                Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
                 if (settings.DynamicSlotsValidateDropEnabled)
                 {
-                    CustomComponents.Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.CCValidation.ValidateDrop);
+                    Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.CCValidation.ValidateDrop);
                 }
 
-                CustomComponents.Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
+                Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
 
-                CustomComponents.Validator.RegisterMechValidator(ArmActuatorHandler.Shared.CCValidation.ValidateMech, ArmActuatorHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                CustomComponents.Validator.RegisterDropValidator(check: ArmActuatorHandler.Shared.CCValidation.ValidateDrop);
+                Validator.RegisterMechValidator(ArmActuatorHandler.Shared.CCValidation.ValidateMech, ArmActuatorHandler.Shared.CCValidation.ValidateMechCanBeFielded);
+                Validator.RegisterDropValidator(check: ArmActuatorHandler.Shared.CCValidation.ValidateDrop);
 
-                CustomComponents.Validator.RegisterMechValidator(TagRestrictionsHandler.Shared.CCValidation.ValidateMech, TagRestrictionsHandler.Shared.CCValidation.ValidateMechCanBeFielded);
+                Validator.RegisterMechValidator(TagRestrictionsHandler.Shared.CCValidation.ValidateMech, TagRestrictionsHandler.Shared.CCValidation.ValidateMechCanBeFielded);
                 if (settings.TagRestrictionsValidateDropEnabled)
                 {
-                    CustomComponents.Validator.RegisterDropValidator(check: TagRestrictionsHandler.Shared.CCValidation.ValidateDrop);
+                    Validator.RegisterDropValidator(check: TagRestrictionsHandler.Shared.CCValidation.ValidateDrop);
                 }
 
                 foreach (var restriction in settings.TagRestrictions)

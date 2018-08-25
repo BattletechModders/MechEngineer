@@ -78,10 +78,17 @@
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
     <Compile Include="Features\ArmActuators\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
     <Compile Include="Features\AutoFix\ArmActuatorHandler.cs" />
+    <Compile Include="Features\Descriptions\BonusDescriptions.cs" />
+    <Compile Include="Features\Descriptions\DescriptionDefAdapter.cs" />
+    <Compile Include="Features\Descriptions\IAdjustInventoryElement.cs" />
+    <Compile Include="Features\Descriptions\IAdjustSlotElement.cs" />
     <Compile Include="Features\ChassisStatusEffects\ChassisQuirks.cs" />
     <Compile Include="Features\ChassisStatusEffects\Patches\Mech_InitEffectStats_Patch3.cs" />
+    <Compile Include="Features\Descriptions\MechComponentDefAdapter.cs" />
+    <Compile Include="Features\Descriptions\Patches\InventoryItemElement_RefreshInfo_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabItemSlotElement_OnPointerEnter_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabItemSlotElement_OnPointerExit_Patch.cs" />
+    <Compile Include="Features\Descriptions\Patches\MechLabPanel_CreateMechComponentItem_Patch2.cs" />
     <Compile Include="Features\TagRestrictions\TagRestrictions.cs" />
     <Compile Include="Features\ComponentExplosions\CASEComponent.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosionHandler.cs" />
@@ -104,6 +111,7 @@
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_InitEffectStats_Patch2.cs" />
     <Compile Include="Misc\CCValidationAdapter.cs" />
     <Compile Include="Engine\Handler\EngineValidation.cs" />
+    <Compile Include="Features\Descriptions\IAdjustTooltip.cs" />
     <Compile Include="Misc\LogManager.cs" />
     <Compile Include="Features\AutoFix\ArmorHandler.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
@@ -111,8 +119,8 @@
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
     <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch1.cs" />
     <Compile Include="Features\HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />
-    <Compile Include="Features\RefreshSlotElement\RefreshSlotElementHandler.cs" />
-    <Compile Include="Features\RefreshSlotElement\Patches\MechLabPanel_ValidateLoadout_Patch2.cs" />
+    <Compile Include="Features\Descriptions\DescriptionsHandler.cs" />
+    <Compile Include="Features\Descriptions\Patches\MechLabPanel_ValidateLoadout_Patch2.cs" />
     <Compile Include="Features\SaveMechToFile\MechLabPanel_DoConfirmRefit_Patch.cs" />
     <Compile Include="Helper\MechLabLocationWidgetAdapter.cs" />
     <Compile Include="Features\HardpointFix\limits\MechLabLocationWidgetPatch.cs" />
@@ -158,7 +166,7 @@
     <Compile Include="Engine\StaticHandler\EngineCrits.cs" />
     <Compile Include="Engine\StaticHandler\EnginePersistence.cs" />
     <Compile Include="Features\AutoFix\LegUpgradeHandler.cs" />
-    <Compile Include="Features\RefreshSlotElement\Patches\MechLabPanel_CreateMechComponentItem_Patch.cs" />
+    <Compile Include="Engine\Patches\MechLabPanel_CreateMechComponentItem_Patch.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />
     <Compile Include="Engine\Patches\MechBayPanel_OnGotoMechLab_Patch.cs" />
     <Compile Include="Engine\Patches\MechBayPanel_OnRepairMech_Patch.cs" />
@@ -191,7 +199,7 @@
     <Compile Include="Engine\Patches\StatTooltipData_SetHeatData_Patch.cs" />
     <Compile Include="Engine\Patches\StatTooltipData_SetMovementData_Patch.cs" />
     <Compile Include="Helper\TooltipPrefab_EquipmentAdapter.cs" />
-    <Compile Include="Features\Weights\Patches\TooltipPrefab_EquipmentSetData_Patch.cs" />
+    <Compile Include="Features\Descriptions\Patches\TooltipPrefab_EquipmentSetData_Patch.cs" />
     <Compile Include="Engine\StaticHandler\EngineMisc.cs" />
     <Compile Include="Features\Weights\Patches\MechLabMechInfoWidget_CalculateTonnage_Patch.cs" />
     <Compile Include="Features\Weights\Patches\MechStatisticsRules_CalculateTonnage_Patch.cs" />

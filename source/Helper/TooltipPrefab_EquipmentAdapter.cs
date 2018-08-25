@@ -8,7 +8,7 @@ namespace MechEngineer
         public TooltipPrefab_EquipmentAdapter(TooltipPrefab_Equipment instance) : base(instance)
         {
         }
-
+        
         public TextMeshProUGUI bonusesText => traverse.Field("bonusesText").GetValue<TextMeshProUGUI>();
 
         public TextMeshProUGUI detailText => traverse.Field("detailText").GetValue<TextMeshProUGUI>();
@@ -16,5 +16,14 @@ namespace MechEngineer
         public TextMeshProUGUI tonnageText => traverse.Field("tonnageText").GetValue<TextMeshProUGUI>();
 
         public TextMeshProUGUI slotsText => traverse.Field("slotsText").GetValue<TextMeshProUGUI>();
+
+        public bool ShowBonuses
+        {
+            set
+            {
+                var text = bonusesText.transform.parent.parent.parent;
+                text.gameObject.SetActive(value);
+            }
+        }
     }
 }

@@ -24,11 +24,6 @@ namespace MechEngineer
         float TonnageChanges(MechDef mechDef);
     }
 
-    internal interface IAdjustTooltip
-    {
-        void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechComponentDef mechComponentDef);
-    }
-
     internal interface IValidateDrop
     {
         MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget);

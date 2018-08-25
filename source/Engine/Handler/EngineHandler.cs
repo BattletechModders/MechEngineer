@@ -1,4 +1,5 @@
 ﻿using BattleTech;
+using BattleTech.UI.Tooltips;
 using CustomComponents;
 
 namespace MechEngineer
@@ -7,7 +8,7 @@ namespace MechEngineer
     {
         internal static EngineHandler Shared = new EngineHandler();
 
-        public void AdjustTooltip(TooltipPrefab_EquipmentAdapter tooltip, MechComponentDef mechComponentDef)
+        public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
         {
             var engineDef = mechComponentDef.GetComponent<EngineCoreDef>();
             if (engineDef == null)
@@ -35,7 +36,8 @@ namespace MechEngineer
             var engineRef = engine.CoreRef;
 
             var movement = engineDef.GetMovement(panel.activeMechDef.Chassis.Tonnage);
-
+            
+            var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
 

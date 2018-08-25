@@ -12,16 +12,13 @@ namespace MechEngineer
         {
             try
             {
-                if (data == null)
-                {
-                    return;
-                }
-
                 var adapter = new TooltipPrefab_EquipmentAdapter(__instance);
+                adapter.ShowBonuses = true;
 
-                var mechComponentDef = (MechComponentDef) data;
-                EngineHandler.Shared.AdjustTooltip(adapter, mechComponentDef);
-                WeightsHandler.Shared.AdjustTooltip(adapter, mechComponentDef);
+                if (data is MechComponentDef def)
+                {
+                    OverrideDescriptionsHandler.Shared.AdjustTooltip(__instance, def);
+                }
             }
             catch (Exception e)
             {

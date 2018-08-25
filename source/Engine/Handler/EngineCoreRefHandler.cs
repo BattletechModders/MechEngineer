@@ -6,7 +6,7 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class EngineCoreRefHandler : IAutoFixMechDef, IRefreshSlotElement
+    internal class EngineCoreRefHandler : IAutoFixMechDef, IAdjustSlotElement
     {
         internal static EngineCoreRefHandler Shared = new EngineCoreRefHandler();
 
@@ -110,7 +110,7 @@ namespace MechEngineer
             mechDef.SetInventory(inventory.ToArray());
         }
 
-        public void RefreshSlotElement(MechLabItemSlotElement instance, MechLabPanel panel = null)
+        public void AdjustSlotElement(MechLabItemSlotElement instance, MechLabPanel panel = null)
         {
             var engineRef = instance.ComponentRef.GetEngineCoreRef();
             if (engineRef == null)

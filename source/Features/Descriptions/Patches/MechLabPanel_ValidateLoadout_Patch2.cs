@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using BattleTech.UI;
 using Harmony;
-using UnityEngine;
 
 namespace MechEngineer
 {
@@ -14,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                RefreshSlotElementHandler.Shared.RefreshData(__instance);
+                OverrideDescriptionsHandler.Shared.RefreshData(__instance);
             }
             catch (Exception e)
             {
