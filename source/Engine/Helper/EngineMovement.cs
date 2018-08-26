@@ -50,10 +50,10 @@ namespace MechEngineer
 
             if (Control.settings.CBTMovement.UseGameWalkValues)
             {
-                return (WalkSpeedFixed + MovementPoint * WalkSpeedMult).RoundBy5();
+                return RoundBy5(WalkSpeedFixed + MovementPoint * WalkSpeedMult);
             }
 
-            return (MovementPoint * Control.settings.CBTMovement.TTWalkMultiplier).RoundBy5();
+            return RoundBy5(MovementPoint * Control.settings.CBTMovement.TTWalkMultiplier);
         }
 
         private float CalcSprintDistance()
@@ -64,10 +64,15 @@ namespace MechEngineer
 
             if (Control.settings.CBTMovement.UseGameWalkValues)
             {
-                return (RunSpeedFixed + MovementPoint * RunSpeedMult).RoundBy5();
+                return RoundBy5(RunSpeedFixed + MovementPoint * RunSpeedMult);
             }
 
-            return (MovementPoint * Control.settings.CBTMovement.TTSprintMultiplier).RoundBy5();
+            return RoundBy5(MovementPoint * Control.settings.CBTMovement.TTSprintMultiplier);
+        }
+
+        private static float RoundBy5(float value)
+        {
+            return value.Round(Mathf.Floor, 5);
         }
     }
 }

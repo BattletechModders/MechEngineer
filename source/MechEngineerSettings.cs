@@ -21,7 +21,7 @@ namespace MechEngineer
 
         public int MinimumHeatSinksOnMech = 10; // minimum heatsinks a mech requires
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
-        public bool FractionalAccounting = false; // instead of half ton rounding use kg precise calculations
+        public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
         //public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
 
         public bool SaveMechDefOnMechLabConfirm = false;

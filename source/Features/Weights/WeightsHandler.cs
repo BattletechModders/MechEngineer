@@ -30,7 +30,7 @@ namespace MechEngineer
             tonnageSaved -= CalculateEngineTonnageChanges(mechDef, weights);
             
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
-            tooltip.tonnageText.text = $"- {tonnageSaved}";
+            tooltip.tonnageText.text = $"- {tonnageSaved:0.##}";
 
             // TODO move to own feature... SlotsHandler or SizeHandler
             var reservedSlots = weights.ReservedSlots;
@@ -81,7 +81,7 @@ namespace MechEngineer
             if (!Mathf.Approximately(tonnageSaved, 0))
             {
                 var sign = tonnageSaved > 0 ? "- " : "";
-                adapter.bonusTextA.text = $"{sign}{tonnageSaved} ton";
+                adapter.bonusTextA.text = $"{sign}{tonnageSaved:0.##} ton";
             }
             else if (adapter.bonusTextA.text.EndsWith("ton"))
             {
@@ -142,14 +142,23 @@ namespace MechEngineer
                    + CalculateStructureWeightSavings(mechDef, savings);
         }
 
-        private static float CalculateArmorWeightSavings(MechDef mechDef, Weights savings)
+        private static float CalculateArmorWeightSavings(MechDef mechDef, Weights weights)
         {
-            return (mechDef.ArmorTonnage() * (1 - savings.ArmorFactor)).RoundDownStandard();
+            var unmodified = mechDef.ArmorTonnage();
+            var modified = unmodified * weights.ArmorFactor;
+            var precision = 1 / MechDefExtensions.ArmorPerTon;
+            var modifiedRounded = modified.RoundUp(precision);
+            var savings = unmodified - modifiedRounded;
+            return savings;
         }
 
-        private static float CalculateStructureWeightSavings(MechDef mechDef, Weights savings)
+        private static float CalculateStructureWeightSavings(MechDef mechDef, Weights weights)
         {
-            return (mechDef.Chassis.DefaultStructureTonnage() * (1 - savings.StructureFactor)).RoundDownStandard();
+            var unmodified = mechDef.Chassis.DefaultStructureTonnage();
+            var modified = unmodified * weights.StructureFactor;
+            var modifiedRounded = modified.RoundUp();
+            var savings = unmodified - modifiedRounded;
+            return savings;
         }
     }
 }

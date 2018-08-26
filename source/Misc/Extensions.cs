@@ -15,29 +15,15 @@ namespace MechEngineer
             collection.PerformOperation(statistic, data.operation, variant);
         }
         
-        internal static float RoundUpStandard(this float @this)
+        internal static float RoundUp(this float @this, float? precision = null)
         {
-            if (Control.settings.FractionalAccounting)
-            {
-                return Mathf.Ceil(@this * 1000f) / 1000f;
-            }
-
-            return Mathf.Ceil(@this * 2f) / 2f;
+            return Round(@this, Mathf.Ceil, precision);
         }
         
-        internal static float RoundDownStandard(this float @this)
+        internal static float Round(this float @this, Func<float, float> rounder, float? precision = null)
         {
-            if (Control.settings.FractionalAccounting)
-            {
-                return Mathf.Floor(@this * 1000f) / 1000f;
-            }
-
-            return Mathf.Floor(@this * 2f) / 2f;
-        }
-
-        internal static float RoundBy5(this float @this)
-        {
-            return (float)Math.Round(@this / 5) * 5;
+            var precisionFactor = precision ?? Control.settings.FractionalAccountingPrecision;
+            return rounder(@this / precisionFactor) * precisionFactor;
         }
     }
 

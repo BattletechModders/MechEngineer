@@ -32,9 +32,9 @@ namespace MechEngineer
             => Mathf.Min(FreeExternalHeatSinkCount, CoreDef.MaxFreeExternalHeatSinks)
             * CoreRef.HeatSinkDef.Def.Tonnage;
 
-        internal float GyroTonnage => (CoreDef.StandardGyroTonnage * Weights.GyroFactor).RoundUpStandard();
+        internal float GyroTonnage => (CoreDef.StandardGyroTonnage * Weights.GyroFactor).RoundUp();
 
-        internal float EngineTonnage => (CoreDef.StandardEngineTonnage * Weights.EngineFactor).RoundUpStandard();
+        internal float EngineTonnage => (CoreDef.StandardEngineTonnage * Weights.EngineFactor).RoundUp();
  
         internal float HeatSinkTonnage => CoreRef.InternalHeatSinkTonnage - FreeExternalHeatSinkTonnage;
 
