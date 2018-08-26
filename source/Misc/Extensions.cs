@@ -25,6 +25,16 @@ namespace MechEngineer
             return Mathf.Round(@this * 2f) / 2f;
         }
 
+        internal static float RoundUp(this float @this)
+        {
+            if (Control.settings.FractionalAccounting)
+            {
+                return Math.Ceiling(@this * 1000f) / 1000f;
+            }
+
+            return Math.Ceiling(@this * 2f) / 2f;
+        }
+
         internal static float RoundBy5(this float @this)
         {
             return Mathf.Round(@this / 5) * 5;
