@@ -3,6 +3,7 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
+using UnityEngine;
 
 namespace MechEngineer
 {
@@ -10,8 +11,48 @@ namespace MechEngineer
     {
         internal static EngineCoreRefHandler Shared = new EngineCoreRefHandler();
 
+        private bool alreadyDumped = false;
+        private void DumpAllAsTable()
+        {
+            if (alreadyDumped)
+            {
+                return;
+            }
+
+            alreadyDumped = true;
+            var cores = UnityGameInstance.BattleTechGame.DataManager.HeatSinkDefs
+                .Select(hs => hs.Value)
+                .Select(hs => hs.GetComponent<EngineCoreDef>())
+                .Where(c => c != null)
+                .OrderBy(x => x.Rating);
+
+            var weights = UnityGameInstance.BattleTechGame.DataManager.HeatSinkDefs
+                .Select(hs => hs.Value)
+                .Select(hs => hs.GetComponent<Weights>())
+                .Where(c => c != null && !Mathf.Approximately(c.EngineFactor, 1))
+                .ToList();
+
+            var standardHeatSinkDef = UnityGameInstance.BattleTechGame.DataManager.GetDefaultEngineHeatSinkDef();
+
+            foreach (var coreDef in cores)
+            {
+                foreach (var weight in weights)
+                {
+                    var coreRef = new EngineCoreRef(standardHeatSinkDef, coreDef);
+                    var engine = new Engine(coreRef, weight, Enumerable.Empty<MechComponentRef>());
+
+                    var coreName = coreDef.Def.Description.UIName;
+                    var weightName = weight.Def.Description.UIName;
+                    var engineTonnage = engine.EngineTonnage;
+                    Control.mod.Logger.LogDebug($"{coreName} {weightName} {engineTonnage}");
+                }
+            }
+        }
+
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
+            //DumpAllAsTable();
+
             if (mechDef.Inventory.Any(c => c.Def.GetComponent<EngineCoreDef>() != null))
             {
                 return;
