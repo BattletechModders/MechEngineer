@@ -79,8 +79,9 @@ namespace MechEngineer
 
             {
                 var adapter = new DescriptionDefAdapter(Def.Description);
-                var additional = string.Join("\r\n", Descriptions.Select(x => x.Full).Where(x => x != null).Select(x => $"    {x}").ToArray());
-                adapter.Details = "Bonuses:<b><color=#F79B26FF>\r\n" + additional + "</color></b>\r\n\r\n" + adapter.Details;
+                var bonuses = string.Join("\r\n", Descriptions.Select(x => x.Full).Where(x => x != null).Select(x => $"    {x}").ToArray());
+                var title = Control.settings.BonusDescriptionsTooltipTitle;
+                adapter.Details = $"{title}:<b><color=#F79B26FF>\r\n{bonuses}</color></b>\r\n\r\n{adapter.Details}";
             }
         }
 

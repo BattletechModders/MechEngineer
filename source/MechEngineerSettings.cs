@@ -36,7 +36,10 @@ namespace MechEngineer
         // battletech allows overweight, to stay consistent so we also allow overspace usage by default
         // set to true to switch to MWO style
         public bool DynamicSlotsValidateDropEnabled = false;
-        
+
+        public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
+
+        public string BonusDescriptionsTooltipTitle = "Traits"; // the title to use for the bonus section of tooltips
         public BonusDescriptionSettings[] BonusDescriptions = {
             new BonusDescriptionSettings
             {

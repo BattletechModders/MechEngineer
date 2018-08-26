@@ -142,12 +142,16 @@ namespace MechEngineer
                    + CalculateStructureWeightSavings(mechDef, savings);
         }
 
+        private static float ArmorRoundingPrecision { get; }
+            = Control.settings.ArmorRoundingPrecision ??
+              UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_STEP
+              * UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
+
         private static float CalculateArmorWeightSavings(MechDef mechDef, Weights weights)
         {
             var unmodified = mechDef.ArmorTonnage();
             var modified = unmodified * weights.ArmorFactor;
-            var precision = 1 / MechDefExtensions.ArmorPerTon;
-            var modifiedRounded = modified.RoundUp(precision);
+            var modifiedRounded = modified.RoundUp(ArmorRoundingPrecision);
             var savings = unmodified - modifiedRounded;
             return savings;
         }
