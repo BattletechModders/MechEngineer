@@ -14,20 +14,30 @@ namespace MechEngineer
             variant.statName = data.statName;
             collection.PerformOperation(statistic, data.operation, variant);
         }
-
-        internal static float RoundStandard(this float @this)
+        
+        internal static float RoundUpStandard(this float @this)
         {
             if (Control.settings.FractionalAccounting)
             {
-                return Mathf.Round(@this * 1000f) / 1000f;
+                return Mathf.Ceil(@this * 1000f) / 1000f;
             }
 
-            return Mathf.Round(@this * 2f) / 2f;
+            return Mathf.Ceil(@this * 2f) / 2f;
+        }
+        
+        internal static float RoundDownStandard(this float @this)
+        {
+            if (Control.settings.FractionalAccounting)
+            {
+                return Mathf.Floor(@this * 1000f) / 1000f;
+            }
+
+            return Mathf.Floor(@this * 2f) / 2f;
         }
 
         internal static float RoundBy5(this float @this)
         {
-            return Mathf.Round(@this / 5) * 5;
+            return (float)Math.Round(@this / 5) * 5;
         }
     }
 

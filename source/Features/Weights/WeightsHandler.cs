@@ -144,12 +144,12 @@ namespace MechEngineer
 
         private static float CalculateArmorWeightSavings(MechDef mechDef, Weights savings)
         {
-            return (mechDef.ArmorTonnage() * (1 - savings.ArmorFactor)).RoundStandard();
+            return (mechDef.ArmorTonnage() * (1 - savings.ArmorFactor)).RoundDownStandard();
         }
 
         private static float CalculateStructureWeightSavings(MechDef mechDef, Weights savings)
         {
-            return (mechDef.Chassis.DefaultStructureTonnage() * (1 - savings.StructureFactor)).RoundStandard();
+            return (mechDef.Chassis.DefaultStructureTonnage() * (1 - savings.StructureFactor)).RoundDownStandard();
         }
     }
 }
