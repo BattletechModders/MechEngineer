@@ -40,27 +40,6 @@ namespace MechEngineer
         public BonusDescriptionSettings[] BonusDescriptions = {
             new BonusDescriptionSettings
             {
-                Bonus = "Accuracy",
-                Short = "{0} Acc.",
-                Long = "{0} Accuracy",
-                Full = "{0} accuracy with ranged weapons"
-            },
-            new BonusDescriptionSettings
-            {
-                Bonus = "Accuracy2",
-                Short = "{0} Acc.2",
-                Long = "{0} Accuracy2",
-                Full = "{0} accuracy2 with ranged weapons"
-            },
-            new BonusDescriptionSettings
-            {
-                Bonus = "Accuracy3",
-                Short = "{0} Acc.3",
-                Long = "{0} Accuracy3",
-                Full = "{0} accuracy3 with ranged weapons"
-            },
-            new BonusDescriptionSettings
-            {
                 Bonus = "HeatPerTurn",
                 Short = "{0} Heat / Turn",
                 Long = "{0} Heat / Turn",
