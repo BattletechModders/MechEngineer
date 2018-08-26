@@ -16,9 +16,6 @@ namespace MechEngineer
         public void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
             var adapter = new TooltipPrefab_EquipmentAdapter(tooltip);
-
-            var additional = string.Join("\r\n", Descriptions.Select(x => x.Full).Where(x => x != null).Select(x => $"    {x}").ToArray());
-            adapter.detailText.text = "Bonuses:<b><color=#F79B26FF>\r\n" + additional + "</color></b>\r\n\r\n" + adapter.detailText.text;
             //GUILogUtils.LogHierarchy(tooltip.transform);
             adapter.ShowBonuses = false;
         }
@@ -47,7 +44,6 @@ namespace MechEngineer
                 return;
             }
             
-            var adapter = new MechComponentDefAdapter(Def);
             foreach (var bonus in Bonuses)
             {
                 var split = bonus.Split(new[]{':'}, 2);
@@ -64,18 +60,27 @@ namespace MechEngineer
                 Descriptions.Add(description);
             }
 
-            var count = 0;
-            foreach (var description in Descriptions.Select(x => x.Short).Where(x => x != null).Take(2))
             {
-                if (count == 0)
+                var adapter = new MechComponentDefAdapter(Def);
+                var count = 0;
+                foreach (var description in Descriptions.Select(x => x.Short).Where(x => x != null).Take(2))
                 {
-                    adapter.BonusValueA = description;
-                    count++;
+                    if (count == 0)
+                    {
+                        adapter.BonusValueA = description;
+                        count++;
+                    }
+                    else if (count == 1)
+                    {
+                        adapter.BonusValueB = description;
+                    }
                 }
-                else if (count == 1)
-                {
-                    adapter.BonusValueB = description;
-                }
+            }
+
+            {
+                var adapter = new DescriptionDefAdapter(Def.Description);
+                var additional = string.Join("\r\n", Descriptions.Select(x => x.Full).Where(x => x != null).Select(x => $"    {x}").ToArray());
+                adapter.Details = "Bonuses:<b><color=#F79B26FF>\r\n" + additional + "</color></b>\r\n\r\n" + adapter.Details;
             }
         }
 
