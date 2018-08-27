@@ -409,6 +409,7 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder0" },
                     ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "ArmorDamaged" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_armorslots_standard", ["Location"] = "CenterTorso" },
@@ -425,6 +426,7 @@ namespace MechEngineer
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "OrangeHalf" },
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder1" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 1 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_structureslots_standard", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
@@ -439,6 +441,7 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "Cockpit" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Cockpit_Generic_Standard", ["Location"] = "Head" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"not_broken"} },
@@ -453,6 +456,7 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder2" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 2 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Gyro_Generic_Standard", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"not_broken"} },
@@ -467,6 +471,7 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder3" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 3 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engineslots_std_center", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
@@ -481,6 +486,7 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder4" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 4 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_dummy", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
@@ -505,6 +511,7 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "ActuatorArm" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_arm_upper" },
                     ["ArmActuator"] = new Dictionary<string, object>{ ["AccuracyBonus"] = -1, ["Type"] = "Hand" },
@@ -515,7 +522,11 @@ namespace MechEngineer
                 Name = "LegUpgrade",
                 displayName = "Leg Upgrade",
                 MaxEquiped =  1,
-                AutoReplace = true
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "ActuatorLeg" }
+                }
             },
             new CategoryDescriptor
             {
@@ -525,6 +536,7 @@ namespace MechEngineer
                 Forbidden = new [] {"CASE2"},
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CASE" },
                     ["CASE"] = new Dictionary<string, object>(),
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
                 }
@@ -537,6 +549,7 @@ namespace MechEngineer
                 Forbidden = new [] {"CASE"},
                 DefaultCustoms = new Dictionary<string, object>
                 {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CASE" },
                     ["CASE"] = new Dictionary<string, object>{ ["MaximumDamage"] = 3 },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
                 }
