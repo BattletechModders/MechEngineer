@@ -51,6 +51,7 @@ namespace MechEngineer
 
                 if (!Settings.TryGetValue(bonusKey, out var settings))
                 {
+                    Control.mod.Logger.LogError($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
                     continue;
                 }
 
