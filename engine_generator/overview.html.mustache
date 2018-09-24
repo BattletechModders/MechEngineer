@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
+<table>
+<thead>
+<tr>
+<th>Rating</th>
+<th>Std Tonnage</th>
+<th>LFE Tonnage</th>
+<th>XL Tonnage</th>
+<th>Gyro Tonnage</th>
+<th>Internal Heatsinks</th>
+<th>Free External Heat Sinks</th>
+<th>Max Additional Internal Heatsinks</th>
+</tr>
+</thead>
+{{#rows}}
+<tr>
+<td>{{rating}}</td>
+<td>{{std_tonnage}}</td>
+<td>{{light_tonnage}}</td>
+<td>{{xl_tonnage}}</td>
+<td>{{gyro_tons}}</td>
+<td>{{ihs_count}}</td>
+<td>{{ehs_count}}</td>
+<td>{{ahs_count}}</td>
+</tr>
+{{/rows}}
+</body>
+</table>

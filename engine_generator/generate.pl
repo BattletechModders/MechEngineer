@@ -41,10 +41,17 @@ my $categories = {
 	"exotics" => []
 };
 
+my @overview_rows = ();
+
 my $header = <$info>;
 while (my $line = <$info>)  {
 	my @cols = split(' ', $line);
+	
 	my $rating = $cols[0];
+	my $std_tonnage = $cols[5];
+	my $light_tonnage = $cols[6];
+	my $xl_tonnage = $cols[7];
+	my $xxl_tonnage = $cols[8];
 
 	my $category = "basic";
 	
@@ -57,9 +64,25 @@ while (my $line = <$info>)  {
 	my $heat_dissipation = min(floor($rating / 25), 10) * 3;
 	my $additional_slots = max(floor($rating / 25 - 10), 0);
 
+	my $hs_free = 10;
+	my $total = $rating / 25;
+	my $ihs_count = int(min($hs_free, $total));
+	my $ehs_count = int(max(0, $hs_free - $ihs_count));
+	my $ahs_count = int(max(0, $total - $hs_free));
+	
+	push(@overview_rows, {
+			rating => $rating,
+			std_tonnage => $std_tonnage,
+			light_tonnage => $light_tonnage,
+			xl_tonnage => $xl_tonnage,
+			gyro_tons => $gyro_tons,
+			ihs_count => $ihs_count,
+			ehs_count => $ehs_count,
+			ahs_count => $ahs_count
+		});
+	
 	my $generate_engine_sub = sub {
 		my $prefix = shift;
-		my $engine_tonnage = shift;
 		
 		my $engine_cost = int($rating * $rating * $rating * $rating / 10000 / 10000) * 10000;
 		
@@ -67,7 +90,7 @@ while (my $line = <$info>)  {
 			ID => "${prefix}_${rating_string}",
 			RATING => $rating,
 			RATING_STRING => $rating_string,
-			TONNAGE => $engine_tonnage + $gyro_tons,
+			TONNAGE => $std_tonnage + $gyro_tons,
 			COST => $engine_cost + $gyro_cost,
 			ICON => next_icon(),
 			BONUSA => "- ${heat_dissipation} Heat / Turn",
@@ -81,10 +104,15 @@ while (my $line = <$info>)  {
 		push(@$engines, $engine);
 	};
 	
-	$generate_engine_sub->("emod_engine", $cols[5]);
+	$generate_engine_sub->("emod_engine");
 }
 
 close $info;
+
+{
+	my $json = $tache->render("overview.html.mustache", { "rows" => \@overview_rows });
+	write_to_file("overview.html", $json);
+}
 
 while ((my $category, my $engines) = each(%{$categories})) {
 	my $shop = {
