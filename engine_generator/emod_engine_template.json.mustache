@@ -10,7 +10,7 @@
 			},
 			"Install": {
 				"TechCost": "1",
-				"CBillCost": "{{RATING}} * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 4"
+				"CBillCost": "{{RATING}} * [[Chassis.Tonnage]] / 2000"
 			}
 		},
 		"Category" : { 
@@ -24,9 +24,9 @@
         "Purchasable" : true,
         "Manufacturer" : "Vlar",
         "Model" : "Fusion Core",
-        "UIName" : "Fusion Core {{RATING}}",
-        "Id" : "emod_engine_{{RATING}}",
-        "Name" : "Fusion Core {{RATING}}",
+        "UIName" : "Fusion Core {{RATING_STRING}}",
+        "Id" : "emod_engine_{{RATING_STRING}}",
+        "Name" : "Fusion Core {{RATING_STRING}}",
         "Details" : "Fusion engines function by harnessing the power of a fusion reaction, running on light hydrogen and protium.\r\nFusion engines are defined by their <b>engine rating</b>. For 'Mechs, the engine rating is the mathematical product of the mass of the vehicle and its desired maximum walking or cruising velocity.",
         "Icon" : "{{ICON}}"
     },

@@ -11,7 +11,163 @@
    },
    "Inventory" : [
       {
+         "ID" : "emod_engine_010",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_015",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_020",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_025",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_030",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_035",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_040",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_045",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_050",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_055",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_060",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_065",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_070",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_075",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_080",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_085",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_090",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_095",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_100",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_105",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_110",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_115",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_120",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_125",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_130",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_135",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_140",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
@@ -41,6 +197,12 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engine_165",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_170",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
@@ -59,7 +221,31 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engine_185",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_190",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_195",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_200",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_205",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
@@ -95,6 +281,12 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engine_235",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_240",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
@@ -125,6 +317,12 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engine_265",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_270",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
@@ -149,7 +347,37 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engine_290",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_295",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_300",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_305",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_310",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_315",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
@@ -161,7 +389,43 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engine_325",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_330",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_335",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_340",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_345",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_350",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_355",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0
@@ -173,7 +437,43 @@
          "Count" : 0
       },
       {
+         "ID" : "emod_engine_365",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_370",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_375",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
          "ID" : "emod_engine_380",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_385",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_390",
+         "Type" : "HeatSink",
+         "DiscountModifier" : 1.0,
+         "Count" : 0
+      },
+      {
+         "ID" : "emod_engine_395",
          "Type" : "HeatSink",
          "DiscountModifier" : 1.0,
          "Count" : 0

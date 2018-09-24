@@ -1,7 +1,7 @@
 {
 	"Custom": {
 		"EngineCore": {
-			"Rating": 060
+			"Rating": 60
 		},
 		"WorkOrderCosts": {
 			"Default": {
@@ -10,7 +10,7 @@
 			},
 			"Install": {
 				"TechCost": "1",
-				"CBillCost": "060 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 4"
+				"CBillCost": "60 * [[Chassis.Tonnage]] / 2000"
 			}
 		},
 		"Category" : { 

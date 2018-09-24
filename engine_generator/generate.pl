@@ -48,7 +48,7 @@ while (my $line = <$info>)  {
 
 	my $category = "basic";
 	
-	next unless (exists $stockratings{$rating});
+	#next unless (exists $stockratings{$rating});
 
 	my $rating_string = sprintf('%03s', $rating);
 	print($rating_string, " ");
@@ -65,7 +65,8 @@ while (my $line = <$info>)  {
 		
 		my $engine = {
 			ID => "${prefix}_${rating_string}",
-			RATING => $rating_string,
+			RATING => $rating,
+			RATING_STRING => $rating_string,
 			TONNAGE => $engine_tonnage + $gyro_tons,
 			COST => $engine_cost + $gyro_cost,
 			ICON => next_icon(),
