@@ -151,6 +151,11 @@ namespace MechEngineer
             {
                 Name = "MechEngineer",
                 Level = LogLevel.Debug
+            },
+            new LoggerLogLevel
+            {
+                Name = Mech_InitStats_Patch.LOGGER_NAME,
+                Level = LogLevel.Log
             }
         };
 
