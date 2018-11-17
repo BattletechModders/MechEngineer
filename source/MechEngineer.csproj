@@ -143,7 +143,6 @@
     <Compile Include="Features\HardpointFix\utils\HardpointCounter.cs" />
     <Compile Include="Features\HardpointFix\utils\VHLUtils.cs" />
     <Compile Include="Features\HardpointFix\utils\WeaponComponentPrefabCalculator.cs" />
-    <Compile Include="Helper\ChassisExtensions.cs" />
     <Compile Include="Helper\MechDefExtensions.cs" />
     <Compile Include="Features\WorkOrderCosts\Patches\SimGameState_CreateComponentRepairWorkOrder_Patch.cs" />
     <Compile Include="Features\WorkOrderCosts\WorkOrderCosts.cs" />

@@ -60,8 +60,6 @@ namespace MechEngineer
 
         internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;
 
-        internal float TotalTonnageChanges => TotalTonnage - CoreDef.Def.Tonnage;
-
         internal EngineHeatSinkDef EngineHeatSinkDef { get; set; }
 
         internal float EngineHeatDissipation

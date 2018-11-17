@@ -26,11 +26,10 @@ namespace MechEngineer
                 return;
             }
 
-            var tonnageSaved = CalculateWeightSavings(mechDef, weights);
-            tonnageSaved -= CalculateEngineTonnageChanges(mechDef, weights);
+            var tonnageChanges = CalculateWeightChanges(mechDef, weights);
             
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
-            tooltip.tonnageText.text = $"- {tonnageSaved:0.##}";
+            tooltip.tonnageText.text = FloatToText(tonnageChanges);
 
             // TODO move to own feature... SlotsHandler or SizeHandler
             var reservedSlots = weights.ReservedSlots;
@@ -49,15 +48,7 @@ namespace MechEngineer
 
         public float TonnageChanges(MechDef mechDef)
         {
-            var tonnageChanges = 0f;
-            foreach (var savings in mechDef.Inventory.Select(r => r.Def.GetComponent<Weights>()).Where(w => w != null))
-            {
-                tonnageChanges -= CalculateWeightSavings(mechDef, savings);
-            }
-
-            tonnageChanges += CalculateEngineTonnageChanges(mechDef);
-
-            return tonnageChanges;
+            return CalculateWeightChanges(mechDef);
         }
 
         public void AdjustSlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
@@ -74,14 +65,12 @@ namespace MechEngineer
                 return;
             }
 
-            var tonnageSaved = CalculateWeightSavings(mechDef, weights);
-            tonnageSaved -= CalculateEngineTonnageChanges(mechDef, weights);
+            var tonnageChanges = CalculateWeightChanges(mechDef, weights);
             var adapter = new MechLabItemSlotElementAdapter(instance);
 
-            if (!Mathf.Approximately(tonnageSaved, 0))
+            if (!Mathf.Approximately(tonnageChanges, 0))
             {
-                var sign = tonnageSaved > 0 ? "- " : "";
-                adapter.bonusTextA.text = $"{sign}{tonnageSaved:0.##} ton";
+                adapter.bonusTextA.text = $"{FloatToText(tonnageChanges)} ton";
             }
             else if (adapter.bonusTextA.text.EndsWith("ton"))
             {
@@ -89,57 +78,80 @@ namespace MechEngineer
             }
         }
 
-        private static float CalculateEngineTonnageChanges(MechDef mechDef, Weights savings = null)
+        private static string FloatToText(float number)
         {
-            var engine = mechDef.GetEngine();
+            var sign = "";
+            if (number < 0)
+            {
+                sign = "- ";
+                number = -number;
+            }
+            return $"{sign}{number:0.##}";
+        }
+
+        private static float CalculateWeightChanges(MechDef mechDef)
+        {
+            var state = new BaseWeightState(mechDef);
+
+            return mechDef.Inventory
+                .Select(r => r.Def.GetComponent<Weights>())
+                .Where(w => w != null)
+                .Sum(weights => CalculateWeightChanges(state, weights));
+        }
+
+        private static float CalculateWeightChanges(MechDef mechDef, Weights weights)
+        {
+            var state = new BaseWeightState(mechDef);
+
+            return CalculateWeightChanges(state, weights);
+        }
+
+        private class BaseWeightState
+        {
+            internal readonly float Armor;
+            internal readonly float Structure;
+            internal readonly float Chassis;
+            internal readonly Engine Engine;
+
+            internal BaseWeightState(MechDef mechDef)
+            {
+                Armor = mechDef.ArmorTonnage();
+                Structure = mechDef.Chassis.Tonnage / 10f;
+                Chassis = mechDef.Chassis.Tonnage;
+                Engine = mechDef.GetEngine();
+            }
+        }
+
+        private static float CalculateWeightChanges(BaseWeightState state, Weights weights)
+        {
+            var tonnageChanges = 0.0f;
+
+            tonnageChanges += CalculateEngineTonnageChanges(state.Engine, weights);
+            tonnageChanges += CalcChanges(state.Armor, weights.ArmorFactor, ArmorRoundingPrecision);
+            tonnageChanges += CalcChanges(state.Structure, weights.StructureFactor);
+            tonnageChanges += CalcChanges(state.Chassis, weights.ChassisFactor);
+
+            return tonnageChanges;
+        }
+
+        private static float CalculateEngineTonnageChanges(Engine engine, Weights weights)
+        {
             if (engine == null)
             {
                 return 0;
             }
             
-            // TODO only way to get rid of this would be to fake replace using category restrictions
-            // then get a prepared mechdef and use that
-            // unfortunatly CC does not work on fake mechdefs or inventories in that sense yet
-            if (savings != null)
-            {
-                //var originalTonnage = engine.TotalTonnage;
+            engine.Weights = new Weights();
 
-                if (!Mathf.Approximately(savings.EngineFactor, 1))
-                {
-                    engine.Weights.EngineFactor = 1;
-                }
-                
-                if (!Mathf.Approximately(savings.GyroFactor, 1))
-                {
-                    engine.Weights.GyroFactor = 1;
-                }
+            var defaultTonnage = engine.TotalTonnage;
 
-                var defaultTonnage = engine.TotalTonnage;
+            engine.Weights = weights;
 
-                if (!Mathf.Approximately(savings.EngineFactor, 1))
-                {
-                    engine.Weights.EngineFactor = savings.EngineFactor;
-                }
-                
-                if (!Mathf.Approximately(savings.GyroFactor, 1))
-                {
-                    engine.Weights.GyroFactor = savings.GyroFactor;
-                }
+            var newTonnage = engine.TotalTonnage;
 
-                var newTonnage = engine.TotalTonnage;
+            //Control.mod.Logger.LogDebug($"originalTonnage={originalTonnage} defaultTonnage={defaultTonnage} newTonnage={newTonnage}");
 
-                //Control.mod.Logger.LogDebug($"originalTonnage={originalTonnage} defaultTonnage={defaultTonnage} newTonnage={newTonnage}");
-
-                return newTonnage - defaultTonnage;
-            }
-
-            return engine.TotalTonnageChanges;
-        }
-
-        private static float CalculateWeightSavings(MechDef mechDef, Weights savings)
-        {
-            return CalculateArmorWeightSavings(mechDef, savings)
-                   + CalculateStructureWeightSavings(mechDef, savings);
+            return newTonnage - defaultTonnage;
         }
 
         private static float ArmorRoundingPrecision { get; }
@@ -147,22 +159,12 @@ namespace MechEngineer
               UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_STEP
               * UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
 
-        private static float CalculateArmorWeightSavings(MechDef mechDef, Weights weights)
+        private static float CalcChanges(float unmodified, float factor, float? precision = null)
         {
-            var unmodified = mechDef.ArmorTonnage();
-            var modified = unmodified * weights.ArmorFactor;
-            var modifiedRounded = modified.RoundUp(ArmorRoundingPrecision);
-            var savings = unmodified - modifiedRounded;
-            return savings;
-        }
-
-        private static float CalculateStructureWeightSavings(MechDef mechDef, Weights weights)
-        {
-            var unmodified = mechDef.Chassis.DefaultStructureTonnage();
-            var modified = unmodified * weights.StructureFactor;
-            var modifiedRounded = modified.RoundUp();
-            var savings = unmodified - modifiedRounded;
-            return savings;
+            var modified = unmodified * factor;
+            var modifiedRounded = modified.RoundUp(precision);
+            var changes = modifiedRounded - unmodified;
+            return changes;
         }
     }
 }
