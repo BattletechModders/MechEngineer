@@ -12,7 +12,7 @@ namespace MechEngineer
         {
             try
             {
-                EngineMisc.InitEffectstats(__instance);
+                EngineMisc.InitEffectStats(__instance);
             }
             catch (Exception e)
             {

@@ -1,30 +1,34 @@
 {
 	"Custom": {
+		"EngineHeatBlock": {
+			"HeatSinkCount": 0
+		},
 		"WorkOrderCosts": {
 			"Default": {
 				"TechCost": "0",
 				"CBillCost": "0"
+			},
+			"Install": {
+				"TechCost": "10 * [[Chassis.Tonnage]] / 20",
+				"CBillCost": "10 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]]"
 			}
 		},
 		"Category" : { 
-			"CategoryID" : "EngineCore"
+			"CategoryID" : "EngineHeatBlock" 
 		},
-		"Flags" : { 
-			"ErrorInvalid": "{0} has to be replaced",
-			"Flags" : [ "default", "not_broken", "invalid" ]
-		}
+		"Flags" : { "flags" : [ "engine_part", "default", "not_broken"  ] }
 	},
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 0,
         "Rarity" : 0,
         "Purchasable" : false,
-        "Manufacturer" : "",
-        "Model" : "Placeholder",
-        "UIName" : "Fusion Core Placeholder",
-        "Id" : "emod_engine_dummy",
-        "Name" : "Fusion Core Placeholder",
-        "Details" : "Fusion engines function by harnessing the power of a fusion reaction, running on light hydrogen and protium.\r\nFusion engines are defined by their <b>engine rating</b>. For 'Mechs, the engine rating is the mathematical product of the mass of the vehicle and its desired maximum walking or cruising velocity.",
+        "Manufacturer" : "Vlar",
+        "Model" : "Engine Heat Block",
+        "UIName" : "Heat Block",
+        "Id" : "emod_heat_block",
+        "Name" : "Engine Heat Block",
+        "Details" : "An engine heat block is a containment vessel for the engine internal heat sinks.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : " ",

@@ -15,29 +15,12 @@ namespace MechEngineer
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
 
-            if (result.CoreRef == null)
+            if (result.CoolingDef == null || result.CoreDef == null || result.HeatBlockDef == null)
             {
                 return null;
             }
 
-            return new Engine(result.CoreRef, result.Weights, result.HeatSinks);
-        }
-
-        internal static EngineCoreRef GetEngineCoreRef(this IEnumerable<MechComponentRef> componentRefs)
-        {
-            var result = EngineSearcher.SearchInventory(componentRefs);
-            return result.CoreRef;
-        }
-
-        internal static EngineCoreRef GetEngineCoreRef(this MechComponentRef @this)
-        {
-            var engineDef = @this?.Def?.GetComponent<EngineCoreDef>();
-            if (engineDef == null)
-            {
-                return null;
-            }
-
-            return new EngineCoreRef(@this, engineDef);
+            return new Engine(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks);
         }
 
         internal static bool IsEnginePart(this MechComponentDef componentDef)

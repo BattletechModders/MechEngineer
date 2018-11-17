@@ -14,10 +14,16 @@ namespace MechEngineer
             {
                 var componentDef = componentRef.Def;
 
-                var heatsink = componentDef.GetComponent<EngineHeatSink>();
-                if (heatsink != null)
+                var engineHeatSinkDef = componentDef.GetComponent<EngineHeatSinkDef>();
+                if (engineHeatSinkDef != null)
                 {
                     result.HeatSinks.Add(componentRef);
+                    continue;
+                }
+
+                if (componentDef.Is<CoolingDef>(out var coolingDef))
+                {
+                    result.CoolingDef = coolingDef;
                     continue;
                 }
 
@@ -33,9 +39,14 @@ namespace MechEngineer
 
                 result.Parts.Add(componentRef);
 
-                if (result.CoreRef == null && componentDef.GetComponent<EngineCoreDef>() != null)
+                if (componentDef.Is<EngineCoreDef>(out var coreDef))
                 {
-                    result.CoreRef = componentRef.GetEngineCoreRef();
+                    result.CoreDef = coreDef;
+                }
+
+                if (componentDef.Is<EngineHeatBlockDef>(out var blockDef))
+                {
+                    result.HeatBlockDef = blockDef;
                 }
             }
 
@@ -44,7 +55,9 @@ namespace MechEngineer
 
         internal class Result
         {
-            internal EngineCoreRef CoreRef;
+            internal CoolingDef CoolingDef;
+            internal EngineHeatBlockDef HeatBlockDef;
+            internal EngineCoreDef CoreDef;
             internal List<MechComponentRef> Parts = new List<MechComponentRef>();
             internal Weights Weights = new Weights();
             internal List<MechComponentRef> HeatSinks = new List<MechComponentRef>();

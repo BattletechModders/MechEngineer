@@ -61,14 +61,16 @@ while (my $line = <$info>)  {
 	print($rating_string, " ");
 	my $gyro_tons = ceil($rating / 100);
 	my $gyro_cost = 300000 * $gyro_tons;
-	my $heat_dissipation = min(floor($rating / 25), 10) * 3;
-	my $additional_slots = max(floor($rating / 25 - 10), 0);
 
 	my $hs_free = 10;
-	my $total = $rating / 25;
-	my $ihs_count = int(min($hs_free, $total));
-	my $ehs_count = int(max(0, $hs_free - $ihs_count));
-	my $ahs_count = int(max(0, $total - $hs_free));
+	my $total = floor($rating / 25);
+	
+	my $ihs_count = min($hs_free, $total);
+	my $ehs_count = max(0, $hs_free - $ihs_count);
+	my $ahs_count = max(0, $total - $hs_free);
+	
+	my $hs_free_tonnage = $ehs_count * 1;
+	my $heat_dissipation = min($total, 10) * 3;
 	
 	push(@overview_rows, {
 			rating => $rating,
@@ -86,6 +88,14 @@ while (my $line = <$info>)  {
 		
 		my $engine_cost = int($rating * $rating * $rating * $rating / 10000 / 10000) * 10000;
 		
+		my $bonus = " ";
+		if ($ahs_count > 0) {
+			$bonus = "+ $ahs_count HS Cap"
+		}
+		if ($hs_free_tonnage > 0) {
+			$bonus = "- $hs_free_tonnage HS ton"
+		}
+		
 		my $engine = {
 			ID => "${prefix}_${rating_string}",
 			RATING => $rating,
@@ -93,8 +103,8 @@ while (my $line = <$info>)  {
 			TONNAGE => $std_tonnage + $gyro_tons,
 			COST => $engine_cost + $gyro_cost,
 			ICON => next_icon(),
-			BONUSA => "- ${heat_dissipation} Heat / Turn",
-			BONUSB => $additional_slots == 0 ? " " : "+ $additional_slots Slots"
+			BONUSA => $bonus,
+			BONUSB => ""
 		};
 
 		my $json = $tache->render("${prefix}_template.json", $engine);

@@ -28,7 +28,7 @@ namespace MechEngineer
             }
         }
 
-        internal bool Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None, string simGameUID = null)
+        internal bool Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None)
         {
             // find location
             if (location == ChassisLocations.None || LocationCount(location) > 1)
@@ -43,7 +43,7 @@ namespace MechEngineer
             {
                 AddSlotsToLocation(def.InventorySize, location, true);
             }
-            var componentRef = new MechComponentRef(def.Description.Id, simGameUID, def.ComponentType, location);
+            var componentRef = new MechComponentRef(def.Description.Id, null, def.ComponentType, location);
             Inventory.Add(componentRef);
             return true;
         }

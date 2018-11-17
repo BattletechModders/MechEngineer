@@ -5,6 +5,7 @@
     },
     "ResolutionConstants":
     {
-        "DefaultUnsteadyThreshold": 1
+        "DefaultUnsteadyThreshold": 1,
+		"MinCritChance": 10
     }
 }

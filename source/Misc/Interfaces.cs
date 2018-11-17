@@ -14,19 +14,9 @@ namespace MechEngineer
         void ValidateMech(MechDef mechDef, Errors errors);
     }
 
-    internal interface IProcessWeaponHit
-    {
-        bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects);
-    }
-
     internal interface ITonnageChanges
     {
         float TonnageChanges(MechDef mechDef);
-    }
-
-    internal interface IValidateDrop
-    {
-        MechLabDropResult ValidateDrop(MechLabItemSlotElement dragItem, MechLabLocationWidget widget);
     }
 
     internal interface IAdjustUpgradeDef

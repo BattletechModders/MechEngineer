@@ -71,7 +71,7 @@ namespace MechEngineer
 
             Add(new MechDefAutoFixCategory
             {
-                AutoFixMechDef = EngineCoreRefHandler.Shared,
+                AutoFixMechDef = EngineHandler.Shared,
                 AutoFixSetting = Control.settings.AutoFixMechDefEngine,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefEngine"
             });

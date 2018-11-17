@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
+using Harmony;
 
 namespace MechEngineer
 {
@@ -38,7 +39,7 @@ namespace MechEngineer
 
             if (Control.settings.MinimumHeatSinksOnMech > 0)
             {
-                var externalCount = mechDef.Inventory.Count(c => c.Is<EngineHeatSink>());
+                var externalCount = mechDef.Inventory.Count(c => c.Is<EngineHeatSinkDef>());
                 var internalCount = engine.CoreDef.InternalHeatSinks;
                 var count = internalCount + externalCount;
 
@@ -57,17 +58,32 @@ namespace MechEngineer
             {
                 var types = new HashSet<string>();
 
-                var inventoryHeatSinkTypes = mechDef.Inventory.Select(r => r.GetComponent<EngineHeatSink>()).Where(hs => hs != null);
-                foreach (var hs in inventoryHeatSinkTypes.Union(engine.CoreRef.GetInternalEngineHeatSinkTypes()))
+                var inventoryHeatSinkTypes = mechDef.Inventory.Select(r => r.GetComponent<EngineHeatSinkDef>()).Where(hs => hs != null).ToList();
+                inventoryHeatSinkTypes.Add(engine.GetInternalEngineHeatSinkTypes());
+                foreach (var hs in inventoryHeatSinkTypes)
                 {
                     types.Add(hs.HSCategory);
-                    if (types.Count > 1)
+                    if (types.Count <= 1)
                     {
-                        if (errors.Add(MechValidationType.InvalidInventorySlots, "MIXED HEAT SINKS: Heat Sink types cannot be mixed"))
-                        {
-                            return;
-                        }
-                        break;
+                        continue;
+                    }
+
+                    if (errors.Add(MechValidationType.InvalidInventorySlots, "HEAT SINKS: Heat Sink types cannot be mixed"))
+                    {
+                        return;
+                    }
+                }
+            }
+
+            if (Control.settings.EnforceRulesForAdditionalInternalHeatSinks)
+            {
+                var count = engine.HeatBlockDef.HeatSinkCount;
+                var max = engine.CoreDef.InternalHeatSinkAdditionalMaxCount;
+                if (count > max)
+                {
+                    if (errors.Add(MechValidationType.InvalidInventorySlots, $"HEAT SINKS: This Mech has too many internal heat sinks ({count} / {max})"))
+                    {
+                        return;
                     }
                 }
             }

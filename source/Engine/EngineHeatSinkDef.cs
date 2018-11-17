@@ -8,7 +8,7 @@ using CustomComponents;
 namespace MechEngineer
 {
     [CustomComponent("EngineHeatSink")]
-    public class EngineHeatSink : SimpleCustom<HeatSinkDef>
+    public class EngineHeatSinkDef : SimpleCustom<HeatSinkDef>
     {
         public string FullName { get; set; }
         public string Abbreviation { get; set; }
@@ -23,17 +23,17 @@ namespace MechEngineer
             return @this.HeatSinkDefs.Select(hsd => hsd.Value);
         }
 
-        internal static IEnumerable<EngineHeatSink> GetAllEngineHeatSinkDefs(this DataManager @this)
+        internal static IEnumerable<EngineHeatSinkDef> GetAllEngineHeatSinkDefs(this DataManager @this)
         {
-            return @this.GetAllHeatSinkDefs().Select(d => d.GetComponent<EngineHeatSink>()).Where(c => c != null);
+            return @this.GetAllHeatSinkDefs().Select(d => d.GetComponent<EngineHeatSinkDef>()).Where(c => c != null);
         }
 
-        internal static EngineHeatSink GetEngineHeatSinkDef(this DataManager @this, string key)
+        internal static EngineHeatSinkDef GetEngineHeatSinkDef(this DataManager @this, string key)
         {
-            return @this.HeatSinkDefs.Get(key)?.GetComponent<EngineHeatSink>();
+            return @this.HeatSinkDefs.Get(key)?.GetComponent<EngineHeatSinkDef>();
         }
 
-        internal static EngineHeatSink GetDefaultEngineHeatSinkDef(this DataManager @this)
+        internal static EngineHeatSinkDef GetDefaultEngineHeatSinkDef(this DataManager @this)
         {
             return GetEngineHeatSinkDef(@this, Control.settings.DefaultEngineHeatSinkId);
         }

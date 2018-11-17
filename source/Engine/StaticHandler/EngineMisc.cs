@@ -7,9 +7,9 @@ namespace MechEngineer
 {
     internal static class EngineMisc
     {
-        internal static void InitEffectstats(Mech mech)
+        internal static void InitEffectStats(Mech mech)
         {
-            var engine = mech.MechDef.Inventory.GetEngineCoreRef();
+            var engine = mech.MechDef.Inventory.GetEngine();
 
             if (engine == null)
             {
@@ -26,7 +26,7 @@ namespace MechEngineer
 
         internal static EngineMovement GetEngineMovement(this MechDef mechDef)
         {
-            var engine = mechDef.Inventory.GetEngineCoreRef();
+            var engine = mechDef.Inventory.GetEngine();
             return engine?.CoreDef.GetMovement(mechDef.Chassis.Tonnage);
         }
 
@@ -42,7 +42,7 @@ namespace MechEngineer
                 return;
             }
 
-            var engine = mechLab.activeMechInventory.GetEngineCoreRef();
+            var engine = mechLab.activeMechInventory.GetEngine();
 
             var current = mechLab.headWidget.currentJumpjetCount
                           + mechLab.centerTorsoWidget.currentJumpjetCount

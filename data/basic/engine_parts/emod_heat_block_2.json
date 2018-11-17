@@ -1,7 +1,7 @@
 {
 	"Custom": {
-		"Cooling": {
-			"HeatSinkDefId": "Gear_HeatSink_Generic_Double"
+		"EngineHeatBlock": {
+			"HeatSinkCount": 2
 		},
 		"WorkOrderCosts": {
 			"Default": {
@@ -9,35 +9,35 @@
 				"CBillCost": "0"
 			},
 			"Install": {
-				"TechCost": "10 * [[Chassis.Tonnage]] / 2000",
-				"CBillCost": "10 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 10"
+				"TechCost": "10 * [[Chassis.Tonnage]] / 20",
+				"CBillCost": "10 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]]"
 			}
 		},
 		"Category" : { 
-			"CategoryID" : "Cooling" 
+			"CategoryID" : "EngineHeatBlock" 
 		}
 	},
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : 6000000,
+        "Cost" : 1,
         "Rarity" : 0,
         "Purchasable" : true,
-        "Manufacturer" : "Lostech",
-        "Model" : "Cooling System",
-        "UIName" : "DHS Cooling",
-        "Id" : "emod_kit_dhs",
-        "Name" : "DHS Cooling",
-        "Details" : "A Heat Sink Cooling System provides heat dissipation for the engine and compatible extension points for additional heat sinks throughout the mech.",
+        "Manufacturer" : "Vlar",
+        "Model" : "Engine Heat Block",
+        "UIName" : "Heat Block + 2",
+        "Id" : "emod_heat_block_2",
+        "Name" : "Engine Heat Block + 2",
+        "Details" : "An engine heat block is a containment vessel for the engine internal heat sinks.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
-    "BonusValueA" : " 2 x Cooling",
-    "BonusValueB" : "",
+    "BonusValueA" : " ",
+    "BonusValueB" : "+ 2 HS",
     "ComponentType" : "HeatSink",
     "ComponentSubType" : "Heatsink",
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 1,
-    "Tonnage" : 0,
+    "Tonnage" : 2,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,

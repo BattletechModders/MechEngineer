@@ -1,84 +1,123 @@
-﻿using BattleTech;
-using BattleTech.UI.Tooltips;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BattleTech;
+using BattleTech.UI;
 using CustomComponents;
+using UnityEngine;
 
 namespace MechEngineer
 {
-    internal class EngineHandler : IAdjustTooltip
+    internal class EngineHandler : IAutoFixMechDef
     {
         internal static EngineHandler Shared = new EngineHandler();
 
-        public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
+        public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
-            var engineDef = mechComponentDef.GetComponent<EngineCoreDef>();
-            if (engineDef == null)
+            //DumpAllAsTable();
+
+            if (mechDef.Inventory.Any(c => c.Def.GetComponent<EngineCoreDef>() != null))
             {
                 return;
             }
 
-            var panel = Global.ActiveMechLabPanel;
-            if (panel == null)
+            var inventory = new List<MechComponentRef>(mechDef.Inventory);
+            var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
+            var engineHeatSinkDef = inventory
+                                        .Select(r => r.Def.GetComponent<EngineHeatSinkDef>())
+                                        .FirstOrDefault(d => d != null && d != standardHeatSinkDef) ?? standardHeatSinkDef;
+
+            if (!Control.settings.AllowMixingHeatSinkTypes)
             {
-                return;
+                // remove incompatible heat sinks
+                inventory.RemoveAll(r => r.Def.Is<EngineHeatSinkDef>(out var engineHeatSink) && engineHeatSink.HSCategory != engineHeatSinkDef.HSCategory);
             }
 
-            var engine = panel.activeMechInventory.GetEngine();
-            if (engine == null)
+            float freeTonnage;
             {
-                return;
-            }
+                float currentTotalTonnage = 0, maxValue = 0;
+                MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
 
-            // use standard heat sinks for non-installed fusion core
-            if (engine.CoreRef.CoreDef.Def.Description.Id != engineDef.Def.Description.Id)
-            {
-                engine.CoreRef = new EngineCoreRef(panel.dataManager.GetDefaultEngineHeatSinkDef(), engineDef);
-            }
-            var engineRef = engine.CoreRef;
-
-            var movement = engineDef.GetMovement(panel.activeMechDef.Chassis.Tonnage);
-            
-            var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
-            var originalText = tooltip.detailText.text;
-            tooltip.detailText.text = "";
-
-            foreach (var heatSinkDef in panel.dataManager.GetAllEngineHeatSinkDefs())
-            {
-                var query = engineRef.Query(heatSinkDef);
-
-                if (query.Count == 0)
+                var originalInitialTonnage = ChassisHandler.GetOriginalTonnage(mechDef.Chassis);
+                if (originalInitialTonnage.HasValue) // either use the freed up tonnage from the initial tonnage fix
                 {
-                    continue;
+                    freeTonnage = originalInitialTonnage.Value - mechDef.Chassis.InitialTonnage;
+                    freeTonnage -= currentTotalTonnage - originalTotalTonnage;
                 }
 
-                if (Control.settings.AllowMixingHeatSinkTypes || query.IsType)
+                else // or use up available total tonnage
                 {
-
-                    tooltip.detailText.text += "<i>" + heatSinkDef.FullName + "</i>" +
-                                               "   Internal: <b>" + query.InternalCount + "</b>" +
-                                               "   Additional: <b>" + query.AdditionalCount + "</b> / <b>" + engineDef.MaxAdditionalHeatSinks + "</b>" +
-                                               "\r\n";
+                    freeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
                 }
             }
 
-            tooltip.detailText.text += "<i>Speeds</i>" +
-                                       "   Cruise <b>" + movement.WalkSpeed + "</b>" +
-                                       " / Top <b>" + movement.RunSpeed + "</b>";
+            //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
+            var standardWeights = new Weights(); // use default gyro and weights
+            var standardEngineType = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef);
+            var standardHeatBlock = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefHeatBlockDef).GetComponent<EngineHeatBlockDef>();
+            // TODO autoselect correct type
+            var standardCooling = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefCoolingDef).GetComponent<CoolingDef>();
 
-            tooltip.detailText.text += "\r\n" +
-                                       "<i>Weights [Ton]</i>" +
-                                       "   Engine: <b>" + engine.EngineTonnage + "</b>" +
-                                       "   Gyro: <b>" + engine.GyroTonnage + "</b>" +
-                                       "   Sinks: <b>" + engine.HeatSinkTonnage + "</b>";
+            var engineCoreDefs = mechDef.DataManager.HeatSinkDefs
+                .Select(hs => hs.Value)
+                .Select(hs => hs.GetComponent<EngineCoreDef>())
+                .Where(c => c != null)
+                .OrderByDescending(x => x.Rating);
 
-            tooltip.tonnageText.text = $"{engine.TotalTonnage}";
+            var maxEngine = engineCoreDefs
+                .Select(coreDef => new Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, Enumerable.Empty<MechComponentRef>()))
+                .FirstOrDefault(engine => !(engine.TotalTonnage > freeTonnage));
 
-            tooltip.detailText.text += "\r\n";
-            tooltip.detailText.text += "\r\n";
-            tooltip.detailText.text += originalText;
-            tooltip.detailText.SetAllDirty();
+            if (maxEngine == null)
+            {
+                return;
+            }
 
-            tooltip.bonusesText.text = engineRef.BonusValueA;
-            tooltip.bonusesText.SetAllDirty();
+            // Control.mod.Logger.LogDebug("D maxEngine=" + maxEngine.CoreDef);
+
+            {
+                // remove superfluous jump jets
+                var maxJetCount = maxEngine.CoreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
+                var jumpJetList = inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
+                for (var i = 0; i < jumpJetList.Count - maxJetCount; i++)
+                {
+                    inventory.Remove(jumpJetList[i]);
+                }
+            }
+
+            var builder = new MechDefBuilder(mechDef.Chassis, inventory);
+
+            // add engine
+            builder.Add(
+                maxEngine.CoreDef.Def,
+                ChassisLocations.CenterTorso
+            );
+
+            // add standard shielding
+            builder.Add(standardEngineType, ChassisLocations.CenterTorso);
+
+            // add standard cooling
+            builder.Add(standardCooling.Def, ChassisLocations.CenterTorso);
+
+            // add standard heat block
+            builder.Add(standardHeatBlock.Def, ChassisLocations.CenterTorso);
+
+            // add free heatsinks
+            {
+                var count = 0;
+                while (count < maxEngine.CoreDef.ExternalHeatSinksFreeMaxCount)
+                {
+                    if (builder.Add(engineHeatSinkDef.Def))
+                    {
+                        count++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            mechDef.SetInventory(inventory.ToArray());
         }
     }
 }

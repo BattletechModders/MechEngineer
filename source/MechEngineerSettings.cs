@@ -20,6 +20,7 @@ namespace MechEngineer
         public bool ShutdownInjuryEnabled = true;
 
         public int MinimumHeatSinksOnMech = 10; // minimum heatsinks a mech requires
+        public bool EnforceRulesForAdditionalInternalHeatSinks = true; // can't have those juicy ++ cooling systems with smaller fusion cores than the rules allow it
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
         public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
         //public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
@@ -168,6 +169,8 @@ namespace MechEngineer
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
         public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center"; // always assumes weight factor 1.0
+        public string AutoFixMechDefCoolingDef = "emod_kit_shs";
+        public string AutoFixMechDefHeatBlockDef = "emod_heat_block";
 
         public IdentityHelper AutoFixGyroCategorizer = new IdentityHelper
         {
@@ -280,7 +283,7 @@ namespace MechEngineer
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.CenterTorso,
-                Change = new ValueChange<int> {From = 4, By = 10}
+                Change = new ValueChange<int> {From = 4, By = 11}
             },
             new ChassisSlotsChange
             {
@@ -407,6 +410,21 @@ namespace MechEngineer
         public CategoryDescriptor[] Categories = {
             new CategoryDescriptor
             {
+                Name = "Cockpit",
+                displayName = "Cockpit",
+                MaxEquiped =  1,
+                MinEquiped =  1,
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "Cockpit" },
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Cockpit_Generic_Standard", ["Location"] = "Head" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"not_broken"} },
+                }
+            },
+            new CategoryDescriptor
+            {
                 Name = "Armor",
                 displayName = "Armor",
                 MaxEquiped =  1,
@@ -439,17 +457,17 @@ namespace MechEngineer
             },
             new CategoryDescriptor
             {
-                Name = "Cockpit",
-                displayName = "Cockpit",
+                Name = "Cooling",
+                displayName = "Cooling System",
                 MaxEquiped =  1,
                 MinEquiped =  1,
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
-                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "Cockpit" },
-                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Cockpit_Generic_Standard", ["Location"] = "Head" },
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"not_broken"} },
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder2" },
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 2 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_kit_shs", ["Location"] = "CenterTorso" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
                 }
             },
             new CategoryDescriptor
@@ -461,8 +479,8 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
-                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder2" },
-                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 2 },
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder3" },
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 3 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "Gear_Gyro_Generic_Standard", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"not_broken"} },
                 }
@@ -476,9 +494,24 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
-                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder3" },
-                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 3 },
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder4" },
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 4 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engineslots_std_center", ["Location"] = "CenterTorso" },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
+                }
+            },
+            new CategoryDescriptor
+            {
+                Name = "EngineHeatBlock",
+                displayName = "Engine Heat Block",
+                MaxEquiped =  1,
+                MinEquiped =  1,
+                AutoReplace = true,
+                DefaultCustoms = new Dictionary<string, object>
+                {
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder5" },
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 5 },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_heat_block", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
                 }
             },
@@ -491,8 +524,8 @@ namespace MechEngineer
                 AutoReplace = true,
                 DefaultCustoms = new Dictionary<string, object>
                 {
-                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder4" },
-                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 4 },
+                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder6" },
+                    ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 6 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_dummy", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
                 }
