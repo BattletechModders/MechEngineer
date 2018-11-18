@@ -42,8 +42,8 @@ namespace MechEngineer
         public TagRestrictions[] TagRestrictions = {
             new TagRestrictions
             {
-                Tag = "CASE",
-                IncompatibleTags = new[] {"CASE2"}
+                Tag = "emod_case",
+                IncompatibleTags = new[] {"emod_case2"}
             }
         };
 
@@ -649,18 +649,6 @@ namespace MechEngineer
                 {
                     ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CASE" },
                     ["CASE"] = new Dictionary<string, object>(),
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
-                }
-            },
-            new CategoryDescriptor
-            {
-                Name = "CASE2",
-                displayName = "CASE II",
-                MaxEquipedPerLocation = 1,
-                DefaultCustoms = new Dictionary<string, object>
-                {
-                    ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CASE" },
-                    ["CASE"] = new Dictionary<string, object>{ ["MaximumDamage"] = 3 },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
                 }
             },

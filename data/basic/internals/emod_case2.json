@@ -1,7 +1,10 @@
 {
 	"Custom": {
+		"CASE": {
+			"MaximumDamage": 3
+		},
 		"Category" : { 
-			"CategoryID" : "CASE2" 
+			"CategoryID" : "CASE" 
 		}
 	},
     "Description" : {
