@@ -1,5 +1,11 @@
 {
 	"Custom": {
+		"BonusDescriptions": {
+			"Bonuses": [
+				"ArmAccuracyBonus: 1",
+				"MeleeAccuracyBonus: 1"
+			]
+		},
 		"Category" : { 
 			"CategoryID" : "ArmActuator" 
 		},
@@ -20,8 +26,8 @@
         "Details" : "An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units. The hand actuator requires the lower and upper arm actuators to be installed and working.",
         "Icon" : "uixSvgIcon_equipment_ActuatorArm"
     },
-    "BonusValueA" : "+ 1 Acc.",
-    "BonusValueB" : "+ 1 Melee Hit",
+    "BonusValueA" : "",
+    "BonusValueB" : "",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",

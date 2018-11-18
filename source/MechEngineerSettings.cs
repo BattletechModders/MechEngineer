@@ -23,7 +23,6 @@ namespace MechEngineer
         public bool EnforceRulesForAdditionalInternalHeatSinks = true; // can't have those juicy ++ cooling systems with smaller fusion cores than the rules allow it
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
         public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
-        //public bool AllowPartialWeightSavings = false; // similar to patchwork armor without any penalties and location requirements, also works for structure
 
         public bool SaveMechDefOnMechLabConfirm = false;
 
@@ -40,24 +39,6 @@ namespace MechEngineer
 
         public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
 
-        public string BonusDescriptionsTooltipTitle = "Traits"; // the title to use for the bonus section of tooltips
-        public BonusDescriptionSettings[] BonusDescriptions = {
-            new BonusDescriptionSettings
-            {
-                Bonus = "HeatPerTurn",
-                Short = "{0} Heat / Turn",
-                Long = "{0} Heat / Turn",
-                Full = "{0} heat per turn"
-            }
-        };
-        public class BonusDescriptionSettings
-        {
-            public string Bonus;
-            public string Short;
-            public string Long;
-            public string Full;
-        }
-
         public bool TagRestrictionsValidateDropEnabled = false;
         public bool TagRestrictionsUseDescriptionIds = true;
         public TagRestrictions[] TagRestrictions = {
@@ -68,6 +49,102 @@ namespace MechEngineer
                 MoreTagRestrictionsFrom = new[] {"OtherTag"},
             }
         };
+
+        #endregion
+
+        #region bonus descriptions
+
+        public string BonusDescriptionsTooltipTitle = "Traits"; // the title to use for the bonus section of tooltips
+        public BonusDescriptionSettings[] BonusDescriptions = {
+            new BonusDescriptionSettings
+            {
+                Bonus = "Whitespace",
+                Short = " ",
+                Long = " ",
+                Full = null
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "EngineHSFreeExt",
+                Short = "- {0} HS ton",
+                Long = "- {0} HS ton",
+                Full = "{0} required external heat sinks, those count as weightless"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "EngineHSCap",
+                Short = "+ {0} HS Cap",
+                Long = "+ {0} HS Cap",
+                Full = "+ {0} additional installable engine heat sinks"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "EngineHSAdd",
+                Short = "+ {0} HS",
+                Long = "+ {0} Heat Sink",
+                Full = "+ {0} additional engine heat sinks"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "EngineWeightReduction",
+                Short = "- {0} E. Weight",
+                Long = "- {0} Engine Weight",
+                Full = "- {0} engine weight"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "StructureWeightReduction",
+                Short = "- {0} S. Weight",
+                Long = "- {0} Structure Weight",
+                Full = "- {0} structure weight"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "ArmorWeightReduction",
+                Short = "- {0} A. Weight",
+                Long = "- {0} Armor Weight",
+                Full = "- {0} armor weight"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "ReservedSlots",
+                Short = "- {0} Slots",
+                Long = "- {0} Slots Available",
+                Full = "- {0} slots available"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "ArmAccuracyBonus",
+                Short = "+ {0} Acc. (Arm)",
+                Long = "+ {0} Accuracy (Arm)",
+                Full = "+ {0} accuracy with arm mounted weapons"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "MeleeAccuracyBonus",
+                Short = "+ {0} Melee Hit",
+                Long = "+ {0} Melee Hit",
+                Full = "+ {0} accuracy with all melee attacks"
+            },
+            new BonusDescriptionSettings
+            {
+                Bonus = "CoolingSystemDHS",
+                Short = "2 x Cooling",
+                Long = "2 x Cooling",
+                Full = "2 x cooling throughout the BattleMech"
+            },
+        };
+        public class BonusDescriptionSettings
+        {
+            public string Bonus;
+            public string Short;
+            public string Long;
+            public string Full;
+        }
+
+        #endregion
+
+        #region engine critical hit states
 
         public CriticalHitStates EngineCriticalHitStates = new CriticalHitStates
         {
@@ -170,7 +247,7 @@ namespace MechEngineer
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
         public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center"; // always assumes weight factor 1.0
         public string AutoFixMechDefCoolingDef = "emod_kit_shs";
-        public string AutoFixMechDefHeatBlockDef = "emod_heat_block";
+        public string AutoFixMechDefHeatBlockDef = "emod_engine_cooling";
 
         public IdentityHelper AutoFixGyroCategorizer = new IdentityHelper
         {
@@ -511,7 +588,7 @@ namespace MechEngineer
                 {
                     ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder5" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 5 },
-                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_heat_block", ["Location"] = "CenterTorso" },
+                    ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engine_cooling", ["Location"] = "CenterTorso" },
                     ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
                 }
             },

@@ -4,11 +4,6 @@
 			"FullName": "Double Heat Sinks",
 			"Abbreviation": "DHS",
 			"Tag": "DHS",
-		},
-		"BonusDescriptions": {
-			"Bonuses": [
-				"HeatPerTurn: - 6"
-			]
 		}
 	},
     "Description" : {

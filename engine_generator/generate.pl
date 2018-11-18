@@ -21,7 +21,7 @@ close $handle;
 my %stockratings;
 {
 	my @ratings = get_lines_from_file("stock_std_ratings.txt");
-	push(@ratings, get_lines_from_file("lore_ratings.txt"));
+	#push(@ratings, get_lines_from_file("lore_ratings.txt"));
 	push(@ratings, get_lines_from_file("special_ratings.txt"));
 	@stockratings{@ratings} = ();
 }
@@ -54,8 +54,6 @@ while (my $line = <$info>)  {
 	my $xxl_tonnage = $cols[8];
 
 	my $category = "basic";
-	
-	#next unless (exists $stockratings{$rating});
 
 	my $rating_string = sprintf('%03s', $rating);
 	print($rating_string, " ");
@@ -71,6 +69,8 @@ while (my $line = <$info>)  {
 	
 	my $hs_free_tonnage = $ehs_count * 1;
 	my $heat_dissipation = min($total, 10) * 3;
+	
+	my $tag = exists $stockratings{$rating} ? "component_type_stock" : "BLACKLISTED";
 	
 	push(@overview_rows, {
 			rating => $rating,
@@ -88,12 +88,12 @@ while (my $line = <$info>)  {
 		
 		my $engine_cost = int($rating * $rating * $rating * $rating / 10000 / 10000) * 10000;
 		
-		my $bonus = " ";
+		my $bonus = "";
 		if ($ahs_count > 0) {
-			$bonus = "+ $ahs_count HS Cap"
+			$bonus = "\"EngineHSCap: $ahs_count\""
 		}
 		if ($hs_free_tonnage > 0) {
-			$bonus = "- $hs_free_tonnage HS ton"
+			$bonus = "\"EngineHSFreeExt: $hs_free_tonnage\""
 		}
 		
 		my $engine = {
@@ -103,8 +103,8 @@ while (my $line = <$info>)  {
 			TONNAGE => $std_tonnage + $gyro_tons,
 			COST => $engine_cost + $gyro_cost,
 			ICON => next_icon(),
-			BONUSA => $bonus,
-			BONUSB => ""
+			BONUS => $bonus,
+			TAG => $tag
 		};
 
 		my $json = $tache->render("${prefix}_template.json", $engine);

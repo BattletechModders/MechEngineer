@@ -1,5 +1,10 @@
 {
 	"Custom": {
+		"BonusDescriptions": {
+			"Bonuses": [
+				"CoolingSystemDHS"
+			]
+		},
 		"Cooling": {
 			"HeatSinkDefId": "Gear_HeatSink_Generic_Double"
 		},
@@ -24,13 +29,13 @@
         "Purchasable" : true,
         "Manufacturer" : "Lostech",
         "Model" : "Cooling System",
-        "UIName" : "DHS Cooling",
+        "UIName" : "Cooling (DHS)",
         "Id" : "emod_kit_dhs",
-        "Name" : "DHS Cooling",
-        "Details" : "A Heat Sink Cooling System provides heat dissipation for the engine and compatible extension points for additional heat sinks throughout the mech.",
+        "Name" : "Cooling (DHS)",
+        "Details" : "A Mech' <b>Cooling System</b> provides heat dissipation for components inside the mech and compatible extension points for additional heat sinks throughout the mech. It differs from the closed cooling system of the engine.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
-    "BonusValueA" : " 2 x Cooling",
+    "BonusValueA" : "",
     "BonusValueB" : "",
     "ComponentType" : "HeatSink",
     "ComponentSubType" : "Heatsink",

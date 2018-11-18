@@ -1,7 +1,7 @@
 {
 	"Custom": {
 		"EngineHeatBlock": {
-			"HeatSinkCount": 5
+			"HeatSinkCount": 0
 		},
 		"WorkOrderCosts": {
 			"Default": {
@@ -15,29 +15,30 @@
 		},
 		"Category" : { 
 			"CategoryID" : "EngineHeatBlock" 
-		}
+		},
+		"Flags" : { "flags" : [ "engine_part", "default", "not_broken"  ] }
 	},
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : 1,
+        "Cost" : 0,
         "Rarity" : 0,
-        "Purchasable" : true,
+        "Purchasable" : false,
         "Manufacturer" : "Vlar",
-        "Model" : "Engine Heat Block",
-        "UIName" : "Heat Block + 5",
-        "Id" : "emod_heat_block_5",
-        "Name" : "Engine Heat Block + 5",
-        "Details" : "An engine heat block is a containment vessel for the engine internal heat sinks.",
+        "Model" : "Engine Cooling System",
+        "UIName" : "E-Cooling",
+        "Id" : "emod_engine_cooling",
+        "Name" : "E-Cooling",
+        "Details" : "The regenerative cooling system of an engine uses waste heat to generate power and is part of the Mech' cooling system. The engines integral heat sinks (a.k.a free heat sinks) are not common Mech' heat sinks and use up less volume.",
         "Icon" : "uixSvgIcon_equipment_Heatsink"
     },
     "BonusValueA" : " ",
-    "BonusValueB" : "+ 5 HS",
+    "BonusValueB" : " ",
     "ComponentType" : "HeatSink",
     "ComponentSubType" : "Heatsink",
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
     "InventorySize" : 1,
-    "Tonnage" : 5,
+    "Tonnage" : 0,
     "AllowedLocations" : "CenterTorso",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,
