@@ -99,7 +99,6 @@
     <Compile Include="Features\MechLabSlots\Patches\MechLabItemSlotElement_OnPointerEnter_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabItemSlotElement_OnPointerExit_Patch.cs" />
     <Compile Include="Features\Descriptions\Patches\MechLabPanel_CreateMechComponentItem_Patch2.cs" />
-    <Compile Include="Features\TagRestrictions\TagRestrictions.cs" />
     <Compile Include="Features\ComponentExplosions\CASEComponent.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosionHandler.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosion.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="Features\MechLabSlots\GUILogUtils.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_SetData_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_LoadMech_Patch.cs" />
-    <Compile Include="Features\TagRestrictions\TagRestrictionsHandler.cs" />
     <Compile Include="Helper\MechExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_DamageLocation_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\AmmunitionBox_DamageComponent_Patch.cs" />
@@ -119,9 +117,9 @@
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChanges.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_CheckForHeatDamage_Patch.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_InitEffectStats_Patch2.cs" />
-    <Compile Include="Misc\CCValidationAdapter.cs" />
     <Compile Include="Engine\Handler\EngineValidation.cs" />
     <Compile Include="Features\Descriptions\IAdjustTooltip.cs" />
+    <Compile Include="Misc\CCValidationAdapter.cs" />
     <Compile Include="Misc\LogManager.cs" />
     <Compile Include="Features\AutoFix\ArmorHandler.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />

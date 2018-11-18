@@ -39,14 +39,11 @@ namespace MechEngineer
 
         public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
 
-        public bool TagRestrictionsValidateDropEnabled = false;
-        public bool TagRestrictionsUseDescriptionIds = true;
         public TagRestrictions[] TagRestrictions = {
             new TagRestrictions
             {
-                Tag = "ExampleTag",
-                IncompatibleTags = new[] {"ExampleIncompatibleTag"},
-                MoreTagRestrictionsFrom = new[] {"OtherTag"},
+                Tag = "CASE",
+                IncompatibleTags = new[] {"CASE2"}
             }
         };
 
@@ -648,7 +645,6 @@ namespace MechEngineer
                 Name = "CASE",
                 displayName = "CASE",
                 MaxEquipedPerLocation = 1,
-                Forbidden = new [] {"CASE2"},
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CASE" },
@@ -661,7 +657,6 @@ namespace MechEngineer
                 Name = "CASE2",
                 displayName = "CASE II",
                 MaxEquipedPerLocation = 1,
-                Forbidden = new [] {"CASE"},
                 DefaultCustoms = new Dictionary<string, object>
                 {
                     ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CASE" },
