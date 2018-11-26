@@ -17,14 +17,14 @@ namespace MechEngineer
             mod = new Mod(modDirectory);
             try
             {
+                mod.SaveSettings(settings, mod.SettingsDefaultsPath);
                 mod.LoadSettings(settings);
+                mod.SaveSettings(settings, mod.SettingsLastPath);
+
                 LogManager.Setup(mod.LogPath, settings.LogLevels.ToDictionary(x => x.Name, x => x.Level));
                 
                 mod.Logger.Log("settings loaded");
                 mod.Logger.LogDebug("debugging enabled");
-
-                mod.SaveSettings(settings, mod.DefaultsSettingsPath);
-
                 
                 mod.Logger.LogDebug("patching game");
 

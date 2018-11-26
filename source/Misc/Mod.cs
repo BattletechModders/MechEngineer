@@ -20,7 +20,8 @@ namespace MechEngineer
 
         public string SourcePath => Path.Combine(Directory, "source");
         public string SettingsPath => Path.Combine(Directory, "Settings.json");
-        public string DefaultsSettingsPath => Path.Combine(Directory, "Settings.defaults.json");
+        public string SettingsDefaultsPath => Path.Combine(Directory, "Settings.defaults.json");
+        public string SettingsLastPath => Path.Combine(Directory, "Settings.last.json");
         public string ModsPath => Path.GetDirectoryName(Directory);
         public string InfoPath => Path.Combine(Directory, "mod.json");
         public string LogPath => Path.Combine(Directory, "log.txt");
