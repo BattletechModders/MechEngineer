@@ -64,7 +64,7 @@ namespace MechEngineer
                 .OrderByDescending(x => x.Rating);
 
             var maxEngine = engineCoreDefs
-                .Select(coreDef => new Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, Enumerable.Empty<MechComponentRef>()))
+                .Select(coreDef => new Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, new List<MechComponentRef>()))
                 .FirstOrDefault(engine => !(engine.TotalTonnage > freeTonnage));
 
             if (maxEngine == null)

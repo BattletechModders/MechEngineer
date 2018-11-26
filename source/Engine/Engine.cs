@@ -13,13 +13,13 @@ namespace MechEngineer
             EngineHeatBlockDef engineHeatBlockDef,
             EngineCoreDef coreDef,
             Weights weights,
-            IEnumerable<MechComponentRef> externalHeatSinks)
+            List<MechComponentRef> externalHeatSinks)
         {
-            CoolingDef = coolingDef;
+            ExternalHeatSinks = externalHeatSinks;
             HeatBlockDef = engineHeatBlockDef;
             CoreDef = coreDef;
             Weights = weights;
-            ExternalHeatSinkCount = MatchingCount(externalHeatSinks, EngineHeatSinkDef.Def);
+            CoolingDef = coolingDef; // last as it also CalculateStats()
         }
 
         public static int MatchingCount(IEnumerable<MechComponentRef> heatSinks, HeatSinkDef heatSinkDef)
@@ -37,12 +37,21 @@ namespace MechEngineer
                 var id = _coolingDef.HeatSinkDefId;
                 var def = UnityGameInstance.BattleTechGame.DataManager.HeatSinkDefs.Get(id);
                 EngineHeatSinkDef = def.GetComponent<EngineHeatSinkDef>();
+                CalculateStats();
             }
         }
         
         internal EngineHeatBlockDef HeatBlockDef { get; set; }
         internal EngineCoreDef CoreDef { get; set; }
-        internal int ExternalHeatSinkCount { get; }
+
+        internal void CalculateStats()
+        {
+            ExternalHeatSinkCount = MatchingCount(ExternalHeatSinks, EngineHeatSinkDef.Def);
+            //Control.mod.Logger.LogDebug($"ExternalHeatSinkCount={ExternalHeatSinkCount} ExternalHeatSinks.Count={ExternalHeatSinks.Count} EngineHeatSinkDef.Id={EngineHeatSinkDef.Def.Description.Id}");
+        }
+
+        internal List<MechComponentRef> ExternalHeatSinks { get; }
+        internal int ExternalHeatSinkCount { get; private set; }
         internal int ExternalHeatSinkFreeCount => Mathf.Min(ExternalHeatSinkCount, CoreDef.ExternalHeatSinksFreeMaxCount);
         internal int ExternalHeatSinkAdditionalCount => ExternalHeatSinkCount - ExternalHeatSinkFreeCount;
 

@@ -25,8 +25,8 @@ namespace MechEngineer
         {
             return instructions
                 .MethodReplacer(
-                    AccessTools.Method(typeof(ChassisDef), "get_InitialTonnage"),
-                    AccessTools.Method(typeof(MechLabMechInfoWidget_CalculateTonnage_Patch), "OverrideInitialTonnage")
+                    AccessTools.Property(typeof(ChassisDef), nameof(ChassisDef.InitialTonnage)).GetGetMethod(),
+                    AccessTools.Method(typeof(MechLabMechInfoWidget_CalculateTonnage_Patch), nameof(OverrideInitialTonnage))
                 );
         }
 

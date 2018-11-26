@@ -93,10 +93,15 @@ namespace MechEngineer
         {
             var state = new BaseWeightState(mechDef);
 
-            return mechDef.Inventory
+            var tonnageChanges = mechDef.Inventory
                 .Select(r => r.Def.GetComponent<Weights>())
                 .Where(w => w != null)
                 .Sum(weights => CalculateWeightChanges(state, weights));
+
+            // WORKAROUND
+            // didn't add free heat sink tonnages to the actual cores, since RT doesn't either we fix it here
+            tonnageChanges -= state.Engine.ExternalHeatSinkFreeTonnage;
+            return tonnageChanges;
         }
 
         private static float CalculateWeightChanges(MechDef mechDef, Weights weights)
