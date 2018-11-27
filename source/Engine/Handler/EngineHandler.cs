@@ -36,18 +36,28 @@ namespace MechEngineer
             {
                 float currentTotalTonnage = 0, maxValue = 0;
                 MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
+                var maxFreeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
 
+                var initialTonnage = mechDef.Chassis.InitialTonnage;
                 var originalInitialTonnage = ChassisHandler.GetOriginalTonnage(mechDef.Chassis);
                 if (originalInitialTonnage.HasValue) // either use the freed up tonnage from the initial tonnage fix
                 {
-                    freeTonnage = originalInitialTonnage.Value - mechDef.Chassis.InitialTonnage;
+                    freeTonnage = originalInitialTonnage.Value - initialTonnage;
                     freeTonnage -= currentTotalTonnage - originalTotalTonnage;
+                    freeTonnage = Mathf.Min(freeTonnage, maxFreeTonnage); // if the original was overweight, make sure not to stay overweight
                 }
 
                 else // or use up available total tonnage
                 {
-                    freeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
+                    freeTonnage = maxFreeTonnage;
                 }
+
+                //Control.mod.Logger.LogDebug($"AutoFix {mechDef.Chassis.Description.Id}" +
+                //                            $" InitialTonnage={initialTonnage}" +
+                //                            $" originalInitialTonnage={originalInitialTonnage ?? 0}" +
+                //                            $" currentTotalTonnage={currentTotalTonnage}" +
+                //                            $" originalTotalTonnage={originalTotalTonnage}" +
+                //                            $" freeTonnage={freeTonnage}");
             }
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
