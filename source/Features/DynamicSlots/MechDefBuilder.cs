@@ -50,9 +50,49 @@ namespace MechEngineer
 
         private ChassisLocations AddSlots(int slotCount, ChassisLocations allowedLocations)
         {
-            return MechDefSlots.Locations
+            return GetLocations()
                 .Where(location => (location & allowedLocations) != 0)
                 .FirstOrDefault(location => AddSlotsToLocation(slotCount, location));
+        }
+
+        private IEnumerable<ChassisLocations> GetLocations()
+        {
+            yield return ChassisLocations.CenterTorso;
+
+            if (GetFreeSlots(ChassisLocations.LeftTorso) >= GetFreeSlots(ChassisLocations.RightTorso))
+            {
+                yield return ChassisLocations.LeftTorso;
+                yield return ChassisLocations.RightTorso;
+            }
+            else
+            {
+                yield return ChassisLocations.RightTorso;
+                yield return ChassisLocations.LeftTorso;
+            }
+
+            if (GetFreeSlots(ChassisLocations.LeftLeg) >= GetFreeSlots(ChassisLocations.RightLeg))
+            {
+                yield return ChassisLocations.LeftLeg;
+                yield return ChassisLocations.RightLeg;
+            }
+            else
+            {
+                yield return ChassisLocations.RightLeg;
+                yield return ChassisLocations.LeftLeg;
+            }
+
+            yield return ChassisLocations.Head;
+
+            if (GetFreeSlots(ChassisLocations.LeftArm) >= GetFreeSlots(ChassisLocations.RightArm))
+            {
+                yield return ChassisLocations.LeftArm;
+                yield return ChassisLocations.RightArm;
+            }
+            else
+            {
+                yield return ChassisLocations.RightArm;
+                yield return ChassisLocations.LeftArm;
+            }
         }
 
         private bool AddSlotsToLocation(int slotCount, ChassisLocations location, bool force = false)
