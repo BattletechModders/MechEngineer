@@ -29,9 +29,11 @@
 			"Path": "data/basic/shops/",
 			"ShouldMergeJSON": false
 		},
+		{ "Type": "MechDef", "Path": "data/basic/mech" },
+		{ "Type": "ChassisDef", "Path": "data/basic/chassis" },		
 		{
 			"Type": "ShopDef",
-			"Path": "data/basic/shops_test/",
+			"Path": "disabled data/basic/shops_test/",
 			"ShouldMergeJSON": false
 		},
 		{
