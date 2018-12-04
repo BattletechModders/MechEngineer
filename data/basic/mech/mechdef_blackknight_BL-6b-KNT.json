@@ -69,7 +69,7 @@
             "CurrentArmor": 130,
             "CurrentRearArmor": 40,
             "CurrentInternalStructure": 80,
-            "AssignedArmor": 120,
+            "AssignedArmor": 130,
             "AssignedRearArmor": 40
         },
         {
@@ -87,7 +87,7 @@
             "CurrentArmor": 130,
             "CurrentRearArmor": -1,
             "CurrentInternalStructure": 80,
-            "AssignedArmor": 120,
+            "AssignedArmor": 130,
             "AssignedRearArmor": -1
         },
         {
@@ -96,7 +96,7 @@
             "CurrentArmor": 130,
             "CurrentRearArmor": -1,
             "CurrentInternalStructure": 80,
-            "AssignedArmor": 120,
+            "AssignedArmor": 130,
             "AssignedRearArmor": -1
         }
     ],
