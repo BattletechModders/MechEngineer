@@ -12,6 +12,18 @@
         "Icon": "uixTxrIcon_highlander"
     },
  "FixedEquipment": [
+      {
+      "ComponentDefID": "Gear_Cockpit_SLDF_Custom",
+      "ComponentDefType": "Upgrade",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "Head",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
     {
       "ComponentDefID": "emod_kit_dhs",
       "ComponentDefType": "HeatSink",

@@ -1,0 +1,175 @@
+{
+    "Description": {
+        "Id": "starsystemdef_CatesHold",
+        "Name": "Cate's Hold",
+        "Details": "Cate's Hold was settled as a gambling and resort world, but soon became a critical logistical center for the Magistracy in the Reunification War. Recent prospectors have discovered caches of SLDF technology and radioactive ores, once more drawing interest to the planet.",
+        "Icon": ""
+    },
+    "Position": {
+        "x": -70.27,
+        "y": -475.66,
+        "z": 0
+    },
+    "Tags": {
+        "items": [
+            "planet_size_small",
+            "planet_climate_terran",
+            "planet_pop_small",
+            "planet_civ_periphery",
+            "planet_progress_3",
+            "planet_feature_moon01",
+            "planet_industry_manufacturing",
+            "planet_industry_recreation",
+            "planet_other_battlefield",
+            "planet_other_blackmarket",
+            "planet_other_moon",
+            "planet_other_starleague",
+            "planet_name_cateshold",
+            "planet_faction_magistracy"
+        ],
+        "tagSetSourceFile": ""
+    },
+    "SupportedBiomes": [
+        "lowlandsSpring",
+        "lowlandsFall",
+        "highlandsSpring",
+        "highlandsFall",
+        "desertParched",
+        "badlandsParched",
+        "polarFrozen",
+        "tundraFrozen",
+        "jungleTropical"
+    ],
+    "MapRequiredTags": {
+        "items": [],
+        "tagSetSourceFile": ""
+    },
+    "MapExcludedTags": {
+        "items": [],
+        "tagSetSourceFile": ""
+    },
+    "FuelingStation": true,
+    "JumpDistance": 3,
+    "Owner": "MagistracyOfCanopus",
+    "ShopRefreshRate": 0,
+    "ShopMaxInventory": 0,
+    "ShopMaxSpecials": 4,
+    "SystemInfluence": [
+        {
+            "Faction": "NoFaction",
+            "Influence": 0
+        },
+        {
+            "Faction": "Davion",
+            "Influence": 0
+        },
+        {
+            "Faction": "Liao",
+            "Influence": 0
+        },
+        {
+            "Faction": "Kurita",
+            "Influence": 0
+        },
+        {
+            "Faction": "Marik",
+            "Influence": 0
+        },
+        {
+            "Faction": "Steiner",
+            "Influence": 0
+        },
+        {
+            "Faction": "TaurianConcordat",
+            "Influence": 0
+        },
+        {
+            "Faction": "MagistracyOfCanopus",
+            "Influence": 0
+        },
+        {
+            "Faction": "AuriganDirectorate",
+            "Influence": 0
+        },
+        {
+            "Faction": "AuriganRestoration",
+            "Influence": 0
+        },
+        {
+            "Faction": "ComStar",
+            "Influence": 0
+        },
+        {
+            "Faction": "MercenaryReviewBoard",
+            "Influence": 0
+        },
+        {
+            "Faction": "AuriganPirates",
+            "Influence": 0
+        },
+        {
+            "Faction": "AuriganMercenaries",
+            "Influence": 0
+        }
+    ],
+    "TravelRequirements": [
+        {
+            "Scope": "Company",
+            "RequirementTags": {
+                "items": [
+                    "map_travel_3"
+                ],
+                "tagSetSourceFile": ""
+            },
+            "ExclusionTags": {
+                "items": [],
+                "tagSetSourceFile": ""
+            },
+            "RequirementComparisons": []
+        }
+    ],
+    "StarPosition": null,
+    "StarType": "M",
+    "Depletable": false,
+    "UseSystemRoninHiringChance": false,
+    "RoninHiringChance": 0,
+    "UseMaxContractOverride": false,
+    "MaxContractOverride": 0,
+    "SystemShopItems": [
+        "itemCollection_minor_MagistracyOfCanopus",
+        "itemCollection_shop_starleague",
+        "itemCollection_shop_industrial",
+        "itemCollection_shop_battlefield",
+        "itemCollection_shop_progression_med",
+        "itemCollection_shop_ss1"		
+    ],
+    "FactionShopOwner": "INVALID_UNSET",
+    "FactionShopItems": null,
+    "BlackMarketShopItems": [
+        "itemCollection_faction_AuriganPirates"
+    ],
+    "CoreSystemID": "starsystemdef_CatesHold",
+    "StartingSystemModes": [
+        "KAMEA_CAMPAIGN",
+        "CAREER",
+        "NONE"
+    ],
+    "DefaultDifficulty": -1,
+    "DifficultyList": [
+        -1,
+        2
+    ],
+    "DifficultyModes": [
+        "KAMEA_CAMPAIGN",
+        "CAREER"
+    ],
+    "ContractEmployers": [
+        "Liao",
+        "MagistracyOfCanopus"
+    ],
+    "ContractTargets": [
+        "AuriganPirates",
+        "Liao",
+        "MagistracyOfCanopus"
+    ]
+}
