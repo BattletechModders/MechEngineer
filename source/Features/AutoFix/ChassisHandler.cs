@@ -20,6 +20,8 @@ namespace MechEngineer
                 return;
             }
 
+            Control.mod.Logger.LogDebug("Auto fixing chassisDef=" + chassisDef.Description.Id);
+
             AutoFixChassisDef(chassisDef);
             AutoFixSlots(chassisDef);
         }
@@ -108,7 +110,7 @@ namespace MechEngineer
             }
 
             var newValue = change.Change(locationDef.InventorySlots);
-            if (newValue < 1)
+            if (!newValue.HasValue)
             {
                 return;
             }
