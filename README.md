@@ -136,6 +136,7 @@ The engine generator can be used to quickly add more engine ratings:
 ## Contributors
 
 * Aliencreature - ideas, lore and rules, item variants, testing
+* Colobos - ideas, lore and rules, item and mech balancing, testing
 * CptMoore - ideas, rules, coding, testing, core items
 * CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
 * Denadan - ideas, custom components lib, coding
