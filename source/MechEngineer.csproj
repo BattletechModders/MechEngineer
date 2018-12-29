@@ -145,10 +145,6 @@
     <Compile Include="Features\HardpointFix\utils\VHLUtils.cs" />
     <Compile Include="Features\HardpointFix\utils\WeaponComponentPrefabCalculator.cs" />
     <Compile Include="Helper\MechDefExtensions.cs" />
-    <Compile Include="Features\WorkOrderCosts\Patches\SimGameState_CreateComponentRepairWorkOrder_Patch.cs" />
-    <Compile Include="Features\WorkOrderCosts\WorkOrderCosts.cs" />
-    <Compile Include="Features\WorkOrderCosts\WorkOrderCostsHandler.cs" />
-    <Compile Include="Features\WorkOrderCosts\WorkOrderEntry_MechLabAdapter.cs" />
     <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
     <Compile Include="Features\CriticalHitStates\CriticalHitStatesHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
@@ -165,7 +161,6 @@
     <Compile Include="Features\CriticalHitStates\CriticalHitStates.cs" />
     <Compile Include="Features\Weights\Weights.cs" />
     <Compile Include="Misc\HarmonyExtensions.cs" />
-    <Compile Include="Misc\FormulaEvaluator.cs" />
     <Compile Include="Helper\IdentityHelper.cs" />
     <Compile Include="Helper\AdjustCompDefTonnageHelper.cs" />
     <Compile Include="Helper\AdjustCompDefInvSizeHelper.cs" />
@@ -190,7 +185,6 @@
     <Compile Include="Features\AutoFix\Patches\SkirmishSettings_Beta_LanceConfiguratorDataLoaded_Patch.cs" />
     <Compile Include="Engine\BTLoadFix\SkirmishSettings_Beta_LoadLanceConfiguratorData_Patch.cs" />
     <Compile Include="Engine\BTLoadFix\SkirmishMechBayPanel_RequestResources_Patch.cs" />
-    <Compile Include="Features\WorkOrderCosts\Patches\SimGameState_CreateComponentInstallWorkOrder_Patch.cs" />
     <Compile Include="Features\AutoFix\Patches\SimGameState_RespondToDefsLoadComplete_Patch.cs" />
     <Compile Include="Engine\Patches\StatTooltipData_SetHeatData_Patch.cs" />
     <Compile Include="Engine\Patches\StatTooltipData_SetMovementData_Patch.cs" />
