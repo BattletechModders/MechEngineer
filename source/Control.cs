@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using CustomComponents;
@@ -23,7 +24,7 @@ namespace MechEngineer
 
                 LogManager.Setup(mod.LogPath, settings.LogLevels.ToDictionary(x => x.Name, x => x.Level));
 
-                mod.Logger.Log($"version {Assembly.GetExecutingAssembly().GetName().Version}");
+                mod.Logger.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
                 mod.Logger.Log("settings loaded");
                 mod.Logger.LogDebug("debugging enabled");
                 
@@ -72,12 +73,23 @@ namespace MechEngineer
                 
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
-                mod.Logger.Log("Loaded " + mod.Name);
+                mod.Logger.Log("loaded " + mod.Name);
             }
             catch (Exception e)
             {
                 mod.Logger.LogError(e);
             }
+        }
+
+        private static string GetInformationalVersion(this Assembly assembly) {
+            var attributes = assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false);
+
+            if (attributes.Length == 0)
+            {
+                return "";
+            }
+
+            return ((AssemblyInformationalVersionAttribute)attributes[0]).InformationalVersion;
         }
     }
 }
