@@ -79,10 +79,11 @@ namespace MechEngineer
             }
 
             {
+                var bonusTemplate = Control.settings.BonusDescriptionsBonusTemplate;
+                var descriptionTemplate = Control.settings.BonusDescriptionsDescriptionTemplate;
                 var adapter = new DescriptionDefAdapter(Def.Description);
-                var bonuses = string.Join("\r\n", Descriptions.Select(x => x.Full).Where(x => x != null).Select(x => $" <indent=10%><line-indent=-5%><line-height=65%>{x}</line-height></line-indent></indent>").ToArray());
-                var title = Control.settings.BonusDescriptionsTooltipTitle;
-                adapter.Details = $"{title}:<b><color=#F79B26FF>\r\n{bonuses}</color></b>\r\n\r\n{adapter.Details}";
+                var bonuses = string.Join("", Descriptions.Select(x => x.Full).Where(x => x != null).Select(x => bonusTemplate.Replace("{{bonus}}", x)).ToArray());
+                adapter.Details = descriptionTemplate.Replace("{{bonuses}}", bonuses).Replace("{{originalDescription}}", adapter.Details);
             }
         }
 

@@ -51,7 +51,8 @@ namespace MechEngineer
 
         #region bonus descriptions
 
-        public string BonusDescriptionsTooltipTitle = "Traits"; // the title to use for the bonus section of tooltips
+        public string BonusDescriptionsBonusTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{bonus}}</line-height></line-indent></indent>\r\n";
+        public string BonusDescriptionsDescriptionTemplate = "Traits:<b><color=#F79B26FF>\r\n{{bonuses}}</color></b>\r\n{{originalDescription}}";
         public BonusDescriptionSettings[] BonusDescriptions = {
             new BonusDescriptionSettings
             {
