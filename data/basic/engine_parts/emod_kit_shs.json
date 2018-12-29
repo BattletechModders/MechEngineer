@@ -12,6 +12,9 @@
 		"Category" : { 
 			"CategoryID" : "Cooling" 
 		},
+		"Color": {
+			"UIColor": "DarkGray"
+		},
 		"Flags" : { "flags" : [ "ignore_damage", "default"  ] }
 	},
     "DissipationCapacity" : 0,
