@@ -1,0 +1,136 @@
+{
+	"TargetFile": "data/mech/mechdef_highlander_HGN-732b.json",
+	"Instructions": [
+		{
+			"JSONPath": "Locations[?(@.Location == 'Head')]",
+			"Action": "ObjectMerge",
+			"Value": {
+				"CurrentArmor": 45,
+				"AssignedArmor": 45
+			}
+		},
+		{
+			"JSONPath": "Locations[?(@.Location == 'LeftArm')]",
+			"Action": "ObjectMerge",
+			"Value": {
+				"CurrentArmor": 150,
+				"AssignedArmor": 150
+			}
+		},
+		{
+			"JSONPath": "Locations[?(@.Location == 'LeftTorso')]",
+			"Action": "ObjectMerge",
+			"Value": {
+				"CurrentArmor": 160,
+				"CurrentRearArmor": 70,
+				"AssignedArmor": 160,
+				"AssignedRearArmor": 70
+			}
+		},
+		{
+			"JSONPath": "Locations[?(@.Location == 'CenterTorso')]",
+			"Action": "ObjectMerge",
+			"Value": {
+				"CurrentArmor": 210,
+				"CurrentRearArmor": 80,
+				"AssignedArmor": 210,
+				"AssignedRearArmor": 80
+			}
+		},
+		{
+			"JSONPath": "Locations[?(@.Location == 'RightTorso')]",
+			"Action": "ObjectMerge",
+			"Value": {
+				"CurrentArmor": 160,
+				"CurrentRearArmor": 70,
+				"AssignedArmor": 160,
+				"AssignedRearArmor": 70
+			}
+		},
+		{
+			"JSONPath": "Locations[?(@.Location == 'RightArm')]",
+			"Action": "ObjectMerge",
+			"Value": {
+				"CurrentArmor": 150,
+				"AssignedArmor": 150
+			}
+		},
+		{
+			"JSONPath": "Locations[?(@.Location == 'LeftLeg')]",
+			"Action": "ObjectMerge",
+			"Value": {
+				"CurrentArmor": 190,
+				"AssignedArmor": 190
+			}
+		},
+		{
+			"JSONPath": "Locations[?(@.Location == 'RightLeg')]",
+			"Action": "ObjectMerge",
+			"Value": {
+				"CurrentArmor": 190,
+				"AssignedArmor": 190
+			}
+		},
+		{
+			"JSONPath": "inventory",
+			"Action": "ArrayConcat",
+			"Value": [
+				{
+					"MountedLocation": "CenterTorso",
+					"ComponentDefID": "emod_engine_270",
+					"SimGameUID": null,
+					"ComponentDefType": "HeatSink",
+					"HardpointSlot": -1,
+					"GUID": null,
+					"DamageLevel": "Functional",
+					"prefabName": null,
+					"hasPrefabName": false
+				},
+				{
+					"MountedLocation": "CenterTorso",
+					"ComponentDefID": "emod_engineslots_std_center",
+					"SimGameUID": null,
+					"ComponentDefType": "HeatSink",
+					"HardpointSlot": -1,
+					"GUID": null,
+					"DamageLevel": "Functional",
+					"prefabName": null,
+					"hasPrefabName": false
+				},	
+				{
+					"MountedLocation": "CenterTorso",
+					"ComponentDefID": "emod_engine_cooling",
+					"SimGameUID": null,
+					"ComponentDefType": "HeatSink",
+					"HardpointSlot": -1,
+					"GUID": null,
+					"DamageLevel": "Functional",
+					"prefabName": null,
+					"hasPrefabName": false
+				},		
+				{
+					"MountedLocation": "CenterTorso",
+					"ComponentDefID": "emod_structureslots_standard",
+					"SimGameUID": null,
+					"ComponentDefType": "Upgrade",
+					"HardpointSlot": -1,
+					"GUID": null,
+					"DamageLevel": "Functional",
+					"prefabName": null,
+					"hasPrefabName": false
+				},	
+				{
+					"MountedLocation": "CenterTorso",
+					"ComponentDefID": "Gear_Gyro_Generic_Standard",
+					"SimGameUID": null,
+					"ComponentDefType": "Upgrade",
+					"HardpointSlot": -1,
+					"GUID": null,
+					"DamageLevel": "Functional",
+					"prefabName": null,
+					"hasPrefabName": false
+				}
+			]
+		}
+	]
+}

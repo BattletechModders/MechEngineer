@@ -103,7 +103,7 @@
         {
             "MountedLocation": "CenterTorso",
             "ComponentDefID": "emod_engine_160",
-            "SimGameUID": "/ihstype=Gear_HeatSink_Generic_Standard&Gear_HeatSink_Generic_Standard=0",
+            "SimGameUID": null,
             "ComponentDefType": "HeatSink",
             "HardpointSlot": -1,
             "GUID": null,

@@ -3,5 +3,55 @@
 		"ArmActuatorSupport" : {
 			"RightLimit" : "Lower"
 		}
-	}
+	},
+	"FixedEquipment": [
+		{
+			"ComponentDefID": "Gear_Cockpit_SLDF_Custom",
+			"ComponentDefType": "Upgrade",
+			"DamageLevel": "Functional",
+			"GUID": null,
+			"HardpointSlot": -1,
+			"IsFixed": true,
+			"MountedLocation": "Head",
+			"SimGameUID": "",
+			"hasPrefabName": false,
+			"prefabName": null
+		},
+		{
+			"ComponentDefID": "emod_kit_dhs",
+			"ComponentDefType": "HeatSink",
+			"DamageLevel": "Functional",
+			"GUID": null,
+			"HardpointSlot": -1,
+			"IsFixed": true,
+			"MountedLocation": "CenterTorso",
+			"SimGameUID": "",
+			"hasPrefabName": false,
+			"prefabName": null
+		},
+		{
+			"ComponentDefID": "emod_armorslots_ferrosfibrous",
+			"ComponentDefType": "Upgrade",
+			"DamageLevel": "Functional",
+			"GUID": null,
+			"HardpointSlot": -1,
+			"IsFixed": true,
+			"MountedLocation": "CenterTorso",
+			"SimGameUID": "",
+			"hasPrefabName": false,
+			"prefabName": null
+		},
+		{
+			"ComponentDefID": "Gear_TargetingTrackingSystem_Hartford_S2000",
+			"ComponentDefType": "Upgrade",
+			"DamageLevel": "Functional",
+			"GUID": null,
+			"HardpointSlot": -1,
+			"IsFixed": true,
+			"MountedLocation": "CenterTorso",
+			"SimGameUID": "",
+			"hasPrefabName": false,
+			"prefabName": null
+		}
+	]
 }
