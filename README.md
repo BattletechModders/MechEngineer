@@ -135,6 +135,8 @@ The engine generator can be used to quickly add more engine ratings:
 
 ## Contributors
 
+Maintainer: CptMoore
+
 * Aliencreature - ideas, lore and rules, item variants, testing
 * Colobos - ideas, lore and rules, item and mech balancing, testing
 * CptMoore - ideas, rules, coding, testing, core items
