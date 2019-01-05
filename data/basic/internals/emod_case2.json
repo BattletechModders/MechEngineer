@@ -8,9 +8,9 @@
 		}
 	},
     "Description" : {
-        "Cost" : 100000,
+        "Cost" : 350000,
         "Rarity" : 0,
-        "Purchasable" : true,
+        "Purchasable" : false,
         "Manufacturer" : "Generic",
         "Model" : "Standard",
         "Id" : "emod_case2",

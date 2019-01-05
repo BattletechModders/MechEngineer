@@ -30,8 +30,18 @@
 			"ShouldMergeJSON": false
 		},
 		{
+			"Type": "MechDef",
+			"Path": "data/basic/mech/",
+			"ShouldMergeJSON": true
+		},
+		{
+			"Type": "ChassisDef",
+			"Path": "data/basic/chassis/",
+			"ShouldMergeJSON": true
+		},		
+		{
 			"Type": "ShopDef",
-			"Path": "data/basic/shops_test/",
+			"Path": "disabled data/basic/shops_test/",
 			"ShouldMergeJSON": false
 		},
 		{

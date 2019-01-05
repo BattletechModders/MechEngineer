@@ -17,15 +17,15 @@
 		},
 		"WorkOrderCosts": {
 			"Install": {
-				"TechCost": "1",
-				"CBillCost": "[[Chassis.Tonnage]]"
+				"TechCost": "0.4 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 40",
+				"CBillCost": "20000 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 40"
 			}
 		}
 	},
     "Description" : {
-        "Cost" : 0,
+        "Cost" : 250000,
         "Rarity" : 0,
-        "Purchasable" : true,
+        "Purchasable" : false,
         "Manufacturer" : "Lostech",
         "Model" : "Armor",
         "UIName" : "Ferro-Fibrous",

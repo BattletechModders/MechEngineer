@@ -16,7 +16,7 @@
 				"CBillCost": "0"
 			},
 			"Install": {
-				"TechCost": "1",
+				"TechCost": "1.2 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 40",
 				"CBillCost": "20000 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 40"
 			}
 		},
@@ -33,7 +33,7 @@
     "Description" : {
         "Cost" : 200000,
         "Rarity" : 0,
-        "Purchasable" : true,
+        "Purchasable" : false,
         "Manufacturer" : "Lostech",
         "Model" : "Extra-light",
         "UIName" : "XL Engine",

@@ -1,0 +1,177 @@
+{
+    "Description": {
+        "Id": "starsystemdef_Taurus",
+        "Name": "Taurus",
+        "Details": "The political and cultural capital of the Taurian Concordant, and the technological heart of the Periphery, this system is defended by a dangerous asteroid belt that makes it nearly impossible to approach without local support.",
+        "Icon": ""
+    },
+    "Position": {
+        "x": 192.81,
+        "y": -394.11,
+        "z": 0
+    },
+    "Tags": {
+        "items": [
+            "planet_size_medium",
+            "planet_climate_terran",
+            "planet_pop_large",
+            "planet_civ_innersphere",
+            "planet_progress_2a",
+            "planet_industry_agriculture",
+            "planet_industry_aquaculture",
+            "planet_industry_mining",
+            "planet_industry_manufacturing",
+            "planet_industry_recreation",
+            "planet_industry_research",
+            "planet_other_capital",
+            "planet_other_hub",
+            "planet_industry_rich",
+            "planet_other_factionhq_taurianconcordat",
+            "planet_name_taurus",
+            "planet_faction_taurian"
+        ],
+        "tagSetSourceFile": ""
+    },
+    "SupportedBiomes": [
+        "lowlandsSpring",
+        "lowlandsFall",
+        "highlandsSpring",
+        "highlandsFall",
+        "desertParched",
+        "badlandsParched",
+        "polarFrozen",
+        "tundraFrozen",
+        "jungleTropical"
+    ],
+    "MapRequiredTags": {
+        "items": [],
+        "tagSetSourceFile": ""
+    },
+    "MapExcludedTags": {
+        "items": [],
+        "tagSetSourceFile": ""
+    },
+    "FuelingStation": true,
+    "JumpDistance": 8,
+    "Owner": "TaurianConcordat",
+    "ShopRefreshRate": 0,
+    "ShopMaxInventory": 0,
+    "ShopMaxSpecials": 9,
+    "SystemInfluence": [
+        {
+            "Faction": "NoFaction",
+            "Influence": 0
+        },
+        {
+            "Faction": "Davion",
+            "Influence": 0
+        },
+        {
+            "Faction": "Liao",
+            "Influence": 0
+        },
+        {
+            "Faction": "Kurita",
+            "Influence": 0
+        },
+        {
+            "Faction": "Marik",
+            "Influence": 0
+        },
+        {
+            "Faction": "Steiner",
+            "Influence": 0
+        },
+        {
+            "Faction": "TaurianConcordat",
+            "Influence": 0
+        },
+        {
+            "Faction": "MagistracyOfCanopus",
+            "Influence": 0
+        },
+        {
+            "Faction": "AuriganDirectorate",
+            "Influence": 0
+        },
+        {
+            "Faction": "AuriganRestoration",
+            "Influence": 0
+        },
+        {
+            "Faction": "ComStar",
+            "Influence": 0
+        },
+        {
+            "Faction": "MercenaryReviewBoard",
+            "Influence": 0
+        },
+        {
+            "Faction": "AuriganPirates",
+            "Influence": 0
+        },
+        {
+            "Faction": "AuriganMercenaries",
+            "Influence": 0
+        }
+    ],
+    "TravelRequirements": [
+        {
+            "Scope": "Company",
+            "RequirementTags": {
+                "items": [
+                    "map_travel_2a"
+                ],
+                "tagSetSourceFile": ""
+            },
+            "ExclusionTags": {
+                "items": [],
+                "tagSetSourceFile": ""
+            },
+            "RequirementComparisons": []
+        }
+    ],
+    "StarPosition": null,
+    "StarType": "K",
+    "Depletable": false,
+    "UseSystemRoninHiringChance": false,
+    "RoninHiringChance": 0,
+    "UseMaxContractOverride": false,
+    "MaxContractOverride": 0,
+    "SystemShopItems": [
+        "itemCollection_major_TaurianConcordat",
+        "itemCollection_shop_industrial",
+        "itemCollection_shop_research",
+		"itemCollection_TaurusE"
+    ],
+    "FactionShopOwner": "TaurianConcordat",
+    "FactionShopItems": [
+        "itemCollection_faction_TaurianConcordat"
+    ],
+    "BlackMarketShopItems": null,
+    "CoreSystemID": "starsystemdef_Taurus",
+    "StartingSystemModes": [
+        "KAMEA_CAMPAIGN",
+        "CAREER",
+        "NONE"
+    ],
+    "DefaultDifficulty": 2,
+    "DifficultyList": [
+        2,
+        9
+    ],
+    "DifficultyModes": [
+        "KAMEA_CAMPAIGN",
+        "CAREER"
+    ],
+    "ContractEmployers": [
+        "Davion",
+        "TaurianConcordat",
+        "AuriganPirates"
+    ],
+    "ContractTargets": [
+        "AuriganPirates",
+        "Davion",
+        "TaurianConcordat"
+    ]
+}

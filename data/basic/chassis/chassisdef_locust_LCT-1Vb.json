@@ -1,0 +1,379 @@
+{
+    "Description": {
+        "Cost": 8000000,
+        "Rarity": 0,
+        "Purchasable": false,
+        "Manufacturer": "",
+        "Model": "",
+        "UIName": "Locust",
+        "Id": "chassisdef_locust_LCT-1Vb",
+        "Name": "Locust",
+        "Details": "The Royal Locust introduced in 2610 mounts a Small Pulse Laser and a Medium Pulse Laser in each arm, while keeping the torso-mounted medium laser. It also uses a XL Engine, Endo Steel chassis, and Ferro-Fibrous armor. The heat-sinks have also been upgraded to Double Heat Sinks.",
+        "Icon": "uixTxrIcon_locust"
+    },
+ "FixedEquipment": [
+     {
+      "ComponentDefID": "Gear_Cockpit_SLDF_Custom",
+      "ComponentDefType": "Upgrade",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "Head",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
+    {
+      "ComponentDefID": "emod_kit_dhs",
+      "ComponentDefType": "HeatSink",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "CenterTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },	
+    {
+      "ComponentDefID": "emod_armorslots_ferrosfibrous",
+      "ComponentDefType": "Upgrade",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "CenterTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
+    {
+      "ComponentDefID": "emod_structureslots_endosteel",
+      "ComponentDefType": "Upgrade",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "CenterTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
+    {
+      "ComponentDefID": "Gear_Gyro_Friedhof_Sparrow",
+      "ComponentDefType": "Upgrade",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "CenterTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
+    {
+      "ComponentDefID": "emod_engineslots_xl_center",
+      "ComponentDefType": "HeatSink",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "CenterTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
+    {
+      "ComponentDefID": "Gear_HeatSink_Generic_Double",
+      "ComponentDefType": "HeatSink",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "LeftTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },	
+    {
+      "ComponentDefID": "Gear_HeatSink_Generic_Double",
+      "ComponentDefType": "HeatSink",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "LeftTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
+    {
+      "ComponentDefID": "Gear_HeatSink_Generic_Double",
+      "ComponentDefType": "HeatSink",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "RightTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
+    {
+      "ComponentDefID": "Gear_HeatSink_Generic_Double",
+      "ComponentDefType": "HeatSink",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": -1,
+      "IsFixed": true,
+      "MountedLocation": "RightTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },	
+    {
+      "ComponentDefID": "Weapon_Laser_MediumLaserPulse_2-Magna400P",
+      "ComponentDefType": "Weapon",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": 0,
+      "IsFixed": true,
+      "MountedLocation": "LeftArm",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },	
+    {
+      "ComponentDefID": "Weapon_Laser_SmallLaserPulse_2-Magna200P",
+      "ComponentDefType": "Weapon",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": 0,
+      "IsFixed": true,
+      "MountedLocation": "LeftArm",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },	
+    {
+      "ComponentDefID": "Weapon_Laser_MediumLaserPulse_2-Magna400P",
+      "ComponentDefType": "Weapon",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": 0,
+      "IsFixed": true,
+      "MountedLocation": "RightArm",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },	
+    {
+      "ComponentDefID": "Weapon_Laser_SmallLaserPulse_2-Magna200P",
+      "ComponentDefType": "Weapon",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": 0,
+      "IsFixed": true,
+      "MountedLocation": "RightArm",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },
+    {
+      "ComponentDefID": "Weapon_Laser_MediumLaser_3-Diverse_Optics",
+      "ComponentDefType": "Weapon",
+      "DamageLevel": "Functional",
+      "GUID": null,
+      "HardpointSlot": 0,
+      "IsFixed": true,
+      "MountedLocation": "CenterTorso",
+      "SimGameUID": "",
+      "hasPrefabName": false,
+      "prefabName": null
+    },	
+],		
+    "MovementCapDefID": "movedef_locust_LCT-1V",
+    "PathingCapDefID": "pathingdef_light",
+    "HardpointDataDefID": "hardpointdatadef_locust",
+    "PrefabIdentifier": "chrPrfMech_locustBase-001",
+    "PrefabBase": "locust",
+    "Tonnage": 20,
+    "InitialTonnage": 13,
+    "weightClass": "LIGHT",
+    "BattleValue": 1642000,
+    "Heatsinks": 0,
+    "TopSpeed": 210,
+    "TurnRadius": 90,
+    "MaxJumpjets": 8,
+    "Stability": 100,
+    "StabilityDefenses": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ],
+    "SpotterDistanceMultiplier": 1,
+    "VisibilityMultiplier": 1,
+    "SensorRangeMultiplier": 1,
+    "Signature": 0,
+    "Radius": 4,
+    "PunchesWithLeftArm": false,
+    "MeleeDamage": 15,
+    "MeleeInstability": 20,
+    "MeleeToHitModifier": 0,
+    "DFADamage": 25,
+    "DFAToHitModifier": 0,
+    "DFASelfDamage": 25,
+    "DFAInstability": 25,
+    "Locations": [
+        {
+            "Location": "Head",
+            "Hardpoints": [],
+            "Tonnage": 0,
+            "InventorySlots": 1,
+            "MaxArmor": 45,
+            "MaxRearArmor": -1,
+            "InternalStructure": 16
+        },
+        {
+            "Location": "LeftArm",
+            "Hardpoints": [
+                {
+                    "WeaponMount": "Energy",
+                    "Omni": false
+                },
+                {
+                    "WeaponMount": "AntiPersonnel",
+                    "Omni": false
+                }
+            ],
+            "Tonnage": 0,
+            "InventorySlots": 8,
+            "MaxArmor": 30,
+            "MaxRearArmor": -1,
+            "InternalStructure": 15
+        },
+        {
+            "Location": "LeftTorso",
+            "Hardpoints": [],
+            "Tonnage": 0,
+            "InventorySlots": 10,
+            "MaxArmor": 50,
+            "MaxRearArmor": 25,
+            "InternalStructure": 25
+        },
+        {
+            "Location": "CenterTorso",
+            "Hardpoints": [
+                {
+                    "WeaponMount": "Energy",
+                    "Omni": false
+                }
+            ],
+            "Tonnage": 0,
+            "InventorySlots": 4,
+            "MaxArmor": 60,
+            "MaxRearArmor": 30,
+            "InternalStructure": 30
+        },
+        {
+            "Location": "RightTorso",
+            "Hardpoints": [],
+            "Tonnage": 0,
+            "InventorySlots": 10,
+            "MaxArmor": 50,
+            "MaxRearArmor": 25,
+            "InternalStructure": 25
+        },
+        {
+            "Location": "RightArm",
+            "Hardpoints": [
+                {
+                    "WeaponMount": "Energy",
+                    "Omni": false
+                },
+                {
+                    "WeaponMount": "AntiPersonnel",
+                    "Omni": false
+                }
+            ],
+            "Tonnage": 0,
+            "InventorySlots": 8,
+            "MaxArmor": 30,
+            "MaxRearArmor": -1,
+            "InternalStructure": 15
+        },
+        {
+            "Location": "LeftLeg",
+            "Hardpoints": [],
+            "Tonnage": 0,
+            "InventorySlots": 4,
+            "MaxArmor": 40,
+            "MaxRearArmor": -1,
+            "InternalStructure": 20
+        },
+        {
+            "Location": "RightLeg",
+            "Hardpoints": [],
+            "Tonnage": 0,
+            "InventorySlots": 4,
+            "MaxArmor": 40,
+            "MaxRearArmor": -1,
+            "InternalStructure": 20
+        }
+    ],
+    "LOSSourcePositions": [
+        {
+            "x": 0,
+            "y": 8,
+            "z": 0
+        },
+        {
+            "x": 2,
+            "y": 8,
+            "z": -1
+        },
+        {
+            "x": -2,
+            "y": 8,
+            "z": -1
+        }
+    ],
+    "LOSTargetPositions": [
+        {
+            "x": 0,
+            "y": 8,
+            "z": 0
+        },
+        {
+            "x": 2,
+            "y": 8,
+            "z": -1
+        },
+        {
+            "x": -2,
+            "y": 8,
+            "z": -1
+        },
+        {
+            "x": 1.5,
+            "y": 3,
+            "z": 0
+        },
+        {
+            "x": -1.5,
+            "y": 3,
+            "z": 0
+        }
+    ],
+    "VariantName": "LCT-1Vb",
+    "ChassisTags": {
+        "items": [],
+        "tagSetSourceFile": ""
+    },
+    "StockRole": "Light Fire Support",
+    "YangsThoughts": "This locust is super crazy, Ferro armour Endo chassis topped with a XL engine and DHS. It's firepower is equally insane for something so small."
+}

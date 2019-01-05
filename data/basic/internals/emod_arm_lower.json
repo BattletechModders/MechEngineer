@@ -14,9 +14,9 @@
 		}
 	},
     "Description" : {
-        "Cost" : 0,
+        "Cost" : 20000,
         "Rarity" : 0,
-        "Purchasable" : false,
+        "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "Standard",
         "UIName" : "Arm Lower",

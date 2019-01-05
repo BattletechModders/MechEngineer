@@ -8,15 +8,10 @@ use List::Util qw[min max];
 use POSIX;
 use Mustache::Simple;
 
-my $table_file = 'engine_tables.txt';
+local $/ = "\r\n";
 
-my $tache = new Mustache::Simple(
-	throw => 1
-);
-
-open my $handle, '<', "icons.txt";
-chomp(my @icons = <$handle>);
-close $handle;
+my @engine_tonnages = get_table('engine_tables.txt');
+my %engine_values = map { $_->[0] => $_->[1] } get_table('engine_values.txt');
 
 my %stockratings;
 {
@@ -26,6 +21,14 @@ my %stockratings;
 	@stockratings{@ratings} = ();
 }
 
+my $tache = new Mustache::Simple(
+	throw => 1
+);
+
+open my $handle, '<', "icons.txt";
+chomp(my @icons = <$handle>);
+close $handle;
+
 my $icon = "uixSvgIcon_equipment_Heatsink";
 # useful to browse icons
 sub next_icon {
@@ -34,8 +37,6 @@ sub next_icon {
 	return $icon;
 }
 
-open my $info, $table_file or die "Could not open $table_file: $!";
-
 my $categories = {
 	"basic" => [],
 	"exotics" => []
@@ -43,15 +44,13 @@ my $categories = {
 
 my @overview_rows = ();
 
-my $header = <$info>;
-while (my $line = <$info>)  {
-	my @cols = split(' ', $line);
-	
-	my $rating = $cols[0];
-	my $std_tonnage = $cols[5];
-	my $light_tonnage = $cols[6];
-	my $xl_tonnage = $cols[7];
-	my $xxl_tonnage = $cols[8];
+foreach my $row_ref (@engine_tonnages) {
+	my @row = @{$row_ref};
+	my $rating = $row[0];
+	my $std_tonnage = $row[5];
+	my $light_tonnage = $row[6];
+	my $xl_tonnage = $row[7];
+	my $xxl_tonnage = $row[8];
 
 	my $category = "basic";
 
@@ -88,6 +87,10 @@ while (my $line = <$info>)  {
 		
 		my $engine_cost = int($rating * $rating * $rating * $rating / 10000 / 10000) * 10000;
 		
+		#my $total_cost = $engine_cost + $gyro_cost;
+		
+		my $total_cost = $engine_values{$rating};
+		
 		my $bonus = "";
 		if ($ahs_count > 0) {
 			$bonus = "\"EngineHSCap: $ahs_count\""
@@ -101,7 +104,7 @@ while (my $line = <$info>)  {
 			RATING => $rating,
 			RATING_STRING => $rating_string,
 			TONNAGE => $std_tonnage + $gyro_tons,
-			COST => $engine_cost + $gyro_cost,
+			COST => $total_cost,
 			ICON => next_icon(),
 			BONUS => $bonus,
 			TAG => $tag
@@ -116,8 +119,6 @@ while (my $line = <$info>)  {
 	
 	$generate_engine_sub->("emod_engine");
 }
-
-close $info;
 
 {
 	my $json = $tache->render("overview.html.mustache", { "rows" => \@overview_rows });
@@ -143,10 +144,22 @@ sub write_to_file {
 }
 
 sub get_lines_from_file {
-	local $/ = "\r\n";
 	my $filename = shift;
 	open my $handle, '<', $filename;
 	chomp(my @lines = <$handle>);
 	close $handle;
 	return @lines;
+}
+
+sub get_table {
+	my $filename = shift;
+	my @lines = get_lines_from_file($filename);
+	shift(@lines); # header
+	my @rows = ();
+	for my $line (@lines) {
+		chomp($line);
+		my @row = split(/\s+/, $line);
+		push(@rows, \@row);
+	}
+	return @rows;
 }
