@@ -24,6 +24,9 @@ namespace MechEngineer
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
         public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
 
+        public bool ArmorStructureRatioEnforcement = true;
+        public string[] ArmorStructureRatioEnforcementSkipMechDefs = { }; // mech defs to skip
+
         public bool SaveMechDefOnMechLabConfirm = false;
 
         public bool PerformanceEnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts (300+ item types)
