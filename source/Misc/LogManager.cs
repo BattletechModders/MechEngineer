@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using HBS.Logging;
 
 namespace MechEngineer
@@ -58,6 +60,21 @@ namespace MechEngineer
             {
                 SetupLogger(logger.Key);
             }
+        }
+    }
+
+    public static class LoggerExtensions
+    {
+        [Conditional("DEBUG")]
+        public static void FastDebug(this ILog logger, object message)
+        {
+            logger.LogDebug(message);
+        }
+
+        [Conditional("DEBUG")]
+        public static void FastDebug(this ILog logger, object message, Exception exception)
+        {
+            logger.LogDebug(message, exception);
         }
     }
 }
