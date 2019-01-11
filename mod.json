@@ -45,6 +45,11 @@
 			"ShouldMergeJSON": false
 		},		
 		{
+			"Type": "ItemCollectionDef",
+			"Path": "data/basic/itemCollections/",
+			"ShouldMergeJSON": false
+		},
+		{
 			"Type": "ShopDef",
 			"Path": "disabled data/basic/shops_test/",
 			"ShouldMergeJSON": false

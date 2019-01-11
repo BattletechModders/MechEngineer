@@ -1,0 +1,11 @@
+{
+    
+    "SystemShopItems": [
+	    "itemCollection_minor_MagistracyOfCanopus",
+        "itemCollection_shop_starleague",
+        "itemCollection_shop_industrial",
+        "itemCollection_shop_battlefield",
+        "itemCollection_shop_progression_med",
+        "itemCollection_shop_ss1"
+    ]
+}
