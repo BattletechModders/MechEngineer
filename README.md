@@ -1,16 +1,17 @@
 # MechEngineer
 BattleTech mod that adds engines and other components to mechs based on TT rules.
 
-## Requirements
+## Download
 
-either
-* install BattleTechModTools using [BattleTechModInstaller](https://github.com/CptMoore/BattleTechModTools/releases)
+Downloads can be found on [github](https://github.com/BattletechModders/MechEngineer/releases).
 
-or
-* install [BattleTechModLoader](https://github.com/Mpstark/BattleTechModLoader/releases) using [instructions here](https://github.com/Mpstark/BattleTechModLoader)
-* install [ModTek](https://github.com/Mpstark/ModTek/releases) using [instructions here](https://github.com/Mpstark/ModTek)
-* install [CustomComponents](https://github.com/Denadan/CustomComponents/releases) using [instructions here](https://github.com/Denadan/CustomComponents)
-* install [DynModLib](https://github.com/CptMoore/DynModLib/releases) using [instructions here](https://github.com/CptMoore/DynModLib)
+## Requirements and Installation
+
+* install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
+* install [CustomComponents](https://github.com/BattletechModders/CustomComponents/releases) using [instructions here](https://github.com/BattletechModders/CustomComponents)
+* install [AdjustedMechSalvage](https://github.com/Morphyum/AdjustedMechSalvage/releases) using [instructions here](https://github.com/Morphyum/AdjustedMechSalvage)
+
+Afterwards put the MechEngineer mod folder into the \BATTLETECH\Mods\ folder and launch the game.
 
 ## Suggested Mods
 
@@ -124,14 +125,9 @@ endo-steel | -
 clan endo-steel | yes
 endo-composite | yes
 
-Ratings are chosen by what the base game requires + JK chassis variants needed.
-The engine generator can be used to quickly add more engine ratings:
-* edit engine_generator/stock_std_ratings.txt
-* right click on folder -> git bash here -> type in "./generate.pl"
+### TODOs and Bug Reporting
 
-### TODO
-
-* see [issues list](https://github.com/CptMoore/MechEngineer/issues)
+* see [issues list](https://github.com/BattletechModders/MechEngineer/issues)
 
 ## Contributors
 
@@ -145,14 +141,6 @@ Maintainer: CptMoore
 * Gentleman Reaper - ideas, lore and rules, testing
 * LadyAlekto - ideas, lore and rules, testing, items
 * TotalMeltdown - ideas, lore and rules
-
-## Download
-
-Downloads can be found on [github](https://github.com/CptMoore/MechEngineer/releases).
-
-## Install
-
-After installing BTML, ModTek, CustomComponents and DynModLib, put the mod into the \BATTLETECH\Mods\ folder and launch the game.
 
 ## Development
 
