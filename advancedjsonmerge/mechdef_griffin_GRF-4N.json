@@ -1,5 +1,5 @@
 {
-	"TargetFile": "data/mech/mechdef_griffin_GRF-4N.json",
+	"TargetID": "mechdef_griffin_GRF-4N",
 	"Instructions": [
 		{
 			"JSONPath": "Locations[?(@.Location == 'Head')]",

@@ -1,5 +1,5 @@
 {
-	"TargetFile": "data/mech/mechdef_blackknight_BL-6b-KNT.json",
+	"TargetID": "mechdef_blackknight_BL-6b-KNT",
 	"Instructions": [
 		{
 			"JSONPath": "Locations[?(@.Location == 'Head')]",
