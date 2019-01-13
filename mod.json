@@ -1,7 +1,7 @@
 {
 	"Name": "MechEngineer",
-	"Author": "The Community",
-	"Website": "https://github.com/CptMoore/MechEngineer",
+	"Author": "Maintainer: CptMoore",
+	"Website": "https://github.com/BattletechModders/MechEngineer",
 
 	"Enabled": true,
 	"DependsOn": ["CustomComponents"],
@@ -30,11 +30,6 @@
 			"ShouldMergeJSON": false
 		},
 		{
-			"Type": "ShopDef",
-			"Path": "disabled data/basic/shops/",
-			"ShouldMergeJSON": false
-		},
-		{
 			"Type": "MechDef",
 			"Path": "data/basic/mech/",
 			"ShouldMergeJSON": false
@@ -50,38 +45,28 @@
 			"ShouldMergeJSON": false
 		},
 		{
-			"Type": "ShopDef",
-			"Path": "disabled data/basic/shops_test/",
-			"ShouldMergeJSON": false
-		},
-		{
 			"Type": "UpgradeDef",
 			"Path": "disabled data/test/upgrades/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "UpgradeDef",
-			"Path": "disabled data/exotics/internals/",
+			"Path": "disabled data/test/internals/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "HeatSinkDef",
-			"Path": "disabled data/exotics/heatsinks/",
+			"Path": "disabled data/test/heatsinks/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "HeatSinkDef",
-			"Path": "disabled data/exotics/engines/",
+			"Path": "disabled data/test/engines/",
 			"ShouldMergeJSON": false
 		},
 		{
 			"Type": "HeatSinkDef",
-			"Path": "disabled data/exotics/engine_parts/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "ShopDef",
-			"Path": "disabled data/exotics/shops_test/",
+			"Path": "disabled data/test/engine_parts/",
 			"ShouldMergeJSON": false
 		},
 	]
