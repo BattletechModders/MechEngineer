@@ -514,7 +514,7 @@ namespace MechEngineer
                     ["Color"] = new Dictionary<string, object>{ ["UIColor"] = "ArmorDamaged" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 0 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_armorslots_standard", ["Location"] = "CenterTorso" },
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "no_salvage"} },
                 }
             },
             new CategoryDescriptor
@@ -530,7 +530,7 @@ namespace MechEngineer
                     ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder1" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 1 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_structureslots_standard", ["Location"] = "CenterTorso" },
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "no_salvage"} },
                 }
             },
             new CategoryDescriptor
@@ -545,7 +545,7 @@ namespace MechEngineer
                     ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder2" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 2 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_kit_shs", ["Location"] = "CenterTorso" },
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage"} },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"ignore_damage", "no_salvage"} },
                 }
             },
             new CategoryDescriptor
@@ -575,7 +575,7 @@ namespace MechEngineer
                     ["InventorySorter"] = new Dictionary<string, object>{ ["SortKey"] = "CzOrder4" },
                     ["Sorter"] = new Dictionary<string, object>{ ["Order"] = 4 },
                     ["Replace"] = new Dictionary<string, object>{ ["ComponentDefId"] = "emod_engineslots_std_center", ["Location"] = "CenterTorso" },
-                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken"} },
+                    ["Flags"] = new Dictionary<string, object>{ ["Flags"] = new List<string>{"engine_part", "not_broken", "no_salvage"} },
                 }
             },
             new CategoryDescriptor

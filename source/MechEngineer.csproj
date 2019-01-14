@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\EngineHeatBlockDef.cs" />
+    <Compile Include="Engine\Patches\Contract_GenerateSalvage_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
     <Compile Include="Features\ArmActuators\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />

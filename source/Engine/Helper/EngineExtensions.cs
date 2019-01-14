@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using CustomComponents;
 
@@ -26,6 +27,11 @@ namespace MechEngineer
         internal static bool IsEnginePart(this MechComponentDef componentDef)
         {
             return componentDef.Is<Flags>(out var flags) && flags.IsSet("engine_part");
+        }
+
+        internal static bool HasDestroyedEngine(this MechDef mechDef)
+        {
+            return mechDef.Inventory.Any(x => x.DamageLevel == ComponentDamageLevel.Destroyed && x.Is<EngineCoreDef>());
         }
     }
 }

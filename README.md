@@ -9,7 +9,6 @@ Downloads can be found on [github](https://github.com/BattletechModders/MechEngi
 
 * install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
 * install [CustomComponents](https://github.com/BattletechModders/CustomComponents/releases) using [instructions here](https://github.com/BattletechModders/CustomComponents)
-* install [AdjustedMechSalvage](https://github.com/Morphyum/AdjustedMechSalvage/releases) using [instructions here](https://github.com/Morphyum/AdjustedMechSalvage)
 
 Afterwards put the MechEngineer mod folder into the \BATTLETECH\Mods\ folder and launch the game.
 

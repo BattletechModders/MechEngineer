@@ -9,7 +9,10 @@
 				"TechCost": "[[Chassis.Tonnage]]/10",
 				"CBillCost": "[[Chassis.Tonnage]] * 1.1"
 			}
-		}	
+		},
+		"Flags": {
+			"Flags": ["not_broken", "no_salvage"]
+		}
 	},
 
     "StatName" : null,
