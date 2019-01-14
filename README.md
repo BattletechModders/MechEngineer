@@ -3,14 +3,17 @@ BattleTech mod that adds engines and other components to mechs based on TT rules
 
 ## Download
 
-Downloads can be found on [github](https://github.com/BattletechModders/MechEngineer/releases).
+Downloads of the latest release can be found on [github](https://github.com/BattletechModders/MechEngineer/releases).
 
 ## Requirements and Installation
 
+either install [RogueTech](https://www.nexusmods.com/battletech/mods/79) for the full MechEngineer experience
+
+or
+
 * install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
 * install [CustomComponents](https://github.com/BattletechModders/CustomComponents/releases) using [instructions here](https://github.com/BattletechModders/CustomComponents)
-
-Afterwards put the MechEngineer mod folder into the \BATTLETECH\Mods\ folder and launch the game.
+* install MechEngineer by putting it into the \BATTLETECH\Mods\ folder
 
 ## Suggested Mods
 
@@ -19,6 +22,24 @@ Use these mods to maximize enjoyment
 * [CBT Movement](https://github.com/McFistyBuns/CBTMovement) - movement reduces accuracy
 * [CBT Piloting](https://github.com/McFistyBuns/CBTPiloting) - mech can stumble by chance
 * [Pansar](https://github.com/hokvel/pansar) - applies armor ratio enforcement according to CBT rules
+
+## TODOs and Bug Reporting
+
+* see [issues list](https://github.com/BattletechModders/MechEngineer/issues)
+
+## Contributors
+
+Maintainer: CptMoore
+
+* adammartinez271828 - rounding logic
+* Aliencreature - ideas, lore and rules, item variants, testing
+* Colobos - ideas, lore and rules, item and mech balancing, testing
+* CptMoore - ideas, rules, coding, testing, core items
+* CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
+* Denadan - ideas, custom components lib, coding
+* Gentleman Reaper - ideas, lore and rules, testing
+* LadyAlekto - ideas, lore and rules, testing, items
+* TotalMeltdown - ideas, lore and rules
 
 ## Features
 
@@ -124,24 +145,29 @@ endo-steel | -
 clan endo-steel | yes
 endo-composite | yes
 
-### TODOs and Bug Reporting
+### HardpointFixMod
 
-* see [issues list](https://github.com/BattletechModders/MechEngineer/issues)
+Originally a standalone mod, it is now incorporated into MechEngineer.
 
-## Contributors
+- Fix bad visual loadout issues, sometimes the wrong or ugly looking loadout was shown, a new algorithm should improve upon this.
+  Sometimes attaching a PPC after having already attached many small lasers would hide the PPC, this should be fixed now.
+- Restrict weapon loadouts to what is supported by the mech model.
+  BattleTech has some of the best looking models due to MWO, however we never know what mechs support which model hardpoints and therefore we might mount weapons that can't be shown.
 
-Maintainer: CptMoore
+An example of how the weapon loadout restrictions feature work for the Highlander assault mech:
+The left torso has 2 missle hardpoint slots, however only one can mount an LRM20, the other is limited to LRM10. Without this mod you can mount an LRM20 also for the second slot, but it visually would only be showing up as LRM10. With this mod you can't mount the second LRM20 anymore, you have to take either an LRM10 or LRM5. Of course SRMs are still an option.
+The left arm is also limited to an LRM15 and you can't mount an LRM20 at all.
 
-* Aliencreature - ideas, lore and rules, item variants, testing
-* Colobos - ideas, lore and rules, item and mech balancing, testing
-* CptMoore - ideas, rules, coding, testing, core items
-* CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
-* Denadan - ideas, custom components lib, coding
-* Gentleman Reaper - ideas, lore and rules, testing
-* LadyAlekto - ideas, lore and rules, testing, items
-* TotalMeltdown - ideas, lore and rules
+There are currently the following configuration settings available:
 
-## Development
+Setting | Type | Default | Description
+--- | --- | --- | ---
+enforceHardpointLimits | bool | true | set this to false to deactivate the hardpoint limits in mechlab
+allowDefaultLoadoutWeapons | bool | true | always allow to reattach weapons the mech comes with by default
+allowLRMsInSmallerSlotsForAll | bool | true | set this to false so only mechs with a proper sized hardpoint can field an LRM20.
+allowLRMsInSmallerSlotsForMechs | string[] | default ["atlas"] | a list of mechs that can field larger LRM sizes even in smaller slots, even if allowLRMsInSmallerSlotsForAll is false.
+allowLRMsInLargerSlotsForAll | bool | true | allow smaller sized LRMs to be used in larger sized hardpoint slots. E.g. an LRM10 should fit into an LRM20 slot.
 
-* Use git
-* Use Visual Studio to compile the project
+#### Limitations
+
+- can't replace weapons by dragging another weapon ontop of it, you have to remove the weapon first and then add another one (you dont have to leave the mechlab for this to work)
