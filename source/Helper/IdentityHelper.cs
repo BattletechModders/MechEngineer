@@ -67,13 +67,11 @@ namespace MechEngineer
                 return;
             }
 
-            if(Control.settings.AutoFixUpgradeDefSkip.Contains(def.Description.Id))
+            if (Control.settings.AutoFixUpgradeDefSkip.Contains(def.Description.Id))
             {
-                Control.mod.Logger.LogDebug("PreProcess: skipped " + def.Description.Id);
                 return;
             }
 
-            Control.mod.Logger.LogDebug("PreProcess: Fixing " + def.Description.Id );
 
             // TODO: copy structure from standard object
 
@@ -85,69 +83,14 @@ namespace MechEngineer
                 values["Custom"] = custom;
             }
 
-            object create_new_category()
+            if (custom.ContainsKey("Category"))
             {
-                var category = new Dictionary<string, object>();
-                category["CategoryID"] = CategoryId;
-                return category;
+                return;
             }
 
-            // if category exists
-            if (custom.TryGetValue("Category", out var categoryObject))
-            {
-                // if single category
-                if (categoryObject is Dictionary<string, Object> catDictionary)
-                {
-                    // if correct category descreiption
-                    if (catDictionary.TryGetValue("CategoryID", out var catID) && catID is string strID)
-                    {
-                        //if not same category
-                        if (strID != CategoryId)
-                        {
-                            //turn to list and add new
-                            var list = new List<object>();
-                            list.Add(categoryObject);
-                            list.Add(create_new_category());
-                            custom["Category"] = list;
-                        }
-                    }
-                    //replace with correct category
-                    else
-                        custom["Category"] = create_new_category();
-                }
-                //if category list
-                else if (categoryObject is IEnumerable<object> catList)
-                {
-                    bool found = false;
-
-                    var itemObjects = catList as object[] ?? catList.ToArray();
-                    foreach (var item_object in itemObjects)
-                    {
-                        if (item_object is Dictionary<string, object> item_dict
-                            && item_dict.TryGetValue("CategoryID", out var catID)
-                            && catID is string strID
-                            && strID == CategoryId)
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-
-                    if (!found)
-                    {
-                        var list = new List<object>();
-                        list.Add(create_new_category());
-                        list.AddRange(itemObjects);
-                        custom["Category"] = list;
-                    }
-                }
-                else
-                    custom["Category"] = create_new_category();
-            }
-            else
-            {
-                custom["Category"] = create_new_category();
-            }
+            var category = new Dictionary<string, object>();
+            category["CategoryID"] = CategoryId;
+            custom["Category"] = category;
         }
     }
 
