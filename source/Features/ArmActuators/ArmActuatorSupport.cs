@@ -9,5 +9,10 @@ namespace MechEngineer
     {
         public ArmActuator.TypeDef LeftLimit = ArmActuator.TypeDef.Hand;
         public ArmActuator.TypeDef RightLimit = ArmActuator.TypeDef.Hand;
+
+        public override string ToString()
+        {
+            return $"ArmActuatorSupport: {LeftLimit}/{RightLimit}";
+        }
     }
 }

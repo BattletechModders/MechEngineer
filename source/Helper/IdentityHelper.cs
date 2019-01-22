@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using CustomComponents;
 
@@ -49,6 +50,8 @@ namespace MechEngineer
 
         public void PreProcess(object target, Dictionary<string, object> values)
         {
+
+
             if (!AutoAddCategoryIdIfMissing)
             {
                 return;
@@ -64,6 +67,12 @@ namespace MechEngineer
                 return;
             }
 
+            if (Control.settings.AutoFixUpgradeDefSkip.Contains(def.Description.Id))
+            {
+                return;
+            }
+
+
             // TODO: copy structure from standard object
 
             values.TryGetValue("Custom", out var customObject);
@@ -74,20 +83,14 @@ namespace MechEngineer
                 values["Custom"] = custom;
             }
 
-            custom.TryGetValue("Category", out var categoryObject);
-            var category = categoryObject as Dictionary<string, object>;
-            if (category == null)
-            {
-                category = new Dictionary<string, object>();
-                custom["Category"] = category;
-            }
-
-            if (category.ContainsKey("CategoryID"))
+            if (custom.ContainsKey("Category"))
             {
                 return;
             }
 
+            var category = new Dictionary<string, object>();
             category["CategoryID"] = CategoryId;
+            custom["Category"] = category;
         }
     }
 

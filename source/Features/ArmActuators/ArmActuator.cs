@@ -15,5 +15,10 @@ namespace MechEngineer
             Lower,
             Upper,
         }
+
+        public override string ToString()
+        {
+            return $"ArmActuator: {Type}+{(AccuracyBonus.HasValue ? AccuracyBonus.Value : 0f)}";
+        }
     }
 }
