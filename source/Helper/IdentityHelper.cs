@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using CustomComponents;
 
@@ -49,6 +50,7 @@ namespace MechEngineer
 
         public void PreProcess(object target, Dictionary<string, object> values)
         {
+
             if (!AutoAddCategoryIdIfMissing)
             {
                 return;
@@ -74,20 +76,69 @@ namespace MechEngineer
                 values["Custom"] = custom;
             }
 
-            custom.TryGetValue("Category", out var categoryObject);
-            var category = categoryObject as Dictionary<string, object>;
-            if (category == null)
+            object create_new_category()
             {
-                category = new Dictionary<string, object>();
-                custom["Category"] = category;
+                var category = new Dictionary<string, object>();
+                category["CategoryID"] = CategoryId;
+                return category;
             }
 
-            if (category.ContainsKey("CategoryID"))
+            // if category exists
+            if (custom.TryGetValue("Category", out var categoryObject))
             {
-                return;
-            }
+                // if single category
+                if (categoryObject is Dictionary<string, Object> catDictionary)
+                {
+                    // if correct category descreiption
+                    if (catDictionary.TryGetValue("CategoryID", out var catID) && catID is string strID)
+                    {
+                        //if not same category
+                        if (strID != CategoryId)
+                        {
+                            //turn to list and add new
+                            var list = new List<object>();
+                            list.Add(categoryObject);
+                            list.Add(create_new_category());
+                            custom["Category"] = list;
+                        }
+                    }
+                    //replace with correct category
+                    else
+                        custom["Category"] = create_new_category();
+                }
+                //if category list
+                else if (categoryObject is IEnumerable<object> catList)
+                {
+                    bool found = false;
 
-            category["CategoryID"] = CategoryId;
+                    var itemObjects = catList as object[] ?? catList.ToArray();
+                    foreach (var item_object in itemObjects)
+                    {
+                        if (item_object is Dictionary<string, object> item_dict
+                            && item_dict.TryGetValue("CategoryID", out var catID)
+                            && catID is string strID
+                            && strID == CategoryId)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        var list = new List<object>();
+                        list.Add(create_new_category());
+                        list.AddRange(itemObjects);
+                        custom["Category"] = list;
+                    }
+                }
+                else
+                    custom["Category"] = create_new_category();
+            }
+            else
+            {
+                custom["Category"] = create_new_category();
+            }
         }
     }
 
