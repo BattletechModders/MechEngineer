@@ -51,6 +51,7 @@ namespace MechEngineer
         public void PreProcess(object target, Dictionary<string, object> values)
         {
 
+
             if (!AutoAddCategoryIdIfMissing)
             {
                 return;
@@ -65,6 +66,14 @@ namespace MechEngineer
             {
                 return;
             }
+
+            if(Control.settings.AutoFixUpgradeDefSkip.Contains(def.Description.Id))
+            {
+                Control.mod.Logger.LogDebug("PreProcess: skipped " + def.Description.Id);
+                return;
+            }
+
+            Control.mod.Logger.LogDebug("PreProcess: Fixing " + def.Description.Id );
 
             // TODO: copy structure from standard object
 

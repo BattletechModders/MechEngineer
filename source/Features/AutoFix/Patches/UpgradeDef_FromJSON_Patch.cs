@@ -15,6 +15,7 @@ namespace MechEngineer
             {
                 if (Control.settings.AutoFixUpgradeDefSkip.Contains(__instance.Description.Id))
                 {
+                    Control.mod.Logger.LogDebug($"AutoFixer: {__instance.Description.Id} - skipped by options");
                     return;
                 }
                 ArmActuatorHandler.Shared.AdjustUpgradeDef(__instance);
