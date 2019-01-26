@@ -4,24 +4,33 @@ namespace MechEngineer
 {
     internal class StructureHandler : IAutoFixMechDef
     {
-        internal static StructureHandler Shared = new StructureHandler();
+        internal static MELazy<StructureHandler> Lazy = new MELazy<StructureHandler>();
+        internal static StructureHandler Shared => Lazy.Value;
 
         private readonly IdentityHelper identity;
         private readonly AutoFixMechDefHelper fixer;
 
-        private StructureHandler()
+        public StructureHandler()
         {
             identity = Control.settings.AutoFixStructureCategorizer;
 
-            fixer = new AutoFixMechDefHelper(
-                identity,
-                Control.settings.AutoFixMechDefStructureAdder
-            );
+            if (identity == null)
+            {
+                return;
+            }
+
+            if (Control.settings.AutoFixMechDefStructureAdder != null)
+            {
+                fixer = new AutoFixMechDefHelper(
+                    identity,
+                    Control.settings.AutoFixMechDefStructureAdder
+                );
+            }
         }
 
         public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
         {
-            fixer.AutoFixMechDef(mechDef, originalTotalTonnage);
+            fixer?.AutoFixMechDef(mechDef, originalTotalTonnage);
         }
     }
 }

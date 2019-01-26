@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleTech;
-using BattleTech.UI;
 using CustomComponents;
 
 namespace MechEngineer
@@ -9,26 +7,35 @@ namespace MechEngineer
     // this isn't yet leg actuators, but we still did reduce the legs size
     internal class LegUpgradeHandler : IAdjustUpgradeDef, IPreProcessor
     {
-        internal static LegUpgradeHandler Shared = new LegUpgradeHandler();
+        internal static MELazy<LegUpgradeHandler> Lazy = new MELazy<LegUpgradeHandler>();
+        internal static LegUpgradeHandler Shared => Lazy.Value;
         
         private readonly IdentityHelper identity;
         private readonly AdjustCompDefInvSizeHelper resizer;
 
-        private LegUpgradeHandler()
+        public LegUpgradeHandler()
         {
             identity = Control.settings.AutoFixLegUpgradesCategorizer;
 
-            resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixLegUpgradesSlotChange);
+            if (identity == null)
+            {
+                return;
+            }
+
+            if (Control.settings.AutoFixLegUpgradesSlotChange != null)
+            {
+                resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixLegUpgradesSlotChange);
+            }
         }
 
         public void PreProcess(object target, Dictionary<string, object> values)
         {
-            identity.PreProcess(target, values);
+            identity?.PreProcess(target, values);
         }
 
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
-            resizer.AdjustComponentDef(upgradeDef);
+            resizer?.AdjustComponentDef(upgradeDef);
         }
     }
 }
