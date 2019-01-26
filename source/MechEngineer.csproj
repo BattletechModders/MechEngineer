@@ -84,13 +84,13 @@
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructureSimple_Patch.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructure_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorHandler.cs" />
-    <Compile Include="Features\ChassisStatusEffects\Patches\Mech_InitStats_Patch.cs" />
+    <Compile Include="Features\ChassisQuirks\Patches\Mech_InitStats_Patch.cs" />
     <Compile Include="Features\Descriptions\BonusDescriptions.cs" />
     <Compile Include="Features\Descriptions\DescriptionDefAdapter.cs" />
     <Compile Include="Features\Descriptions\IAdjustInventoryElement.cs" />
     <Compile Include="Features\Descriptions\IAdjustSlotElement.cs" />
-    <Compile Include="Features\ChassisStatusEffects\ChassisQuirks.cs" />
-    <Compile Include="Features\ChassisStatusEffects\Patches\Mech_InitEffectStats_Patch3.cs" />
+    <Compile Include="Features\ChassisQuirks\ChassisQuirks.cs" />
+    <Compile Include="Features\ChassisQuirks\Patches\Mech_InitEffectStats_Patch3.cs" />
     <Compile Include="Features\Descriptions\MechComponentDefAdapter.cs" />
     <Compile Include="Features\Engine\BTLoadFix\SkirmishMechBayPanel_RequestResources_Patch.cs" />
     <Compile Include="Features\Engine\BTLoadFix\SkirmishSettings_Beta_LoadLanceConfiguratorData_Patch.cs" />
