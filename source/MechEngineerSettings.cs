@@ -29,8 +29,6 @@ namespace MechEngineer
 
         public bool SaveMechDefOnMechLabConfirm = false;
 
-        public bool PerformanceEnableAvailabilityChecks = true; // set this to false to have a faster mechlab experience on large engine counts (300+ item types)
-
         public string DefaultEngineHeatSinkId = "Gear_HeatSink_Generic_Standard"; // default heat sink type for engines without a kit
 
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
