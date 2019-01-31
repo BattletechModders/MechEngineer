@@ -59,17 +59,21 @@
 			"JSONPath": "Locations[?(@.Location == 'LeftLeg')]",
 			"Action": "ObjectMerge",
 			"Value": {
-				"CurrentArmor": 130,
-				"AssignedArmor": 130
+				"CurrentArmor": 140,
+				"AssignedArmor": 140
 			}
 		},
 		{
 			"JSONPath": "Locations[?(@.Location == 'RightLeg')]",
 			"Action": "ObjectMerge",
 			"Value": {
-				"CurrentArmor": 130,
-				"AssignedArmor": 130
+				"CurrentArmor": 140,
+				"AssignedArmor": 140
 			}
+		},
+		{
+			"JSONPath": "inventory[?(@.ComponentDefID == 'Gear_HeatSink_Generic_Double')]",
+			"Action": "Remove"
 		},
 		{
 			"JSONPath": "inventory",
@@ -107,7 +111,51 @@
 					"DamageLevel": "Functional",
 					"prefabName": null,
 					"hasPrefabName": false
-				}
+				},
+				{
+					"MountedLocation" : "LeftTorso",
+					"ComponentDefID" : "Gear_HeatSink_Generic_Double",
+					"SimGameUID" : "",
+					"ComponentDefType" : "HeatSink",
+					"HardpointSlot" : -1,
+					"GUID" : null,
+					"DamageLevel" : "Functional",
+					"prefabName" : null,
+					"hasPrefabName" : false
+				},
+				{
+					"MountedLocation" : "LeftTorso",
+					"ComponentDefID" : "Gear_HeatSink_Generic_Double",
+					"SimGameUID" : "",
+					"ComponentDefType" : "HeatSink",
+					"HardpointSlot" : -1,
+					"GUID" : null,
+					"DamageLevel" : "Functional",
+					"prefabName" : null,
+					"hasPrefabName" : false
+				},
+				{
+					"MountedLocation" : "RightTorso",
+					"ComponentDefID" : "Gear_HeatSink_Generic_Double",
+					"SimGameUID" : "",
+					"ComponentDefType" : "HeatSink",
+					"HardpointSlot" : -1,
+					"GUID" : null,
+					"DamageLevel" : "Functional",
+					"prefabName" : null,
+					"hasPrefabName" : false
+				},
+				{
+					"MountedLocation" : "RightTorso",
+					"ComponentDefID" : "Gear_HeatSink_Generic_Double",
+					"SimGameUID" : "",
+					"ComponentDefType" : "HeatSink",
+					"HardpointSlot" : -1,
+					"GUID" : null,
+					"DamageLevel" : "Functional",
+					"prefabName" : null,
+					"hasPrefabName" : false
+				},
 			]
 		}
 	]
