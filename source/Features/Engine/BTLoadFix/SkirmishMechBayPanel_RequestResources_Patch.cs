@@ -12,10 +12,10 @@ namespace MechEngineer
         {
             try
             {
-                __instance.dataManager.RequestAllResourcesOfType(BattleTechResourceType.HeatSinkDef);
-                __instance.dataManager.RequestAllResourcesOfType(BattleTechResourceType.UpgradeDef);
-                __instance.dataManager.RequestAllResourcesOfType(BattleTechResourceType.WeaponDef);
-                __instance.dataManager.RequestAllResourcesOfType(BattleTechResourceType.AmmunitionBoxDef);
+                //__instance.dataManager.RequestAllResourcesOfType(BattleTechResourceType.HeatSinkDef);
+                //__instance.dataManager.RequestAllResourcesOfType(BattleTechResourceType.UpgradeDef);
+                //__instance.dataManager.RequestAllResourcesOfType(BattleTechResourceType.WeaponDef);
+                //__instance.dataManager.RequestAllResourcesOfType(BattleTechResourceType.AmmunitionBoxDef);
             }
             catch (Exception e)
             {
