@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
@@ -12,10 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                //___uiManager.dataManager.RequestAllResourcesOfType(BattleTechResourceType.HeatSinkDef);
-                //___uiManager.dataManager.RequestAllResourcesOfType(BattleTechResourceType.UpgradeDef);
-                //___uiManager.dataManager.RequestAllResourcesOfType(BattleTechResourceType.WeaponDef);
-                //___uiManager.dataManager.RequestAllResourcesOfType(BattleTechResourceType.AmmunitionBoxDef);
+                BTLoadUtils.PreloadComponents(___uiManager.dataManager);
             }
             catch (Exception e)
             {
