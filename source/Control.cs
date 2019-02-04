@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using BattleTech;
 using CustomComponents;
 using Harmony;
 
@@ -82,6 +84,11 @@ namespace MechEngineer
             {
                 mod.Logger.LogError(e);
             }
+        }
+
+        public static void FinishedLoading(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        {
+            BonusDescriptions.Setup(customResources);
         }
 
         private static string GetInformationalVersion(this Assembly assembly) {

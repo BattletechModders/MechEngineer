@@ -9,7 +9,7 @@ using fastJSON;
 namespace MechEngineer
 {
     [CustomComponent("BonusDescriptions")]
-    public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltip, IAdjustInventoryElement, IAfterLoad
+    public partial class BonusDescriptions : SimpleCustomComponent, IAdjustTooltip, IAdjustInventoryElement, IAfterLoad
     {
         public string[] Bonuses { get; set; }
 
@@ -23,7 +23,7 @@ namespace MechEngineer
         public void AdjustInventoryElement(ListElementController_BASE_NotListView element)
         {
             var count = 0;
-            foreach (var description in Descriptions.Select(x => x.Long).Where(x => x != null).Take(2))
+            foreach (var description in descriptions.Select(x => x.Long).Where(x => x != null).Take(2))
             {
                 if (count == 0)
                 {
@@ -58,13 +58,13 @@ namespace MechEngineer
                 var args = split.Length >= 2 ? split[1].Split(',').Select(c => c.Trim()).ToArray() : new string[0];
 
                 var description = new BonusDescription(settings, args);
-                Descriptions.Add(description);
+                descriptions.Add(description);
             }
 
             {
                 var adapter = new MechComponentDefAdapter(Def);
                 var count = 0;
-                foreach (var description in Descriptions.Select(x => x.Short).Where(x => x != null).Take(2))
+                foreach (var description in descriptions.Select(x => x.Short).Where(x => x != null).Take(2))
                 {
                     if (count == 0)
                     {
@@ -82,20 +82,37 @@ namespace MechEngineer
                 var bonusTemplate = Control.settings.BonusDescriptionsBonusTemplate;
                 var descriptionTemplate = Control.settings.BonusDescriptionsDescriptionTemplate;
                 var adapter = new DescriptionDefAdapter(Def.Description);
-                var bonuses = string.Join("", Descriptions.Select(x => x.Full).Where(x => x != null).Select(x => bonusTemplate.Replace("{{bonus}}", x)).ToArray());
+                var bonuses = string.Join("", descriptions.Select(x => x.Full).Where(x => x != null).Select(x => bonusTemplate.Replace("{{bonus}}", x)).ToArray());
                 adapter.Details = descriptionTemplate.Replace("{{bonuses}}", bonuses).Replace("{{originalDescription}}", adapter.Details);
             }
         }
 
         [JsonIgnore]
-        private static Dictionary<string, MechEngineerSettings.BonusDescriptionSettings> Settings { get; } = Control.settings.BonusDescriptions.ToDictionary(x => x.Bonus);
+        private static Dictionary<string, BonusDescriptionSettings> Settings { get; set; } = new Dictionary<string, BonusDescriptionSettings>();
+
+
+        internal static void Setup(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        {
+            Settings = SettingsResourcesTools.Enumerate<BonusDescriptionSettings>("BonusDescriptions", customResources)
+                .ToDictionary(entry => entry.Bonus);
+        }
+        
+        internal class BonusDescriptionSettings
+        {
+#pragma warning disable 649
+            public string Bonus;
+            public string Short;
+            public string Long;
+            public string Full;
+#pragma warning restore 649
+        }
 
         [JsonIgnore]
-        private List<BonusDescription> Descriptions = new List<BonusDescription>();
+        private readonly List<BonusDescription> descriptions = new List<BonusDescription>();
 
         private class BonusDescription
         {
-            internal BonusDescription(MechEngineerSettings.BonusDescriptionSettings settings, string[] values)
+            internal BonusDescription(BonusDescriptionSettings settings, string[] values)
             {
                 Short = string.IsNullOrEmpty(settings.Short) ? null : string.Format(settings.Short, values);
                 Long = string.IsNullOrEmpty(settings.Long) ? null : string.Format(settings.Long, values);

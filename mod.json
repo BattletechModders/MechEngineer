@@ -7,11 +7,18 @@
 	"DependsOn": ["CustomComponents"],
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
-
+	
+	"CustomResourceTypes": ["BonusDescriptions"],
+	
 	"Manifest": [
 		{
 			"Type": "AdvancedJSONMerge",
 			"Path": "advancedjsonmerge",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "BonusDescriptions",
+			"Path": "data/basic/bonusDescriptions/",
 			"ShouldMergeJSON": false
 		},
 		{
