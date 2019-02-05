@@ -58,16 +58,6 @@ namespace MechEngineer
 
                 Validator.RegisterMechValidator(ArmActuatorHandler.Shared.CCValidation.ValidateMech, ArmActuatorHandler.Shared.CCValidation.ValidateMechCanBeFielded);
                 Validator.RegisterDropValidator(check: ArmActuatorHandler.Shared.CCValidation.ValidateDrop);
-
-                foreach (var categoryDescriptor in settings.Categories)
-                {
-                    CustomComponents.Control.AddCategory(categoryDescriptor);
-                }
-
-                foreach (var restrictions in settings.TagRestrictions)
-                {
-                    CustomComponents.Control.AddTagRestrictions(restrictions);
-                }
                 
                 mod.Logger.LogDebug("setting up mechdef auto fixers");
 

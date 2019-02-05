@@ -22,6 +22,16 @@
 			"ShouldMergeJSON": false
 		},
 		{
+			"Type": "CCCategories",
+			"Path": "data/basic/categories/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "CCTagRestrictions",
+			"Path": "data/basic/tagRestrictions/",
+			"ShouldMergeJSON": false
+		},
+		{
 			"Type": "UpgradeDef",
 			"Path": "data/basic/internals/",
 			"ShouldMergeJSON": false

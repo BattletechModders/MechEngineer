@@ -1,0 +1,276 @@
+{
+    "Settings" : [
+        {
+            "Name" : "Cockpit",
+            "DisplayName" : "Cockpit",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "Cockpit"
+                },
+                "Sorter" : {
+                    "Order" : 0
+                },
+                "Replace" : {
+                    "ComponentDefId" : "Gear_Cockpit_Generic_Standard",
+                    "Location" : "Head"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "Armor",
+            "DisplayName" : "Armor",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "CzOrder0"
+                },
+                "Color" : {
+                    "UIColor" : "ArmorDamaged"
+                },
+                "Sorter" : {
+                    "Order" : 0
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_armorslots_standard",
+                    "Location" : "CenterTorso"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "ignore_damage",
+                        "no_salvage"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "Structure",
+            "DisplayName" : "Structure",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "Color" : {
+                    "UIColor" : "OrangeHalf"
+                },
+                "InventorySorter" : {
+                    "SortKey" : "CzOrder1"
+                },
+                "Sorter" : {
+                    "Order" : 1
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_structureslots_standard",
+                    "Location" : "CenterTorso"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "ignore_damage",
+                        "no_salvage"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "Cooling",
+            "DisplayName" : "Cooling System",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "CzOrder2"
+                },
+                "Sorter" : {
+                    "Order" : 2
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_kit_shs",
+                    "Location" : "CenterTorso"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "ignore_damage",
+                        "no_salvage"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "Gyro",
+            "DisplayName" : "Gyro",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "CzOrder3"
+                },
+                "Sorter" : {
+                    "Order" : 3
+                },
+                "Replace" : {
+                    "ComponentDefId" : "Gear_Gyro_Generic_Standard",
+                    "Location" : "CenterTorso"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "EngineShield",
+            "DisplayName" : "Engine Shielding",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "CzOrder4"
+                },
+                "Sorter" : {
+                    "Order" : 4
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_engineslots_std_center",
+                    "Location" : "CenterTorso"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "engine_part",
+                        "not_broken",
+                        "no_salvage"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "EngineHeatBlock",
+            "DisplayName" : "Engine Heat Block",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "CzOrder5"
+                },
+                "Sorter" : {
+                    "Order" : 5
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_engine_cooling",
+                    "Location" : "CenterTorso"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "engine_part",
+                        "not_broken"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "EngineCore",
+            "DisplayName" : "Engine Core",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "CzOrder6"
+                },
+                "Sorter" : {
+                    "Order" : 6
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_engine_dummy",
+                    "Location" : "CenterTorso"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "engine_part",
+                        "not_broken"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "EngineSlots",
+            "DisplayName" : "Engine Slots",
+            "DefaultCustoms" : {
+                "Sorter" : {
+                    "Order" : 0
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "engine_part",
+                        "not_broken",
+                        "default"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "ArmActuator",
+            "DisplayName" : "Arm Actuator",
+            "MaxEquipedPerLocation" : 1,
+            "MinEquiped" : 2,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorArm"
+                },
+                "Sorter" : {
+                    "Order" : 0
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_arm_upper"
+                },
+                "ArmActuator" : {
+                    "AccuracyBonus" : -1,
+                    "Type" : "Hand"
+                }
+            }
+        },
+        {
+            "Name" : "LegUpgrade",
+            "DisplayName" : "Leg Upgrade",
+            "MaxEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorLeg"
+                }
+            }
+        },
+        {
+            "Name" : "CASE",
+            "DisplayName" : "CASE",
+            "MaxEquipedPerLocation" : 1,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "CASE"
+                },
+                "CASE" : {
+                    
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "ignore_damage"
+                    ]
+                }
+            }
+        }
+    ]
+}
