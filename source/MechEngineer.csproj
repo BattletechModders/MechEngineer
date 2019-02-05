@@ -95,7 +95,6 @@
     <Compile Include="Features\Descriptions\MechComponentDefAdapter.cs" />
     <Compile Include="Features\BTLoadFix\Patches\SkirmishMechBayPanel_RequestResources_Patch.cs" />
     <Compile Include="Features\BTLoadFix\Patches\SkirmishSettings_Beta_LoadLanceConfiguratorData_Patch.cs" />
-    <Compile Include="Misc\SettingsResourceTools.cs" />
     <Compile Include="Features\Engine\CoolingDef.cs" />
     <Compile Include="Features\Engine\Engine.cs" />
     <Compile Include="Features\Engine\EngineCoreDef.cs" />
