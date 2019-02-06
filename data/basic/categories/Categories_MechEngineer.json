@@ -222,6 +222,27 @@
             }
         },
         {
+            "Name" : "ArmShoulder",
+            "DisplayName" : "Shoulder",
+            "MaxEquipedPerLocation" : 1,
+            "MinEquiped" : 2,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorArm0"
+                },
+                "Sorter" : {
+                    "Order" : 0
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+                        "default"
+                    ]
+                }
+            }
+        },
+        {
             "Name" : "ArmActuator",
             "DisplayName" : "Arm Actuator",
             "MaxEquipedPerLocation" : 1,
@@ -229,10 +250,10 @@
             "AutoReplace" : true,
             "DefaultCustoms" : {
                 "InventorySorter" : {
-                    "SortKey" : "ActuatorArm"
+                    "SortKey" : "ActuatorArm1"
                 },
                 "Sorter" : {
-                    "Order" : 0
+                    "Order" : 1
                 },
                 "Replace" : {
                     "ComponentDefId" : "emod_arm_upper"
@@ -244,17 +265,83 @@
             }
         },
         {
-            "Name" : "LegActuator",
-            "DisplayName" : "Leg Actuator",
+            "Name" : "LegHip",
+            "DisplayName" : "Hip",
             "MaxEquipedPerLocation" : 1,
             "MinEquiped" : 2,
             "AutoReplace" : true,
             "DefaultCustoms" : {
                 "InventorySorter" : {
-                    "SortKey" : "ActuatorLeg"
+                    "SortKey" : "ActuatorLeg0"
                 },
                 "Sorter" : {
                     "Order" : 0
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+                        "default"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "LegUpperActuator",
+            "DisplayName" : "Upper Leg Actuator",
+            "MaxEquipedPerLocation" : 1,
+            "MinEquiped" : 2,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorLeg1"
+                },
+                "Sorter" : {
+                    "Order" : 1
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+                        "default"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "LegLowerActuator",
+            "DisplayName" : "Lower Leg Actuator",
+            "MaxEquipedPerLocation" : 1,
+            "MinEquiped" : 2,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorLeg2"
+                },
+                "Sorter" : {
+                    "Order" : 2
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+                        "default"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "LegFootActuator",
+            "DisplayName" : "Foot Actuator",
+            "MaxEquipedPerLocation" : 1,
+            "MinEquiped" : 2,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorLeg3"
+                },
+                "Sorter" : {
+                    "Order" : 3
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_leg_foot"
                 }
             }
         },

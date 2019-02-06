@@ -4,7 +4,15 @@
 		{ "CategoryID" : "Structure", "Type" : "Upgrade", "DefID" : "emod_structureslots_standard", "Location" : "CenterTorso" },
 		{ "CategoryID" : "Cockpit", "Type" : "Upgrade", "DefID" : "Gear_Cockpit_Generic_Standard", "Location" : "Head" },
 		{ "CategoryID" : "Gyro", "Type" : "Upgrade", "DefID" : "Gear_Gyro_Generic_Standard", "Location" : "CenterTorso" },
-		{ "CategoryID" : "LegActuator", "Type" : "Upgrade", "DefID" : "emod_leg_foot", "Location" : "LeftLeg", "AnyLocation" : false },
-		{ "CategoryID" : "LegActuator", "Type" : "Upgrade", "DefID" : "emod_leg_foot", "Location" : "RightLeg", "AnyLocation" : false },
+		{ "CategoryID" : "ArmShoulder", "Type" : "Upgrade", "DefID" : "emod_arm_shoulder", "Location" : "LeftArm", "AnyLocation" : false },
+		{ "CategoryID" : "ArmShoulder", "Type" : "Upgrade", "DefID" : "emod_arm_shoulder", "Location" : "RightArm", "AnyLocation" : false },
+		{ "CategoryID" : "LegHip", "Type" : "Upgrade", "DefID" : "emod_leg_hip", "Location" : "LeftLeg", "AnyLocation" : false },
+		{ "CategoryID" : "LegUpperActuator", "Type" : "Upgrade", "DefID" : "emod_leg_upper", "Location" : "LeftLeg", "AnyLocation" : false },
+		{ "CategoryID" : "LegLowerActuator", "Type" : "Upgrade", "DefID" : "emod_leg_lower", "Location" : "LeftLeg", "AnyLocation" : false },
+		{ "CategoryID" : "LegFootActuator", "Type" : "Upgrade", "DefID" : "emod_leg_foot", "Location" : "LeftLeg", "AnyLocation" : false },
+		{ "CategoryID" : "LegHip", "Type" : "Upgrade", "DefID" : "emod_leg_hip", "Location" : "RightLeg", "AnyLocation" : false },
+		{ "CategoryID" : "LegUpperActuator", "Type" : "Upgrade", "DefID" : "emod_leg_upper", "Location" : "RightLeg", "AnyLocation" : false },
+		{ "CategoryID" : "LegLowerActuator", "Type" : "Upgrade", "DefID" : "emod_leg_lower", "Location" : "RightLeg", "AnyLocation" : false },
+		{ "CategoryID" : "LegFootActuator", "Type" : "Upgrade", "DefID" : "emod_leg_foot", "Location" : "RightLeg", "AnyLocation" : false },
 	]
 }

@@ -1,9 +1,8 @@
 {
 	"Custom": {
 		"Category" : { 
-			"CategoryID" : "LegFootActuator" 
-		},
-		"Flags" : { "flags" : [ "default" ] }
+			"CategoryID" : "ArmShoulder" 
+		}
 	},
     "Description" : {
         "Cost" : 30000,
@@ -11,11 +10,11 @@
         "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "Standard",
-        "UIName" : "Foot",
-        "Id" : "emod_leg_foot",
-        "Name" : "Foot Actuator",
-        "Details" : "An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
-        "Icon" : "uixSvgIcon_equipment_ActuatorLeg"
+        "UIName" : "Shoulder",
+        "Id" : "emod_arm_shoulder",
+        "Name" : "Shoulder",
+        "Details" : "",
+        "Icon" : "uixSvgIcon_equipment_ActuatorArm"
     },
     "BonusValueA" : "",
     "BonusValueB" : "",

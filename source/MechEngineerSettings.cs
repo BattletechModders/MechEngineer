@@ -204,10 +204,10 @@ namespace MechEngineer
             AllowedLocations = ChassisLocations.Legs,
             ComponentType = ComponentType.Upgrade,
             Prefix = null, //"Gear_Actuator_";
-            CategoryId = "LegActuator",
+            CategoryId = "LegFootActuator",
             AutoAddCategoryIdIfMissing = true
         };
-        public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int> {From = 3, By = 1, FromIsMin = true};
+        public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int>  {From = 3, By = -2, FromIsMin = true, NewMin = 1};
 
         public string[] AutoFixChassisDefSkip = { };
 
