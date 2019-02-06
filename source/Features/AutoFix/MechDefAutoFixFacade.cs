@@ -43,34 +43,6 @@ namespace MechEngineer
 
             Add(new MechDefAutoFixCategory
             {
-                AutoFixMechDef = CockpitHandler.Shared,
-                AutoFixSetting = Control.settings.AutoFixMechDefCockpitAdder != null,
-                CompanyStatKey = "MechEngineer_AutoFixMechDefCockpit"
-            });
-
-            Add(new MechDefAutoFixCategory
-            {
-                AutoFixMechDef = GyroHandler.Shared,
-                AutoFixSetting = Control.settings.AutoFixMechDefGyroAdder != null,
-                CompanyStatKey = "MechEngineer_AutoFixMechDefGyro"
-            });
-
-            Add(new MechDefAutoFixCategory
-            {
-                AutoFixMechDef = ArmorHandler.Shared,
-                AutoFixSetting = Control.settings.AutoFixMechDefArmorAdder != null,
-                CompanyStatKey = "MechEngineer_AutoFixArmor"
-            });
-
-            Add(new MechDefAutoFixCategory
-            {
-                AutoFixMechDef = StructureHandler.Shared,
-                AutoFixSetting = Control.settings.AutoFixMechDefStructureAdder != null,
-                CompanyStatKey = "MechEngineer_AutoFixStructure"
-            });
-
-            Add(new MechDefAutoFixCategory
-            {
                 AutoFixMechDef = EngineHandler.Shared,
                 AutoFixSetting = Control.settings.AutoFixMechDefEngine,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefEngine"

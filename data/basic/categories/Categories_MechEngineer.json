@@ -157,7 +157,7 @@
         },
         {
             "Name" : "EngineHeatBlock",
-            "DisplayName" : "Engine Heat Block",
+            "DisplayName" : "Engine Cooling",
             "MaxEquiped" : 1,
             "MinEquiped" : 1,
             "AutoReplace" : true,
@@ -244,13 +244,17 @@
             }
         },
         {
-            "Name" : "LegUpgrade",
-            "DisplayName" : "Leg Upgrade",
-            "MaxEquiped" : 1,
+            "Name" : "LegActuator",
+            "DisplayName" : "Leg Actuator",
+            "MaxEquipedPerLocation" : 1,
+            "MinEquiped" : 2,
             "AutoReplace" : true,
             "DefaultCustoms" : {
                 "InventorySorter" : {
                     "SortKey" : "ActuatorLeg"
+                },
+                "Sorter" : {
+                    "Order" : 0
                 }
             }
         },

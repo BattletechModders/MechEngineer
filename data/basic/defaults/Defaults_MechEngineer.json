@@ -1,0 +1,10 @@
+{
+	"Settings" : [
+		{ "CategoryID" : "Armor", "Type" : "Upgrade", "DefID" : "emod_armorslots_standard", "Location" : "CenterTorso" },
+		{ "CategoryID" : "Structure", "Type" : "Upgrade", "DefID" : "emod_structureslots_standard", "Location" : "CenterTorso" },
+		{ "CategoryID" : "Cockpit", "Type" : "Upgrade", "DefID" : "Gear_Cockpit_Generic_Standard", "Location" : "Head" },
+		{ "CategoryID" : "Gyro", "Type" : "Upgrade", "DefID" : "Gear_Gyro_Generic_Standard", "Location" : "CenterTorso" },
+		{ "CategoryID" : "LegActuator", "Type" : "Upgrade", "DefID" : "emod_leg_foot", "Location" : "LeftLeg", "AnyLocation" : false },
+		{ "CategoryID" : "LegActuator", "Type" : "Upgrade", "DefID" : "emod_leg_foot", "Location" : "RightLeg", "AnyLocation" : false },
+	]
+}

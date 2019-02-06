@@ -40,6 +40,9 @@ namespace MechEngineer
 
         public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
 
+        public float? MechLabScale = 0.85f;
+        public float? MechLabPositionY = 40;
+
         #endregion
 
         #region bonus descriptions
@@ -147,7 +150,17 @@ namespace MechEngineer
         #region auto fixes
 
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
-        public string[] AutoFixUpgradeDefSkip = {"Gear_Cockpit_Generic_Small", "emod_arm_lower"}; // upgrades to not autofix
+        public string[] AutoFixUpgradeDefSkip =
+        {
+            "Gear_Cockpit_SLDF_Custom",
+            "Gear_Cockpit_Generic_Small",
+            "Gear_Cockpit_Generic_Standard",
+            "Gear_Gyro_Generic_Standard",
+            "emod_arm_upper",
+            "emod_arm_lower",
+            "emod_arm_hand",
+            "emod_leg_foot"
+        }; // upgrades to not autofix
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
         public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center"; // always assumes weight factor 1.0
@@ -162,12 +175,6 @@ namespace MechEngineer
             CategoryId = "Gyro", // required
             AutoAddCategoryIdIfMissing = true // adds category id to items matched by optional filters
         };
-        public AddHelper AutoFixMechDefGyroAdder = new AddHelper
-        {
-            ChassisLocation = ChassisLocations.CenterTorso,
-            ComponentDefId = "Gear_Gyro_Generic_Standard",
-            ComponentType = ComponentType.Upgrade,
-        };
         public ValueChange<int> AutoFixGyroSlotChange = new ValueChange<int> {From = 3, By = 1};
 
         public IdentityHelper AutoFixCockpitCategorizer = new IdentityHelper
@@ -178,14 +185,8 @@ namespace MechEngineer
             CategoryId = "Cockpit",
             AutoAddCategoryIdIfMissing = true
         };
-        public AddHelper AutoFixMechDefCockpitAdder = new AddHelper
-        {
-            ChassisLocation = ChassisLocations.Head,
-            ComponentDefId = "Gear_Cockpit_Generic_Standard",
-            ComponentType = ComponentType.Upgrade,
-        };
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
-        public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 1};
+        public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 5};
 
         public bool AutoFixMechDefArmActuator = true;
         public IdentityHelper AutoFixArmActuatorCategorizer = new IdentityHelper
@@ -196,42 +197,17 @@ namespace MechEngineer
             CategoryId = "ArmActuator",
             AutoAddCategoryIdIfMissing = true
         };
-        public ValueChange<int> AutoFixArmActuatorSlotChange = new ValueChange<int> {From = 2, By = 1};
+        public ValueChange<int> AutoFixArmActuatorSlotChange = new ValueChange<int> {From = 2, By = 2};
 
         public IdentityHelper AutoFixLegUpgradesCategorizer = new IdentityHelper
         {
             AllowedLocations = ChassisLocations.Legs,
             ComponentType = ComponentType.Upgrade,
             Prefix = null, //"Gear_Actuator_";
-            CategoryId = "LegUpgrade",
+            CategoryId = "LegActuator",
             AutoAddCategoryIdIfMissing = true
         };
-        public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int> {From = 3, By = -2, FromIsMin = true, NewMin = 1};
-
-        public IdentityHelper AutoFixArmorCategorizer = new IdentityHelper
-        {
-            CategoryId = "Armor",
-            AutoAddCategoryIdIfMissing = true
-        };
-        public AddHelper AutoFixMechDefArmorAdder = new AddHelper
-        {
-            ChassisLocation = ChassisLocations.CenterTorso,
-            ComponentDefId = "emod_armorslots_standard",
-            ComponentType = ComponentType.Upgrade,
-        };
-
-        public IdentityHelper AutoFixStructureCategorizer = new IdentityHelper
-        {
-            CategoryId = "Structure",
-            AutoAddCategoryIdIfMissing = true
-        };
-
-        public AddHelper AutoFixMechDefStructureAdder = new AddHelper
-        {
-            ChassisLocation = ChassisLocations.CenterTorso,
-            ComponentDefId = "emod_structureslots_standard",
-            ComponentType = ComponentType.Upgrade,
-        };
+        public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int> {From = 3, By = 1, FromIsMin = true};
 
         public string[] AutoFixChassisDefSkip = { };
 
@@ -250,17 +226,17 @@ namespace MechEngineer
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.LeftLeg,
-                Change = new ValueChange<int> {From = 4, By = -2}
+                Change = new ValueChange<int> {From = 4, By = 2}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.RightLeg,
-                Change = new ValueChange<int> {From = 4, By = -2}
+                Change = new ValueChange<int> {From = 4, By = 2}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.Head,
-                Change = new ValueChange<int> {From = 1, By = 2}
+                Change = new ValueChange<int> {From = 1, By = 5}
             },
             new ChassisSlotsChange
             {
@@ -270,12 +246,12 @@ namespace MechEngineer
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.LeftArm,
-                Change = new ValueChange<int> {From = 8, By = 3}
+                Change = new ValueChange<int> {From = 8, By = 4}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.RightArm,
-                Change = new ValueChange<int> {From = 8, By = 3}
+                Change = new ValueChange<int> {From = 8, By = 4}
             }
         };
         public class ChassisSlotsChange

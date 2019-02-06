@@ -31,6 +31,11 @@
 			"Path": "data/basic/tagRestrictions/",
 			"ShouldMergeJSON": false
 		},
+        {
+            "Type": "CCDefaults",
+            "Path": "data/basic/defaults/",
+            "ShouldMergeJSON": false
+        },
 		{
 			"Type": "UpgradeDef",
 			"Path": "data/basic/internals/",

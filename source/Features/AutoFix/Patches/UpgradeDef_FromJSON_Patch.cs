@@ -20,7 +20,7 @@ namespace MechEngineer
                 }
                 ArmActuatorHandler.Shared.AdjustUpgradeDef(__instance);
                 GyroHandler.Shared.AdjustUpgradeDef(__instance);
-                LegUpgradeHandler.Shared.AdjustUpgradeDef(__instance);
+                LegActuatorHandler.Shared.AdjustUpgradeDef(__instance);
                 CockpitHandler.Shared.AdjustUpgradeDef(__instance);
             }
             catch (Exception e)

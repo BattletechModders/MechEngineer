@@ -31,7 +31,7 @@
     "ComponentSubType" : "NotSet",
     "PrefabIdentifier" : "",
     "BattleValue" : 0,
-    "InventorySize" : 2,
+    "InventorySize" : 3,
     "Tonnage" : 0,
     "AllowedLocations" : "Arms",
     "DisallowedLocations" : "All",

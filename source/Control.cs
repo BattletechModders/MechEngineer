@@ -46,7 +46,7 @@ namespace MechEngineer
                 Registry.RegisterPreProcessor(ArmActuatorHandler.Shared);
                 Registry.RegisterPreProcessor(CockpitHandler.Shared);
                 Registry.RegisterPreProcessor(GyroHandler.Shared);
-                Registry.RegisterPreProcessor(LegUpgradeHandler.Shared);
+                Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
 
                 Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
                 if (settings.DynamicSlotsValidateDropEnabled)

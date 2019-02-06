@@ -4,13 +4,12 @@ using CustomComponents;
 
 namespace MechEngineer
 {
-    internal class GyroHandler : IAdjustUpgradeDef, IAutoFixMechDef, IPreProcessor
+    internal class GyroHandler : IAdjustUpgradeDef, IPreProcessor
     {
         internal static MELazy<GyroHandler> Lazy = new MELazy<GyroHandler>();
         internal static GyroHandler Shared => Lazy.Value;
 
         private readonly IdentityHelper identity;
-        private readonly AutoFixMechDefHelper fixer;
         private readonly AdjustCompDefInvSizeHelper resizer;
 
         public GyroHandler()
@@ -20,14 +19,6 @@ namespace MechEngineer
             if (identity == null)
             {
                 return;
-            }
-
-            if (Control.settings.AutoFixMechDefGyroAdder != null)
-            {
-                fixer = new AutoFixMechDefHelper(
-                    identity,
-                    Control.settings.AutoFixMechDefGyroAdder
-                );
             }
 
             if (Control.settings.AutoFixGyroSlotChange != null)
@@ -44,11 +35,6 @@ namespace MechEngineer
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
             resizer?.AdjustComponentDef(upgradeDef);
-        }
-
-        public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
-        {
-            fixer?.AutoFixMechDef(mechDef, originalTotalTonnage);
         }
     }
 }

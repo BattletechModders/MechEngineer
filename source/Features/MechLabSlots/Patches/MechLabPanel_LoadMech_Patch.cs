@@ -16,8 +16,24 @@ namespace MechEngineer
                 var mechLabPanel = __instance;
                 //GUILogUtils.LogHierarchy(mechLabPanel.transform);
 
+                //mechLabPanel.transform.localScale = new Vector3(0.5f, 0.5f);
                 var Representation = mechLabPanel.transform.GetChild("Representation");
                 var OBJ_mech = Representation.GetChild("OBJ_mech");
+
+                {
+                    var scale = Control.settings.MechLabScale;
+                    if (scale.HasValue)
+                    {
+                        OBJ_mech.transform.localScale = new Vector3(scale.Value, scale.Value);
+                    }
+
+                    var postitionY = Control.settings.MechLabPositionY;
+                    if (postitionY.HasValue)
+                    {
+                        var rect = OBJ_mech.GetComponent<RectTransform>();
+                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, postitionY.Value);
+                    }
+                }
 
                 var Centerline = OBJ_mech.GetChild("Centerline");
                 {
@@ -51,14 +67,12 @@ namespace MechEngineer
 
                 const float moveUp = 0;
                 const float space = 50;
-                const float spaceHeatCT = 20;
-
                 {
                     var headWidget = Centerline.GetChild("uixPrfPanl_ML_location-Widget-MANAGED");
                     var centerTorsoWidget = Centerline.GetChild("uixPrfPanl_ML_location-Widget-MANAGED", 1);
-                    
+
                     headWidget.SetTop(headWidget.Top() + moveUp);
-                    centerTorsoWidget.SetTop(headWidget.Bottom() - spaceHeatCT);
+                    centerTorsoWidget.SetTop(headWidget.Bottom() - space);
                 }
 
                 {

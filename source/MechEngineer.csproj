@@ -150,9 +150,7 @@
     <Compile Include="Features\Descriptions\IAdjustTooltip.cs" />
     <Compile Include="Misc\CCValidationAdapter.cs" />
     <Compile Include="Misc\LogManager.cs" />
-    <Compile Include="Features\AutoFix\ArmorHandler.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
-    <Compile Include="Features\AutoFix\StructureHandler.cs" />
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
     <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch1.cs" />
     <Compile Include="Features\HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />
@@ -188,7 +186,7 @@
     <Compile Include="Features\AutoFix\AutoFixMechDefHelper.cs" />
     <Compile Include="Features\Weights\WeightsHandler.cs" />
     <Compile Include="Misc\DictionarySerializer.cs" />
-    <Compile Include="Features\AutoFix\LegUpgradeHandler.cs" />
+    <Compile Include="Features\AutoFix\LegActuatorHandler.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />
     <Compile Include="Misc\Global.cs" />
     <Compile Include="Features\CriticalHitStates\Patches\Mech_GetComponentInSlot_Patch.cs" />
