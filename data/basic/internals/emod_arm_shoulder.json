@@ -13,7 +13,7 @@
         "UIName" : "Shoulder",
         "Id" : "emod_arm_shoulder",
         "Name" : "Shoulder",
-        "Details" : "",
+        "Details" : "TODO",
         "Icon" : "uixSvgIcon_equipment_ActuatorArm"
     },
     "BonusValueA" : "",

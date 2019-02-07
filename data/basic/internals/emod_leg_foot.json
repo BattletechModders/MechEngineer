@@ -14,7 +14,7 @@
         "UIName" : "Foot",
         "Id" : "emod_leg_foot",
         "Name" : "Foot Actuator",
-        "Details" : "An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
+        "Details" : "TODO An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
         "Icon" : "uixSvgIcon_equipment_ActuatorLeg"
     },
     "BonusValueA" : "",

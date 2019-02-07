@@ -1,6 +1,56 @@
 {
     "Settings" : [
         {
+            "Name" : "LifeSupportA",
+            "DisplayName" : "Life Support",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "Cockpit0"
+                },
+                "Sorter" : {
+                    "Order" : 0
+                },
+                "Replace" : {
+                    "ComponentDefId" : "Gear_Cockpit_LifeSupportA_Standard",
+                    "Location" : "Head"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+						"default"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "SensorsA",
+            "DisplayName" : "Sensors",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "Cockpit1"
+                },
+                "Sorter" : {
+                    "Order" : 1
+                },
+                "Replace" : {
+                    "ComponentDefId" : "Gear_Cockpit_SensorsA_Standard",
+                    "Location" : "Head"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+						"default"
+                    ]
+                }
+            }
+        },
+        {
             "Name" : "Cockpit",
             "DisplayName" : "Cockpit",
             "MaxEquiped" : 1,
@@ -8,10 +58,10 @@
             "AutoReplace" : true,
             "DefaultCustoms" : {
                 "InventorySorter" : {
-                    "SortKey" : "Cockpit"
+                    "SortKey" : "Cockpit2"
                 },
                 "Sorter" : {
-                    "Order" : 0
+                    "Order" : 2
                 },
                 "Replace" : {
                     "ComponentDefId" : "Gear_Cockpit_Generic_Standard",
@@ -19,7 +69,58 @@
                 },
                 "Flags" : {
                     "Flags" : [
-                        "not_broken"
+                        "not_broken",
+						"default"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "SensorsB",
+            "DisplayName" : "Sensors",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "Cockpit3"
+                },
+                "Sorter" : {
+                    "Order" : 3
+                },
+                "Replace" : {
+                    "ComponentDefId" : "Gear_Cockpit_SensorsB_Standard",
+                    "Location" : "Head"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+						"default"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "LifeSupportB",
+            "DisplayName" : "Life Support",
+            "MaxEquiped" : 1,
+            "MinEquiped" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "Cockpit4"
+                },
+                "Sorter" : {
+                    "Order" : 4
+                },
+                "Replace" : {
+                    "ComponentDefId" : "Gear_Cockpit_LifeSupportB_Standard",
+                    "Location" : "Head"
+                },
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+						"default"
                     ]
                 }
             }
@@ -234,6 +335,9 @@
                 "Sorter" : {
                     "Order" : 0
                 },
+                "Replace" : {
+                    "ComponentDefId" : "emod_arm_shoulder"
+                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -243,8 +347,8 @@
             }
         },
         {
-            "Name" : "ArmActuator",
-            "DisplayName" : "Arm Actuator",
+            "Name" : "ArmUpperActuator",
+            "DisplayName" : "Upper Arm Actuator",
             "MaxEquipedPerLocation" : 1,
             "MinEquiped" : 2,
             "AutoReplace" : true,
@@ -258,9 +362,45 @@
                 "Replace" : {
                     "ComponentDefId" : "emod_arm_upper"
                 },
-                "ArmActuator" : {
-                    "AccuracyBonus" : -1,
-                    "Type" : "Hand"
+                "Flags" : {
+                    "Flags" : [
+                        "not_broken",
+                        "default"
+                    ]
+                }
+            }
+        },
+        {
+            "Name" : "ArmLowerActuator",
+            "DisplayName" : "Lower Arm Actuator",
+            "MaxEquipedPerLocation" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorArm2"
+                },
+                "Sorter" : {
+                    "Order" : 2
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_arm_lower"
+                }
+            }
+        },
+        {
+            "Name" : "ArmHandActuator",
+            "DisplayName" : "Hand Actuator",
+            "MaxEquipedPerLocation" : 1,
+            "AutoReplace" : true,
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorArm3"
+                },
+                "Sorter" : {
+                    "Order" : 3
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_arm_hand"
                 }
             }
         },
@@ -276,6 +416,9 @@
                 },
                 "Sorter" : {
                     "Order" : 0
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_leg_hip"
                 },
                 "Flags" : {
                     "Flags" : [
@@ -298,6 +441,9 @@
                 "Sorter" : {
                     "Order" : 1
                 },
+                "Replace" : {
+                    "ComponentDefId" : "emod_leg_upper"
+                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -318,6 +464,9 @@
                 },
                 "Sorter" : {
                     "Order" : 2
+                },
+                "Replace" : {
+                    "ComponentDefId" : "emod_leg_lower"
                 },
                 "Flags" : {
                     "Flags" : [

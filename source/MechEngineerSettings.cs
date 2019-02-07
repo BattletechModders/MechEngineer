@@ -155,11 +155,19 @@ namespace MechEngineer
             "Gear_Cockpit_SLDF_Custom",
             "Gear_Cockpit_Generic_Small",
             "Gear_Cockpit_Generic_Standard",
+            "Gear_Cockpit_LifeSupportA_Standard",
+            "Gear_Cockpit_LifeSupportB_Standard",
+            "Gear_Cockpit_SensorsA_Standard",
+            "Gear_Cockpit_SensorsB_Standard",
             "Gear_Gyro_Generic_Standard",
+            "emod_arm_shoulder",
             "emod_arm_upper",
             "emod_arm_lower",
             "emod_arm_hand",
-            "emod_leg_foot"
+            "emod_leg_hip",
+            "emod_leg_upper",
+            "emod_leg_lower",
+            "emod_leg_foot",
         }; // upgrades to not autofix
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets

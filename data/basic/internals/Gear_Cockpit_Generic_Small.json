@@ -1,8 +1,12 @@
 {
 	"Custom": {
-		"Category" : { 
-			"CategoryID" : "Cockpit" 
-		},
+		"Category" : [
+			{"CategoryID": "Cockpit"},
+			{"CategoryID": "LifeSupportB"}
+		],
+		"Flags": {
+			"Flags": []
+		}
 	},
     "Description" : {
         "Cost" : 240000,

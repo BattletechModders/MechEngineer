@@ -1,20 +1,20 @@
 {
 	"Custom": {
 		"Category" : { 
-			"CategoryID" : "LegUpperActuator" 
+			"CategoryID" : "LifeSupportA" 
 		}
 	},
     "Description" : {
-        "Cost" : 30000,
+        "Cost" : 0,
         "Rarity" : 0,
-        "Purchasable" : true,
+        "Purchasable" : false,
         "Manufacturer" : "Generic",
         "Model" : "Standard",
-        "UIName" : "Upper Leg",
-        "Id" : "emod_leg_upper",
-        "Name" : "Upper Leg Actuator",
-        "Details" : "TODO An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
-        "Icon" : "uixSvgIcon_equipment_ActuatorLeg"
+        "UIName" : "Life Support",
+        "Id" : "Gear_Cockpit_LifeSupportA_Standard",
+        "Name" : "Life Support A",
+        "Details" : "TODO",
+        "Icon" : "uixSvgIcon_equipment_Cockpit"
     },
     "BonusValueA" : "",
     "BonusValueB" : "",
@@ -24,9 +24,9 @@
     "BattleValue" : 0,
     "InventorySize" : 1,
     "Tonnage" : 0,
-    "AllowedLocations" : "Legs",
+    "AllowedLocations" : "Head",
     "DisallowedLocations" : "All",
-    "CriticalComponent" : false,
+    "CriticalComponent" : true,
     "statusEffects" : null,
     "ComponentTags" : {
         "items" : [
