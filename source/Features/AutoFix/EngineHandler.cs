@@ -11,7 +11,7 @@ namespace MechEngineer
     {
         internal static EngineHandler Shared = new EngineHandler();
 
-        public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
+        public void AutoFixMechDef(MechDef mechDef)
         {
             //DumpAllAsTable();
 
@@ -43,7 +43,6 @@ namespace MechEngineer
                 if (originalInitialTonnage.HasValue) // either use the freed up tonnage from the initial tonnage fix
                 {
                     freeTonnage = originalInitialTonnage.Value - initialTonnage;
-                    freeTonnage -= currentTotalTonnage - originalTotalTonnage;
                     freeTonnage = Mathf.Min(freeTonnage, maxFreeTonnage); // if the original was overweight, make sure not to stay overweight
                 }
 
@@ -62,9 +61,7 @@ namespace MechEngineer
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
             var standardWeights = new Weights(); // use default gyro and weights
-            var standardEngineType = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefEngineTypeDef);
             var standardHeatBlock = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefHeatBlockDef).GetComponent<EngineHeatBlockDef>();
-            // TODO autoselect correct type
             var standardCooling = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefCoolingDef).GetComponent<CoolingDef>();
 
             var engineCoreDefs = mechDef.DataManager.HeatSinkDefs
@@ -94,6 +91,8 @@ namespace MechEngineer
                 }
             }
 
+            inventory.RemoveAll(r => r.ComponentDefID == Control.settings.AutoFixMechDefCoreDummy);
+
             var builder = new MechDefBuilder(mechDef.Chassis, inventory);
 
             // add engine
@@ -101,15 +100,6 @@ namespace MechEngineer
                 maxEngine.CoreDef.Def,
                 ChassisLocations.CenterTorso
             );
-
-            // add standard shielding
-            builder.Add(standardEngineType, ChassisLocations.CenterTorso);
-
-            // add standard cooling
-            builder.Add(standardCooling.Def, ChassisLocations.CenterTorso);
-
-            // add standard heat block
-            builder.Add(standardHeatBlock.Def, ChassisLocations.CenterTorso);
 
             // add free heatsinks
             {

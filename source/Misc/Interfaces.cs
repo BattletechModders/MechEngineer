@@ -26,6 +26,6 @@ namespace MechEngineer
 
     internal interface IAutoFixMechDef
     {
-        void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage);
+        void AutoFixMechDef(MechDef mechDef);
     }
 }

@@ -15,7 +15,7 @@ namespace MechEngineer
             this.adder = adder;
         }
 
-        public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
+        public void AutoFixMechDef(MechDef mechDef)
         {
             if (mechDef.Inventory.Any(x => x.Def != null && identifier.IsCustomType(x.Def)))
             {

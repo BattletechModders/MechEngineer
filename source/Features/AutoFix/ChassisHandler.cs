@@ -144,7 +144,7 @@ namespace MechEngineer
             return true;
         }
         
-        public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
+        public void AutoFixMechDef(MechDef mechDef)
         {
             var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
 

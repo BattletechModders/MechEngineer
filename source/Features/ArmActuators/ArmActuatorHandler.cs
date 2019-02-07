@@ -33,7 +33,7 @@ namespace MechEngineer
             resizer.AdjustComponentDef(upgradeDef);
         }
 
-        public void AutoFixMechDef(MechDef mechDef, float originalTotalTonnage)
+        public void AutoFixMechDef(MechDef mechDef)
         {
             //Control.mod.Logger.LogDebug($"ArmActuatorHandler.AutoFixMechDef");
             //Control.mod.Logger.LogDebug($" chassis={mechDef.Chassis.Description.Id}");

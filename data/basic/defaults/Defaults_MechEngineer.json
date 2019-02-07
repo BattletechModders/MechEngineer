@@ -8,8 +8,13 @@
 
 		{ "CategoryID" : "Armor", "Type" : "Upgrade", "DefID" : "emod_armorslots_standard", "Location" : "CenterTorso" },
 		{ "CategoryID" : "Structure", "Type" : "Upgrade", "DefID" : "emod_structureslots_standard", "Location" : "CenterTorso" },
+		{ "CategoryID" : "Cooling", "Type" : "HeatSink", "DefID" : "emod_kit_shs", "Location" : "CenterTorso" },
 
 		{ "CategoryID" : "Gyro", "Type" : "Upgrade", "DefID" : "Gear_Gyro_Generic_Standard", "Location" : "CenterTorso" },
+		
+		{ "CategoryID" : "EngineShield", "Type" : "HeatSink", "DefID" : "emod_engineslots_std_center", "Location" : "CenterTorso" },
+		{ "CategoryID" : "EngineHeatBlock", "Type" : "HeatSink", "DefID" : "emod_engine_cooling", "Location" : "CenterTorso" },
+		{ "CategoryID" : "EngineCore", "Type" : "HeatSink", "DefID" : "emod_engine_dummy", "Location" : "CenterTorso" },
 
 		{ "CategoryID" : "ArmShoulder", "Type" : "Upgrade", "DefID" : "emod_arm_shoulder", "Location" : "LeftArm", "AnyLocation" : false },
 		{ "CategoryID" : "ArmUpperActuator", "Type" : "Upgrade", "DefID" : "emod_arm_upper", "Location" : "LeftArm", "AnyLocation" : false },

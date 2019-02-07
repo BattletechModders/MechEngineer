@@ -171,9 +171,9 @@ namespace MechEngineer
         }; // upgrades to not autofix
 
         public bool AutoFixMechDefEngine = true; // adds missing engine and removes too many jump jets
-        public string AutoFixMechDefEngineTypeDef = "emod_engineslots_std_center"; // always assumes weight factor 1.0
         public string AutoFixMechDefCoolingDef = "emod_kit_shs";
         public string AutoFixMechDefHeatBlockDef = "emod_engine_cooling";
+        public string AutoFixMechDefCoreDummy = "emod_engine_dummy";
 
         public IdentityHelper AutoFixGyroCategorizer = new IdentityHelper
         {

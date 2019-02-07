@@ -34,12 +34,12 @@ namespace MechEngineer
                 }
             }
 
-            Add(new MechDefAutoFixCategory
-            {
-                AutoFixMechDef = ArmActuatorHandler.Shared,
-                AutoFixSetting = Control.settings.AutoFixMechDefArmActuator,
-                CompanyStatKey = "MechEngineer_AutoFixMechDefArmActuator"
-            });
+            //Add(new MechDefAutoFixCategory
+            //{
+            //    AutoFixMechDef = ArmActuatorHandler.Shared,
+            //    AutoFixSetting = Control.settings.AutoFixMechDefArmActuator,
+            //    CompanyStatKey = "MechEngineer_AutoFixMechDefArmActuator"
+            //});
 
             Add(new MechDefAutoFixCategory
             {
@@ -70,14 +70,11 @@ namespace MechEngineer
 
             mechDef.Refresh();
 
-            float originalTotalTonnage = 0, maxValue = 0;
-            MechStatisticsRules.CalculateTonnage(mechDef, ref originalTotalTonnage, ref maxValue);
-
             foreach (var fixer in fixers)
             {
                 if (fixer.ShouldFix)
                 {
-                    fixer.AutoFixMechDef.AutoFixMechDef(mechDef, originalTotalTonnage);
+                    fixer.AutoFixMechDef.AutoFixMechDef(mechDef);
                 }
             }
         }

@@ -13,10 +13,6 @@
                 "Sorter" : {
                     "Order" : 0
                 },
-                "Replace" : {
-                    "ComponentDefId" : "Gear_Cockpit_LifeSupportA_Standard",
-                    "Location" : "Head"
-                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -37,10 +33,6 @@
                 },
                 "Sorter" : {
                     "Order" : 1
-                },
-                "Replace" : {
-                    "ComponentDefId" : "Gear_Cockpit_SensorsA_Standard",
-                    "Location" : "Head"
                 },
                 "Flags" : {
                     "Flags" : [
@@ -63,10 +55,6 @@
                 "Sorter" : {
                     "Order" : 2
                 },
-                "Replace" : {
-                    "ComponentDefId" : "Gear_Cockpit_Generic_Standard",
-                    "Location" : "Head"
-                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -88,10 +76,6 @@
                 "Sorter" : {
                     "Order" : 3
                 },
-                "Replace" : {
-                    "ComponentDefId" : "Gear_Cockpit_SensorsB_Standard",
-                    "Location" : "Head"
-                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -112,10 +96,6 @@
                 },
                 "Sorter" : {
                     "Order" : 4
-                },
-                "Replace" : {
-                    "ComponentDefId" : "Gear_Cockpit_LifeSupportB_Standard",
-                    "Location" : "Head"
                 },
                 "Flags" : {
                     "Flags" : [
@@ -141,10 +121,6 @@
                 "Sorter" : {
                     "Order" : 0
                 },
-                "Replace" : {
-                    "ComponentDefId" : "emod_armorslots_standard",
-                    "Location" : "CenterTorso"
-                },
                 "Flags" : {
                     "Flags" : [
                         "ignore_damage",
@@ -169,10 +145,6 @@
                 "Sorter" : {
                     "Order" : 1
                 },
-                "Replace" : {
-                    "ComponentDefId" : "emod_structureslots_standard",
-                    "Location" : "CenterTorso"
-                },
                 "Flags" : {
                     "Flags" : [
                         "ignore_damage",
@@ -193,10 +165,6 @@
                 },
                 "Sorter" : {
                     "Order" : 2
-                },
-                "Replace" : {
-                    "ComponentDefId" : "emod_kit_shs",
-                    "Location" : "CenterTorso"
                 },
                 "Flags" : {
                     "Flags" : [
@@ -219,10 +187,6 @@
                 "Sorter" : {
                     "Order" : 3
                 },
-                "Replace" : {
-                    "ComponentDefId" : "Gear_Gyro_Generic_Standard",
-                    "Location" : "CenterTorso"
-                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken"
@@ -242,10 +206,6 @@
                 },
                 "Sorter" : {
                     "Order" : 4
-                },
-                "Replace" : {
-                    "ComponentDefId" : "emod_engineslots_std_center",
-                    "Location" : "CenterTorso"
                 },
                 "Flags" : {
                     "Flags" : [
@@ -269,10 +229,6 @@
                 "Sorter" : {
                     "Order" : 5
                 },
-                "Replace" : {
-                    "ComponentDefId" : "emod_engine_cooling",
-                    "Location" : "CenterTorso"
-                },
                 "Flags" : {
                     "Flags" : [
                         "engine_part",
@@ -293,10 +249,6 @@
                 },
                 "Sorter" : {
                     "Order" : 6
-                },
-                "Replace" : {
-                    "ComponentDefId" : "emod_engine_dummy",
-                    "Location" : "CenterTorso"
                 },
                 "Flags" : {
                     "Flags" : [
@@ -335,9 +287,6 @@
                 "Sorter" : {
                     "Order" : 0
                 },
-                "Replace" : {
-                    "ComponentDefId" : "emod_arm_shoulder"
-                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -359,9 +308,6 @@
                 "Sorter" : {
                     "Order" : 1
                 },
-                "Replace" : {
-                    "ComponentDefId" : "emod_arm_upper"
-                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -381,9 +327,6 @@
                 },
                 "Sorter" : {
                     "Order" : 2
-                },
-                "Replace" : {
-                    "ComponentDefId" : "emod_arm_lower"
                 }
             }
         },
@@ -398,9 +341,6 @@
                 },
                 "Sorter" : {
                     "Order" : 3
-                },
-                "Replace" : {
-                    "ComponentDefId" : "emod_arm_hand"
                 }
             }
         },
@@ -416,9 +356,6 @@
                 },
                 "Sorter" : {
                     "Order" : 0
-                },
-                "Replace" : {
-                    "ComponentDefId" : "emod_leg_hip"
                 },
                 "Flags" : {
                     "Flags" : [
@@ -441,9 +378,6 @@
                 "Sorter" : {
                     "Order" : 1
                 },
-                "Replace" : {
-                    "ComponentDefId" : "emod_leg_upper"
-                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -465,9 +399,6 @@
                 "Sorter" : {
                     "Order" : 2
                 },
-                "Replace" : {
-                    "ComponentDefId" : "emod_leg_lower"
-                },
                 "Flags" : {
                     "Flags" : [
                         "not_broken",
@@ -488,9 +419,6 @@
                 },
                 "Sorter" : {
                     "Order" : 3
-                },
-                "Replace" : {
-                    "ComponentDefId" : "emod_leg_foot"
                 }
             }
         },
