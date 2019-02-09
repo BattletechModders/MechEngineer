@@ -12,7 +12,7 @@ namespace MechEngineer
         {
             try
             {
-                if (__instance.mechComponentRef.Def.IsIgnoreDamage())
+                if (__instance.componentDef.IsIgnoreDamage())
                 {
                     return false;
                 }
