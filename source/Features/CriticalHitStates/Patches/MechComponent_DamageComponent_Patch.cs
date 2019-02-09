@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleTech;
 using Harmony;
+using Localize;
 
 namespace MechEngineer
 {
@@ -12,34 +12,41 @@ namespace MechEngineer
         {
             try
             {
-                var messages = new List<MessageAddition>();
-                void ClearMessageAndPublishAdditions()
-                {
-                    MechCheckForCritPatch.Message = null;
-                    foreach (var message in messages)
-                    {
-                        var actor = __instance.parent;
-                        var stackMessage = new AddSequenceToStackMessage(new ShowActorInfoSequence(actor, message.Text, message.Nature, true));
-                        actor.Combat.MessageCenter.PublishMessage(stackMessage);
-                    }
-                }
-
                 if (__instance.mechComponentRef.Def.IsIgnoreDamage())
                 {
-                    ClearMessageAndPublishAdditions();
                     return false;
                 }
 
-                if (!CirticalHitStatesHandler.Shared.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects, messages))
+                if (!CirticalHitStatesHandler.Shared.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects))
                 {
-                    ClearMessageAndPublishAdditions();
                     return false;
                 }
 
-                if (!EngineCrits.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects, messages))
+                if (!EngineCrits.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects))
                 {
-                    ClearMessageAndPublishAdditions();
                     return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
+
+            try
+            {
+                if (__instance.DamageLevel == ComponentDamageLevel.Penalized)
+                {
+                    __instance.PublishMessage(
+                        new Text("{0} CRIT", __instance.UIName),
+                        FloatieMessage.MessageNature.CriticalHit
+                    );
+                }
+                else
+                {
+                    __instance.PublishMessage(
+                        new Text("{0} DESTROYED", __instance.UIName),
+                        FloatieMessage.MessageNature.ComponentDestroyed
+                    );
                 }
             }
             catch (Exception e)
@@ -48,47 +55,6 @@ namespace MechEngineer
             }
 
             return true;
-        }
-    }
-
-    public class MessageAddition
-    {
-        public string Text { get; set; }
-        public FloatieMessage.MessageNature Nature { get; set; }
-    }
-
-    [HarmonyPatch(typeof(Mech), "CheckForCrit")]
-    public static class MechCheckForCritPatch
-    {
-        public static MessageCenterMessage Message { get; set; }
-
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return instructions.MethodReplacer(
-                AccessTools.Method(typeof(MessageCenter), "PublishMessage"),
-                AccessTools.Method(typeof(MechCheckForCritPatch), "PublishMessage")
-            );
-        }
-
-        public static void PublishMessage(this MessageCenter @this, MessageCenterMessage message)
-        {
-            Message = message;
-        }
-
-        public static void Postfix(Mech __instance)
-        {
-            try
-            {
-                if (Message != null)
-                {
-                    __instance.Combat.MessageCenter.PublishMessage(Message);
-                    Message = null;
-                }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
         }
     }
 }

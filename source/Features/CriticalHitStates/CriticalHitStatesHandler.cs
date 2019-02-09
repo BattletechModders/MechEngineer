@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
+using Localize;
 
 namespace MechEngineer
 {
@@ -19,7 +20,6 @@ namespace MechEngineer
             WeaponHitInfo hitInfo,
             ComponentDamageLevel damageLevel,
             bool applyEffects,
-            List<MessageAddition> messages,
             CriticalHitStates criticalHitStates = null,
             int? hits = null)
         {
@@ -141,10 +141,11 @@ namespace MechEngineer
 
             if (damageLevel == ComponentDamageLevel.Destroyed)
             {
+                var text = new Text("{0} DESTROYED", mechComponent.UIName);
                 if (criticalHitStates.DeathMethod != DeathMethod.NOT_SET)
                 {
                     mech.FlagForDeath(
-                        mechComponent.Description.Name + " DESTROYED",
+                        text.ToString(),
                         criticalHitStates.DeathMethod,
                         DamageType.Combat,
                         mechComponent.Location,
@@ -154,14 +155,15 @@ namespace MechEngineer
                 }
                 else
                 {
-                    var text = componentRef.Def.Description.UIName + " DESTROYED";
-                    messages.Add(new MessageAddition {Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = text});
+                    mechComponent.PublishMessage(text, FloatieMessage.MessageNature.ComponentDestroyed);
                 }
             }
             else
             {
-                var text = componentRef.Def.Description.UIName + " " + (crits == 1 ? " CRIT" : " CRIT X" + crits);
-                messages.Add(new MessageAddition {Nature = FloatieMessage.MessageNature.ComponentDestroyed, Text = text});
+                mechComponent.PublishMessage(
+                    new Text("{0} " + (crits == 1 ? "CRIT" : "CRIT X" + crits), mechComponent.UIName),
+                    FloatieMessage.MessageNature.CriticalHit
+                );
             }
 
             return false;

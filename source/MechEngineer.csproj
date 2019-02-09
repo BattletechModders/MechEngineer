@@ -86,6 +86,8 @@
     <Compile Include="Features\ArmActuators\ArmActuatorHandler.cs" />
     <Compile Include="Features\BTLoadFix\BTLoadUtils.cs" />
     <Compile Include="Features\ChassisQuirks\Patches\Mech_InitStats_Patch.cs" />
+    <Compile Include="Features\CriticalHitStates\Patches\Mech_CheckForCrit_Patch.cs" />
+    <Compile Include="Features\CriticalHitStates\MessageCenterUtils.cs" />
     <Compile Include="Features\Descriptions\BonusDescriptions.cs" />
     <Compile Include="Features\Descriptions\DescriptionDefAdapter.cs" />
     <Compile Include="Features\Descriptions\IAdjustInventoryElement.cs" />

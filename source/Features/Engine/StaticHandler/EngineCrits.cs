@@ -12,8 +12,7 @@ namespace MechEngineer
             CombatGameState combat,
             WeaponHitInfo hitInfo,
             ComponentDamageLevel damageLevel,
-            bool applyEffects,
-            List<MessageAddition> messages)
+            bool applyEffects)
         {
             if (Control.settings.EngineCriticalHitStates == null)
             {
@@ -66,7 +65,6 @@ namespace MechEngineer
                 hitInfo,
                 damageLevel,
                 applyEffects,
-                messages,
                 Control.settings.EngineCriticalHitStates,
                 hits
                 ))
