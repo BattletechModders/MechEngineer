@@ -23,6 +23,9 @@ Use these mods to maximize enjoyment
 * [CBT Piloting](https://github.com/McFistyBuns/CBTPiloting) - mech can stumble by chance
 * [Pansar](https://github.com/hokvel/pansar) - applies armor ratio enforcement according to CBT rules
 
+Compatibility Patches
+* [JK-ME](https://github.com/17783/JK-ME_Fix) - fixes JK mech variants to work with MechEngineer
+
 ## TODOs and Bug Reporting
 
 * see [issues list](https://github.com/BattletechModders/MechEngineer/issues)
