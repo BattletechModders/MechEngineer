@@ -56,7 +56,7 @@ namespace MechEngineer
                 CompanyStatKey = "MechEngineer_AutoFixMechDefByChassisDefSlotsChanges"
             });
 
-            AutoFixer.Shared.RegisterSaveMechFixer(MechDefAutoFixFacade.AutoFix);
+            AutoFixer.Shared.RegisterMechFixer(MechDefAutoFixFacade.AutoFix);
         }
 
         internal static List<MechDefAutoFixCategory> Fixers = new List<MechDefAutoFixCategory>();
