@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using BattleTech.Data;
+using CustomComponents;
 
 namespace MechEngineer
 {
@@ -54,6 +55,8 @@ namespace MechEngineer
                 AutoFixSetting = Control.settings.AutoFixChassisDefSlotsChanges != null,
                 CompanyStatKey = "MechEngineer_AutoFixMechDefByChassisDefSlotsChanges"
             });
+
+            AutoFixer.Shared.RegisterSaveMechFixer(MechDefAutoFixFacade.AutoFix);
         }
 
         internal static List<MechDefAutoFixCategory> Fixers = new List<MechDefAutoFixCategory>();
@@ -61,84 +64,42 @@ namespace MechEngineer
 
     internal static class MechDefAutoFixFacade
     {
-        private static void AutoFixMechDef(MechDef mechDef, IEnumerable<MechDefAutoFixCategory> fixers)
+        public static void AutoFix(List<MechDef> mechDefs, SimGameState simgame)
         {
-            if (Control.settings.AutoFixMechDefSkip.Contains(mechDef.Description.Id))
-            {
-                return;
-            }
-
-            mechDef.Refresh();
+            var fixers = MechDefAutoFixCategory.Fixers;
 
             foreach (var fixer in fixers)
             {
-                if (fixer.ShouldFix)
+                fixer.SetShouldFix(simgame?.CompanyStats);
+            }
+
+            foreach (var mechDef in mechDefs)
+            {
+                if (Control.settings.AutoFixMechDefSkip.Contains(mechDef.Description.Id))
                 {
-                    fixer.AutoFixMechDef.AutoFixMechDef(mechDef);
+                    continue;
+                }
+
+                mechDef.Refresh();
+
+                foreach (var fixer in fixers)
+                {
+                    if (fixer.ShouldFix)
+                    {
+                        fixer.AutoFixMechDef.AutoFixMechDef(mechDef);
+                    }
                 }
             }
-        }
 
-        internal static void PostProcessAfterLoading(DataManager dataManager)
-        {
-            var fixers = MechDefAutoFixCategory.Fixers;
-            if (fixers.Count == 0)
+            if (simgame != null)
             {
-                return;
-            }
-
-            foreach (var fixer in fixers)
-            {
-                fixer.SetShouldFix(null);
-            }
-
-            foreach (var keyValuePair in dataManager.MechDefs)
-            {
-                AutoFixMechDef(keyValuePair.Value, fixers);
-            }
-        }
-
-        internal static void InitCompanyStats(StatCollection companyStats)
-        {
-            var fixers = MechDefAutoFixCategory.Fixers;
-            if (fixers.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var fixer in fixers)
-            {
-                fixer.SetShouldFix(companyStats);
-                if (fixer.ShouldFix)
+                foreach (var fixer in fixers)
                 {
-                    fixer.SetFixed(companyStats);
-                }
-            }
-        }
-
-        internal static void Rehydrate(StatCollection companyStats, List<MechDef> mechs)
-        {
-            var fixers = MechDefAutoFixCategory.Fixers;
-            if (fixers.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var fixer in fixers)
-            {
-                fixer.SetShouldFix(companyStats);
-            }
-
-            foreach (var mech in mechs)
-            {
-                AutoFixMechDef(mech, fixers);
-            }
-
-            foreach (var fixer in fixers)
-            {
-                if (fixer.ShouldFix)
-                {
-                    fixer.SetFixed(companyStats);
+                    fixer.SetShouldFix(simgame.CompanyStats);
+                    if (fixer.ShouldFix)
+                    {
+                        fixer.SetFixed(simgame.CompanyStats);
+                    }
                 }
             }
         }

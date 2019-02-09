@@ -199,11 +199,6 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Features\InvalidInventory\Patches\MechLabPanel_GetCantSaveErrorString_Patch.cs" />
     <Compile Include="Features\InvalidInventory\Patches\MechLabPanel_GetNonFieldableErrorString_Patch.cs" />
-    <Compile Include="Features\AutoFix\Patches\SimGameState_InitCompanyStats_Patch.cs" />
-    <Compile Include="Features\AutoFix\Patches\SimGameState_Rehydrate_Patch.cs" />
-    <Compile Include="Features\AutoFix\Patches\SkirmishMechBayPanel_LanceConfiguratorDataLoaded_Patch.cs" />
-    <Compile Include="Features\AutoFix\Patches\SkirmishSettings_Beta_LanceConfiguratorDataLoaded_Patch.cs" />
-    <Compile Include="Features\AutoFix\Patches\SimGameState_RespondToDefsLoadComplete_Patch.cs" />
     <Compile Include="Helper\TooltipPrefab_EquipmentAdapter.cs" />
     <Compile Include="Features\Descriptions\Patches\TooltipPrefab_EquipmentSetData_Patch.cs" />
     <Compile Include="Features\Weights\Patches\MechLabMechInfoWidget_CalculateTonnage_Patch.cs" />
