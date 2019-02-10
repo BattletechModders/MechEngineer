@@ -77,6 +77,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\ArmActuatorsCBT\ArmActuatorCBTHandler.cs" />
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
     <Compile Include="Features\ArmActuators\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
@@ -85,6 +86,8 @@
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructure_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorHandler.cs" />
     <Compile Include="Features\BTLoadFix\BTLoadUtils.cs" />
+    <Compile Include="Features\ArmActuatorsCBT\ArmActuatorCBT.cs" />
+    <Compile Include="Features\ArmActuatorsCBT\ArmSupportCBT.cs" />
     <Compile Include="Features\ChassisQuirks\Patches\Mech_InitStats_Patch.cs" />
     <Compile Include="Features\CriticalHitStates\Patches\Mech_CheckForCrit_Patch.cs" />
     <Compile Include="Features\CriticalHitStates\MessageCenterUtils.cs" />

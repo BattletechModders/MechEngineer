@@ -196,6 +196,14 @@ namespace MechEngineer
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
         public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 5};
 
+
+        public bool UseCBTActuators = true;
+        public string DefaultCBTShoulder = "emod_armcbt_shoulder";
+        public string DefaultCBTLower = "emod_armcbt_lower";
+        public string DefaultCBTUppder = "emod_armcbt_upper";
+        public string DefaultCBTHand = "emod_armcbt_hand";
+
+
         public bool AutoFixMechDefArmActuator = true;
         public IdentityHelper AutoFixArmActuatorCategorizer = new IdentityHelper
         {
