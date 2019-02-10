@@ -48,7 +48,38 @@ namespace MechEngineer
 
         public string ReplaceValidateDrop(MechLabItemSlotElement drop_item, LocationHelper location, List<IChange> changes)
         {
-            var slot = Slot;
+            var total_slot = Slot;
+            var mount_loc = location.widget.loadout.Location;
+            var mechlab = location.mechLab;
+            var mech = mechlab.activeMechDef;
+
+            void add_default(ArmActuatorSlot slot)
+            {
+                bool add_item(string id)
+                {
+                    if (string.IsNullOrEmpty(id))
+                        return false;
+
+                    var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, mechlab.dataManager, mechlab.Sim);
+
+                    if (!r.Is<ArmActuatorCBT>(out var actuator) && (actuator.Slot & total_slot) == 0)
+                    {
+                        changes.Add(new AddDefaultChange(mount_loc, DefaultHelper.CreateSlot(r, mechlab)));
+                        total_slot = total_slot & actuator.Slot;
+                        return true;
+                    }
+
+                    return false;
+                }
+                if (slot.HasFlag(slot))
+                    return;
+
+                if (add_item(ArmActuatorCBTHandler.GetDefaultActuator(mech, mount_loc, slot)))
+                    return;
+
+                add_item(ArmActuatorCBTHandler.GetDefaultActuator(null, mount_loc, slot));
+            }
+
             foreach (var item in location.LocalInventory.Where(i => i.ComponentRef.Is<ArmActuatorCBT>()))
             {
 
@@ -60,20 +91,23 @@ namespace MechEngineer
                     changes.Add(new RemoveChange(location.widget.loadout.Location, item));
                 }
                 else
-                    slot = slot | actuator.Slot;
+                    total_slot = total_slot | actuator.Slot;
             }
 
-            if (!slot.HasFlag(ArmActuatorSlot.Shoulder))
-            {
+            add_default(ArmActuatorSlot.Shoulder);
+            add_default(ArmActuatorSlot.Upper);
 
-            }
-            if (!slot.HasFlag(ArmActuatorSlot.Upper))
+            if (!total_slot.HasFlag(ArmActuatorSlot.Lower) && total_slot.HasFlag(ArmActuatorSlot.Hand))
             {
-
-            }
-            if (!slot.HasFlag(ArmActuatorSlot.Lower) && slot.HasFlag(ArmActuatorSlot.Hand))
-            {
-
+                var change = AddFromInventoryChange.FoundInInventory(mount_loc, new MechLabHelper(mechlab),
+                    item => item.Is<ArmActuatorCBT>(out var actuator) && actuator.Slot == ArmActuatorSlot.Lower,
+                    item => item.Description.Id == Control.settings.DefaultCBTLower
+                );
+                if(change != null)
+                    changes.Add(change);
+                else
+                    if (Control.settings.InterruptHandDropIfNoLower)
+                        return $"Cannot found LowerArm";
             }
 
             return string.Empty;
