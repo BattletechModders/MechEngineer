@@ -10,22 +10,20 @@ namespace MechEngineer
 {
     [CustomComponent("ArmActuatorCBT")]
     public class ArmActuatorCBT : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed,
-        IAdjustDescription, IOnInstalled, IPostValidateDrop
+        IAdjustDescription, IOnInstalled
     {
         public ArmActuatorSlot Slot { get; set; }
         public ArmActuatorSlot MaxSlot { get; set; } = ArmActuatorSlot.Hand;
 
         public string PreValidateDrop(MechLabItemSlotElement item, LocationHelper location, MechLabHelper mechlab)
         {
-            var max = ArmActuatorSlot.Hand;
-
             if (mechlab.MechLab.activeMechDef.Chassis.Is<ArmSupportCBT>(out var support))
             {
                 var part = support.GetByLocation(location.widget.loadout.Location);
                 if (part != null && part.MaxActuator < Slot)
                 {
                     return
-                        $"Cannot install {item.ComponentRef.Def.Description.Name} mech support only up to {max} in {location.LocationName}";
+                        $"Cannot install {item.ComponentRef.Def.Description.Name} mech support only up to {part.MaxActuator} in {location.LocationName}";
                 }
             }
 
@@ -35,16 +33,18 @@ namespace MechEngineer
                 {
                     if (actuator.MaxSlot < Slot)
                         return
-                            $"Cannot install {item.ComponentRef.Def.Description.Name} {slot.ComponentRef.Def.Description.Name} limit {location.LocationName} to {actuator.MaxSlot}";
+                            $"Cannot install {item.ComponentRef.Def.Description.Name} because {slot.ComponentRef.Def.Description.Name} is already installed, remove it first";
 
                     if (MaxSlot < actuator.Slot)
                         return
-                        $"Cannot install {item.ComponentRef.Def.Description.Name} cose {actuator.Slot} present, remove it first";
+                            $"Cannot install {item.ComponentRef.Def.Description.Name} because {actuator.Slot} is already installed, remove it first";
                 }
             }
 
             return string.Empty;
         }
+
+
 
         public string ReplaceValidateDrop(MechLabItemSlotElement drop_item, LocationHelper location, List<IChange> changes)
         {
@@ -126,15 +126,62 @@ namespace MechEngineer
 
         public void OnItemGrabbed(IMechLabDraggableItem item, MechLabPanel mechLab, MechLabLocationWidget widget)
         {
+            var loc_helper = new LocationHelper(widget);
+            var total_slot = ArmActuatorSlot.None;
+            var mount_loc = widget.loadout.Location;
+            var ml_helper = new MechLabHelper(mechLab);
+
+            void add_default(ArmActuatorSlot slot)
+            {
+                bool add_item(string id)
+                {
+                    if (string.IsNullOrEmpty(id))
+                        return false;
+
+                    var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, mechLab.dataManager, mechLab.Sim);
+
+                    if (!r.Is<ArmActuatorCBT>(out var actuator) && (actuator.Slot & total_slot) == 0)
+                    {
+                        DefaultHelper.AddMechLab(id, ComponentType.Upgrade, ml_helper, mount_loc);
+                        total_slot = total_slot & actuator.Slot;
+                        return true;
+                    }
+
+                    return false;
+                }
+                if (slot.HasFlag(slot))
+                    return;
+
+                if (add_item(ArmActuatorCBTHandler.GetDefaultActuator(mechLab.activeMechDef, mount_loc, slot)))
+                    return;
+
+                add_item(ArmActuatorCBTHandler.GetDefaultActuator(null, mount_loc, slot));
+            }
+
+
+            foreach (var slotitem in loc_helper.LocalInventory.Where(i => i.ComponentRef.Is<ArmActuatorCBT>()))
+            {
+                var actuator = slotitem.ComponentRef.GetComponent<ArmActuatorCBT>();
+                total_slot = total_slot & actuator.Slot;
+            }
+
+            add_default(ArmActuatorSlot.Shoulder);
+            add_default(ArmActuatorSlot.Lower);
+            if (total_slot.HasFlag(ArmActuatorSlot.Hand) && !total_slot.HasFlag(ArmActuatorSlot.Lower))
+            {
+                var hand = loc_helper.LocalInventory.FirstOrDefault(i =>
+                    i.ComponentRef.Is<ArmActuatorCBT>(out var actuator) && actuator.Slot.HasFlag(ArmActuatorSlot.Hand));
+                if (hand == null || hand.ComponentRef.IsFixed)
+                    return;
+                var dragitem = mechLab.DragItem;
+                mechLab.ForceItemDrop(hand);
+                ml_helper.SetDragItem(dragitem as MechLabItemSlotElement);
+            }
         }
 
         public void OnInstalled(WorkOrderEntry_InstallComponent order, SimGameState state, MechDef mech)
         {
-        }
 
-        public string PostValidateDrop(MechLabItemSlotElement drop_item, MechDef mech, List<InvItem> new_inventory, List<IChange> changes)
-        {
-            return string.Empty;
         }
     }
 }
