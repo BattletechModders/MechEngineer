@@ -200,7 +200,7 @@ namespace MechEngineer
         public bool UseCBTActuators = true;
         public string DefaultCBTShoulder = "emod_armcbt_shoulder";
         public string DefaultCBTLower = "emod_armcbt_lower";
-        public string DefaultCBTUppder = "emod_armcbt_upper";
+        public string DefaultCBTUpper = "emod_armcbt_upper";
         public string DefaultCBTHand = "emod_armcbt_hand";
         public bool InterruptHandDropIfNoLower = false;
 

@@ -1,16 +1,9 @@
 {
 	"Custom": {
-		"Category" : { 
-			"CategoryID" : "ArmLowerActuator" 
+		"ArmActuatorCBT" : {
+			"Slot" : "Lower"
 		},
-		"ArmActuator" : {
-			"AccuracyBonus" : -1
-		},
-		"BonusDescriptions": {
-			"Bonuses": [
-				"ArmAccuracyBonus: 1"
-			]
-		}
+		"Category" : { "CategoryID" : "ArmActuator1" }
 	},
     "Description" : {
         "Cost" : 20000,
@@ -19,7 +12,7 @@
         "Manufacturer" : "Generic",
         "Model" : "Standard",
         "UIName" : "Lower Arm",
-        "Id" : "emod_arm_lower",
+        "Id" : "emod_armcbt_lower",
         "Name" : "Lower Arm Actuator",
         "Details" : "TODO An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units. The lower actuator requires the upper arm actuators to be installed and working.",
         "Icon" : "uixSvgIcon_equipment_ActuatorArm"

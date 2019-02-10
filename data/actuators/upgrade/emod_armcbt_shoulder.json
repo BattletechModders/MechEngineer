@@ -1,20 +1,21 @@
 {
 	"Custom": {
-		"Category" : { 
-			"CategoryID" : "ArmUpperActuator" 
+		"ArmActuatorCBT" : {
+			"Slot" : "Shoulder"
 		},
-		"Flags" : { "flags" : [ "default" ] }
+		"Flags" : { "flags" : [ "default" ] },
+		"Category" : { "CategoryID" : "ArmActuator1" }
 	},
     "Description" : {
-        "Cost" : 20000,
+        "Cost" : 30000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Generic",
         "Model" : "Standard",
-        "UIName" : "Upper Arm",
-        "Id" : "emod_arm_upper",
-        "Name" : "Upper Arm Actuator",
-        "Details" : "TODO An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
+        "UIName" : "Shoulder",
+        "Id" : "emod_armcbt_shoulder",
+        "Name" : "Shoulder",
+        "Details" : "TODO",
         "Icon" : "uixSvgIcon_equipment_ActuatorArm"
     },
     "BonusValueA" : "",
@@ -25,10 +26,10 @@
     "BattleValue" : 0,
     "InventorySize" : 1,
     "Tonnage" : 0,
-    "AllowedLocations" : "Arms",
+    "AllowedLocations" : "Legs",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,
-    "statusEffects": null,
+    "statusEffects" : null,
     "ComponentTags" : {
         "items" : [
             "component_type_stock"

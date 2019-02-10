@@ -275,76 +275,6 @@
             }
         },
         {
-            "Name" : "ArmShoulder",
-            "DisplayName" : "Shoulder",
-            "MaxEquipedPerLocation" : 1,
-            "MinEquiped" : 2,
-            "AutoReplace" : true,
-            "DefaultCustoms" : {
-                "InventorySorter" : {
-                    "SortKey" : "ActuatorArm0"
-                },
-                "Sorter" : {
-                    "Order" : 0
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-                        "default"
-                    ]
-                }
-            }
-        },
-        {
-            "Name" : "ArmUpperActuator",
-            "DisplayName" : "Upper Arm Actuator",
-            "MaxEquipedPerLocation" : 1,
-            "MinEquiped" : 2,
-            "AutoReplace" : true,
-            "DefaultCustoms" : {
-                "InventorySorter" : {
-                    "SortKey" : "ActuatorArm1"
-                },
-                "Sorter" : {
-                    "Order" : 1
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-                        "default"
-                    ]
-                }
-            }
-        },
-        {
-            "Name" : "ArmLowerActuator",
-            "DisplayName" : "Lower Arm Actuator",
-            "MaxEquipedPerLocation" : 1,
-            "AutoReplace" : true,
-            "DefaultCustoms" : {
-                "InventorySorter" : {
-                    "SortKey" : "ActuatorArm2"
-                },
-                "Sorter" : {
-                    "Order" : 2
-                }
-            }
-        },
-        {
-            "Name" : "ArmHandActuator",
-            "DisplayName" : "Hand Actuator",
-            "MaxEquipedPerLocation" : 1,
-            "AutoReplace" : true,
-            "DefaultCustoms" : {
-                "InventorySorter" : {
-                    "SortKey" : "ActuatorArm3"
-                },
-                "Sorter" : {
-                    "Order" : 3
-                }
-            }
-        },
-        {
             "Name" : "LegHip",
             "DisplayName" : "Hip",
             "MaxEquipedPerLocation" : 1,
@@ -437,6 +367,15 @@
                     "Flags" : [
                         "ignore_damage"
                     ]
+                }
+            }
+        },
+        {
+            "Name" : "ArmActuator1",
+            "DisplayName" : "Arm Actuator",
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "Arm"
                 }
             }
         }

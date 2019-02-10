@@ -11,7 +11,7 @@ namespace MechEngineer
         private static string get_default(ArmActuatorSlot slot)
         {
             if (slot == ArmActuatorSlot.Upper)
-                return Control.settings.DefaultCBTUppder;
+                return Control.settings.DefaultCBTUpper;
             if (slot == ArmActuatorSlot.Shoulder)
                 return Control.settings.DefaultCBTShoulder;
             return "";
