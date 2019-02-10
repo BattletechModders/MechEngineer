@@ -11,10 +11,24 @@ namespace MechEngineer
 {
     [CustomComponent("ArmActuatorCBT")]
     public class ArmActuatorCBT : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed,
-        IAdjustDescription, IOnInstalled
+        IAdjustDescription, IOnInstalled, ISorter
     {
         public ArmActuatorSlot Slot { get; set; }
         public ArmActuatorSlot MaxSlot { get; set; } = ArmActuatorSlot.Hand;
+        public int Order {
+            get
+            {
+                if (Slot.HasFlag(ArmActuatorSlot.Shoulder))
+                    return 0;
+                if (Slot.HasFlag(ArmActuatorSlot.Upper))
+                    return 1;
+                if (Slot.HasFlag(ArmActuatorSlot.Lower))
+                    return 2;
+                if (Slot.HasFlag(ArmActuatorSlot.Hand))
+                    return 3;
+                return 0;
+            }
+        }
 
         public string PreValidateDrop(MechLabItemSlotElement item, LocationHelper location, MechLabHelper mechlab)
         {
@@ -187,15 +201,34 @@ namespace MechEngineer
             }
 
 
-            foreach (var slotitem in loc_helper.LocalInventory.Where(i => i.ComponentRef.Is<ArmActuatorCBT>()))
+            for (int i = loc_helper.LocalInventory.Count-1; i >= 0; i--)
             {
+                var slotitem = loc_helper.LocalInventory[i];
+
+                if (!slotitem.ComponentRef.Is<ArmActuatorCBT>())
+                    continue;
+
                 var actuator = slotitem.ComponentRef.GetComponent<ArmActuatorCBT>();
-                total_slot = total_slot | actuator.Slot;
+                if (slotitem.ComponentRef.IsDefault() &&
+                    !slotitem.ComponentRef.IsModuleFixed(ml_helper.MechLab.activeMechDef))
+                {
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                        $"-- removing {slotitem.ComponentRef.ComponentDefID} {actuator.Slot}");
+
+                    DefaultHelper.RemoveMechLab(slotitem.ComponentRef.ComponentDefID,
+                        slotitem.ComponentRef.ComponentDefType, ml_helper, mount_loc);
+                }
+                else
+                {
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- checking {slotitem.ComponentRef.ComponentDefID} {actuator.Slot}");
+                    total_slot = total_slot | actuator.Slot;
+                }
             }
+
             CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- actuators {total_slot}");
 
             add_default(ArmActuatorSlot.Shoulder);
-            add_default(ArmActuatorSlot.Lower);
+            add_default(ArmActuatorSlot.Upper);
 
 
             if (total_slot.HasFlag(ArmActuatorSlot.Hand) && !total_slot.HasFlag(ArmActuatorSlot.Lower))
@@ -221,5 +254,6 @@ namespace MechEngineer
         {
 
         }
+
     }
 }
