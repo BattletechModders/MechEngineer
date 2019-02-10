@@ -49,13 +49,6 @@ namespace MechEngineer
                 CompanyStatKey = "MechEngineer_AutoFixMechDefEngine"
             });
 
-            Add(new MechDefAutoFixCategory
-            {
-                AutoFixMechDef = ChassisHandler.Shared,
-                AutoFixSetting = Control.settings.AutoFixChassisDefSlotsChanges != null,
-                CompanyStatKey = "MechEngineer_AutoFixMechDefByChassisDefSlotsChanges"
-            });
-
             AutoFixer.Shared.RegisterMechFixer(MechDefAutoFixFacade.AutoFix);
         }
 
