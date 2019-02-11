@@ -20,7 +20,7 @@ namespace MechEngineer
                 return;
             }
 
-            Control.mod.Logger.LogDebug("Auto fixing chassisDef=" + chassisDef.Description.Id);
+            Control.mod.Logger.Log($"Auto fixing chassisDef={chassisDef.Description.Id}");
 
             AutoFixChassisDef(chassisDef);
             AutoFixSlots(chassisDef);
@@ -55,6 +55,8 @@ namespace MechEngineer
                 var info = typeof(ChassisDef).GetProperty("InitialTonnage");
                 var value = Convert.ChangeType(tonnage, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
+                
+                Control.mod.Logger.LogDebug($"set InitialTonnage={tonnage}");
             }
 
             if (Control.settings.AutoFixChassisDefMaxJumpjets)
@@ -67,6 +69,8 @@ namespace MechEngineer
                 var info = typeof(ChassisDef).GetProperty("MaxJumpjets");
                 var value = Convert.ChangeType(maxCount, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
+                
+                Control.mod.Logger.LogDebug($"set MaxJumpjets={maxCount}");
             }
         }
 
@@ -98,8 +102,6 @@ namespace MechEngineer
             }
             
             adapter.refreshLocationReferences();
-
-            //Control.mod.Logger.LogDebug("AutoFixSlots InventorySlots=" + chassisDef.LeftTorso.InventorySlots);
         }
 
         private static void ModifyInventorySlots(ref LocationDef locationDef, ChassisLocations location, ValueChange<int> change)
@@ -121,7 +123,7 @@ namespace MechEngineer
             info.SetValue(box, value);
             locationDef = (LocationDef) box;
 
-            //Control.mod.Logger.LogDebug("ModifyInventorySlots InventorySlots=" + locationDef.InventorySlots);
+            Control.mod.Logger.LogDebug($"set InventorySlots={locationDef.InventorySlots} on location={location}");
         }
     }
 }

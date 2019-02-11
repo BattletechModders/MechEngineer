@@ -19,8 +19,13 @@ namespace MechEngineer
                 return;
             }
 
-            Control.mod.Logger.LogDebug($"AutoFixing {mechDef.Chassis.Description.Id}");
+            Control.mod.Logger.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
 
+            if (Control.settings.ArmorStructureRatioEnforcement)
+            {
+                ArmorStructureRatioValidation.AutoFixMechDef(mechDef);
+            }
+            
             var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
             var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();
             var engineHeatSinkDef = builder.Inventory
@@ -50,12 +55,13 @@ namespace MechEngineer
                     return;
                 }
 
-                Control.mod.Logger.LogDebug($"AutoFix {mechDef.Chassis.Description.Id}" +
-                                            $" InitialTonnage={initialTonnage}" +
-                                            $" originalInitialTonnage={originalInitialTonnage}" +
-                                            $" currentTotalTonnage={currentTotalTonnage}" +
-                                            $" freeTonnage={freeTonnage}" +
-                                            $" maxFreeTonnage={maxFreeTonnage}");
+                freeTonnage = maxFreeTonnage;
+
+//                Control.mod.Logger.LogDebug($" InitialTonnage={initialTonnage}" +
+//                                            $" originalInitialTonnage={originalInitialTonnage}" +
+//                                            $" currentTotalTonnage={currentTotalTonnage}" +
+//                                            $" freeTonnage={freeTonnage}" +
+//                                            $" maxFreeTonnage={maxFreeTonnage}");
             }
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
@@ -70,34 +76,51 @@ namespace MechEngineer
                 .OrderByDescending(x => x.Rating);
 
             Engine maxEngine = null;
-
-            var heatSinks = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.HeatSink && x.Def.Is<EngineHeatSinkDef>()).ToList();
-            var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
-
-            foreach (var coreDef in engineCoreDefs)
             {
-                var engine = new Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, heatSinks);
-
+                //var heatSinks = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.HeatSink && x.Def.Is<EngineHeatSinkDef>()).ToList();
+                var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
+                var engines = new LinkedList<Engine>();
+                
+                foreach (var coreDef in engineCoreDefs)
                 {
-                    // remove superfluous jump jets
-                    var maxJetCount = coreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
-                    while (jumpJetList.Count > maxJetCount)
                     {
-                        var lastIndex = jumpJetList.Count - 1;
-                        var jumpJet = jumpJetList[lastIndex];
-                        freeTonnage += jumpJet.Def.Tonnage;
-                        builder.Remove(jumpJet);
-                        jumpJetList.Remove(jumpJet);
+                        var engine = new Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, new List<MechComponentRef>());
+                        engines.AddFirst(engine);
+                    }
+                    
+                    {
+                        // remove superfluous jump jets
+                        var maxJetCount = coreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
+//                        Control.mod.Logger.LogDebug($"Ca Inventory.Count={builder.Inventory.Count} jumpJetList.Count={jumpJetList.Count} maxJetCount={maxJetCount}");
+                        while (jumpJetList.Count > maxJetCount)
+                        {
+                            var lastIndex = jumpJetList.Count - 1;
+                            var jumpJet = jumpJetList[lastIndex];
+                            freeTonnage += jumpJet.Def.Tonnage;
+                            builder.Remove(jumpJet);
+                            jumpJetList.Remove(jumpJet);
+                        }
+//                        Control.mod.Logger.LogDebug($"Cb Inventory.Count={builder.Inventory.Count} jumpJetList.Count={jumpJetList.Count} maxJetCount={maxJetCount}");
+                    }
+
+                    foreach (var engine in engines)
+                    {
+//                        Control.mod.Logger.LogDebug($"D engine={engine.CoreDef} engine.TotalTonnage={engine.TotalTonnage} freeTonnage={freeTonnage}");
+                        
+                        if (engine.TotalTonnage <= freeTonnage)
+                        {
+                            maxEngine = engine;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if (maxEngine != null)
+                    {
+                        break;
                     }
                 }
-
-                if (engine.TotalTonnage > freeTonnage)
-                {
-                    continue;
-                }
-
-                maxEngine = engine;
-                break;
             }
 
             if (maxEngine == null)
@@ -105,7 +128,7 @@ namespace MechEngineer
                 return;
             }
 
-            Control.mod.Logger.LogDebug($"D maxEngine={maxEngine.CoreDef} freeTonnage={freeTonnage}");
+//            Control.mod.Logger.LogDebug($"D maxEngine={maxEngine.CoreDef} freeTonnage={freeTonnage}");
             {
                 var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == Control.settings.AutoFixMechDefCoreDummy);
                 if (dummyCore != null)
@@ -130,11 +153,15 @@ namespace MechEngineer
                 {
                     builder.Remove(incompatibleHeatSink);
                 }
+                
+//                Control.mod.Logger.LogDebug($"E Inventory.Count={builder.Inventory.Count} incompatibleHeatSinks.Count={incompatibleHeatSinks.Count}");
                 // add same amount of compatible heat sinks
                 foreach (var unused in incompatibleHeatSinks)
                 {
                     builder.Add(engineHeatSinkDef.Def);
                 }
+
+//                Control.mod.Logger.LogDebug($"F Inventory.Count={builder.Inventory.Count}");
             }
 
             // add free heatsinks
@@ -142,7 +169,7 @@ namespace MechEngineer
                 //var maxFree = maxEngine.CoreDef.ExternalHeatSinksFreeMaxCount;
                 //var current = maxEngine.ExternalHeatSinkCount;
                 var maxFree = maxEngine.CoreDef.ExternalHeatSinksFreeMaxCount;
-                var current = 0;
+                var current = 0; //we assume exiting heatsinks on the mech are additional and not free
                 for (var i = current; i < maxFree; i++)
                 {
                     if (!builder.Add(engineHeatSinkDef.Def))
@@ -150,14 +177,15 @@ namespace MechEngineer
                         break;
                     }
                 }
+//                Control.mod.Logger.LogDebug($"G Inventory.Count={builder.Inventory.Count} maxFree={maxFree}");
             }
             
             // find any overused location
             if (builder.HasOveruse())
             {
                 // heatsinks, upgrades
-                var itemsToBeReordered = mechDef.Inventory
-                    .Where(c => IsReorderable(c.Def))
+                var itemsToBeReordered = builder.Inventory
+                    .Where(IsReorderable)
                     .OrderBy(c => MechDefBuilder.LocationCount(c.Def.AllowedLocations))
                     .ThenByDescending(c => c.Def.InventorySize)
                     .ThenByDescending(c =>
@@ -192,10 +220,23 @@ namespace MechEngineer
             }
 
             mechDef.SetInventory(builder.Inventory.ToArray());
+
+//            {
+//                float currentTotalTonnage = 0, maxValue = 0;
+//                MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
+//                Control.mod.Logger.LogDebug($"Last currentTotalTonnage={currentTotalTonnage} maxValue={maxValue}");
+//            }
         }
 
-        private static bool IsReorderable(MechComponentDef def)
+        private static bool IsReorderable(MechComponentRef c)
         {
+            var def = c?.Def;
+            
+            if (def == null)
+            {
+                return false;
+            }
+            
             if (!(def.ComponentType >= ComponentType.AmmunitionBox && def.ComponentType <= ComponentType.Upgrade))
             {
                 return false;

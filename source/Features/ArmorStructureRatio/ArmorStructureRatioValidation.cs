@@ -8,6 +8,24 @@ namespace MechEngineer
 {
     public static class ArmorStructureRatioValidation
     {
+        public static void AutoFixMechDef(MechDef mechDef)
+        {
+            if (!Control.settings.ArmorStructureRatioEnforcement)
+            {
+                return;
+            }
+            
+            if (Control.settings.ArmorStructureRatioEnforcementSkipMechDefs.Contains(mechDef.Description.Id))
+            {
+                return;
+            }
+
+            foreach (var location in MechDefSlots.Locations)
+            {
+                ProcessMechArmorStructureRatioForLocation(mechDef, location, applyChanges:true);
+            }
+        }
+        
         public static bool ValidateMechArmorStructureRatio(
             MechDef mechDef,
             Dictionary<MechValidationType, List<Text>> errorMessages = null)
@@ -26,7 +44,7 @@ namespace MechEngineer
             foreach (var location in MechDefSlots.Locations)
             {
 
-                var valid = ValidateMechArmorStructureRatioForLocation(mechDef, location, errorMessages);
+                var valid = ProcessMechArmorStructureRatioForLocation(mechDef, location, errorMessages);
 
                 if (valid)
                 {
@@ -44,10 +62,11 @@ namespace MechEngineer
             return !hasInvalid;
         }
 
-        private static bool ValidateMechArmorStructureRatioForLocation(
+        private static bool ProcessMechArmorStructureRatioForLocation(
             MechDef mechDef,
             ChassisLocations location,
-            Dictionary<MechValidationType, List<Text>> errorMessages)
+            Dictionary<MechValidationType, List<Text>> errorMessages = null,
+            bool applyChanges = false)
         {
             
             var mechLocationDef = mechDef.GetLocationLoadoutDef(location);
@@ -60,11 +79,35 @@ namespace MechEngineer
 
             var ratio = location == ChassisLocations.Head ? 3 : 2;
 
-            if (armor + armorRear <= ratio * structure)
+            var total = armor + armorRear;
+            var totalMax = ratio * structure;
+            
+            if (total <= totalMax)
             {
                 return true;
             }
 
+            if (applyChanges)
+            {
+//                Control.mod.Logger.LogDebug($"structure={structure} location={location} totalMax={totalMax}");
+//                Control.mod.Logger.LogDebug($"before AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor}");
+
+                if ((location & ChassisLocations.Torso) != 0)
+                {
+                    mechLocationDef.AssignedArmor = (totalMax * 2 / 3).Round(Mathf.Ceil, 5);
+                    mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
+                    mechLocationDef.AssignedRearArmor = (totalMax * 1 / 3).Round(Mathf.Floor, 5);
+                    mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
+                }
+                else
+                {
+                    mechLocationDef.AssignedArmor = totalMax;
+                    mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
+                }
+                
+                Control.mod.Logger.LogDebug($"set AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor} on location={location}");
+            }
+            
             //Control.mod.Logger.LogDebug($"{Mech.GetAbbreviatedChassisLocation(location)} armor={armor} armorRear={armorRear} structure={structure}");
 
             if (errorMessages != null)

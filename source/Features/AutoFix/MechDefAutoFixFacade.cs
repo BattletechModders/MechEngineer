@@ -59,6 +59,11 @@ namespace MechEngineer
     {
         public static void AutoFix(List<MechDef> mechDefs, SimGameState simgame)
         {
+            if (simgame != null)
+            {
+                return;
+            }
+            
             var fixers = MechDefAutoFixCategory.Fixers;
 
             foreach (var fixer in fixers)
