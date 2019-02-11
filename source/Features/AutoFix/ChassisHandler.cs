@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    internal class ChassisHandler : IAutoFixMechDef
+    internal class ChassisHandler
     {
         internal static ChassisHandler Shared = new ChassisHandler();
 
@@ -20,7 +20,7 @@ namespace MechEngineer
                 return;
             }
 
-            Control.mod.Logger.LogDebug("Auto fixing chassisDef=" + chassisDef.Description.Id);
+            Control.mod.Logger.Log($"Auto fixing chassisDef={chassisDef.Description.Id}");
 
             AutoFixChassisDef(chassisDef);
             AutoFixSlots(chassisDef);
@@ -55,6 +55,8 @@ namespace MechEngineer
                 var info = typeof(ChassisDef).GetProperty("InitialTonnage");
                 var value = Convert.ChangeType(tonnage, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
+                
+                Control.mod.Logger.LogDebug($"set InitialTonnage={tonnage}");
             }
 
             if (Control.settings.AutoFixChassisDefMaxJumpjets)
@@ -67,6 +69,8 @@ namespace MechEngineer
                 var info = typeof(ChassisDef).GetProperty("MaxJumpjets");
                 var value = Convert.ChangeType(maxCount, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
+                
+                Control.mod.Logger.LogDebug($"set MaxJumpjets={maxCount}");
             }
         }
 
@@ -98,8 +102,6 @@ namespace MechEngineer
             }
             
             adapter.refreshLocationReferences();
-
-            //Control.mod.Logger.LogDebug("AutoFixSlots InventorySlots=" + chassisDef.LeftTorso.InventorySlots);
         }
 
         private static void ModifyInventorySlots(ref LocationDef locationDef, ChassisLocations location, ValueChange<int> change)
@@ -121,88 +123,7 @@ namespace MechEngineer
             info.SetValue(box, value);
             locationDef = (LocationDef) box;
 
-            //Control.mod.Logger.LogDebug("ModifyInventorySlots InventorySlots=" + locationDef.InventorySlots);
-        }
-
-        private static bool IsReorderable(MechComponentDef def)
-        {
-            if (!(def.ComponentType >= ComponentType.AmmunitionBox && def.ComponentType <= ComponentType.Upgrade))
-            {
-                return false;
-            }
-
-            if (MechDefBuilder.LocationCount(def.AllowedLocations) == 1)
-            {
-                return false;
-            }
-
-            if (def.Is<Category>(out var category) && category.CategoryDescriptor.UniqueForLocation)
-            {
-                return false;
-            }
-
-            return true;
-        }
-        
-        public void AutoFixMechDef(MechDef mechDef)
-        {
-            var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
-
-            // find any overused location
-            if (!builder.HasOveruse())
-            {
-                return;
-            }
-            
-            // heatsinks, upgrades
-            var itemsToBeReordered = mechDef.Inventory
-                .Where(c => IsReorderable(c.Def))
-                .OrderBy(c => MechDefBuilder.LocationCount(c.Def.AllowedLocations))
-                .ThenByDescending(c => c.Def.InventorySize)
-                .ThenByDescending(c =>
-                {
-                    switch (c.ComponentDefType)
-                    {
-                        case ComponentType.Upgrade:
-                            return 2;
-                        case ComponentType.AmmunitionBox:
-                            return 1;
-                        default:
-                            return 0;
-                    }
-                })
-                .ToList();
-
-            // remove all items that can be reordered: heatsinks, upgrades
-            foreach (var item in itemsToBeReordered)
-            {
-                builder.Remove(item);
-            }
-
-            // then add most restricting, and then largest items first (probably double head sinks)
-            foreach (var item in itemsToBeReordered)
-            {
-                // couldn't add everything
-                if (!builder.Add(item.Def))
-                {
-                    return;
-                }
-            }
-
-            // if reorder does not work perfectly, ignore
-            if (builder.HasOveruse())
-            {
-                return;
-            }
-
-            // save
-            mechDef.SetInventory(builder.Inventory.ToArray());
-
-            //Control.mod.Logger.LogDebug($"Name={mechDef.Name} ChassisID={mechDef.ChassisID}");
-            foreach (var item in mechDef.Inventory)
-            {
-                //Control.mod.Logger.LogDebug($" ComponentDefID={item.ComponentDefID} MountedLocation={item.MountedLocation}");
-            }
+            Control.mod.Logger.LogDebug($"set InventorySlots={locationDef.InventorySlots} on location={location}");
         }
     }
 }

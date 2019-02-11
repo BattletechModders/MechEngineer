@@ -22,18 +22,18 @@
 			"Action": "ObjectMerge",
 			"Value": {
 				"CurrentArmor": 160,
-				"CurrentRearArmor": 60,
+				"CurrentRearArmor": 50,
 				"AssignedArmor": 160,
-				"AssignedRearArmor": 60
+				"AssignedRearArmor": 50
 			}
 		},
 		{
 			"JSONPath": "Locations[?(@.Location == 'CenterTorso')]",
 			"Action": "ObjectMerge",
 			"Value": {
-				"CurrentArmor": 245,
+				"CurrentArmor": 250,
 				"CurrentRearArmor": 70,
-				"AssignedArmor": 245,
+				"AssignedArmor": 250,
 				"AssignedRearArmor": 70
 			}
 		},
@@ -42,9 +42,9 @@
 			"Action": "ObjectMerge",
 			"Value": {
 				"CurrentArmor": 160,
-				"CurrentRearArmor": 60,
+				"CurrentRearArmor": 50,
 				"AssignedArmor": 160,
-				"AssignedRearArmor": 60
+				"AssignedRearArmor": 50
 			}
 		},
 		{

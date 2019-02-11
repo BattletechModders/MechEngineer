@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using CustomComponents;
 using Localize;
+using UnityEngine;
 
 namespace MechEngineer
 {
@@ -64,6 +66,8 @@ namespace MechEngineer
             }
             else if (mechLocationDestroyed)
             {
+                // TODO track hits on same component
+                // TODO already doing it
                 crits = mechComponent.componentDef.InventorySize;
             }
 
@@ -74,7 +78,7 @@ namespace MechEngineer
 
                 var critStat = mechComponent.StatCollection.GetStatistic(statisticName) ?? mechComponent.StatCollection.AddStatistic(statisticName, 0);
                 oldCritLevel = critStat.Value<int>();
-                critLevel = oldCritLevel + crits;
+                critLevel = Mathf.Max(oldCritLevel + crits, criticalHitStates.MaxStates + 1);
                 critStat.SetValue(critLevel);
             }
 
@@ -106,21 +110,11 @@ namespace MechEngineer
 
                 foreach (var hitEffect in hitEffects)
                 {
-                    var effectId = hitEffect.StatusEffect.IdForComponent(mechComponent);
-
-                    var statusEffects = combat.EffectManager
-                        .GetAllEffectsWithID(effectId)
-                        .Where(e => e.Target == mechComponent.parent);
-
-                    foreach (var statusEffect in statusEffects)
-                    {
-                        mechComponent.parent.CancelEffect(statusEffect);
-                        mechComponent.createdEffectIDs.Remove(effectId);
-                    }
+                    mechComponent.CancelCriticalEffect(hitEffect.StatusEffect);
                 }
             }
 
-            if (damageLevel < ComponentDamageLevel.Destroyed) {
+            {
                 var hitEffects = criticalHitStates
                     .HitEffects
                     .Where(e => e.State == critLevel);
@@ -133,9 +127,14 @@ namespace MechEngineer
                         continue;
                     }
 
-                    var effectId = hitEffect.StatusEffect.IdForComponent(mechComponent);
-                    combat.EffectManager.CreateEffect(effectData, effectId, -1, mechComponent.parent, mechComponent.parent, default(WeaponHitInfo), 0, false);
-                    mechComponent.createdEffectIDs.Add(effectId);
+                    if (damageLevel < ComponentDamageLevel.Destroyed)
+                    {
+                        mechComponent.CreateCriticalEffect(effectData);
+                    }
+                    else
+                    {
+                        mechComponent.CreateCriticalEffect(effectData, false);
+                    }
                 }
             }
 
@@ -171,10 +170,49 @@ namespace MechEngineer
     }
 
     internal static class EffectDataExtensions
-    {
-        internal static string IdForComponent(this EffectData statusEffect, MechComponent mechComponent)
+    {   
+        internal static void CreateCriticalEffect(this MechComponent mechComponent, EffectData effectData, bool tracked = true)
         {
-            return $"CritialHitEffect_{statusEffect.Description.Id}_{mechComponent.parent.GUID}_{mechComponent.uid}";
+            var effectId = mechComponent.EffectId(effectData);
+            
+            var actor = mechComponent.parent;
+            
+            actor.Combat.EffectManager.CreateEffect(
+                effectData, effectId, -1,
+                actor, actor,
+                default(WeaponHitInfo), 0, false);
+
+            if (tracked)
+            {
+                // make sure created effects are removed once component got destroyed
+                mechComponent.createdEffectIDs.Add(effectId);
+            }
+        }
+
+        internal static void CancelCriticalEffect(this MechComponent mechComponent, EffectData effectData)
+        {
+            var effectId = mechComponent.EffectId(effectData);
+
+            var actor = mechComponent.parent;
+            var statusEffects = actor.Combat.EffectManager
+                .GetAllEffectsWithID(effectId)
+                .Where(e => e.Target == actor);
+
+            foreach (var statusEffect in statusEffects)
+            {
+                actor.CancelEffect(statusEffect);
+                mechComponent.createdEffectIDs.Remove(effectId);
+            }
+        }
+        
+        private static string EffectId(this MechComponent mechComponent, EffectData statusEffect)
+        {
+            return $"{mechComponent.parent.EffectId(statusEffect)}_{mechComponent.uid}";
+        }
+        
+        private static string EffectId(this AbstractActor actor, EffectData statusEffect)
+        {
+            return $"CriticalHitEffect_{statusEffect.Description.Id}_{actor.GUID}";
         } 
     }
 }

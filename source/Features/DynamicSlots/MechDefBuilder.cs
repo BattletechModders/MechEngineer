@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using BattleTech.Data;
 
 namespace MechEngineer
 {
     internal class MechDefBuilder
     {
+        internal readonly DataManager DataManager;
         internal readonly MechDefSlots Slots;
         internal readonly List<MechComponentRef> Inventory;
         internal readonly Dictionary<ChassisLocations, int> LocationUsage = new Dictionary<ChassisLocations, int>();
@@ -16,6 +18,7 @@ namespace MechEngineer
 
             Inventory = inventory;
 
+            DataManager = UnityGameInstance.BattleTechGame.DataManager;
             //Control.mod.Logger.LogDebug("");
             //Control.mod.Logger.LogDebug($"chassisDef={chassisDef.Description.Id}");
 
@@ -44,6 +47,8 @@ namespace MechEngineer
                 AddSlotsToLocation(def.InventorySize, location, true);
             }
             var componentRef = new MechComponentRef(def.Description.Id, null, def.ComponentType, location);
+            componentRef.DataManager = DataManager;
+            componentRef.RefreshComponentDef();
             Inventory.Add(componentRef);
             return true;
         }

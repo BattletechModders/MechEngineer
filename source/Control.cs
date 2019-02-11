@@ -66,7 +66,7 @@ namespace MechEngineer
                 
                 mod.Logger.LogDebug("setting up mechdef auto fixers");
 
-                MechDefAutoFixCategory.SetMechDefAutoFixCategory();
+                AutoFixer.Shared.RegisterMechFixer(MEAutoFixer.Shared.AutoFix);
 
                 mod.Logger.LogDebug("added backwards compatibility assembly resolver");
                 AllowAnyAssemblyVersionReference();

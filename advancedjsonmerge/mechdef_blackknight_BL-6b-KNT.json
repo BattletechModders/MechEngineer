@@ -21,9 +21,9 @@
 			"JSONPath": "Locations[?(@.Location == 'LeftTorso')]",
 			"Action": "ObjectMerge",
 			"Value": {
-				"CurrentArmor": 130,
+				"CurrentArmor": 120,
 				"CurrentRearArmor": 40,
-				"AssignedArmor": 130,
+				"AssignedArmor": 120,
 				"AssignedRearArmor": 40
 			}
 		},
@@ -41,9 +41,9 @@
 			"JSONPath": "Locations[?(@.Location == 'RightTorso')]",
 			"Action": "ObjectMerge",
 			"Value": {
-				"CurrentArmor": 130,
+				"CurrentArmor": 120,
 				"CurrentRearArmor": 40,
-				"AssignedArmor": 130,
+				"AssignedArmor": 120,
 				"AssignedRearArmor": 40
 			}
 		},
