@@ -49,7 +49,7 @@ namespace MechEngineer
                 Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
 
                 Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                if (Control.settings.UseCBTActuators)
+                if (settings.UseCBTActuators)
                 {
                     Validator.RegisterClearInventory(ArmActuatorCBTHandler.ClearInventory);
                 }

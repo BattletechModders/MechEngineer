@@ -8,13 +8,21 @@ namespace MechEngineer
 {
     public static class ArmActuatorCBTHandler
     {
-        private static string get_default(ArmActuatorSlot slot)
+        private static string GetComponentIdForSlot(ArmActuatorSlot slot)
         {
-            if (slot == ArmActuatorSlot.Upper)
-                return Control.settings.DefaultCBTUpper;
-            if (slot == ArmActuatorSlot.Shoulder)
-                return Control.settings.DefaultCBTShoulder;
-            return "";
+            switch (slot)
+            {
+                case ArmActuatorSlot.Shoulder:
+                    return Control.settings.DefaultCBTShoulder;
+                case ArmActuatorSlot.Upper:
+                    return Control.settings.DefaultCBTUpper;
+                case ArmActuatorSlot.Lower:
+                    return Control.settings.DefaultCBTLower;
+                case ArmActuatorSlot.Hand:
+                    return Control.settings.DefaultCBTHand;
+                default:
+                    return "";
+            }
         }
 
         public static string GetDefaultActuator(MechDef mech, ChassisLocations location, ArmActuatorSlot slot)
@@ -25,13 +33,13 @@ namespace MechEngineer
             if (mech?.Chassis == null || !mech.Chassis.Is<ArmSupportCBT>(out var support))
             {
                 if (location == ChassisLocations.RightArm || location == ChassisLocations.LeftArm)
-                    return get_default(slot);
+                    return GetComponentIdForSlot(slot);
                 return "";
             }
 
             var part = support.GetByLocation(location);
             if (part == null)
-                return get_default(slot);
+                return GetComponentIdForSlot(slot);
 
             if (slot == ArmActuatorSlot.Shoulder)
                 return part.DefaultShoulder;
@@ -68,7 +76,7 @@ namespace MechEngineer
 
                 if (add_item(GetDefaultActuator(mech, location, slot)))
                     return;
-                add_item(get_default(slot));
+                add_item(GetComponentIdForSlot(slot));
             }
 
             void clear_side(ChassisLocations location)
