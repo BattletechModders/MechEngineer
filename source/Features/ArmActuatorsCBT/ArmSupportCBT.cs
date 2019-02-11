@@ -25,7 +25,7 @@ namespace MechEngineer
     }
 
     [CustomComponent("CBTArmActuatorSupport")]
-    public class ArmSupportCBT : ChassisCusomComponent
+    public class ArmSupportCBT : ChassisCustom
     {
         public SupportPart Left { get; set; }
         public SupportPart Right { get; set; }
