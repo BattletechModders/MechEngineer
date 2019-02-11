@@ -102,7 +102,7 @@
     <Compile Include="Features\Engine\EngineCoreDef.cs" />
     <Compile Include="Features\Engine\EngineHeatBlockDef.cs" />
     <Compile Include="Features\Engine\EngineHeatSinkDef.cs" />
-    <Compile Include="Features\AutoFix\EngineHandler.cs" />
+    <Compile Include="Features\AutoFix\MEAutoFixer.cs" />
     <Compile Include="Features\Engine\Handler\EngineValidation.cs" />
     <Compile Include="Features\Engine\Helper\EngineExtensions.cs" />
     <Compile Include="Features\Engine\Helper\EngineMovement.cs" />
@@ -193,7 +193,6 @@
     <Compile Include="Misc\Global.cs" />
     <Compile Include="Features\CriticalHitStates\Patches\Mech_GetComponentInSlot_Patch.cs" />
     <Compile Include="Features\AutoFix\CockpitHandler.cs" />
-    <Compile Include="Features\AutoFix\MechDefAutoFixFacade.cs" />
     <Compile Include="Misc\Interfaces.cs" />
     <Compile Include="Control.cs" />
     <Compile Include="AssemblyInfo.cs" />

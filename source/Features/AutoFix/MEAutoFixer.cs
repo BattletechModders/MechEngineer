@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
@@ -7,9 +8,30 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    internal class EngineHandler : IAutoFixMechDef
+    internal class MEAutoFixer : IAutoFixMechDef
     {
-        internal static EngineHandler Shared = new EngineHandler();
+        internal static MEAutoFixer Shared = new MEAutoFixer();
+
+        public void AutoFix(List<MechDef> mechDefs, SimGameState simgame)
+        {
+            // we dont fix save games anymore, have to have money and time to fix an ongoing campaign
+            if (simgame != null)
+            {
+                return;
+            }
+            
+            foreach (var mechDef in mechDefs)
+            {
+                try
+                {
+                    AutoFixMechDef(mechDef);
+                }
+                catch (Exception e)
+                {
+                    Control.mod.Logger.LogError(e);
+                }
+            }
+        }
 
         public void AutoFixMechDef(MechDef mechDef)
         {
@@ -42,18 +64,18 @@ namespace MechEngineer
                 MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
                 var maxFreeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
 
-                var initialTonnage = mechDef.Chassis.InitialTonnage;
-                var originalInitialTonnage = ChassisHandler.GetOriginalTonnage(mechDef.Chassis);
-                if (originalInitialTonnage.HasValue) // either use the freed up tonnage from the initial tonnage fix
-                {
-                    freeTonnage = originalInitialTonnage.Value - initialTonnage;
-                    freeTonnage = Mathf.Min(freeTonnage, maxFreeTonnage); // if the original was overweight, make sure not to stay overweight
-                }
-                else // or use up available total tonnage
-                {
-                    Control.mod.Logger.LogWarning("Couldn't find original initial tonnage");
-                    return;
-                }
+//                var initialTonnage = mechDef.Chassis.InitialTonnage;
+//                var originalInitialTonnage = ChassisHandler.GetOriginalTonnage(mechDef.Chassis);
+//                if (originalInitialTonnage.HasValue) // either use the freed up tonnage from the initial tonnage fix
+//                {
+//                    freeTonnage = originalInitialTonnage.Value - initialTonnage;
+//                    freeTonnage = Mathf.Min(freeTonnage, maxFreeTonnage); // if the original was overweight, make sure not to stay overweight
+//                }
+//                else // or use up available total tonnage
+//                {
+//                    Control.mod.Logger.LogWarning("Couldn't find original initial tonnage");
+//                    return;
+//                }
 
                 freeTonnage = maxFreeTonnage;
 
@@ -138,10 +160,7 @@ namespace MechEngineer
             }
 
             // add engine
-            builder.Add(
-                maxEngine.CoreDef.Def,
-                ChassisLocations.CenterTorso
-            );
+            builder.Add(maxEngine.CoreDef.Def,ChassisLocations.CenterTorso);
 
             if (!Control.settings.AllowMixingHeatSinkTypes)
             {
