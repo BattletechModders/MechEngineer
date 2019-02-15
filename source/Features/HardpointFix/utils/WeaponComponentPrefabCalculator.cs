@@ -47,7 +47,7 @@ namespace MechEngineer
         internal string GetNewPrefabName(MechComponentRef componentRef, ChassisLocations location)
         {
             var availablePrefabNames = GetAvailablePrefabNamesForLocation(location);
-            return GetAvailableWeaponComponentPrefabName(componentRef.Def.PrefabIdentifier.ToLower(), chassisDef.PrefabBase, availablePrefabNames);
+            return GetAvailableWeaponComponentPrefabName(componentRef.Def.PrefabIdentifier.ToLower(), availablePrefabNames);
         }
 
         private void CalculateMappingForLocation(ChassisLocations location, List<MechComponentRef> locationComponentRefs)
@@ -65,79 +65,13 @@ namespace MechEngineer
                 mapping[componentRef] = prefabName;
             }
         }
-
-        private static string GetAvailableWeaponComponentPrefabName(string prefabId, string prefabBase, List<string> availablePrefabNames)
+        
+        private static string GetAvailableWeaponComponentPrefabName(string prefabId, List<string> availablePrefabNames)
         {
-            List<string> compatibleTerms;
-            if (prefabId.Contains("lrm"))
+            if (!Control.settings.HardpointFix.WeaponPrefabMapping.TryGetValue(prefabId, out var compatibleTerms))
             {
-                var prefabIdFix = prefabId == "srm20" ? "lrm20" : prefabId;
-                var order = new[] {"lrm5", "lrm10", "lrm15", "lrm20"};
-                var index = Array.IndexOf(order, prefabId);
-
-                compatibleTerms = new List<string> {prefabIdFix};
-
-                if (Control.settings.HardpointFix.AllowLRMInLargerSlotsForAll)
-                {
-                    for (var i = index + 1; i < order.Length; i++)
-                    {
-                        compatibleTerms.Add(order[i]);
-                    }
-                }
-
-                if (Control.settings.HardpointFix.AllowLRMInSmallerSlotsForAll || Control.settings.HardpointFix.AllowLRMInSmallerSlotsForMechs.Contains(prefabBase))
-                {
-                    for (var i = index - 1; i >= 0; i--)
-                    {
-                        compatibleTerms.Add(order[i]);
-                    }
-                }
-
-                var lrm20Index = compatibleTerms.IndexOf("lrm20");
-                if (lrm20Index > -1)
-                {
-                    compatibleTerms.Insert(lrm20Index, "srm20");
-                }
+                compatibleTerms = new[] {prefabId.ToLowerInvariant()};
             }
-            else if (prefabId.Contains("machinegun"))
-            {
-                compatibleTerms = new List<string> {prefabId, "mg"};
-            }
-            else if (prefabId.Contains("ac"))
-            {
-                compatibleTerms = new List<string>(5) {prefabId};
-                if (prefabId.Contains("ac5"))
-                {
-                    compatibleTerms.Add("uac5");
-                }
-                if (prefabId.Contains("ac10"))
-                {
-                    compatibleTerms.Add("lbx10");
-                }
-                compatibleTerms.Add("ac"); // fix for hunchback ac hardpoint
-                compatibleTerms.Add("lbx"); // ? don't like it but maybe solves stuff?
-            }
-            else
-            {
-                compatibleTerms = new List<string> {prefabId};
-            }
-
-            // if orderBy of availablePreabNames is from least important to more important, least important slots are filled first -> doesn't look nice though
-            //foreach (var term in compatibleTerms)
-            //{
-            //    var prefabName = availablePrefabNames.FirstOrDefault(x => x.Contains("_" + term + "_"));
-            //    if (prefabName != null)
-            //    {
-            //        return prefabName;
-            //    }
-            //}
-
-            // since prefabNames is sorted by index and get available weapon component is already sorted from largest to smallest, we should have a nice sort order
-
-            //Control.mod.Logger.LogDebug("availablePrefabNames for " + prefabBase);
-            //availablePrefabNames.ForEach(Control.mod.Logger.LogDebug);
-            //Control.mod.Logger.LogDebug("compatibleTerms for " + prefabId);
-            //compatibleTerms.ForEach(Control.mod.Logger.LogDebug);
 
             var prefabName = compatibleTerms.Select(t => availablePrefabNames.FirstOrDefault(n => n.Contains("_" + t + "_"))).FirstOrDefault(n => n != null);
             //Control.mod.Logger.LogDebug("found prefabName " + prefabName);
@@ -166,34 +100,6 @@ namespace MechEngineer
                 //.OrderBy(hpset => hpset.Length) // sort hardpoints by how many weapon types are supported (use up the ones with less options first) - no -> use index order, lower index = nicer looking
                 .SelectMany(hpset => hpset) // we don't care about groups anymore, just flatten everything into one stream
                 .ToList();
-        }
-
-        private string[] RemoveUnwantedHardpoints(ChassisLocations location, string[] hardpointSet)
-        {
-            var counter = new HardpointCounter(chassisDef, location);
-
-            IEnumerable<string> hardpoints = hardpointSet;
-            if (counter.numBallistic == 0)
-            {
-                hardpoints = hardpoints.Where(hp => !hp.Contains("_bh"));
-            }
-
-            if (counter.numEnergy == 0 && counter.numSmall == 0)
-            {
-                hardpoints = hardpoints.Where(hp => !hp.Contains("_eh"));
-            }
-
-            if (counter.numMissile == 0)
-            {
-                hardpoints = hardpoints.Where(hp => !hp.Contains("_mh"));
-            }
-
-            if (counter.numSmall == 0)
-            {
-                hardpoints = hardpoints.Where(hp => !hp.Contains("_ah"));
-            }
-
-            return hardpoints.ToArray();
         }
     }
 }

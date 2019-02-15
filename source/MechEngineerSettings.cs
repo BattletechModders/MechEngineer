@@ -364,9 +364,28 @@ namespace MechEngineer
             public bool AutoFixChassisDefWeaponHardpointCounts = false; // true = hardpoint counts derived from prefab hardpoints
             public bool EnforceHardpointLimits = false; // true = use prefab hardpoints
             public bool AllowDefaultLoadoutWeapons = false;
-            public bool AllowLRMInSmallerSlotsForAll = false;
-            public string[] AllowLRMInSmallerSlotsForMechs = { "atlas" };
-            public bool AllowLRMInLargerSlotsForAll = true;
+            
+            // from: /data/weapon$ grep -R "PrefabIdentifier" . | cut -d\" -f 4 | sort | uniq
+            // to: /data/hardpoints$ grep -R "chrPrfWeap" . | cut -d_ -f 5 | sort | uniq
+            // default mapping = prefabid -> lower case prefab id (e.g. Flamer -> flamer, PPC -> ppc)
+            public Dictionary<string, string[]> WeaponPrefabMapping = new Dictionary<string, string[]>
+            {
+                ["AC2"] = new[] {"ac2", "ac", "lbx"},
+                ["AC5"] = new[] {"ac5", "uac5", "ac", "lbx"},
+                ["AC10"] = new[] {"ac10", "lbx10", "ac", "lbx"},
+                ["AC20"] = new[] {"ac20", "ac", "lbx"},
+                
+                ["lrm5"] = new[] {"lrm5", "lrm10", "lrm15", "lrm20", "srm20"},
+                ["lrm10"] = new[] {"lrm10", "lrm15", "lrm20", "srm20", "lrm5"},
+                ["lrm15"] = new[] {"lrm15", "lrm20", "srm20", "lrm10", "lrm5"},
+                ["lrm20"] = new[] {"lrm20", "srm20", "lrm15", "lrm10", "lrm5"},
+                
+                ["MachineGun"] = new[] {"machinegun", "mg"},
+                
+                ["srm2"] = new[] {"srm2", "srm4", "srm6"},
+                ["srm4"] = new[] {"srm4", "srm6", "srm2"},
+                ["srm6"] = new[] {"srm6", "srm4", "srm2"},
+            };
         }
 
         #endregion
