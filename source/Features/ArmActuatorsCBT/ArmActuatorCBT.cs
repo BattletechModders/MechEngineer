@@ -265,71 +265,24 @@ namespace MechEngineer
 
         public void OnInstalled(WorkOrderEntry_InstallComponent order, SimGameState state, MechDef mech)
         {
-            ArmActuatorSlot clear_defaults(ChassisLocations location)
-            {
-                mech.SetInventory(mech.Inventory.Where(i =>
-                    i.MountedLocation == location && i.Is<ArmActuatorCBT>() && i.IsFixed &&
-                    !i.IsModuleFixed(mech)).ToArray());
-
-                var slot = ArmActuatorSlot.None;
-                foreach (var item in mech.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuatorCBT>()))
-                {
-                    var actuator = item.GetComponent<ArmActuatorCBT>();
-                    slot = slot | actuator.Slot;
-                }
-
-                return slot;
-            }
-
-            void add_default(ArmActuatorSlot slot, ChassisLocations location, ref ArmActuatorSlot slots)
-            {
-                bool add_item(string id, ref ArmActuatorSlot total_slot)
-                {
-                    if (string.IsNullOrEmpty(id))
-                        return false;
-
-                    var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, state.DataManager, state);
-
-                    if (r.Is<ArmActuatorCBT>(out var actuator) && (actuator.Slot & total_slot) == 0)
-                    {
-                        DefaultHelper.AddInventory(id, mech, location, ComponentType.Upgrade, state);
-                        total_slot = total_slot | actuator.Slot;
-                        return true;
-                    }
-
-                    return false;
-                }
-
-                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"---- adding {slot} to {slots}");
-                if (slots.HasFlag(slot))
-                {
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"---- already present");
-                    return;
-                }
-
-                if (add_item(ArmActuatorCBTHandler.GetDefaultActuator(mech, location, slot), ref slots))
-                    return;
-
-                add_item(ArmActuatorCBTHandler.GetDefaultActuator(null, location, slot), ref slots);
-            }
 
 
             if (order.DesiredLocation != ChassisLocations.None && ChassisLocations.Arms.HasFlag(order.DesiredLocation) )
             {
-                var slots = clear_defaults(order.DesiredLocation);
+                var slots = ArmActuatorCBTHandler.ClearDefaultActuators(mech, order.DesiredLocation);
                 CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- ArmActuator removing, left {slots}");
 
-                add_default(ArmActuatorSlot.Shoulder, order.DesiredLocation, ref slots);
-                add_default(ArmActuatorSlot.Upper, order.DesiredLocation, ref slots);
+                ArmActuatorCBTHandler.AddDefaultToInventory(mech, state, order.DesiredLocation, ArmActuatorSlot.Shoulder, ref slots);
+                ArmActuatorCBTHandler.AddDefaultToInventory(mech, state, order.DesiredLocation, ArmActuatorSlot.Upper, ref slots);
             }
 
             if (order.PreviousLocation != ChassisLocations.None && ChassisLocations.Arms.HasFlag(order.DesiredLocation))
             {
-                var slots = clear_defaults(order.PreviousLocation);
+                var slots = ArmActuatorCBTHandler.ClearDefaultActuators(mech, order.PreviousLocation);
                 CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- ArmActuator adding, left {slots}");
 
-                add_default(ArmActuatorSlot.Shoulder, order.PreviousLocation, ref slots);
-                add_default(ArmActuatorSlot.Upper, order.PreviousLocation,ref slots);
+                ArmActuatorCBTHandler.AddDefaultToInventory(mech, state, order.PreviousLocation, ArmActuatorSlot.Shoulder, ref slots);
+                ArmActuatorCBTHandler.AddDefaultToInventory(mech, state, order.PreviousLocation, ArmActuatorSlot.Upper, ref slots);
             }
         }
     }

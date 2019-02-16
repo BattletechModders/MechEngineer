@@ -13,7 +13,11 @@ namespace MechEngineer
         Shoulder = 1,
         Upper = 2,
         Lower = 4,
-        Hand = 8
+        Hand = 8,
+
+        FullHand = 15,
+        FullLower = 7,
+        FullUpper = 3
     }
 
     [Serializable]

@@ -170,9 +170,9 @@ namespace MechEngineer
 
                 //list of actuators in location
                 var actuators = from item in mechdef.Inventory
-                    where item.MountedLocation == location &&
-                          item.Is<ArmActuatorCBT>()
-                    select item.GetComponent<ArmActuatorCBT>();
+                                where item.MountedLocation == location &&
+                                      item.Is<ArmActuatorCBT>()
+                                select item.GetComponent<ArmActuatorCBT>();
 
 
                 //get max avaliable actuator
@@ -202,7 +202,7 @@ namespace MechEngineer
                 // if not support hand/lower
                 if (slots > max)
                     return false;
-                
+
                 //if not have shoulder
                 if (!slots.HasFlag(ArmActuatorSlot.Shoulder))
                     return false;
@@ -220,6 +220,151 @@ namespace MechEngineer
 
             return check_location(ChassisLocations.LeftArm) && check_location(ChassisLocations.RightArm);
 
+        }
+
+        public static void FixCBTActuators(List<MechDef> mechdefs, SimGameState simgame)
+        {
+            if (simgame == null)
+                foreach (var mechdef in mechdefs)
+                    add_full_actuators(mechdef);
+            else
+                foreach (var mechdef in mechdefs)
+                    add_default_actuators(mechdef, simgame);
+        }
+
+        private static void add_default_actuators(MechDef mechdef, SimGameState simgame)
+        {
+            void process_location(ChassisLocations location)
+            {
+                var total_slots = ArmActuatorSlot.None;
+
+                foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuatorCBT>()).Select(i => i.GetComponent<ArmActuatorCBT>()))
+                {
+                    total_slots = total_slots | item.Slot;
+                }
+
+                AddDefaultToInventory(mechdef, simgame, location, ArmActuatorSlot.Shoulder, ref total_slots);
+                AddDefaultToInventory(mechdef, simgame, location, ArmActuatorSlot.Upper, ref total_slots);
+            }
+
+            process_location(ChassisLocations.RightArm);
+            process_location(ChassisLocations.LeftArm);
+
+
+        }
+
+        internal static void AddDefaultToInventory(MechDef mechdef, SimGameState simgame, ChassisLocations location, ArmActuatorSlot slot, ref ArmActuatorSlot totalSlots)
+        {
+            bool add_item(string id, ref ArmActuatorSlot total_slot)
+            {
+                if (string.IsNullOrEmpty(id))
+                    return false;
+
+                var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, UnityGameInstance.BattleTechGame.DataManager, simgame);
+
+                if (r.Is<ArmActuatorCBT>(out var actuator) && (actuator.Slot & total_slot) == 0)
+                {
+                    DefaultHelper.AddInventory(id, mechdef, location, ComponentType.Upgrade, simgame);
+                    total_slot = total_slot | actuator.Slot;
+                    return true;
+                }
+
+                return false;
+            }
+
+            CustomComponents.Control.LogDebug(DType.ComponentInstall, $"---- adding {slot} to {totalSlots}");
+            if (totalSlots.HasFlag(slot))
+            {
+                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"---- already present");
+                return;
+            }
+
+            if (add_item(GetDefaultActuator(mechdef, location, slot), ref totalSlots))
+                return;
+
+            add_item(GetDefaultActuator(null, location, slot), ref totalSlots);
+        }
+
+        internal static ArmActuatorSlot ClearDefaultActuators(MechDef mechdef, ChassisLocations location)
+        {
+            mechdef.SetInventory(mechdef.Inventory.Where(i =>
+                    i.MountedLocation == location && i.Is<ArmActuatorCBT>() && i.IsFixed &&
+                    !i.IsModuleFixed(mechdef)).ToArray());
+
+            var slot = ArmActuatorSlot.None;
+            foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuatorCBT>()))
+            {
+                var actuator = item.GetComponent<ArmActuatorCBT>();
+                slot = slot | actuator.Slot;
+            }
+
+            return slot;
+        }
+
+        private static void add_full_actuators(MechDef mechdef)
+        {
+            void process_location(ChassisLocations location)
+            {
+                var total_slots = mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuatorCBT>())
+                    .Select(i => i.GetComponent<ArmActuatorCBT>())
+                    .Aggregate(ArmActuatorSlot.None, (current, item) => current | item.Slot);
+
+                //if not present any actuators
+                if (total_slots == ArmActuatorSlot.None)
+                {
+                    //add shoulder, and upper
+                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Shoulder, ref total_slots);
+                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Upper, ref total_slots);
+                    //get max avaliable actuator
+                    ArmActuatorSlot max = ArmActuatorSlot.Hand;
+
+                    if (mechdef.Chassis.Is<ArmSupportCBT>(out var support))
+                    {
+                        var part = support.GetByLocation(location);
+                        if (part != null)
+                            max = part.MaxActuator;
+                    }
+                    foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location &&
+                        i.Is<ArmActuatorCBT>()).Select(i => i.GetComponent<ArmActuatorCBT>()))
+                    {
+                        if (item.MaxSlot < max)
+                            max = item.MaxSlot;
+                    }
+
+                    if (max >= ArmActuatorSlot.Lower && !total_slots.HasFlag(ArmActuatorSlot.Lower))
+                    {
+                        var r = new MechComponentRef(Control.settings.DefaultCBTLower, null, ComponentType.Upgrade, location);
+                        r.DataManager = UnityGameInstance.BattleTechGame.DataManager;
+                        r.RefreshComponentDef();
+
+                        var list = mechdef.Inventory.ToList();
+                        list.Add(r);
+                        mechdef.SetInventory(list.ToArray());
+                    }
+
+                    if (max >= ArmActuatorSlot.Hand && !total_slots.HasFlag(ArmActuatorSlot.Hand))
+                    {
+                        var r = new MechComponentRef(Control.settings.DefaultCBTHand, null, ComponentType.Upgrade, location);
+                        r.DataManager = UnityGameInstance.BattleTechGame.DataManager;
+                        r.RefreshComponentDef();
+
+                        var list = mechdef.Inventory.ToList();
+                        list.Add(r);
+                        mechdef.SetInventory(list.ToArray());
+                    }
+                }
+                else
+                {
+                    //recheck and add if needed shoulder and arm
+                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Shoulder, ref total_slots);
+                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Upper, ref total_slots);
+                }
+
+
+            }
+
+            process_location(ChassisLocations.RightArm);
+            process_location(ChassisLocations.LeftArm);
         }
     }
 }

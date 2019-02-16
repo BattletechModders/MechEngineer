@@ -198,6 +198,8 @@ namespace MechEngineer
 
 
         public bool UseCBTActuators = true;
+        //use old actuators, if CBT enabled
+        public bool UseOnePieceActuator = false;
         public string DefaultCBTShoulder = "emod_armcbt_shoulder";
         public string DefaultCBTLower = "emod_armcbt_lower";
         public string DefaultCBTUpper = "emod_armcbt_upper";

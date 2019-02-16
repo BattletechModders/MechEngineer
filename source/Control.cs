@@ -53,6 +53,8 @@ namespace MechEngineer
                 {
                     Validator.RegisterClearInventory(ArmActuatorCBTHandler.ClearInventory);
                     Validator.RegisterMechValidator(ArmActuatorCBTHandler.ValidateMech, ArmActuatorCBTHandler.CanBeFielded);
+
+                    AutoFixer.Shared.RegisterMechFixer(ArmActuatorCBTHandler.FixCBTActuators);
                 }
 
                 if (settings.DynamicSlotsValidateDropEnabled)
