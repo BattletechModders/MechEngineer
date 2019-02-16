@@ -107,13 +107,17 @@ namespace MechEngineer
         {
             bool check_location(ChassisLocations location)
             {
+                //occupied slots
                 var slots = ArmActuatorSlot.None;
 
+                //list of actuators in location
                 var actuators = from item in mechdef.Inventory
                     where item.MountedLocation == location &&
                           item.Is<ArmActuatorCBT>()
                     select item.GetComponent<ArmActuatorCBT>();
 
+
+                //get max avaliable actuator
                 ArmActuatorSlot max = ArmActuatorSlot.Hand;
 
                 if (mechdef.Chassis.Is<ArmSupportCBT>(out var support))
@@ -125,23 +129,31 @@ namespace MechEngineer
 
                 foreach (var actuator in actuators)
                 {
+                    // if more then 1 actuator occupy 1 slot
                     if ((slots & actuator.Slot) != 0)
                         return false;
 
+                    //correcting max slot if actuator has limits
                     if (max > actuator.MaxSlot)
                         max = actuator.MaxSlot;
+
+                    //save actuator to slots
                     slots = slots | actuator.Slot;
                 }
 
+                // if not support hand/lower
                 if (slots > max)
                     return false;
                 
+                //if not have shoulder
                 if (!slots.HasFlag(ArmActuatorSlot.Shoulder))
                     return false;
 
+                //if not have upper
                 if (!slots.HasFlag(ArmActuatorSlot.Upper))
                     return false;
 
+                //if have hand but not lower
                 if (slots.HasFlag(ArmActuatorSlot.Hand) && !slots.HasFlag(ArmActuatorSlot.Lower))
                     return false;
 
