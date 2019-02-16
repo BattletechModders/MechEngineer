@@ -28,11 +28,15 @@ namespace MechEngineer
         public string DefaultUpper { get; set; }
     }
 
-    [CustomComponent("CBTArmActuatorSupport")]
-    public class ArmSupportCBT : ChassisCusomComponent
+    [CustomComponent("ArmActuatorSupport")]
+    public class ArmSupportCBT : ChassisCusomComponent, IAfterLoad
     {
         public SupportPart Left { get; set; }
         public SupportPart Right { get; set; }
+        public ArmActuatorSlot LeftLimit = ArmActuatorSlot.Hand;
+        public ArmActuatorSlot RightLimit = ArmActuatorSlot.Hand;
+
+
 
         public SupportPart GetByLocation(ChassisLocations location)
         {
@@ -42,6 +46,16 @@ namespace MechEngineer
                 return Left;
 
             return null;
+        }
+
+        public void OnLoaded(Dictionary<string, object> values)
+        {
+            if (Left == null)
+                Left = new SupportPart() { MaxActuator = LeftLimit };
+
+            if (Right == null)
+                Right = new SupportPart() { MaxActuator = RightLimit };
+
         }
     }
 }

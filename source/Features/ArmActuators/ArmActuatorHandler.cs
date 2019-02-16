@@ -39,22 +39,22 @@ namespace MechEngineer
             //Control.mod.Logger.LogDebug($" chassis={mechDef.Chassis.Description.Id}");
 
             var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
-            UpgradeDef GetComponent(ArmActuator.TypeDef type)
+            UpgradeDef GetComponent(ArmActuatorSlot type)
             {
                 switch (type)
                 {
-                    case ArmActuator.TypeDef.Hand:
+                    case ArmActuatorSlot.Hand:
                         return mechDef.DataManager.UpgradeDefs.Get("emod_arm_hand");
-                    case ArmActuator.TypeDef.Lower:
+                    case ArmActuatorSlot.Lower:
                         return mechDef.DataManager.UpgradeDefs.Get("emod_arm_lower");
-                    case ArmActuator.TypeDef.Upper:
+                    case ArmActuatorSlot.Upper:
                         return mechDef.DataManager.UpgradeDefs.Get("emod_arm_upper");
                     default:
                         return null;
                 }
             }
 
-            void AddActuatorToArm(ChassisLocations location, ArmActuator.TypeDef limit)
+            void AddActuatorToArm(ChassisLocations location, ArmActuatorSlot limit)
             {
                 if (mechDef.Inventory.Any(r => r.MountedLocation == location && r.Def.Is<ArmActuator>()))
                 {
@@ -63,11 +63,11 @@ namespace MechEngineer
 
                 //Control.mod.Logger.LogDebug($" AddActuatorToArm");
                 //Control.mod.Logger.LogDebug($" location={location} limit={limit}");
-                foreach (var candidate in Enum.GetValues(typeof(ArmActuator.TypeDef)).Cast<ArmActuator.TypeDef>().Where(type => type >= limit))
+                foreach (var candidate in Enum.GetValues(typeof(ArmActuatorSlot)).Cast<ArmActuatorSlot>().Where(type => type >= limit))
                 {
                     //Control.mod.Logger.LogDebug($"  candidate={candidate}");
                     var component = GetComponent(candidate);
-                    if (candidate <= ArmActuator.TypeDef.Upper && builder.GetFreeSlots(location) < component.InventorySize)
+                    if (candidate <= ArmActuatorSlot.Upper && builder.GetFreeSlots(location) < component.InventorySize)
                     {
                         continue;
                     }
@@ -78,7 +78,7 @@ namespace MechEngineer
                 }
             }
 
-            var limits = mechDef.Chassis.GetComponent<ArmActuatorSupport>() ?? new ArmActuatorSupport();
+            var limits = mechDef.Chassis.GetComponent<ArmSupportCBT>() ?? new ArmSupportCBT();
             var beforeCount = builder.Inventory.Count;
             AddActuatorToArm(ChassisLocations.LeftArm, limits.LeftLimit);
             AddActuatorToArm(ChassisLocations.RightArm, limits.RightLimit);
@@ -93,7 +93,7 @@ namespace MechEngineer
             var left = mechDef.Inventory.Where(r => r.MountedLocation == ChassisLocations.LeftArm).Select(r => r.GetComponent<ArmActuator>()).FirstOrDefault(r => r != null);
             var right = mechDef.Inventory.Where(r => r.MountedLocation == ChassisLocations.RightArm).Select(r => r.GetComponent<ArmActuator>()).FirstOrDefault(r => r != null);
 
-            var limits = mechDef.Chassis.GetComponent<ArmActuatorSupport>() ?? new ArmActuatorSupport();
+            var limits = mechDef.Chassis.GetComponent<ArmSupportCBT>() ?? new ArmSupportCBT();
 
             //Control.mod.Logger.LogDebug($"left={left} limits.LeftLimit={limits.LeftLimit}");
 

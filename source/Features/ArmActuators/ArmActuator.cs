@@ -7,18 +7,12 @@ namespace MechEngineer
     public class ArmActuator : SimpleCustomComponent
     {
         public float? AccuracyBonus;
-        public TypeDef Type = TypeDef.Hand;
+        public ArmActuatorSlot Type =  ArmActuatorSlot.Hand;
 
-        public enum TypeDef
-        {
-            Hand, // Hand = default
-            Lower,
-            Upper,
-        }
 
         public override string ToString()
         {
-            return $"ArmActuator: {Type}+{(AccuracyBonus.HasValue ? AccuracyBonus.Value : 0f)}";
+            return $"ArmActuator: {Type}+{AccuracyBonus ?? 0f}";
         }
     }
 }
