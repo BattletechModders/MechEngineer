@@ -32,22 +32,18 @@ namespace MechEngineer
             {
                 return null;
             }
-
-            if (!mech.Chassis.Is<ArmSupportCBT>(out var support))
+            
+            if (mech == null || !mech.Chassis.Is<ArmSupportCBT>(out var support))
             {
                 return GetComponentIdForSlot(slot);
             }
 
-            var part = support.GetByLocation(location);
-            if (part == null)
-                return GetComponentIdForSlot(slot);
-
             switch (slot)
             {
                 case ArmActuatorSlot.Shoulder:
-                    return part.DefaultShoulder;
+                    return support.GetShoulder(location);
                 case ArmActuatorSlot.Upper:
-                    return part.DefaultUpper;
+                    return support.GetUpper(location);
                 default:
                     return null;
             }
@@ -114,14 +110,9 @@ namespace MechEngineer
 
 
                 //get max avaliable actuator
-                ArmActuatorSlot max = ArmActuatorSlot.Hand;
-
-                if (mechdef.Chassis.Is<ArmSupportCBT>(out var support))
-                {
-                    var part = support.GetByLocation(location);
-                    if (part != null)
-                        max = part.MaxActuator;
-                }
+                ArmActuatorSlot max = mechdef.Chassis.Is<ArmSupportCBT>(out var support)  ? 
+                    support.GetLimit(location) :
+                    ArmActuatorSlot.Hand;
 
                 foreach (var actuator in actuators)
                 {
@@ -175,15 +166,12 @@ namespace MechEngineer
                                 select item.GetComponent<ArmActuatorCBT>();
 
 
-                //get max avaliable actuator
-                ArmActuatorSlot max = ArmActuatorSlot.Hand;
 
-                if (mechdef.Chassis.Is<ArmSupportCBT>(out var support))
-                {
-                    var part = support.GetByLocation(location);
-                    if (part != null)
-                        max = part.MaxActuator;
-                }
+                //get max avaliable actuator
+                ArmActuatorSlot max = mechdef.Chassis.Is<ArmSupportCBT>(out var support) ?
+                    support.GetLimit(location) :
+                    ArmActuatorSlot.Hand;
+
 
                 foreach (var actuator in actuators)
                 {
@@ -315,15 +303,12 @@ namespace MechEngineer
                     //add shoulder, and upper
                     AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Shoulder, ref total_slots);
                     AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Upper, ref total_slots);
-                    //get max avaliable actuator
-                    ArmActuatorSlot max = ArmActuatorSlot.Hand;
 
-                    if (mechdef.Chassis.Is<ArmSupportCBT>(out var support))
-                    {
-                        var part = support.GetByLocation(location);
-                        if (part != null)
-                            max = part.MaxActuator;
-                    }
+                    //get max avaliable actuator
+                    ArmActuatorSlot max = mechdef.Chassis.Is<ArmSupportCBT>(out var support) ?
+                        support.GetLimit(location) :
+                        ArmActuatorSlot.Hand;
+
                     foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location &&
                         i.Is<ArmActuatorCBT>()).Select(i => i.GetComponent<ArmActuatorCBT>()))
                     {

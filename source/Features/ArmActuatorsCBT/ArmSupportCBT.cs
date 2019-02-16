@@ -20,42 +20,43 @@ namespace MechEngineer
         FullUpper = 3
     }
 
-    [Serializable]
-    public class SupportPart
-    {
-        public ArmActuatorSlot MaxActuator { get; set; } = ArmActuatorSlot.Hand;
-        public string DefaultShoulder { get; set; }
-        public string DefaultUpper { get; set; }
-    }
-
     [CustomComponent("ArmActuatorSupport")]
-    public class ArmSupportCBT : ChassisCusomComponent, IAfterLoad
+    public class ArmSupportCBT : ChassisCusomComponent
     {
-        public SupportPart Left { get; set; }
-        public SupportPart Right { get; set; }
         public ArmActuatorSlot LeftLimit = ArmActuatorSlot.Hand;
         public ArmActuatorSlot RightLimit = ArmActuatorSlot.Hand;
 
+        public string LeftDefaultShoulder = "";
+        public string RightDefaultShoulder = "";
+        public string LeftDefaultUpper = "";
+        public string RightDefaultUpper = "";
 
 
-        public SupportPart GetByLocation(ChassisLocations location)
+        public ArmActuatorSlot GetLimit(ChassisLocations location)
         {
-            if (location == ChassisLocations.RightArm)
-                return Right;
             if (location == ChassisLocations.LeftArm)
-                return Left;
+                return LeftLimit;
+            if (location == ChassisLocations.RightArm)
+                return RightLimit;
+            return ArmActuatorSlot.Hand;
+        }
 
+        public string GetShoulder(ChassisLocations location)
+        {
+            if (location == ChassisLocations.LeftArm)
+                return LeftDefaultShoulder;
+            if (location == ChassisLocations.RightArm)
+                return RightDefaultShoulder;
             return null;
         }
 
-        public void OnLoaded(Dictionary<string, object> values)
+        public string GetUpper(ChassisLocations location)
         {
-            if (Left == null)
-                Left = new SupportPart() { MaxActuator = LeftLimit };
-
-            if (Right == null)
-                Right = new SupportPart() { MaxActuator = RightLimit };
-
+            if (location == ChassisLocations.LeftArm)
+                return LeftDefaultUpper;
+            if (location == ChassisLocations.RightArm)
+                return RightDefaultUpper;
+            return null;
         }
     }
 }

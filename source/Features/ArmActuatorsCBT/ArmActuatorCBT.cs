@@ -39,11 +39,12 @@ namespace MechEngineer
 
             if (mechlab.MechLab.activeMechDef.Chassis.Is<ArmSupportCBT>(out var support))
             {
-                var part = support.GetByLocation(location.widget.loadout.Location);
-                if (part != null && part.MaxActuator < Slot)
+                var max = support.GetLimit(location.widget.loadout.Location);
+
+                if (max < Slot)
                 {
                     return
-                        $"Cannot install {item.ComponentRef.Def.Description.Name} mech support only up to {part.MaxActuator} in {location.LocationName}";
+                        $"Cannot install {item.ComponentRef.Def.Description.Name} mech support only up to {max} in {location.LocationName}";
                 }
             }
 
