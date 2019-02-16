@@ -105,7 +105,51 @@ namespace MechEngineer
 
         public static bool CanBeFielded(MechDef mechdef)
         {
-            return false;
+            bool check_location(ChassisLocations location)
+            {
+                var slots = ArmActuatorSlot.None;
+
+                var actuators = from item in mechdef.Inventory
+                    where item.MountedLocation == location &&
+                          item.Is<ArmActuatorCBT>()
+                    select item.GetComponent<ArmActuatorCBT>();
+
+                ArmActuatorSlot max = ArmActuatorSlot.Hand;
+
+                if (mechdef.Chassis.Is<ArmSupportCBT>(out var support))
+                {
+                    var part = support.GetByLocation(location);
+                    if (part != null)
+                        max = part.MaxActuator;
+                }
+
+                foreach (var actuator in actuators)
+                {
+                    if ((slots & actuator.Slot) != 0)
+                        return false;
+
+                    if (max > actuator.MaxSlot)
+                        max = actuator.MaxSlot;
+                    slots = slots | actuator.Slot;
+                }
+
+                if (slots > max)
+                    return false;
+                
+                if (!slots.HasFlag(ArmActuatorSlot.Shoulder))
+                    return false;
+
+                if (!slots.HasFlag(ArmActuatorSlot.Upper))
+                    return false;
+
+                if (slots.HasFlag(ArmActuatorSlot.Hand) && !slots.HasFlag(ArmActuatorSlot.Lower))
+                    return false;
+
+                return true;
+            }
+
+            return check_location(ChassisLocations.LeftArm) && check_location(ChassisLocations.RightArm);
+
         }
     }
 }
