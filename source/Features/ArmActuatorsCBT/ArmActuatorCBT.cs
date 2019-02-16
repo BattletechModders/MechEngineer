@@ -33,6 +33,10 @@ namespace MechEngineer
 
         public string PreValidateDrop(MechLabItemSlotElement item, LocationHelper location, MechLabHelper mechlab)
         {
+            if (location.widget.loadout.Location != ChassisLocations.LeftArm &&
+                location.widget.loadout.Location != ChassisLocations.RightArm)
+                return string.Empty;
+
             if (mechlab.MechLab.activeMechDef.Chassis.Is<ArmSupportCBT>(out var support))
             {
                 var part = support.GetByLocation(location.widget.loadout.Location);
@@ -62,6 +66,10 @@ namespace MechEngineer
 
         public string ReplaceValidateDrop(MechLabItemSlotElement drop_item, LocationHelper location, List<IChange> changes)
         {
+            if (location.widget.loadout.Location != ChassisLocations.LeftArm &&
+                location.widget.loadout.Location != ChassisLocations.RightArm)
+                return string.Empty;
+
             var total_slot = Slot;
             var mount_loc = location.widget.loadout.Location;
             var mechlab = location.mechLab;
@@ -162,6 +170,10 @@ namespace MechEngineer
 
         public void OnItemGrabbed(IMechLabDraggableItem item, MechLabPanel mechLab, MechLabLocationWidget widget)
         {
+            if (widget.loadout.Location != ChassisLocations.LeftArm &&
+                widget.loadout.Location != ChassisLocations.RightArm)
+                return;
+
             var loc_helper = new LocationHelper(widget);
             var total_slot = ArmActuatorSlot.None;
             var mount_loc = widget.loadout.Location;
@@ -302,9 +314,8 @@ namespace MechEngineer
             }
 
 
-            if (order.DesiredLocation != ChassisLocations.None)
+            if (order.DesiredLocation != ChassisLocations.None && ChassisLocations.Arms.HasFlag(order.DesiredLocation) )
             {
-
                 var slots = clear_defaults(order.DesiredLocation);
                 CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- ArmActuator removing, left {slots}");
 
@@ -312,7 +323,7 @@ namespace MechEngineer
                 add_default(ArmActuatorSlot.Upper, order.DesiredLocation, ref slots);
             }
 
-            if (order.PreviousLocation != ChassisLocations.None)
+            if (order.PreviousLocation != ChassisLocations.None && ChassisLocations.Arms.HasFlag(order.DesiredLocation))
             {
                 var slots = clear_defaults(order.PreviousLocation);
                 CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- ArmActuator adding, left {slots}");
