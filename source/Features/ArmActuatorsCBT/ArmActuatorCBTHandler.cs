@@ -3,6 +3,7 @@ using System.Linq;
 using BattleTech;
 using CustomComponents;
 using HBS.Extensions;
+using Localize;
 
 namespace MechEngineer
 {
@@ -94,6 +95,15 @@ namespace MechEngineer
 
             clear_side(ChassisLocations.LeftArm);
             clear_side(ChassisLocations.RightArm);
+        }
+
+        public static void ValidateMech(Dictionary<MechValidationType, List<Text>> errors, MechValidationLevel validationlevel, MechDef mechdef)
+        {
+        }
+
+        public static bool CanBeFielded(MechDef mechdef)
+        {
+            return false;
         }
     }
 }

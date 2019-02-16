@@ -52,6 +52,7 @@ namespace MechEngineer
                 if (settings.UseCBTActuators)
                 {
                     Validator.RegisterClearInventory(ArmActuatorCBTHandler.ClearInventory);
+                    Validator.RegisterMechValidator(ArmActuatorCBTHandler.ValidateMech, ArmActuatorCBTHandler.CanBeFielded);
                 }
 
                 if (settings.DynamicSlotsValidateDropEnabled)
