@@ -22,36 +22,40 @@ namespace MechEngineer
                 case ArmActuatorSlot.Hand:
                     return Control.settings.DefaultCBTHand;
                 default:
-                    return "";
+                    return null;
             }
         }
 
         public static string GetDefaultActuator(MechDef mech, ChassisLocations location, ArmActuatorSlot slot)
         {
             if (location != ChassisLocations.RightArm && location != ChassisLocations.LeftArm)
-                return "";
-
-            if (mech?.Chassis == null || !mech.Chassis.Is<ArmSupportCBT>(out var support))
             {
-                if (location == ChassisLocations.RightArm || location == ChassisLocations.LeftArm)
-                    return GetComponentIdForSlot(slot);
-                return "";
+                return null;
+            }
+
+            if (!mech.Chassis.Is<ArmSupportCBT>(out var support))
+            {
+                return GetComponentIdForSlot(slot);
             }
 
             var part = support.GetByLocation(location);
             if (part == null)
                 return GetComponentIdForSlot(slot);
 
-            if (slot == ArmActuatorSlot.Shoulder)
-                return part.DefaultShoulder;
-            if (slot == ArmActuatorSlot.Upper)
-                return part.DefaultUpper;
-            return "";
+            switch (slot)
+            {
+                case ArmActuatorSlot.Shoulder:
+                    return part.DefaultShoulder;
+                case ArmActuatorSlot.Upper:
+                    return part.DefaultUpper;
+                default:
+                    return null;
+            }
         }
 
         internal static void ClearInventory(MechDef mech, List<MechComponentRef> result, SimGameState state)
         {
-            ArmActuatorSlot total_slot = ArmActuatorSlot.None;
+            var total_slot = ArmActuatorSlot.None;
 
             void add_default(ChassisLocations location, ArmActuatorSlot slot)
             {
@@ -75,9 +79,7 @@ namespace MechEngineer
                 if (total_slot.HasFlag(slot))
                     return;
 
-                if (add_item(GetDefaultActuator(mech, location, slot)))
-                    return;
-                add_item(GetComponentIdForSlot(slot));
+                add_item(GetDefaultActuator(mech, location, slot));
             }
 
             void clear_side(ChassisLocations location)
