@@ -80,39 +80,6 @@
 			"Action": "ArrayConcat",
 			"Value": [
 				{
-					"MountedLocation": "CenterTorso",
-					"ComponentDefID": "emod_engine_300",
-					"SimGameUID": null,
-					"ComponentDefType": "HeatSink",
-					"HardpointSlot": -1,
-					"GUID": null,
-					"DamageLevel": "Functional",
-					"prefabName": null,
-					"hasPrefabName": false
-				},
-				{
-					"MountedLocation": "CenterTorso",
-					"ComponentDefID": "emod_engineslots_std_center",
-					"SimGameUID": null,
-					"ComponentDefType": "HeatSink",
-					"HardpointSlot": -1,
-					"GUID": null,
-					"DamageLevel": "Functional",
-					"prefabName": null,
-					"hasPrefabName": false
-				},
-				{
-					"MountedLocation": "CenterTorso",
-					"ComponentDefID": "emod_armorslots_standard",
-					"SimGameUID": null,
-					"ComponentDefType": "Upgrade",
-					"HardpointSlot": -1,
-					"GUID": null,
-					"DamageLevel": "Functional",
-					"prefabName": null,
-					"hasPrefabName": false
-				},
-				{
 					"MountedLocation" : "LeftTorso",
 					"ComponentDefID" : "Gear_HeatSink_Generic_Double",
 					"SimGameUID" : "",
