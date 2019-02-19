@@ -23,7 +23,7 @@ namespace MechEngineer
         public class LinkedClass
         {
             public string CollectionStatisticName { get; set; } = null;
-            public bool Destruction { get; set; } = false;
+            public bool SharedDamageLevel { get; set; } = false;
         }
     }
 }

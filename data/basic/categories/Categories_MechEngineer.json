@@ -211,7 +211,7 @@
                     "Scope": "Mech",
                     "Linked" : {
                         "CollectionId" : "EngineCrits",
-                        "Destruction" : true
+                        "SharedDamageLevel" : true
                     },
                     "DeathMethod" : "EngineDestroyed",
                     "PenalizedEffects" : [
