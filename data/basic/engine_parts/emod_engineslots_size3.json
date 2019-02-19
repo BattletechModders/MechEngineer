@@ -1,9 +1,10 @@
 {
 	"Custom": {
-		"Category" : { 
-			"CategoryID" : "EngineSlots"
-		}
-	},
+        "Category" : [
+            {"CategoryID": "EngineSlots"},
+            {"CategoryID": "EnginePart"}
+        ]
+    },
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 0,

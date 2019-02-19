@@ -20,9 +20,10 @@
 				"CBillCost": "20000 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 40"
 			}
 		},
-		"Category" : { 
-			"CategoryID" : "EngineShield" 
-		},
+		"Category" : [
+			{"CategoryID": "EngineShield"},
+			{"CategoryID": "EnginePart"}
+		],
 		"Linked" : {
 			"Links" : [
 				{ "ComponentDefId" : "emod_engineslots_size3", "Location" : "LeftTorso" },

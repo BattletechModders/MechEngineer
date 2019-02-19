@@ -9,9 +9,10 @@
 				"CBillCost": "0"
 			}
 		},
-		"Category" : { 
-			"CategoryID" : "Cooling" 
-		},
+        "Category" : [
+          {"CategoryID": "Cooling"},
+          {"CategoryID": "EnginePart"}
+        ],
 		"Color": {
 			"UIColor": "DarkGray"
 		},
