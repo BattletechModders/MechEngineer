@@ -88,8 +88,9 @@
     <Compile Include="Features\ArmActuatorsCBT\ArmActuatorCBT.cs" />
     <Compile Include="Features\ArmActuatorsCBT\ArmSupportCBT.cs" />
     <Compile Include="Features\ChassisQuirks\Patches\Mech_InitStats_Patch.cs" />
-    <Compile Include="Features\CriticalHitStates\Patches\Mech_CheckForCrit_Patch.cs" />
-    <Compile Include="Features\CriticalHitStates\MessageCenterUtils.cs" />
+    <Compile Include="Features\CriticalEffects\CriticalEffectsHandler.cs" />
+    <Compile Include="Features\CriticalEffects\Patches\Mech_CheckForCrit_Patch.cs" />
+    <Compile Include="Features\CriticalEffects\MessageCenterUtils.cs" />
     <Compile Include="Features\Descriptions\BonusDescriptions.cs" />
     <Compile Include="Features\Descriptions\DescriptionDefAdapter.cs" />
     <Compile Include="Features\Descriptions\IAdjustInventoryElement.cs" />
@@ -118,7 +119,6 @@
     <Compile Include="Features\Engine\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\Engine\Patches\StatTooltipData_SetHeatData_Patch.cs" />
     <Compile Include="Features\Engine\Patches\StatTooltipData_SetMovementData_Patch.cs" />
-    <Compile Include="Features\Engine\StaticHandler\EngineCrits.cs" />
     <Compile Include="Features\Engine\StaticHandler\EngineHeat.cs" />
     <Compile Include="Features\Engine\StaticHandler\EngineMisc.cs" />
     <Compile Include="Features\InventorySorter\InventorySorterListComparer.cs" />
@@ -137,8 +137,8 @@
     <Compile Include="Features\ComponentExplosions\ComponentExplosionHandler.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosion.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\MechComponent_DamageComponent_Patch2.cs" />
-    <Compile Include="Features\CriticalHitStates\DamageIgnoreHelper.cs" />
-    <Compile Include="Features\CriticalHitStates\Patches\Mech_OnLocationDestroyed_Patch.cs" />
+    <Compile Include="Features\CriticalEffects\DamageIgnoreHelper.cs" />
+    <Compile Include="Features\CriticalEffects\Patches\Mech_OnLocationDestroyed_Patch.cs" />
     <Compile Include="Features\MechLabSlots\GUILogUtils.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_SetData_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_LoadMech_Patch.cs" />
@@ -174,14 +174,13 @@
     <Compile Include="Features\HardpointFix\utils\WeaponComponentPrefabCalculator.cs" />
     <Compile Include="Helper\MechDefExtensions.cs" />
     <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
-    <Compile Include="Features\CriticalHitStates\CriticalHitStatesHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
     <Compile Include="Features\DynamicSlots\MechDefSlots.cs" />
     <Compile Include="Misc\Adapter.cs" />
     <Compile Include="Misc\MELazy.cs" />
     <Compile Include="Misc\Mod.cs" />
-    <Compile Include="Features\CriticalHitStates\CriticalHitStates.cs" />
+    <Compile Include="Features\CriticalEffects\CriticalEffects.cs" />
     <Compile Include="Features\Weights\Weights.cs" />
     <Compile Include="Misc\HarmonyExtensions.cs" />
     <Compile Include="Features\AutoFix\IdentityHelper.cs" />
@@ -193,7 +192,7 @@
     <Compile Include="Features\AutoFix\LegActuatorHandler.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />
     <Compile Include="Misc\Global.cs" />
-    <Compile Include="Features\CriticalHitStates\Patches\Mech_GetComponentInSlot_Patch.cs" />
+    <Compile Include="Features\CriticalEffects\Patches\Mech_GetComponentInSlot_Patch.cs" />
     <Compile Include="Features\AutoFix\CockpitHandler.cs" />
     <Compile Include="Misc\Interfaces.cs" />
     <Compile Include="Control.cs" />
@@ -204,7 +203,7 @@
     <Compile Include="Features\Descriptions\Patches\TooltipPrefab_EquipmentSetData_Patch.cs" />
     <Compile Include="Features\Weights\Patches\MechLabMechInfoWidget_CalculateTonnage_Patch.cs" />
     <Compile Include="Features\Weights\Patches\MechStatisticsRules_CalculateTonnage_Patch.cs" />
-    <Compile Include="Features\CriticalHitStates\Patches\MechComponent_DamageComponent_Patch.cs" />
+    <Compile Include="Features\CriticalEffects\Patches\MechComponent_DamageComponent_Patch.cs" />
     <Compile Include="Features\AutoFix\GyroHandler.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\MechShutdownSequence_CheckForHeatDamage_Patch.cs" />
     <Compile Include="Features\AutoFix\Patches\UpgradeDef_FromJSON_Patch.cs" />

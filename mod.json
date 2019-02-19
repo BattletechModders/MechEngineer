@@ -8,7 +8,7 @@
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
-	"CustomResourceTypes": ["MEBonusDescriptions"],
+	"CustomResourceTypes": ["MEBonusDescriptions", "MECriticalEffects"],
 	
 	"Manifest": [
 		{
@@ -19,6 +19,11 @@
 		{
 			"Type": "MEBonusDescriptions",
 			"Path": "data/basic/bonusDescriptions/",
+			"ShouldMergeJSON": false
+		},
+		{
+			"Type": "MECriticalEffects",
+			"Path": "data/basic/criticalEffects/",
 			"ShouldMergeJSON": false
 		},
 		{

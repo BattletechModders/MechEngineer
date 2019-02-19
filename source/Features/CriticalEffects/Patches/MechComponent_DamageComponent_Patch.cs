@@ -8,7 +8,7 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechComponent), "DamageComponent")]
     public static class MechComponent_DamageComponent_Patch
     {
-        public static bool Prefix(MechComponent __instance, CombatGameState ___combat, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
+        public static bool Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
         {
             try
             {
@@ -17,12 +17,7 @@ namespace MechEngineer
                     return false;
                 }
 
-                if (!CirticalHitStatesHandler.Shared.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects))
-                {
-                    return false;
-                }
-
-                if (!EngineCrits.ProcessWeaponHit(__instance, ___combat, hitInfo, damageLevel, applyEffects))
+                if (!CriticalEffectsHandler.Shared.ProcessWeaponHit(__instance, hitInfo, damageLevel))
                 {
                     return false;
                 }

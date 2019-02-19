@@ -26,7 +26,7 @@ namespace MechEngineer
 
         internal static bool IsEnginePart(this MechComponentDef componentDef)
         {
-            return componentDef.Is<Flags>(out var flags) && flags.IsSet("engine_part");
+            return componentDef.IsCategory("EnginePart");
         }
 
         internal static bool HasDestroyedEngine(this MechDef mechDef)

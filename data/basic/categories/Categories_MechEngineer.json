@@ -60,6 +60,9 @@
                         "not_broken",
 						"default"
                     ]
+                },
+                "CriticalEffects" : {
+                    "DeathMethod" : "PilotKilled"
                 }
             }
         },
@@ -191,6 +194,30 @@
                     "Flags" : [
                         "not_broken"
                     ]
+                },
+                "CriticalEffects" : {
+                    "PenalizedEffects" : [
+                        ["CriticalEffect-GyroCrit"]
+                    ],
+                    "DestroyedEffects" : ["CriticalEffect-GyroDestroyed"]
+                }
+            }
+        },
+        {
+            "Name" : "EnginePart",
+            "DisplayName" : "Engine Part",
+            "DefaultCustoms" : {
+                "CriticalEffects" : {
+                    "Scope": "Mech",
+                    "Linked" : {
+                        "CollectionId" : "EngineCrits",
+                        "Destruction" : true
+                    },
+                    "DeathMethod" : "EngineDestroyed",
+                    "PenalizedEffects" : [
+                        ["CriticalEffect-EngineCrit1"],
+                        ["CriticalEffect-EngineCrit2"]
+                    ]
                 }
             }
         },
@@ -209,7 +236,6 @@
                 },
                 "Flags" : {
                     "Flags" : [
-                        "engine_part",
                         "not_broken",
                         "no_salvage"
                     ]
@@ -231,7 +257,6 @@
                 },
                 "Flags" : {
                     "Flags" : [
-                        "engine_part",
                         "not_broken"
                     ]
                 }
@@ -252,7 +277,6 @@
                 },
                 "Flags" : {
                     "Flags" : [
-                        "engine_part",
                         "not_broken"
                     ]
                 }
@@ -267,7 +291,6 @@
                 },
                 "Flags" : {
                     "Flags" : [
-                        "engine_part",
                         "not_broken",
                         "default"
                     ]

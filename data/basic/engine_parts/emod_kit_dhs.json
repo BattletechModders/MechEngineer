@@ -18,10 +18,11 @@
 				"CBillCost": "2000 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 40"
 			}
 		},
-		"Category" : { 
-			"CategoryID" : "Cooling" 
-		}
-	},
+        "Category" : [
+            {"CategoryID": "Cooling"},
+            {"CategoryID": "EnginePart"}
+        ]
+    },
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 6000000,

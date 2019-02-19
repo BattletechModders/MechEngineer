@@ -6,10 +6,11 @@
 				"CBillCost": "0"
 			}
 		},
-		"Category" : { 
-			"CategoryID" : "EngineShield" 
-		},
-		"Flags" : { "flags" : [ "engine_part", "default", "not_broken"  ] }
+        "Category" : [
+            {"CategoryID": "EngineShield"},
+            {"CategoryID": "EnginePart"}
+        ],
+		"Flags" : { "flags" : [ "default", "not_broken"  ] }
 	},
     "Description" : {
         "Cost" : 0,

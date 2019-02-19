@@ -87,6 +87,7 @@ namespace MechEngineer
         public static void FinishedLoading(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
             BonusDescriptions.Setup(customResources);
+            CriticalEffectsHandler.Setup(customResources);
         }
 
         private static string GetInformationalVersion(this Assembly assembly) {

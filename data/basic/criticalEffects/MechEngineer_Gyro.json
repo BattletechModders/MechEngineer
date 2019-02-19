@@ -1,0 +1,54 @@
+{
+    "Settings" : [
+        {
+            "durationData" : {
+                "duration" : -1
+            },
+            "targetingData" : {
+                "effectTriggerType" : "Passive",
+                "effectTargetType" : "Creator",
+                "showInTargetPreview" : true,
+                "showInStatusPanel" : true
+            },
+            "effectType" : "StatisticEffect",
+            "Description" : {
+                "Id" : "CriticalEffect-GyroCrit",
+                "Name" : "Gyro Crit",
+                "Details" : "The gyro was critically hit, reducing unsteady threshold by 20.",
+                "Icon" : "uixSvgIcon_equipment_Gyro"
+            },
+            "statisticData" : {
+                "statName" : "UnsteadyThreshold",
+                "operation" : "Float_Subtract",
+                "modValue" : "20.0",
+                "modType" : "System.Single"
+            },
+            "nature" : "Debuff"
+        },
+        {
+            "durationData" : {
+                "duration" : -1
+            },
+            "targetingData" : {
+                "effectTriggerType" : "Passive",
+                "effectTargetType" : "Creator",
+                "showInTargetPreview" : true,
+                "showInStatusPanel" : true
+            },
+            "effectType" : "StatisticEffect",
+            "Description" : {
+                "Id" : "CriticalEffect-GyroDestroyed",
+                "Name" : "Gyro Destroyed",
+                "Details" : "The gyro was destroyed, reducing unsteady threshold by 40.",
+                "Icon" : "uixSvgIcon_equipment_Gyro"
+            },
+            "statisticData" : {
+                "statName" : "UnsteadyThreshold",
+                "operation" : "Float_Subtract",
+                "modValue" : "40.0",
+                "modType" : "System.Single"
+            },
+            "nature" : "Debuff"
+        }
+    ]
+}

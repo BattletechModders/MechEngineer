@@ -13,10 +13,11 @@
 				"CBillCost": "10 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]]"
 			}
 		},
-		"Category" : { 
-			"CategoryID" : "EngineHeatBlock" 
-		},
-		"Flags" : { "flags" : [ "engine_part", "default", "not_broken"  ] }
+        "Category" : [
+            {"CategoryID": "EngineHeatBlock"},
+            {"CategoryID": "EnginePart"}
+        ],
+		"Flags" : { "flags" : [ "default", "not_broken"  ] }
 	},
     "DissipationCapacity" : 0,
     "Description" : {

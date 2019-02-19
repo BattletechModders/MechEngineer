@@ -52,79 +52,6 @@ namespace MechEngineer
 
         #endregion
 
-        #region engine critical hit states
-
-        public CriticalHitStates EngineCriticalHitStates = new CriticalHitStates
-        {
-            MaxStates = 2,
-            DeathMethod = DeathMethod.EngineDestroyed,
-            HitEffects = new[]
-            {
-                new CriticalHitEffect
-                {
-                    State = 1,
-                    StatusEffect = new EffectData
-                    {
-                        durationData = new EffectDurationData(),
-                        targetingData = new EffectTargetingData
-                        {
-                            effectTriggerType = EffectTriggerType.Passive,
-                            effectTargetType = EffectTargetType.Creator,
-                            showInTargetPreview = true,
-                            showInStatusPanel = true
-                        },
-                        effectType = EffectType.StatisticEffect,
-                        Description = new BaseDescriptionDef(
-                            Id:"StatusEffect-EngineCrit1",
-                            Name:"Engine Crit (1)",
-                            Details:"Engine was hit, additional 15 Heat / Turn",
-                            Icon:"uixSvgIcon_equipment_ThermalExchanger"
-                            ),
-                        nature = EffectNature.Debuff,
-                        statisticData = new StatisticEffectData
-                        {
-                            statName = "HeatSinkCapacity",
-                            operation = StatCollection.StatOperation.Int_Subtract,
-                            modValue = "15",
-                            modType = "System.Int32"
-                        }
-                    }
-                },
-                new CriticalHitEffect
-                {
-                    State = 2,
-                    StatusEffect = new EffectData
-                    {
-                        durationData = new EffectDurationData(),
-                        targetingData = new EffectTargetingData
-                        {
-                            effectTriggerType = EffectTriggerType.Passive,
-                            effectTargetType = EffectTargetType.Creator,
-                            showInTargetPreview = true,
-                            showInStatusPanel = true
-                        },
-                        effectType = EffectType.StatisticEffect,
-                        Description = new BaseDescriptionDef(
-                            Id:"StatusEffect-EngineCrit2",
-                            Name:"Engine Crit (2)",
-                            Details:"Engine was hit, additional 30 Heat / Turn",
-                            Icon:"uixSvgIcon_equipment_ThermalExchanger"
-                        ),
-                        nature = EffectNature.Debuff,
-                        statisticData = new StatisticEffectData
-                        {
-                            statName = "HeatSinkCapacity",
-                            operation = StatCollection.StatOperation.Int_Subtract,
-                            modValue = "30",
-                            modType = "System.Int32"
-                        }
-                    }
-                }
-            }
-        };
-
-        #endregion
-
         #region logging
 
         public class LoggerLogLevel
@@ -374,9 +301,28 @@ namespace MechEngineer
             public bool AutoFixChassisDefWeaponHardpointCounts = false; // true = hardpoint counts derived from prefab hardpoints
             public bool EnforceHardpointLimits = false; // true = use prefab hardpoints
             public bool AllowDefaultLoadoutWeapons = false;
-            public bool AllowLRMInSmallerSlotsForAll = false;
-            public string[] AllowLRMInSmallerSlotsForMechs = { "atlas" };
-            public bool AllowLRMInLargerSlotsForAll = true;
+            
+            // from: /data/weapon$ grep -R "PrefabIdentifier" . | cut -d\" -f 4 | sort | uniq
+            // to: /data/hardpoints$ grep -R "chrPrfWeap" . | cut -d_ -f 5 | sort | uniq
+            // default mapping = prefabid -> lower case prefab id (e.g. Flamer -> flamer, PPC -> ppc)
+            public Dictionary<string, string[]> WeaponPrefabMapping = new Dictionary<string, string[]>
+            {
+                ["AC2"] = new[] {"ac2", "ac", "lbx"},
+                ["AC5"] = new[] {"ac5", "uac5", "ac", "lbx"},
+                ["AC10"] = new[] {"ac10", "lbx10", "ac", "lbx"},
+                ["AC20"] = new[] {"ac20", "ac", "lbx"},
+                
+                ["lrm5"] = new[] {"lrm5", "lrm10", "lrm15", "lrm20", "srm20"},
+                ["lrm10"] = new[] {"lrm10", "lrm15", "lrm20", "srm20", "lrm5"},
+                ["lrm15"] = new[] {"lrm15", "lrm20", "srm20", "lrm10", "lrm5"},
+                ["lrm20"] = new[] {"lrm20", "srm20", "lrm15", "lrm10", "lrm5"},
+                
+                ["MachineGun"] = new[] {"machinegun", "mg"},
+                
+                ["srm2"] = new[] {"srm2", "srm4", "srm6"},
+                ["srm4"] = new[] {"srm4", "srm6", "srm2"},
+                ["srm6"] = new[] {"srm6", "srm4", "srm2"},
+            };
         }
 
         #endregion
