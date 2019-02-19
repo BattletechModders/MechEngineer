@@ -72,8 +72,10 @@ namespace MechEngineer
                     }
                     critLevel = Mathf.Min(oldCritLevel + crits, maxCrits);
                     critStat.SetValue(critLevel);
+                    
+                    Control.mod.Logger.LogDebug($"component crits={crits} maxCrits={maxCrits} oldCritLevel={oldCritLevel} critLevel={critLevel}");
                 }
-                
+
                 var collectionStatisticName = criticalEffects.Linked?.CollectionStatisticName;
                 if (!string.IsNullOrEmpty(collectionStatisticName))
                 {
@@ -82,8 +84,11 @@ namespace MechEngineer
                     var collection = mech.StatCollection;
                     var critStat = collection.GetStatistic(statisticName) ?? collection.AddStatistic(statisticName, 0);
                     oldCritLevel = critStat.Value<int>();
+                    var maxCrits = criticalEffects.PenalizedEffectIDs.Length;
                     critLevel = Mathf.Min(oldCritLevel + crits, criticalEffects.PenalizedEffectIDs.Length);
                     critStat.SetValue(critLevel);
+
+                    Control.mod.Logger.LogDebug($"linked crits={crits} maxCrits={maxCrits} oldCritLevel={oldCritLevel} critLevel={critLevel}");
                 }
             }
 
@@ -96,17 +101,11 @@ namespace MechEngineer
                 {
                     damageLevel = ComponentDamageLevel.Penalized;
                 }
-                
-                mechComponent.StatCollection.ModifyStat(
-                    hitInfo.attackerId,
-                    hitInfo.stackItemUID,
-                    "DamageLevel",
-                    StatCollection.StatOperation.Set,
-                    damageLevel);
+
+                SetDamageLevel(mechComponent, hitInfo, damageLevel);
             
-                if (damageLevel == ComponentDamageLevel.Destroyed
-                    && criticalEffects.Linked != null
-                    && criticalEffects.Linked.Destruction
+                if (criticalEffects.Linked != null
+                    && criticalEffects.Linked.SharedDamageLevel
                     && !string.IsNullOrEmpty(criticalEffects.Linked.CollectionStatisticName))
                 {
                     var collectionStatisticName = criticalEffects.Linked?.CollectionStatisticName;
@@ -115,7 +114,7 @@ namespace MechEngineer
                     foreach (var mc in mech.allComponents)
                     {
                         var r = mc.mechComponentRef;
-                        if (r.DamageLevel != ComponentDamageLevel.Destroyed)
+                        if (r.DamageLevel == ComponentDamageLevel.Destroyed)
                         {
                             continue;
                         }
@@ -134,18 +133,11 @@ namespace MechEngineer
                         var otherScopedId = ScopedId(otherStatisticName, mc, ce.Scope);
                         if (scopedId == otherScopedId)
                         {
-                            mc.StatCollection.ModifyStat(
-                                hitInfo.attackerId,
-                                hitInfo.stackItemUID,
-                                "DamageLevel",
-                                StatCollection.StatOperation.Set,
-                                damageLevel);
+                            SetDamageLevel(mc, hitInfo, damageLevel);
                         }
                     }
                 }
             }
-
-            //Control.mod.Logger.LogDebug($"oldCritLevel={oldCritLevel} critLevel={critLevel} damageLevel={damageLevel}");
 
             {
                 // cancel effects
@@ -226,6 +218,16 @@ namespace MechEngineer
             }
 
             return false;
+        }
+
+        private static void SetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
+        {
+            mechComponent.StatCollection.ModifyStat(
+                hitInfo.attackerId,
+                hitInfo.stackItemUID,
+                "DamageLevel",
+                StatCollection.StatOperation.Set,
+                damageLevel);
         }
 
         private static HashSet<string> DisabledScopedIdsOnMech(Mech mech)
