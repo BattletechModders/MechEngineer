@@ -8,7 +8,7 @@ use List::Util qw[min max];
 use POSIX;
 use Mustache::Simple;
 
-local $/ = "\r\n";
+local $/ = "\n";
 
 my @engine_tonnages = get_table('engine_tables.txt');
 my %engine_values = map { $_->[0] => $_->[1] } get_table('engine_values.txt');
@@ -37,11 +37,6 @@ sub next_icon {
 	return $icon;
 }
 
-my $categories = {
-	"basic" => [],
-	"exotics" => []
-};
-
 my @overview_rows = ();
 
 foreach my $row_ref (@engine_tonnages) {
@@ -51,8 +46,6 @@ foreach my $row_ref (@engine_tonnages) {
 	my $light_tonnage = $row[6];
 	my $xl_tonnage = $row[7];
 	my $xxl_tonnage = $row[8];
-
-	my $category = "basic";
 
 	my $rating_string = sprintf('%03s', $rating);
 	print($rating_string, " ");
@@ -112,9 +105,7 @@ foreach my $row_ref (@engine_tonnages) {
 
 		my $json = $tache->render("${prefix}_template.json", $engine);
 
-		write_to_file("../data/$category/engines/$engine->{ID}.json", $json);
-		my $engines = $categories->{$category};
-		push(@$engines, $engine);
+		write_to_file("../data/basic/engines/$engine->{ID}.json", $json);
 	};
 	
 	$generate_engine_sub->("emod_engine");
@@ -123,16 +114,6 @@ foreach my $row_ref (@engine_tonnages) {
 {
 	my $json = $tache->render("overview.html.mustache", { "rows" => \@overview_rows });
 	write_to_file("overview.html", $json);
-}
-
-while ((my $category, my $engines) = each(%{$categories})) {
-	my $shop = {
-		ID => "shopdef_emod_engines_${category}_test_generated",
-		ENGINES => $engines
-	};
-
-	my $json = $tache->render('shopdef_emod_engines_template.json', $shop);
-	write_to_file("../data/${category}/shops_test/$shop->{ID}.json", $json);
 }
 
 sub write_to_file {

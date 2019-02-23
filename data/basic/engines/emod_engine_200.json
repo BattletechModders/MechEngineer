@@ -18,13 +18,14 @@
 				"CBillCost": "200 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 10"
 			}
 		},
-		"Category" : { 
-			"CategoryID" : "EngineCore" 
-		}
+		"Category" : [
+			{"CategoryID": "EngineCore"},
+			{"CategoryID": "EnginePart"}
+		]
 	},
     "DissipationCapacity" : 0,
     "Description" : {
-        "Cost" : 760000,
+        "Cost" : 866000,
         "Rarity" : 0,
         "Purchasable" : true,
         "Manufacturer" : "Vlar",
