@@ -130,6 +130,18 @@ namespace MechEngineer
                     slots = slots | actuator.Slot;
                 }
 
+                if (Control.settings.ExtendHandLimit)
+                {
+                    if (max == ArmActuatorSlot.Hand)
+                        max = ArmActuatorSlot.FullHand;
+
+                    if (max == ArmActuatorSlot.Upper)
+                        max = ArmActuatorSlot.FullUpper;
+
+                    if (max == ArmActuatorSlot.Lower)
+                        max = ArmActuatorSlot.FullLower;
+                }
+
                 // if not support hand/lower
                 if (slots > max)
                     errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} cannot support more then {max} actuator"));
@@ -187,6 +199,17 @@ namespace MechEngineer
                     slots = slots | actuator.Slot;
                 }
 
+                if (Control.settings.ExtendHandLimit)
+                {
+                    if (max == ArmActuatorSlot.Hand)
+                        max = ArmActuatorSlot.FullHand;
+
+                    if (max == ArmActuatorSlot.Upper)
+                        max = ArmActuatorSlot.FullUpper;
+
+                    if (max == ArmActuatorSlot.Lower)
+                        max = ArmActuatorSlot.FullLower;
+                }
                 // if not support hand/lower
                 if (slots > max)
                     return false;

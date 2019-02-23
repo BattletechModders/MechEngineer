@@ -132,6 +132,7 @@ namespace MechEngineer
         public string DefaultCBTUpper = "emod_armcbt_upper";
         public string DefaultCBTHand = "emod_armcbt_hand";
         public bool InterruptHandDropIfNoLower = false;
+        public bool ExtendHandLimit = true;
 
         public bool AutoFixMechDefArmActuator = true;
         public IdentityHelper AutoFixArmActuatorCategorizer = new IdentityHelper
