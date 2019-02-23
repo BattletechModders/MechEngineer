@@ -255,6 +255,14 @@ namespace MechEngineer
             {
                 return false;
             }
+
+            if (c.IsFixed)
+            {
+                return false;
+            }
+
+            if (c.Is<ArmActuatorCBT>())
+                return false;
             
             if (!(def.ComponentType >= ComponentType.AmmunitionBox && def.ComponentType <= ComponentType.Upgrade))
             {
