@@ -269,16 +269,14 @@ namespace MechEngineer
             {
                 return false;
             }
-
-            if (c.Is<ArmActuatorCBT>())
-                return false;
             
             if (!(def.ComponentType >= ComponentType.AmmunitionBox && def.ComponentType <= ComponentType.Upgrade))
             {
                 return false;
             }
 
-            if (MechDefBuilder.LocationCount(def.AllowedLocations) == 1)
+            // items in arms and legs are usually bound to a certain side, so lets ignore them from relocation
+            if (MechDefBuilder.LocationCount(def.AllowedLocations) <= 2)
             {
                 return false;
             }
