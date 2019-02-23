@@ -121,15 +121,7 @@
     <Compile Include="Features\Engine\Patches\StatTooltipData_SetMovementData_Patch.cs" />
     <Compile Include="Features\Engine\StaticHandler\EngineHeat.cs" />
     <Compile Include="Features\Engine\StaticHandler\EngineMisc.cs" />
-    <Compile Include="Features\InventorySorter\InventorySorterListComparer.cs" />
-    <Compile Include="Features\InventorySorter\InventorySorterNotListComparer.cs" />
-    <Compile Include="Features\InventorySorter\MechLabInventoryWidgetAdapter.cs" />
-    <Compile Include="Features\InventorySorter\Patches\MechLabInventoryWidget_ApplySorting_Patch.cs" />
-    <Compile Include="Features\InventorySorter\MechLabInventoryWidget_ListViewAdapter.cs" />
-    <Compile Include="Features\InventorySorter\Patches\MechLabInventoryWidget_ListView_ApplySorting_Patch.cs" />
     <Compile Include="Features\Descriptions\Patches\ListElementController_BASE_NotListView_SetComponentTooltipData_Patch.cs" />
-    <Compile Include="Features\InventorySorter\InventorySorter.cs" />
-    <Compile Include="Features\InventorySorter\SortUtils.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabItemSlotElement_OnPointerEnter_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabItemSlotElement_OnPointerExit_Patch.cs" />
     <Compile Include="Features\Descriptions\Patches\MechLabPanel_CreateMechComponentItem_Patch2.cs" />

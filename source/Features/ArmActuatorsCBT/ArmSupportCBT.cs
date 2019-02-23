@@ -21,7 +21,7 @@ namespace MechEngineer
     }
 
     [CustomComponent("ArmActuatorSupport")]
-    public class ArmSupportCBT : CustomComponents.ChassisCusomComponent
+    public class ArmSupportCBT : ChassisCustom
     {
         public ArmActuatorSlot LeftLimit = ArmActuatorSlot.FullHand;
         public ArmActuatorSlot RightLimit = ArmActuatorSlot.FullHand;

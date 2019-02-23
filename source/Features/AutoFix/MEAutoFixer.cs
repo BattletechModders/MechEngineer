@@ -238,13 +238,22 @@ namespace MechEngineer
                 }
             }
 
-            mechDef.SetInventory(builder.Inventory.ToArray());
+            mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
 
 //            {
 //                float currentTotalTonnage = 0, maxValue = 0;
 //                MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
 //                Control.mod.Logger.LogDebug($"Last currentTotalTonnage={currentTotalTonnage} maxValue={maxValue}");
 //            }
+        }
+
+        private class OrderComparer : IComparer<MechComponentRef>
+        {
+            private readonly SorterComparer comparer = new SorterComparer();
+            public int Compare(MechComponentRef x, MechComponentRef y)
+            {
+                return comparer.Compare(x?.Def, y?.Def);
+            }
         }
 
         private static bool IsReorderable(MechComponentRef c)
