@@ -14,13 +14,13 @@
             "Description" : {
                 "Id" : "CriticalEffect-GyroCrit",
                 "Name" : "Gyro Crit",
-                "Details" : "The gyro was critically hit, reducing unsteady threshold by 20.",
+                "Details" : "The gyro was critically hit, reducing unsteady threshold by 50%.",
                 "Icon" : "uixSvgIcon_equipment_Gyro"
             },
             "statisticData" : {
                 "statName" : "UnsteadyThreshold",
-                "operation" : "Float_Subtract",
-                "modValue" : "20.0",
+                "operation" : "Float_Multiply",
+                "modValue" : "0.5",
                 "modType" : "System.Single"
             },
             "nature" : "Debuff"
@@ -39,13 +39,13 @@
             "Description" : {
                 "Id" : "CriticalEffect-GyroDestroyed",
                 "Name" : "Gyro Destroyed",
-                "Details" : "The gyro was destroyed, reducing unsteady threshold by 40.",
+                "Details" : "The gyro was destroyed, setting unsteady threshold to 0.",
                 "Icon" : "uixSvgIcon_equipment_Gyro"
             },
             "statisticData" : {
                 "statName" : "UnsteadyThreshold",
-                "operation" : "Float_Subtract",
-                "modValue" : "40.0",
+                "operation" : "Float_Multiply",
+                "modValue" : "0.0",
                 "modType" : "System.Single"
             },
             "nature" : "Debuff"

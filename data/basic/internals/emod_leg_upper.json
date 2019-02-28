@@ -2,7 +2,8 @@
 	"Custom": {
 		"Category" : { 
 			"CategoryID" : "LegUpperActuator" 
-		}
+		},
+		"Flags" : { "flags" : [ "default", "not_broken" ] }
 	},
     "Description" : {
         "Cost" : 30000,
@@ -13,7 +14,7 @@
         "UIName" : "Upper Leg",
         "Id" : "emod_leg_upper",
         "Name" : "Upper Leg Actuator",
-        "Details" : "TODO An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
+        "Details" : "An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
         "Icon" : "uixSvgIcon_equipment_ActuatorLeg"
     },
     "BonusValueA" : "",

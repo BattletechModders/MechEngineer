@@ -2,6 +2,12 @@
 	"Custom": {
 		"Category" : { 
 			"CategoryID" : "Cockpit" 
+		},
+		"Flags": {
+			"Flags": [
+				"not_broken",
+				"default"
+			]
 		}
 	},
     "Description" : {
@@ -26,7 +32,7 @@
     "Tonnage" : 3,
     "AllowedLocations" : "Head",
     "DisallowedLocations" : "All",
-    "CriticalComponent" : true,
+    "CriticalComponent" : false,
     "statusEffects" : null,
     "ComponentTags" : {
         "items" : [

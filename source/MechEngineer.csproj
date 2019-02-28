@@ -89,8 +89,10 @@
     <Compile Include="Features\ArmActuatorsCBT\ArmSupportCBT.cs" />
     <Compile Include="Features\ChassisQuirks\Patches\Mech_InitStats_Patch.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffectsHandler.cs" />
+    <Compile Include="Features\CriticalEffects\CriticalEffectsMechComponentExtensions.cs" />
     <Compile Include="Features\CriticalEffects\Patches\Mech_CheckForCrit_Patch.cs" />
     <Compile Include="Features\CriticalEffects\MessageCenterUtils.cs" />
+    <Compile Include="Features\CriticalEffects\Patches\MechComponent_inventorySize_Patch.cs" />
     <Compile Include="Features\Descriptions\BonusDescriptions.cs" />
     <Compile Include="Features\Descriptions\DescriptionDefAdapter.cs" />
     <Compile Include="Features\Descriptions\IAdjustInventoryElement.cs" />

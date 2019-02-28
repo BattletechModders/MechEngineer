@@ -8,10 +8,10 @@ namespace MechEngineer
     public class CriticalEffects : SimpleCustomComponent
     {
         public string[][] PenalizedEffectIDs { get; set; } = new string[0][];
+        public string[] OnDestroyedEffectIDs { get; set; } = new string[0];
+        public string[] OnDestroyedDisableEffectIds { get; set; } = new string[0];
 
         public DeathMethod DeathMethod { get; set; } = DeathMethod.NOT_SET;
-        public string[] DestroyedEffectIds { get; set; } = new string[0];
-        public string[] DestroyedDisableEffectIds { get; set; } = new string[0];
         
         public ScopeEnum Scope { get; set; } = ScopeEnum.Component;
         public enum ScopeEnum
@@ -19,11 +19,8 @@ namespace MechEngineer
             Component, Location, Mech
         }
         
-        public LinkedClass Linked = null;
-        public class LinkedClass
-        {
-            public string CollectionStatisticName { get; set; } = null;
-            public bool SharedDamageLevel { get; set; } = false;
-        }
+        public string LinkedStatisticName = null;
+
+        public bool HasLinked => !string.IsNullOrEmpty(LinkedStatisticName);
     }
 }

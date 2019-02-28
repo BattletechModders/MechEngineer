@@ -48,68 +48,55 @@ namespace MechEngineer
                 return true;
             }
 
+            damageLevel = ComponentDamageLevel.Penalized;
+
             var location = mechComponent.mechComponentRef.MountedLocation;
             var mechLocationDestroyed = mech.IsLocationDestroyed(location);
-            
-            int critLevel;
-            int oldCritLevel;
-            int crits;
+
+            int critsMax;
+            int critsPrev;
+            int critsNext;
+            int critsAdded;
             {
-                {
-                    const string statisticName = "MECriticalHits";
+                critsPrev = criticalEffects.HasLinked ? mechComponent.CriticalSlotsHitLinked() : mechComponent.CriticalSlotsHit();
+                critsMax = criticalEffects.PenalizedEffectIDs.Length + 1; // max = how many crits can be absorbed, last one destroys component
 
-                    var collection = mechComponent.StatCollection;
-                    var critStat = collection.GetStatistic(statisticName) ?? collection.AddStatistic(statisticName, 0);
-                    oldCritLevel = critStat.Value<int>();
-                    var maxCrits = mechComponent.componentDef.InventorySize;
-                    if (mechLocationDestroyed)
-                    {
-                        crits = Mathf.Max(maxCrits - oldCritLevel, 1);
-                    }
-                    else
-                    {
-                        crits = 1;
-                    }
-                    critLevel = Mathf.Min(oldCritLevel + crits, maxCrits);
-                    critStat.SetValue(critLevel);
-                    
-                    Control.mod.Logger.LogDebug($"component crits={crits} maxCrits={maxCrits} oldCritLevel={oldCritLevel} critLevel={critLevel}");
-                }
+                var critsMaybePossible = mechLocationDestroyed ? mechComponent.CriticalSlots() : 1;
 
-                var collectionStatisticName = criticalEffects.Linked?.CollectionStatisticName;
-                if (!string.IsNullOrEmpty(collectionStatisticName))
-                {
-                    var statisticName = ScopedId(collectionStatisticName, mechComponent, criticalEffects.Scope);
-                    
-                    var collection = mech.StatCollection;
-                    var critStat = collection.GetStatistic(statisticName) ?? collection.AddStatistic(statisticName, 0);
-                    oldCritLevel = critStat.Value<int>();
-                    var maxCrits = criticalEffects.PenalizedEffectIDs.Length;
-                    critLevel = Mathf.Min(oldCritLevel + crits, criticalEffects.PenalizedEffectIDs.Length);
-                    critStat.SetValue(critLevel);
+                critsNext = Mathf.Min(critsMax, critsPrev + critsMaybePossible);
+                critsAdded = Mathf.Max(critsNext - critsPrev, 0);
 
-                    Control.mod.Logger.LogDebug($"linked crits={crits} maxCrits={maxCrits} oldCritLevel={oldCritLevel} critLevel={critLevel}");
-                }
-            }
-
-            {
-                if (mechLocationDestroyed || critLevel >= criticalEffects.PenalizedEffectIDs.Length)
+                if (critsNext >= critsMax)
                 {
                     damageLevel = ComponentDamageLevel.Destroyed;
                 }
-                else
+
+                if (critsNext != critsPrev)
                 {
-                    damageLevel = ComponentDamageLevel.Penalized;
+                    if (criticalEffects.HasLinked)
+                    {
+                        mechComponent.CriticalSlotsHitLinked(critsNext);
+                    }
+                    else
+                    {
+                        mechComponent.CriticalSlotsHit(critsNext);
+                    }
                 }
+
+                Control.mod.Logger.LogDebug(
+                    $"critsAdded={critsAdded} critsMax={critsMax}" +
+                    $"critsPrev={critsPrev} critsNext={critsNext}" +
+                    $"HasLinked={criticalEffects.HasLinked}"
+                );
+            }
+
+            {
 
                 SetDamageLevel(mechComponent, hitInfo, damageLevel);
             
-                if (criticalEffects.Linked != null
-                    && criticalEffects.Linked.SharedDamageLevel
-                    && !string.IsNullOrEmpty(criticalEffects.Linked.CollectionStatisticName))
+                if (criticalEffects.HasLinked)
                 {
-                    var collectionStatisticName = criticalEffects.Linked?.CollectionStatisticName;
-                    var scopedId = ScopedId(collectionStatisticName, mechComponent, criticalEffects.Scope);
+                    var scopedId = mechComponent.ScopedId(criticalEffects.LinkedStatisticName, criticalEffects.Scope);
                 
                     foreach (var mc in mech.allComponents)
                     {
@@ -123,14 +110,13 @@ namespace MechEngineer
                         {
                             continue;
                         }
-
-                        var otherStatisticName = criticalEffects.Linked?.CollectionStatisticName;
-                        if (string.IsNullOrEmpty(otherStatisticName))
+                        
+                        if (string.IsNullOrEmpty(ce.LinkedStatisticName))
                         {
                             continue;
                         }
                     
-                        var otherScopedId = ScopedId(otherStatisticName, mc, ce.Scope);
+                        var otherScopedId = mc.ScopedId(ce.LinkedStatisticName, ce.Scope);
                         if (scopedId == otherScopedId)
                         {
                             SetDamageLevel(mc, hitInfo, damageLevel);
@@ -143,14 +129,14 @@ namespace MechEngineer
                 // cancel effects
                 var effectIds = new string[0];
                 
-                if (oldCritLevel > 0)
+                if (critsPrev > 0)
                 {
-                    effectIds.AddRange(criticalEffects.PenalizedEffectIDs[oldCritLevel]);
+                    effectIds.AddRange(criticalEffects.PenalizedEffectIDs[critsPrev]);
                 }
                 
                 if (damageLevel == ComponentDamageLevel.Destroyed)
                 {
-                    effectIds.AddRange(criticalEffects.DestroyedDisableEffectIds);
+                    effectIds.AddRange(criticalEffects.OnDestroyedDisableEffectIds);
                 }
                 
                 foreach (var effectId in effectIds)
@@ -164,14 +150,14 @@ namespace MechEngineer
                 // create effects
                 var effectIds = new string[0];
                 
-                if (critLevel < criticalEffects.PenalizedEffectIDs.Length)
+                if (critsNext < criticalEffects.PenalizedEffectIDs.Length)
                 {
-                    effectIds = criticalEffects.PenalizedEffectIDs[critLevel];
+                    effectIds = criticalEffects.PenalizedEffectIDs[critsNext];
                 }
                 
                 if (damageLevel == ComponentDamageLevel.Destroyed)
                 {
-                    effectIds = criticalEffects.DestroyedEffectIds;
+                    effectIds = criticalEffects.OnDestroyedEffectIDs;
                 }
                 
                 // collect disabled effects, probably easier to cache these in a mech statistic
@@ -179,7 +165,7 @@ namespace MechEngineer
                 
                 foreach (var effectId in effectIds)
                 {
-                    var scopedId = ScopedId(effectId, mechComponent, criticalEffects.Scope);
+                    var scopedId = mechComponent.ScopedId(effectId, criticalEffects.Scope);
                     if (disabledEffectIds.Contains(scopedId))
                     {
                         continue;
@@ -212,7 +198,7 @@ namespace MechEngineer
             else
             {
                 mechComponent.PublishMessage(
-                    new Text("{0} " + (crits == 1 ? "CRIT" : "CRIT X" + crits), mechComponent.UIName),
+                    new Text("{0} " + (critsAdded == 1 ? "CRIT" : "CRIT X" + critsAdded), mechComponent.UIName),
                     FloatieMessage.MessageNature.CriticalHit
                 );
             }
@@ -247,29 +233,14 @@ namespace MechEngineer
                     continue;
                 }
 
-                foreach (var effectId in ce.DestroyedDisableEffectIds)
+                foreach (var effectId in ce.OnDestroyedDisableEffectIds)
                 {
-                    var scopedId = ScopedId(effectId, mc, ce.Scope);
+                    var scopedId = mc.ScopedId(effectId, ce.Scope);
                     disabledEffectIds.Add(scopedId);
                 }
             }
 
             return disabledEffectIds;
-        }
-            
-        private static string ScopedId(string id, MechComponent mechComponent, CriticalEffects.ScopeEnum scope)
-        {
-            switch (scope)
-            {
-                case CriticalEffects.ScopeEnum.Location:
-                    var locationId = Mech.GetAbbreviatedChassisLocation(mechComponent.mechComponentRef.MountedLocation);
-                    return $"{id}_{locationId}";
-                case CriticalEffects.ScopeEnum.Component:
-                    var uid = mechComponent.uid;
-                    return $"{id}_{uid}";
-                default:
-                    return id;
-            }
         }
         
         private class EffectIdUtil
@@ -332,7 +303,7 @@ namespace MechEngineer
             private string AppliedEffectId()
             {
                 var id = $"MECriticalHitEffect_{effectId}_{mechComponent.parent.GUID}";
-                return ScopedId(id, mechComponent, scope);
+                return mechComponent.ScopedId(id, scope);
             }
         }
     }

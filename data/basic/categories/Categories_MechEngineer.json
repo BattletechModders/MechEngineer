@@ -13,11 +13,10 @@
                 "Sorter" : {
                     "Order" : 0
                 },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-						"default"
-                    ]
+                "CriticalEffects" : {
+                    "Scope": "Mech",
+                    "LinkedStatisticName" : "LifeSupport",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-LifeSupport1", "CriticalEffect-LifeSupport2"]
                 }
             }
         },
@@ -34,11 +33,13 @@
                 "Sorter" : {
                     "Order" : 1
                 },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-						"default"
-                    ]
+                "CriticalEffects" : {
+                    "Scope": "Mech",
+                    "LinkedStatisticName" : "Sensors",
+                    "PenalizedEffectIDs" : [
+                        ["CriticalEffect-Sensors1"]
+                    ],
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-Sensors2"]
                 }
             }
         },
@@ -54,12 +55,6 @@
                 },
                 "Sorter" : {
                     "Order" : 2
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-						"default"
-                    ]
                 },
                 "CriticalEffects" : {
                     "DeathMethod" : "PilotKilled"
@@ -79,11 +74,13 @@
                 "Sorter" : {
                     "Order" : 3
                 },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-						"default"
-                    ]
+                "CriticalEffects" : {
+                    "Scope": "Mech",
+                    "LinkedStatisticName" : "Sensors",
+                    "PenalizedEffectIDs" : [
+                        ["CriticalEffect-Sensors1"]
+                    ],
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-Sensors2"]
                 }
             }
         },
@@ -100,11 +97,10 @@
                 "Sorter" : {
                     "Order" : 4
                 },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-						"default"
-                    ]
+                "CriticalEffects" : {
+                    "Scope": "Mech",
+                    "LinkedStatisticName" : "LifeSupport",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-LifeSupport1", "CriticalEffect-LifeSupport2"]
                 }
             }
         },
@@ -190,16 +186,11 @@
                 "Sorter" : {
                     "Order" : 3
                 },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken"
-                    ]
-                },
                 "CriticalEffects" : {
-                    "PenalizedEffects" : [
+                    "PenalizedEffectIDs" : [
                         ["CriticalEffect-GyroCrit"]
-                    ],
-                    "DestroyedEffects" : ["CriticalEffect-GyroDestroyed"]
+                    ]
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-GyroDestroyed"]
                 }
             }
         },
@@ -209,15 +200,12 @@
             "DefaultCustoms" : {
                 "CriticalEffects" : {
                     "Scope": "Mech",
-                    "Linked" : {
-                        "CollectionId" : "EngineCrits",
-                        "SharedDamageLevel" : true
-                    },
-                    "DeathMethod" : "EngineDestroyed",
-                    "PenalizedEffects" : [
+                    "LinkedStatisticName" : "EngineCrits",
+                    "PenalizedEffectIDs" : [
                         ["CriticalEffect-EngineCrit1"],
                         ["CriticalEffect-EngineCrit2"]
                     ]
+                    "DeathMethod" : "EngineDestroyed",
                 }
             }
         },
@@ -233,12 +221,6 @@
                 },
                 "Sorter" : {
                     "Order" : 4
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-                        "no_salvage"
-                    ]
                 }
             }
         },
@@ -254,11 +236,6 @@
                 },
                 "Sorter" : {
                     "Order" : 5
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken"
-                    ]
                 }
             }
         },
@@ -274,11 +251,6 @@
                 },
                 "Sorter" : {
                     "Order" : 6
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken"
-                    ]
                 }
             }
         },
@@ -309,12 +281,6 @@
                 },
                 "Sorter" : {
                     "Order" : 0
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-                        "default"
-                    ]
                 }
             }
         },
@@ -330,12 +296,6 @@
                 },
                 "Sorter" : {
                     "Order" : 1
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-                        "default"
-                    ]
                 }
             }
         },
@@ -351,12 +311,6 @@
                 },
                 "Sorter" : {
                     "Order" : 2
-                },
-                "Flags" : {
-                    "Flags" : [
-                        "not_broken",
-                        "default"
-                    ]
                 }
             }
         },
