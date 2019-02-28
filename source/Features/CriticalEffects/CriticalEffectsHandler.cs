@@ -52,46 +52,41 @@ namespace MechEngineer
 
             var location = mechComponent.mechComponentRef.MountedLocation;
             var mechLocationDestroyed = mech.IsLocationDestroyed(location);
-
-            int critsMax;
+            
             int critsPrev;
             int critsNext;
             int critsAdded;
             {
                 critsPrev = criticalEffects.HasLinked ? mechComponent.CriticalSlotsHitLinked() : mechComponent.CriticalSlotsHit();
-                critsMax = criticalEffects.PenalizedEffectIDs.Length + 1; // max = how many crits can be absorbed, last one destroys component
+                var critsMax = criticalEffects.PenalizedEffectIDs.Length + 1; // max = how many crits can be absorbed, last one destroys component
 
-                var critsMaybePossible = mechLocationDestroyed ? mechComponent.CriticalSlots() : 1;
+                var slots = mechComponent.CriticalSlots(); // critical slots left
 
-                critsNext = Mathf.Min(critsMax, critsPrev + critsMaybePossible);
-                critsAdded = Mathf.Max(critsNext - critsPrev, 0);
+                var critsHit = mechLocationDestroyed ? slots : Mathf.Min(1, slots);
 
+                critsNext = Mathf.Min(critsMax, critsPrev + critsHit);
                 if (critsNext >= critsMax)
                 {
                     damageLevel = ComponentDamageLevel.Destroyed;
                 }
-
-                if (critsNext != critsPrev)
+                if (criticalEffects.HasLinked)
                 {
-                    if (criticalEffects.HasLinked)
-                    {
-                        mechComponent.CriticalSlotsHitLinked(critsNext);
-                    }
-                    else
-                    {
-                        mechComponent.CriticalSlotsHit(critsNext);
-                    }
+                    mechComponent.CriticalSlotsHitLinked(critsNext);
                 }
+
+                critsAdded = Mathf.Max(critsNext - critsPrev, 0);
+                
+                var slotsHitPrev = mechComponent.CriticalSlotsHit();
+                mechComponent.CriticalSlotsHit(slotsHitPrev + critsAdded);
 
                 Control.mod.Logger.LogDebug(
                     $"critsAdded={critsAdded} critsMax={critsMax}" +
                     $"critsPrev={critsPrev} critsNext={critsNext}" +
-                    $"HasLinked={criticalEffects.HasLinked}"
+                    $"critsHit={critsHit} HasLinked={criticalEffects.HasLinked}"
                 );
             }
 
             {
-
                 SetDamageLevel(mechComponent, hitInfo, damageLevel);
             
                 if (criticalEffects.HasLinked)
