@@ -15,16 +15,13 @@ namespace MechEngineer
             {
                 if (weapon.parent is Mech mech)
                 {
-                    var armActuator = mech.allComponents
+                    __result = mech.allComponents
                         .Where(c => c.IsFunctional && c.Location == weapon.Location)
                         .Select(c => c.componentDef?.GetComponent<ArmActuator>())
-                        .FirstOrDefault(a => a != null);
+                        .Where(a => a != null)
+                        .Sum(x => x.AccuracyBonus) ?? 0.0f;
 
-                    if (armActuator?.AccuracyBonus != null)
-                    {
-                        __result = armActuator.AccuracyBonus.Value;
-                        return false;
-                    }
+                    return false;
                 }
             }
             catch (Exception e)

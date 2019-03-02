@@ -43,7 +43,6 @@ namespace MechEngineer
                 Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
                 Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
                 
-                Registry.RegisterPreProcessor(ArmActuatorHandler.Shared);
                 Registry.RegisterPreProcessor(CockpitHandler.Shared);
                 Registry.RegisterPreProcessor(GyroHandler.Shared);
                 Registry.RegisterPreProcessor(LegActuatorHandler.Shared);

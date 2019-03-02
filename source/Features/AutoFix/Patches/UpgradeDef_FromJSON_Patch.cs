@@ -18,7 +18,6 @@ namespace MechEngineer
                     Control.mod.Logger.LogDebug($"AutoFixer: {__instance.Description.Id} - skipped by options");
                     return;
                 }
-                ArmActuatorHandler.Shared.AdjustUpgradeDef(__instance);
                 GyroHandler.Shared.AdjustUpgradeDef(__instance);
                 LegActuatorHandler.Shared.AdjustUpgradeDef(__instance);
                 CockpitHandler.Shared.AdjustUpgradeDef(__instance);

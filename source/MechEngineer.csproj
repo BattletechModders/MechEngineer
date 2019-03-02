@@ -83,7 +83,6 @@
     <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioValidation.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructureSimple_Patch.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructure_Patch.cs" />
-    <Compile Include="Features\ArmActuators\ArmActuatorHandler.cs" />
     <Compile Include="Features\BTLoadFix\BTLoadUtils.cs" />
     <Compile Include="Features\ArmActuatorsCBT\ArmActuatorCBT.cs" />
     <Compile Include="Features\ArmActuatorsCBT\ArmSupportCBT.cs" />
