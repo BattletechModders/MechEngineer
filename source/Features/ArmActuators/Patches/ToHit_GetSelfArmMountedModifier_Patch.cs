@@ -19,7 +19,7 @@ namespace MechEngineer
                         .Where(c => c.IsFunctional && c.Location == weapon.Location)
                         .Select(c => c.componentDef?.GetComponent<ArmActuator>())
                         .Where(a => a != null)
-                        .Sum(x => x.AccuracyBonus) ?? 0.0f;
+                        .Sum(x => x.AccuracyBonus);
 
                     return false;
                 }
