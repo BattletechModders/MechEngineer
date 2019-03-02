@@ -189,7 +189,7 @@
                 "CriticalEffects" : {
                     "PenalizedEffectIDs" : [
                         ["CriticalEffect-GyroCrit"]
-                    ]
+                    ],
                     "OnDestroyedEffectIDs" : ["CriticalEffect-GyroDestroyed"]
                 }
             }
@@ -204,8 +204,8 @@
                     "PenalizedEffectIDs" : [
                         ["CriticalEffect-EngineCrit1"],
                         ["CriticalEffect-EngineCrit2"]
-                    ]
-                    "DeathMethod" : "EngineDestroyed",
+                    ],
+                    "DeathMethod" : "EngineDestroyed"
                 }
             }
         },
@@ -281,6 +281,15 @@
                 },
                 "Sorter" : {
                     "Order" : 0
+                },
+                "CriticalEffects" : {
+                    "Scope": "Location",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-HipDestroyed"],
+					"OnDestroyedDisableEffectIds" : [
+						"CriticalEffect-LegUpperActuatorDestroyed",
+						"CriticalEffect-LegLowerActuatorDestroyed",
+						"CriticalEffect-LegFootActuatorDestroyed"
+					]
                 }
             }
         },
@@ -296,6 +305,10 @@
                 },
                 "Sorter" : {
                     "Order" : 1
+                },
+                "CriticalEffects" : {
+                    "Scope": "Location",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegUpperActuatorDestroyed"]
                 }
             }
         },
@@ -311,6 +324,10 @@
                 },
                 "Sorter" : {
                     "Order" : 2
+                },
+                "CriticalEffects" : {
+                    "Scope": "Location",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegLowerActuatorDestroyed"]
                 }
             }
         },
@@ -326,6 +343,10 @@
                 },
                 "Sorter" : {
                     "Order" : 3
+                },
+                "CriticalEffects" : {
+                    "Scope": "Location",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegFootActuatorDestroyed"]
                 }
             }
         },

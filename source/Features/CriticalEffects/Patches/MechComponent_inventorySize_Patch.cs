@@ -8,18 +8,16 @@ namespace MechEngineer
     [HarmonyPatch(nameof(MechComponent.inventorySize), MethodType.Getter)]
     internal static class MechComponent_inventorySize_Patch
     {
-        public static int Prefix(MechComponent __instance)
+        public static void Postfix(MechComponent __instance, ref int __result)
         {
             try
             {
-                return __instance.CriticalSlots();
+                __result = __instance.CriticalSlots();
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
-
-            return __instance.inventorySize;
         }
     }
 }
