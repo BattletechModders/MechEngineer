@@ -32,12 +32,19 @@ namespace MechEngineer
                 Control.mod.Logger.LogError(e);
             }
             
-            var effectManager = mechComponent.parent.Combat.EffectManager;
-            effectManager.CreateEffect(
-                effect, effectID, 
-                -1, 
-                mechComponent.parent, target, 
-                new WeaponHitInfo(), 0, false);
+            try
+            {
+                var effectManager = mechComponent.parent.Combat.EffectManager;
+                effectManager.CreateEffect(
+                    effect, effectID, 
+                    -1, 
+                    mechComponent.parent, target, 
+                    new WeaponHitInfo(), 0, false);
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
     }
 }
