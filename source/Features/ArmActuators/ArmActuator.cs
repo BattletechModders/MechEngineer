@@ -13,7 +13,6 @@ namespace MechEngineer
     [CustomComponent("ArmActuator")]
     public class ArmActuator : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed, IOnInstalled, ISorter
     {
-        public float AccuracyBonus = 0.0f;
         public ArmActuatorSlot Type { get; set; }
         
         public ArmActuatorSlot MaxSlot { get; set; } = ArmActuatorSlot.PartHand;

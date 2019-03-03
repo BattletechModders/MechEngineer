@@ -266,6 +266,8 @@ namespace MechEngineer
                 }
                 
                 var actor = mechComponent.parent;
+
+                effectData = LocationalEffects.ProcessLocationalEffectData(effectData, mechComponent);
                 
                 actor.Combat.EffectManager.CreateEffect(
                     effectData, appliedEffectId, -1,

@@ -77,16 +77,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\AccuracyEffects\AccuracyEffects.cs" />
+    <Compile Include="Features\AccuracyEffects\LocationalEffects.cs" />
+    <Compile Include="Features\AccuracyEffects\Patches\MechComponent_InitPassiveSelfEffects_Patch.cs" />
+    <Compile Include="Features\AccuracyEffects\Patches\Mech_InitEffectStats_Patch5.cs" />
+    <Compile Include="Features\AccuracyEffects\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorHandler.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
-    <Compile Include="Features\ArmActuators\Patches\Mech_InitEffectStats_Patch5.cs" />
-    <Compile Include="Features\ArmActuators\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
     <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioValidation.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructureSimple_Patch.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructure_Patch.cs" />
     <Compile Include="Features\BTLoadFix\BTLoadUtils.cs" />
-    <Compile Include="Features\ChassisQuirks\Patches\Mech_InitStats_Patch.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffectsHandler.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffectsMechComponentExtensions.cs" />
     <Compile Include="Features\CriticalEffects\Patches\Mech_CheckForCrit_Patch.cs" />
@@ -96,8 +98,6 @@
     <Compile Include="Features\Descriptions\DescriptionDefAdapter.cs" />
     <Compile Include="Features\Descriptions\IAdjustInventoryElement.cs" />
     <Compile Include="Features\Descriptions\IAdjustSlotElement.cs" />
-    <Compile Include="Features\ChassisQuirks\ChassisQuirks.cs" />
-    <Compile Include="Features\ChassisQuirks\Patches\Mech_InitEffectStats_Patch3.cs" />
     <Compile Include="Features\Descriptions\MechComponentDefAdapter.cs" />
     <Compile Include="Features\BTLoadFix\Patches\SkirmishMechBayPanel_RequestResources_Patch.cs" />
     <Compile Include="Features\BTLoadFix\Patches\SkirmishSettings_Beta_LoadLanceConfiguratorData_Patch.cs" />
