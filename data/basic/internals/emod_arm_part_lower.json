@@ -9,7 +9,7 @@
                 "ArmAccuracyBonus: 1"
             ]
         },
-		"Category" : { "CategoryID" : "ArmActuator" }
+		"Category" : { "CategoryID" : "ArmLowerActuator" }
 	},
     "Description" : {
         "Cost" : 20000,

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MechEngineer
 {
-    [HarmonyPatch(typeof(Mech), "MoveMultiplier")]
+    [HarmonyPatch(typeof(Mech), "get_MoveMultiplier")]
     internal static class Mech_MoveMultiplier_Patch
     {
         public static void Postfix(Mech __instance, ref float __result)

@@ -11,8 +11,7 @@ using HBS.Extensions;
 namespace MechEngineer
 {
     [CustomComponent("ArmActuator")]
-    public class ArmActuator : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed,
-        IAdjustDescription, IOnInstalled, ISorter
+    public class ArmActuator : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed, IOnInstalled, ISorter
     {
         public float AccuracyBonus = 0.0f;
         public ArmActuatorSlot Type { get; set; }
@@ -160,16 +159,18 @@ namespace MechEngineer
             return string.Empty;
         }
 
-        public string AdjustDescription(string Description)
-        {
-            Description += "\n<color=#28b463><b>[" + Type + "]</b></color>";
-            if (MaxSlot < ArmActuatorSlot.PartHand)
-            {
-                Description += "\n<color=#c0392b><b>Forbid Actuators up to:" + MaxSlot + "</b></color>";
-            }
-
-            return Description;
-        }
+        // TODO: restriction description should be applied to chassisDef description not item
+        // IAdjustDescription
+//        public string AdjustDescription(string Description)
+//        {
+//            Description += "\n<color=#28b463><b>[" + Type + "]</b></color>";
+//            if (MaxSlot < ArmActuatorSlot.PartHand)
+//            {
+//                Description += "\n<color=#c0392b><b>Forbid Actuators up to:" + MaxSlot + "</b></color>";
+//            }
+//
+//            return Description;
+//        }
 
         public void OnItemGrabbed(IMechLabDraggableItem item, MechLabPanel mechLab, MechLabLocationWidget widget)
         {

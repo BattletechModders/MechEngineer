@@ -8,7 +8,7 @@
                 "MeleeAccuracyBonus: 1"
             ]
         },
-		"Category" : { "CategoryID" : "ArmActuator" }
+		"Category" : { "CategoryID" : "ArmHandActuator" }
 	},
     "Description" : {
         "Cost" : 30000,

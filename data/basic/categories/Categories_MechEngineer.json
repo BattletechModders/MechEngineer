@@ -369,11 +369,38 @@
             }
         },
         {
-            "Name" : "ArmActuator",
-            "DisplayName" : "Arm Actuator",
+            "Name" : "ArmShoulder",
+            "DisplayName" : "Shoulder",
             "DefaultCustoms" : {
                 "InventorySorter" : {
-                    "SortKey" : "Arm"
+                    "SortKey" : "ActuatorArm0"
+                }
+            }
+        },
+        {
+            "Name" : "ArmUpperActuator",
+            "DisplayName" : "Upper Arm Actuator",
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorArm1"
+                }
+            }
+        },
+        {
+            "Name" : "ArmLowerActuator",
+            "DisplayName" : "Lower Arm Actuator",
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorArm2"
+                }
+            }
+        },
+        {
+            "Name" : "ArmHandActuator",
+            "DisplayName" : "Hand Actuator",
+            "DefaultCustoms" : {
+                "InventorySorter" : {
+                    "SortKey" : "ActuatorArm3"
                 }
             }
         }
