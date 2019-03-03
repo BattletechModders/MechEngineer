@@ -46,11 +46,11 @@
                 "Details" : "The cramped conditions of a small cockpit reduces accuracy and removes overheat protection.",
                 "Icon" : "uixSvgIcon_ability_precisionstrike"
             },
-            "nature" : "Debufff",
+            "nature" : "Debuff",
             "statisticData" : {
                 "effectsPersistAfterDestruction" : false,
                 "statName" : "AccuracyModifier",
-                "operation" : "Float_Substract",
+                "operation" : "Float_Subtract",
                 "modValue" : "1.0",
                 "modType" : "System.Single",
             },

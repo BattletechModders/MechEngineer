@@ -80,9 +80,13 @@ namespace MechEngineer
                 mechComponent.CriticalSlotsHit(slotsHitPrev + critsAdded);
 
                 Control.mod.Logger.LogDebug(
-                    $"critsAdded={critsAdded} critsMax={critsMax}" +
-                    $"critsPrev={critsPrev} critsNext={critsNext}" +
-                    $"critsHit={critsHit} HasLinked={criticalEffects.HasLinked}"
+                    $"{criticalEffects.Def.Description.Id} on {mechComponent.mechComponentRef.MountedLocation} " +
+                    $"critsAdded={critsAdded} critsMax={critsMax} " +
+                    $"critsPrev={critsPrev} critsNext={critsNext} " +
+                    $"critsHit={critsHit} " +
+                    $"slots={slots} slotsHitPrev={slotsHitPrev} " +
+                    $"damageLevel={damageLevel} " +
+                    $"HasLinked={criticalEffects.HasLinked}"
                 );
             }
 
@@ -124,7 +128,7 @@ namespace MechEngineer
                 // cancel effects
                 var effectIds = new string[0];
                 
-                if (critsPrev > 0)
+                if (critsPrev > 0 && critsPrev < criticalEffects.PenalizedEffectIDs.Length)
                 {
                     effectIds.AddRange(criticalEffects.PenalizedEffectIDs[critsPrev]);
                 }
@@ -157,7 +161,7 @@ namespace MechEngineer
                 
                 // collect disabled effects, probably easier to cache these in a mech statistic
                 var disabledEffectIds = DisabledScopedIdsOnMech(mech);
-                
+
                 foreach (var effectId in effectIds)
                 {
                     var scopedId = mechComponent.ScopedId(effectId, criticalEffects.Scope);

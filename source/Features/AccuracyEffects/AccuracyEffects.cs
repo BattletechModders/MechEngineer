@@ -15,7 +15,7 @@ namespace MechEngineer
         
         public static float AccuracyForLocation(StatCollection statCollection, ChassisLocations location)
         {
-            var key = LocationalEffects.LocationalStatisticName("ArmAccuracy", location);
+            var key = LocationalEffects.LocationalStatisticName("Accuracy", location);
             return AccuracyForKey(statCollection, key);
         }
         

@@ -1,4 +1,10 @@
 {
+	"Custom" : {
+		"ArmActuatorSupport" : {
+			"LeftLimit" : "Upper",
+			"RightLimit" : "Upper"
+		}
+	},
     "Description": {
         "Cost": 8000000,
         "Rarity": 0,

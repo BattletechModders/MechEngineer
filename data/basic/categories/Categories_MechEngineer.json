@@ -374,6 +374,15 @@
             "DefaultCustoms" : {
                 "InventorySorter" : {
                     "SortKey" : "ActuatorArm0"
+                },
+                "CriticalEffects" : {
+                    "Scope": "Location",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-ShoulderDestroyed"],
+					"OnDestroyedDisableEffectIds" : [
+						"CriticalEffect-ArmUpperActuatorDestroyed",
+						"CriticalEffect-ArmLowerActuatorDestroyed",
+						"CriticalEffect-ArmHandActuatorDestroyed"
+					]
                 }
             }
         },
@@ -383,6 +392,10 @@
             "DefaultCustoms" : {
                 "InventorySorter" : {
                     "SortKey" : "ActuatorArm1"
+                },
+                "CriticalEffects" : {
+                    "Scope": "Location",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmUpperActuatorDestroyed"]
                 }
             }
         },
@@ -392,6 +405,10 @@
             "DefaultCustoms" : {
                 "InventorySorter" : {
                     "SortKey" : "ActuatorArm2"
+                },
+                "CriticalEffects" : {
+                    "Scope": "Location",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmLowerActuatorDestroyed"]
                 }
             }
         },
@@ -401,6 +418,10 @@
             "DefaultCustoms" : {
                 "InventorySorter" : {
                     "SortKey" : "ActuatorArm3"
+                },
+                "CriticalEffects" : {
+                    "Scope": "Location",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmHandActuatorDestroyed"]
                 }
             }
         }

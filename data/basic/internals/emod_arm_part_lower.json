@@ -1,13 +1,7 @@
 {
 	"Custom": {
         "ArmActuator" : {
-            "Type" : "PartLower",
-            "AccuracyBonus" : -1
-        },
-        "BonusDescriptions": {
-            "Bonuses": [
-                "ArmAccuracyBonus: 1"
-            ]
+            "Type" : "PartLower"
         },
 		"Category" : { "CategoryID" : "ArmLowerActuator" }
 	},

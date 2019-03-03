@@ -73,20 +73,12 @@ namespace MechEngineer
 
             var statisticName = mechComponent.ScopedId(ce.LinkedStatisticName, ce.Scope);
             var collection = mechComponent.parent.StatCollection;
-            var critStat = collection.GetStatistic(HitsStatisticName);
 
+            var critStat = collection.GetStatistic(statisticName) ?? collection.AddStatistic(statisticName, 0);
             if (setHits.HasValue)
             {
-                if (critStat == null)
-                {
-                    critStat = collection.AddStatistic(statisticName, setHits.Value);
-                }
-                else
-                {
-                    critStat.SetValue(setHits.Value);
-                }
+                critStat.SetValue(setHits.Value);
             }
-
             return critStat?.Value<int>() ?? 0;
         }
 
