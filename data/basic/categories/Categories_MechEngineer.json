@@ -369,7 +369,7 @@
             }
         },
         {
-            "Name" : "ArmActuator1",
+            "Name" : "ArmActuator",
             "DisplayName" : "Arm Actuator",
             "DefaultCustoms" : {
                 "InventorySorter" : {

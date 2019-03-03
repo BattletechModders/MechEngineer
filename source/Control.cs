@@ -48,12 +48,12 @@ namespace MechEngineer
                 Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
 
                 Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                if (settings.UseCBTActuators)
+                if (settings.UseArmActuators)
                 {
-                    Validator.RegisterClearInventory(ArmActuatorCBTHandler.ClearInventory);
-                    Validator.RegisterMechValidator(ArmActuatorCBTHandler.ValidateMech, ArmActuatorCBTHandler.CanBeFielded);
+                    Validator.RegisterClearInventory(ArmActuatorHandler.ClearInventory);
+                    Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMech, ArmActuatorHandler.CanBeFielded);
 
-                    AutoFixer.Shared.RegisterMechFixer(ArmActuatorCBTHandler.FixCBTActuators);
+                    AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuators);
                 }
 
                 if (settings.DynamicSlotsValidateDropEnabled)

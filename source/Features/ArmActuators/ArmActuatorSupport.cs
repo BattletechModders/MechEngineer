@@ -10,21 +10,22 @@ namespace MechEngineer
     public enum ArmActuatorSlot
     {
         None = 0,
-        Shoulder = 1,
-        Upper = 2,
-        Lower = 4,
-        Hand = 8,
+        
+        PartShoulder = 1,
+        PartUpper = 2,
+        PartLower = 4,
+        PartHand = 8,
 
-        FullHand = 15,
-        FullLower = 7,
-        FullUpper = 3
+        Upper = PartShoulder | PartUpper,
+        Lower = Upper | PartLower,
+        Hand = Lower | PartHand,
     }
 
     [CustomComponent("ArmActuatorSupport")]
-    public class ArmSupportCBT : ChassisCustom
+    public class ArmActuatorSupport : ChassisCustom
     {
-        public ArmActuatorSlot LeftLimit = ArmActuatorSlot.FullHand;
-        public ArmActuatorSlot RightLimit = ArmActuatorSlot.FullHand;
+        public ArmActuatorSlot LeftLimit = ArmActuatorSlot.Hand;
+        public ArmActuatorSlot RightLimit = ArmActuatorSlot.Hand;
 
         public string LeftDefaultShoulder = "";
         public string RightDefaultShoulder = "";
@@ -38,7 +39,7 @@ namespace MechEngineer
                 return LeftLimit;
             if (location == ChassisLocations.RightArm)
                 return RightLimit;
-            return ArmActuatorSlot.Hand;
+            return ArmActuatorSlot.PartHand;
         }
 
         public string GetShoulder(ChassisLocations location)

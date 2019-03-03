@@ -87,10 +87,10 @@ namespace MechEngineer
             "Gear_Cockpit_SensorsA_Standard",
             "Gear_Cockpit_SensorsB_Standard",
             "Gear_Gyro_Generic_Standard",
-            "emod_arm_shoulder",
-            "emod_arm_upper",
-            "emod_arm_lower",
-            "emod_arm_hand",
+            "emod_arm_part_shoulder",
+            "emod_arm_part_upper",
+            "emod_arm_part_lower",
+            "emod_arm_part_hand",
             "emod_leg_hip",
             "emod_leg_upper",
             "emod_leg_lower",
@@ -122,28 +122,6 @@ namespace MechEngineer
         };
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
         public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 5};
-
-
-        public bool UseCBTActuators = true;
-        //use old actuators, if CBT enabled
-        public bool UseOnePieceActuator = false;
-        public string DefaultCBTShoulder = "emod_armcbt_shoulder";
-        public string DefaultCBTLower = "emod_armcbt_lower";
-        public string DefaultCBTUpper = "emod_armcbt_upper";
-        public string DefaultCBTHand = "emod_armcbt_hand";
-        public bool InterruptHandDropIfNoLower = false;
-        public bool ExtendHandLimit = true;
-
-        public bool AutoFixMechDefArmActuator = true;
-        public IdentityHelper AutoFixArmActuatorCategorizer = new IdentityHelper
-        {
-            AllowedLocations = ChassisLocations.Arms,
-            ComponentType = ComponentType.Upgrade,
-            Prefix = null, //"Gear_Actuator_",
-            CategoryId = "ArmActuator",
-            AutoAddCategoryIdIfMissing = true
-        };
-        public ValueChange<int> AutoFixArmActuatorSlotChange = new ValueChange<int> {From = 2, By = 2};
 
         public IdentityHelper AutoFixLegUpgradesCategorizer = new IdentityHelper
         {
@@ -253,6 +231,18 @@ namespace MechEngineer
 
         #endregion
 
+        #region arm actuators
+
+        public bool UseArmActuators = true;
+        public string DefaultCBTShoulder = "emod_arm_part_shoulder";
+        public string DefaultCBTLower = "emod_arm_part_lower";
+        public string DefaultCBTUpper = "emod_arm_part_upper";
+        public string DefaultCBTHand = "emod_arm_part_hand";
+        public bool InterruptHandDropIfNoLower = false;
+        public bool ExtendHandLimit = true;
+
+        #endregion
+        
         #region movement
 
         public CBTMovementSettings CBTMovement = new CBTMovementSettings();

@@ -7,19 +7,19 @@ using Localize;
 
 namespace MechEngineer
 {
-    public static class ArmActuatorCBTHandler
+    public static class ArmActuatorHandler
     {
         private static string GetComponentIdForSlot(ArmActuatorSlot slot)
         {
             switch (slot)
             {
-                case ArmActuatorSlot.Shoulder:
+                case ArmActuatorSlot.PartShoulder:
                     return Control.settings.DefaultCBTShoulder;
-                case ArmActuatorSlot.Upper:
+                case ArmActuatorSlot.PartUpper:
                     return Control.settings.DefaultCBTUpper;
-                case ArmActuatorSlot.Lower:
+                case ArmActuatorSlot.PartLower:
                     return Control.settings.DefaultCBTLower;
-                case ArmActuatorSlot.Hand:
+                case ArmActuatorSlot.PartHand:
                     return Control.settings.DefaultCBTHand;
                 default:
                     return null;
@@ -33,16 +33,16 @@ namespace MechEngineer
                 return null;
             }
             
-            if (mech == null || !mech.Chassis.Is<ArmSupportCBT>(out var support))
+            if (mech == null || !mech.Chassis.Is<ArmActuatorSupport>(out var support))
             {
                 return GetComponentIdForSlot(slot);
             }
 
             switch (slot)
             {
-                case ArmActuatorSlot.Shoulder:
+                case ArmActuatorSlot.PartShoulder:
                     return support.GetShoulder(location);
-                case ArmActuatorSlot.Upper:
+                case ArmActuatorSlot.PartUpper:
                     return support.GetUpper(location);
                 default:
                     return null;
@@ -61,11 +61,11 @@ namespace MechEngineer
                         return false;
 
                     var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, state.DataManager, state);
-                    if (!r.Is<ArmActuatorCBT>(out var actuator) && (actuator.Slot & total_slot) == 0)
+                    if (!r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
                     {
                         r.SetData(location, -1, ComponentDamageLevel.Functional, true);
                         result.Add(r);
-                        total_slot = total_slot | actuator.Slot;
+                        total_slot = total_slot | actuator.Type;
                         return true;
                     }
 
@@ -84,11 +84,11 @@ namespace MechEngineer
                 total_slot = ArmActuatorSlot.None;
                 foreach (var item in result)
                 {
-                    if (item.Is<ArmActuatorCBT>(out var a))
-                        total_slot = total_slot | a.Slot;
+                    if (item.Is<ArmActuator>(out var a))
+                        total_slot = total_slot | a.Type;
                 }
-                add_default(location, ArmActuatorSlot.Shoulder);
-                add_default(location, ArmActuatorSlot.Upper);
+                add_default(location, ArmActuatorSlot.PartShoulder);
+                add_default(location, ArmActuatorSlot.PartUpper);
             }
 
             clear_side(ChassisLocations.LeftArm);
@@ -105,21 +105,21 @@ namespace MechEngineer
                 //list of actuators in location
                 var actuators = from item in mechdef.Inventory
                                 where item.MountedLocation == location &&
-                                      item.Is<ArmActuatorCBT>()
-                                select item.GetComponent<ArmActuatorCBT>();
+                                      item.Is<ArmActuator>()
+                                select item.GetComponent<ArmActuator>();
 
 
                 //get max avaliable actuator
-                ArmActuatorSlot max = mechdef.Chassis.Is<ArmSupportCBT>(out var support)  ? 
+                ArmActuatorSlot max = mechdef.Chassis.Is<ArmActuatorSupport>(out var support)  ? 
                     support.GetLimit(location) :
-                    ArmActuatorSlot.Hand;
+                    ArmActuatorSlot.PartHand;
 
                 foreach (var actuator in actuators)
                 {
                     // if more then 1 actuator occupy 1 slot
-                    if ((slots & actuator.Slot) != 0)
+                    if ((slots & actuator.Type) != 0)
                     {
-                        errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} have more then one {actuator.Slot} actuator"));
+                        errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} have more then one {actuator.Type} actuator"));
                     }
 
                     //correcting max slot if actuator has limits
@@ -127,19 +127,19 @@ namespace MechEngineer
                         max = actuator.MaxSlot;
 
                     //save actuator to slots
-                    slots = slots | actuator.Slot;
+                    slots = slots | actuator.Type;
                 }
 
                 if (Control.settings.ExtendHandLimit)
                 {
-                    if (max == ArmActuatorSlot.Hand)
-                        max = ArmActuatorSlot.FullHand;
+                    if (max == ArmActuatorSlot.PartHand)
+                        max = ArmActuatorSlot.Hand;
 
-                    if (max == ArmActuatorSlot.Upper)
-                        max = ArmActuatorSlot.FullUpper;
+                    if (max == ArmActuatorSlot.PartUpper)
+                        max = ArmActuatorSlot.Upper;
 
-                    if (max == ArmActuatorSlot.Lower)
-                        max = ArmActuatorSlot.FullLower;
+                    if (max == ArmActuatorSlot.PartLower)
+                        max = ArmActuatorSlot.Lower;
                 }
 
                 // if not support hand/lower
@@ -147,15 +147,15 @@ namespace MechEngineer
                     errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} cannot support more then {max} actuator"));
 
                 //if not have shoulder
-                if (!slots.HasFlag(ArmActuatorSlot.Shoulder))
+                if (!slots.HasFlag(ArmActuatorSlot.PartShoulder))
                     errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Shoulder"));
 
                 //if not have upper
-                if (!slots.HasFlag(ArmActuatorSlot.Upper))
+                if (!slots.HasFlag(ArmActuatorSlot.PartUpper))
                     errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Upper Arm"));
 
                 //if have hand but not lower
-                if (slots.HasFlag(ArmActuatorSlot.Hand) && !slots.HasFlag(ArmActuatorSlot.Lower))
+                if (slots.HasFlag(ArmActuatorSlot.PartHand) && !slots.HasFlag(ArmActuatorSlot.PartLower))
                     errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Lower Arm"));
             }
 
@@ -174,21 +174,21 @@ namespace MechEngineer
                 //list of actuators in location
                 var actuators = from item in mechdef.Inventory
                                 where item.MountedLocation == location &&
-                                      item.Is<ArmActuatorCBT>()
-                                select item.GetComponent<ArmActuatorCBT>();
+                                      item.Is<ArmActuator>()
+                                select item.GetComponent<ArmActuator>();
 
 
 
                 //get max avaliable actuator
-                ArmActuatorSlot max = mechdef.Chassis.Is<ArmSupportCBT>(out var support) ?
+                ArmActuatorSlot max = mechdef.Chassis.Is<ArmActuatorSupport>(out var support) ?
                     support.GetLimit(location) :
-                    ArmActuatorSlot.Hand;
+                    ArmActuatorSlot.PartHand;
 
 
                 foreach (var actuator in actuators)
                 {
                     // if more then 1 actuator occupy 1 slot
-                    if ((slots & actuator.Slot) != 0)
+                    if ((slots & actuator.Type) != 0)
                         return false;
 
                     //correcting max slot if actuator has limits
@@ -196,34 +196,34 @@ namespace MechEngineer
                         max = actuator.MaxSlot;
 
                     //save actuator to slots
-                    slots = slots | actuator.Slot;
+                    slots = slots | actuator.Type;
                 }
 
                 if (Control.settings.ExtendHandLimit)
                 {
-                    if (max == ArmActuatorSlot.Hand)
-                        max = ArmActuatorSlot.FullHand;
+                    if (max == ArmActuatorSlot.PartHand)
+                        max = ArmActuatorSlot.Hand;
 
-                    if (max == ArmActuatorSlot.Upper)
-                        max = ArmActuatorSlot.FullUpper;
+                    if (max == ArmActuatorSlot.PartUpper)
+                        max = ArmActuatorSlot.Upper;
 
-                    if (max == ArmActuatorSlot.Lower)
-                        max = ArmActuatorSlot.FullLower;
+                    if (max == ArmActuatorSlot.PartLower)
+                        max = ArmActuatorSlot.Lower;
                 }
                 // if not support hand/lower
                 if (slots > max)
                     return false;
 
                 //if not have shoulder
-                if (!slots.HasFlag(ArmActuatorSlot.Shoulder))
+                if (!slots.HasFlag(ArmActuatorSlot.PartShoulder))
                     return false;
 
                 //if not have upper
-                if (!slots.HasFlag(ArmActuatorSlot.Upper))
+                if (!slots.HasFlag(ArmActuatorSlot.PartUpper))
                     return false;
 
                 //if have hand but not lower
-                if (slots.HasFlag(ArmActuatorSlot.Hand) && !slots.HasFlag(ArmActuatorSlot.Lower))
+                if (slots.HasFlag(ArmActuatorSlot.PartHand) && !slots.HasFlag(ArmActuatorSlot.PartLower))
                     return false;
 
                 return true;
@@ -249,13 +249,13 @@ namespace MechEngineer
             {
                 var total_slots = ArmActuatorSlot.None;
 
-                foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuatorCBT>()).Select(i => i.GetComponent<ArmActuatorCBT>()))
+                foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuator>()).Select(i => i.GetComponent<ArmActuator>()))
                 {
-                    total_slots = total_slots | item.Slot;
+                    total_slots = total_slots | item.Type;
                 }
 
-                AddDefaultToInventory(mechdef, simgame, location, ArmActuatorSlot.Shoulder, ref total_slots);
-                AddDefaultToInventory(mechdef, simgame, location, ArmActuatorSlot.Upper, ref total_slots);
+                AddDefaultToInventory(mechdef, simgame, location, ArmActuatorSlot.PartShoulder, ref total_slots);
+                AddDefaultToInventory(mechdef, simgame, location, ArmActuatorSlot.PartUpper, ref total_slots);
             }
 
             process_location(ChassisLocations.RightArm);
@@ -273,10 +273,10 @@ namespace MechEngineer
 
                 var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, UnityGameInstance.BattleTechGame.DataManager, simgame);
 
-                if (r.Is<ArmActuatorCBT>(out var actuator) && (actuator.Slot & total_slot) == 0)
+                if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
                 {
                     DefaultHelper.AddInventory(id, mechdef, location, ComponentType.Upgrade, simgame);
-                    total_slot = total_slot | actuator.Slot;
+                    total_slot = total_slot | actuator.Type;
                     return true;
                 }
 
@@ -299,14 +299,14 @@ namespace MechEngineer
         internal static ArmActuatorSlot ClearDefaultActuators(MechDef mechdef, ChassisLocations location)
         {
             mechdef.SetInventory(mechdef.Inventory.Where(i =>
-                    i.MountedLocation == location && i.Is<ArmActuatorCBT>() && i.IsFixed &&
+                    i.MountedLocation == location && i.Is<ArmActuator>() && i.IsFixed &&
                     !i.IsModuleFixed(mechdef)).ToArray());
 
             var slot = ArmActuatorSlot.None;
-            foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuatorCBT>()))
+            foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuator>()))
             {
-                var actuator = item.GetComponent<ArmActuatorCBT>();
-                slot = slot | actuator.Slot;
+                var actuator = item.GetComponent<ArmActuator>();
+                slot = slot | actuator.Type;
             }
 
             return slot;
@@ -316,30 +316,30 @@ namespace MechEngineer
         {
             void process_location(ChassisLocations location)
             {
-                var total_slots = mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuatorCBT>())
-                    .Select(i => i.GetComponent<ArmActuatorCBT>())
-                    .Aggregate(ArmActuatorSlot.None, (current, item) => current | item.Slot);
+                var total_slots = mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuator>())
+                    .Select(i => i.GetComponent<ArmActuator>())
+                    .Aggregate(ArmActuatorSlot.None, (current, item) => current | item.Type);
 
                 //if not present any actuators
                 if (total_slots == ArmActuatorSlot.None)
                 {
                     //add shoulder, and upper
-                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Shoulder, ref total_slots);
-                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Upper, ref total_slots);
+                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.PartShoulder, ref total_slots);
+                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.PartUpper, ref total_slots);
 
                     //get max avaliable actuator
-                    ArmActuatorSlot max = mechdef.Chassis.Is<ArmSupportCBT>(out var support) ?
+                    ArmActuatorSlot max = mechdef.Chassis.Is<ArmActuatorSupport>(out var support) ?
                         support.GetLimit(location) :
-                        ArmActuatorSlot.Hand;
+                        ArmActuatorSlot.PartHand;
 
                     foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location &&
-                        i.Is<ArmActuatorCBT>()).Select(i => i.GetComponent<ArmActuatorCBT>()))
+                        i.Is<ArmActuator>()).Select(i => i.GetComponent<ArmActuator>()))
                     {
                         if (item.MaxSlot < max)
                             max = item.MaxSlot;
                     }
 
-                    if (max >= ArmActuatorSlot.Lower && !total_slots.HasFlag(ArmActuatorSlot.Lower))
+                    if (max >= ArmActuatorSlot.PartLower && !total_slots.HasFlag(ArmActuatorSlot.PartLower))
                     {
                         var r = new MechComponentRef(Control.settings.DefaultCBTLower, null, ComponentType.Upgrade, location);
                         r.DataManager = UnityGameInstance.BattleTechGame.DataManager;
@@ -350,7 +350,7 @@ namespace MechEngineer
                         mechdef.SetInventory(list.ToArray());
                     }
 
-                    if (max >= ArmActuatorSlot.Hand && !total_slots.HasFlag(ArmActuatorSlot.Hand))
+                    if (max >= ArmActuatorSlot.PartHand && !total_slots.HasFlag(ArmActuatorSlot.PartHand))
                     {
                         var r = new MechComponentRef(Control.settings.DefaultCBTHand, null, ComponentType.Upgrade, location);
                         r.DataManager = UnityGameInstance.BattleTechGame.DataManager;
@@ -364,8 +364,8 @@ namespace MechEngineer
                 else
                 {
                     //recheck and add if needed shoulder and arm
-                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Shoulder, ref total_slots);
-                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.Upper, ref total_slots);
+                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.PartShoulder, ref total_slots);
+                    AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.PartUpper, ref total_slots);
                 }
 
 

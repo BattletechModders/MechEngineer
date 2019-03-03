@@ -1,9 +1,14 @@
 {
 	"Custom": {
-		"ArmActuatorCBT" : {
-			"Slot" : "Hand"
+		"ArmActuator" : {
+			"Type" : "PartHand"
 		},
-		"Category" : { "CategoryID" : "ArmActuator1" }
+        "BonusDescriptions": {
+            "Bonuses": [
+                "MeleeAccuracyBonus: 1"
+            ]
+        },
+		"Category" : { "CategoryID" : "ArmActuator" }
 	},
     "Description" : {
         "Cost" : 30000,
@@ -12,9 +17,9 @@
         "Manufacturer" : "Generic",
         "Model" : "Standard",
         "UIName" : "Hand",
-        "Id" : "emod_armcbt_hand",
+        "Id" : "emod_arm_part_hand",
         "Name" : "Hand Actuator",
-        "Details" : "TODO An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units. The hand actuator requires the lower and upper arm actuators to be installed and working.",
+        "Details" : "An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
         "Icon" : "uixSvgIcon_equipment_ActuatorArm"
     },
     "BonusValueA" : "",
