@@ -130,12 +130,12 @@ namespace MechEngineer
                 
                 if (critsPrev > 0 && critsPrev <= criticalEffects.PenalizedEffectIDs.Length)
                 {
-                    effectIds.AddRange(criticalEffects.PenalizedEffectIDs[critsPrev - 1]);
+                    effectIds = effectIds.AddRange(criticalEffects.PenalizedEffectIDs[critsPrev - 1]);
                 }
                 
                 if (damageLevel == ComponentDamageLevel.Destroyed)
                 {
-                    effectIds.AddRange(criticalEffects.OnDestroyedDisableEffectIds);
+                    effectIds = effectIds.AddRange(criticalEffects.OnDestroyedDisableEffectIds);
                 }
                 
                 foreach (var effectId in effectIds)
