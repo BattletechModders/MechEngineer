@@ -128,9 +128,9 @@ namespace MechEngineer
                 // cancel effects
                 var effectIds = new string[0];
                 
-                if (critsPrev > 0 && critsPrev < criticalEffects.PenalizedEffectIDs.Length)
+                if (critsPrev > 0 && critsPrev <= criticalEffects.PenalizedEffectIDs.Length)
                 {
-                    effectIds.AddRange(criticalEffects.PenalizedEffectIDs[critsPrev]);
+                    effectIds.AddRange(criticalEffects.PenalizedEffectIDs[critsPrev - 1]);
                 }
                 
                 if (damageLevel == ComponentDamageLevel.Destroyed)
@@ -149,9 +149,9 @@ namespace MechEngineer
                 // create effects
                 var effectIds = new string[0];
                 
-                if (critsNext < criticalEffects.PenalizedEffectIDs.Length)
+                if (critsNext > 0 && critsNext <= criticalEffects.PenalizedEffectIDs.Length)
                 {
-                    effectIds = criticalEffects.PenalizedEffectIDs[critsNext];
+                    effectIds = criticalEffects.PenalizedEffectIDs[critsNext - 1];
                 }
                 
                 if (damageLevel == ComponentDamageLevel.Destroyed)
@@ -257,7 +257,7 @@ namespace MechEngineer
             
             internal void CreateCriticalEffect(bool tracked = true)
             {
-                var appliedEffectId = AppliedEffectId();
+                var scopedId = ScopedId();
                 
                 if (!Settings.TryGetValue(effectId, out var effectData))
                 {
@@ -273,35 +273,38 @@ namespace MechEngineer
 
                 effectData = LocationalEffects.ProcessLocationalEffectData(effectData, mechComponent);
                 
+                Control.mod.Logger.LogDebug($"Creating scopedId={scopedId} statName={effectData.statisticData.statName}");
                 actor.Combat.EffectManager.CreateEffect(
-                    effectData, appliedEffectId, -1,
+                    effectData, scopedId, -1,
                     actor, actor,
                     default(WeaponHitInfo), 0, false);
     
                 if (tracked)
                 {
                     // make sure created effects are removed once component got destroyed
-                    mechComponent.createdEffectIDs.Add(appliedEffectId);
+                    mechComponent.createdEffectIDs.Add(scopedId);
                 }
             }
     
             internal void CancelCriticalEffect()
             {
-                var appliedEffectId = AppliedEffectId();
+                var scopedId = ScopedId();
     
                 var actor = mechComponent.parent;
                 var statusEffects = actor.Combat.EffectManager
-                    .GetAllEffectsWithID(appliedEffectId)
+                    .GetAllEffectsWithID(scopedId)
                     .Where(e => e.Target == actor);
     
+                Control.mod.Logger.LogDebug($"Canceling scopedId={scopedId}");
                 foreach (var statusEffect in statusEffects)
                 {
+                    Control.mod.Logger.LogDebug($"Canceling statName={statusEffect.EffectData.statisticData.statName}");
                     actor.CancelEffect(statusEffect);
-                    mechComponent.createdEffectIDs.Remove(appliedEffectId);
                 }
+                mechComponent.createdEffectIDs.Remove(scopedId);
             }
             
-            private string AppliedEffectId()
+            private string ScopedId()
             {
                 var id = $"MECriticalHitEffect_{effectId}_{mechComponent.parent.GUID}";
                 return mechComponent.ScopedId(id, scope);
