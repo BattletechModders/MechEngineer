@@ -222,5 +222,5 @@
     <Error Condition="!Exists('packages\UtilPack.NuGet.MSBuild.2.8.0\build\UtilPack.NuGet.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\UtilPack.NuGet.MSBuild.2.8.0\build\UtilPack.NuGet.MSBuild.props'))" />
     <Error Condition="!Exists('packages\GitVersionTask.4.0.0\build\GitVersionTask.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\GitVersionTask.4.0.0\build\GitVersionTask.targets'))" />
   </Target>
-  <Import Project="packages\GitVersionTask.4.0.0\build\GitVersionTask.targets" Condition="Exists('packages\GitVersionTask.4.0.0\build\GitVersionTask.targets')" />
+  <Import Project="packages\GitVersionTask.4.0.0\build\GitVersionTask.targets" Condition="Exists('packages\GitVersionTask.4.0.0\build\GitVersionTask.targets') AND '$(OS)' != 'Unix' " />
 </Project>
