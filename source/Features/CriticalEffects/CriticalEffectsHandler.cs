@@ -161,7 +161,7 @@ namespace MechEngineer
                 
                 // collect disabled effects, probably easier to cache these in a mech statistic
                 var disabledEffectIds = DisabledScopedIdsOnMech(mech);
-
+                //Control.mod.Logger.LogDebug($"disabledEffectIds={string.Join(",", disabledEffectIds.ToArray())}");
                 foreach (var effectId in effectIds)
                 {
                     var scopedId = mechComponent.ScopedId(effectId, criticalEffects.Scope);
@@ -221,13 +221,12 @@ namespace MechEngineer
             
             foreach (var mc in mech.allComponents)
             {
-                var r = mc.mechComponentRef;
-                if (r.DamageLevel != ComponentDamageLevel.Destroyed)
+                if (mc.IsFunctional)
                 {
                     continue;
                 }
 
-                if (!r.Is<CriticalEffects>(out var ce))
+                if (!mc.mechComponentRef.Def.Is<CriticalEffects>(out var ce))
                 {
                     continue;
                 }
