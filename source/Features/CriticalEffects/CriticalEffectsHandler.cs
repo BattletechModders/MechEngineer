@@ -193,6 +193,8 @@ namespace MechEngineer
                 {
                     mechComponent.PublishMessage(text, FloatieMessage.MessageNature.ComponentDestroyed);
                 }
+
+                return true;
             }
             else
             {
