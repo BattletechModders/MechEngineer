@@ -283,12 +283,12 @@
                     "Order" : 0
                 },
                 "CriticalEffects" : {
-                    "Scope": "Location",
-                    "OnDestroyedEffectIDs" : ["CriticalEffect-HipDestroyed"],
+                    "Scope": "Mech",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-HipDestroyed-{location}"],
 					"OnDestroyedDisableEffectIds" : [
-						"CriticalEffect-LegUpperActuatorDestroyed",
-						"CriticalEffect-LegLowerActuatorDestroyed",
-						"CriticalEffect-LegFootActuatorDestroyed"
+						"CriticalEffect-LegUpperActuatorDestroyed-{location}",
+						"CriticalEffect-LegLowerActuatorDestroyed-{location}",
+						"CriticalEffect-LegFootActuatorDestroyed-{location}"
 					]
                 }
             }
@@ -307,8 +307,8 @@
                     "Order" : 1
                 },
                 "CriticalEffects" : {
-                    "Scope": "Location",
-                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegUpperActuatorDestroyed"]
+                    "Scope": "Mech",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegUpperActuatorDestroyed-{location}"]
                 }
             }
         },
@@ -326,8 +326,8 @@
                     "Order" : 2
                 },
                 "CriticalEffects" : {
-                    "Scope": "Location",
-                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegLowerActuatorDestroyed"]
+                    "Scope": "Mech",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegLowerActuatorDestroyed-{location}"]
                 }
             }
         },
@@ -345,8 +345,8 @@
                     "Order" : 3
                 },
                 "CriticalEffects" : {
-                    "Scope": "Location",
-                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegFootActuatorDestroyed"]
+                    "Scope": "Mech",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-LegFootActuatorDestroyed-{location}"]
                 }
             }
         },
@@ -376,12 +376,12 @@
                     "SortKey" : "ActuatorArm0"
                 },
                 "CriticalEffects" : {
-                    "Scope": "Location",
-                    "OnDestroyedEffectIDs" : ["CriticalEffect-ShoulderDestroyed"],
+                    "Scope": "Mech",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-ShoulderDestroyed-{location}"],
 					"OnDestroyedDisableEffectIds" : [
-						"CriticalEffect-ArmUpperActuatorDestroyed",
-						"CriticalEffect-ArmLowerActuatorDestroyed",
-						"CriticalEffect-ArmHandActuatorDestroyed"
+						"CriticalEffect-ArmUpperActuatorDestroyed-{location}",
+						"CriticalEffect-ArmLowerActuatorDestroyed-{location}",
+						"CriticalEffect-ArmHandActuatorDestroyed-{location}"
 					]
                 }
             }
@@ -394,8 +394,8 @@
                     "SortKey" : "ActuatorArm1"
                 },
                 "CriticalEffects" : {
-                    "Scope": "Location",
-                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmUpperActuatorDestroyed"]
+                    "Scope": "Mech",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmUpperActuatorDestroyed-{location}"]
                 }
             }
         },
@@ -407,8 +407,8 @@
                     "SortKey" : "ActuatorArm2"
                 },
                 "CriticalEffects" : {
-                    "Scope": "Location",
-                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmLowerActuatorDestroyed"]
+                    "Scope": "Mech",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmLowerActuatorDestroyed-{location}"]
                 }
             }
         },
@@ -420,8 +420,8 @@
                     "SortKey" : "ActuatorArm3"
                 },
                 "CriticalEffects" : {
-                    "Scope": "Location",
-                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmHandActuatorDestroyed"]
+                    "Scope": "Mech",
+                    "OnDestroyedEffectIDs" : ["CriticalEffect-ArmHandActuatorDestroyed-{location}"]
                 }
             }
         }

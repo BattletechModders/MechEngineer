@@ -16,7 +16,7 @@ namespace MechEngineer
         public ScopeEnum Scope { get; set; } = ScopeEnum.Component;
         public enum ScopeEnum
         {
-            Component, Location, Mech
+            Component, Mech
         }
         
         public string LinkedStatisticName = null;

@@ -84,11 +84,9 @@ namespace MechEngineer
 
         internal static string ScopedId(this MechComponent mechComponent, string id, CriticalEffects.ScopeEnum scope)
         {
+            id = LocationalEffects.InterpolateEffectId(id, mechComponent.mechComponentRef.MountedLocation);
             switch (scope)
             {
-                case CriticalEffects.ScopeEnum.Location:
-                    var locationId = Mech.GetAbbreviatedChassisLocation(mechComponent.mechComponentRef.MountedLocation);
-                    return $"{id}_{locationId}";
                 case CriticalEffects.ScopeEnum.Component:
                     var uid = mechComponent.uid;
                     return $"{id}_{uid}";

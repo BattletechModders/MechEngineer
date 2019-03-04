@@ -12,9 +12,9 @@
             },
             "effectType" : "StatisticEffect",
             "Description" : {
-                "Id" : "CriticalEffect-HipDestroyed",
-                "Name" : "Hip Destroyed",
-                "Details" : "A hip actuator was destroyed, reducing walk and sprint distances by 40%.",
+                "Id" : "CriticalEffect-HipDestroyed-{location}",
+                "Name" : "{side} Hip Destroyed",
+                "Details" : "The {side} hip actuator was destroyed, reducing walk and sprint distances by 40%.",
                 "Icon" : "uixSvgIcon_equipment_ActuatorLeg"
             },
             "statisticData" : {
@@ -37,9 +37,9 @@
 		    },
 		    "effectType" : "StatisticEffect",
 		    "Description" : {
-			    "Id" : "CriticalEffect-LegUpperActuatorDestroyed",
-			    "Name" : "Upper Leg Destroyed",
-			    "Details" : "An upper leg actuator was destroyed, reducing walk and sprint distances by 10%.",
+			    "Id" : "CriticalEffect-LegUpperActuatorDestroyed-{location}",
+			    "Name" : "{side} Upper Leg Destroyed",
+			    "Details" : "The {side} upper leg actuator was destroyed, reducing walk and sprint distances by 10%.",
 			    "Icon" : "uixSvgIcon_equipment_ActuatorLeg"
 		    },
 		    "statisticData" : {
@@ -62,9 +62,9 @@
 		    },
 		    "effectType" : "StatisticEffect",
 		    "Description" : {
-			    "Id" : "CriticalEffect-LegLowerActuatorDestroyed",
-			    "Name" : "Lower Leg Destroyed",
-			    "Details" : "A lower leg actuator was destroyed, reducing walk and sprint distances by 10%.",
+			    "Id" : "CriticalEffect-LegLowerActuatorDestroyed-{location}",
+			    "Name" : "{side} Lower Leg Destroyed",
+			    "Details" : "The {side} lower leg actuator was destroyed, reducing walk and sprint distances by 10%.",
 			    "Icon" : "uixSvgIcon_equipment_ActuatorLeg"
 		    },
 		    "statisticData" : {
@@ -87,9 +87,9 @@
 		    },
 		    "effectType" : "StatisticEffect",
 		    "Description" : {
-			    "Id" : "CriticalEffect-LegFootActuatorDestroyed",
-			    "Name" : "Foot Destroyed",
-			    "Details" : "A foot actuator was destroyed, reducing walk and sprint distances by 10%.",
+			    "Id" : "CriticalEffect-LegFootActuatorDestroyed-{location}",
+			    "Name" : "{side} Foot Destroyed",
+			    "Details" : "The {side} foot actuator was destroyed, reducing walk and sprint distances by 10%.",
 			    "Icon" : "uixSvgIcon_equipment_ActuatorLeg"
 		    },
 		    "statisticData" : {

@@ -12,13 +12,13 @@
             },
             "effectType" : "StatisticEffect",
             "Description" : {
-                "Id" : "CriticalEffect-ShoulderDestroyed",
-                "Name" : "Shoulder Destroyed",
-                "Details" : "A shoulder actuator was destroyed, reducing weapon accuracy by 5 for weapons in the same arm.",
+                "Id" : "CriticalEffect-ShoulderDestroyed-{location}",
+                "Name" : "{side} Shoulder Destroyed",
+                "Details" : "The {side} shoulder actuator was destroyed, reducing weapon accuracy by 5 for weapons in the same arm.",
                 "Icon" : "uixSvgIcon_equipment_ActuatorArm"
             },
             "statisticData" : {
-                "statName" : "{Location}.Accuracy",
+                "statName" : "{location}.Accuracy",
                 "operation" : "Float_Add",
                 "modValue" : "4",
                 "modType" : "System.Single"
@@ -37,13 +37,13 @@
 		    },
 		    "effectType" : "StatisticEffect",
 		    "Description" : {
-			    "Id" : "CriticalEffect-ArmUpperActuatorDestroyed",
-			    "Name" : "Upper Arm Destroyed",
-			    "Details" : "An upper arm actuator was destroyed, reducing weapon accuracy by 1 for weapons in the same arm.",
+			    "Id" : "CriticalEffect-ArmUpperActuatorDestroyed-{location}",
+			    "Name" : "{side} Upper Arm Destroyed",
+			    "Details" : "The {side} upper arm actuator was destroyed, reducing weapon accuracy by 1 for weapons in the same arm.",
 			    "Icon" : "uixSvgIcon_equipment_ActuatorArm"
 		    },
 		    "statisticData" : {
-			    "statName" : "{Location}.Accuracy",
+			    "statName" : "{location}.Accuracy",
 			    "operation" : "Float_Add",
 			    "modValue" : "1",
 			    "modType" : "System.Single"
@@ -62,13 +62,13 @@
 		    },
 		    "effectType" : "StatisticEffect",
 		    "Description" : {
-			    "Id" : "CriticalEffect-ArmLowerActuatorDestroyed",
-			    "Name" : "Lower Arm Destroyed",
-			    "Details" : "A lower arm actuator was destroyed, reducing weapon accuracy by 1 for weapons in the same arm.",
+			    "Id" : "CriticalEffect-ArmLowerActuatorDestroyed-{location}",
+			    "Name" : "{side} Lower Arm Destroyed",
+			    "Details" : "The {side} lower arm actuator was destroyed, reducing weapon accuracy by 1 for weapons in the same arm.",
 			    "Icon" : "uixSvgIcon_equipment_ActuatorArm"
 		    },
 		    "statisticData" : {
-			    "statName" : "{Location}.Accuracy",
+			    "statName" : "{location}.Accuracy",
 			    "operation" : "Float_Add",
 			    "modValue" : "1",
 			    "modType" : "System.Single"
