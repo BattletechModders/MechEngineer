@@ -22,7 +22,7 @@ namespace MechEngineer
     }
 
     [CustomComponent("ArmActuatorSupport")]
-    public class ArmActuatorSupport : ChassisCustom
+    public class ArmActuatorSupport : SimpleCustomChassis
     {
         public ArmActuatorSlot LeftLimit = ArmActuatorSlot.Hand;
         public ArmActuatorSlot RightLimit = ArmActuatorSlot.Hand;
