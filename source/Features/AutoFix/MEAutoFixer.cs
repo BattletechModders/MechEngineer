@@ -35,6 +35,17 @@ namespace MechEngineer
 
         public void AutoFixMechDef(MechDef mechDef)
         {
+            if (!Control.settings.AutoFixMechDefEngine)
+            {
+                return;
+            }
+
+            if (Control.settings.AutoFixMechDefSkip.Contains(mechDef.Description.Id)
+                || Control.settings.AutoFixMechDefSkip.Contains(mechDef.Chassis.Description.Id))
+            {
+                return;
+            }
+            
             //DumpAllAsTable();
             if (mechDef.Inventory.Any(c => c.Def.GetComponent<EngineCoreDef>() != null))
             {

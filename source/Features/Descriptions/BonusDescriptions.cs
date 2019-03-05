@@ -9,7 +9,7 @@ using fastJSON;
 namespace MechEngineer
 {
     [CustomComponent("BonusDescriptions")]
-    public partial class BonusDescriptions : SimpleCustomComponent, IAdjustTooltip, IAdjustInventoryElement, IAfterLoad
+    public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltip, IAdjustInventoryElement, IAfterLoad
     {
         public string[] Bonuses { get; set; }
 

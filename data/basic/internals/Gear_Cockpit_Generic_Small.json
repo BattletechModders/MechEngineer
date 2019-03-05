@@ -1,5 +1,12 @@
 {
 	"Custom": {
+        "BonusDescriptions": {
+            "Bonuses": [
+                "FreedSlots: 1",
+                "AccuracyLoss: 1",
+                "OverheatDamage"
+            ]
+        },
 		"Category" : [
 			{"CategoryID": "Cockpit"},
 			{"CategoryID": "LifeSupportB"}
@@ -17,7 +24,7 @@
         "Details" : "The Small Cockpit weighs one ton less than the standard version, at the expense of being cramped.",
         "Icon" : "uixSvgIcon_equipment_Cockpit"
     },
-    "BonusValueA" : "-1 Accuracy",
+    "BonusValueA" : "- 1 Accuracy",
     "BonusValueB" : "",
     "ComponentType" : "Upgrade",
     "ComponentSubType" : "NotSet",
@@ -50,9 +57,9 @@
             "statisticData" : {
                 "effectsPersistAfterDestruction" : false,
                 "statName" : "AccuracyModifier",
-                "operation" : "Float_Subtract",
+                "operation" : "Float_Add",
                 "modValue" : "1.0",
-                "modType" : "System.Single",
+                "modType" : "System.Single"
             },
         },
 	],

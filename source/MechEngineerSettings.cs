@@ -116,7 +116,7 @@ namespace MechEngineer
             AutoAddCategoryIdIfMissing = true
         };
         public ValueChange<float> AutoFixCockpitTonnageChange = new ValueChange<float> {From = 0, By = 3};
-        public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 5};
+        public ValueChange<int> AutoFixCockpitSlotChange = new ValueChange<int> {From = 1, By = 0};
 
         public IdentityHelper AutoFixLegUpgradesCategorizer = new IdentityHelper
         {
@@ -126,7 +126,7 @@ namespace MechEngineer
             CategoryId = "LegFootActuator",
             AutoAddCategoryIdIfMissing = true
         };
-        public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int>  {From = 3, By = -2, FromIsMin = true, NewMin = 1};
+        public ValueChange<int> AutoFixLegUpgradesSlotChange = new ValueChange<int>  {From = 3, By = -1, FromIsMin = true, NewMin = 1};
 
         public string[] AutoFixChassisDefSkip = { };
 

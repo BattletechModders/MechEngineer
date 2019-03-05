@@ -42,6 +42,12 @@
             "Full" : "- {0} armor weight"
         },
         {
+            "Bonus" : "FreedSlots",
+            "Short" : "+ {0} Slots",
+            "Long" : "+ {0} Slots Available",
+            "Full" : "+ {0} slots available"
+        },
+        {
             "Bonus" : "ReservedSlots",
             "Short" : "- {0} Slots",
             "Long" : "- {0} Slots Available",
@@ -60,10 +66,22 @@
             "Full" : "+ {0} accuracy with all melee attacks"
         },
         {
+            "Bonus" : "AccuracyLoss",
+            "Short" : "- {0} Acc.",
+            "Long" : "- {0} Accuracy",
+            "Full" : "- {0} accuracy with all attack"
+        },
+        {
             "Bonus" : "CoolingSystemDHS",
             "Short" : "2 x Cooling",
             "Long" : "2 x Cooling",
             "Full" : "2 x cooling throughout the BattleMech"
+        },
+        {
+            "Bonus" : "OverheatDamage",
+            "Short" : "- Heat Prot.",
+            "Long" : "- Heat Protection",
+            "Full" : "the pilot receives damage when the BattleMech overheats"
         }
     ]
 }
