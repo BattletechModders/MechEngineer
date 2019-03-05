@@ -1,11 +1,13 @@
 ﻿
+using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
+using HBS.Scripting.Constants;
 
 namespace MechEngineer
 {
     [CustomComponent("CriticalEffects")]
-    public class CriticalEffects : SimpleCustomComponent
+    public class CriticalEffects : SimpleCustomComponent, IAfterLoad
     {
         public string[][] PenalizedEffectIDs { get; set; } = new string[0][];
         public string[] OnDestroyedEffectIDs { get; set; } = new string[0];
@@ -13,14 +15,62 @@ namespace MechEngineer
 
         public DeathMethod DeathMethod { get; set; } = DeathMethod.NOT_SET;
         
-        public ScopeEnum Scope { get; set; } = ScopeEnum.Component;
-        public enum ScopeEnum
-        {
-            Component, Mech
-        }
-        
         public string LinkedStatisticName = null;
 
         public bool HasLinked => !string.IsNullOrEmpty(LinkedStatisticName);
+        
+        public void OnLoaded(Dictionary<string, object> values)
+        {
+            var descriptions = new List<string>();
+            
+            var i = 0;
+            foreach (var effectIDs in PenalizedEffectIDs)
+            {
+                i++;
+                foreach (var id in effectIDs)
+                {
+                    var effectData = CriticalEffectsHandler.GetEffectData(id);
+                    if (effectData == null || effectData.targetingData.showInStatusPanel == false)
+                    {
+                        continue;
+                    }
+                    
+                    var text = $"HIT {i}: {effectData.Description.Details}";
+                    
+                    descriptions.Add(text);
+                }
+            }
+            
+            foreach (var id in OnDestroyedEffectIDs)
+            {
+                var effectData = CriticalEffectsHandler.GetEffectData(id);
+                if (effectData == null || effectData.targetingData.showInStatusPanel == false)
+                {
+                    continue;
+                }
+                
+                var text = $"DESTROYED: {effectData.Description.Details}";
+                    
+                descriptions.Add(text);
+            }
+
+            if (DeathMethod != DeathMethod.NOT_SET)
+            {
+                descriptions.Add($"DESTROYED: Mech is incapacitated, reason is {DeathMethod}");
+            }
+
+            if (HasLinked)
+            {
+                descriptions.Add($"Critical hits are linked to '{LinkedStatisticName}'");
+            }
+
+            
+            BonusDescriptions.AddBonusDescriptions(
+                Def.Description,
+                descriptions,
+                Control.settings.BonusDescriptionsElementTemplate,
+                Control.settings.CriticalEffectsDescriptionTemplate
+            );
+        }
     }
 }

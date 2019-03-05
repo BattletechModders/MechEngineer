@@ -18,6 +18,17 @@ namespace MechEngineer
             Settings = SettingsResourcesTools.Enumerate<EffectData>("MECriticalEffects", customResources)
                 .ToDictionary(entry => entry.Description.Id);
         }
+
+        internal static EffectData GetEffectData(string effectId)
+        {
+            if (Settings.TryGetValue(effectId, out var effectData))
+            {
+                return effectData;
+            }
+            
+            Control.mod.Logger.LogError($"Can't find critical effect id '{effectId}'");
+            return null;
+        }
         
         public static readonly CriticalEffectsHandler Shared = new CriticalEffectsHandler();
 
@@ -95,7 +106,7 @@ namespace MechEngineer
             
                 if (criticalEffects.HasLinked)
                 {
-                    var scopedId = mechComponent.ScopedId(criticalEffects.LinkedStatisticName, criticalEffects.Scope);
+                    var scopedId = mechComponent.ScopedId(criticalEffects.LinkedStatisticName, true);
                 
                     foreach (var mc in mech.allComponents)
                     {
@@ -110,12 +121,12 @@ namespace MechEngineer
                             continue;
                         }
                         
-                        if (string.IsNullOrEmpty(ce.LinkedStatisticName))
+                        if (!ce.HasLinked)
                         {
                             continue;
                         }
                     
-                        var otherScopedId = mc.ScopedId(ce.LinkedStatisticName, ce.Scope);
+                        var otherScopedId = mc.ScopedId(ce.LinkedStatisticName, true);
                         if (scopedId == otherScopedId)
                         {
                             SetDamageLevel(mc, hitInfo, damageLevel);
@@ -140,7 +151,7 @@ namespace MechEngineer
                 
                 foreach (var effectId in effectIds)
                 {
-                    var util = new EffectIdUtil(effectId, mechComponent, criticalEffects.Scope);
+                    var util = new EffectIdUtil(effectId, mechComponent, criticalEffects);
                     util.CancelCriticalEffect();
                 }
             }
@@ -164,13 +175,13 @@ namespace MechEngineer
                 //Control.mod.Logger.LogDebug($"disabledEffectIds={string.Join(",", disabledEffectIds.ToArray())}");
                 foreach (var effectId in effectIds)
                 {
-                    var scopedId = mechComponent.ScopedId(effectId, criticalEffects.Scope);
+                    var scopedId = mechComponent.ScopedId(effectId, criticalEffects.HasLinked);
                     if (disabledEffectIds.Contains(scopedId))
                     {
                         continue;
                     }
                     
-                    var util = new EffectIdUtil(effectId, mechComponent, criticalEffects.Scope);
+                    var util = new EffectIdUtil(effectId, mechComponent, criticalEffects);
                     util.CreateCriticalEffect(damageLevel < ComponentDamageLevel.Destroyed);
                 }
             }
@@ -235,7 +246,7 @@ namespace MechEngineer
 
                 foreach (var effectId in ce.OnDestroyedDisableEffectIds)
                 {
-                    var scopedId = mc.ScopedId(effectId, ce.Scope);
+                    var scopedId = mc.ScopedId(effectId, ce.HasLinked);
                     disabledEffectIds.Add(scopedId);
                 }
             }
@@ -247,22 +258,22 @@ namespace MechEngineer
         {
             private string effectId;
             private MechComponent mechComponent;
-            private CriticalEffects.ScopeEnum scope;
+            private CriticalEffects ce;
     
-            internal EffectIdUtil(string effectId, MechComponent mechComponent, CriticalEffects.ScopeEnum scope)
+            internal EffectIdUtil(string effectId, MechComponent mechComponent, CriticalEffects ce)
             {
                 this.effectId = effectId;
                 this.mechComponent = mechComponent;
-                this.scope = scope;
+                this.ce = ce;
             }
             
             internal void CreateCriticalEffect(bool tracked = true)
             {
                 var scopedId = ScopedId();
-                
-                if (!Settings.TryGetValue(effectId, out var effectData))
+
+                var effectData = GetEffectData(effectId);
+                if (effectData == null)
                 {
-                    Control.mod.Logger.LogError($"Can't find critical effect id '{effectId}'");
                     return;
                 }
                 if (effectData.targetingData.effectTriggerType != EffectTriggerType.Passive) // we only support passive for now
@@ -308,7 +319,7 @@ namespace MechEngineer
             private string ScopedId()
             {
                 var id = $"MECriticalHitEffect_{effectId}_{mechComponent.parent.GUID}";
-                return mechComponent.ScopedId(id, scope);
+                return mechComponent.ScopedId(id, ce.HasLinked);
             }
         }
     }

@@ -71,7 +71,7 @@ namespace MechEngineer
                 throw new Exception("shouldn't really happen too");
             }
 
-            var statisticName = mechComponent.ScopedId(ce.LinkedStatisticName, ce.Scope);
+            var statisticName = mechComponent.ScopedId(ce.LinkedStatisticName, true);
             var collection = mechComponent.parent.StatCollection;
 
             var critStat = collection.GetStatistic(statisticName) ?? collection.AddStatistic(statisticName, 0);
@@ -82,17 +82,15 @@ namespace MechEngineer
             return critStat?.Value<int>() ?? 0;
         }
 
-        internal static string ScopedId(this MechComponent mechComponent, string id, CriticalEffects.ScopeEnum scope)
+        internal static string ScopedId(this MechComponent mechComponent, string id, bool isLinked)
         {
-            id = LocationalEffects.InterpolateEffectId(id, mechComponent.mechComponentRef.MountedLocation);
-            switch (scope)
+            var scopeId = LocationalEffects.InterpolateEffectId(id, mechComponent.mechComponentRef.MountedLocation);
+            if (scopeId == id && !isLinked)
             {
-                case CriticalEffects.ScopeEnum.Component:
-                    var uid = mechComponent.uid;
-                    return $"{id}_{uid}";
-                default:
-                    return id;
+                var uid = mechComponent.uid;
+                return $"{id}_{uid}";
             }
+            return scopeId;
         }
     }
 }

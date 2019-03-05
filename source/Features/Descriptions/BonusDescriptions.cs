@@ -77,14 +77,24 @@ namespace MechEngineer
                     }
                 }
             }
+            
+            AddBonusDescriptions(
+                Def.Description,
+                descriptions.Select(x => x.Full),
+                Control.settings.BonusDescriptionsElementTemplate,
+                Control.settings.BonusDescriptionsDescriptionTemplate
+            );
+        }
 
-            {
-                var bonusTemplate = Control.settings.BonusDescriptionsBonusTemplate;
-                var descriptionTemplate = Control.settings.BonusDescriptionsDescriptionTemplate;
-                var adapter = new DescriptionDefAdapter(Def.Description);
-                var bonuses = string.Join("", descriptions.Select(x => x.Full).Where(x => x != null).Select(x => bonusTemplate.Replace("{{bonus}}", x)).ToArray());
-                adapter.Details = descriptionTemplate.Replace("{{bonuses}}", bonuses).Replace("{{originalDescription}}", adapter.Details);
-            }
+        internal static void AddBonusDescriptions(
+            DescriptionDef descriptionDef,
+            IEnumerable<string> elements,
+            string elementTemplate,
+            string descriptionTemplate)
+        {
+            var adapter = new DescriptionDefAdapter(descriptionDef);
+            var bonuses = string.Join("", elements.Where(x => x != null).Select(x => elementTemplate.Replace("{{element}}", x)).ToArray());
+            adapter.Details = descriptionTemplate.Replace("{{elements}}", bonuses).Replace("{{originalDescription}}", adapter.Details);
         }
 
         [JsonIgnore]

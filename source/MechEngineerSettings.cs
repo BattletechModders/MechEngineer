@@ -47,8 +47,9 @@ namespace MechEngineer
 
         #region bonus descriptions
 
-        public string BonusDescriptionsBonusTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{bonus}}</line-height></line-indent></indent>\r\n";
-        public string BonusDescriptionsDescriptionTemplate = "Traits:<b><color=#F79B26FF>\r\n{{bonuses}}</color></b>\r\n{{originalDescription}}";
+        public string BonusDescriptionsElementTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{element}}</line-height></line-indent></indent>\r\n";
+        public string BonusDescriptionsDescriptionTemplate = "Traits:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
+        public string CriticalEffectsDescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
 
         #endregion
 

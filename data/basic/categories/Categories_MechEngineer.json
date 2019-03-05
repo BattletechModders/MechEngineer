@@ -14,7 +14,6 @@
                     "Order" : 0
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "LinkedStatisticName" : "LifeSupport",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LifeSupport1", "CriticalEffect-LifeSupport2"]
                 }
@@ -34,7 +33,6 @@
                     "Order" : 1
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "LinkedStatisticName" : "Sensors",
                     "PenalizedEffectIDs" : [
                         ["CriticalEffect-Sensors1"]
@@ -75,7 +73,6 @@
                     "Order" : 3
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "LinkedStatisticName" : "Sensors",
                     "PenalizedEffectIDs" : [
                         ["CriticalEffect-Sensors1"]
@@ -98,7 +95,6 @@
                     "Order" : 4
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "LinkedStatisticName" : "LifeSupport",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LifeSupport1", "CriticalEffect-LifeSupport2"]
                 }
@@ -199,7 +195,6 @@
             "DisplayName" : "Engine Part",
             "DefaultCustoms" : {
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "LinkedStatisticName" : "EngineCrits",
                     "PenalizedEffectIDs" : [
                         ["CriticalEffect-EngineCrit1"],
@@ -283,7 +278,6 @@
                     "Order" : 0
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-HipDestroyed-{location}"],
 					"OnDestroyedDisableEffectIds" : [
 						"CriticalEffect-LegUpperActuatorDestroyed-{location}",
@@ -307,7 +301,6 @@
                     "Order" : 1
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LegUpperActuatorDestroyed-{location}"]
                 }
             }
@@ -326,7 +319,6 @@
                     "Order" : 2
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LegLowerActuatorDestroyed-{location}"]
                 }
             }
@@ -345,7 +337,6 @@
                     "Order" : 3
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LegFootActuatorDestroyed-{location}"]
                 }
             }
@@ -376,7 +367,6 @@
                     "SortKey" : "ActuatorArm0"
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-ShoulderDestroyed-{location}"],
 					"OnDestroyedDisableEffectIds" : [
 						"CriticalEffect-ArmUpperActuatorDestroyed-{location}",
@@ -394,7 +384,6 @@
                     "SortKey" : "ActuatorArm1"
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-ArmUpperActuatorDestroyed-{location}"]
                 }
             }
@@ -407,7 +396,6 @@
                     "SortKey" : "ActuatorArm2"
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-ArmLowerActuatorDestroyed-{location}"]
                 }
             }
@@ -420,7 +408,6 @@
                     "SortKey" : "ActuatorArm3"
                 },
                 "CriticalEffects" : {
-                    "Scope": "Mech",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-ArmHandActuatorDestroyed-{location}"]
                 }
             }
