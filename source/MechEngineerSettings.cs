@@ -298,6 +298,8 @@ namespace MechEngineer
                 ["AC5"] = new[] {"ac5", "uac5", "ac", "lbx"},
                 ["AC10"] = new[] {"ac10", "lbx10", "ac", "lbx"},
                 ["AC20"] = new[] {"ac20", "ac", "lbx"},
+
+                ["artillery"] = new[] {"artillery", "ac20", "ac", "lbx"}, /* requested by LtShade */
                 
                 ["lrm5"] = new[] {"lrm5", "lrm10", "lrm15", "lrm20", "srm20"},
                 ["lrm10"] = new[] {"lrm10", "lrm15", "lrm20", "srm20", "lrm5"},
