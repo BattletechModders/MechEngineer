@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleTech;
-using BattleTech.UI;
 using CustomComponents;
 
 namespace MechEngineer
@@ -11,10 +9,10 @@ namespace MechEngineer
     {
         None = 0,
         
-        PartShoulder = 1,
-        PartUpper = 2,
-        PartLower = 4,
-        PartHand = 8,
+        PartShoulder = 1 << 0,
+        PartUpper = 1 << 1,
+        PartLower = 1 << 2,
+        PartHand = 1 << 3,
 
         Upper = PartShoulder | PartUpper,
         Lower = Upper | PartLower,
@@ -27,10 +25,10 @@ namespace MechEngineer
         public ArmActuatorSlot LeftLimit = ArmActuatorSlot.Hand;
         public ArmActuatorSlot RightLimit = ArmActuatorSlot.Hand;
 
-        public string LeftDefaultShoulder = "";
-        public string RightDefaultShoulder = "";
-        public string LeftDefaultUpper = "";
-        public string RightDefaultUpper = "";
+        public string LeftDefaultShoulder = null;
+        public string RightDefaultShoulder = null;
+        public string LeftDefaultUpper = null;
+        public string RightDefaultUpper = null;
 
 
         public ArmActuatorSlot GetLimit(ChassisLocations location)
