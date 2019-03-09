@@ -15,7 +15,7 @@ namespace MechEngineer
     {
         public ArmActuatorSlot Type { get; set; }
         
-        public ArmActuatorSlot MaxSlot { get; set; } = ArmActuatorSlot.PartHand;
+        public ArmActuatorSlot MaxSlot { get; set; } = ArmActuatorSlot.Hand;
         public int Order {
             get
             {
