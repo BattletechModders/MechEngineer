@@ -74,8 +74,6 @@ namespace MechEngineer
             }
         }
 
-        private static Dictionary<ChassisLocations, ValueChange<int>> lookupDictionary;
-
         private static void AutoFixSlots(ChassisDef chassisDef)
         {
             var changes = Control.settings.AutoFixChassisDefSlotsChanges;
@@ -87,15 +85,10 @@ namespace MechEngineer
             var adapter = new ChassisDefAdapter(chassisDef);
             var locations = adapter.Locations;
 
-            if (lookupDictionary == null)
-            {
-                lookupDictionary = changes.ToDictionary(x => x.Location, x => x.Change);
-            }
-
             for (var i = 0; i < locations.Length; i++)
             {
                 var location = locations[i].Location;
-                if (lookupDictionary.TryGetValue(location, out var change))
+                foreach (var change in changes.Where(x => x.Location == location).Select(x => x.Change))
                 {
                     ModifyInventorySlots(ref locations[i], location, change);
                 }

@@ -133,6 +133,7 @@ namespace MechEngineer
 
         public ChassisSlotsChange[] AutoFixChassisDefSlotsChanges =
         {
+            // vanilla mechs
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.LeftTorso,
@@ -172,7 +173,33 @@ namespace MechEngineer
             {
                 Location = ChassisLocations.RightArm,
                 Change = new ValueChange<int> {From = 8, By = 4}
-            }
+            },
+            // old ME values
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.LeftLeg,
+                Change = new ValueChange<int> {From = 2, By = 4}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.RightLeg,
+                Change = new ValueChange<int> {From = 2, By = 4}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.Head,
+                Change = new ValueChange<int> {From = 3, By = 3}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.LeftArm,
+                Change = new ValueChange<int> {From = 11, By = 1}
+            },
+            new ChassisSlotsChange
+            {
+                Location = ChassisLocations.RightArm,
+                Change = new ValueChange<int> {From = 11, By = 1}
+            },
         };
         public class ChassisSlotsChange
         {
