@@ -68,7 +68,12 @@ namespace MechEngineer
         
         private static string GetAvailableWeaponComponentPrefabName(string prefabId, List<string> availablePrefabNames)
         {
-            if (!Control.settings.HardpointFix.WeaponPrefabMapping.TryGetValue(prefabId, out var compatibleTerms))
+            var compatibleTerms = Control.settings.HardpointFix.WeaponPrefabMappings
+                .Where(x => x.PrefabIdentifier == prefabId)
+                .Select(x => x.HardpointCandidates)
+                .SingleOrDefault();
+
+            if (compatibleTerms == null)
             {
                 compatibleTerms = new[] {prefabId.ToLowerInvariant()};
             }
