@@ -9,18 +9,18 @@ namespace MechEngineer
 {
     internal class MechDefBuilder
     {
-        internal readonly ChassisDef Chassis;
-        
-        internal readonly DataManager DataManager;
         internal readonly List<MechComponentRef> Inventory;
-        internal readonly Dictionary<ChassisLocations, int> LocationUsage = new Dictionary<ChassisLocations, int>();
         
-        internal readonly int TotalMax;
-        internal int TotalUsage = 0;
+        private readonly ChassisDef Chassis;
+        private readonly DataManager DataManager;
+        private readonly Dictionary<ChassisLocations, int> LocationUsage = new Dictionary<ChassisLocations, int>();
+
+        private readonly int TotalMax;
+        private int TotalUsage = 0;
         internal int TotalMissing => Mathf.Max(TotalUsage + Reserved - TotalMax, 0);
 
-        internal readonly List<DynamicSlots> DynamicSlots;
-        internal int Reserved => DynamicSlots.Sum(c => c.ReservedSlots);
+        private readonly List<DynamicSlots> DynamicSlots;
+        private int Reserved => DynamicSlots.Sum(c => c.ReservedSlots);
         
         internal MechDefBuilder(MechDef mechDef) : this (mechDef.Chassis, mechDef.Inventory.ToList())
         {
