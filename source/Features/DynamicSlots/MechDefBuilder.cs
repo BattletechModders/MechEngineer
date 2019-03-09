@@ -71,7 +71,7 @@ namespace MechEngineer
             ChassisLocations.RightArm,
         };
 
-        internal bool Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None)
+        internal bool Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None, bool force = false)
         {
             // find location
             if (location == ChassisLocations.None || LocationCount(location) > 1)
@@ -83,8 +83,14 @@ namespace MechEngineer
                 }
             }
             
+            var newLocationUsage = GetUsedSlots(location) + def.InventorySize;
+            if (!force && newLocationUsage > GetMaxSlots(location))
+            {
+                return false;
+            }
+            
             TotalUsage += def.InventorySize;
-            LocationUsage[location] = GetUsedSlots(location) + def.InventorySize;
+            LocationUsage[location] = newLocationUsage;
             
             if (def.Is<DynamicSlots>(out var ds))
             {
@@ -178,18 +184,18 @@ namespace MechEngineer
                 return Locations.Count(location => (container & location) != ChassisLocations.None);
             }
         }
-
-        internal int GetUsedSlots(ChassisLocations location)
+        
+        private int GetUsedSlots(ChassisLocations location)
         {
             return LocationUsage.TryGetValue(location, out var count) ? count : 0;
         }
 
-        internal int GetMaxSlots(ChassisLocations location)
+        private int GetMaxSlots(ChassisLocations location)
         {
             return Chassis.GetLocationDef(location).InventorySlots;
         }
 
-        internal int GetFreeSlots(ChassisLocations location)
+        private int GetFreeSlots(ChassisLocations location)
         {
             return GetMaxSlots(location) - GetUsedSlots(location);
         }

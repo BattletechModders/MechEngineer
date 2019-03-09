@@ -171,7 +171,7 @@ namespace MechEngineer
             }
 
             // add engine
-            builder.Add(maxEngine.CoreDef.Def,ChassisLocations.CenterTorso);
+            builder.Add(maxEngine.CoreDef.Def,ChassisLocations.CenterTorso, true);
 
             if (!Control.settings.AllowMixingHeatSinkTypes)
             {

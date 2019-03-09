@@ -339,27 +339,26 @@ namespace MechEngineer
                             max = item.MaxSlot;
                     }
 
+                    var builder = new MechDefBuilder(mechdef);
                     if (max >= ArmActuatorSlot.PartLower && !total_slots.HasFlag(ArmActuatorSlot.PartLower))
                     {
-                        var r = new MechComponentRef(Control.settings.DefaultCBTLower, null, ComponentType.Upgrade, location);
-                        r.DataManager = UnityGameInstance.BattleTechGame.DataManager;
-                        r.RefreshComponentDef();
-
-                        var list = mechdef.Inventory.ToList();
-                        list.Add(r);
-                        mechdef.SetInventory(list.ToArray());
+                        var def = UnityGameInstance.BattleTechGame.DataManager.UpgradeDefs.Get(Control.settings.DefaultCBTLower);
+                        if (def == null)
+                        {
+                            return;
+                        }
+                        if (!builder.Add(def, location))
+                        {
+                            return;
+                        }
                     }
 
                     if (max >= ArmActuatorSlot.PartHand && !total_slots.HasFlag(ArmActuatorSlot.PartHand))
                     {
-                        var r = new MechComponentRef(Control.settings.DefaultCBTHand, null, ComponentType.Upgrade, location);
-                        r.DataManager = UnityGameInstance.BattleTechGame.DataManager;
-                        r.RefreshComponentDef();
-
-                        var list = mechdef.Inventory.ToList();
-                        list.Add(r);
-                        mechdef.SetInventory(list.ToArray());
+                        var def = UnityGameInstance.BattleTechGame.DataManager.UpgradeDefs.Get(Control.settings.DefaultCBTHand);
+                        builder.Add(def, location);
                     }
+                    mechdef.SetInventory(builder.Inventory.ToArray());
                 }
                 else
                 {
