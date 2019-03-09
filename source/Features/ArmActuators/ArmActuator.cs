@@ -268,24 +268,38 @@ namespace MechEngineer
 
         public void OnInstalled(WorkOrderEntry_InstallComponent order, SimGameState state, MechDef mech)
         {
-
-
-            if (order.DesiredLocation != ChassisLocations.None && ChassisLocations.Arms.HasFlag(order.DesiredLocation) )
+            try
             {
-                var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.DesiredLocation);
-                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- ArmActuator removing, left {slots}");
+                if (order.DesiredLocation != ChassisLocations.None &&
+                    ChassisLocations.Arms.HasFlag(order.DesiredLocation))
+                {
+                    var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.DesiredLocation);
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                        $"- ArmActuator removing, left {slots}");
 
-                ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation, ArmActuatorSlot.PartShoulder, ref slots);
-                ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation, ArmActuatorSlot.PartUpper, ref slots);
+                    ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                        ArmActuatorSlot.PartShoulder, ref slots);
+                    ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                        ArmActuatorSlot.PartUpper, ref slots);
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
+                }
+
+                if (order.PreviousLocation != ChassisLocations.None &&
+                    ChassisLocations.Arms.HasFlag(order.DesiredLocation))
+                {
+                    var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.PreviousLocation);
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"- ArmActuator adding, left {slots}");
+
+                    ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                        ArmActuatorSlot.PartShoulder, ref slots);
+                    ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                        ArmActuatorSlot.PartUpper, ref slots);
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
+                }
             }
-
-            if (order.PreviousLocation != ChassisLocations.None && ChassisLocations.Arms.HasFlag(order.DesiredLocation))
+            catch (Exception e)
             {
-                var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.PreviousLocation);
-                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- ArmActuator adding, left {slots}");
-
-                ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation, ArmActuatorSlot.PartShoulder, ref slots);
-                ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation, ArmActuatorSlot.PartUpper, ref slots);
+                CustomComponents.Control.LogError(e);
             }
         }
     }

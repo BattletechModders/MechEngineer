@@ -299,8 +299,8 @@ namespace MechEngineer
         internal static ArmActuatorSlot ClearDefaultActuators(MechDef mechdef, ChassisLocations location)
         {
             mechdef.SetInventory(mechdef.Inventory.Where(i =>
-                    i.MountedLocation == location && i.Is<ArmActuator>() && i.IsFixed &&
-                    !i.IsModuleFixed(mechdef)).ToArray());
+                    !(i.MountedLocation == location && i.Is<ArmActuator>() && i.IsFixed &&
+                    !i.IsModuleFixed(mechdef))).ToArray());
 
             var slot = ArmActuatorSlot.None;
             foreach (var item in mechdef.Inventory.Where(i => i.MountedLocation == location && i.Is<ArmActuator>()))
