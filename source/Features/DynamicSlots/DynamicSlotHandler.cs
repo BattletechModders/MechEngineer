@@ -21,7 +21,7 @@ namespace MechEngineer
 
         #region settings
         private static readonly Color DynamicSlotsSpaceMissingColor = new Color(0.5f, 0, 0); // color changes when slots dont fit
-        private static readonly ChassisLocations[] Locations = MechDefSlots.Locations; // order of locations to fill up first
+        private static readonly ChassisLocations[] Locations = MechDefBuilder.Locations; // order of locations to fill up first
         #endregion
 
         internal void RefreshData(MechLabPanel mechLab)
@@ -31,7 +31,7 @@ namespace MechEngineer
                 return;
             }
 
-            var slots = new MechDefSlots(mechLab.activeMechDef);
+            var slots = new MechDefBuilder(mechLab.activeMechDef);
             using (var reservedSlots = slots.GetReservedSlots().GetEnumerator())
             {
                 foreach (var location in Locations)
@@ -63,8 +63,8 @@ namespace MechEngineer
 
         public void ValidateMech(MechDef mechDef, Errors errors)
         {
-            var slots = new MechDefSlots(mechDef);
-            var missing = slots.Missing;
+            var slots = new MechDefBuilder(mechDef);
+            var missing = slots.TotalMissing;
             if (missing > 0)
             {
                 errors.Add(MechValidationType.InvalidInventorySlots, $"RESERVED SLOTS: Mech requires {missing} additional free slots");

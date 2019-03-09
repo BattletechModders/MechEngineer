@@ -171,7 +171,6 @@
     <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
-    <Compile Include="Features\DynamicSlots\MechDefSlots.cs" />
     <Compile Include="Misc\Adapter.cs" />
     <Compile Include="Misc\MELazy.cs" />
     <Compile Include="Misc\Mod.cs" />

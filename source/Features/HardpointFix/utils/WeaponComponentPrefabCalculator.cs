@@ -18,14 +18,14 @@ namespace MechEngineer
                 .ThenByDescending(c => ((WeaponDef) c.Def).Tonnage)
                 .ToList();
 
-            if (!MechDefSlots.Locations.Contains(location))
+            if (!MechDefBuilder.Locations.Contains(location))
             {
                 location = ChassisLocations.All;
             }
 
             if (location == ChassisLocations.All)
             {
-                foreach (var tlocation in MechDefSlots.Locations)
+                foreach (var tlocation in MechDefBuilder.Locations)
                 {
                     var locationComponentRefs = componentRefs.Where(c => c.MountedLocation == tlocation).ToList();
                     CalculateMappingForLocation(tlocation, locationComponentRefs);

@@ -20,7 +20,7 @@ namespace MechEngineer
                 return;
             }
 
-            foreach (var location in MechDefSlots.Locations)
+            foreach (var location in MechDefBuilder.Locations)
             {
                 ProcessMechArmorStructureRatioForLocation(mechDef, location, applyChanges:true);
             }
@@ -41,7 +41,7 @@ namespace MechEngineer
             }
 
             var hasInvalid = false;
-            foreach (var location in MechDefSlots.Locations)
+            foreach (var location in MechDefBuilder.Locations)
             {
 
                 var valid = ProcessMechArmorStructureRatioForLocation(mechDef, location, errorMessages);

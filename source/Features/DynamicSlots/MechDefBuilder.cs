@@ -2,21 +2,37 @@
 using System.Linq;
 using BattleTech;
 using BattleTech.Data;
+using CustomComponents;
+using UnityEngine;
 
 namespace MechEngineer
 {
     internal class MechDefBuilder
     {
+        internal readonly ChassisDef Chassis;
+        
         internal readonly DataManager DataManager;
-        internal readonly MechDefSlots Slots;
         internal readonly List<MechComponentRef> Inventory;
         internal readonly Dictionary<ChassisLocations, int> LocationUsage = new Dictionary<ChassisLocations, int>();
+        
+        internal readonly int TotalMax;
+        internal int TotalUsage = 0;
+        internal int TotalMissing => Mathf.Max(TotalUsage + Reserved - TotalMax, 0);
+
+        internal readonly List<DynamicSlots> DynamicSlots;
+        internal int Reserved => DynamicSlots.Sum(c => c.ReservedSlots);
+        
+        internal MechDefBuilder(MechDef mechDef) : this (mechDef.Chassis, mechDef.Inventory.ToList())
+        {
+        }
 
         internal MechDefBuilder(ChassisDef chassisDef, List<MechComponentRef> inventory)
         {
-            Slots = new MechDefSlots(chassisDef, inventory);
-
             Inventory = inventory;
+            
+            DynamicSlots = inventory.Select(r => r.Def.GetComponent<DynamicSlots>()).Where(s => s != null).ToList();
+            TotalMax = Locations.Select(chassisDef.GetLocationDef).Sum(d => d.InventorySlots);
+            Chassis = chassisDef;
 
             DataManager = UnityGameInstance.BattleTechGame.DataManager;
             //Control.mod.Logger.LogDebug("");
@@ -27,25 +43,54 @@ namespace MechEngineer
                 var location = group.Key;
                 var sum = group.Sum(r => r.Def.InventorySize);
                 LocationUsage[location] = sum;
+                TotalUsage += sum;
                 //Control.mod.Logger.LogDebug($"location={location} sum={sum}");
             }
         }
+
+        internal IEnumerable<DynamicSlots> GetReservedSlots()
+        {
+            foreach (var reservedSlot in DynamicSlots)
+            {
+                for (var i = 0; i < reservedSlot.ReservedSlots; i++)
+                {
+                    yield return reservedSlot;
+                }
+            }
+        }
+
+        internal static readonly ChassisLocations[] Locations =
+        {
+            ChassisLocations.CenterTorso,
+            ChassisLocations.Head,
+            ChassisLocations.LeftTorso,
+            ChassisLocations.LeftLeg,
+            ChassisLocations.RightTorso,
+            ChassisLocations.RightLeg,
+            ChassisLocations.LeftArm,
+            ChassisLocations.RightArm,
+        };
 
         internal bool Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None)
         {
             // find location
             if (location == ChassisLocations.None || LocationCount(location) > 1)
             {
-                location = AddSlots(def.InventorySize, def.AllowedLocations);
+                location = FindSpaceAtLocations(def.InventorySize, def.AllowedLocations);
                 if (location == ChassisLocations.None)
                 {
                     return false;
                 }
             }
-            else
+            
+            TotalUsage += def.InventorySize;
+            LocationUsage[location] = GetUsedSlots(location) + def.InventorySize;
+            
+            if (def.Is<DynamicSlots>(out var ds))
             {
-                AddSlotsToLocation(def.InventorySize, location, true);
+                DynamicSlots.Add(ds);
             }
+            
             var componentRef = new MechComponentRef(def.Description.Id, null, def.ComponentType, location);
             componentRef.DataManager = DataManager;
             componentRef.RefreshComponentDef();
@@ -53,11 +98,22 @@ namespace MechEngineer
             return true;
         }
 
-        private ChassisLocations AddSlots(int slotCount, ChassisLocations allowedLocations)
+        internal void Remove(MechComponentRef item)
+        {
+            Inventory.Remove(item);
+            if (item.Is<DynamicSlots>(out var ds))
+            {
+                DynamicSlots.Remove(ds);
+            }
+            LocationUsage[item.MountedLocation] -= item.Def.InventorySize;
+            TotalUsage -= item.Def.InventorySize;
+        }
+
+        private ChassisLocations FindSpaceAtLocations(int slotCount, ChassisLocations allowedLocations)
         {
             return GetLocations()
                 .Where(location => (location & allowedLocations) != 0)
-                .FirstOrDefault(location => AddSlotsToLocation(slotCount, location));
+                .FirstOrDefault(location => HasSpaceInLocation(slotCount, location));
         }
 
         private IEnumerable<ChassisLocations> GetLocations()
@@ -100,33 +156,26 @@ namespace MechEngineer
             }
         }
 
-        private bool AddSlotsToLocation(int slotCount, ChassisLocations location, bool force = false)
+        private bool HasSpaceInLocation(int slotCount, ChassisLocations location)
         {
             var used = GetUsedSlots(location);
             var max = GetMaxSlots(location);
-            if (force || max - used >= slotCount)
+            if (max - used >= slotCount)
             {
-                LocationUsage[location] = used + slotCount;
                 return true;
             }
             return false;
-        }
-
-        internal void Remove(MechComponentRef item)
-        {
-            Inventory.Remove(item);
-            LocationUsage[item.MountedLocation] -= item.Def.InventorySize;
         }
 
         internal static int LocationCount(ChassisLocations container)
         {
             if (container == ChassisLocations.All)
             {
-                return MechDefSlots.Locations.Length;
+                return Locations.Length;
             }
             else
             {
-                return MechDefSlots.Locations.Count(location => (container & location) != ChassisLocations.None);
+                return Locations.Count(location => (container & location) != ChassisLocations.None);
             }
         }
 
@@ -137,7 +186,7 @@ namespace MechEngineer
 
         internal int GetMaxSlots(ChassisLocations location)
         {
-            return Slots.Chassis.GetLocationDef(location).InventorySlots;
+            return Chassis.GetLocationDef(location).InventorySlots;
         }
 
         internal int GetFreeSlots(ChassisLocations location)
@@ -145,9 +194,9 @@ namespace MechEngineer
             return GetMaxSlots(location) - GetUsedSlots(location);
         }
 
-        internal bool HasOveruse()
+        internal bool HasOveruseAtAnyLocation()
         {
-            return (from location in MechDefSlots.Locations
+            return (from location in Locations
                 let max = GetMaxSlots(location)
                 let used = GetUsedSlots(location)
                 where used > max

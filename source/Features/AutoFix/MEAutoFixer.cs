@@ -211,7 +211,7 @@ namespace MechEngineer
             }
             
             // find any overused location
-            if (builder.HasOveruse())
+            if (builder.HasOveruseAtAnyLocation())
             {
                 // heatsinks, upgrades
                 var itemsToBeReordered = builder.Inventory

@@ -7,7 +7,7 @@ namespace MechEngineer
     {
         public static void SetupAccuracyStatistics(StatCollection statCollection)
         {
-            foreach (var location in MechDefSlots.Locations)
+            foreach (var location in MechDefBuilder.Locations)
             {
                 AccuracyForLocation(statCollection, location);
             }

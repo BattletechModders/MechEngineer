@@ -54,7 +54,7 @@ namespace MechEngineer
     {
         public static IEnumerable<MechLabItemSlotElement> Elements(this MechLabPanel panel)
         {
-            return MechDefSlots.Locations
+            return MechDefBuilder.Locations
                 .Select(location => panel.GetLocationWidget((ArmorLocation) location))
                 .Select(widget => new MechLabLocationWidgetAdapter(widget))
                 .SelectMany(adapter => adapter.LocalInventory);
