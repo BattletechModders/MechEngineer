@@ -9,8 +9,6 @@ namespace MechEngineer
     [HarmonyPatch(typeof(WeaponDef), "FromJSON")]
     public static class WeaponDef_FromJSON_Patch
     {
-        private static Dictionary<WeaponSubType, ValueChange<int>> lookupDictionary;
-
         public static void Postfix(WeaponDef __instance)
         {
             try
@@ -20,24 +18,16 @@ namespace MechEngineer
                 {
                     return;
                 }
-
-                if (lookupDictionary == null)
+                
+                foreach (var change in changes.Where(x => x.Type == __instance.WeaponSubType).Select(x => x.Change))
                 {
-                    lookupDictionary = changes.ToDictionary(x => x.Type, x => x.Change);
+                    var newValue = change.Change(__instance.InventorySize);
+                    if (!newValue.HasValue)
+                    {
+                        return;
+                    }
+                    Traverse.Create(__instance).Property("InventorySize").SetValue(newValue);
                 }
-
-                if (!lookupDictionary.TryGetValue(__instance.WeaponSubType, out var change))
-                {
-                    return;
-                }
-
-                var newValue = change.Change(__instance.InventorySize);
-                if (!newValue.HasValue)
-                {
-                    return;
-                }
-
-                Traverse.Create(__instance).Property("InventorySize").SetValue(newValue);
             }
             catch (Exception e)
             {

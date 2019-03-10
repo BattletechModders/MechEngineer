@@ -237,11 +237,6 @@ namespace MechEngineer
             },
             new WeaponSlotChange
             {
-                Type = WeaponSubType.LargeLaserPulse,
-                Change = new ValueChange<int> {From = 2, By = 1}
-            },
-            new WeaponSlotChange
-            {
                 Type = WeaponSubType.LRM20,
                 Change = new ValueChange<int> {From = 4, By = 1}
             }
