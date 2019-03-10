@@ -36,27 +36,22 @@ namespace MechEngineer
         {
         }
 
-        public bool ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
+        public void ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
         {
             var criticalEffects = mechComponent.componentDef?.GetComponent<CriticalEffects>();
             if (criticalEffects == null)
             {
-                return true;
-            }
-
-            if (damageLevel != ComponentDamageLevel.Destroyed) // only care about destructions, other things dont get through anyway
-            {
-                return true;
+                return;
             }
 
             if (mechComponent.DamageLevel == ComponentDamageLevel.Destroyed) // already destroyed
             {
-                return true;
+                return;
             }
 
             if (!(mechComponent.parent is Mech mech))
             {
-                return true;
+                return;
             }
 
             damageLevel = ComponentDamageLevel.Penalized;
@@ -188,11 +183,10 @@ namespace MechEngineer
 
             if (damageLevel == ComponentDamageLevel.Destroyed)
             {
-                var text = new Text("{0} DESTROYED", mechComponent.UIName);
                 if (criticalEffects.DeathMethod != DeathMethod.NOT_SET)
                 {
                     mech.FlagForDeath(
-                        text.ToString(),
+                        $"{mechComponent.UIName} DESTROYED",
                         criticalEffects.DeathMethod,
                         DamageType.Combat,
                         mechComponent.Location,
@@ -200,22 +194,7 @@ namespace MechEngineer
                         hitInfo.attackerId,
                         false);
                 }
-                else
-                {
-                    mechComponent.PublishMessage(text, FloatieMessage.MessageNature.ComponentDestroyed);
-                }
-
-                return true;
             }
-            else
-            {
-                mechComponent.PublishMessage(
-                    new Text("{0} " + (critsAdded == 1 ? "CRIT" : "CRIT X" + critsAdded), mechComponent.UIName),
-                    FloatieMessage.MessageNature.CriticalHit
-                );
-            }
-
-            return false;
         }
 
         private static void SetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)

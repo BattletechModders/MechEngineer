@@ -8,37 +8,58 @@ namespace MechEngineer
     [HarmonyPatch(typeof(MechComponent), "DamageComponent")]
     public static class MechComponent_DamageComponent_Patch
     {
-        public static bool Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
+        public static bool Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
         {
             try
             {
-                if (__instance.componentDef.IsIgnoreDamage())
+                var mechComponent = __instance;
+                if (mechComponent.componentDef.IsIgnoreDamage())
                 {
                     return false;
                 }
 
-                if (!CriticalEffectsHandler.Shared.ProcessWeaponHit(__instance, hitInfo, damageLevel))
-                {
-                    return false;
-                }
+                CriticalEffectsHandler.Shared.ProcessWeaponHit(mechComponent, hitInfo, ref damageLevel);
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
 
+            return true;
+        }
+
+        public static void Postfix(MechComponent __instance, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
+        {
             try
             {
-                if (__instance.DamageLevel == ComponentDamageLevel.Penalized)
+                var mechComponent = __instance;
+                if (mechComponent.DamageLevel == ComponentDamageLevel.Penalized)
                 {
-                    __instance.PublishMessage(
+                    mechComponent.PublishMessage(
                         new Text("{0} CRIT", __instance.UIName),
                         FloatieMessage.MessageNature.CriticalHit
                     );
                 }
-                else
+                else if (mechComponent.DamageLevel == ComponentDamageLevel.Destroyed)
                 {
-                    __instance.PublishMessage(
+                    var actor = mechComponent.parent;
+                    if (actor.IsDead || actor.IsFlaggedForDeath)
+                    {
+                        return;
+                    }
+
+                    // dont show destruction if a whole section gets destroyed, counters spam
+                    //if (actor is Mech mech)
+                    //{
+                    //    var location = mechComponent.mechComponentRef.MountedLocation;
+                    //    var mechLocationDestroyed = mech.IsLocationDestroyed(location);
+                    //    if (mechLocationDestroyed)
+                    //    {
+                    //        return;
+                    //    }
+                    //}
+
+                    mechComponent.PublishMessage(
                         new Text("{0} DESTROYED", __instance.UIName),
                         FloatieMessage.MessageNature.ComponentDestroyed
                     );
@@ -48,8 +69,6 @@ namespace MechEngineer
             {
                 Control.mod.Logger.LogError(e);
             }
-
-            return true;
         }
     }
 }
