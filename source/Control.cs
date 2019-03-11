@@ -75,18 +75,27 @@ namespace MechEngineer
                 
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
-                mod.Logger.Log("loaded " + mod.Name);
+                mod.Logger.Log("started");
             }
             catch (Exception e)
             {
-                mod.Logger.LogError(e);
+                mod.Logger.LogError("error starting", e);
             }
         }
 
         public static void FinishedLoading(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
-            BonusDescriptions.Setup(customResources);
-            CriticalEffectsHandler.Setup(customResources);
+            try
+            {
+                BonusDescriptions.Setup(customResources);
+                CriticalEffectsHandler.Setup(customResources);
+
+                mod.Logger.Log("loaded");
+            }
+            catch (Exception e)
+            {
+                mod.Logger.LogError("error loading", e);
+            }
         }
 
         private static string GetInformationalVersion(this Assembly assembly) {

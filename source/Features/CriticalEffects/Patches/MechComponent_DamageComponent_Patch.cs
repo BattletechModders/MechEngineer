@@ -42,13 +42,14 @@ namespace MechEngineer
                 }
                 else if (mechComponent.DamageLevel == ComponentDamageLevel.Destroyed)
                 {
+                    // dont show destroyed if a mech is known to be incapacitated
                     var actor = mechComponent.parent;
                     if (actor.IsDead || actor.IsFlaggedForDeath)
                     {
                         return;
                     }
 
-                    // dont show destruction if a whole section gets destroyed, counters spam
+                    // dont show destroyed if a whole section was destroyed, counters spam
                     //if (actor is Mech mech)
                     //{
                     //    var location = mechComponent.mechComponentRef.MountedLocation;
