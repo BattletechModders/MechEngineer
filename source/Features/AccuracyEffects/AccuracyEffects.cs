@@ -24,7 +24,7 @@ namespace MechEngineer
             var statistic = statCollection.GetStatistic(collectionKey);
             if (statistic == null)
             {
-                const float defaultValue = 1.0f;
+                const float defaultValue = 0.0f;
                 statistic = statCollection.AddStatistic(collectionKey, defaultValue);
             }
             return statistic.Value<float>();
