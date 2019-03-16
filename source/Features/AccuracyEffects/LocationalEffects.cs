@@ -24,7 +24,7 @@ namespace MechEngineer
 
                 var location = mechComponent.mechComponentRef.MountedLocation;
 
-                Control.mod.Logger.LogDebug($"Replacing location in {effect.Description.Id} with {{location}}");
+                Control.mod.Logger.LogDebug($"Replacing location in {effect.Description.Id} with {location}");
 
                 effect.statisticData.statName = InterpolateStatisticName(effect.statisticData.statName, location);
                 

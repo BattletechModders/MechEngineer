@@ -19,6 +19,9 @@ namespace MechEngineer
 
         public bool HasLinked => !string.IsNullOrEmpty(LinkedStatisticName);
         
+        public string CritFloatieMessage = null;
+        public string DestroyedFloatieMessage = null;
+        
         public void OnLoaded(Dictionary<string, object> values)
         {
             var descriptions = new List<string>();
