@@ -262,7 +262,7 @@ namespace MechEngineer
                 
                 var actor = mechComponent.parent;
 
-                effectData = LocationalEffects.ProcessLocationalEffectData(effectData, mechComponent);
+                LocationalEffects.ProcessLocationalEffectData(ref effectData, mechComponent);
                 
                 Control.mod.Logger.LogDebug($"Creating scopedId={scopedId} statName={effectData.statisticData.statName}");
                 actor.Combat.EffectManager.CreateEffect(

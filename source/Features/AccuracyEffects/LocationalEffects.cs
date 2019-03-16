@@ -11,7 +11,7 @@ namespace MechEngineer
             return InterpolateStatisticName($"{{location}}.{statisticName}", location);
         }
 
-        internal static EffectData ProcessLocationalEffectData(EffectData effect, MechComponent mechComponent)
+        internal static bool ProcessLocationalEffectData(ref EffectData effect, MechComponent mechComponent)
         {
                 
             if (mechComponent.parent is Mech
@@ -24,6 +24,8 @@ namespace MechEngineer
 
                 var location = mechComponent.mechComponentRef.MountedLocation;
 
+                Control.mod.Logger.LogDebug($"Replacing location in {effect.Description.Id} with {{location}}");
+
                 effect.statisticData.statName = InterpolateStatisticName(effect.statisticData.statName, location);
                 
                 effect.Description = new BaseDescriptionDef(
@@ -32,9 +34,11 @@ namespace MechEngineer
                     InterpolateText(effect.Description.Details, location),
                     InterpolateText(effect.Description.Icon, location)
                 );
+
+                return true;
             }
 
-            return effect;
+            return false;
         }
 
         const string LocationPlaceholder = "{location}";

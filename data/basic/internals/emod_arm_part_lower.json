@@ -1,10 +1,15 @@
 {
-	"Custom": {
+    "Custom": {
         "ArmActuator" : {
             "Type" : "PartLower"
         },
-		"Category" : { "CategoryID" : "ArmLowerActuator" }
-	},
+        "BonusDescriptions": {
+            "Bonuses": [
+                "ArmAccuracyBonus: 1"
+            ]
+        },
+        "Category" : { "CategoryID" : "ArmLowerActuator" }
+    },
     "Description" : {
         "Cost" : 20000,
         "Rarity" : 0,
@@ -28,7 +33,33 @@
     "AllowedLocations" : "Arms",
     "DisallowedLocations" : "All",
     "CriticalComponent" : false,
-    "statusEffects": null,
+    "statusEffects" : [
+        {
+            "durationData" : {
+                "duration" : -1
+            },
+            "targetingData" : {
+                "effectTriggerType" : "Passive",
+                "effectTargetType" : "Creator",
+                "showInTargetPreview" : false,
+                "showInStatusPanel" : false
+            },
+            "effectType" : "StatisticEffect",
+            "Description" : {
+                "Id" : "StatusEffect-ArmLowerActuator-{location}",
+                "Name" : "{side} Arm",
+                "Details" : "The {side} arm actuator.",
+                "Icon" : "uixSvgIcon_equipment_ActuatorArm"
+            },
+            "statisticData" : {
+                "statName" : "{location}.Accuracy",
+                "operation" : "Float_Add",
+                "modValue" : "-1.0",
+                "modType" : "System.Single"
+            },
+            "nature" : "Buff"
+        }
+    ],
     "ComponentTags" : {
         "items" : [
             "component_type_stock"
