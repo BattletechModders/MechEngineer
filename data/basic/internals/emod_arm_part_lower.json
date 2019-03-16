@@ -8,7 +8,8 @@
                 "ArmAccuracyBonus: 1"
             ]
         },
-        "Category" : { "CategoryID" : "ArmLowerActuator" }
+        "Category" : { "CategoryID" : "ArmLowerActuator" },
+        "Flags" : { "flags" : [ "autorepair", "not_broken" ] }
     },
     "Description" : {
         "Cost" : 20000,

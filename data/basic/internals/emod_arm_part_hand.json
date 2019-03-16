@@ -8,7 +8,8 @@
                 "MeleeAccuracyBonus: 1"
             ]
         },
-		"Category" : { "CategoryID" : "ArmHandActuator" }
+        "Category" : { "CategoryID" : "ArmHandActuator" },
+        "Flags" : { "flags" : [ "autorepair", "not_broken" ] }
 	},
     "Description" : {
         "Cost" : 30000,
