@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using BattleTech.UI;
 using Harmony;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MechEngineer
 {
@@ -14,26 +14,72 @@ namespace MechEngineer
             try
             {
                 var mechLabPanel = __instance;
+                var Representation = mechLabPanel.transform.GetChild("Representation");
+                var OBJ_mech = Representation.GetChild("OBJ_mech");
+
+                void ProcessChild(GameObject go)
+                {
+                    go.EnableLayout();
+                    var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
+                    component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                    component.enabled = true;
+                }
+                ProcessChild(OBJ_mech.GetChild("RightArm").gameObject);
+                ProcessChild(OBJ_mech.GetChild("RightTorsoLeg").gameObject);
+                ProcessChild(OBJ_mech.GetChild("Centerline").gameObject);
+                ProcessChild(OBJ_mech.GetChild("LeftTorsoLeg").gameObject);
+                ProcessChild(OBJ_mech.GetChild("LeftArm").gameObject);
+
+                OBJ_mech.gameObject.EnableLayout();
+                {
+                    var go = OBJ_mech.gameObject;
+                    var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
+                    component.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+                    component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                    component.enabled = true;
+                }
+
+                var mechRectTransform = OBJ_mech.GetComponent<RectTransform>();
+                // Unity (?) does not handle layout propagation properly, so we need to force several layout passes here
+                // also allows us to calculate stuff for auto zoom without waiting for regular layout passes
+                LayoutRebuilder.ForceRebuildLayoutImmediate(mechRectTransform);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(mechRectTransform);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(mechRectTransform);
+
+                mechRectTransform.anchorMin = new Vector2(mechRectTransform.anchorMin.x, 1);
+                mechRectTransform.anchorMax = new Vector2(mechRectTransform.anchorMin.x, 1);
+                mechRectTransform.pivot = new Vector2(mechRectTransform.pivot.x, 1);
+                
+                var OBJ_actions = Representation.GetChild("OBJ_actions");
+                mechRectTransform.position = new Vector3(OBJ_mech.position.x, OBJ_actions.position.y, OBJ_mech.position.z);
+
+                {
+                    var OBJ_cancelconfirm = Representation.GetChild("OBJ_cancelconfirm");
+                    var confirmRectTransform = OBJ_cancelconfirm.GetComponent<RectTransform>();
+                    var cancelConfirmBottom = confirmRectTransform.localPosition.y + confirmRectTransform.sizeDelta.y;
+
+                    var mechSize = mechRectTransform.sizeDelta.y;
+                    var targetSize = mechRectTransform.localPosition.y - cancelConfirmBottom;
+
+                    var scale = Mathf.Min(1, targetSize / mechSize);
+                    mechRectTransform.localScale = new Vector3(scale, scale, 1);
+                
+                    Control.mod.Logger.LogDebug($"AutoZoom scale={scale} mechSize={mechSize} targetSize={targetSize}");
+                }
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
+
+            try
+            {
+                var mechLabPanel = __instance;
                 //GUILogUtils.LogHierarchy(mechLabPanel.transform);
 
                 //mechLabPanel.transform.localScale = new Vector3(0.5f, 0.5f);
                 var Representation = mechLabPanel.transform.GetChild("Representation");
                 var OBJ_mech = Representation.GetChild("OBJ_mech");
-
-                {
-                    var scale = Control.settings.MechLabScale;
-                    if (scale.HasValue)
-                    {
-                        OBJ_mech.transform.localScale = new Vector3(scale.Value, scale.Value);
-                    }
-
-                    var postitionY = Control.settings.MechLabPositionY;
-                    if (postitionY.HasValue)
-                    {
-                        var rect = OBJ_mech.GetComponent<RectTransform>();
-                        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, postitionY.Value);
-                    }
-                }
 
                 var Centerline = OBJ_mech.GetChild("Centerline");
                 {
@@ -64,43 +110,6 @@ namespace MechEngineer
                         );
                     }
                 }
-
-                const float moveUp = 0;
-                const float space = 50;
-                {
-                    var headWidget = Centerline.GetChild("uixPrfPanl_ML_location-Widget-MANAGED");
-                    var centerTorsoWidget = Centerline.GetChild("uixPrfPanl_ML_location-Widget-MANAGED", 1);
-
-                    headWidget.SetTop(headWidget.Top() + moveUp);
-                    centerTorsoWidget.SetTop(headWidget.Bottom() - space);
-                }
-
-                {
-                    var RightTorsoLeg = OBJ_mech.GetChild("RightTorsoLeg");
-                    var RightTorsoWidget = RightTorsoLeg.GetChild("uixPrfPanl_ML_location-Widget-MANAGED");
-                    var RightLegWidget = RightTorsoLeg.GetChild("uixPrfPanl_ML_location-Widget-MANAGED", 1);
-
-                    RightTorsoWidget.SetTop(RightTorsoWidget.Top() + moveUp);
-                    RightLegWidget.SetTop(RightTorsoWidget.Bottom() - space);
-                }
-
-                {
-                    var LeftTorsoLeg = OBJ_mech.GetChild("LeftTorsoLeg");
-                    var LeftTorsoWidget = LeftTorsoLeg.GetChild("uixPrfPanl_ML_location-Widget-MANAGED");
-                    var LeftLegWidget = LeftTorsoLeg.GetChild("uixPrfPanl_ML_location-Widget-MANAGED", 1);
-                    
-                    LeftTorsoWidget.SetTop(LeftTorsoWidget.Top() + moveUp);
-                    LeftLegWidget.SetTop(LeftTorsoWidget.Bottom() - space);
-                }
-
-                //if (Control.settings.MechLabPanelLocationRepairButtonsHidden)
-                //{
-                //    foreach (var button in mechLabPanel.transform.GetComponentsInChildren<Transform>()
-                //        .Where(t => t.name == "uixPrfBttn_BASE_repairButton-MANAGED"))
-                //    {
-                //        button.gameObject.SetActive(false);
-                //    }
-                //}
             }
             catch (Exception e)
             {

@@ -4,20 +4,13 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
-using HBS.Extensions;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Object = System.Object;
-using Random = UnityEngine.Random;
 
 namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), "SetData")]
     public static class MechLabLocationWidget_SetData_Patch
     {
-        private const int SlotHeight = 32;
-
         public static void Postfix(MechLabLocationWidget __instance, int ___maxSlots, LocationLoadoutDef ___loadout)
         {
             try
@@ -60,7 +53,7 @@ namespace MechEngineer
             for (var i = slots.Count; i < maxSlots; i++)
             {
                 var newSlot = UnityEngine.Object.Instantiate(templateSlot, layout.layout_slots);
-                newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
+                //newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
                 newSlot.SetSiblingIndex(index + i);
                 newSlot.name = "slot (" + i + ")";
                 slots.Add(newSlot);
@@ -74,10 +67,8 @@ namespace MechEngineer
                 UnityEngine.Object.Destroy(slot.gameObject);
             }
 
-            var changedHeight = changedSlotCount * SlotHeight;
-
-            layout.widget.transform.AdjustHeight(changedHeight);
-            layout.layout_slots.AdjustHeight(changedHeight);
+            layout.layout_slots.gameObject.EnableLayout();
+            layout.widget.gameObject.EnableLayout();
         }
 
         internal static Dictionary<ChassisLocations, List<Filler>> Fillers = new Dictionary<ChassisLocations, List<Filler>>();

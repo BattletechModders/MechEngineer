@@ -40,9 +40,6 @@ namespace MechEngineer
 
         public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
 
-        public float? MechLabScale = 0.85f;
-        public float? MechLabPositionY = 40;
-
         #endregion
 
         #region bonus descriptions
