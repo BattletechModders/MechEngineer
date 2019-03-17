@@ -56,7 +56,7 @@ namespace MechEngineer
                 {
                     var OBJ_cancelconfirm = Representation.GetChild("OBJ_cancelconfirm");
                     var confirmRectTransform = OBJ_cancelconfirm.GetComponent<RectTransform>();
-                    var cancelConfirmBottom = confirmRectTransform.localPosition.y + confirmRectTransform.sizeDelta.y;
+                    var cancelConfirmBottom = confirmRectTransform.localPosition.y - confirmRectTransform.sizeDelta.y;
 
                     var mechSize = mechRectTransform.sizeDelta.y;
                     var targetSize = mechRectTransform.localPosition.y - cancelConfirmBottom;
