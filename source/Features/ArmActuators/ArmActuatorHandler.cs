@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿//#define CCDEBUG
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using CustomComponents;
@@ -57,11 +58,16 @@ namespace MechEngineer
             {
                 bool add_item(string id)
                 {
+                    CustomComponents.Control.LogDebug(DType.ClearInventory, $"--- adding {id} to {location}");
                     if (string.IsNullOrEmpty(id))
+                    {
+                        CustomComponents.Control.LogDebug(DType.ClearInventory, $"---- is null - skipping");
                         return false;
+                    }
 
                     var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, state.DataManager, state);
-                    if (!r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
+
+                    if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
                     {
                         r.SetData(location, -1, ComponentDamageLevel.Functional, true);
                         result.Add(r);
@@ -73,20 +79,25 @@ namespace MechEngineer
                 }
 
                 if (total_slot.HasFlag(slot))
+                {
+                    CustomComponents.Control.LogDebug(DType.ClearInventory, $"--- already have {slot} skip");
                     return;
+                }
 
-                add_item(GetDefaultActuator(mech, location, slot));
+                if (!add_item(GetDefaultActuator(mech, location, slot)))
+                    add_item(GetDefaultActuator(null, location, slot));
             }
 
             void clear_side(ChassisLocations location)
             {
-                result.RemoveAll(i => i.Is<ArmActuator>() && !i.IsModuleFixed(mech));
+                result.RemoveAll(i => i.MountedLocation == location & i.Is<ArmActuator>() && !i.IsModuleFixed(mech));
                 total_slot = ArmActuatorSlot.None;
-                foreach (var item in result)
+                foreach (var item in result.Where(i => i.MountedLocation == location))
                 {
                     if (item.Is<ArmActuator>(out var a))
                         total_slot = total_slot | a.Type;
                 }
+                CustomComponents.Control.LogDebug(DType.ClearInventory, $"-- {location} current {total_slot}");
                 add_default(location, ArmActuatorSlot.PartShoulder);
                 add_default(location, ArmActuatorSlot.PartUpper);
             }
