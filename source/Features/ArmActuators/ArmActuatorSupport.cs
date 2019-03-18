@@ -62,5 +62,23 @@ namespace MechEngineer
                 return RightDefaultUpper;
             return null;
         }
+
+        public string GetLower(ChassisLocations location)
+        {
+            if (location == ChassisLocations.LeftArm)
+                return LeftDefaultLower;
+            if (location == ChassisLocations.RightArm)
+                return RightDefaultLower;
+            return null;
+        }
+
+        public string GetHand(ChassisLocations location)
+        {
+            if (location == ChassisLocations.LeftArm)
+                return LeftDefaultHand;
+            if (location == ChassisLocations.RightArm)
+                return RightDefaultHand;
+            return null;
+        }
     }
 }
