@@ -58,7 +58,9 @@ namespace MechEngineer
                     var confirmRectTransform = OBJ_cancelconfirm.GetComponent<RectTransform>();
 
                     var mechSize = mechRectTransform.sizeDelta.y;
-                    var targetSize = mechRectTransform.localPosition.y - confirmRectTransform.localPosition.y;
+                    var targetSize = mechRectTransform.localPosition.y
+                                     - 40 // repair button height
+                                     - confirmRectTransform.localPosition.y + confirmRectTransform.sizeDelta.y; // save button bottom
 
                     var scale = Mathf.Min(1, targetSize / mechSize);
                     mechRectTransform.localScale = new Vector3(scale, scale, 1);
