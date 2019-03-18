@@ -29,7 +29,12 @@ namespace MechEngineer
         public string RightDefaultShoulder = null;
         public string LeftDefaultUpper = null;
         public string RightDefaultUpper = null;
+        public string LeftDefaultLower = null;
+        public string RightDefaultLower = null;
+        public string LeftDefaultHand = null;
+        public string RightDefaultHand = null;
 
+        public bool IgnoreFullActuators = false;
 
         public ArmActuatorSlot GetLimit(ChassisLocations location)
         {

@@ -11,7 +11,7 @@ using HBS.Extensions;
 namespace MechEngineer
 {
     [CustomComponent("ArmActuator")]
-    public class ArmActuator : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed, IOnInstalled, ISorter
+    public class ArmActuator : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed, IOnInstalled, ISorter, IAdjustDescription
     {
         public ArmActuatorSlot Type { get; set; }
         
@@ -115,61 +115,67 @@ namespace MechEngineer
                 add_item(ArmActuatorHandler.GetDefaultActuator(null, mount_loc, slot));
             }
 
-            foreach (var item in location.LocalInventory.Where(i => i.ComponentRef.Is<ArmActuator>()))
+            if (!Control.settings.ForceFullDefaultActuators || mech.IsIgnoreFullActuators())
             {
-                var actuator = item.ComponentRef.GetComponent<ArmActuator>();
-                if ((actuator.Type & Type) != 0)
+                foreach (var item in location.LocalInventory.Where(i => i.ComponentRef.Is<ArmActuator>()))
                 {
-                    if (item.ComponentRef.IsModuleFixed(location.mechLab.activeMechDef))
+                    var actuator = item.ComponentRef.GetComponent<ArmActuator>();
+                    if ((actuator.Type & Type) != 0)
                     {
-                        CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- cannot remove {item.ComponentRef.ComponentDefID}");
-                        return
-                            $"Cannot install {drop_item.ComponentRef.Def.Description.Name} - {Type} occuped by {item.ComponentRef.Def.Description.Name}";
-                    }
+                        if (item.ComponentRef.IsModuleFixed(location.mechLab.activeMechDef))
+                        {
+                            CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                                $"--- cannot remove {item.ComponentRef.ComponentDefID}");
+                            return
+                                $"Cannot install {drop_item.ComponentRef.Def.Description.Name} - {Type} occuped by {item.ComponentRef.Def.Description.Name}";
+                        }
 
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- removing {item.ComponentRef.ComponentDefID}");
-                    changes.Add(new RemoveChange(location.widget.loadout.Location, item));
+                        CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                            $"--- removing {item.ComponentRef.ComponentDefID}");
+                        changes.Add(new RemoveChange(location.widget.loadout.Location, item));
+                    }
+                    else
+                        total_slot = total_slot | actuator.Type;
+                }
+
+                add_default(ArmActuatorSlot.PartShoulder);
+                add_default(ArmActuatorSlot.PartUpper);
+
+                if (!total_slot.HasFlag(ArmActuatorSlot.PartLower) && total_slot.HasFlag(ArmActuatorSlot.PartHand))
+                {
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- adding Lower to {total_slot}");
+                    var change = AddFromInventoryChange.FoundInInventory(mount_loc, new MechLabHelper(mechlab),
+                        item => item.Is<ArmActuator>(out var actuator) && actuator.Type == ArmActuatorSlot.PartLower,
+                        item => item.Description.Id == Control.settings.DefaultCBTLower
+                    );
+                    if (change != null)
+                        changes.Add(change);
+                    else if (Control.settings.InterruptHandDropIfNoLower)
+                        return $"Cannot found LowerArm";
                 }
                 else
-                    total_slot = total_slot | actuator.Type;
-            }
+                {
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- Lower exist in {total_slot}, done");
+                }
 
-            add_default(ArmActuatorSlot.PartShoulder);
-            add_default(ArmActuatorSlot.PartUpper);
-
-            if (!total_slot.HasFlag(ArmActuatorSlot.PartLower) && total_slot.HasFlag(ArmActuatorSlot.PartHand))
-            {
-                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- adding Lower to {total_slot}");
-                var change = AddFromInventoryChange.FoundInInventory(mount_loc, new MechLabHelper(mechlab),
-                    item => item.Is<ArmActuator>(out var actuator) && actuator.Type == ArmActuatorSlot.PartLower,
-                    item => item.Description.Id == Control.settings.DefaultCBTLower
-                );
-                if(change != null)
-                    changes.Add(change);
-                else
-                    if (Control.settings.InterruptHandDropIfNoLower)
-                        return $"Cannot found LowerArm";
+                return string.Empty;
             }
             else
             {
-                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- Lower exist in {total_slot}, done");
+                // TODO: FF
+                return String.Empty;
+            }
+        }
+        public string AdjustDescription(string Description)
+        {
+            Description += "\n<color=#28b463><b>[" + Type + "]</b></color>";
+            if (MaxSlot < ArmActuatorSlot.PartHand)
+            {
+                Description += "\n<color=#c0392b><b>Forbid Actuators up to:" + MaxSlot + "</b></color>";
             }
 
-            return string.Empty;
+            return Description;
         }
-
-        // TODO: restriction description should be applied to chassisDef description not item
-        // IAdjustDescription
-//        public string AdjustDescription(string Description)
-//        {
-//            Description += "\n<color=#28b463><b>[" + Type + "]</b></color>";
-//            if (MaxSlot < ArmActuatorSlot.PartHand)
-//            {
-//                Description += "\n<color=#c0392b><b>Forbid Actuators up to:" + MaxSlot + "</b></color>";
-//            }
-//
-//            return Description;
-//        }
 
         public void OnItemGrabbed(IMechLabDraggableItem item, MechLabPanel mechLab, MechLabLocationWidget widget)
         {
@@ -184,85 +190,95 @@ namespace MechEngineer
 
             CustomComponents.Control.LogDebug(DType.ComponentInstall, $"- ArmActuator: {Def.Description.Id} {Type}");
 
-            void add_default(ArmActuatorSlot slot)
+            if (mechLab.activeMechDef.IsIgnoreFullActuators())
             {
-                bool add_item(string id)
+                void add_default(ArmActuatorSlot slot)
                 {
-                    if (string.IsNullOrEmpty(id))
-                        return false;
-
-                    var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, mechLab.dataManager, mechLab.Sim);
-
-                    if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
+                    bool add_item(string id)
                     {
-                        DefaultHelper.AddMechLab(id, ComponentType.Upgrade, ml_helper, mount_loc);
-                        total_slot = total_slot | actuator.Type;
-                        return true;
+                        if (string.IsNullOrEmpty(id))
+                            return false;
+
+                        var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, mechLab.dataManager, mechLab.Sim);
+
+                        if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
+                        {
+                            DefaultHelper.AddMechLab(id, ComponentType.Upgrade, ml_helper, mount_loc);
+                            total_slot = total_slot | actuator.Type;
+                            return true;
+                        }
+
+                        return false;
                     }
 
-                    return false;
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- adding {slot} to {total_slot}");
+
+                    if (total_slot.HasFlag(slot))
+                    {
+                        CustomComponents.Control.LogDebug(DType.ComponentInstall, $"---- already present");
+                        return;
+                    }
+
+                    if (add_item(ArmActuatorHandler.GetDefaultActuator(mechLab.activeMechDef, mount_loc, slot)))
+                        return;
+
+                    add_item(ArmActuatorHandler.GetDefaultActuator(null, mount_loc, slot));
                 }
-                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- adding {slot} to {total_slot}");
 
-                if (total_slot.HasFlag(slot))
+                for (int i = loc_helper.LocalInventory.Count - 1; i >= 0; i--)
                 {
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"---- already present");
-                    return;
+                    var slotitem = loc_helper.LocalInventory[i];
+
+                    if (!slotitem.ComponentRef.Is<ArmActuator>())
+                        continue;
+
+                    var actuator = slotitem.ComponentRef.GetComponent<ArmActuator>();
+                    if (slotitem.ComponentRef.IsDefault() &&
+                        !slotitem.ComponentRef.IsModuleFixed(ml_helper.MechLab.activeMechDef))
+                    {
+                        CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                            $"-- removing {slotitem.ComponentRef.ComponentDefID} {actuator.Type}");
+
+                        DefaultHelper.RemoveMechLab(slotitem.ComponentRef.ComponentDefID,
+                            slotitem.ComponentRef.ComponentDefType, ml_helper, mount_loc);
+                    }
+                    else
+                    {
+                        CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                            $"-- checking {slotitem.ComponentRef.ComponentDefID} {actuator.Type}");
+                        total_slot = total_slot | actuator.Type;
+                    }
                 }
 
-                if (add_item(ArmActuatorHandler.GetDefaultActuator(mechLab.activeMechDef, mount_loc, slot)))
-                    return;
+                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- actuators {total_slot}");
 
-                add_item(ArmActuatorHandler.GetDefaultActuator(null, mount_loc, slot));
-            }
+                add_default(ArmActuatorSlot.PartShoulder);
+                add_default(ArmActuatorSlot.PartUpper);
 
 
-            for (int i = loc_helper.LocalInventory.Count-1; i >= 0; i--)
-            {
-                var slotitem = loc_helper.LocalInventory[i];
-
-                if (!slotitem.ComponentRef.Is<ArmActuator>())
-                    continue;
-
-                var actuator = slotitem.ComponentRef.GetComponent<ArmActuator>();
-                if (slotitem.ComponentRef.IsDefault() &&
-                    !slotitem.ComponentRef.IsModuleFixed(ml_helper.MechLab.activeMechDef))
+                if (total_slot.HasFlag(ArmActuatorSlot.PartHand) && !total_slot.HasFlag(ArmActuatorSlot.PartLower))
                 {
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall,
-                        $"-- removing {slotitem.ComponentRef.ComponentDefID} {actuator.Type}");
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- Removing hand from {total_slot}");
 
-                    DefaultHelper.RemoveMechLab(slotitem.ComponentRef.ComponentDefID,
-                        slotitem.ComponentRef.ComponentDefType, ml_helper, mount_loc);
+                    var hand = loc_helper.LocalInventory.FirstOrDefault(i =>
+                        i.ComponentRef.Is<ArmActuator>(out var actuator) &&
+                        actuator.Type.HasFlag(ArmActuatorSlot.PartHand));
+                    if (hand == null || hand.ComponentRef.IsFixed)
+                        return;
+                    var dragitem = mechLab.DragItem;
+                    widget.OnRemoveItem(hand, false);
+                    mechLab.ForceItemDrop(hand);
+                    ml_helper.SetDragItem(dragitem as MechLabItemSlotElement);
                 }
                 else
                 {
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- checking {slotitem.ComponentRef.ComponentDefID} {actuator.Type}");
-                    total_slot = total_slot | actuator.Type;
+                    CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                        $"-- hand already removed from {total_slot}");
                 }
-            }
-
-            CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- actuators {total_slot}");
-
-            add_default(ArmActuatorSlot.PartShoulder);
-            add_default(ArmActuatorSlot.PartUpper);
-
-
-            if (total_slot.HasFlag(ArmActuatorSlot.PartHand) && !total_slot.HasFlag(ArmActuatorSlot.PartLower))
-            {
-                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- Removing hand from {total_slot}");
-
-                var hand = loc_helper.LocalInventory.FirstOrDefault(i =>
-                    i.ComponentRef.Is<ArmActuator>(out var actuator) && actuator.Type.HasFlag(ArmActuatorSlot.PartHand));
-                if (hand == null || hand.ComponentRef.IsFixed)
-                    return;
-                var dragitem = mechLab.DragItem;
-                widget.OnRemoveItem(hand, false);
-                mechLab.ForceItemDrop(hand);
-                ml_helper.SetDragItem(dragitem as MechLabItemSlotElement);
             }
             else
             {
-                CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- hand already removed from {total_slot}");
+                // TODO: FF
             }
         }
 
@@ -270,31 +286,40 @@ namespace MechEngineer
         {
             try
             {
-                if (order.DesiredLocation != ChassisLocations.None &&
-                    ChassisLocations.Arms.HasFlag(order.DesiredLocation))
+                if (!Control.settings.ForceFullDefaultActuators || mech.IsIgnoreFullActuators())
                 {
-                    var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.DesiredLocation);
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall,
-                        $"- ArmActuator removing, left {slots}");
 
-                    ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
-                        ArmActuatorSlot.PartShoulder, ref slots);
-                    ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
-                        ArmActuatorSlot.PartUpper, ref slots);
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
+                    if (order.DesiredLocation != ChassisLocations.None &&
+                        ChassisLocations.Arms.HasFlag(order.DesiredLocation))
+                    {
+                        var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.DesiredLocation);
+                        CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                            $"- ArmActuator removing, left {slots}");
+
+                        ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                            ArmActuatorSlot.PartShoulder, ref slots);
+                        ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                            ArmActuatorSlot.PartUpper, ref slots);
+                        CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
+                    }
+
+                    if (order.PreviousLocation != ChassisLocations.None &&
+                        ChassisLocations.Arms.HasFlag(order.DesiredLocation))
+                    {
+                        var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.PreviousLocation);
+                        CustomComponents.Control.LogDebug(DType.ComponentInstall,
+                            $"- ArmActuator adding, left {slots}");
+
+                        ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                            ArmActuatorSlot.PartShoulder, ref slots);
+                        ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                            ArmActuatorSlot.PartUpper, ref slots);
+                        CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
+                    }
                 }
-
-                if (order.PreviousLocation != ChassisLocations.None &&
-                    ChassisLocations.Arms.HasFlag(order.DesiredLocation))
+                else
                 {
-                    var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.PreviousLocation);
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"- ArmActuator adding, left {slots}");
-
-                    ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
-                        ArmActuatorSlot.PartShoulder, ref slots);
-                    ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
-                        ArmActuatorSlot.PartUpper, ref slots);
-                    CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
+                    // TODO: FF
                 }
             }
             catch (Exception e)

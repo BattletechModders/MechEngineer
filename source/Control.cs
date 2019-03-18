@@ -50,10 +50,22 @@ namespace MechEngineer
                 Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
                 if (settings.UseArmActuators)
                 {
-                    Validator.RegisterClearInventory(ArmActuatorHandler.ClearInventory);
-                    Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMech, ArmActuatorHandler.CanBeFielded);
+                    if (settings.ForceFullDefaultActuators)
+                    {
+                        Validator.RegisterClearInventory(ArmActuatorHandler.ClearInventoryFF);
+                        Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMechFF,
+                            ArmActuatorHandler.CanBeFieldedFF);
 
-                    AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuators);
+                        AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuatorsFF);
+                    }
+                    else
+                    {
+                        Validator.RegisterClearInventory(ArmActuatorHandler.ClearInventory);
+                        Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMech,
+                            ArmActuatorHandler.CanBeFielded);
+
+                        AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuators);
+                    }
                 }
 
                 if (settings.DynamicSlotsValidateDropEnabled)

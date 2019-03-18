@@ -377,12 +377,59 @@ namespace MechEngineer
                     AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.PartShoulder, ref total_slots);
                     AddDefaultToInventory(mechdef, null, location, ArmActuatorSlot.PartUpper, ref total_slots);
                 }
-
-
             }
 
             process_location(ChassisLocations.RightArm);
             process_location(ChassisLocations.LeftArm);
+        }
+
+        public static bool IsIgnoreFullActuators(this MechDef mech)
+        {
+            // TODO FF
+            return false;
+        }
+
+
+        public static void ClearInventoryFF(MechDef mech, List<MechComponentRef> result, SimGameState state)
+        {
+            if (mech.IsIgnoreFullActuators())
+            {
+                ClearInventory(mech, result, state);
+                return;
+            }
+            // TODO FF
+        }
+
+        public static void ValidateMechFF(Dictionary<MechValidationType, List<Text>> errors, MechValidationLevel validationlevel, MechDef mechdef)
+        {
+            if (mechdef.IsIgnoreFullActuators())
+            {
+                ValidateMech(errors, validationlevel, mechdef);
+                return;
+            }
+            // TODO FF
+
+        }
+
+        public static bool CanBeFieldedFF(MechDef mechdef)
+        {
+            if (mechdef.IsIgnoreFullActuators())
+                return CanBeFieldedFF(mechdef);
+            // TODO FF
+            return false;
+        }
+
+        public static void FixCBTActuatorsFF(List<MechDef> mechdefs, SimGameState simgame)
+        {
+            foreach (var mechdef in mechdefs)
+            {
+                if (mechdef.IsIgnoreFullActuators())
+                {
+                    FixCBTActuators(mechdefs, simgame);
+                    continue;
+                }
+                // TODO FF
+            }
         }
     }
 }
