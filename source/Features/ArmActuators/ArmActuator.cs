@@ -299,9 +299,6 @@ namespace MechEngineer
         {
             try
             {
-                if (!Control.settings.ForceFullDefaultActuators || mech.IsIgnoreFullActuators())
-                {
-
                     if (order.DesiredLocation != ChassisLocations.None &&
                         ChassisLocations.Arms.HasFlag(order.DesiredLocation))
                     {
@@ -314,10 +311,23 @@ namespace MechEngineer
                         ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
                             ArmActuatorSlot.PartUpper, ref slots);
                         CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
+
+                        if (!mech.IsIgnoreFullActuators())
+                        {
+                            var limit = mech.Chassis.Is<ArmActuatorSupport>(out var s)
+                                ? s.GetLimit(order.DesiredLocation)
+                                : ArmActuatorSlot.Hand;
+                            if (limit.HasFlag(ArmActuatorSlot.PartLower))
+                                ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                                    ArmActuatorSlot.PartLower, ref slots);
+                            if (limit.HasFlag(ArmActuatorSlot.PartHand))
+                                ArmActuatorHandler.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                                    ArmActuatorSlot.PartHand, ref slots);
+                        }
                     }
 
                     if (order.PreviousLocation != ChassisLocations.None &&
-                        ChassisLocations.Arms.HasFlag(order.DesiredLocation))
+                        ChassisLocations.Arms.HasFlag(order.PreviousLocation))
                     {
                         var slots = ArmActuatorHandler.ClearDefaultActuators(mech, order.PreviousLocation);
                         CustomComponents.Control.LogDebug(DType.ComponentInstall,
@@ -328,12 +338,20 @@ namespace MechEngineer
                         ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
                             ArmActuatorSlot.PartUpper, ref slots);
                         CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
+
+                        if (!mech.IsIgnoreFullActuators())
+                        {
+                            var limit = mech.Chassis.Is<ArmActuatorSupport>(out var s)
+                                ? s.GetLimit(order.PreviousLocation)
+                                : ArmActuatorSlot.Hand;
+                            if (limit.HasFlag(ArmActuatorSlot.PartLower))
+                                ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                                    ArmActuatorSlot.PartLower, ref slots);
+                            if (limit.HasFlag(ArmActuatorSlot.PartHand))
+                                ArmActuatorHandler.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                                    ArmActuatorSlot.PartHand, ref slots);
+                        }
                     }
-                }
-                else
-                {
-                    // TODO: FF
-                }
             }
             catch (Exception e)
             {
