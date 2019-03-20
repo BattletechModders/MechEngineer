@@ -1,4 +1,6 @@
 ﻿//#define CCDEBUG
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
@@ -425,6 +427,7 @@ namespace MechEngineer
                     var a = item.GetComponent<ArmActuator>();
                     if ((a.Type & total_slots) != 0)
                         errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} have more then one {a.Type} actuator"));
+                    total_slots = total_slots | a.Type;
                 }
 
                 if (total_slots < limit)
