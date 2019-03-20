@@ -395,7 +395,15 @@ namespace MechEngineer
 
         public static bool IsIgnoreFullActuators(this MechDef mech)
         {
-            // TODO FF
+            if (!Control.settings.ForceFullDefaultActuators)
+                return true;
+
+            if (mech.Chassis.Is<ArmActuatorSupport>(out var s) && s.IgnoreFullActuators)
+                return true;
+
+            if (!string.IsNullOrEmpty(Control.settings.IgnoreFullActuatorsTag) && mech.Chassis.ChassisTags.Contains(Control.settings.IgnoreFullActuatorsTag))
+                return true;
+
             return false;
         }
 

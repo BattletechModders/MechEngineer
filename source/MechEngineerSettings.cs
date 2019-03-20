@@ -250,7 +250,7 @@ namespace MechEngineer
 
         public bool UseArmActuators = true;
         public bool ForceFullDefaultActuators = false;
-        public string IgnoreFullActuatorstags = null;
+        public string IgnoreFullActuatorsTag = null;
         public string DefaultCBTShoulder = "emod_arm_part_shoulder";
         public string DefaultCBTLower = "emod_arm_part_lower";
         public string DefaultCBTUpper = "emod_arm_part_upper";
