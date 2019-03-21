@@ -120,140 +120,163 @@ namespace MechEngineer
 
         public static void ValidateMech(Dictionary<MechValidationType, List<Text>> errors, MechValidationLevel validationlevel, MechDef mechdef)
         {
-            void check_location(ChassisLocations location)
+            try
             {
-                //occupied slots
-                var slots = ArmActuatorSlot.None;
-
-                //list of actuators in location
-                var actuators = from item in mechdef.Inventory
-                                where item.MountedLocation == location &&
-                                      item.Is<ArmActuator>()
-                                select item.GetComponent<ArmActuator>();
 
 
-                //get max avaliable actuator
-                ArmActuatorSlot max = mechdef.Chassis.Is<ArmActuatorSupport>(out var support) ?
-                    support.GetLimit(location) :
-                    ArmActuatorSlot.PartHand;
-
-                foreach (var actuator in actuators)
+                void check_location(ChassisLocations location)
                 {
-                    // if more then 1 actuator occupy 1 slot
-                    if ((slots & actuator.Type) != 0)
+                    //occupied slots
+                    var slots = ArmActuatorSlot.None;
+
+                    //list of actuators in location
+                    var actuators = from item in mechdef.Inventory
+                                    where item.MountedLocation == location &&
+                                          item.Is<ArmActuator>()
+                                    select item.GetComponent<ArmActuator>();
+
+
+                    //get max avaliable actuator
+                    ArmActuatorSlot max = mechdef.Chassis.Is<ArmActuatorSupport>(out var support)
+                        ? support.GetLimit(location)
+                        : ArmActuatorSlot.PartHand;
+
+                    foreach (var actuator in actuators)
                     {
-                        errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} have more then one {actuator.Type} actuator"));
+                        // if more then 1 actuator occupy 1 slot
+                        if ((slots & actuator.Type) != 0)
+                        {
+                            errors[MechValidationType.InvalidInventorySlots]
+                                .Add(new Text($"{location} have more then one {actuator.Type} actuator"));
+                        }
+
+                        //correcting max slot if actuator has limits
+                        if (max > actuator.MaxSlot)
+                            max = actuator.MaxSlot;
+
+                        //save actuator to slots
+                        slots = slots | actuator.Type;
                     }
 
-                    //correcting max slot if actuator has limits
-                    if (max > actuator.MaxSlot)
-                        max = actuator.MaxSlot;
+                    if (Control.settings.ExtendHandLimit)
+                    {
+                        if (max == ArmActuatorSlot.PartHand)
+                            max = ArmActuatorSlot.Hand;
 
-                    //save actuator to slots
-                    slots = slots | actuator.Type;
+                        if (max == ArmActuatorSlot.PartUpper)
+                            max = ArmActuatorSlot.Upper;
+
+                        if (max == ArmActuatorSlot.PartLower)
+                            max = ArmActuatorSlot.Lower;
+                    }
+
+                    // if not support hand/lower
+                    if (slots > max)
+                        errors[MechValidationType.InvalidInventorySlots]
+                            .Add(new Text($"{location} cannot support more then {max} actuator"));
+
+                    //if not have shoulder
+                    if (!slots.HasFlag(ArmActuatorSlot.PartShoulder))
+                        errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Shoulder"));
+
+                    //if not have upper
+                    if (!slots.HasFlag(ArmActuatorSlot.PartUpper))
+                        errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Upper Arm"));
+
+                    //if have hand but not lower
+                    if (slots.HasFlag(ArmActuatorSlot.PartHand) && !slots.HasFlag(ArmActuatorSlot.PartLower))
+                        errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Lower Arm"));
                 }
 
-                if (Control.settings.ExtendHandLimit)
-                {
-                    if (max == ArmActuatorSlot.PartHand)
-                        max = ArmActuatorSlot.Hand;
+                MechComponent component;
 
-                    if (max == ArmActuatorSlot.PartUpper)
-                        max = ArmActuatorSlot.Upper;
-
-                    if (max == ArmActuatorSlot.PartLower)
-                        max = ArmActuatorSlot.Lower;
-                }
-
-                // if not support hand/lower
-                if (slots > max)
-                    errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} cannot support more then {max} actuator"));
-
-                //if not have shoulder
-                if (!slots.HasFlag(ArmActuatorSlot.PartShoulder))
-                    errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Shoulder"));
-
-                //if not have upper
-                if (!slots.HasFlag(ArmActuatorSlot.PartUpper))
-                    errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Upper Arm"));
-
-                //if have hand but not lower
-                if (slots.HasFlag(ArmActuatorSlot.PartHand) && !slots.HasFlag(ArmActuatorSlot.PartLower))
-                    errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Lower Arm"));
+                check_location(ChassisLocations.LeftArm);
+                check_location(ChassisLocations.RightArm);
             }
-
-            check_location(ChassisLocations.LeftArm);
-            check_location(ChassisLocations.RightArm);
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError("Error in can be fielded", e);
+            }
 
         }
 
         public static bool CanBeFielded(MechDef mechdef)
         {
-            bool check_location(ChassisLocations location)
+            try
             {
-                //occupied slots
-                var slots = ArmActuatorSlot.None;
 
-                //list of actuators in location
-                var actuators = from item in mechdef.Inventory
-                                where item.MountedLocation == location &&
-                                      item.Is<ArmActuator>()
-                                select item.GetComponent<ArmActuator>();
-
-
-
-                //get max avaliable actuator
-                ArmActuatorSlot max = mechdef.Chassis.Is<ArmActuatorSupport>(out var support) ?
-                    support.GetLimit(location) :
-                    ArmActuatorSlot.PartHand;
-
-
-                foreach (var actuator in actuators)
+                bool check_location(ChassisLocations location)
                 {
-                    // if more then 1 actuator occupy 1 slot
-                    if ((slots & actuator.Type) != 0)
+                    //occupied slots
+                    var slots = ArmActuatorSlot.None;
+
+                    //list of actuators in location
+                    var actuators = from item in mechdef.Inventory
+                                    where item.MountedLocation == location &&
+                                          item.Is<ArmActuator>()
+                                    select item.GetComponent<ArmActuator>();
+
+
+
+                    //get max avaliable actuator
+                    ArmActuatorSlot max = mechdef.Chassis.Is<ArmActuatorSupport>(out var support)
+                        ? support.GetLimit(location)
+                        : ArmActuatorSlot.PartHand;
+
+
+                    foreach (var actuator in actuators)
+                    {
+                        // if more then 1 actuator occupy 1 slot
+                        if ((slots & actuator.Type) != 0)
+                            return false;
+
+                        //correcting max slot if actuator has limits
+                        if (max > actuator.MaxSlot)
+                            max = actuator.MaxSlot;
+
+                        //save actuator to slots
+                        slots = slots | actuator.Type;
+                    }
+
+                    if (Control.settings.ExtendHandLimit)
+                    {
+                        if (max == ArmActuatorSlot.PartHand)
+                            max = ArmActuatorSlot.Hand;
+
+                        if (max == ArmActuatorSlot.PartUpper)
+                            max = ArmActuatorSlot.Upper;
+
+                        if (max == ArmActuatorSlot.PartLower)
+                            max = ArmActuatorSlot.Lower;
+                    }
+
+                    // if not support hand/lower
+                    if (slots > max)
                         return false;
 
-                    //correcting max slot if actuator has limits
-                    if (max > actuator.MaxSlot)
-                        max = actuator.MaxSlot;
+                    //if not have shoulder
+                    if (!slots.HasFlag(ArmActuatorSlot.PartShoulder))
+                        return false;
 
-                    //save actuator to slots
-                    slots = slots | actuator.Type;
+                    //if not have upper
+                    if (!slots.HasFlag(ArmActuatorSlot.PartUpper))
+                        return false;
+
+                    //if have hand but not lower
+                    if (slots.HasFlag(ArmActuatorSlot.PartHand) && !slots.HasFlag(ArmActuatorSlot.PartLower))
+                        return false;
+
+                    return true;
                 }
 
-                if (Control.settings.ExtendHandLimit)
-                {
-                    if (max == ArmActuatorSlot.PartHand)
-                        max = ArmActuatorSlot.Hand;
-
-                    if (max == ArmActuatorSlot.PartUpper)
-                        max = ArmActuatorSlot.Upper;
-
-                    if (max == ArmActuatorSlot.PartLower)
-                        max = ArmActuatorSlot.Lower;
-                }
-                // if not support hand/lower
-                if (slots > max)
-                    return false;
-
-                //if not have shoulder
-                if (!slots.HasFlag(ArmActuatorSlot.PartShoulder))
-                    return false;
-
-                //if not have upper
-                if (!slots.HasFlag(ArmActuatorSlot.PartUpper))
-                    return false;
-
-                //if have hand but not lower
-                if (slots.HasFlag(ArmActuatorSlot.PartHand) && !slots.HasFlag(ArmActuatorSlot.PartLower))
-                    return false;
-
-                return true;
+                return check_location(ChassisLocations.LeftArm) && check_location(ChassisLocations.RightArm);
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError("Error in can be fielded", e);
             }
 
-            return check_location(ChassisLocations.LeftArm) && check_location(ChassisLocations.RightArm);
-
+            return false;
         }
 
         public static void FixCBTActuators(List<MechDef> mechdefs, SimGameState simgame)
@@ -452,7 +475,7 @@ namespace MechEngineer
         public static bool CanBeFieldedFF(MechDef mechdef)
         {
             if (mechdef.IsIgnoreFullActuators())
-                return CanBeFieldedFF(mechdef);
+                return CanBeFielded(mechdef);
 
             bool check_side(ChassisLocations location, ArmActuatorSlot limit)
             {
