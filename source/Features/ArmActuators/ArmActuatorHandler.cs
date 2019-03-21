@@ -463,6 +463,7 @@ namespace MechEngineer
                     var a = item.GetComponent<ArmActuator>();
                     if ((a.Type & total_slots) != 0)
                         return false;
+                    total_slots = total_slots | a.Type;
                 }
 
                 if (total_slots < limit)
