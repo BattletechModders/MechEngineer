@@ -10,8 +10,7 @@
 			}
 		},
         "Category" : [
-          {"CategoryID": "Cooling"},
-          {"CategoryID": "EnginePart"}
+          {"CategoryID": "Cooling"}
         ],
 		"Color": {
 			"UIColor": "DarkGray"

@@ -19,8 +19,7 @@
 			}
 		},
         "Category" : [
-            {"CategoryID": "Cooling"},
-            {"CategoryID": "EnginePart"}
+            {"CategoryID": "Cooling"}
         ]
     },
     "DissipationCapacity" : 0,

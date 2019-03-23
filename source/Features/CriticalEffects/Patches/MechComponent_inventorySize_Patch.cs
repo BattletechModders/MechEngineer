@@ -12,6 +12,11 @@ namespace MechEngineer
         {
             try
             {
+                if (__instance.mechComponentRef?.Def?.IsIgnoreDamage() ?? false)
+                {
+                    __result = 0;
+                    return;
+                }
                 __result = __instance.CriticalSlots();
             }
             catch (Exception e)
