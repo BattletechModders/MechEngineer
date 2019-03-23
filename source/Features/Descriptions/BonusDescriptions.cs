@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
@@ -124,14 +125,28 @@ namespace MechEngineer
         {
             internal BonusDescription(BonusDescriptionSettings settings, string[] values)
             {
-                Short = string.IsNullOrEmpty(settings.Short) ? null : string.Format(settings.Short, values);
-                Long = string.IsNullOrEmpty(settings.Long) ? null : string.Format(settings.Long, values);
-                Full = string.IsNullOrEmpty(settings.Full) ? null : string.Format(settings.Full, values);
+                Short = Process(settings.Short, values);
+                Long = Process(settings.Long, values);
+                Full = Process(settings.Full, values);
             }
 
             public string Short { get; }
             public string Long { get; }
             public string Full { get; }
+
+            private string Process(string format, string[] values)
+            {
+                try
+                {
+                    return string.IsNullOrEmpty(format) ? null : string.Format(format, values);
+                }
+                catch (Exception e)
+                {
+                    var message = $"Can't process '{format}'";
+                    Control.mod.Logger.LogError(message, e);
+                    return message;
+                }
+            }
         }
     }
 }
