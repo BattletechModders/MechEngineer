@@ -109,10 +109,18 @@ namespace MechEngineer
 
                 if (Control.settings.ForceFullDefaultActuators && !mech.IsIgnoreFullActuators())
                 {
-                    add_default(location, ArmActuatorSlot.PartLower);
-                    add_default(location, ArmActuatorSlot.PartHand);
+                    var limit = mech.Chassis.Is<ArmActuatorSupport>(out var s)
+                        ? s.GetLimit(location)
+                        : ArmActuatorSlot.Hand;
+
+                    if(limit.HasFlag(ArmActuatorSlot.Lower))
+                        add_default(location, ArmActuatorSlot.PartLower);
+                    if (limit.HasFlag(ArmActuatorSlot.Hand))
+                        add_default(location, ArmActuatorSlot.PartHand);
                 }
             }
+
+
 
             clear_side(ChassisLocations.LeftArm);
             clear_side(ChassisLocations.RightArm);
@@ -454,9 +462,9 @@ namespace MechEngineer
                 }
 
                 if (total_slots < limit)
-                    errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} dont have {limit - total_slots} actuator"));
+                    errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} dont have {(ArmActuatorSlot)(limit - total_slots):G} actuator"));
                 else if (total_slots > limit)
-                    errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} dont support {total_slots - limit} actuator"));
+                    errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} dont support {(ArmActuatorSlot)(total_slots - limit):G} actuator"));
 
             }
 
