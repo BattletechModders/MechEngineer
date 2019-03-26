@@ -29,7 +29,12 @@ namespace MechEngineer
         public string RightDefaultShoulder = null;
         public string LeftDefaultUpper = null;
         public string RightDefaultUpper = null;
+        public string LeftDefaultLower = null;
+        public string RightDefaultLower = null;
+        public string LeftDefaultHand = null;
+        public string RightDefaultHand = null;
 
+        public bool IgnoreFullActuators = false;
 
         public ArmActuatorSlot GetLimit(ChassisLocations location)
         {
@@ -55,6 +60,24 @@ namespace MechEngineer
                 return LeftDefaultUpper;
             if (location == ChassisLocations.RightArm)
                 return RightDefaultUpper;
+            return null;
+        }
+
+        public string GetLower(ChassisLocations location)
+        {
+            if (location == ChassisLocations.LeftArm)
+                return LeftDefaultLower;
+            if (location == ChassisLocations.RightArm)
+                return RightDefaultLower;
+            return null;
+        }
+
+        public string GetHand(ChassisLocations location)
+        {
+            if (location == ChassisLocations.LeftArm)
+                return LeftDefaultHand;
+            if (location == ChassisLocations.RightArm)
+                return RightDefaultHand;
             return null;
         }
     }

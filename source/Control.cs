@@ -29,20 +29,20 @@ namespace MechEngineer
                 mod.Logger.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
                 mod.Logger.Log("settings loaded");
                 mod.Logger.LogDebug("debugging enabled");
-                
+
                 mod.Logger.LogDebug("patching game");
 
                 //HarmonyInstance.DEBUG = true;
                 var harmony = HarmonyInstance.Create(mod.Name);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
-                
+
                 mod.Logger.LogDebug("setting up CustomComponents");
                 Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
                 Registry.RegisterSimpleCustomComponents(typeof(Weights));
                 Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
                 Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
-                
+
                 Registry.RegisterPreProcessor(CockpitHandler.Shared);
                 Registry.RegisterPreProcessor(GyroHandler.Shared);
                 Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
@@ -51,9 +51,21 @@ namespace MechEngineer
                 if (settings.UseArmActuators)
                 {
                     Validator.RegisterClearInventory(ArmActuatorHandler.ClearInventory);
-                    Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMech, ArmActuatorHandler.CanBeFielded);
 
-                    AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuators);
+                    if (settings.ForceFullDefaultActuators)
+                    {
+                        Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMechFF,
+                            ArmActuatorHandler.CanBeFieldedFF);
+
+                        AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuatorsFF);
+                    }
+                    else
+                    {
+                        Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMech,
+                            ArmActuatorHandler.CanBeFielded);
+
+                        AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuators);
+                    }
                 }
 
                 if (settings.DynamicSlotsValidateDropEnabled)
@@ -65,14 +77,14 @@ namespace MechEngineer
 
                 //Validator.RegisterMechValidator(ArmActuatorHandler.Shared.CCValidation.ValidateMech, ArmActuatorHandler.Shared.CCValidation.ValidateMechCanBeFielded);
                 //Validator.RegisterDropValidator(check: ArmActuatorHandler.Shared.CCValidation.ValidateDrop);
-                
+
                 mod.Logger.LogDebug("setting up mechdef auto fixers");
 
                 AutoFixer.Shared.RegisterMechFixer(MEAutoFixer.Shared.AutoFix);
 
                 mod.Logger.LogDebug("added backwards compatibility assembly resolver");
                 AllowAnyAssemblyVersionReference();
-                
+
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
                 mod.Logger.Log("started");
@@ -98,7 +110,8 @@ namespace MechEngineer
             }
         }
 
-        private static string GetInformationalVersion(this Assembly assembly) {
+        private static string GetInformationalVersion(this Assembly assembly)
+        {
             var attributes = assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false);
 
             if (attributes.Length == 0)
