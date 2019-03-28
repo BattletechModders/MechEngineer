@@ -38,8 +38,7 @@ namespace MechEngineer
 
         public void ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
         {
-            var criticalEffects = mechComponent.componentDef?.GetComponent<CriticalEffects>();
-            if (criticalEffects == null)
+            if (mechComponent.parent == null)
             {
                 return;
             }
@@ -49,16 +48,16 @@ namespace MechEngineer
                 return;
             }
 
-            if (!(mechComponent.parent is Mech mech))
+            var criticalEffects = mechComponent.componentDef?.GetComponent<CriticalEffects>();
+            if (criticalEffects == null)
             {
                 return;
             }
 
+            var actor = mechComponent.parent;
+
             damageLevel = ComponentDamageLevel.Penalized;
 
-            var location = mechComponent.mechComponentRef.MountedLocation;
-            var mechLocationDestroyed = mech.IsLocationDestroyed(location);
-            
             int critsPrev;
             int critsNext;
             int critsAdded;
@@ -68,7 +67,8 @@ namespace MechEngineer
 
                 var slots = mechComponent.CriticalSlots(); // critical slots left
 
-                var critsHit = mechLocationDestroyed ? slots : Mathf.Min(1, slots);
+                var locationDestroyed = actor.StructureForLocation(mechComponent.Location) <= 0f;
+                var critsHit = locationDestroyed ? slots : Mathf.Min(1, slots);
 
                 critsNext = Mathf.Min(critsMax, critsPrev + critsHit);
                 if (critsNext >= critsMax)
@@ -103,7 +103,7 @@ namespace MechEngineer
                 {
                     var scopedId = mechComponent.ScopedId(criticalEffects.LinkedStatisticName, true);
                 
-                    foreach (var mc in mech.allComponents)
+                    foreach (var mc in actor.allComponents)
                     {
                         var r = mc.mechComponentRef;
                         if (r.DamageLevel == ComponentDamageLevel.Destroyed)
@@ -166,7 +166,7 @@ namespace MechEngineer
                 }
                 
                 // collect disabled effects, probably easier to cache these in a mech statistic
-                var disabledEffectIds = DisabledScopedIdsOnMech(mech);
+                var disabledEffectIds = DisabledScopedIdsOnActor(actor);
                 //Control.mod.Logger.LogDebug($"disabledEffectIds={string.Join(",", disabledEffectIds.ToArray())}");
                 foreach (var effectId in effectIds)
                 {
@@ -185,7 +185,7 @@ namespace MechEngineer
             {
                 if (criticalEffects.DeathMethod != DeathMethod.NOT_SET)
                 {
-                    mech.FlagForDeath(
+                    actor.FlagForDeath(
                         $"{mechComponent.UIName} DESTROYED",
                         criticalEffects.DeathMethod,
                         DamageType.Combat,
@@ -207,11 +207,11 @@ namespace MechEngineer
                 damageLevel);
         }
 
-        private static HashSet<string> DisabledScopedIdsOnMech(Mech mech)
+        private static HashSet<string> DisabledScopedIdsOnActor(AbstractActor actor)
         {
             var disabledEffectIds = new HashSet<string>();
             
-            foreach (var mc in mech.allComponents)
+            foreach (var mc in actor.allComponents)
             {
                 if (mc.IsFunctional)
                 {

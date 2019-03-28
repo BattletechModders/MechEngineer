@@ -31,13 +31,6 @@ namespace MechEngineer
                 {
                     result.Weights.Combine(weightSavings);
                 }
-                
-                if (!componentDef.IsEnginePart())
-                {
-                    continue;
-                }
-
-                result.Parts.Add(componentRef);
 
                 if (componentDef.Is<EngineCoreDef>(out var coreDef))
                 {
@@ -58,7 +51,6 @@ namespace MechEngineer
             internal CoolingDef CoolingDef;
             internal EngineHeatBlockDef HeatBlockDef;
             internal EngineCoreDef CoreDef;
-            internal List<MechComponentRef> Parts = new List<MechComponentRef>();
             internal Weights Weights = new Weights();
             internal List<MechComponentRef> HeatSinks = new List<MechComponentRef>();
         }
