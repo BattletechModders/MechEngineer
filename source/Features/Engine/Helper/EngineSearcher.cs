@@ -13,18 +13,15 @@ namespace MechEngineer
             foreach (var componentRef in componentRefs)
             {
                 var componentDef = componentRef.Def;
-
-                var engineHeatSinkDef = componentDef.GetComponent<EngineHeatSinkDef>();
-                if (engineHeatSinkDef != null)
+                
+                if (componentDef.Is<EngineHeatSinkDef>())
                 {
                     result.HeatSinks.Add(componentRef);
-                    continue;
                 }
 
                 if (componentDef.Is<CoolingDef>(out var coolingDef))
                 {
                     result.CoolingDef = coolingDef;
-                    continue;
                 }
 
                 if (componentDef.Is<Weights>(out var weightSavings))
