@@ -15,7 +15,7 @@
         "Purchasable" : false,
         "Manufacturer" : "Generic",
         "Model" : "Standard",
-        "UIName" : "Arm Hand",
+        "UIName" : "OBSOLETE Arm Hand",
         "Id" : "emod_arm_hand",
         "Name" : "Arm Hand Actuator",
         "Details" : "An Actuator is a component within a BattleMech's limbs, composed of the joint, myomer bundles, and motor control units.",
@@ -61,7 +61,7 @@
     ],
     "ComponentTags" : {
         "items" : [
-            "component_type_stock"
+            "BLACKLISTED"
         ],
         "tagSetSourceFile" : ""
     }
