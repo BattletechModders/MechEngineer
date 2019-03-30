@@ -196,8 +196,6 @@ namespace MechEngineer
                         errors[MechValidationType.InvalidInventorySlots].Add(new Text($"{location} missing Lower Arm"));
                 }
 
-                MechComponent component;
-
                 check_location(ChassisLocations.LeftArm);
                 check_location(ChassisLocations.RightArm);
             }

@@ -7,7 +7,7 @@ using HBS.Scripting.Constants;
 namespace MechEngineer
 {
     [CustomComponent("CriticalEffects")]
-    public class CriticalEffects : SimpleCustomComponent, IAfterLoad
+    public class CriticalEffects : SimpleCustomComponent, IAfterLoad, ICheckIsDead
     {
         public string[][] PenalizedEffectIDs { get; set; } = new string[0][];
         public string[] OnDestroyedEffectIDs { get; set; } = new string[0];
@@ -74,6 +74,30 @@ namespace MechEngineer
                 Control.settings.BonusDescriptionsElementTemplate,
                 Control.settings.CriticalEffectsDescriptionTemplate
             );
+        }
+
+        public bool IsMechDestroyed(MechComponentRef item, Mech mech)
+        {
+            if (DeathMethod == DeathMethod.NOT_SET)
+                return false;
+
+            return item.DamageLevel == ComponentDamageLevel.Destroyed;
+        }
+
+        public bool IsVechicleDestroyed(VehicleComponentRef item, Vehicle mech)
+        {
+            if (DeathMethod == DeathMethod.NOT_SET)
+                return false;
+
+            return item.DamageLevel == ComponentDamageLevel.Destroyed;
+        }
+
+        public bool IsTurretDestroyed(TurretComponentRef item, Turret mech)
+        {
+            if (DeathMethod == DeathMethod.NOT_SET)
+                return false;
+
+            return item.DamageLevel == ComponentDamageLevel.Destroyed;
         }
     }
 }
