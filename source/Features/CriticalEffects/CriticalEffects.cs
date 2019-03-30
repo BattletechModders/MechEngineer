@@ -76,28 +76,14 @@ namespace MechEngineer
             );
         }
 
-        public bool IsMechDestroyed(MechComponentRef item, Mech mech)
+        public bool IsActorDestroyed(MechComponent component, AbstractActor actor)
         {
             if (DeathMethod == DeathMethod.NOT_SET)
+            {
                 return false;
+            }
 
-            return item.DamageLevel == ComponentDamageLevel.Destroyed;
-        }
-
-        public bool IsVechicleDestroyed(VehicleComponentRef item, Vehicle mech)
-        {
-            if (DeathMethod == DeathMethod.NOT_SET)
-                return false;
-
-            return item.DamageLevel == ComponentDamageLevel.Destroyed;
-        }
-
-        public bool IsTurretDestroyed(TurretComponentRef item, Turret mech)
-        {
-            if (DeathMethod == DeathMethod.NOT_SET)
-                return false;
-
-            return item.DamageLevel == ComponentDamageLevel.Destroyed;
+            return component.DamageLevel == ComponentDamageLevel.Destroyed;
         }
     }
 }
