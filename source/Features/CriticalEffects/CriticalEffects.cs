@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
-using HBS.Scripting.Constants;
 
 namespace MechEngineer
 {
     [CustomComponent("CriticalEffects")]
-    public class CriticalEffects : SimpleCustomComponent, IAfterLoad, ICheckIsDead
+    public class CriticalEffects : SimpleCustomComponent, IAfterLoad //, ICheckIsDead
     {
         public string[][] PenalizedEffectIDs { get; set; } = new string[0][];
         public string[] OnDestroyedEffectIDs { get; set; } = new string[0];
@@ -76,14 +75,15 @@ namespace MechEngineer
             );
         }
 
-        public bool IsActorDestroyed(MechComponent component, AbstractActor actor)
-        {
-            if (DeathMethod == DeathMethod.NOT_SET)
-            {
-                return false;
-            }
+        // TODO should not be necessary as actor IsDead should already return true
+        //public bool IsActorDestroyed(MechComponent component, AbstractActor actor)
+        //{
+        //    if (DeathMethod == DeathMethod.NOT_SET)
+        //    {
+        //        return false;
+        //    }
 
-            return component.DamageLevel == ComponentDamageLevel.Destroyed;
-        }
+        //    return component.DamageLevel == ComponentDamageLevel.Destroyed;
+        //}
     }
 }
