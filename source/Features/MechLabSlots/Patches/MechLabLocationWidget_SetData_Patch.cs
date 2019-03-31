@@ -5,12 +5,21 @@ using BattleTech;
 using BattleTech.UI;
 using Harmony;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), "SetData")]
     public static class MechLabLocationWidget_SetData_Patch
     {
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            return instructions.MethodReplacer(
+                AccessTools.Method(typeof(Transform), nameof(Transform.SetParent), new []{typeof(Transform), typeof(bool)}),
+                AccessTools.Method(typeof(MechConfiguration), nameof(MechConfiguration.SetParent))
+            );
+        }
+
         public static void Postfix(MechLabLocationWidget __instance, int ___maxSlots, LocationLoadoutDef ___loadout)
         {
             try
@@ -21,14 +30,19 @@ namespace MechEngineer
                     return;
                 }
 
-                var widgetLayout = new WidgetLayout(__instance, ___loadout.Location);
+                var widgetLayout = new WidgetLayout(__instance);
                 if (widgetLayout.layout_slots == null)
                 {
                     return;
                 }
 
+                if (__instance == (__instance.parentDropTarget as MechLabPanel).centerTorsoWidget)
+                {
+                    ___maxSlots -= Control.settings.MechLabGeneralSlots;
+                }
+
                 ModifySlotCount(widgetLayout, ___maxSlots);
-                AddFillersToSlots(widgetLayout);
+                AddFillersToSlots(widgetLayout, ___loadout.Location);
             }
             catch (Exception e)
             {
@@ -36,7 +50,7 @@ namespace MechEngineer
             }
         }
 
-        private static void ModifySlotCount(WidgetLayout layout, int maxSlots)
+        internal static void ModifySlotCount(WidgetLayout layout, int maxSlots)
         {
             var slots = layout.slots;
             var changedSlotCount = maxSlots - slots.Count;
@@ -66,15 +80,21 @@ namespace MechEngineer
                 slots.RemoveAt(slots.Count - 1);
                 UnityEngine.Object.Destroy(slot.gameObject);
             }
-
-            layout.layout_slots.gameObject.EnableLayout();
-            layout.widget.gameObject.EnableLayout();
         }
 
         internal static Dictionary<ChassisLocations, List<Filler>> Fillers = new Dictionary<ChassisLocations, List<Filler>>();
 
-        private static void AddFillersToSlots(WidgetLayout layout)
+        private static void AddFillersToSlots(WidgetLayout layout, ChassisLocations location)
         {
+            // dispose of all fillers
+            if (Fillers.TryGetValue(location, out var existing))
+            {
+                foreach (var old in existing)
+                {
+                    old.Dispose();
+                }
+            }
+
             var fillers = new List<Filler>();
 
             foreach (var slot in layout.slots)
@@ -84,10 +104,10 @@ namespace MechEngineer
                 fillers.Add(filler);
             }
 
-            Fillers[layout.location] = fillers;
+            Fillers[location] = fillers;
         }
 
-        internal class Filler
+        internal class Filler : IDisposable
         {
             private readonly GameObject layout;
             private readonly MechLabItemSlotElement element;
@@ -141,6 +161,12 @@ namespace MechEngineer
                 layout.SetActive(false);
             }
 
+            public void Dispose()
+            {
+                UnityGameInstance.BattleTechGame.DataManager
+                    .PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, element.gameObject);
+            }
+
             internal static Filler CreateFromSlot(GameObject slot)
             {
                 return new Filler(slot);
@@ -170,26 +196,33 @@ namespace MechEngineer
             }
         }
 
-        private class WidgetLayout
+        internal class WidgetLayout
         {
-            internal WidgetLayout(MechLabLocationWidget widget, ChassisLocations location)
+            internal WidgetLayout(MechLabLocationWidget widget)
             {
-                this.location = location;
                 this.widget = widget;
                 layout_slots = widget.transform.GetChild("layout_slots");
                 if (layout_slots == null)
                 {
                     return;
                 }
+                
+                layout_slottedComponents = layout_slots.GetChild("layout_slottedComponents");
+
                 slots = layout_slots.GetChildren()
                     .Where(x => x.name.StartsWith("slot"))
                     .OrderByDescending(x => x.localPosition.y)
                     .ToList();
             }
-
-            internal ChassisLocations location { get; }
+            
             internal MechLabLocationWidget widget { get; }
+
             internal Transform layout_slots { get; }
+            internal GridLayoutGroup layout_slots_glg => layout_slots.GetComponent<GridLayoutGroup>();
+
+            internal Transform layout_slottedComponents { get; }
+            internal VerticalLayoutGroup layout_slottedComponents_vlg => layout_slottedComponents.GetComponent<VerticalLayoutGroup>();
+
             internal List<Transform> slots { get; }
         }
     }

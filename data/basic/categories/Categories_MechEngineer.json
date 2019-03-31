@@ -107,6 +107,8 @@
             "MinEquiped" : 1,
             "AutoReplace" : true,
             "DefaultCustoms" : {
+                "MechConfiguration" : {
+                },
                 "InventorySorter" : {
                     "SortKey" : "CzOrder0"
                 },
@@ -131,6 +133,8 @@
             "MinEquiped" : 1,
             "AutoReplace" : true,
             "DefaultCustoms" : {
+                "MechConfiguration" : {
+                },
                 "Color" : {
                     "UIColor" : "OrangeHalf"
                 },
@@ -155,6 +159,8 @@
             "MinEquiped" : 1,
             "AutoReplace" : true,
             "DefaultCustoms" : {
+                "MechConfiguration" : {
+                },
                 "InventorySorter" : {
                     "SortKey" : "CzOrder2"
                 },

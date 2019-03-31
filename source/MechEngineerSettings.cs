@@ -40,6 +40,10 @@ namespace MechEngineer
 
         public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
 
+        public bool MechLabGeneralWidgetEnabled = true;
+        public int MechLabGeneralSlots = 3;
+        public int MechLabArmTopPadding = 120;
+
         #endregion
 
         #region bonus descriptions

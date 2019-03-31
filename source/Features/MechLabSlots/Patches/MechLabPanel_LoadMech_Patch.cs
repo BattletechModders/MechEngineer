@@ -1,6 +1,6 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 using Harmony;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,28 +16,6 @@ namespace MechEngineer
                 var mechLabPanel = __instance;
                 var Representation = mechLabPanel.transform.GetChild("Representation");
                 var OBJ_mech = Representation.GetChild("OBJ_mech");
-
-                void ProcessChild(GameObject go)
-                {
-                    go.EnableLayout();
-                    var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
-                    component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                    component.enabled = true;
-                }
-                ProcessChild(OBJ_mech.GetChild("RightArm").gameObject);
-                ProcessChild(OBJ_mech.GetChild("RightTorsoLeg").gameObject);
-                ProcessChild(OBJ_mech.GetChild("Centerline").gameObject);
-                ProcessChild(OBJ_mech.GetChild("LeftTorsoLeg").gameObject);
-                ProcessChild(OBJ_mech.GetChild("LeftArm").gameObject);
-
-                OBJ_mech.gameObject.EnableLayout();
-                {
-                    var go = OBJ_mech.gameObject;
-                    var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
-                    component.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-                    component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                    component.enabled = true;
-                }
 
                 var mechRectTransform = OBJ_mech.GetComponent<RectTransform>();
                 // Unity (?) does not handle layout propagation properly, so we need to force several layout passes here
@@ -66,50 +44,6 @@ namespace MechEngineer
                     mechRectTransform.localScale = new Vector3(scale, scale, 1);
                 
                     Control.mod.Logger.LogDebug($"AutoZoom scale={scale} mechSize={mechSize} targetSize={targetSize}");
-                }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-
-            try
-            {
-                var mechLabPanel = __instance;
-                //GUILogUtils.LogHierarchy(mechLabPanel.transform);
-
-                //mechLabPanel.transform.localScale = new Vector3(0.5f, 0.5f);
-                var Representation = mechLabPanel.transform.GetChild("Representation");
-                var OBJ_mech = Representation.GetChild("OBJ_mech");
-
-                var Centerline = OBJ_mech.GetChild("Centerline");
-                {
-                    var layout_details = Centerline.GetChild("layout_details");
-                    if (layout_details == null)
-                    {
-                        layout_details = Representation.GetChild("layout_details");
-                    }
-
-                    if (layout_details != null)
-                    {
-                        var OBJ_value = Representation.GetChild("OBJ_value");
-                        var LeftArmWidget = OBJ_mech.GetChild("LeftArm").GetChild("uixPrfPanl_ML_location-Widget-MANAGED");
-
-                        var v = new Vector3[4];
-                        LeftArmWidget.Rect().GetWorldCorners(v);
-                        var armtop = v[1].y;
-                        var armleft = v[2].x;
-                        var armright = v[3].x;
-                        var armcenter_x = armleft + (armleft - armright) / 2;
-
-                        layout_details.SetParent(Representation, true);
-                        layout_details.Rect().pivot = new Vector2(1.0f, 1.0f);
-                        layout_details.position = new Vector3(
-                            armcenter_x,
-                            armtop + layout_details.Rect().sizeDelta.y + 10,
-                            OBJ_value.position.z
-                        );
-                    }
                 }
             }
             catch (Exception e)

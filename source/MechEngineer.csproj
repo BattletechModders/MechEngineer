@@ -134,8 +134,14 @@
     <Compile Include="Features\CriticalEffects\DamageIgnoreHelper.cs" />
     <Compile Include="Features\CriticalEffects\Patches\Mech_OnLocationDestroyed_Patch.cs" />
     <Compile Include="Features\MechLabSlots\GUILogUtils.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_OnAddItem_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_OnDrop_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_SetData_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_ShowHighlightFrame_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_InitWidgets_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_LoadMech_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\MechConfiguration.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_RefreshDropHighlights_Patch.cs" />
     <Compile Include="Features\MoveMultiplier\Patches\Mech_InitEffectStats_Patch4.cs" />
     <Compile Include="Features\MoveMultiplier\Patches\Mech_MoveMultiplier_Patch.cs" />
     <Compile Include="Helper\MechExtensions.cs" />

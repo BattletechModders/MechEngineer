@@ -40,9 +40,11 @@ namespace MechEngineer
                     var widget = mechLab.GetLocationWidget((ArmorLocation)location); // by chance armorlocation = chassislocation for main locations
                     var adapter = new MechLabLocationWidgetAdapter(widget);
                     var used = adapter.usedSlots;
-                    for (var i = 0; i < adapter.maxSlots; i++)
+                    var start = location == ChassisLocations.CenterTorso ? Control.settings.MechLabGeneralSlots : 0;
+                    for (var i = start; i < adapter.maxSlots; i++)
                     {
-                        var filler = fillers[i];
+                        var fillerIndex = location == ChassisLocations.CenterTorso ? i - Control.settings.MechLabGeneralSlots : i;
+                        var filler = fillers[fillerIndex];
                         if (i >= used && reservedSlots.MoveNext())
                         {
                             var reservedSlot = reservedSlots.Current;
