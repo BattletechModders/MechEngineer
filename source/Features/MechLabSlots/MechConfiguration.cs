@@ -35,7 +35,7 @@ namespace MechEngineer
 
         public static bool IsMechConfiguration(MechComponentDef def)
         {
-            return def.Is<MechConfiguration>();
+            return Control.settings.MechLabGeneralWidgetEnabled && def.Is<MechConfiguration>();
             //return def.Is<Flags>(out var f) && f.IsSet("mech_configuration");
         }
     }
