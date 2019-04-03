@@ -49,7 +49,6 @@ namespace MechEngineer
 
                 {
                     var go = OBJ_mech.gameObject;
-                    Control.mod.Logger.LogError(OBJ_mech.name);
                     go.EnableLayout();
                     var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
                     component.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
