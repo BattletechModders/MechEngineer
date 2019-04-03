@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using BattleTech.Data;
 using BattleTech.UI;
 using Harmony;
 using UnityEngine;
@@ -99,9 +100,7 @@ namespace MechEngineer
 
             foreach (var slot in layout.slots)
             {
-                var filler = Filler.CreateFromSlot(slot.gameObject);
-                filler.Hide();
-                fillers.Add(filler);
+                fillers.Add(new Filler(slot));
             }
 
             Fillers[location] = fillers;
@@ -109,7 +108,7 @@ namespace MechEngineer
 
         internal class Filler : IDisposable
         {
-            private readonly GameObject layout;
+            private readonly GameObject gameObject;
             private readonly MechLabItemSlotElement element;
 
             internal void Show(DynamicSlots dynamicSlots)
@@ -152,48 +151,41 @@ namespace MechEngineer
 
                 adapter.icon.gameObject.SetActive(dynamicSlots.ShowIcon);
                 
-                layout.SetActive(true);
+                gameObject.SetActive(true);
                 element.SetDraggable(false);
             }
 
             internal void Hide()
             {
-                layout.SetActive(false);
+                gameObject.SetActive(false);
             }
 
             public void Dispose()
             {
-                UnityGameInstance.BattleTechGame.DataManager
-                    .PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, element.gameObject);
+                DataManager.PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, element.GameObject);
             }
 
-            internal static Filler CreateFromSlot(GameObject slot)
+            internal Filler(Transform parent)
             {
-                return new Filler(slot);
-            }
+                gameObject = DataManager.PooledInstantiate(
+                    MechLabPanel.MECHCOMPONENT_ITEM_PREFAB,
+                    BattleTechResourceType.UIModulePrefabs,
+                    null, null);
 
-            private Filler(GameObject slot)
-            {
-                element = slot.GetComponentInChildren<MechLabItemSlotElement>();
-                if (element != null)
-                {
-                    layout = element.GameObject;
-                    return;
-                }
-
-                layout = UnityGameInstance.BattleTechGame.DataManager.PooledInstantiate(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, BattleTechResourceType.UIModulePrefabs, null, null);
-                element = layout.GetComponent<MechLabItemSlotElement>();
+                element = gameObject.GetComponent<MechLabItemSlotElement>();
                 element.AllowDrag = false;
                 {
-                    var rect = layout.GetComponent<RectTransform>();
+                    var rect = gameObject.GetComponent<RectTransform>();
                     rect.pivot = new Vector2(0, 1);
                     rect.anchorMin = new Vector2(0, 0);
                     rect.anchorMax = new Vector2(1, 1);
                     rect.anchoredPosition = Vector2.zero;
                 }
-                element.transform.SetParent(slot.transform, false);
+                element.transform.SetParent(parent, false);
                 Hide();
             }
+
+            private static DataManager DataManager => UnityGameInstance.BattleTechGame.DataManager;
         }
 
         internal class WidgetLayout
