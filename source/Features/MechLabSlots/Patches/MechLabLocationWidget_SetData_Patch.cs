@@ -162,7 +162,13 @@ namespace MechEngineer
 
             public void Dispose()
             {
-                DataManager.PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, element.GameObject);
+                // could be null if the pool was cleared and the GameObjects were already destroyed
+                // can happen if DataManager.Clear was called
+                if (gameObject == null)
+                {
+                    return;
+                }
+                DataManager.PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, gameObject);
             }
 
             internal Filler(Transform parent)
