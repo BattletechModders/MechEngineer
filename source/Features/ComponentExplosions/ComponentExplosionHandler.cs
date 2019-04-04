@@ -27,10 +27,8 @@ namespace MechEngineer
                 return;
             }
 
-            if (!(component.parent is Mech mech))
-            {
-                return;
-            }
+            var actor = component.parent;
+            var mech = actor as Mech;
 
             var ammoCount = 0;
             if (component is AmmunitionBox box)
@@ -44,21 +42,24 @@ namespace MechEngineer
             }
 
             
-            var attackSequence = mech.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
+            var attackSequence = actor.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
 
             var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
             //Control.mod.Logger.LogDebug($"heatDamage={heatDamage}");
             if (!Mathf.Approximately(heatDamage, 0))
             {
-                mech.AddExternalHeat("AMMO EXPLOSION HEAT", (int)heatDamage);
+                actor.AddExternalHeat("AMMO EXPLOSION HEAT", (int)heatDamage);
                 attackSequence?.FlagAttackDidHeatDamage();
             }
 
-            var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
-            //Control.mod.Logger.LogDebug($"stabilityDamage={stabilityDamage}");
-            if (!Mathf.Approximately(stabilityDamage, 0))
+            if (mech != null)
             {
-                mech.AddAbsoluteInstability(stabilityDamage, StabilityChangeSource.Effect, hitInfo.targetId);
+                var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
+                //Control.mod.Logger.LogDebug($"stabilityDamage={stabilityDamage}");
+                if (!Mathf.Approximately(stabilityDamage, 0))
+                {
+                    mech.AddAbsoluteInstability(stabilityDamage, StabilityChangeSource.Effect, hitInfo.targetId);
+                }
             }
 
             var explosionDamage = exp.ExplosionDamage + ammoCount * exp.ExplosionDamagePerAmmo;
@@ -68,21 +69,36 @@ namespace MechEngineer
             {
                 return;
             }
-            
+
+            if (mech == null)
+            {
+                // for vehicles and turrets we play dead, idea from AIM
+                actor.FlagForDeath(
+                    "Ammo Explosion",
+                    DeathMethod.AmmoExplosion,
+                    DamageType.Weapon,
+                    1,
+                    hitInfo.stackItemUID,
+                    hitInfo.attackerId,
+                    false
+                );
+                return;
+            }
+
             Mech_DamageLocation_Patch.IsInternalExplosion = true;
             try
             {
                 attackSequence?.FlagAttackCausedAmmoExplosion();
 
-                mech.PublishFloatieMessage($"{component.Name} EXPLOSION");
-                if (mech.Combat.Constants.PilotingConstants.InjuryFromAmmoExplosion)
+                actor.PublishFloatieMessage($"{component.Name} EXPLOSION");
+                if (actor.Combat.Constants.PilotingConstants.InjuryFromAmmoExplosion)
                 {
-                    var pilot = mech.GetPilot();
+                    var pilot = actor.GetPilot();
                     pilot?.SetNeedsInjury(InjuryReason.AmmoExplosion);
                 }
-            
+
                 // this is very hacky as this is an invalid weapon
-                var weapon = new Weapon(mech, mech.Combat, component.mechComponentRef, component.uid);
+                var weapon = new Weapon(mech, actor.Combat, component.mechComponentRef, component.uid);
 
                 // bool DamageLocation(int originalHitLoc, WeaponHitInfo hitInfo, ArmorLocation aLoc, Weapon weapon, float totalDamage, int hitIndex, AttackImpactQuality impactQuality)
                 var args = new object[] {component.Location, hitInfo, (ArmorLocation) component.Location, weapon, explosionDamage, 0, AttackImpactQuality.Solid, DamageType.AmmoExplosion};
