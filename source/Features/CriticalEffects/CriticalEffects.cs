@@ -6,7 +6,7 @@ using CustomComponents;
 namespace MechEngineer
 {
     [CustomComponent("CriticalEffects")]
-    public class CriticalEffects : SimpleCustomComponent, IAfterLoad //, ICheckIsDead
+    public class CriticalEffects : SimpleCustomComponent, IAfterLoad, IIsDestroyed
     {
         public string[][] PenalizedEffectIDs { get; set; } = new string[0][];
         public string[] OnDestroyedEffectIDs { get; set; } = new string[0];
@@ -75,15 +75,15 @@ namespace MechEngineer
             );
         }
 
-        // TODO should not be necessary as actor IsDead should already return true
-        //public bool IsActorDestroyed(MechComponent component, AbstractActor actor)
-        //{
-        //    if (DeathMethod == DeathMethod.NOT_SET)
-        //    {
-        //        return false;
-        //    }
+        public bool IsMechDestroyed(MechComponentRef component, MechDef mech)
+        {
+            if (DeathMethod == DeathMethod.NOT_SET)
+            {
+                return false;
+            }
 
-        //    return component.DamageLevel == ComponentDamageLevel.Destroyed;
-        //}
+            return component.DamageLevel == ComponentDamageLevel.Destroyed;
+        }
     }
+
 }
