@@ -56,18 +56,7 @@ namespace MechEngineer
 
         #region logging
 
-        public class LoggerLogLevel
-        {
-            public string Name;
-            public LogLevel Level;
-        }
-        public LoggerLogLevel[] LogLevels = {
-            new LoggerLogLevel
-            {
-                Name = "MechEngineer",
-                Level = LogLevel.Debug
-            }
-        };
+        public LogSettings LogSettings = new LogSettings();
 
         #endregion
 

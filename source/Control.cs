@@ -24,7 +24,7 @@ namespace MechEngineer
                 mod.LoadSettings(settings);
                 mod.SaveSettings(settings, mod.SettingsLastPath);
 
-                LogManager.Setup(mod.LogPath, settings.LogLevels.ToDictionary(x => x.Name, x => x.Level));
+                mod.SetupLogging(settings.LogSettings);
 
                 mod.Logger.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
                 mod.Logger.Log("settings loaded");

@@ -30,7 +30,8 @@
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>default</LangVersion>
@@ -156,7 +157,6 @@
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_InitEffectStats_Patch2.cs" />
     <Compile Include="Features\Descriptions\IAdjustTooltip.cs" />
     <Compile Include="Misc\CCValidationAdapter.cs" />
-    <Compile Include="Misc\LogManager.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
     <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch1.cs" />
