@@ -91,7 +91,8 @@
     <Compile Include="Features\BTLoadFix\BTLoadUtils.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffectsHandler.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffectsMechComponentExtensions.cs" />
-    <Compile Include="Features\CriticalEffects\Patches\CombatHUDFloatieStack_AddFloatie_Patch.cs" />
+    <Compile Include="Features\CompressFloatieMessages\Patches\CombatHUDFloatieStack_AddFloatie_Patch.cs" />
+    <Compile Include="Features\CompressFloatieMessages\FloatieHandler.cs" />
     <Compile Include="Features\CriticalEffects\Patches\Mech_CheckForCrit_Patch.cs" />
     <Compile Include="Features\CriticalEffects\MessagesHandler.cs" />
     <Compile Include="Features\CriticalEffects\Patches\MechComponent_inventorySize_Patch.cs" />
@@ -220,6 +221,7 @@
     <None Include="..\Settings.json" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

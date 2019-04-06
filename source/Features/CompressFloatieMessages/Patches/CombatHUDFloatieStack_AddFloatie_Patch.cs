@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+using System.Diagnostics;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
@@ -19,7 +18,7 @@ namespace MechEngineer
         {
             try
             {
-                if (MessagesHandler.CompressFloatieMessages(message, ___msgQueue))
+                if (FloatieHandler.CompressFloatieMessages(message, ___msgQueue))
                 {
                     return false;
                 }
