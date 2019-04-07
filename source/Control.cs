@@ -82,9 +82,6 @@ namespace MechEngineer
 
                 AutoFixer.Shared.RegisterMechFixer(MEAutoFixer.Shared.AutoFix);
 
-                mod.Logger.LogDebug("added backwards compatibility assembly resolver");
-                AllowAnyAssemblyVersionReference();
-
                 // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
                 // or also under yourmod/log.txt
                 mod.Logger.Log("started");
@@ -120,23 +117,6 @@ namespace MechEngineer
             }
 
             return ((AssemblyInformationalVersionAttribute)attributes[0]).InformationalVersion;
-        }
-
-        private static void AllowAnyAssemblyVersionReference()
-        {
-            // this code makes sure that dlls that depend on ME will always try to load even if the ME version is different than whats expected
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-            {
-                var resolvingName = new AssemblyName(args.Name);
-                var assembly = typeof(Control).Assembly;
-                if (resolvingName.Name != assembly.GetName().Name)
-                {
-                    return null;
-                }
-
-                mod.Logger.Log($"assembly resolve \"{args.Name}\" with \"{assembly.FullName}\"");
-                return assembly;
-            };
         }
     }
 }
