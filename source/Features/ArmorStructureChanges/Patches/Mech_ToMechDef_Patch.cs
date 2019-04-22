@@ -41,7 +41,7 @@ namespace MechEngineer
 
                 if (mechLocationDef.CurrentArmor > 0)
                 {
-                    mechLocationDef.CurrentArmor /= armorFactor;
+                    mechLocationDef.CurrentArmor = Mathf.Min(mechLocationDef.CurrentArmor / armorFactor, mechLocationDef.AssignedArmor);
                     if (Mathf.Approximately(mechLocationDef.CurrentArmor, mechLocationDef.AssignedArmor))
                     {
                         mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
@@ -50,7 +50,7 @@ namespace MechEngineer
 
                 if (mechLocationDef.CurrentRearArmor > 0)
                 {
-                    mechLocationDef.CurrentRearArmor /= armorFactor;
+                    mechLocationDef.CurrentRearArmor = Mathf.Min(mechLocationDef.CurrentRearArmor / armorFactor, mechLocationDef.AssignedRearArmor);
                     if (Mathf.Approximately(mechLocationDef.CurrentRearArmor, mechLocationDef.AssignedRearArmor))
                     {
                         mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
