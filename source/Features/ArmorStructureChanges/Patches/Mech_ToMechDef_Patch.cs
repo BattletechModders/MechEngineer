@@ -29,34 +29,28 @@ namespace MechEngineer
             var adapter = new MechDefAdapter(mechDef);
             foreach (var mechLocationDef in adapter.Locations)
             {
-                if (mechLocationDef.CurrentInternalStructure > 0)
-                {
-                    mechLocationDef.CurrentInternalStructure /= structureFactor;
-                    var chassisLocationDef = mechDef.Chassis.GetLocationDef(mechLocationDef.Location);
-                    if (Mathf.Approximately(mechLocationDef.CurrentInternalStructure, chassisLocationDef.InternalStructure))
-                    {
-                        mechLocationDef.CurrentInternalStructure = chassisLocationDef.InternalStructure;
-                    }
-                }
+                var chassisLocationDef = mechDef.Chassis.GetLocationDef(mechLocationDef.Location);
 
-                if (mechLocationDef.CurrentArmor > 0)
-                {
-                    mechLocationDef.CurrentArmor = Mathf.Min(mechLocationDef.CurrentArmor / armorFactor, mechLocationDef.AssignedArmor);
-                    if (Mathf.Approximately(mechLocationDef.CurrentArmor, mechLocationDef.AssignedArmor))
-                    {
-                        mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
-                    }
-                }
-
-                if (mechLocationDef.CurrentRearArmor > 0)
-                {
-                    mechLocationDef.CurrentRearArmor = Mathf.Min(mechLocationDef.CurrentRearArmor / armorFactor, mechLocationDef.AssignedRearArmor);
-                    if (Mathf.Approximately(mechLocationDef.CurrentRearArmor, mechLocationDef.AssignedRearArmor))
-                    {
-                        mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
-                    }
-                }
+                mechLocationDef.CurrentInternalStructure = ReverseFactor(structureFactor, mechLocationDef.CurrentInternalStructure, chassisLocationDef.InternalStructure);
+                mechLocationDef.CurrentArmor = ReverseFactor(armorFactor, mechLocationDef.CurrentArmor, mechLocationDef.AssignedArmor);
+                mechLocationDef.CurrentRearArmor = ReverseFactor(armorFactor, mechLocationDef.CurrentRearArmor, mechLocationDef.AssignedRearArmor);
             }
+        }
+
+        private static float ReverseFactor(float factor, float current, float max)
+        {
+            if (current <= 0)
+            {
+                return current;
+            }
+
+            current = Mathf.Min(current / factor, max);
+            if (Mathf.Approximately(current, max))
+            {
+                current = max;
+            }
+
+            return current;
         }
     }
 }
