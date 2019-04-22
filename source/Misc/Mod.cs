@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using HBS.Util;
 using fastJSON;
 using HBS.Logging;
+using HBS.Util;
 
 namespace MechEngineer
 {
@@ -13,7 +13,7 @@ namespace MechEngineer
         {
             Directory = directory;
             Name = Path.GetFileName(directory);
-            Logger = HBS.Logging.Logger.GetLogger(Name, LogLevel.Debug);
+            Logger = HBS.Logging.Logger.GetLogger(Name);
         }
 
         public string Name { get; }
@@ -26,17 +26,6 @@ namespace MechEngineer
         public string SettingsLastPath => Path.Combine(Directory, "Settings.last.json");
         public string ModsPath => Path.GetDirectoryName(Directory);
         public string InfoPath => Path.Combine(Directory, "mod.json");
-        public string LogPath => Path.Combine(Directory, "log.txt");
-
-        public void SetupLogging(LogSettings settings)
-        {
-            if (settings.LogFileEnabled)
-            {
-                var appender = new FileLogAppender(LogPath, FileLogAppender.WriteMode.INSTANT);
-                HBS.Logging.Logger.AddAppender(Logger.Name, appender);
-            }
-            HBS.Logging.Logger.SetLoggerLevel(Logger.Name, settings.LogLevel);
-        }
 
         public void LoadSettings(object settings)
         {
@@ -73,27 +62,6 @@ namespace MechEngineer
         public override string ToString()
         {
             return $"{Name} ({Directory})";
-        }
-    }
-    
-    public class LogSettings
-    {
-        public bool LogFileEnabled = true;
-        public LogLevel LogLevel = LogLevel.Debug;
-    }
-
-    public static class LoggerExtensions
-    {
-        [Conditional("TRACE")]
-        public static void Trace(this ILog logger, object message)
-        {
-            logger.LogDebug(message);
-        }
-
-        [Conditional("TRACE")]
-        public static void Trace(this ILog logger, object message, Exception exception)
-        {
-            logger.LogDebug(message, exception);
         }
     }
 }

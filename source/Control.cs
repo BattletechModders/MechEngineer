@@ -24,8 +24,6 @@ namespace MechEngineer
                 mod.LoadSettings(settings);
                 mod.SaveSettings(settings, mod.SettingsLastPath);
 
-                mod.SetupLogging(settings.LogSettings);
-
                 mod.Logger.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
                 mod.Logger.Log("settings loaded");
                 mod.Logger.LogDebug("debugging enabled");

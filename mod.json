@@ -8,6 +8,10 @@
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
+	"LogSettings": {
+		"LogFileEnabled" : true
+	},
+	
 	"CustomResourceTypes": ["MEBonusDescriptions", "MECriticalEffects"],
 	
 	"Manifest": [

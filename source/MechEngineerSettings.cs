@@ -54,12 +54,6 @@ namespace MechEngineer
 
         #endregion
 
-        #region logging
-
-        public LogSettings LogSettings = new LogSettings();
-
-        #endregion
-
         #region auto fixes
 
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
