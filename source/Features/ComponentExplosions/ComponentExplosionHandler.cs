@@ -74,7 +74,7 @@ namespace MechEngineer
             {
                 // for vehicles and turrets we play dead, idea from AIM
                 actor.FlagForDeath(
-                    "Ammo Explosion",
+                    $"{component.Name} EXPLOSION",
                     DeathMethod.AmmoExplosion,
                     DamageType.Weapon,
                     1,
