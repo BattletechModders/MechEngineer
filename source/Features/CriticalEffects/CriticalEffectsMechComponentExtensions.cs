@@ -28,7 +28,8 @@ namespace MechEngineer
 
         internal static int CriticalSlotsHit(this MechComponent mechComponent, int? setHits = null)
         {
-            if (!mechComponent.mechComponentRef.Is<CriticalEffects>(out var ce))
+            var ce = mechComponent.GetCriticalEffects();
+            if (ce == null)
             {
                 switch (mechComponent.DamageLevel)
                 {
@@ -61,7 +62,8 @@ namespace MechEngineer
 
         internal static int CriticalSlotsHitLinked(this MechComponent mechComponent, int? setHits = null)
         {
-            if (!mechComponent.mechComponentRef.Is<CriticalEffects>(out var ce))
+            var ce = mechComponent.GetCriticalEffects();
+            if (ce == null)
             {
                 throw new Exception("should not happen");
             }
@@ -91,6 +93,15 @@ namespace MechEngineer
                 return $"{id}_{uid}";
             }
             return scopeId;
+        }
+
+        internal static CriticalEffects GetCriticalEffects(this MechComponent component)
+        {
+            if (component.parent is Vehicle && component.componentDef.Is<VehicleCriticalEffects>(out var ce))
+            {
+                return ce;
+            }
+            return component.componentDef.GetComponent<CriticalEffects>();
         }
     }
 }

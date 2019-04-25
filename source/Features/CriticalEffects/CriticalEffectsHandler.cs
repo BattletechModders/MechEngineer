@@ -48,7 +48,7 @@ namespace MechEngineer
                 return;
             }
 
-            var criticalEffects = mechComponent.componentDef?.GetComponent<CriticalEffects>();
+            var criticalEffects = mechComponent.GetCriticalEffects();
             if (criticalEffects == null)
             {
                 return;
@@ -111,7 +111,8 @@ namespace MechEngineer
                             continue;
                         }
 
-                        if (!r.Is<CriticalEffects>(out var ce))
+                        var ce = mc.GetCriticalEffects();
+                        if (ce == null)
                         {
                             continue;
                         }
@@ -218,7 +219,8 @@ namespace MechEngineer
                     continue;
                 }
 
-                if (!mc.mechComponentRef.Def.Is<CriticalEffects>(out var ce))
+                var ce = mc.GetCriticalEffects();
+                if (ce == null)
                 {
                     continue;
                 }

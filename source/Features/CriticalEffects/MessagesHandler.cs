@@ -11,16 +11,15 @@ namespace MechEngineer
             if (mechComponent.DamageLevel == ComponentDamageLevel.Penalized)
             {
                 var critMessage = new Text("{0} CRIT", mechComponent.UIName);
-                if (mechComponent.componentDef.Is<CriticalEffects>(out var ce))
+
+                var ce = mechComponent.GetCriticalEffects();
+                if (ce?.CritFloatieMessage != null)
                 {
-                    if (ce.CritFloatieMessage != null)
+                    if (ce.CritFloatieMessage == "")
                     {
-                        if (ce.CritFloatieMessage == "")
-                        {
-                            return;
-                        }
-                        critMessage = new Text(ce.CritFloatieMessage);
+                        return;
                     }
+                    critMessage = new Text(ce.CritFloatieMessage);
                 }
                 mechComponent.PublishMessage(
                     critMessage,
@@ -48,16 +47,14 @@ namespace MechEngineer
                 //}
 
                 var destroyedMessage = new Text("{0} DESTROYED", mechComponent.UIName);
-                if (mechComponent.componentDef.Is<CriticalEffects>(out var ce))
+                var ce = mechComponent.GetCriticalEffects();
+                if (ce?.DestroyedFloatieMessage != null)
                 {
-                    if (ce.DestroyedFloatieMessage != null)
+                    if (ce.DestroyedFloatieMessage == "")
                     {
-                        if (ce.DestroyedFloatieMessage == "")
-                        {
-                            return;
-                        }
-                        destroyedMessage = new Text(ce.DestroyedFloatieMessage);
+                        return;
                     }
+                    destroyedMessage = new Text(ce.DestroyedFloatieMessage);
                 }
                 mechComponent.PublishMessage(
                     destroyedMessage,

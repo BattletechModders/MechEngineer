@@ -97,6 +97,7 @@
     <Compile Include="Features\CriticalEffects\Patches\Mech_CheckForCrit_Patch.cs" />
     <Compile Include="Features\CriticalEffects\MessagesHandler.cs" />
     <Compile Include="Features\CriticalEffects\Patches\MechComponent_inventorySize_Patch.cs" />
+    <Compile Include="Features\CriticalEffects\VehicleCriticalEffects.cs" />
     <Compile Include="Features\Descriptions\BonusDescriptions.cs" />
     <Compile Include="Features\Descriptions\DescriptionDefAdapter.cs" />
     <Compile Include="Features\Descriptions\IAdjustInventoryElement.cs" />
