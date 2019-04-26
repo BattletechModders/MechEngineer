@@ -7,7 +7,7 @@ using HBS;
 using HBS.Scripting.Reflection;
 using TMPro;
 
-namespace MechEngineer.Features.SaveMechToFile
+namespace MechEngineer
 {
     //[HarmonyPatch(typeof(MainMenu), "ReceiveButtonPress")]
     public static class MainMenu_ReceiveButtonPress_Patch

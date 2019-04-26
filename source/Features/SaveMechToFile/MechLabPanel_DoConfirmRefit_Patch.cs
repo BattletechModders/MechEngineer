@@ -6,7 +6,7 @@ using BattleTech.UI;
 using fastJSON;
 using Harmony;
 
-namespace MechEngineer.Features.SaveMechToFile
+namespace MechEngineer
 {
     [HarmonyPatch(typeof(MechLabPanel), "DoConfirmRefit")]
     public static class MechLabPanel_DoConfirmRefit_Patch
