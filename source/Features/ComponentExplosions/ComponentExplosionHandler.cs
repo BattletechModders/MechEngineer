@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using BattleTech;
 using CustomComponents;
-using Harmony;
 using UnityEngine;
 
 namespace MechEngineer
@@ -28,7 +27,6 @@ namespace MechEngineer
             }
 
             var actor = component.parent;
-            var mech = actor as Mech;
 
             var ammoCount = 0;
             if (component is AmmunitionBox box)
@@ -40,7 +38,6 @@ namespace MechEngineer
             {
                 ammoCount = w2.InternalAmmo;
             }
-
             
             var attackSequence = actor.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
 
@@ -52,13 +49,15 @@ namespace MechEngineer
                 attackSequence?.FlagAttackDidHeatDamage();
             }
 
-            if (mech != null)
-            {
-                var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
-                //Control.mod.Logger.LogDebug($"stabilityDamage={stabilityDamage}");
-                if (!Mathf.Approximately(stabilityDamage, 0))
+            { // only applies for mechs, vehicles don't have stability
+                if (actor is Mech mech)
                 {
-                    mech.AddAbsoluteInstability(stabilityDamage, StabilityChangeSource.Effect, hitInfo.targetId);
+                    var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
+                    //Control.mod.Logger.LogDebug($"stabilityDamage={stabilityDamage}");
+                    if (!Mathf.Approximately(stabilityDamage, 0))
+                    {
+                        mech.AddAbsoluteInstability(stabilityDamage, StabilityChangeSource.Effect, hitInfo.targetId);
+                    }
                 }
             }
 
@@ -70,22 +69,7 @@ namespace MechEngineer
                 return;
             }
 
-            if (mech == null)
-            {
-                // for vehicles and turrets we play dead, idea from AIM
-                actor.FlagForDeath(
-                    $"{component.Name} EXPLOSION",
-                    DeathMethod.AmmoExplosion,
-                    DamageType.Weapon,
-                    1,
-                    hitInfo.stackItemUID,
-                    hitInfo.attackerId,
-                    false
-                );
-                return;
-            }
-
-            Mech_DamageLocation_Patch.IsInternalExplosion = true;
+            IsInternalExplosion = true;
             try
             {
                 attackSequence?.FlagAttackCausedAmmoExplosion();
@@ -97,26 +81,36 @@ namespace MechEngineer
                     pilot?.SetNeedsInjury(InjuryReason.AmmoExplosion);
                 }
 
-                // this is very hacky as this is an invalid weapon
-                var weapon = new Weapon(mech, actor.Combat, component.mechComponentRef, component.uid);
+                if (actor is Mech mech)
+                {
+                    // this is very hacky as this is an invalid weapon
+                    var weapon = new Weapon(mech, actor.Combat, component.mechComponentRef, component.uid);
 
-                // bool DamageLocation(int originalHitLoc, WeaponHitInfo hitInfo, ArmorLocation aLoc, Weapon weapon, float totalDamage, int hitIndex, AttackImpactQuality impactQuality)
-                var args = new object[] {component.Location, hitInfo, (ArmorLocation) component.Location, weapon, explosionDamage, 0, AttackImpactQuality.Solid, DamageType.AmmoExplosion};
-                Traverse.Create(mech).Method("DamageLocation", args).GetValue();
+                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation) component.Location, weapon, explosionDamage, 0, AttackImpactQuality.Solid, DamageType.AmmoExplosion);
+                }
+                else if (actor is Vehicle vehicle)
+                {
+                    // this is very hacky as this is an invalid weapon
+                    var weapon = new Weapon(vehicle, actor.Combat, component.vehicleComponentRef, component.uid);
+
+                    vehicle.DamageLocation(hitInfo, component.Location, (VehicleChassisLocations)component.Location, weapon, explosionDamage, AttackImpactQuality.Solid);
+                }
             }
             finally
             {
-                Mech_DamageLocation_Patch.IsInternalExplosion = false;
+                IsInternalExplosion = false;
             }
         }
 
-        internal CASEComponent GetCASEProperties(Mech mech, int location)
+        internal static bool IsInternalExplosion;
+
+        internal CASEComponent GetCASEProperties(AbstractActor actor, int location)
         {
-            return mech.allComponents
+            return actor.allComponents
                 .Where(c => c.DamageLevel == ComponentDamageLevel.Functional)
                 .Select(componentRef => new { componentRef, CASE = componentRef.componentDef.GetComponent<CASEComponent>() } )
                 .Where(t => t.CASE != null)
-                .Where(t => t.CASE.AllLocations || t.componentRef.Location == location)
+                .Where(t => t.CASE.AllLocations || actor is Vehicle || t.componentRef.Location == location)
                 .Select(t => t.CASE)
                 .OrderBy(CASE => CASE.AllLocations) // localized CASE always overrides global CASE
                 .FirstOrDefault();

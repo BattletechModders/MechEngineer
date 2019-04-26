@@ -1,0 +1,23 @@
+﻿using BattleTech;
+using Harmony;
+
+namespace MechEngineer
+{
+    internal static class VehiclePrivateExtensions
+    {
+        internal static void applyArmorStatDamage(this Vehicle vehicle, VehicleChassisLocations location, float damage, WeaponHitInfo hitInfo)
+        {
+            Traverse.Create(vehicle).Method(nameof(applyArmorStatDamage), location, damage, hitInfo).GetValue();
+        }
+
+        internal static void applyStructureStatDamage(this Vehicle vehicle, VehicleChassisLocations location, float damage, WeaponHitInfo hitInfo)
+        {
+            Traverse.Create(vehicle).Method(nameof(applyStructureStatDamage), location, damage, hitInfo).GetValue();
+        }
+
+        internal static bool DamageLocation(this Vehicle vehicle, WeaponHitInfo hitInfo, int originalHitLoc, VehicleChassisLocations vLoc, Weapon weapon, float totalDamage, AttackImpactQuality impactQuality)
+        {
+            return Traverse.Create(vehicle).Method(nameof(DamageLocation), hitInfo, originalHitLoc, vLoc, weapon, totalDamage, impactQuality).GetValue<bool>();
+        }
+    }
+}

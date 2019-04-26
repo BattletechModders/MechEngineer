@@ -90,6 +90,9 @@
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructureSimple_Patch.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructure_Patch.cs" />
     <Compile Include="Features\BTLoadFix\BTLoadUtils.cs" />
+    <Compile Include="Features\ComponentExplosions\MechPrivateExtensions.cs" />
+    <Compile Include="Features\ComponentExplosions\VehiclePrivateExtensions.cs" />
+    <Compile Include="Features\ComponentExplosions\Patches\Vehicle_DamageLocation_Patch.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffectsHandler.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffectsMechComponentExtensions.cs" />
     <Compile Include="Features\CompressFloatieMessages\Patches\CombatHUDFloatieStack_AddFloatie_Patch.cs" />

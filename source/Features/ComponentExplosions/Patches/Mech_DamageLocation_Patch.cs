@@ -14,28 +14,26 @@ namespace MechEngineer
             return instructions
                 .MethodReplacer(
                     AccessTools.Method(typeof(Mech), nameof(Mech.GetCurrentArmor)),
-                    AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(OverrideGetCurrentArmor))
+                    AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(GetCurrentArmor))
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(Mech), nameof(Mech.ApplyStructureStatDamage)),
-                    AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(OverrideApplyStructureStatDamage))
+                    AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(ApplyStructureStatDamage))
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(MechStructureRules), nameof(MechStructureRules.GetPassthroughLocation)),
-                    AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(OverrideGetPassthroughLocation))
+                    AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(GetPassthroughLocation))
                 );
         }
 
-        internal static bool IsInternalExplosion;
-
-        internal static float OverrideGetCurrentArmor(
+        internal static float GetCurrentArmor(
             this Mech mech,
             ArmorLocation location
             )
         {
             try
             {
-                if (IsInternalExplosion)
+                if (ComponentExplosionHandler.IsInternalExplosion)
                 {
                     return 0;
                 }
@@ -47,7 +45,7 @@ namespace MechEngineer
             return mech.GetCurrentArmor(location);
         }
 
-        internal static void OverrideApplyStructureStatDamage(
+        internal static void ApplyStructureStatDamage(
             this Mech mech,
             ChassisLocations location,
             float damage,
@@ -56,64 +54,77 @@ namespace MechEngineer
         {
             try
             {
-                if (IsInternalExplosion)
+                if (!ComponentExplosionHandler.IsInternalExplosion)
                 {
-                    var properties = ComponentExplosionHandler.Shared.GetCASEProperties(mech, (int) location);
-                    if (properties?.MaximumDamage != null)
-                    {
-                        var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
-                        var backDamage = damage - directDamage;
-                        //Control.mod.Logger.LogDebug($"reducing structure damage from {damage} to {directDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
-                        damage = directDamage;
-
-                        if (backDamage > 0)
-                        {
-                            mech.PublishFloatieMessage("EXPLOSION REDIRECTED");
-
-                            if ((location & ChassisLocations.Torso) > 0)
-                            {
-                                ArmorLocation armorLocation;
-                                switch (location)
-                                {
-                                    case ChassisLocations.LeftTorso:
-                                        armorLocation = ArmorLocation.LeftTorsoRear;
-                                        break;
-                                    case ChassisLocations.RightTorso:
-                                        armorLocation = ArmorLocation.RightTorsoRear;
-                                        break;
-                                    default:
-                                        armorLocation = ArmorLocation.CenterTorsoRear;
-                                        break;
-                                }
-
-                                var armor = mech.GetCurrentArmor(armorLocation);
-                                if (armor > 0)
-                                {
-                                    var armorDamage = Mathf.Min(backDamage, armor);
-                                    //Control.mod.Logger.LogDebug($"added blowout armor damage {armorDamage} to {Mech.GetLongArmorLocation(armorLocation)}");
-
-                                    mech.ApplyArmorStatDamage(armorLocation, armorDamage, hitInfo);
-                                }
-                            }
-                        }
-                    }
+                    return;
                 }
+
+                var properties = ComponentExplosionHandler.Shared.GetCASEProperties(mech, (int) location);
+                if (properties?.MaximumDamage == null)
+                {
+                    return;
+                }
+
+                var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
+                var backDamage = damage - directDamage;
+                //Control.mod.Logger.LogDebug($"reducing structure damage from {damage} to {directDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
+                damage = directDamage;
+
+                if (backDamage <= 0)
+                {
+                    return;
+                }
+
+                mech.PublishFloatieMessage("EXPLOSION REDIRECTED");
+
+                if ((location & ChassisLocations.Torso) == 0)
+                {
+                    return;
+                }
+
+                ArmorLocation armorLocation;
+                switch (location)
+                {
+                    case ChassisLocations.LeftTorso:
+                        armorLocation = ArmorLocation.LeftTorsoRear;
+                        break;
+                    case ChassisLocations.RightTorso:
+                        armorLocation = ArmorLocation.RightTorsoRear;
+                        break;
+                    default:
+                        armorLocation = ArmorLocation.CenterTorsoRear;
+                        break;
+                }
+
+                var armor = mech.GetCurrentArmor(armorLocation);
+                if (armor <= 0)
+                {
+                    return;
+                }
+
+                var armorDamage = Mathf.Min(backDamage, armor);
+                //Control.mod.Logger.LogDebug($"added blowout armor damage {armorDamage} to {Mech.GetLongArmorLocation(armorLocation)}");
+
+                mech.ApplyArmorStatDamage(armorLocation, armorDamage, hitInfo);
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
-            mech.ApplyStructureStatDamage(location, damage, hitInfo);
+            finally
+            {
+                mech.ApplyStructureStatDamage(location, damage, hitInfo);
+            }
         }
 
-        internal static ArmorLocation OverrideGetPassthroughLocation(
+        internal static ArmorLocation GetPassthroughLocation(
             ArmorLocation location,
             AttackDirection attackDirection
             )
         {
             try
             {
-                if (IsInternalExplosion && currentMech != null)
+                if (ComponentExplosionHandler.IsInternalExplosion && currentMech != null)
                 {
                     var chassisLocation = MechStructureRules.GetChassisLocationFromArmorLocation(location);
                     var properties = ComponentExplosionHandler.Shared.GetCASEProperties(currentMech, (int) chassisLocation);
