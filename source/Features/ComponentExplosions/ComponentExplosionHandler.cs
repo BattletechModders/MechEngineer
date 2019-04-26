@@ -110,7 +110,7 @@ namespace MechEngineer
                 .Where(c => c.DamageLevel == ComponentDamageLevel.Functional)
                 .Select(componentRef => new { componentRef, CASE = componentRef.componentDef.GetComponent<CASEComponent>() } )
                 .Where(t => t.CASE != null)
-                .Where(t => t.CASE.AllLocations || actor is Vehicle || t.componentRef.Location == location)
+                .Where(t => t.CASE.AllLocations || t.componentRef.Location == location)
                 .Select(t => t.CASE)
                 .OrderBy(CASE => CASE.AllLocations) // localized CASE always overrides global CASE
                 .FirstOrDefault();
