@@ -195,6 +195,16 @@ namespace MechEngineer
                         hitInfo.attackerId,
                         false);
                 }
+
+                if (!string.IsNullOrEmpty(criticalEffects.OnDestroyedVFXName))
+                {
+                    actor.GameRep.PlayVFX(mechComponent.Location, criticalEffects.OnDestroyedVFXName, true, Vector3.zero, true, -1f);
+                }
+
+                if (!string.IsNullOrEmpty(criticalEffects.OnDestroyedAudioEventName))
+                {
+                    WwiseManager.PostEvent(criticalEffects.OnDestroyedAudioEventName, actor.GameRep.audioObject);
+                }
             }
         }
 

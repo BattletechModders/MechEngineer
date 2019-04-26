@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
@@ -13,7 +14,9 @@ namespace MechEngineer
         public string[] OnDestroyedDisableEffectIds { get; set; } = new string[0];
 
         public DeathMethod DeathMethod { get; set; } = DeathMethod.NOT_SET;
-        
+        public string OnDestroyedVFXName { get; set; } = null;
+        public string OnDestroyedAudioEventName { get; set; } = null;
+
         public string LinkedStatisticName = null;
 
         public bool HasLinked => !string.IsNullOrEmpty(LinkedStatisticName);
