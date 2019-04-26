@@ -150,6 +150,7 @@
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_RefreshDropHighlights_Patch.cs" />
     <Compile Include="Features\MoveMultiplier\Patches\Mech_InitEffectStats_Patch4.cs" />
     <Compile Include="Features\MoveMultiplier\Patches\Mech_MoveMultiplier_Patch.cs" />
+    <Compile Include="Features\SaveMechToFile\MainMenu_ReceiveButtonPress_Patch.cs" />
     <Compile Include="Helper\MechExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_DamageLocation_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\AmmunitionBox_DamageComponent_Patch.cs" />
