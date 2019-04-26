@@ -153,7 +153,7 @@ namespace MechEngineer
             currentMech = __instance;
         }
 
-        internal static void Postfix(Mech __instance, int originalHitLoc, WeaponHitInfo hitInfo, ArmorLocation aLoc, Weapon weapon, float totalDamage, int hitIndex, AttackImpactQuality impactQuality, bool __result)
+        internal static void Postfix(Mech __instance)
         {
             currentMech = null;
         }
