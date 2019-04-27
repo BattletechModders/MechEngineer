@@ -11,7 +11,7 @@ namespace MechEngineer.Features.MoveMultiplierStat.Patches
         {
             try
             {
-                MoveMultiplierStatHandler.Shared.InitEffectStats(__instance);
+                MoveMultiplierStatHandler.InitEffectStats(__instance);
             }
             catch (Exception e)
             {

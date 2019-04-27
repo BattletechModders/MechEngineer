@@ -6,36 +6,29 @@ using UnityEngine;
 
 namespace MechEngineer.Features.MoveMultiplierStat
 {
-    internal class MoveMultiplierStatHandler
+    internal static class MoveMultiplierStatHandler
     {
         internal static void Setup(HarmonyInstance harmony, MechEngineerSettings settings)
         {
-            var success = FeatureUtils.SetupFeature(
+            FeatureUtils.SetupFeature(
                 harmony,
                 nameof(Features.MoveMultiplierStat),
                 settings.FeatureMoveMultiplierEnabled,
                 typeof(Mech_InitEffectStats_Patch),
                 typeof(Mech_MoveMultiplier_Patch)
             );
-
-            if (success)
-            {
-                Shared = new MoveMultiplierStatHandler();
-            }
         }
 
-        internal static MoveMultiplierStatHandler Shared;
-
-        internal void InitEffectStats(Mech mech)
+        internal static void InitEffectStats(Mech mech)
         {
             MoveMultiplierStat(mech.StatCollection);
         }
 
-        internal void MoveMultiplier(Mech mech, ref float multiplier)
+        internal static void MoveMultiplier(Mech mech, ref float multiplier)
         {
             var multiplierStat = MoveMultiplierStat(mech.StatCollection);
             var rounded = Mathf.Max(mech.Combat.Constants.MoveConstants.MinMoveSpeed, multiplierStat);
-            multiplier = multiplier * rounded;
+            multiplier *= rounded;
         }
 
         private static float MoveMultiplierStat(StatCollection statCollection) 
