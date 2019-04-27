@@ -87,6 +87,7 @@ namespace MechEngineer
             catch (Exception e)
             {
                 mod.Logger.LogError("error starting", e);
+                throw;
             }
         }
 
