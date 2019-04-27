@@ -150,6 +150,12 @@
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_RefreshDropHighlights_Patch.cs" />
     <Compile Include="Features\MoveMultiplier\Patches\Mech_InitEffectStats_Patch4.cs" />
     <Compile Include="Features\MoveMultiplier\Patches\Mech_MoveMultiplier_Patch.cs" />
+    <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_ClearCachedSettings_Patch.cs" />
+    <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SettingsGetter_Patch.cs" />
+    <Compile Include="Features\NewSaveFolder\NewSaveFolderHandlers.cs" />
+    <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SaveSettingsToPlayerPrefs_Patch.cs" />
+    <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SettingsSetter_Patch.cs" />
+    <Compile Include="Features\NewSaveFolder\Patches\WriteLocation_Constructor_Patch.cs" />
     <Compile Include="Features\SaveMechToFile\MainMenu_ReceiveButtonPress_Patch.cs" />
     <Compile Include="Helper\MechExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_DamageLocation_Patch.cs" />
