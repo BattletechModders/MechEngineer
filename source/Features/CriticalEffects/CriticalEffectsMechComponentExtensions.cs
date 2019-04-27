@@ -1,9 +1,10 @@
 ﻿using System;
 using BattleTech;
 using CustomComponents;
+using MechEngineer.Features.LocationalEffects;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects
 {
     public static class CriticalEffectsMechComponentExtensions
     {
@@ -86,7 +87,7 @@ namespace MechEngineer
 
         internal static string ScopedId(this MechComponent mechComponent, string id, bool isLinked)
         {
-            var scopeId = LocationalEffects.InterpolateEffectId(id, mechComponent.mechComponentRef.MountedLocation);
+            var scopeId = LocationalEffectsHandler.InterpolateEffectId(id, mechComponent.mechComponentRef.MountedLocation);
             if (scopeId == id && !isLinked)
             {
                 var uid = mechComponent.uid;

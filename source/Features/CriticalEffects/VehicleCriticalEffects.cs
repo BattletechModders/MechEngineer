@@ -1,6 +1,6 @@
 ﻿using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects
 {
     [CustomComponent("VehicleCriticalEffects")]
     public class VehicleCriticalEffects : CriticalEffects

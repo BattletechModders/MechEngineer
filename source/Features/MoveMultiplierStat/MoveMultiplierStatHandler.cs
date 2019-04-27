@@ -7,7 +7,7 @@ namespace MechEngineer.Features.MoveMultiplierStat
 {
     internal static class MoveMultiplierStatHandler
     {
-        internal static void Setup()
+        internal static void SetupPatches()
         {
             FeatureUtils.SetupFeature(
                 nameof(Features.MoveMultiplierStat),

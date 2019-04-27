@@ -10,7 +10,7 @@ namespace MechEngineer.Features.CompressFloatieMessages
 {
     internal static class CompressFloatieMessagesHandler
     {
-        internal static void Setup()
+        internal static void SetupPatches()
         {
             FeatureUtils.SetupFeature(
                 nameof(Features.CompressFloatieMessages),

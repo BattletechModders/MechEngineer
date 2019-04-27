@@ -1,19 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using CustomComponents;
 using FluffyUnderware.DevTools.Extensions;
-using Localize;
+using MechEngineer.Features.CriticalEffects.Patches;
+using MechEngineer.Features.LocationalEffects;
+using MechEngineer.Misc;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects
 {
     public class CriticalEffectsHandler
     {
+        internal static void SetupPatches()
+        {
+            FeatureUtils.SetupFeature(
+                nameof(Features.CriticalEffects),
+                Control.settings.FeatureCriticalEffectsEnabled,
+                typeof(Mech_CheckForCrit_Patch),
+                typeof(Mech_GetComponentInSlot_Patch),
+                typeof(Mech_OnLocationDestroyed_Patch),
+                typeof(MechComponent_DamageComponent_Patch),
+                typeof(MechComponent_inventorySize_Patch)
+            );
+        }
+
         private static Dictionary<string, EffectData> Settings { get; set; } = new Dictionary<string, EffectData>();
 
-        internal static void Setup(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        internal static void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
             Settings = SettingsResourcesTools.Enumerate<EffectData>("MECriticalEffects", customResources)
                 .ToDictionary(entry => entry.Description.Id);
@@ -274,7 +288,7 @@ namespace MechEngineer
                 
                 var actor = mechComponent.parent;
 
-                LocationalEffects.ProcessLocationalEffectData(ref effectData, mechComponent);
+                LocationalEffectsHandler.ProcessLocationalEffectData(ref effectData, mechComponent);
                 
                 Control.mod.Logger.LogDebug($"Creating scopedId={scopedId} statName={effectData.statisticData.statName}");
                 actor.Combat.EffectManager.CreateEffect(

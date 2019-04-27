@@ -1,8 +1,7 @@
-﻿
-using BattleTech;
+﻿using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects
 {
     internal static class DamageIgnoreHelper
     {

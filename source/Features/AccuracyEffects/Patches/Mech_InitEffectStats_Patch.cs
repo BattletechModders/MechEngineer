@@ -1,18 +1,17 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
-using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AccuracyEffects.Patches
 {
     [HarmonyPatch(typeof(Mech), "InitEffectStats")]
-    public static class Mech_InitEffectStats_Patch5
+    public static class Mech_InitEffectStats_Patch
     {
         public static void Prefix(Mech __instance)
         {
             try
             {
-                AccuracyEffects.SetupAccuracyStatistics(__instance.StatCollection);
+                AccuracyEffectsHandler.SetupAccuracyStatistics(__instance.StatCollection);
             }
             catch (Exception e)
             {

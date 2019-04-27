@@ -78,10 +78,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Features\AccuracyEffects\AccuracyEffects.cs" />
-    <Compile Include="Features\AccuracyEffects\LocationalEffects.cs" />
-    <Compile Include="Features\AccuracyEffects\Patches\MechComponent_ApplyPassiveEffectToTarget_Patch.cs" />
-    <Compile Include="Features\AccuracyEffects\Patches\Mech_InitEffectStats_Patch5.cs" />
+    <Compile Include="Features\AccuracyEffects\AccuracyEffectsHandler.cs" />
+    <Compile Include="Features\LocationalEffects\LocationalEffectsHandler.cs" />
+    <Compile Include="Features\LocationalEffects\Patches\MechComponent_ApplyPassiveEffectToTarget_Patch.cs" />
+    <Compile Include="Features\AccuracyEffects\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorHandler.cs" />

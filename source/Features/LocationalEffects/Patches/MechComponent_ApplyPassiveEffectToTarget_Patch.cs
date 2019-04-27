@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.LocationalEffects.Patches
 {
     [HarmonyPatch(typeof(MechComponent), "ApplyPassiveEffectToTarget")]
     public static class MechComponent_ApplyPassiveEffectToTarget_Patch
@@ -12,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                LocationalEffects.ProcessLocationalEffectData(ref effect, __instance);
+                LocationalEffectsHandler.ProcessLocationalEffectData(ref effect, __instance);
             }
             catch (Exception e)
             {

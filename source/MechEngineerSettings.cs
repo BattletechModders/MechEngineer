@@ -36,12 +36,18 @@ namespace MechEngineer
         public bool DynamicSlotsValidateDropEnabled = false;
 
         public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
+        
+        public bool FeatureAccuracyEffectsEnabled = true;
 
-        public bool FeatureMoveMultiplierEnabled = true;
         public bool FeatureCompressFloatieMessagesEnabled = true;
         public bool DebugDestroyedFloaties = true;
 
+        public bool FeatureCriticalEffectsEnabled = true;
+        public bool FeatureLocationalEffectsEnabled => FeatureAccuracyEffectsEnabled || FeatureCriticalEffectsEnabled;
+        public bool FeatureMoveMultiplierEnabled = true;
+
         public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
+
         public int MechLabGeneralSlots = 3;
         public int MechLabArmTopPadding = 120;
 

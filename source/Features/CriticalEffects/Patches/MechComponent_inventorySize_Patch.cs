@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects.Patches
 {
     [HarmonyPatch(typeof(MechComponent))]
     [HarmonyPatch(nameof(MechComponent.inventorySize), MethodType.Getter)]

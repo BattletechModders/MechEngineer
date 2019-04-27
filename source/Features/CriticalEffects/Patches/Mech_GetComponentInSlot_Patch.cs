@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects.Patches
 {
     [HarmonyPatch(typeof(Mech), nameof(Mech.GetComponentInSlot))]
     internal static class Mech_GetComponentInSlot_Patch

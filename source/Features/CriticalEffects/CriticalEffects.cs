@@ -1,10 +1,8 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects
 {
     [CustomComponent("CriticalEffects")]
     public class CriticalEffects : SimpleCustomComponent, IAfterLoad, IIsDestroyed

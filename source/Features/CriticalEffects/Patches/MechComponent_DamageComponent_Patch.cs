@@ -1,10 +1,8 @@
 ﻿using System;
 using BattleTech;
-using CustomComponents;
 using Harmony;
-using Localize;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects.Patches
 {
     [HarmonyPatch(typeof(MechComponent), "DamageComponent")]
     public static class MechComponent_DamageComponent_Patch

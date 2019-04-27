@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using BattleTech;
-using CustomComponents;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AccuracyEffects.Patches
 {
     [HarmonyPatch(typeof(ToHit), "GetSelfArmMountedModifier")]
     public static class ToHit_GetSelfArmMountedModifier_Patch
@@ -15,7 +13,7 @@ namespace MechEngineer
             {
                 if (weapon.parent is Mech mech)
                 {
-                    __result += AccuracyEffects.AccuracyForLocation(
+                    __result += AccuracyEffectsHandler.AccuracyForLocation(
                         mech.StatCollection,
                         weapon.mechComponentRef.MountedLocation
                     );

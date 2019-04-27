@@ -1,8 +1,7 @@
 ﻿using BattleTech;
-using CustomComponents;
 using Localize;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects
 {
     public static class MessagesHandler
     {

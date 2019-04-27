@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CriticalEffects.Patches
 {
     [HarmonyPatch(typeof(Mech), "CheckForCrit")]
     public static class Mech_CheckForCrit_Patch

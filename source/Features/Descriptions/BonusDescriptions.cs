@@ -102,7 +102,7 @@ namespace MechEngineer
         private static Dictionary<string, BonusDescriptionSettings> Settings { get; set; } = new Dictionary<string, BonusDescriptionSettings>();
 
 
-        internal static void Setup(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        internal static void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
             Settings = SettingsResourcesTools.Enumerate<BonusDescriptionSettings>("MEBonusDescriptions", customResources)
                 .ToDictionary(entry => entry.Bonus);
