@@ -6,7 +6,7 @@ cd ..
 
 SEVENZIP="/c/Program Files/7-Zip/7z"
 
-INCLUDES="-ir!MechEngineer -ir!CustomComponents"
+INCLUDES="-ir!MechEngineer -ir!CustomComponents -ir!ModTek/ModTek.dll"
 # -ir!HardpointFixMod
 INCLUDES_ALL="$INCLUDES -ir!BattletechPerformanceFix -ir!SkipTravelCutscenes -ir!SkipTutorialCleaner -ir!SkipIntro -ir!CBTHeat -ir!DynModLib -ir!pansar -ir!SpeedMod -ir!ModTek"
 
