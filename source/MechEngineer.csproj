@@ -148,8 +148,10 @@
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_LoadMech_Patch.cs" />
     <Compile Include="Features\MechLabSlots\MechConfiguration.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_RefreshDropHighlights_Patch.cs" />
-    <Compile Include="Features\MoveMultiplier\Patches\Mech_InitEffectStats_Patch4.cs" />
-    <Compile Include="Features\MoveMultiplier\Patches\Mech_MoveMultiplier_Patch.cs" />
+    <Compile Include="Misc\FeatureUtils.cs" />
+    <Compile Include="Features\MoveMultiplierStat\MoveMultiplierStatHandler.cs" />
+    <Compile Include="Features\MoveMultiplierStat\Patches\Mech_InitEffectStats_Patch.cs" />
+    <Compile Include="Features\MoveMultiplierStat\Patches\Mech_MoveMultiplier_Patch.cs" />
     <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_ClearCachedSettings_Patch.cs" />
     <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SettingsGetter_Patch.cs" />
     <Compile Include="Features\NewSaveFolder\NewSaveFolderHandlers.cs" />
@@ -195,7 +197,6 @@
     <Compile Include="Misc\Mod.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffects.cs" />
     <Compile Include="Features\Weights\Weights.cs" />
-    <Compile Include="Misc\HarmonyExtensions.cs" />
     <Compile Include="Features\AutoFix\IdentityHelper.cs" />
     <Compile Include="Features\AutoFix\AdjustCompDefTonnageHelper.cs" />
     <Compile Include="Features\AutoFix\AdjustCompDefInvSizeHelper.cs" />

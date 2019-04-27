@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using BattleTech;
 using CustomComponents;
 using Harmony;
+using MechEngineer.Features.MoveMultiplierStat;
 
 namespace MechEngineer
 {
@@ -32,6 +31,7 @@ namespace MechEngineer
 
                 //HarmonyInstance.DEBUG = true;
                 var harmony = HarmonyInstance.Create(mod.Name);
+                MoveMultiplierStatHandler.Setup(harmony, settings);
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
 

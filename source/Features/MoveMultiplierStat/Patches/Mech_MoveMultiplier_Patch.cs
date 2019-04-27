@@ -1,20 +1,17 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
-using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.MoveMultiplierStat.Patches
 {
-    [HarmonyPatch(typeof(Mech), "get_MoveMultiplier")]
+    [HarmonyPatch(typeof(Mech), "MoveMultiplier", MethodType.Getter)]
     internal static class Mech_MoveMultiplier_Patch
     {
         public static void Postfix(Mech __instance, ref float __result)
         {
             try
             {
-                var multiplier = __instance.StatCollection.MoveMultiplier();
-                var rounded = Mathf.Max(__instance.Combat.Constants.MoveConstants.MinMoveSpeed, multiplier);
-                __result = __result * rounded;
+                MoveMultiplierStatHandler.Shared.MoveMultiplier(__instance, ref __result);
             }
             catch (Exception e)
             {
