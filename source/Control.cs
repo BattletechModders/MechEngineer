@@ -4,6 +4,7 @@ using System.Reflection;
 using BattleTech;
 using CustomComponents;
 using Harmony;
+using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.MoveMultiplierStat;
 
 namespace MechEngineer
@@ -13,6 +14,7 @@ namespace MechEngineer
         internal static Mod mod;
 
         internal static MechEngineerSettings settings = new MechEngineerSettings();
+        internal static HarmonyInstance harmony;
 
         public static void Start(string modDirectory, string json)
         {
@@ -30,9 +32,12 @@ namespace MechEngineer
                 mod.Logger.LogDebug("patching game");
 
                 //HarmonyInstance.DEBUG = true;
-                var harmony = HarmonyInstance.Create(mod.Name);
-                MoveMultiplierStatHandler.Setup(harmony, settings);
-                harmony.PatchAll(Assembly.GetExecutingAssembly());
+                harmony = HarmonyInstance.Create(mod.Name);
+
+                MoveMultiplierStatHandler.Setup();
+                CompressFloatieMessagesHandler.Setup();
+
+                //harmony.PatchAll(Assembly.GetExecutingAssembly());
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
 
                 mod.Logger.LogDebug("setting up CustomComponents");

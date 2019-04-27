@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleTech;
-using CustomComponents;
-using HBS.Logging;
+﻿using BattleTech;
 
 namespace MechEngineer
 {
@@ -39,8 +36,10 @@ namespace MechEngineer
         public bool DynamicSlotsValidateDropEnabled = false;
 
         public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
-        
+
         public bool FeatureMoveMultiplierEnabled = true;
+        public bool FeatureCompressFloatieMessagesEnabled = true;
+        public bool DebugDestroyedFloaties = true;
 
         public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
         public int MechLabGeneralSlots = 3;

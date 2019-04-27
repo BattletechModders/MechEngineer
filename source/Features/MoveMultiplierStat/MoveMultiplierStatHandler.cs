@@ -1,5 +1,4 @@
 ﻿using BattleTech;
-using Harmony;
 using MechEngineer.Features.MoveMultiplierStat.Patches;
 using MechEngineer.Misc;
 using UnityEngine;
@@ -8,12 +7,11 @@ namespace MechEngineer.Features.MoveMultiplierStat
 {
     internal static class MoveMultiplierStatHandler
     {
-        internal static void Setup(HarmonyInstance harmony, MechEngineerSettings settings)
+        internal static void Setup()
         {
             FeatureUtils.SetupFeature(
-                harmony,
                 nameof(Features.MoveMultiplierStat),
-                settings.FeatureMoveMultiplierEnabled,
+                Control.settings.FeatureMoveMultiplierEnabled,
                 typeof(Mech_InitEffectStats_Patch),
                 typeof(Mech_MoveMultiplier_Patch)
             );

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CompressFloatieMessages.Patches
 {
     [HarmonyPatch(typeof(CombatHUDFloatieStack), nameof(CombatHUDFloatieStack.AddFloatie), typeof(FloatieMessage))]
     public static class CombatHUDFloatieStack_AddFloatie_Patch
@@ -18,7 +17,7 @@ namespace MechEngineer
         {
             try
             {
-                if (FloatieHandler.CompressFloatieMessages(message, ___msgQueue))
+                if (CompressFloatieMessagesHandler.CompressFloatieMessages(message, ___msgQueue))
                 {
                     return false;
                 }

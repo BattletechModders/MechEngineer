@@ -1,17 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BattleTech;
+using Harmony;
+using MechEngineer.Features.CompressFloatieMessages.Patches;
+using MechEngineer.Misc;
 
-namespace MechEngineer
+namespace MechEngineer.Features.CompressFloatieMessages
 {
-    public static class FloatieHandler
+    internal static class CompressFloatieMessagesHandler
     {
+        internal static void Setup()
+        {
+            FeatureUtils.SetupFeature(
+                nameof(Features.CompressFloatieMessages),
+                Control.settings.FeatureCompressFloatieMessagesEnabled,
+                typeof(CombatHUDFloatieStack_AddFloatie_Patch)
+            );
+        }
+
         public static bool CompressFloatieMessages(FloatieMessage incoming, Queue<FloatieMessage> queue)
         {
             var incomingString = incoming.text.ToString();
-            Control.mod.Logger.LogDebug($"Floatie {DateTime.Now:hh.mm.ss.ffffff} {incomingString}");
+            Control.mod.Logger.LogDebug($"Floatie {incomingString}");
+            if (Control.settings.DebugDestroyedFloaties && !string.IsNullOrEmpty(incomingString) && incomingString.EndsWith("DESTROYED"))
+            {
+                Control.mod.Logger.LogError("COMPRESS DESTROYED " + new System.Diagnostics.StackTrace());
+            }
             foreach (var message in queue)
             {
                 // quick preliminary check
@@ -49,6 +64,7 @@ namespace MechEngineer
 
             return false;
         }
+
         private static readonly Regex MultiplierRegex = new Regex("^ x (\\d+)$", RegexOptions.Compiled);
     }
 }

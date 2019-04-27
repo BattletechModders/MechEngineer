@@ -8,13 +8,13 @@ namespace MechEngineer.Misc
 {
     internal static class FeatureUtils
     {
-        internal static bool SetupFeature(HarmonyInstance harmony, string topic, bool enabled, params Type[] types)
+        internal static bool SetupFeature(string topic, bool enabled, params Type[] types)
         {
             if (enabled)
             {
                 try
                 {
-                    PatchTypes(harmony, types);
+                    PatchTypes(types);
                 }
                 catch (Exception e)
                 {
@@ -32,14 +32,14 @@ namespace MechEngineer.Misc
             return enabled;
         }
 
-        internal static void PatchTypes(HarmonyInstance harmony, params Type[] types)
+        internal static void PatchTypes(params Type[] types)
         {
             var hooks = new List<Hook>();
             try
             {
                 foreach (var type in types)
                 {
-                    var hook = Patch(harmony, type);
+                    var hook = Patch(Control.harmony, type);
                     hooks.Add(hook);
                 }
             }
