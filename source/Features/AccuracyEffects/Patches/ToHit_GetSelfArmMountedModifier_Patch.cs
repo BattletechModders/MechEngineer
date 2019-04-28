@@ -13,7 +13,7 @@ namespace MechEngineer.Features.AccuracyEffects.Patches
             {
                 if (weapon.parent is Mech mech)
                 {
-                    __result += AccuracyEffectsHandler.AccuracyForLocation(
+                    __result += AccuracyEffectsFeature.AccuracyForLocation(
                         mech.StatCollection,
                         weapon.mechComponentRef.MountedLocation
                     );

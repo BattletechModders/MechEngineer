@@ -17,7 +17,7 @@ namespace MechEngineer.Features.CompressFloatieMessages.Patches
         {
             try
             {
-                if (CompressFloatieMessagesHandler.CompressFloatieMessages(message, ___msgQueue))
+                if (CompressFloatieMessagesFeature.CompressFloatieMessages(message, ___msgQueue))
                 {
                     return false;
                 }

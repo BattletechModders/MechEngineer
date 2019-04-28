@@ -32,7 +32,7 @@ namespace MechEngineer.Features.CriticalEffects
                 i++;
                 foreach (var id in effectIDs)
                 {
-                    var effectData = CriticalEffectsHandler.GetEffectData(id);
+                    var effectData = CriticalEffectsFeature.GetEffectData(id);
                     if (effectData == null || effectData.targetingData.showInStatusPanel == false)
                     {
                         continue;
@@ -46,7 +46,7 @@ namespace MechEngineer.Features.CriticalEffects
             
             foreach (var id in OnDestroyedEffectIDs)
             {
-                var effectData = CriticalEffectsHandler.GetEffectData(id);
+                var effectData = CriticalEffectsFeature.GetEffectData(id);
                 if (effectData == null || effectData.targetingData.showInStatusPanel == false)
                 {
                     continue;

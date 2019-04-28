@@ -1,37 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using CustomComponents;
 using FluffyUnderware.DevTools.Extensions;
 using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.LocationalEffects;
-using MechEngineer.Misc;
 using UnityEngine;
 
 namespace MechEngineer.Features.CriticalEffects
 {
-    public class CriticalEffectsHandler
+    internal class CriticalEffectsFeature : Feature
     {
-        internal static void SetupPatches()
-        {
-            FeatureUtils.SetupFeature(
-                nameof(Features.CriticalEffects),
-                Control.settings.FeatureCriticalEffectsEnabled,
-                typeof(Mech_CheckForCrit_Patch),
-                typeof(Mech_GetComponentInSlot_Patch),
-                typeof(Mech_OnLocationDestroyed_Patch),
-                typeof(MechComponent_DamageComponent_Patch),
-                typeof(MechComponent_inventorySize_Patch)
-            );
-        }
+        internal static readonly CriticalEffectsFeature Shared = new CriticalEffectsFeature();
 
-        private static Dictionary<string, EffectData> Settings { get; set; } = new Dictionary<string, EffectData>();
-
-        internal static void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        internal override bool Enabled => LocationalEffectsFeature.Shared.Loaded && Control.settings.FeatureCriticalEffectsEnabled;
+        internal override string Topic => nameof(Features.CriticalEffects);
+        internal override Type[] Patches => new[]
         {
+            typeof(Mech_CheckForCrit_Patch),
+            typeof(Mech_GetComponentInSlot_Patch),
+            typeof(Mech_OnLocationDestroyed_Patch),
+            typeof(MechComponent_DamageComponent_Patch),
+            typeof(MechComponent_inventorySize_Patch)
+        };
+
+        internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        {
+            base.SetupResources(customResources);
+
             Settings = SettingsResourcesTools.Enumerate<EffectData>("MECriticalEffects", customResources)
                 .ToDictionary(entry => entry.Description.Id);
         }
+
+        private static Dictionary<string, EffectData> Settings { get; set; } = new Dictionary<string, EffectData>();
 
         internal static EffectData GetEffectData(string effectId)
         {
@@ -42,12 +44,6 @@ namespace MechEngineer.Features.CriticalEffects
             
             Control.mod.Logger.LogError($"Can't find critical effect id '{effectId}'");
             return null;
-        }
-        
-        public static readonly CriticalEffectsHandler Shared = new CriticalEffectsHandler();
-
-        private CriticalEffectsHandler()
-        {
         }
 
         public void ProcessWeaponHit(MechComponent mechComponent, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
@@ -288,7 +284,7 @@ namespace MechEngineer.Features.CriticalEffects
                 
                 var actor = mechComponent.parent;
 
-                LocationalEffectsHandler.ProcessLocationalEffectData(ref effectData, mechComponent);
+                LocationalEffectsFeature.ProcessLocationalEffectData(ref effectData, mechComponent);
                 
                 Control.mod.Logger.LogDebug($"Creating scopedId={scopedId} statName={effectData.statisticData.statName}");
                 actor.Combat.EffectManager.CreateEffect(

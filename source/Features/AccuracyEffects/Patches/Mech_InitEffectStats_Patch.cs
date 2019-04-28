@@ -11,7 +11,7 @@ namespace MechEngineer.Features.AccuracyEffects.Patches
         {
             try
             {
-                AccuracyEffectsHandler.SetupAccuracyStatistics(__instance.StatCollection);
+                AccuracyEffectsFeature.SetupAccuracyStatistics(__instance.StatCollection);
             }
             catch (Exception e)
             {

@@ -1,19 +1,20 @@
+using System;
 using BattleTech;
 using MechEngineer.Features.LocationalEffects.Patches;
-using MechEngineer.Misc;
 
 namespace MechEngineer.Features.LocationalEffects
 {
-    internal static class LocationalEffectsHandler
+    internal class LocationalEffectsFeature : Feature
     {
-        internal static void SetupPatches()
+        internal static LocationalEffectsFeature Shared = new LocationalEffectsFeature();
+
+        internal override bool Enabled => Control.settings.FeatureAccuracyEffectsEnabled || Control.settings.FeatureCriticalEffectsEnabled;
+        internal override string Topic => nameof(Features.LocationalEffects);
+        internal override Type[] Patches => new[]
         {
-            FeatureUtils.SetupFeature(
-                nameof(Features.LocationalEffects),
-                Control.settings.FeatureLocationalEffectsEnabled,
-                typeof(MechComponent_ApplyPassiveEffectToTarget_Patch)
-            );
-        }
+            typeof(MechComponent_ApplyPassiveEffectToTarget_Patch)
+        };
+
         internal static string LocationalStatisticName(string statisticName, ChassisLocations location)
         {
             // this is how Structure and Armor is looked up in Mech initstats

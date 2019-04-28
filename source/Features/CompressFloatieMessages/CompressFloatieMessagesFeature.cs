@@ -1,23 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BattleTech;
-using Harmony;
 using MechEngineer.Features.CompressFloatieMessages.Patches;
-using MechEngineer.Misc;
 
 namespace MechEngineer.Features.CompressFloatieMessages
 {
-    internal static class CompressFloatieMessagesHandler
+    internal class CompressFloatieMessagesFeature : Feature
     {
-        internal static void SetupPatches()
+        internal static CompressFloatieMessagesFeature Shared = new CompressFloatieMessagesFeature();
+
+        internal override bool Enabled => Control.settings.FeatureCompressFloatieMessagesEnabled;
+        internal override string Topic => nameof(Features.CompressFloatieMessages);
+        internal override Type[] Patches => new[]
         {
-            FeatureUtils.SetupFeature(
-                nameof(Features.CompressFloatieMessages),
-                Control.settings.FeatureCompressFloatieMessagesEnabled,
-                typeof(CombatHUDFloatieStack_AddFloatie_Patch)
-            );
-        }
+            typeof(CombatHUDFloatieStack_AddFloatie_Patch)
+        };
 
         public static bool CompressFloatieMessages(FloatieMessage incoming, Queue<FloatieMessage> queue)
         {

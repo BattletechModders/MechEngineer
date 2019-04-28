@@ -17,7 +17,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches
                     return false;
                 }
 
-                CriticalEffectsHandler.Shared.ProcessWeaponHit(mechComponent, hitInfo, ref damageLevel);
+                CriticalEffectsFeature.Shared.ProcessWeaponHit(mechComponent, hitInfo, ref damageLevel);
             }
             catch (Exception e)
             {

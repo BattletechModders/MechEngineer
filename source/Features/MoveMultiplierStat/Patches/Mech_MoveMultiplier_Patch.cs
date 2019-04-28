@@ -11,7 +11,7 @@ namespace MechEngineer.Features.MoveMultiplierStat.Patches
         {
             try
             {
-                MoveMultiplierStatHandler.MoveMultiplier(__instance, ref __result);
+                MoveMultiplierStatFeature.Shared.MoveMultiplier(__instance, ref __result);
             }
             catch (Exception e)
             {

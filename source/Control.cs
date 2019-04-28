@@ -4,11 +4,7 @@ using System.Reflection;
 using BattleTech;
 using CustomComponents;
 using Harmony;
-using MechEngineer.Features.AccuracyEffects;
-using MechEngineer.Features.CompressFloatieMessages;
-using MechEngineer.Features.CriticalEffects;
-using MechEngineer.Features.LocationalEffects;
-using MechEngineer.Features.MoveMultiplierStat;
+using MechEngineer.Features;
 
 namespace MechEngineer
 {
@@ -18,17 +14,6 @@ namespace MechEngineer
 
         internal static MechEngineerSettings settings = new MechEngineerSettings();
         internal static HarmonyInstance harmony;
-
-        // TODO rename handlers to features
-        // make them all instance based
-        // make them implement IFeature
-        // use register
-        public interface IFeature
-        {
-            void SetupPatches(HarmonyInstance harmony);
-            void SetupCustomComponents();
-            void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources);
-        }
 
         public static void Start(string modDirectory, string json)
         {
@@ -48,11 +33,10 @@ namespace MechEngineer
                 //HarmonyInstance.DEBUG = true;
                 harmony = HarmonyInstance.Create(mod.Name);
 
-                MoveMultiplierStatHandler.SetupPatches();
-                CompressFloatieMessagesHandler.SetupPatches();
-                AccuracyEffectsHandler.SetupPatches();
-                CriticalEffectsHandler.SetupPatches();
-                LocationalEffectsHandler.SetupPatches();
+                foreach (var feature in FeaturesList.Features)
+                {
+                    feature.SetupFeature();
+                }
 
                 //harmony.PatchAll(Assembly.GetExecutingAssembly());
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
@@ -117,8 +101,11 @@ namespace MechEngineer
         {
             try
             {
+                foreach (var feature in FeaturesList.Features)
+                {
+                    feature.SetupResources(customResources);
+                }
                 BonusDescriptions.SetupResources(customResources);
-                CriticalEffectsHandler.SetupResources(customResources);
 
                 mod.Logger.Log("loaded");
             }

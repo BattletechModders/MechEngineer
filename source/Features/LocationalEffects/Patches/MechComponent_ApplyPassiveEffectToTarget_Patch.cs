@@ -11,7 +11,7 @@ namespace MechEngineer.Features.LocationalEffects.Patches
         {
             try
             {
-                LocationalEffectsHandler.ProcessLocationalEffectData(ref effect, __instance);
+                LocationalEffectsFeature.ProcessLocationalEffectData(ref effect, __instance);
             }
             catch (Exception e)
             {

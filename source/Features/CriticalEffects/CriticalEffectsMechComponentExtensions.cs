@@ -87,7 +87,7 @@ namespace MechEngineer.Features.CriticalEffects
 
         internal static string ScopedId(this MechComponent mechComponent, string id, bool isLinked)
         {
-            var scopeId = LocationalEffectsHandler.InterpolateEffectId(id, mechComponent.mechComponentRef.MountedLocation);
+            var scopeId = LocationalEffectsFeature.InterpolateEffectId(id, mechComponent.mechComponentRef.MountedLocation);
             if (scopeId == id && !isLinked)
             {
                 var uid = mechComponent.uid;

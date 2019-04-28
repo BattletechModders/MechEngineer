@@ -43,7 +43,6 @@ namespace MechEngineer
         public bool DebugDestroyedFloaties = true;
 
         public bool FeatureCriticalEffectsEnabled = true;
-        public bool FeatureLocationalEffectsEnabled => FeatureAccuracyEffectsEnabled || FeatureCriticalEffectsEnabled;
         public bool FeatureMoveMultiplierEnabled = true;
 
         public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
