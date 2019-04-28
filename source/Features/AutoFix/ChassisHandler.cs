@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
-using CustomComponents;
 using MechEngineer.Features.Engine;
 using MechEngineer.Features.HardpointFix.limits;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix
 {
     internal class ChassisHandler
     {
-        internal static ChassisHandler Shared = new ChassisHandler();
-
         private static readonly Dictionary<string, float> OriginalInitialTonnages = new Dictionary<string, float>();
 
         internal static void OverrideChassisSettings(ChassisDef chassisDef)

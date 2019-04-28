@@ -2,7 +2,7 @@
 using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix
 {
     internal class GyroHandler : IAdjustUpgradeDef, IPreProcessor
     {

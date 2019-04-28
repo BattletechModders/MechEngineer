@@ -3,7 +3,7 @@ using System.Linq;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix.Patches
 {
     [HarmonyPatch(typeof(UpgradeDef), "FromJSON")]
     public static class UpgradeDef_FromJSON_Patch

@@ -5,6 +5,7 @@ using BattleTech;
 using CustomComponents;
 using Harmony;
 using MechEngineer.Features;
+using MechEngineer.Features.AutoFix;
 
 namespace MechEngineer
 {
@@ -36,14 +37,6 @@ namespace MechEngineer
                     feature.SetupFeature();
                 }
                 harmony = null;
-
-                mod.Logger.LogDebug("setting up CustomComponents");
-                Registry.RegisterPreProcessor(CockpitHandler.Shared);
-                Registry.RegisterPreProcessor(GyroHandler.Shared);
-                Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
-
-                mod.Logger.LogDebug("setting up mechdef auto fixers");
-                AutoFixer.Shared.RegisterMechFixer(MEAutoFixer.Shared.AutoFix);
 
                 mod.Logger.Log("started");
             }

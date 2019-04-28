@@ -2,6 +2,7 @@
 using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
+using MechEngineer.Features.AutoFix;
 using MechEngineer.Features.BattleTechLoadFix;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
@@ -51,6 +52,7 @@ namespace MechEngineer.Features
             ArmorStructureRatioValidationFeature.Shared,
             ArmorStructureChangesFeature.Shared,
             HardpointFixFeature.Shared,
+            AutoFixerFeature.Shared,
         };
     }
 }

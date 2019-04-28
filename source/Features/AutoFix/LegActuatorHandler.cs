@@ -2,7 +2,7 @@
 using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix
 {
     // this isn't yet leg actuators, but we still did reduce the legs size
     internal class LegActuatorHandler : IAdjustUpgradeDef, IPreProcessor

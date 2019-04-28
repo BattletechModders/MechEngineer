@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix.Patches
 {
     [HarmonyPatch(typeof(ChassisDef), "FromJSON")]
     public static class ChassisDef_FromJSON_Patch

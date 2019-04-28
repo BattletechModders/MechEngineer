@@ -2,7 +2,7 @@
 using System.Linq;
 using BattleTech;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix
 {
     internal class AutoFixMechDefHelper : IAutoFixMechDef
     {

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix.Patches
 {
     [HarmonyPatch(typeof(WeaponDef), "FromJSON")]
     public static class WeaponDef_FromJSON_Patch

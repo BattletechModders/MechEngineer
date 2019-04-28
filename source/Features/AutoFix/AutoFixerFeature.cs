@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
-using BattleTech.UI;
 using CustomComponents;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engine;
-using MechEngineer.Features.Weights;
-using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix
 {
-    internal class MEAutoFixer : IAutoFixMechDef
+    internal class AutoFixerFeature : Feature, IAutoFixMechDef
     {
-        internal static MEAutoFixer Shared = new MEAutoFixer();
+        internal static AutoFixerFeature Shared = new AutoFixerFeature();
+
+        internal override void SetupFeatureLoaded()
+        {
+            Registry.RegisterPreProcessor(CockpitHandler.Shared);
+            Registry.RegisterPreProcessor(GyroHandler.Shared);
+            Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
+
+            AutoFixer.Shared.RegisterMechFixer(AutoFix);
+        }
 
         public void AutoFix(List<MechDef> mechDefs, SimGameState simgame)
         {
@@ -99,7 +105,7 @@ namespace MechEngineer
             }
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
-            var standardWeights = new Weights(); // use default gyro and weights
+            var standardWeights = new Weights.Weights(); // use default gyro and weights
             var standardHeatBlock = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefHeatBlockDef).GetComponent<EngineHeatBlockDef>();
             var standardCooling = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefCoolingDef).GetComponent<CoolingDef>();
 
@@ -109,16 +115,16 @@ namespace MechEngineer
                 .Where(c => c != null)
                 .OrderByDescending(x => x.Rating);
 
-            Engine maxEngine = null;
+            Engine.Engine maxEngine = null;
             {
                 //var heatSinks = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.HeatSink && x.Def.Is<EngineHeatSinkDef>()).ToList();
                 var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
-                var engines = new LinkedList<Engine>();
+                var engines = new LinkedList<Engine.Engine>();
                 
                 foreach (var coreDef in engineCoreDefs)
                 {
                     {
-                        var engine = new Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, new List<MechComponentRef>());
+                        var engine = new Engine.Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, new List<MechComponentRef>());
                         engines.AddFirst(engine);
                     }
                     

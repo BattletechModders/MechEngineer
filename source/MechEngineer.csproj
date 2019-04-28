@@ -124,7 +124,7 @@
     <Compile Include="Features\Engine\EngineCoreDef.cs" />
     <Compile Include="Features\Engine\EngineHeatBlockDef.cs" />
     <Compile Include="Features\Engine\EngineHeatSinkDef.cs" />
-    <Compile Include="Features\AutoFix\MEAutoFixer.cs" />
+    <Compile Include="Features\AutoFix\AutoFixerFeature.cs" />
     <Compile Include="Features\Engine\Handler\EngineValidation.cs" />
     <Compile Include="Features\Engine\Helper\EngineExtensions.cs" />
     <Compile Include="Features\Engine\Helper\EngineMovement.cs" />

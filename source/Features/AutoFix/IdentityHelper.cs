@@ -4,7 +4,7 @@ using System.Linq;
 using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix
 {
     public class IdentityHelper : IIdentifier, IPreProcessor
     {
