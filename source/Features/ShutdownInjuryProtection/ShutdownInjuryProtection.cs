@@ -8,7 +8,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection
         internal static ShutdownInjuryProtectionFeature Shared = new ShutdownInjuryProtectionFeature();
 
         internal override bool Enabled => Control.settings.ShutdownInjuryEnabled || Control.settings.HeatDamageInjuryEnabled;
-        internal override string Topic => nameof(Features.ShutdownInjuryProtection);
+
         internal override Type[] Patches => new[]
         {
             typeof(Mech_CheckForHeatDamage_Patch),

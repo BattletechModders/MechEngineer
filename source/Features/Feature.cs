@@ -10,7 +10,6 @@ namespace MechEngineer.Features
     internal abstract class Feature
     {
         internal abstract bool Enabled { get; }
-        internal abstract string Topic { get; }
         internal virtual Type[] Patches { get; } = { };
 
         // called when the feature is enabled and its patches have been successfully loaded
@@ -31,7 +30,7 @@ namespace MechEngineer.Features
         internal void SetupFeature()
         {
             Loaded = FeatureUtils.SetupFeature(
-                Topic,
+                GetType().Name,
                 Enabled,
                 Patches
             );

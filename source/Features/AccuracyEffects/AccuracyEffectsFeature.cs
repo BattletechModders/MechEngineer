@@ -11,7 +11,7 @@ namespace MechEngineer.Features.AccuracyEffects
         internal static AccuracyEffectsFeature Shared = new AccuracyEffectsFeature();
 
         internal override bool Enabled => LocationalEffectsFeature.Shared.Loaded && Control.settings.FeatureAccuracyEffectsEnabled;
-        internal override string Topic => nameof(Features.AccuracyEffects);
+
         internal override Type[] Patches => new[]
         {
             typeof(ToHit_GetSelfArmMountedModifier_Patch)

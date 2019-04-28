@@ -12,7 +12,7 @@ namespace MechEngineer.Features.CompressFloatieMessages
         internal static CompressFloatieMessagesFeature Shared = new CompressFloatieMessagesFeature();
 
         internal override bool Enabled => Control.settings.FeatureCompressFloatieMessagesEnabled;
-        internal override string Topic => nameof(Features.CompressFloatieMessages);
+
         internal override Type[] Patches => new[]
         {
             typeof(CombatHUDFloatieStack_AddFloatie_Patch)

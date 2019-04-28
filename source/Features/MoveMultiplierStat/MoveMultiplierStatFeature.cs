@@ -10,7 +10,7 @@ namespace MechEngineer.Features.MoveMultiplierStat
         internal static MoveMultiplierStatFeature Shared = new MoveMultiplierStatFeature();
 
         internal override bool Enabled => Control.settings.FeatureMoveMultiplierEnabled;
-        internal override string Topic => nameof(Features.MoveMultiplierStat);
+
         internal override Type[] Patches => new[]
         {
             typeof(Mech_InitEffectStats_Patch),

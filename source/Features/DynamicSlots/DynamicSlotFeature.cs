@@ -11,7 +11,7 @@ namespace MechEngineer.Features.DynamicSlots
         internal static DynamicSlotFeature Shared = new DynamicSlotFeature();
 
         internal override bool Enabled => Control.settings.FeatureDynamicSlotsEnabled;
-        internal override string Topic => nameof(Features.DynamicSlots);
+
         internal override Type[] Patches => new[]
         {
             typeof(MechLabPanel_ValidateLoadout_Patch)

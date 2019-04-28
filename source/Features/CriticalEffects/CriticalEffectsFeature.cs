@@ -15,7 +15,7 @@ namespace MechEngineer.Features.CriticalEffects
         internal static readonly CriticalEffectsFeature Shared = new CriticalEffectsFeature();
 
         internal override bool Enabled => LocationalEffectsFeature.Shared.Loaded && Control.settings.FeatureCriticalEffectsEnabled;
-        internal override string Topic => nameof(Features.CriticalEffects);
+
         internal override Type[] Patches => new[]
         {
             typeof(Mech_CheckForCrit_Patch),

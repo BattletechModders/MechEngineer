@@ -15,7 +15,7 @@ namespace MechEngineer.Features.OverrideDescriptions
         internal static OverrideDescriptionsFeature Shared = new OverrideDescriptionsFeature();
 
         internal override bool Enabled => Control.settings.FeatureOverrideDescriptionsEnabled;
-        internal override string Topic => nameof(Features.OverrideDescriptions);
+
         internal override Type[] Patches => new[]
         {
             typeof(ListElementController_BASE_NotListView_SetComponentTooltipData_Patch),

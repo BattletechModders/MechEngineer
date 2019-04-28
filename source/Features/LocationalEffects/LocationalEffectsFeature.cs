@@ -9,7 +9,7 @@ namespace MechEngineer.Features.LocationalEffects
         internal static LocationalEffectsFeature Shared = new LocationalEffectsFeature();
 
         internal override bool Enabled => Control.settings.FeatureAccuracyEffectsEnabled || Control.settings.FeatureCriticalEffectsEnabled;
-        internal override string Topic => nameof(Features.LocationalEffects);
+
         internal override Type[] Patches => new[]
         {
             typeof(MechComponent_ApplyPassiveEffectToTarget_Patch)
