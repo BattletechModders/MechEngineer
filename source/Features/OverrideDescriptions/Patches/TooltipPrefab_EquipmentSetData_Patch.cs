@@ -3,7 +3,7 @@ using BattleTech;
 using BattleTech.UI.Tooltips;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.OverrideDescriptions.Patches
 {
     [HarmonyPatch(typeof(TooltipPrefab_Equipment), "SetData")]
     public static class TooltipPrefab_EquipmentSetData_Patch
@@ -17,7 +17,7 @@ namespace MechEngineer
 
                 if (data is MechComponentDef def)
                 {
-                    OverrideDescriptionsHandler.Shared.AdjustTooltip(__instance, def);
+                    OverrideDescriptionsFeature.Shared.AdjustTooltip(__instance, def);
                 }
             }
             catch (Exception e)

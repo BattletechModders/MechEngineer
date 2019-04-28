@@ -1,15 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
+using MechEngineer.Features.OverrideDescriptions.Patches;
 
-namespace MechEngineer
+namespace MechEngineer.Features.OverrideDescriptions
 {
-    public class OverrideDescriptionsHandler: IAdjustSlotElement, IAdjustTooltip, IAdjustInventoryElement
+    internal class OverrideDescriptionsFeature: Feature, IAdjustSlotElement, IAdjustTooltip, IAdjustInventoryElement
     {
-        public static OverrideDescriptionsHandler Shared = new OverrideDescriptionsHandler();
+        internal static OverrideDescriptionsFeature Shared = new OverrideDescriptionsFeature();
+
+        internal override bool Enabled => Control.settings.FeatureOverrideDescriptionsEnabled;
+        internal override string Topic => nameof(Features.OverrideDescriptions);
+        internal override Type[] Patches => new[]
+        {
+            typeof(ListElementController_BASE_NotListView_SetComponentTooltipData_Patch),
+            typeof(MechLabPanel_CreateMechComponentItem_Patch),
+            typeof(MechLabPanel_ValidateLoadout_Patch),
+            typeof(TooltipPrefab_EquipmentSetData_Patch),
+        };
+
+        internal override void SetupFeature()
+        {
+            base.SetupFeature();
+            
+            Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
+        }
 
         public void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel)
         {
@@ -21,7 +40,7 @@ namespace MechEngineer
 
         public void RefreshData(MechLabPanel panel)
         {
-            foreach (var element in panel.Elements())
+            foreach (var element in Elements(panel))
             {
                 AdjustSlotElement(element, panel);
             }
@@ -48,11 +67,8 @@ namespace MechEngineer
                 cc.AdjustInventoryElement(element);
             }
         }
-    }
 
-    public static class MechLabExtensions
-    {
-        public static IEnumerable<MechLabItemSlotElement> Elements(this MechLabPanel panel)
+        private static IEnumerable<MechLabItemSlotElement> Elements(MechLabPanel panel)
         {
             return MechDefBuilder.Locations
                 .Select(location => panel.GetLocationWidget((ArmorLocation) location))

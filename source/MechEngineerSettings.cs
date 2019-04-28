@@ -38,6 +38,7 @@ namespace MechEngineer
         public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
         
         public bool FeatureAccuracyEffectsEnabled = true;
+        public bool FeatureOverrideDescriptionsEnabled = true;
 
         public bool FeatureCompressFloatieMessagesEnabled = true;
         public bool DebugDestroyedFloaties = true;

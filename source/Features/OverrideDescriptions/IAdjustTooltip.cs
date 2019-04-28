@@ -1,7 +1,7 @@
 ﻿using BattleTech;
 using BattleTech.UI.Tooltips;
 
-namespace MechEngineer
+namespace MechEngineer.Features.OverrideDescriptions
 {
     internal interface IAdjustTooltip
     {

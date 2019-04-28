@@ -3,6 +3,7 @@ using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
 using fastJSON;
+using MechEngineer.Features.OverrideDescriptions;
 using UnityEngine;
 
 namespace MechEngineer

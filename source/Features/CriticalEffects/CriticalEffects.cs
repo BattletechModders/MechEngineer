@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
+using MechEngineer.Features.OverrideDescriptions;
 
 namespace MechEngineer.Features.CriticalEffects
 {

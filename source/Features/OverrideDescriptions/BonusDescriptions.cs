@@ -7,7 +7,7 @@ using BattleTech.UI.Tooltips;
 using CustomComponents;
 using fastJSON;
 
-namespace MechEngineer
+namespace MechEngineer.Features.OverrideDescriptions
 {
     [CustomComponent("BonusDescriptions")]
     public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltip, IAdjustInventoryElement, IAfterLoad

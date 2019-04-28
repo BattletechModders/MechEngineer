@@ -3,6 +3,7 @@ using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MoveMultiplierStat;
+using MechEngineer.Features.OverrideDescriptions;
 
 namespace MechEngineer.Features
 {
@@ -14,7 +15,8 @@ namespace MechEngineer.Features
             CompressFloatieMessagesFeature.Shared,
             LocationalEffectsFeature.Shared,
             CriticalEffectsFeature.Shared,
-            AccuracyEffectsFeature.Shared
+            AccuracyEffectsFeature.Shared,
+            OverrideDescriptionsFeature.Shared
         };
     }
 }

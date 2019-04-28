@@ -2,16 +2,16 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.OverrideDescriptions.Patches
 {
     [HarmonyPatch(typeof(MechLabPanel), "ValidateLoadout")]
-    public static class MechLabPanel_ValidateLoadout_Patch2
+    public static class MechLabPanel_ValidateLoadout_Patch
     {
         public static void Postfix(MechLabPanel __instance)
         {
             try
             {
-                OverrideDescriptionsHandler.Shared.RefreshData(__instance);
+                OverrideDescriptionsFeature.Shared.RefreshData(__instance);
             }
             catch (Exception e)
             {

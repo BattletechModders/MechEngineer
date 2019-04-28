@@ -1,6 +1,6 @@
 ﻿using BattleTech.UI;
 
-namespace MechEngineer
+namespace MechEngineer.Features.OverrideDescriptions
 {
     internal interface IAdjustSlotElement
     {

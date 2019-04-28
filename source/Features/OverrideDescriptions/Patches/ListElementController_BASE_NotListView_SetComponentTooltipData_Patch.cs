@@ -2,7 +2,7 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.OverrideDescriptions.Patches
 {
     [HarmonyPatch(typeof(ListElementController_BASE_NotListView), nameof(ListElementController_BASE_NotListView.SetComponentTooltipData))]
     internal static class ListElementController_BASE_NotListView_SetComponentTooltipData_Patch
@@ -11,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                OverrideDescriptionsHandler.Shared.AdjustInventoryElement(__instance);
+                OverrideDescriptionsFeature.Shared.AdjustInventoryElement(__instance);
             }
             catch (Exception e)
             {

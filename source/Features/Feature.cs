@@ -9,10 +9,11 @@ namespace MechEngineer.Features
 {
     internal abstract class Feature
     {
-        internal abstract bool Enabled { get; }
-        internal bool Loaded { get; set; }
         internal abstract string Topic { get; }
+        internal abstract bool Enabled { get; }
         internal abstract Type[] Patches { get; }
+
+        internal bool Loaded { get; set; }
         
         // setup a feature using patching
         internal virtual void SetupFeature()

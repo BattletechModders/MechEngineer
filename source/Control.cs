@@ -4,7 +4,9 @@ using System.Reflection;
 using BattleTech;
 using CustomComponents;
 using Harmony;
+using JetBrains.Annotations;
 using MechEngineer.Features;
+using MechEngineer.Features.OverrideDescriptions;
 
 namespace MechEngineer
 {
@@ -15,6 +17,7 @@ namespace MechEngineer
         internal static MechEngineerSettings settings = new MechEngineerSettings();
         internal static HarmonyInstance harmony;
 
+        [UsedImplicitly]
         public static void Start(string modDirectory, string json)
         {
             mod = new Mod(modDirectory);
@@ -42,7 +45,6 @@ namespace MechEngineer
                 //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
 
                 mod.Logger.LogDebug("setting up CustomComponents");
-                Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
                 Registry.RegisterSimpleCustomComponents(typeof(Weights));
                 Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
                 Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
@@ -96,7 +98,8 @@ namespace MechEngineer
                 throw;
             }
         }
-
+        
+        [UsedImplicitly]
         public static void FinishedLoading(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
             try
