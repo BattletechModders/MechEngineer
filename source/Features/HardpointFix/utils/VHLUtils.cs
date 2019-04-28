@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleTech;
 
-namespace MechEngineer
+namespace MechEngineer.Features.HardpointFix.utils
 {
     internal static class VHLUtils
     {

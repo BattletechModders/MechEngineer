@@ -1,54 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.HardpointFix.utils;
 
-namespace MechEngineer
+namespace MechEngineer.Features.HardpointFix.limits.Patches
 {
-    internal class ChassisDefAdapter : Adapter<ChassisDef>
-    {
-        internal ChassisDefAdapter(ChassisDef instance) : base(instance)
-        {
-        }
-
-        internal LocationDef[] Locations
-        {
-            get => traverse.Field("Locations").GetValue<LocationDef[]>();
-            set => traverse.Field("Locations").SetValue(value);
-        }
-
-        internal void refreshLocationReferences()
-        {
-            traverse.Method("refreshLocationReferences").GetValue();
-        }
-    }
-
-    [HarmonyPatch(typeof(ChassisDef), "refreshLocationReferences")]
-    public static class ChassisDef_refreshLocationReferences_Patch
-    {
-        public static void Prefix(ChassisDef __instance)
-        {
-            try
-            {
-                if (!Control.settings.HardpointFix.AutoFixChassisDefWeaponHardpointCounts)
-                {
-                    return;
-                }
-
-                if (ChassisDef_RefreshHardpointData_Patch.ChassisDefLocationsLocationsCache.TryGetValue(__instance.Description.Id, out var locations))
-                {
-                    var adapter = new ChassisDefAdapter(__instance);
-                    adapter.Locations = locations;
-                }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(ChassisDef), "RefreshHardpointData")]
     public static class ChassisDef_RefreshHardpointData_Patch
     {

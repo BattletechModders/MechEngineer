@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using CustomComponents;
+using MechEngineer.Features.HardpointFix.limits;
 using UnityEngine;
 
 namespace MechEngineer

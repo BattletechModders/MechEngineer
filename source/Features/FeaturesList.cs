@@ -9,6 +9,7 @@ using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MechLabSlots;
@@ -36,7 +37,7 @@ namespace MechEngineer.Features
             AccuracyEffectsFeature.Shared,
             OverrideDescriptionsFeature.Shared,
             ArmActuatorFeature.Shared,
-            DynamicSlotFeature.Shared, // not nicely modularized yet
+            DynamicSlotFeature.Shared,
             ShutdownInjuryProtectionFeature.Shared,
             DebugSaveMechToFileFeature.Shared,
             DebugCycleCombatSoundsFeature.Shared,
@@ -47,6 +48,7 @@ namespace MechEngineer.Features
             BattleTechLoadFixFeature.Shared,
             ArmorStructureRatioValidationFeature.Shared,
             ArmorStructureChangesFeature.Shared,
+            HardpointFixFeature.Shared,
         };
     }
 }

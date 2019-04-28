@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.HardpointFix.utils;
 
-namespace MechEngineer
+namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
     [HarmonyPatch(typeof(MechHardpointRules), "GetComponentPrefabName")]
-    public static class MechHardpointRulesGetComponentPrefabNamePatch
+    public static class MechHardpointRules_GetComponentPrefabName_Patch
     {
         private static WeaponComponentPrefabCalculator calculator;
 

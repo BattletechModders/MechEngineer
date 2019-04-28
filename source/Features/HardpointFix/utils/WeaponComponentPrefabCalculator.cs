@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using MechEngineer.Features.DynamicSlots;
 
-namespace MechEngineer
+namespace MechEngineer.Features.HardpointFix.utils
 {
     internal class WeaponComponentPrefabCalculator
     {

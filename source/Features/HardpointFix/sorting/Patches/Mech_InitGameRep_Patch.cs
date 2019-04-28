@@ -4,10 +4,10 @@ using BattleTech;
 using Harmony;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
     [HarmonyPatch(typeof(Mech), "InitGameRep")]
-    public static class MechInitGameRepPatch
+    public static class Mech_InitGameRep_Patch
     {
         public static void Prefix(Mech __instance, Transform parentTransform)
         {
@@ -18,7 +18,7 @@ namespace MechEngineer
                     .Where(c => c != null)
                     .ToList();
 
-                MechHardpointRulesGetComponentPrefabNamePatch.SetupCalculator(__instance.MechDef.Chassis, componentRefs);
+                MechHardpointRules_GetComponentPrefabName_Patch.SetupCalculator(__instance.MechDef.Chassis, componentRefs);
             }
             catch (Exception e)
             {
@@ -28,7 +28,7 @@ namespace MechEngineer
 
         public static void Postfix(Mech __instance, Transform parentTransform)
         {
-            MechHardpointRulesGetComponentPrefabNamePatch.ResetCalculator();
+            MechHardpointRules_GetComponentPrefabName_Patch.ResetCalculator();
         }
     }
 }

@@ -3,10 +3,10 @@ using System.Linq;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
     [HarmonyPatch(typeof(MechDef), "RefreshInventory")]
-    public static class MechDefRefreshInventoryPatch
+    public static class MechDef_RefreshInventory_Patch
     {
         public static void Prefix(MechDef __instance)
         {
@@ -32,7 +32,7 @@ namespace MechEngineer
                     })
                     .Where(c => !c.hasPrefabName)
                     .ToList();
-                MechHardpointRulesGetComponentPrefabNamePatch.SetupCalculator(adapter.Chassis, componentRefs);
+                MechHardpointRules_GetComponentPrefabName_Patch.SetupCalculator(adapter.Chassis, componentRefs);
             }
             catch (Exception e)
             {
@@ -42,7 +42,7 @@ namespace MechEngineer
 
         public static void Postfix(MechDef __instance)
         {
-            MechHardpointRulesGetComponentPrefabNamePatch.ResetCalculator();
+            MechHardpointRules_GetComponentPrefabName_Patch.ResetCalculator();
         }
     }
 }

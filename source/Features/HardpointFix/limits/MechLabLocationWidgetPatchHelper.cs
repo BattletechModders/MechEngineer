@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using MechEngineer.Features.HardpointFix.utils;
 using UnityEngine.EventSystems;
 
-namespace MechEngineer
+namespace MechEngineer.Features.HardpointFix.limits
 {
     internal class MechLabLocationWidgetPatchHelper
     {

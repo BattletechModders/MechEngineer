@@ -3,16 +3,16 @@ using System.Linq;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
     [HarmonyPatch(typeof(MechRepresentationSimGame), "LoadWeapons")]
-    public static class MechRepresentationSimGameLoadWeaponsPatch
+    public static class MechRepresentationSimGame_LoadWeapons_Patch
     {
         public static void Prefix(MechRepresentationSimGame __instance)
         {
             try
             {
-                MechHardpointRulesGetComponentPrefabNamePatch.SetupCalculator(
+                MechHardpointRules_GetComponentPrefabName_Patch.SetupCalculator(
                     __instance.mechDef?.Chassis,
                     __instance.mechDef?.Inventory?.ToList());
             }
@@ -24,7 +24,7 @@ namespace MechEngineer
 
         public static void Postfix(MechRepresentationSimGame __instance)
         {
-            MechHardpointRulesGetComponentPrefabNamePatch.ResetCalculator();
+            MechHardpointRules_GetComponentPrefabName_Patch.ResetCalculator();
         }
     }
 }
