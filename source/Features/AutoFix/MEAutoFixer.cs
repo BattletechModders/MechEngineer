@@ -5,6 +5,7 @@ using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
 using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Features.Weights;
 using UnityEngine;
 
 namespace MechEngineer

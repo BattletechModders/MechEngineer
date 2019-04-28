@@ -3,15 +3,16 @@ using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
-using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.OverrideDescriptions;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Weights
 {
-    internal class WeightsHandler : ITonnageChanges, IAdjustTooltip, IAdjustSlotElement
+    internal class WeightsFeature : Feature, ITonnageChanges, IAdjustTooltip, IAdjustSlotElement
     {
-        public static readonly WeightsHandler Shared = new WeightsHandler();
+        public static readonly WeightsFeature Shared = new WeightsFeature();
+
+        internal override bool Enabled => true;
 
         public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
         {
@@ -35,7 +36,7 @@ namespace MechEngineer
 
             // TODO move to own feature... SlotsHandler or SizeHandler
             var reservedSlots = weights.ReservedSlots;
-            if (mechComponentDef.Is<DynamicSlots>(out var dynamicSlots))
+            if (mechComponentDef.Is<DynamicSlots.DynamicSlots>(out var dynamicSlots))
             {
                 reservedSlots += dynamicSlots.ReservedSlots;
             }

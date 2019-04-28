@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
+using MechEngineer.Features.Weights;
 
 namespace MechEngineer
 {

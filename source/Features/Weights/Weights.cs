@@ -4,7 +4,7 @@ using BattleTech.UI.Tooltips;
 using CustomComponents;
 using MechEngineer.Features.OverrideDescriptions;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Weights
 {
     [CustomComponent("Weights")]
     public class Weights : SimpleCustomComponent, IAdjustSlotElement, IAdjustTooltip
@@ -28,12 +28,12 @@ namespace MechEngineer
 
         public void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel)
         {
-            WeightsHandler.Shared.AdjustSlotElement(element, panel);
+            WeightsFeature.Shared.AdjustSlotElement(element, panel);
         }
 
         public void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
-            WeightsHandler.Shared.AdjustTooltip(tooltip, componentDef);
+            WeightsFeature.Shared.AdjustTooltip(tooltip, componentDef);
         }
     }
 }

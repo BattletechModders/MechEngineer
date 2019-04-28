@@ -206,7 +206,7 @@
     <Compile Include="Features\AutoFix\AdjustCompDefTonnageHelper.cs" />
     <Compile Include="Features\AutoFix\AdjustCompDefInvSizeHelper.cs" />
     <Compile Include="Features\AutoFix\AutoFixMechDefHelper.cs" />
-    <Compile Include="Features\Weights\WeightsHandler.cs" />
+    <Compile Include="Features\Weights\WeightsFeature.cs" />
     <Compile Include="Misc\DictionarySerializer.cs" />
     <Compile Include="Features\AutoFix\LegActuatorHandler.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />

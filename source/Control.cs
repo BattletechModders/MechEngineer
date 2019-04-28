@@ -6,7 +6,7 @@ using CustomComponents;
 using Harmony;
 using JetBrains.Annotations;
 using MechEngineer.Features;
-using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Features.Weights;
 
 namespace MechEngineer
 {

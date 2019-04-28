@@ -3,7 +3,7 @@ using BattleTech;
 using Harmony;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Weights.Patches
 {
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateTonnage")]
     public static class MechStatisticsRules_CalculateTonnage_Patch
@@ -12,7 +12,7 @@ namespace MechEngineer
         {
             try
             {
-                currentValue += WeightsHandler.Shared.TonnageChanges(mechDef);
+                currentValue += WeightsFeature.Shared.TonnageChanges(mechDef);
                 currentValue = Mathf.Min(currentValue, maxValue);
             }
             catch (Exception e)

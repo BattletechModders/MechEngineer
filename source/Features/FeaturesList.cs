@@ -10,6 +10,7 @@ using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.ShutdownInjuryProtection;
+using MechEngineer.Features.Weights;
 
 namespace MechEngineer.Features
 {
@@ -29,6 +30,7 @@ namespace MechEngineer.Features
             DebugSaveMechToFileFeature.Shared,
             DebugCycleCombatSoundsFeature.Shared,
             NewSaveFolderFeature.Shared,
+            WeightsFeature.Shared,
         };
     }
 }
