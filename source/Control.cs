@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using BattleTech;
-using CustomComponents;
-using Harmony;
 using MechEngineer.Features;
-using MechEngineer.Features.AutoFix;
 
 namespace MechEngineer
 {
@@ -14,7 +11,6 @@ namespace MechEngineer
         internal static Mod mod;
 
         internal static MechEngineerSettings settings = new MechEngineerSettings();
-        internal static HarmonyInstance harmony;
 
         public static void Start(string modDirectory, string json)
         {
@@ -30,13 +26,11 @@ namespace MechEngineer
                 mod.Logger.LogDebug("debugging enabled");
 
                 mod.Logger.LogDebug("setting up features");
-                //HarmonyInstance.DEBUG = true;
-                harmony = HarmonyInstance.Create(mod.Name);
+                
                 foreach (var feature in FeaturesList.Features)
                 {
                     feature.SetupFeature();
                 }
-                harmony = null;
 
                 mod.Logger.Log("started");
             }

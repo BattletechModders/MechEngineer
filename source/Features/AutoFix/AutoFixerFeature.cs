@@ -5,7 +5,8 @@ using BattleTech;
 using CustomComponents;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
-using MechEngineer.Features.Engine;
+using MechEngineer.Features.Engines;
+using MechEngineer.Features.OverrideWeights;
 
 namespace MechEngineer.Features.AutoFix
 {
@@ -105,7 +106,7 @@ namespace MechEngineer.Features.AutoFix
             }
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
-            var standardWeights = new Weights.Weights(); // use default gyro and weights
+            var standardWeights = new Weights(); // use default gyro and weights
             var standardHeatBlock = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefHeatBlockDef).GetComponent<EngineHeatBlockDef>();
             var standardCooling = mechDef.DataManager.HeatSinkDefs.Get(Control.settings.AutoFixMechDefCoolingDef).GetComponent<CoolingDef>();
 
@@ -115,16 +116,16 @@ namespace MechEngineer.Features.AutoFix
                 .Where(c => c != null)
                 .OrderByDescending(x => x.Rating);
 
-            Engine.Engine maxEngine = null;
+            Engine maxEngine = null;
             {
                 //var heatSinks = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.HeatSink && x.Def.Is<EngineHeatSinkDef>()).ToList();
                 var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
-                var engines = new LinkedList<Engine.Engine>();
+                var engines = new LinkedList<Engine>();
                 
                 foreach (var coreDef in engineCoreDefs)
                 {
                     {
-                        var engine = new Engine.Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, new List<MechComponentRef>());
+                        var engine = new Engine(standardCooling, standardHeatBlock, coreDef, standardWeights, new List<MechComponentRef>());
                         engines.AddFirst(engine);
                     }
                     

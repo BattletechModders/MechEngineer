@@ -10,7 +10,7 @@ using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
-using MechEngineer.Features.Engine;
+using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.LocationalEffects;
@@ -19,19 +19,14 @@ using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.ShutdownInjuryProtection;
-using MechEngineer.Features.Weights;
 
 namespace MechEngineer.Features
 {
     internal class FeaturesList
     {
-        // 
-        //Registry.RegisterSimpleCustomComponents(typeof(Weights));
-        //Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
-
         // order matters, dependencies between "Features" are encoded into the order
         internal static Feature[] Features = {
-            WeightsFeature.Shared,
+            /*WeightsFeature.Shared,*/
             EngineFeature.Shared,
             MoveMultiplierStatFeature.Shared,
             CompressFloatieMessagesFeature.Shared,

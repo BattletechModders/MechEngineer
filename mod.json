@@ -9,7 +9,7 @@
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
 	"LogSettings": {
-		"LogFileEnabled" : true
+		"Enabled" : true
 	},
 	
 	"CustomResourceTypes": ["MEBonusDescriptions", "MECriticalEffects"],
