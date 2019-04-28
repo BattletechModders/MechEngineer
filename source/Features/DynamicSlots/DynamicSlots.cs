@@ -1,8 +1,7 @@
-﻿
-using BattleTech.UI;
+﻿using BattleTech.UI;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.DynamicSlots
 {
     [CustomComponent("DynamicSlots")]
     public class DynamicSlots : SimpleCustomComponent

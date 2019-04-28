@@ -7,6 +7,7 @@ using BattleTech;
 using CustomComponents;
 using HBS.Extensions;
 using Localize;
+using MechEngineer.Features.DynamicSlots;
 
 namespace MechEngineer.Features.ArmActuators
 {

@@ -29,7 +29,8 @@ namespace MechEngineer
         public string DefaultEngineHeatSinkId = "Gear_HeatSink_Generic_Standard"; // default heat sink type for engines without a kit
 
         public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
-
+        
+        public bool FeatureDynamicSlotsEnabled = true;
         // MWO does not allow to drop if that would mean to go overweight
         // battletech allows overweight, to stay consistent so we also allow overspace usage by default
         // set to true to switch to MWO style

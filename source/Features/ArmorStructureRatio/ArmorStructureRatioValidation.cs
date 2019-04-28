@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using Localize;
+using MechEngineer.Features.DynamicSlots;
 using UnityEngine;
 
 namespace MechEngineer

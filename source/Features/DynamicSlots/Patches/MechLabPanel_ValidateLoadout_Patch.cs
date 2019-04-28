@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using BattleTech.UI;
 using Harmony;
-using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.DynamicSlots.Patches
 {
     [HarmonyPatch(typeof(MechLabPanel), "ValidateLoadout")]
-    public static class MechLabPanel_ValidateLoadout_Patch1
+    public static class MechLabPanel_ValidateLoadout_Patch
     {
         public static void Postfix(MechLabPanel __instance)
         {
             try
             {
-                DynamicSlotHandler.Shared.RefreshData(__instance);
+                DynamicSlotFeature.Shared.RefreshData(__instance);
             }
             catch (Exception e)
             {

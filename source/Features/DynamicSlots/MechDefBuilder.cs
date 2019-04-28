@@ -5,7 +5,7 @@ using BattleTech.Data;
 using CustomComponents;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.DynamicSlots
 {
     internal class MechDefBuilder
     {

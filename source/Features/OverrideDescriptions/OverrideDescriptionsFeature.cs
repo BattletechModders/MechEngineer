@@ -5,6 +5,7 @@ using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
+using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.OverrideDescriptions.Patches;
 
 namespace MechEngineer.Features.OverrideDescriptions
@@ -28,11 +29,11 @@ namespace MechEngineer.Features.OverrideDescriptions
             Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
         }
 
-        internal static Dictionary<string, BonusDescriptions.BonusDescriptionSettings> Settings { get; set; } = new Dictionary<string, BonusDescriptions.BonusDescriptionSettings>();
+        internal static Dictionary<string, BonusDescriptionSettings> Settings { get; set; } = new Dictionary<string, BonusDescriptionSettings>();
 
-        internal static void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
-            Settings = SettingsResourcesTools.Enumerate<BonusDescriptions.BonusDescriptionSettings>("MEBonusDescriptions", customResources)
+            Settings = SettingsResourcesTools.Enumerate<BonusDescriptionSettings>("MEBonusDescriptions", customResources)
                 .ToDictionary(entry => entry.Bonus);
         }
 

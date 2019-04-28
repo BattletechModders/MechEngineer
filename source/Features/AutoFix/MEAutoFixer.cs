@@ -4,6 +4,7 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
+using MechEngineer.Features.DynamicSlots;
 using UnityEngine;
 
 namespace MechEngineer

@@ -1,6 +1,7 @@
 using System;
 using BattleTech;
 using MechEngineer.Features.AccuracyEffects.Patches;
+using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.LocationalEffects;
 
 namespace MechEngineer.Features.AccuracyEffects

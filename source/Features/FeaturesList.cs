@@ -2,6 +2,7 @@
 using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
+using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OverrideDescriptions;
@@ -19,6 +20,7 @@ namespace MechEngineer.Features
             AccuracyEffectsFeature.Shared,
             OverrideDescriptionsFeature.Shared,
             ArmActuatorFeature.Shared,
+            DynamicSlotFeature.Shared // not nicely modularized yet
         };
     }
 }

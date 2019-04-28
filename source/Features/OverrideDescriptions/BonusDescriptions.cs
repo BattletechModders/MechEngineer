@@ -97,16 +97,6 @@ namespace MechEngineer.Features.OverrideDescriptions
             var bonuses = string.Join("", elements.Where(x => x != null).Select(x => elementTemplate.Replace("{{element}}", x)).ToArray());
             adapter.Details = descriptionTemplate.Replace("{{elements}}", bonuses).Replace("{{originalDescription}}", adapter.Details);
         }
-        
-        internal class BonusDescriptionSettings
-        {
-#pragma warning disable 649
-            public string Bonus;
-            public string Short;
-            public string Long;
-            public string Full;
-#pragma warning restore 649
-        }
 
         [JsonIgnore]
         private readonly List<BonusDescription> descriptions = new List<BonusDescription>();

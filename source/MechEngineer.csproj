@@ -103,6 +103,7 @@
     <Compile Include="Features\CriticalEffects\Patches\MechComponent_inventorySize_Patch.cs" />
     <Compile Include="Features\CriticalEffects\VehicleCriticalEffects.cs" />
     <Compile Include="Features\OverrideDescriptions\BonusDescriptions.cs" />
+    <Compile Include="Features\OverrideDescriptions\BonusDescriptionSettings.cs" />
     <Compile Include="Features\OverrideDescriptions\DescriptionDefAdapter.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustInventoryElement.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustSlotElement.cs" />
@@ -173,7 +174,7 @@
     <Compile Include="Misc\CCValidationAdapter.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
-    <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch1.cs" />
+    <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch.cs" />
     <Compile Include="Features\HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />
     <Compile Include="Features\OverrideDescriptions\OverrideDescriptionsFeature.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\MechLabPanel_ValidateLoadout_Patch.cs" />
@@ -191,7 +192,7 @@
     <Compile Include="Features\HardpointFix\utils\WeaponComponentPrefabCalculator.cs" />
     <Compile Include="Helper\MechDefExtensions.cs" />
     <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
-    <Compile Include="Features\DynamicSlots\DynamicSlotHandler.cs" />
+    <Compile Include="Features\DynamicSlots\DynamicSlotFeature.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
     <Compile Include="Misc\Adapter.cs" />
     <Compile Include="Misc\MELazy.cs" />

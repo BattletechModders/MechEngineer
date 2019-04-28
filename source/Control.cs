@@ -6,6 +6,7 @@ using CustomComponents;
 using Harmony;
 using JetBrains.Annotations;
 using MechEngineer.Features;
+using MechEngineer.Features.DynamicSlots;
 
 namespace MechEngineer
 {
@@ -54,12 +55,6 @@ namespace MechEngineer
                 Registry.RegisterPreProcessor(CockpitHandler.Shared);
                 Registry.RegisterPreProcessor(GyroHandler.Shared);
                 Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
-
-                Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                if (settings.DynamicSlotsValidateDropEnabled)
-                {
-                    Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.CCValidation.ValidateDrop);
-                }
 
                 Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
 
