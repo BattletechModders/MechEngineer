@@ -6,6 +6,7 @@ using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.LocationalEffects;
+using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideDescriptions;
@@ -35,6 +36,7 @@ namespace MechEngineer.Features
             DebugSaveMechToFileFeature.Shared,
             DebugCycleCombatSoundsFeature.Shared,
             NewSaveFolderFeature.Shared,
+            MechLabSlotsFeature.Shared,
         };
     }
 }

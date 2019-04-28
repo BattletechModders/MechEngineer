@@ -104,6 +104,7 @@
     <Compile Include="Features\CriticalEffects\MessagesHandler.cs" />
     <Compile Include="Features\CriticalEffects\Patches\MechComponent_inventorySize_Patch.cs" />
     <Compile Include="Features\CriticalEffects\VehicleCriticalEffects.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabSlotsFeature.cs" />
     <Compile Include="Features\OverrideDescriptions\BonusDescriptions.cs" />
     <Compile Include="Features\OverrideDescriptions\BonusDescriptionSettings.cs" />
     <Compile Include="Features\OverrideDescriptions\DescriptionDefAdapter.cs" />
