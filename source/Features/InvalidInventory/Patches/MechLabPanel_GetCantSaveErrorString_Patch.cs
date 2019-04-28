@@ -5,7 +5,7 @@ using BattleTech.UI;
 using Harmony;
 using Localize;
 
-namespace MechEngineer
+namespace MechEngineer.Features.InvalidInventory.Patches
 {
     [HarmonyPatch(typeof(MechLabPanel), "GetCantSaveErrorString")]
     public static class MechLabPanel_GetCantSaveErrorString_Patch

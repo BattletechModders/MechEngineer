@@ -82,6 +82,7 @@
     <Compile Include="Features\DebugCycleCombatSounds\DebugCycleCombatSoundsFeature.cs" />
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileFeature.cs" />
     <Compile Include="Features\FeaturesList.cs" />
+    <Compile Include="Features\InvalidInventory\InvalidInventoryFeature.cs" />
     <Compile Include="Features\LocationalEffects\LocationalEffectsFeature.cs" />
     <Compile Include="Features\LocationalEffects\Patches\MechComponent_ApplyPassiveEffectToTarget_Patch.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\Mech_InitEffectStats_Patch.cs" />
