@@ -175,7 +175,7 @@
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
     <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch1.cs" />
     <Compile Include="Features\HardpointFix\limits\ChassisDef_RefreshHardpointData_Patch.cs" />
-    <Compile Include="Features\OverrideDescriptions\DescriptionsHandler.cs" />
+    <Compile Include="Features\OverrideDescriptions\OverrideDescriptionsFeature.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\MechLabPanel_ValidateLoadout_Patch.cs" />
     <Compile Include="Features\SaveMechToFile\MechLabPanel_DoConfirmRefit_Patch.cs" />
     <Compile Include="Helper\MechLabLocationWidgetAdapter.cs" />
