@@ -28,12 +28,12 @@ namespace MechEngineer.Features.OverrideTonnage
 
         public void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel)
         {
-            OverrideTonnageFeature.Shared.AdjustSlotElement(element, panel);
+            WeightsHandler.Shared.AdjustSlotElement(element, panel);
         }
 
         public void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
-            OverrideTonnageFeature.Shared.AdjustTooltip(tooltip, componentDef);
+            WeightsHandler.Shared.AdjustTooltip(tooltip, componentDef);
         }
     }
 }

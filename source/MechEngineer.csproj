@@ -170,6 +170,7 @@
     <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SettingsSetter_Patch.cs" />
     <Compile Include="Features\NewSaveFolder\Patches\WriteLocation_Constructor_Patch.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\Patches\MainMenu_ReceiveButtonPress_Patch.cs" />
+    <Compile Include="Features\OverrideTonnage\OverrideTonnageFeature.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionFeature.cs" />
     <Compile Include="Helper\MechExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_DamageLocation_Patch.cs" />
@@ -213,7 +214,7 @@
     <Compile Include="Features\AutoFix\AdjustCompDefTonnageHelper.cs" />
     <Compile Include="Features\AutoFix\AdjustCompDefInvSizeHelper.cs" />
     <Compile Include="Features\AutoFix\AutoFixMechDefHelper.cs" />
-    <Compile Include="Features\OverrideTonnage\OverrideTonnageFeature.cs" />
+    <Compile Include="Features\OverrideTonnage\WeightsHandler.cs" />
     <Compile Include="Misc\DictionarySerializer.cs" />
     <Compile Include="Features\AutoFix\LegActuatorHandler.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />

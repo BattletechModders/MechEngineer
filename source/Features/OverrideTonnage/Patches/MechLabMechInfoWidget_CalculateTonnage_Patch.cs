@@ -35,7 +35,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
             var tonnage = chassisDef.InitialTonnage;
             try
             {
-                tonnage += OverrideTonnageFeature.Shared.TonnageChanges(mechDef);
+                tonnage += WeightsHandler.Shared.TonnageChanges(mechDef);
             }
             catch (Exception e)
             {

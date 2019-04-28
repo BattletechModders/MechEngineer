@@ -12,7 +12,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
         {
             try
             {
-                currentValue += OverrideTonnageFeature.Shared.TonnageChanges(mechDef);
+                currentValue += WeightsHandler.Shared.TonnageChanges(mechDef);
                 currentValue = Mathf.Min(currentValue, maxValue);
             }
             catch (Exception e)

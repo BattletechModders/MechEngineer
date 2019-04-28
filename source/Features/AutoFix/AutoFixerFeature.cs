@@ -154,7 +154,7 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-//            Control.mod.Logger.LogDebug($"D maxEngine={maxEngine.CoreDef} freeTonnage={freeTonnage}");
+            Control.mod.Logger.LogDebug($" maxEngine={maxEngine.CoreDef} freeTonnage={freeTonnage}");
             {
                 var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == Control.settings.AutoFixMechDefCoreDummy);
                 if (dummyCore != null)
@@ -177,14 +177,14 @@ namespace MechEngineer.Features.AutoFix
                     builder.Remove(incompatibleHeatSink);
                 }
 
-                Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count} incompatibleHeatSinks.Count={incompatibleHeatSinks.Count}");
+                //Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count} incompatibleHeatSinks.Count={incompatibleHeatSinks.Count}");
                 // add same amount of compatible heat sinks
                 foreach (var unused in incompatibleHeatSinks)
                 {
                     builder.Add(engineHeatSinkDef.Def);
                 }
 
-                Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count}");
+                //Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count}");
             }
 
             // add free heatsinks
@@ -200,7 +200,7 @@ namespace MechEngineer.Features.AutoFix
                         break;
                     }
                 }
-                Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count} maxFree={maxFree}");
+                //Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count} maxFree={maxFree}");
             }
             
             // find any overused location
@@ -244,11 +244,11 @@ namespace MechEngineer.Features.AutoFix
 
             mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
 
-            {
-                float currentTotalTonnage = 0, maxValue = 0;
-                MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
-                Control.mod.Logger.LogDebug($"currentTotalTonnage={currentTotalTonnage} maxValue={maxValue}");
-            }
+            //{
+            //    float currentTotalTonnage = 0, maxValue = 0;
+            //    MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
+            //    Control.mod.Logger.LogDebug($" end currentTotalTonnage={currentTotalTonnage} mechDef.Chassis.Tonnage={mechDef.Chassis.Tonnage}");
+            //}
         }
 
         private class OrderComparer : IComparer<MechComponentRef>
