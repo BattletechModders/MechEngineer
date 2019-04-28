@@ -7,6 +7,7 @@ using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MoveMultiplierStat;
+using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.ShutdownInjuryProtection;
 
@@ -26,7 +27,8 @@ namespace MechEngineer.Features
             DynamicSlotFeature.Shared, // not nicely modularized yet
             ShutdownInjuryProtectionFeature.Shared,
             DebugSaveMechToFileFeature.Shared,
-            DebugCycleCombatSoundsFeature.Shared
+            DebugCycleCombatSoundsFeature.Shared,
+            NewSaveFolderFeature.Shared,
         };
     }
 }

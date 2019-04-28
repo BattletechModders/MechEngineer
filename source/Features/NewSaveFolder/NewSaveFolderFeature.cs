@@ -4,13 +4,25 @@ using System.IO;
 using System.Text;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.NewSaveFolder.Patches;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.NewSaveFolder
 {
-    internal class NewSaveFolderHandlers
+    internal class NewSaveFolderFeature: Feature
     {
-        internal static NewSaveFolderHandlers Shared = new NewSaveFolderHandlers();
+        internal static NewSaveFolderFeature Shared = new NewSaveFolderFeature();
+
+        internal override bool Enabled => Control.settings.NewSaveFolderFeatureEnabled;
+
+        internal override Type[] Patches => new[]
+        {
+            typeof(CachedSettings_ClearCachedSettings_Patch),
+            typeof(CachedSettings_SaveSettingsToPlayerPrefs_Patch),
+            typeof(CachedSettings_SettingsGetter_Patch),
+            typeof(CachedSettings_SettingsSetter_Patch),
+            typeof(WriteLocation_Constructor_Patch),
+        };
 
         private static string PathByKey(string key)
         {
@@ -52,19 +64,19 @@ namespace MechEngineer
             return instructions
                 .MethodReplacer(
                     AccessTools.Method(typeof(PlayerPrefs), nameof(PlayerPrefs.HasKey)),
-                    AccessTools.Method(typeof(NewSaveFolderHandlers), nameof(HasKey))
+                    AccessTools.Method(typeof(NewSaveFolderFeature), nameof(HasKey))
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(PlayerPrefs), nameof(PlayerPrefs.GetString), new []{typeof(string), typeof(string)}),
-                    AccessTools.Method(typeof(NewSaveFolderHandlers), nameof(GetString))
+                    AccessTools.Method(typeof(NewSaveFolderFeature), nameof(GetString))
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(PlayerPrefs), nameof(PlayerPrefs.DeleteKey)),
-                    AccessTools.Method(typeof(NewSaveFolderHandlers), nameof(DeleteKey))
+                    AccessTools.Method(typeof(NewSaveFolderFeature), nameof(DeleteKey))
                 )
                 .MethodReplacer(
                     AccessTools.Method(typeof(PlayerPrefs), nameof(PlayerPrefs.SetString)),
-                    AccessTools.Method(typeof(NewSaveFolderHandlers), nameof(SetString))
+                    AccessTools.Method(typeof(NewSaveFolderFeature), nameof(SetString))
                 );
         }
 

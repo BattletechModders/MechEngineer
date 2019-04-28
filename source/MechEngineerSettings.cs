@@ -12,6 +12,11 @@ namespace MechEngineer
     public class MechEngineerSettings
     {
         #region misc
+        
+        public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
+
+        public int MechLabGeneralSlots = 3;
+        public int MechLabArmTopPadding = 120;
 
         public bool HeatDamageInjuryEnabled = true;
         public bool ShutdownInjuryEnabled = true;
@@ -46,12 +51,9 @@ namespace MechEngineer
 
         public bool FeatureCriticalEffectsEnabled = true;
         public bool FeatureMoveMultiplierEnabled = true;
+        public bool NewSaveFolderFeatureEnabled = false;
 
-        public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
         public bool DebugCycleCombatSoundsFeatureEnabled = false;
-
-        public int MechLabGeneralSlots = 3;
-        public int MechLabArmTopPadding = 120;
 
         #endregion
 

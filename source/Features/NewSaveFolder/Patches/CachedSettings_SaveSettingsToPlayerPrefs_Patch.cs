@@ -2,14 +2,14 @@
 using BattleTech.Save;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.NewSaveFolder.Patches
 {
-    //[HarmonyPatch(typeof(CachedSettings), "SaveSettingsToPlayerPrefs")]
+    [HarmonyPatch(typeof(CachedSettings), "SaveSettingsToPlayerPrefs")]
     public static class CachedSettings_SaveSettingsToPlayerPrefs_Patch
     {
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return NewSaveFolderHandlers.Transpiler(instructions);
+            return NewSaveFolderFeature.Transpiler(instructions);
         }
     }
 }
