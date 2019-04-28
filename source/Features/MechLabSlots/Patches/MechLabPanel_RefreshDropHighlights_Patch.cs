@@ -2,7 +2,7 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.MechLabSlots.Patches
 {
     [HarmonyPatch(typeof(MechLabPanel), "RefreshDropHighlights")]
     public static class MechLabPanel_RefreshDropHighlights_Patch

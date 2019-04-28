@@ -1,10 +1,10 @@
-﻿using BattleTech.UI;
+﻿using System;
+using BattleTech.UI;
 using Harmony;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MechEngineer
+namespace MechEngineer.Features.MechLabSlots.Patches
 {
     [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
     public static class MechLabPanel_LoadMech_Patch

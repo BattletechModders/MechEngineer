@@ -3,7 +3,7 @@ using BattleTech.UI;
 using Harmony;
 using UnityEngine.EventSystems;
 
-namespace MechEngineer
+namespace MechEngineer.Features.MechLabSlots.Patches
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), nameof(MechLabLocationWidget.OnDrop))]
     public static class MechLabLocationWidget_OnDrop_Patch

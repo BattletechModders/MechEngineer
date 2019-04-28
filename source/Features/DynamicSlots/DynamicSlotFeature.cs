@@ -2,6 +2,7 @@
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
+using MechLabLocationWidget_SetData_Patch = MechEngineer.Features.MechLabSlots.Patches.MechLabLocationWidget_SetData_Patch;
 
 namespace MechEngineer.Features.DynamicSlots
 {

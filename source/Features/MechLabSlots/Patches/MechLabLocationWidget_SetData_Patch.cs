@@ -5,11 +5,10 @@ using BattleTech;
 using BattleTech.Data;
 using BattleTech.UI;
 using Harmony;
-using MechEngineer.Features.DynamicSlots;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MechEngineer
+namespace MechEngineer.Features.MechLabSlots.Patches
 {
     [HarmonyPatch(typeof(MechLabLocationWidget), "SetData")]
     public static class MechLabLocationWidget_SetData_Patch
@@ -112,7 +111,7 @@ namespace MechEngineer
             private readonly GameObject gameObject;
             private readonly MechLabItemSlotElement element;
 
-            internal void Show(DynamicSlots dynamicSlots)
+            internal void Show(DynamicSlots.DynamicSlots dynamicSlots)
             {
                 var def = dynamicSlots.Def;
                 var @ref = new MechComponentRef(def.Description.Id, null, def.ComponentType, ChassisLocations.None) {DataManager = def.DataManager};

@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MechEngineer
+namespace MechEngineer.Features.MechLabSlots.Patches
 {
     [HarmonyPatch(typeof(MechLabPanel), "InitWidgets")]
     public static class MechLabPanel_InitWidgets_Patch

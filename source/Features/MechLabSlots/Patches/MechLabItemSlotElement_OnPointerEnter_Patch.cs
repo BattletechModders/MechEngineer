@@ -1,7 +1,7 @@
 ﻿using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.MechLabSlots.Patches
 {
     [HarmonyPatch(typeof(MechLabItemSlotElement), "OnPointerEnter")]
     public static class MechLabItemSlotElement_OnPointerEnter_Patch

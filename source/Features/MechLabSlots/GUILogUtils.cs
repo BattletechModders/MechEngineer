@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MechEngineer
+namespace MechEngineer.Features.MechLabSlots
 {
     public static class GUILogUtils
     {
