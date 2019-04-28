@@ -1,8 +1,7 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Helper
 {
     internal class EngineMovement
     {

@@ -1,8 +1,9 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.Engine.StaticHandler;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Patches
 {
     [HarmonyPatch(typeof(Mech), "InitEffectStats")]
     public static class Mech_InitEffectStats2_Patch

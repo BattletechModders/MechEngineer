@@ -1,9 +1,9 @@
 ﻿using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
-using Harmony;
+using MechEngineer.Features.Engine.Helper;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.StaticHandler
 {
     internal static class EngineMisc
     {

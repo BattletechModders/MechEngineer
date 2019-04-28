@@ -1,8 +1,9 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.Engine.StaticHandler;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Patches
 {
     [HarmonyPatch(typeof(Mech), "GetHeatSinkDissipation")]
     public static class Mech_GetHeatSinkDissipation_Patch

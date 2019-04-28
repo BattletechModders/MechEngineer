@@ -9,6 +9,7 @@ using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Features.Engine;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.LocationalEffects;
@@ -30,6 +31,7 @@ namespace MechEngineer.Features
         // order matters, dependencies between "Features" are encoded into the order
         internal static Feature[] Features = {
             WeightsFeature.Shared,
+            EngineFeature.Shared,
             MoveMultiplierStatFeature.Shared,
             CompressFloatieMessagesFeature.Shared,
             LocationalEffectsFeature.Shared,

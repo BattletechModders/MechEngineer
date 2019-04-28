@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
 using Harmony;
+using MechEngineer.Features.Engine.StaticHandler;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Patches
 {
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateHeatEfficiencyStat")]
     public static class MechStatisticsRules_CalculateHeatEfficiencyStat_Patch

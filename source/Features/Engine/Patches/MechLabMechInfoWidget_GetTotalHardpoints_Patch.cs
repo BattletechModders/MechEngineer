@@ -1,8 +1,9 @@
 ﻿using System;
 using BattleTech.UI;
 using Harmony;
+using MechEngineer.Features.Engine.StaticHandler;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Patches
 {
     [HarmonyPatch(typeof(MechLabMechInfoWidget), "GetTotalHardpoints")]
     public static class MechLabMechInfoWidget_GetTotalHardpoints_Patch

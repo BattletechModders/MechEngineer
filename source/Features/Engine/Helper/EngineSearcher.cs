@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using BattleTech;
 using CustomComponents;
-using MechEngineer.Features.Weights;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Helper
 {
     internal class EngineSearcher
     {
@@ -25,7 +23,7 @@ namespace MechEngineer
                     result.CoolingDef = coolingDef;
                 }
 
-                if (componentDef.Is<Weights>(out var weightSavings))
+                if (componentDef.Is<Weights.Weights>(out var weightSavings))
                 {
                     result.Weights.Combine(weightSavings);
                 }
@@ -49,7 +47,7 @@ namespace MechEngineer
             internal CoolingDef CoolingDef;
             internal EngineHeatBlockDef HeatBlockDef;
             internal EngineCoreDef CoreDef;
-            internal Weights Weights = new Weights();
+            internal Weights.Weights Weights = new Weights.Weights();
             internal List<MechComponentRef> HeatSinks = new List<MechComponentRef>();
         }
     }

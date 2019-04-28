@@ -83,6 +83,7 @@
     <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixFeature.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\DebugCycleCombatSoundsFeature.cs" />
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileFeature.cs" />
+    <Compile Include="Features\Engine\EngineFeature.cs" />
     <Compile Include="Features\FeaturesList.cs" />
     <Compile Include="Features\HardpointFix\HardpointFixFeature.cs" />
     <Compile Include="Features\HardpointFix\limits\ChassisDefAdapter.cs" />

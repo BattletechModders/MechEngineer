@@ -3,10 +3,11 @@ using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
 using fastJSON;
+using MechEngineer.Features.Engine.Helper;
 using MechEngineer.Features.OverrideDescriptions;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine
 {
     [CustomComponent("EngineCore")]
     public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltip, IAdjustSlotElement

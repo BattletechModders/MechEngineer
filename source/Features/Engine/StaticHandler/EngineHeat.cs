@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BattleTech;
-using BattleTech.UI;
-using CustomComponents;
-using Harmony;
+﻿using BattleTech;
+using MechEngineer.Features.Engine.Helper;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.StaticHandler
 {
     internal class EngineHeat
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Helper
 {
     internal static class EngineExtensions
     {

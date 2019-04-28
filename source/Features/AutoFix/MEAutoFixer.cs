@@ -6,6 +6,7 @@ using BattleTech.UI;
 using CustomComponents;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Features.Engine;
 using MechEngineer.Features.Weights;
 using UnityEngine;
 

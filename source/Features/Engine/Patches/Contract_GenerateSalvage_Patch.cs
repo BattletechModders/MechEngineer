@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.Engine.Helper;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Patches
 {
     [HarmonyPatch(typeof(Contract), "GenerateSalvage")]
     public static class Contract_GenerateSalvage_Patch

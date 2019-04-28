@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.Engine.StaticHandler;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Patches
 {
     [HarmonyPatch(typeof(StatTooltipData), "SetMovementData")]
     public static class StatTooltipData_SetMovementData_Patch

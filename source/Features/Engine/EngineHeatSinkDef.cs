@@ -2,10 +2,9 @@
 using System.Linq;
 using BattleTech;
 using BattleTech.Data;
-using BattleTech.UI;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine
 {
     [CustomComponent("EngineHeatSink")]
     public class EngineHeatSinkDef : SimpleCustom<HeatSinkDef>

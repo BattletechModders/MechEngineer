@@ -2,10 +2,9 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
-using MechEngineer.Features.Weights;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine
 {
     internal class Engine
     {
@@ -13,7 +12,7 @@ namespace MechEngineer
             CoolingDef coolingDef,
             EngineHeatBlockDef engineHeatBlockDef,
             EngineCoreDef coreDef,
-            Weights weights,
+            Weights.Weights weights,
             List<MechComponentRef> externalHeatSinks)
         {
             ExternalHeatSinks = externalHeatSinks;
@@ -58,7 +57,7 @@ namespace MechEngineer
 
         /* dynamic stuff below */
 
-        internal Weights Weights { get; set; }
+        internal Weights.Weights Weights { get; set; }
 
         internal float ExternalHeatSinkFreeTonnage => ExternalHeatSinkFreeCount * EngineHeatSinkDef.Def.Tonnage;
 

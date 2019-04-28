@@ -1,8 +1,7 @@
 ﻿using BattleTech;
-using BattleTech.UI.Tooltips;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine
 {
     [CustomComponent("Cooling")]
     public class CoolingDef : SimpleCustom<HeatSinkDef>

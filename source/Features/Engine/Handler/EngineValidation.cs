@@ -2,9 +2,9 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
-using Harmony;
+using MechEngineer.Features.Engine.Helper;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Handler
 {
     internal class EngineValidation : IValidateMech
     {

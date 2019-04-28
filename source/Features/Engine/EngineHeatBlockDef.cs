@@ -2,9 +2,10 @@
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
+using MechEngineer.Features.Engine.Helper;
 using MechEngineer.Features.OverrideDescriptions;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine
 {
     [CustomComponent("EngineHeatBlock")]
     public class EngineHeatBlockDef : SimpleCustom<HeatSinkDef>, IAdjustTooltip, IAdjustSlotElement

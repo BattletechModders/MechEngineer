@@ -38,8 +38,6 @@ namespace MechEngineer
                 harmony = null;
 
                 mod.Logger.LogDebug("setting up CustomComponents");
-                Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
-
                 Registry.RegisterPreProcessor(CockpitHandler.Shared);
                 Registry.RegisterPreProcessor(GyroHandler.Shared);
                 Registry.RegisterPreProcessor(LegActuatorHandler.Shared);

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.Engine.StaticHandler;
 
-namespace MechEngineer
+namespace MechEngineer.Features.Engine.Patches
 {
     [HarmonyPatch(typeof(MechStatisticsRules), "CalculateMovementStat")]
     public static class MechStatisticsRules_CalculateMovementStat_Patch
