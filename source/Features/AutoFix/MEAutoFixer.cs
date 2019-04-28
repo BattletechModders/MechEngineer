@@ -4,6 +4,7 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
+using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Weights;
 using UnityEngine;
@@ -56,10 +57,7 @@ namespace MechEngineer
 
             Control.mod.Logger.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
 
-            if (Control.settings.ArmorStructureRatioEnforcement)
-            {
-                ArmorStructureRatioValidation.AutoFixMechDef(mechDef);
-            }
+            ArmorStructureRatioValidationFeature.Shared.AutoFixMechDef(mechDef);
             
             var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
             var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();

@@ -1,5 +1,7 @@
 ﻿using MechEngineer.Features.AccuracyEffects;
 using MechEngineer.Features.ArmActuators;
+using MechEngineer.Features.ArmorStructureRatio;
+using MechEngineer.Features.BattleTechLoadFix;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
@@ -41,6 +43,8 @@ namespace MechEngineer.Features
             MechLabSlotsFeature.Shared,
             InvalidInventoryFeature.Shared,
             ComponentExplosionsFeature.Shared,
+            BattleTechLoadFixFeature.Shared,
+            ArmorStructureRatioValidationFeature.Shared,
         };
     }
 }

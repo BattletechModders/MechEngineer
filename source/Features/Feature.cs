@@ -26,6 +26,7 @@ namespace MechEngineer.Features
         
         internal bool Loaded { get; set; }
 
+        // TODO remove the feature loaded method and make this virtual again? => only if loading becomes again because of sub features
         // setup a feature using patching
         internal void SetupFeature()
         {

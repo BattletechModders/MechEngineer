@@ -2,7 +2,7 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.BattleTechLoadFix.Patches
 {
     [HarmonyPatch(typeof(SkirmishMechBayPanel), "RequestResources")]
     public static class SkirmishMechBayPanel_RequestResources_Patch
@@ -11,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                BTLoadUtils.PreloadComponents(__instance.dataManager);
+                BattleTechLoadFixFeature.PreloadComponents(__instance.dataManager);
             }
             catch (Exception e)
             {

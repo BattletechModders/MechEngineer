@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using BattleTech;
 using BattleTech.Data;
 
-namespace MechEngineer
+namespace MechEngineer.Features.BattleTechLoadFix
 {
-    class BTLoadUtils
+    internal class BattleTechLoadFixFeature : Feature
     {
+        internal static BattleTechLoadFixFeature Shared = new BattleTechLoadFixFeature();
+
         internal static void PreloadComponents(DataManager manager)
         {
             var loadRequest = manager.CreateLoadRequest();

@@ -2,7 +2,7 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.BattleTechLoadFix.Patches
 {
     [HarmonyPatch(typeof(SkirmishSettings_Beta), "LoadLanceConfiguratorData")]
     public static class SkirmishSettings_Beta_LoadLanceConfiguratorData_Patch
@@ -11,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                BTLoadUtils.PreloadComponents(___uiManager.dataManager);
+                BattleTechLoadFixFeature.PreloadComponents(___uiManager.dataManager);
             }
             catch (Exception e)
             {

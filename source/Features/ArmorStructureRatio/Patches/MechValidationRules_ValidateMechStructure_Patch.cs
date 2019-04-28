@@ -4,7 +4,7 @@ using BattleTech;
 using Harmony;
 using Localize;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ArmorStructureRatio.Patches
 {
     [HarmonyPatch(typeof(MechValidationRules), nameof(MechValidationRules.ValidateMechStructure))]
     public static class MechValidationRules_ValidateMechStructure_Patch
@@ -13,7 +13,7 @@ namespace MechEngineer
         {
             try
             {
-                ArmorStructureRatioValidation.ValidateMechArmorStructureRatio(mechDef, errorMessages);
+                ArmorStructureRatioValidationFeature.ValidateMechArmorStructureRatio(mechDef, errorMessages);
             }
             catch (Exception e)
             {

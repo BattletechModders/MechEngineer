@@ -5,17 +5,20 @@ using Localize;
 using MechEngineer.Features.DynamicSlots;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ArmorStructureRatio
 {
-    public static class ArmorStructureRatioValidation
+    internal class ArmorStructureRatioValidationFeature : Feature
     {
-        public static void AutoFixMechDef(MechDef mechDef)
+        internal static ArmorStructureRatioValidationFeature Shared = new ArmorStructureRatioValidationFeature();
+        internal override bool Enabled => Control.settings.ArmorStructureRatioEnforcement;
+
+        public void AutoFixMechDef(MechDef mechDef)
         {
-            if (!Control.settings.ArmorStructureRatioEnforcement)
+            if (!Loaded)
             {
                 return;
             }
-            
+
             if (Control.settings.ArmorStructureRatioEnforcementSkipMechDefs.Contains(mechDef.Description.Id))
             {
                 return;
@@ -27,15 +30,10 @@ namespace MechEngineer
             }
         }
         
-        public static bool ValidateMechArmorStructureRatio(
+        internal static bool ValidateMechArmorStructureRatio(
             MechDef mechDef,
             Dictionary<MechValidationType, List<Text>> errorMessages = null)
         {
-            if (!Control.settings.ArmorStructureRatioEnforcement)
-            {
-                return true;
-            }
-            
             if (Control.settings.ArmorStructureRatioEnforcementSkipMechDefs.Contains(mechDef.Description.Id))
             {
                 return true;

@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ArmorStructureRatio.Patches
 {
     [HarmonyPatch(typeof(MechValidationRules), nameof(MechValidationRules.ValidateMechStructureSimple))]
     public static class MechValidationRules_ValidateMechStructureSimple_Patch
@@ -11,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                ArmorStructureRatioValidation.ValidateMechArmorStructureRatio(mechDef);
+                ArmorStructureRatioValidationFeature.ValidateMechArmorStructureRatio(mechDef);
             }
             catch (Exception e)
             {

@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
+    <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixFeature.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\DebugCycleCombatSoundsFeature.cs" />
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileFeature.cs" />
     <Compile Include="Features\FeaturesList.cs" />
@@ -90,10 +91,9 @@
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorFeature.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
-    <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioValidation.cs" />
+    <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioValidationFeature.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructureSimple_Patch.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructure_Patch.cs" />
-    <Compile Include="Features\BTLoadFix\BTLoadUtils.cs" />
     <Compile Include="Features\ComponentExplosions\MechPrivateExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\VehiclePrivateExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Vehicle_DamageLocation_Patch.cs" />
@@ -112,8 +112,8 @@
     <Compile Include="Features\OverrideDescriptions\IAdjustInventoryElement.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustSlotElement.cs" />
     <Compile Include="Features\OverrideDescriptions\MechComponentDefAdapter.cs" />
-    <Compile Include="Features\BTLoadFix\Patches\SkirmishMechBayPanel_RequestResources_Patch.cs" />
-    <Compile Include="Features\BTLoadFix\Patches\SkirmishSettings_Beta_LoadLanceConfiguratorData_Patch.cs" />
+    <Compile Include="Features\BattleTechLoadFix\Patches\SkirmishMechBayPanel_RequestResources_Patch.cs" />
+    <Compile Include="Features\BattleTechLoadFix\Patches\SkirmishSettings_Beta_LoadLanceConfiguratorData_Patch.cs" />
     <Compile Include="Features\Engine\CoolingDef.cs" />
     <Compile Include="Features\Engine\Engine.cs" />
     <Compile Include="Features\Engine\EngineCoreDef.cs" />
