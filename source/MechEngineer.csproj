@@ -208,12 +208,12 @@
     <Compile Include="Misc\MELazy.cs" />
     <Compile Include="Misc\Mod.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffects.cs" />
-    <Compile Include="Features\OverrideWeights\Weights.cs" />
+    <Compile Include="Features\OverrideTonnage\Weights.cs" />
     <Compile Include="Features\AutoFix\IdentityHelper.cs" />
     <Compile Include="Features\AutoFix\AdjustCompDefTonnageHelper.cs" />
     <Compile Include="Features\AutoFix\AdjustCompDefInvSizeHelper.cs" />
     <Compile Include="Features\AutoFix\AutoFixMechDefHelper.cs" />
-    <Compile Include="Features\OverrideWeights\OverrideWeightsFeature.cs" />
+    <Compile Include="Features\OverrideTonnage\OverrideTonnageFeature.cs" />
     <Compile Include="Misc\DictionarySerializer.cs" />
     <Compile Include="Features\AutoFix\LegActuatorHandler.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />
@@ -227,8 +227,8 @@
     <Compile Include="Features\InvalidInventory\Patches\MechLabPanel_GetNonFieldableErrorString_Patch.cs" />
     <Compile Include="Helper\TooltipPrefab_EquipmentAdapter.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\TooltipPrefab_EquipmentSetData_Patch.cs" />
-    <Compile Include="Features\OverrideWeights\Patches\MechLabMechInfoWidget_CalculateTonnage_Patch.cs" />
-    <Compile Include="Features\OverrideWeights\Patches\MechStatisticsRules_CalculateTonnage_Patch.cs" />
+    <Compile Include="Features\OverrideTonnage\Patches\MechLabMechInfoWidget_CalculateTonnage_Patch.cs" />
+    <Compile Include="Features\OverrideTonnage\Patches\MechStatisticsRules_CalculateTonnage_Patch.cs" />
     <Compile Include="Features\CriticalEffects\Patches\MechComponent_DamageComponent_Patch.cs" />
     <Compile Include="Features\AutoFix\GyroHandler.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\MechShutdownSequence_CheckForHeatDamage_Patch.cs" />

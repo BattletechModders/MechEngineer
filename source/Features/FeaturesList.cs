@@ -18,6 +18,7 @@ using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideDescriptions;
+using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
 
 namespace MechEngineer.Features
@@ -26,7 +27,7 @@ namespace MechEngineer.Features
     {
         // order matters, dependencies between "Features" are encoded into the order
         internal static Feature[] Features = {
-            /*WeightsFeature.Shared,*/
+            OverrideTonnageFeature.Shared,
             EngineFeature.Shared,
             MoveMultiplierStatFeature.Shared,
             CompressFloatieMessagesFeature.Shared,

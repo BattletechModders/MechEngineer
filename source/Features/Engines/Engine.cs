@@ -2,7 +2,7 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
-using MechEngineer.Features.OverrideWeights;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines

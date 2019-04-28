@@ -8,11 +8,11 @@ using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.OverrideDescriptions;
 using UnityEngine;
 
-namespace MechEngineer.Features.OverrideWeights
+namespace MechEngineer.Features.OverrideTonnage
 {
-    internal class OverrideWeightsFeature : Feature, ITonnageChanges, IAdjustTooltip, IAdjustSlotElement
+    internal class OverrideTonnageFeature : Feature, ITonnageChanges, IAdjustTooltip, IAdjustSlotElement
     {
-        internal static readonly OverrideWeightsFeature Shared = new OverrideWeightsFeature();
+        internal static readonly OverrideTonnageFeature Shared = new OverrideTonnageFeature();
 
         public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
         {

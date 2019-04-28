@@ -4,7 +4,7 @@ using BattleTech;
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer.Features.OverrideWeights.Patches
+namespace MechEngineer.Features.OverrideTonnage.Patches
 {
     [HarmonyPatch(typeof(MechLabMechInfoWidget), "CalculateTonnage")]
     public static class MechLabMechInfoWidget_CalculateTonnage_Patch
@@ -35,7 +35,7 @@ namespace MechEngineer.Features.OverrideWeights.Patches
             var tonnage = chassisDef.InitialTonnage;
             try
             {
-                tonnage += OverrideWeightsFeature.Shared.TonnageChanges(mechDef);
+                tonnage += OverrideTonnageFeature.Shared.TonnageChanges(mechDef);
             }
             catch (Exception e)
             {

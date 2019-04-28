@@ -6,7 +6,7 @@ using CustomComponents;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
-using MechEngineer.Features.OverrideWeights;
+using MechEngineer.Features.OverrideTonnage;
 
 namespace MechEngineer.Features.AutoFix
 {
@@ -83,26 +83,11 @@ namespace MechEngineer.Features.AutoFix
                 MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
                 var maxFreeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
 
-//                var initialTonnage = mechDef.Chassis.InitialTonnage;
-//                var originalInitialTonnage = ChassisHandler.GetOriginalTonnage(mechDef.Chassis);
-//                if (originalInitialTonnage.HasValue) // either use the freed up tonnage from the initial tonnage fix
-//                {
-//                    freeTonnage = originalInitialTonnage.Value - initialTonnage;
-//                    freeTonnage = Mathf.Min(freeTonnage, maxFreeTonnage); // if the original was overweight, make sure not to stay overweight
-//                }
-//                else // or use up available total tonnage
-//                {
-//                    Control.mod.Logger.LogWarning("Couldn't find original initial tonnage");
-//                    return;
-//                }
-
                 freeTonnage = maxFreeTonnage;
 
-//                Control.mod.Logger.LogDebug($" InitialTonnage={initialTonnage}" +
-//                                            $" originalInitialTonnage={originalInitialTonnage}" +
-//                                            $" currentTotalTonnage={currentTotalTonnage}" +
-//                                            $" freeTonnage={freeTonnage}" +
-//                                            $" maxFreeTonnage={maxFreeTonnage}");
+                Control.mod.Logger.LogDebug( $" currentTotalTonnage={currentTotalTonnage}" +
+                                            $" freeTonnage={freeTonnage}" +
+                                            $" maxFreeTonnage={maxFreeTonnage}");
             }
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
@@ -132,7 +117,7 @@ namespace MechEngineer.Features.AutoFix
                     {
                         // remove superfluous jump jets
                         var maxJetCount = coreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
-//                        Control.mod.Logger.LogDebug($"Ca Inventory.Count={builder.Inventory.Count} jumpJetList.Count={jumpJetList.Count} maxJetCount={maxJetCount}");
+                        //Control.mod.Logger.LogDebug($"before Inventory.Count={builder.Inventory.Count} jumpJetList.Count={jumpJetList.Count} maxJetCount={maxJetCount}");
                         while (jumpJetList.Count > maxJetCount)
                         {
                             var lastIndex = jumpJetList.Count - 1;
@@ -141,7 +126,7 @@ namespace MechEngineer.Features.AutoFix
                             builder.Remove(jumpJet);
                             jumpJetList.Remove(jumpJet);
                         }
-//                        Control.mod.Logger.LogDebug($"Cb Inventory.Count={builder.Inventory.Count} jumpJetList.Count={jumpJetList.Count} maxJetCount={maxJetCount}");
+                        //Control.mod.Logger.LogDebug($"after Inventory.Count={builder.Inventory.Count} jumpJetList.Count={jumpJetList.Count} maxJetCount={maxJetCount}");
                     }
 
                     foreach (var engine in engines)
@@ -191,15 +176,15 @@ namespace MechEngineer.Features.AutoFix
                 {
                     builder.Remove(incompatibleHeatSink);
                 }
-                
-//                Control.mod.Logger.LogDebug($"E Inventory.Count={builder.Inventory.Count} incompatibleHeatSinks.Count={incompatibleHeatSinks.Count}");
+
+                Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count} incompatibleHeatSinks.Count={incompatibleHeatSinks.Count}");
                 // add same amount of compatible heat sinks
                 foreach (var unused in incompatibleHeatSinks)
                 {
                     builder.Add(engineHeatSinkDef.Def);
                 }
 
-//                Control.mod.Logger.LogDebug($"F Inventory.Count={builder.Inventory.Count}");
+                Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count}");
             }
 
             // add free heatsinks
@@ -215,7 +200,7 @@ namespace MechEngineer.Features.AutoFix
                         break;
                     }
                 }
-//                Control.mod.Logger.LogDebug($"G Inventory.Count={builder.Inventory.Count} maxFree={maxFree}");
+                Control.mod.Logger.LogDebug($"Inventory.Count={builder.Inventory.Count} maxFree={maxFree}");
             }
             
             // find any overused location
@@ -259,11 +244,11 @@ namespace MechEngineer.Features.AutoFix
 
             mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
 
-//            {
-//                float currentTotalTonnage = 0, maxValue = 0;
-//                MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
-//                Control.mod.Logger.LogDebug($"Last currentTotalTonnage={currentTotalTonnage} maxValue={maxValue}");
-//            }
+            {
+                float currentTotalTonnage = 0, maxValue = 0;
+                MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
+                Control.mod.Logger.LogDebug($"currentTotalTonnage={currentTotalTonnage} maxValue={maxValue}");
+            }
         }
 
         private class OrderComparer : IComparer<MechComponentRef>
