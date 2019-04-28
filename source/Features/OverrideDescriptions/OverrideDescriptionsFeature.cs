@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
 using MechEngineer.Features.DynamicSlots;
-using MechEngineer.Features.OverrideDescriptions.Patches;
 
 namespace MechEngineer.Features.OverrideDescriptions
 {
@@ -15,14 +13,6 @@ namespace MechEngineer.Features.OverrideDescriptions
         internal static OverrideDescriptionsFeature Shared = new OverrideDescriptionsFeature();
 
         internal override bool Enabled => Control.settings.FeatureOverrideDescriptionsEnabled;
-
-        internal override Type[] Patches => new[]
-        {
-            typeof(ListElementController_BASE_NotListView_SetComponentTooltipData_Patch),
-            typeof(MechLabPanel_CreateMechComponentItem_Patch),
-            typeof(MechLabPanel_ValidateLoadout_Patch),
-            typeof(TooltipPrefab_EquipmentSetData_Patch),
-        };
 
         internal override void SetupFeatureLoaded()
         {

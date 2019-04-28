@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using BattleTech;
-using MechEngineer.Features.CompressFloatieMessages.Patches;
 
 namespace MechEngineer.Features.CompressFloatieMessages
 {
@@ -12,11 +10,6 @@ namespace MechEngineer.Features.CompressFloatieMessages
         internal static CompressFloatieMessagesFeature Shared = new CompressFloatieMessagesFeature();
 
         internal override bool Enabled => Control.settings.FeatureCompressFloatieMessagesEnabled;
-
-        internal override Type[] Patches => new[]
-        {
-            typeof(CombatHUDFloatieStack_AddFloatie_Patch)
-        };
 
         public static bool CompressFloatieMessages(FloatieMessage incoming, Queue<FloatieMessage> queue)
         {

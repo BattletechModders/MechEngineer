@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using CustomComponents;
 using FluffyUnderware.DevTools.Extensions;
-using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.LocationalEffects;
 using UnityEngine;
 
@@ -15,15 +13,6 @@ namespace MechEngineer.Features.CriticalEffects
         internal static readonly CriticalEffectsFeature Shared = new CriticalEffectsFeature();
 
         internal override bool Enabled => LocationalEffectsFeature.Shared.Loaded && Control.settings.FeatureCriticalEffectsEnabled;
-
-        internal override Type[] Patches => new[]
-        {
-            typeof(Mech_CheckForCrit_Patch),
-            typeof(Mech_GetComponentInSlot_Patch),
-            typeof(Mech_OnLocationDestroyed_Patch),
-            typeof(MechComponent_DamageComponent_Patch),
-            typeof(MechComponent_inventorySize_Patch)
-        };
 
         internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {

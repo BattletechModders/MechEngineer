@@ -2,7 +2,6 @@
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
-using MechEngineer.Features.DynamicSlots.Patches;
 
 namespace MechEngineer.Features.DynamicSlots
 {
@@ -11,11 +10,6 @@ namespace MechEngineer.Features.DynamicSlots
         internal static DynamicSlotFeature Shared = new DynamicSlotFeature();
 
         internal override bool Enabled => Control.settings.FeatureDynamicSlotsEnabled;
-
-        internal override Type[] Patches => new[]
-        {
-            typeof(MechLabPanel_ValidateLoadout_Patch)
-        };
 
         internal override void SetupFeatureLoaded()
         {

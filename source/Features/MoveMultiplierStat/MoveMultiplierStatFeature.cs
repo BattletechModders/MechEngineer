@@ -1,6 +1,4 @@
-﻿using System;
-using BattleTech;
-using MechEngineer.Features.MoveMultiplierStat.Patches;
+﻿using BattleTech;
 using UnityEngine;
 
 namespace MechEngineer.Features.MoveMultiplierStat
@@ -10,12 +8,6 @@ namespace MechEngineer.Features.MoveMultiplierStat
         internal static MoveMultiplierStatFeature Shared = new MoveMultiplierStatFeature();
 
         internal override bool Enabled => Control.settings.FeatureMoveMultiplierEnabled;
-
-        internal override Type[] Patches => new[]
-        {
-            typeof(Mech_InitEffectStats_Patch),
-            typeof(Mech_MoveMultiplier_Patch)
-        };
 
         internal void InitEffectStats(Mech mech)
         {

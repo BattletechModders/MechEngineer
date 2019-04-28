@@ -1,6 +1,4 @@
-using System;
 using BattleTech;
-using MechEngineer.Features.LocationalEffects.Patches;
 
 namespace MechEngineer.Features.LocationalEffects
 {
@@ -9,11 +7,6 @@ namespace MechEngineer.Features.LocationalEffects
         internal static LocationalEffectsFeature Shared = new LocationalEffectsFeature();
 
         internal override bool Enabled => Control.settings.FeatureAccuracyEffectsEnabled || Control.settings.FeatureCriticalEffectsEnabled;
-
-        internal override Type[] Patches => new[]
-        {
-            typeof(MechComponent_ApplyPassiveEffectToTarget_Patch)
-        };
 
         internal static string LocationalStatisticName(string statisticName, ChassisLocations location)
         {

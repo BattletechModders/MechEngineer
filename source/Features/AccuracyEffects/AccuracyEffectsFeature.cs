@@ -1,6 +1,4 @@
-using System;
 using BattleTech;
-using MechEngineer.Features.AccuracyEffects.Patches;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.LocationalEffects;
 
@@ -11,11 +9,6 @@ namespace MechEngineer.Features.AccuracyEffects
         internal static AccuracyEffectsFeature Shared = new AccuracyEffectsFeature();
 
         internal override bool Enabled => LocationalEffectsFeature.Shared.Loaded && Control.settings.FeatureAccuracyEffectsEnabled;
-
-        internal override Type[] Patches => new[]
-        {
-            typeof(ToHit_GetSelfArmMountedModifier_Patch)
-        };
 
         internal static void SetupAccuracyStatistics(StatCollection statCollection)
         {

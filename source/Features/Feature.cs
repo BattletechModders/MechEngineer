@@ -10,7 +10,6 @@ namespace MechEngineer.Features
     internal abstract class Feature
     {
         internal abstract bool Enabled { get; }
-        internal virtual Type[] Patches { get; } = { };
 
         // called when the feature is enabled and its patches have been successfully loaded
         internal virtual void SetupFeatureLoaded()
@@ -29,11 +28,7 @@ namespace MechEngineer.Features
         // setup a feature using patching
         internal void SetupFeature()
         {
-            Loaded = FeatureUtils.SetupFeature(
-                GetType().Name,
-                Enabled,
-                Patches
-            );
+            Loaded = FeatureUtils.Setup(this);
 
             if (Loaded)
             {
@@ -43,12 +38,16 @@ namespace MechEngineer.Features
 
         private static class FeatureUtils
         {
-            internal static bool SetupFeature(string topic, bool enabled, params Type[] types)
+            internal static bool Setup(Feature feature)
             {
+                var type = feature.GetType();
+                var topic = type.Name;
+                var enabled = feature.Enabled;
                 if (enabled)
                 {
                     try
                     {
+                        var types = FindTypesInNamespace(type);
                         PatchTypes(types);
                     }
                     catch (Exception e)
@@ -67,7 +66,42 @@ namespace MechEngineer.Features
                 return enabled;
             }
 
-            private static void PatchTypes(params Type[] types)
+            private static IEnumerable<Type> FindTypesInNamespace(Type rootType, bool includeSubNamespaces = true)
+            {
+                if (rootType.Namespace == null)
+                {
+                    throw new InvalidOperationException();
+                }
+                
+                foreach (var type in rootType.Assembly.GetTypes())
+                {
+                    if (type.Namespace == null)
+                    {
+                        continue;
+                    }
+
+                    if (includeSubNamespaces)
+                    {
+                        if (!type.Namespace.StartsWith(rootType.Namespace))
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if (type.Namespace != rootType.Namespace)
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (type.GetCustomAttributes(typeof(HarmonyPatch), true).Length > 0) {
+                        yield return type;
+                    }
+                }
+            }
+
+            private static void PatchTypes(IEnumerable<Type> types)
             {
                 var hooks = new List<Hook>();
                 try

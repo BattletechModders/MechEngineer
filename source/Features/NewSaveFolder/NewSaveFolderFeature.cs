@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using BattleTech;
 using Harmony;
-using MechEngineer.Features.NewSaveFolder.Patches;
 using UnityEngine;
 
 namespace MechEngineer.Features.NewSaveFolder
@@ -14,15 +13,6 @@ namespace MechEngineer.Features.NewSaveFolder
         internal static NewSaveFolderFeature Shared = new NewSaveFolderFeature();
 
         internal override bool Enabled => Control.settings.NewSaveFolderFeatureEnabled;
-
-        internal override Type[] Patches => new[]
-        {
-            typeof(CachedSettings_ClearCachedSettings_Patch),
-            typeof(CachedSettings_SaveSettingsToPlayerPrefs_Patch),
-            typeof(CachedSettings_SettingsGetter_Patch),
-            typeof(CachedSettings_SettingsSetter_Patch),
-            typeof(WriteLocation_Constructor_Patch),
-        };
 
         private static string PathByKey(string key)
         {
