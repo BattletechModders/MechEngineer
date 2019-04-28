@@ -3,11 +3,11 @@ using BattleTech;
 using CustomComponents;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ComponentExplosions
 {
-    internal class ComponentExplosionHandler
+    internal class ComponentExplosionsFeature: Feature
     {
-        internal static ComponentExplosionHandler Shared = new ComponentExplosionHandler();
+        internal static ComponentExplosionsFeature Shared = new ComponentExplosionsFeature();
 
         internal void CheckForExplosion(MechComponent component, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
         {

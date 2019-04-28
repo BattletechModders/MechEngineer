@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection.Emit;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ComponentExplosions.Patches
 {
     [HarmonyPatch(typeof(AmmunitionBox), nameof(AmmunitionBox.DamageComponent))]
     public static class AmmunitionBox_DamageComponent_Patch

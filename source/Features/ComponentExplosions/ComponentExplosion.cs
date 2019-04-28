@@ -1,7 +1,7 @@
 ﻿
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ComponentExplosions
 {
     [CustomComponent("ComponentExplosion")]
     public class ComponentExplosion : SimpleCustomComponent

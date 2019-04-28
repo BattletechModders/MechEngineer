@@ -1,5 +1,6 @@
 ﻿using MechEngineer.Features.AccuracyEffects;
 using MechEngineer.Features.ArmActuators;
+using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.DebugCycleCombatSounds;
@@ -39,6 +40,7 @@ namespace MechEngineer.Features
             NewSaveFolderFeature.Shared,
             MechLabSlotsFeature.Shared,
             InvalidInventoryFeature.Shared,
+            ComponentExplosionsFeature.Shared,
         };
     }
 }

@@ -4,7 +4,7 @@ using BattleTech;
 using Harmony;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ComponentExplosions.Patches
 {
     [HarmonyPatch(typeof(Vehicle), "DamageLocation")]
     internal static class Vehicle_DamageLocation_Patch
@@ -29,7 +29,7 @@ namespace MechEngineer
         {
             try
             {
-                if (ComponentExplosionHandler.IsInternalExplosion)
+                if (ComponentExplosionsFeature.IsInternalExplosion)
                 {
                     return 0;
                 }
@@ -50,12 +50,12 @@ namespace MechEngineer
         {
             try
             {
-                if (!ComponentExplosionHandler.IsInternalExplosion)
+                if (!ComponentExplosionsFeature.IsInternalExplosion)
                 {
                     return;
                 }
 
-                var properties = ComponentExplosionHandler.Shared.GetCASEProperties(vehicle, (int) location);
+                var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(vehicle, (int) location);
                 if (properties?.MaximumDamage == null)
                 {
                     return;

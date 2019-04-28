@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ComponentExplosions.Patches
 {
     [HarmonyPatch(typeof(MechComponent), nameof(MechComponent.DamageComponent))]
     public static class MechComponent_DamageComponent_Patch2
@@ -11,7 +11,7 @@ namespace MechEngineer
         {
             try
             {
-                ComponentExplosionHandler.Shared.CheckForExplosion(__instance, hitInfo, damageLevel, applyEffects);
+                ComponentExplosionsFeature.Shared.CheckForExplosion(__instance, hitInfo, damageLevel, applyEffects);
             }
             catch (Exception e)
             {

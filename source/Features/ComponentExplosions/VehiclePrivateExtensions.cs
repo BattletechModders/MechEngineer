@@ -1,7 +1,7 @@
 ﻿using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ComponentExplosions
 {
     internal static class VehiclePrivateExtensions
     {

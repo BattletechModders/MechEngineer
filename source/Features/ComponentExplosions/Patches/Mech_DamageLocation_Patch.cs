@@ -4,7 +4,7 @@ using BattleTech;
 using Harmony;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ComponentExplosions.Patches
 {
     [HarmonyPatch(typeof(Mech), "DamageLocation")]
     internal static class Mech_DamageLocation_Patch
@@ -33,7 +33,7 @@ namespace MechEngineer
         {
             try
             {
-                if (ComponentExplosionHandler.IsInternalExplosion)
+                if (ComponentExplosionsFeature.IsInternalExplosion)
                 {
                     return 0;
                 }
@@ -54,12 +54,12 @@ namespace MechEngineer
         {
             try
             {
-                if (!ComponentExplosionHandler.IsInternalExplosion)
+                if (!ComponentExplosionsFeature.IsInternalExplosion)
                 {
                     return;
                 }
 
-                var properties = ComponentExplosionHandler.Shared.GetCASEProperties(mech, (int) location);
+                var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(mech, (int) location);
                 if (properties?.MaximumDamage == null)
                 {
                     return;
@@ -124,10 +124,10 @@ namespace MechEngineer
         {
             try
             {
-                if (ComponentExplosionHandler.IsInternalExplosion && currentMech != null)
+                if (ComponentExplosionsFeature.IsInternalExplosion && currentMech != null)
                 {
                     var chassisLocation = MechStructureRules.GetChassisLocationFromArmorLocation(location);
-                    var properties = ComponentExplosionHandler.Shared.GetCASEProperties(currentMech, (int) chassisLocation);
+                    var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(currentMech, (int) chassisLocation);
                     if (properties != null)
                     {
                         currentMech.PublishFloatieMessage("EXPLOSION CONTAINED");
