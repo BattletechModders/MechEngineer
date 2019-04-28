@@ -1,5 +1,6 @@
 ﻿using MechEngineer.Features.AccuracyEffects;
 using MechEngineer.Features.ArmActuators;
+using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.BattleTechLoadFix;
 using MechEngineer.Features.ComponentExplosions;
@@ -45,6 +46,7 @@ namespace MechEngineer.Features
             ComponentExplosionsFeature.Shared,
             BattleTechLoadFixFeature.Shared,
             ArmorStructureRatioValidationFeature.Shared,
+            ArmorStructureChangesFeature.Shared,
         };
     }
 }

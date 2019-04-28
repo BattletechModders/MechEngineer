@@ -1,6 +1,6 @@
 ﻿using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ArmorStructureChanges
 {
     [CustomComponent("ArmorStructureChanges")]
     public class ArmorStructureChanges : SimpleCustomComponent

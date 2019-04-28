@@ -3,7 +3,7 @@ using BattleTech;
 using Harmony;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ArmorStructureChanges.Patches
 {
     // fixing factor not being considerd for campaign stuff, this removes the factor again before switching back to campaign
     [HarmonyPatch(typeof(Mech), "ToMechDef")]
@@ -23,8 +23,8 @@ namespace MechEngineer
 
         private static void UndoArmorStructureChanges(Mech mech, MechDef mechDef)
         {
-            var armorFactor = Mech_get_ArmorMultiplier_Patch.GetFactorForMech(mech);
-            var structureFactor = Mech_get_StructureMultiplier_Patch.GetFactorForMech(mech);
+            var armorFactor = ArmorStructureChangesFeature.GetArmorFactorForMech(mech);
+            var structureFactor = ArmorStructureChangesFeature.GetStructureFactorForMech(mech);
 
             var adapter = new MechDefAdapter(mechDef);
             foreach (var mechLocationDef in adapter.Locations)
