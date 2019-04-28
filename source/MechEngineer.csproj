@@ -85,7 +85,7 @@
     <Compile Include="Features\AccuracyEffects\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />
-    <Compile Include="Features\ArmActuators\ArmActuatorHandler.cs" />
+    <Compile Include="Features\ArmActuators\ArmActuatorFeature.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
     <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioValidation.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructureSimple_Patch.cs" />

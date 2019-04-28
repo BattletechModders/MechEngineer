@@ -1,4 +1,5 @@
 ﻿using MechEngineer.Features.AccuracyEffects;
+using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.LocationalEffects;
@@ -16,7 +17,8 @@ namespace MechEngineer.Features
             LocationalEffectsFeature.Shared,
             CriticalEffectsFeature.Shared,
             AccuracyEffectsFeature.Shared,
-            OverrideDescriptionsFeature.Shared
+            OverrideDescriptionsFeature.Shared,
+            ArmActuatorFeature.Shared,
         };
     }
 }

@@ -6,7 +6,6 @@ using CustomComponents;
 using Harmony;
 using JetBrains.Annotations;
 using MechEngineer.Features;
-using MechEngineer.Features.OverrideDescriptions;
 
 namespace MechEngineer
 {
@@ -47,6 +46,9 @@ namespace MechEngineer
                 mod.Logger.LogDebug("setting up CustomComponents");
                 Registry.RegisterSimpleCustomComponents(typeof(Weights));
                 Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
+
+                // TODO find and replace loading of custom components
+                // new getter with list of ICustom?
                 Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
 
                 Registry.RegisterPreProcessor(CockpitHandler.Shared);
@@ -54,26 +56,6 @@ namespace MechEngineer
                 Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
 
                 Validator.RegisterMechValidator(DynamicSlotHandler.Shared.CCValidation.ValidateMech, DynamicSlotHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                if (settings.UseArmActuators)
-                {
-                    Validator.RegisterClearInventory(ArmActuatorHandler.ClearInventory);
-
-                    if (settings.ForceFullDefaultActuators)
-                    {
-                        Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMechFF,
-                            ArmActuatorHandler.CanBeFieldedFF);
-
-                        AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuatorsFF);
-                    }
-                    else
-                    {
-                        Validator.RegisterMechValidator(ArmActuatorHandler.ValidateMech,
-                            ArmActuatorHandler.CanBeFielded);
-
-                        AutoFixer.Shared.RegisterMechFixer(ArmActuatorHandler.FixCBTActuators);
-                    }
-                }
-
                 if (settings.DynamicSlotsValidateDropEnabled)
                 {
                     Validator.RegisterDropValidator(check: DynamicSlotHandler.Shared.CCValidation.ValidateDrop);
@@ -108,7 +90,6 @@ namespace MechEngineer
                 {
                     feature.SetupResources(customResources);
                 }
-                BonusDescriptions.SetupResources(customResources);
 
                 mod.Logger.Log("loaded");
             }

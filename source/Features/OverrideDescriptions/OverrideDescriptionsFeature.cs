@@ -23,11 +23,17 @@ namespace MechEngineer.Features.OverrideDescriptions
             typeof(TooltipPrefab_EquipmentSetData_Patch),
         };
 
-        internal override void SetupFeature()
+        internal override void SetupFeatureLoaded()
         {
-            base.SetupFeature();
-            
             Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
+        }
+
+        internal static Dictionary<string, BonusDescriptions.BonusDescriptionSettings> Settings { get; set; } = new Dictionary<string, BonusDescriptions.BonusDescriptionSettings>();
+
+        internal static void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        {
+            Settings = SettingsResourcesTools.Enumerate<BonusDescriptions.BonusDescriptionSettings>("MEBonusDescriptions", customResources)
+                .ToDictionary(entry => entry.Bonus);
         }
 
         public void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel)

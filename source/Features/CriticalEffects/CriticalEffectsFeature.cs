@@ -27,8 +27,6 @@ namespace MechEngineer.Features.CriticalEffects
 
         internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
-            base.SetupResources(customResources);
-
             Settings = SettingsResourcesTools.Enumerate<EffectData>("MECriticalEffects", customResources)
                 .ToDictionary(entry => entry.Description.Id);
         }

@@ -9,26 +9,37 @@ namespace MechEngineer.Features
 {
     internal abstract class Feature
     {
-        internal abstract string Topic { get; }
         internal abstract bool Enabled { get; }
-        internal abstract Type[] Patches { get; }
+        internal abstract string Topic { get; }
+        internal virtual Type[] Patches { get; } = { };
 
-        internal bool Loaded { get; set; }
+        // called when the feature is enabled and its patches have been successfully loaded
+        internal virtual void SetupFeatureLoaded()
+        {
+            // noop
+        }
+
+        // called setup a feature via resources
+        internal virtual void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        {
+            // noop
+        }
         
+        internal bool Loaded { get; set; }
+
         // setup a feature using patching
-        internal virtual void SetupFeature()
+        internal void SetupFeature()
         {
             Loaded = FeatureUtils.SetupFeature(
                 Topic,
                 Enabled,
                 Patches
             );
-        }
 
-        // setup a feature via resources
-        internal virtual void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
-        {
-            // noop by default
+            if (Loaded)
+            {
+                SetupFeatureLoaded();
+            }
         }
 
         private static class FeatureUtils

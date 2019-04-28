@@ -50,7 +50,7 @@ namespace MechEngineer.Features.OverrideDescriptions
                 var split = bonus.Split(new[]{':'}, 2);
                 var bonusKey = split[0].Trim();
 
-                if (!Settings.TryGetValue(bonusKey, out var settings))
+                if (!OverrideDescriptionsFeature.Settings.TryGetValue(bonusKey, out var settings))
                 {
                     Control.mod.Logger.LogError($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
                     continue;
@@ -96,16 +96,6 @@ namespace MechEngineer.Features.OverrideDescriptions
             var adapter = new DescriptionDefAdapter(descriptionDef);
             var bonuses = string.Join("", elements.Where(x => x != null).Select(x => elementTemplate.Replace("{{element}}", x)).ToArray());
             adapter.Details = descriptionTemplate.Replace("{{elements}}", bonuses).Replace("{{originalDescription}}", adapter.Details);
-        }
-
-        [JsonIgnore]
-        private static Dictionary<string, BonusDescriptionSettings> Settings { get; set; } = new Dictionary<string, BonusDescriptionSettings>();
-
-
-        internal static void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
-        {
-            Settings = SettingsResourcesTools.Enumerate<BonusDescriptionSettings>("MEBonusDescriptions", customResources)
-                .ToDictionary(entry => entry.Bonus);
         }
         
         internal class BonusDescriptionSettings

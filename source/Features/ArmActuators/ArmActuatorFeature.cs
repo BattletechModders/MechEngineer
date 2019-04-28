@@ -8,10 +8,33 @@ using CustomComponents;
 using HBS.Extensions;
 using Localize;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ArmActuators
 {
-    public static class ArmActuatorHandler
+    internal class ArmActuatorFeature: Feature
     {
+        internal static ArmActuatorFeature Shared = new ArmActuatorFeature();
+
+        internal override bool Enabled => Control.settings.UseArmActuators;
+        internal override string Topic => nameof(Features.ArmActuators);
+
+        internal override void SetupFeatureLoaded()
+        {
+            Validator.RegisterClearInventory(ClearInventory);
+
+            if (Control.settings.ForceFullDefaultActuators)
+            {
+                Validator.RegisterMechValidator(ValidateMechFF, CanBeFieldedFF);
+
+                AutoFixer.Shared.RegisterMechFixer(FixCBTActuatorsFF);
+            }
+            else
+            {
+                Validator.RegisterMechValidator(ValidateMech, CanBeFielded);
+
+                AutoFixer.Shared.RegisterMechFixer(FixCBTActuators);
+            }
+        }
+
         private static string GetComponentIdForSlot(ArmActuatorSlot slot)
         {
             switch (slot)
@@ -107,7 +130,7 @@ namespace MechEngineer
                 add_default(location, ArmActuatorSlot.PartShoulder);
                 add_default(location, ArmActuatorSlot.PartUpper);
 
-                if (Control.settings.ForceFullDefaultActuators && !mech.IsIgnoreFullActuators())
+                if (Control.settings.ForceFullDefaultActuators && !IsIgnoreFullActuators(mech))
                 {
                     var limit = mech.Chassis.Is<ArmActuatorSupport>(out var s)
                         ? s.GetLimit(location)
@@ -424,7 +447,7 @@ namespace MechEngineer
             process_location(ChassisLocations.LeftArm);
         }
 
-        public static bool IsIgnoreFullActuators(this MechDef mech)
+        public static bool IsIgnoreFullActuators(MechDef mech)
         {
             if (!Control.settings.ForceFullDefaultActuators)
                 return true;
@@ -441,7 +464,7 @@ namespace MechEngineer
 
         public static void ValidateMechFF(Dictionary<MechValidationType, List<Text>> errors, MechValidationLevel validationlevel, MechDef mechdef)
         {
-            if (mechdef.IsIgnoreFullActuators())
+            if (IsIgnoreFullActuators(mechdef))
             {
                 ValidateMech(errors, validationlevel, mechdef);
                 return;
@@ -480,7 +503,7 @@ namespace MechEngineer
 
         public static bool CanBeFieldedFF(MechDef mechdef)
         {
-            if (mechdef.IsIgnoreFullActuators())
+            if (IsIgnoreFullActuators(mechdef))
                 return CanBeFielded(mechdef);
 
             bool check_side(ChassisLocations location, ArmActuatorSlot limit)
@@ -536,7 +559,7 @@ namespace MechEngineer
 
             foreach (var mechdef in mechdefs)
             {
-                if (mechdef.IsIgnoreFullActuators())
+                if (IsIgnoreFullActuators(mechdef))
                 {
                     FixCBTActuators(mechdefs, simgame);
                     continue;

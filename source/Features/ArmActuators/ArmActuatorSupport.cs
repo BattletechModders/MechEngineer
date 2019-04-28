@@ -2,7 +2,7 @@
 using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ArmActuators
 {
     [Flags]
     public enum ArmActuatorSlot
