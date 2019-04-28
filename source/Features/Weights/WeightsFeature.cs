@@ -129,7 +129,7 @@ namespace MechEngineer.Features.Weights
             internal readonly float Armor;
             internal readonly float Structure;
             internal readonly float Chassis;
-            internal readonly Engine Engine;
+            internal readonly Engine.Engine Engine;
 
             internal BaseWeightState(MechDef mechDef)
             {
@@ -152,7 +152,7 @@ namespace MechEngineer.Features.Weights
             return tonnageChanges;
         }
 
-        private static float CalculateEngineTonnageChanges(Engine engine, Weights weights)
+        private static float CalculateEngineTonnageChanges(Engine.Engine engine, Weights weights)
         {
             if (engine == null)
             {
