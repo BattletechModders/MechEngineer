@@ -4,9 +4,7 @@ using System.Reflection;
 using BattleTech;
 using CustomComponents;
 using Harmony;
-using JetBrains.Annotations;
 using MechEngineer.Features;
-using MechEngineer.Features.Weights;
 
 namespace MechEngineer
 {
@@ -17,7 +15,6 @@ namespace MechEngineer
         internal static MechEngineerSettings settings = new MechEngineerSettings();
         internal static HarmonyInstance harmony;
 
-        [UsedImplicitly]
         public static void Start(string modDirectory, string json)
         {
             mod = new Mod(modDirectory);
@@ -31,24 +28,17 @@ namespace MechEngineer
                 mod.Logger.Log("settings loaded");
                 mod.Logger.LogDebug("debugging enabled");
 
-                mod.Logger.LogDebug("patching game");
-
+                mod.Logger.LogDebug("setting up features");
                 //HarmonyInstance.DEBUG = true;
                 harmony = HarmonyInstance.Create(mod.Name);
-
                 foreach (var feature in FeaturesList.Features)
                 {
                     feature.SetupFeature();
                 }
+                harmony = null;
 
                 mod.Logger.LogDebug("setting up CustomComponents");
-                Registry.RegisterSimpleCustomComponents(typeof(Weights));
-                Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
                 Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
-
-                // TODO find and replace loading of custom components
-                // new getter with list of ICustom?
-                Registry.RegisterSimpleCustomComponents(Assembly.GetExecutingAssembly());
 
                 Registry.RegisterPreProcessor(CockpitHandler.Shared);
                 Registry.RegisterPreProcessor(GyroHandler.Shared);
@@ -66,7 +56,6 @@ namespace MechEngineer
             }
         }
         
-        [UsedImplicitly]
         public static void FinishedLoading(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
             try

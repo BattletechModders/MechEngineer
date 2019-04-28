@@ -16,8 +16,13 @@ namespace MechEngineer.Features
 {
     internal class FeaturesList
     {
+        // 
+        //Registry.RegisterSimpleCustomComponents(typeof(Weights));
+        //Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
+
         // order matters, dependencies between "Features" are encoded into the order
         internal static Feature[] Features = {
+            WeightsFeature.Shared,
             MoveMultiplierStatFeature.Shared,
             CompressFloatieMessagesFeature.Shared,
             LocationalEffectsFeature.Shared,
@@ -30,7 +35,6 @@ namespace MechEngineer.Features
             DebugSaveMechToFileFeature.Shared,
             DebugCycleCombatSoundsFeature.Shared,
             NewSaveFolderFeature.Shared,
-            WeightsFeature.Shared,
         };
     }
 }

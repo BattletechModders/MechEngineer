@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using BattleTech;
+using CustomComponents;
 using Harmony;
 
 namespace MechEngineer.Features
@@ -47,7 +48,7 @@ namespace MechEngineer.Features
                 {
                     try
                     {
-                        var types = FindTypesInNamespace(type);
+                        var types = FindHarmonyPatchTypesInNamespace(type);
                         PatchTypes(types);
                     }
                     catch (Exception e)
@@ -55,6 +56,18 @@ namespace MechEngineer.Features
                         Control.mod.Logger.Log($"Feature {topic} failed patching", e);
                         return false;
                     }
+
+                    try
+                    {
+                        var types = FindCustomTypesInNamespace(type).ToArray();
+                        Registry.RegisterSimpleCustomComponents(types);
+                    }
+                    catch (Exception e)
+                    {
+                        Control.mod.Logger.Log($"Feature {topic} failed registering customs", e);
+                        return false;
+                    }
+
 
                     Control.mod.Logger.Log($"Feature {topic} enabled");
                 }
@@ -66,38 +79,37 @@ namespace MechEngineer.Features
                 return enabled;
             }
 
-            private static IEnumerable<Type> FindTypesInNamespace(Type rootType, bool includeSubNamespaces = true)
+            private static IEnumerable<Type> FindCustomTypesInNamespace(Type rootType)
             {
-                if (rootType.Namespace == null)
-                {
-                    throw new InvalidOperationException();
-                }
-                
+                var customType = typeof(ICustom);
+                return FindTypesInNamespace(rootType).Where(type => customType.IsAssignableFrom(type));
+            }
+
+            private static IEnumerable<Type> FindHarmonyPatchTypesInNamespace(Type rootType)
+            {
+                return FindTypesInNamespace(rootType).Where(type => type.GetCustomAttributes(typeof(HarmonyPatch), true).Length > 0);
+            }
+
+            private static IEnumerable<Type> FindTypesInNamespace(Type rootType)
+            {
                 foreach (var type in rootType.Assembly.GetTypes())
                 {
+                    if (rootType.Namespace == null)
+                    {
+                        throw new InvalidOperationException();
+                    }
+
                     if (type.Namespace == null)
                     {
                         continue;
                     }
 
-                    if (includeSubNamespaces)
+                    if (!type.Namespace.StartsWith(rootType.Namespace))
                     {
-                        if (!type.Namespace.StartsWith(rootType.Namespace))
-                        {
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        if (type.Namespace != rootType.Namespace)
-                        {
-                            continue;
-                        }
+                        continue;
                     }
 
-                    if (type.GetCustomAttributes(typeof(HarmonyPatch), true).Length > 0) {
-                        yield return type;
-                    }
+                    yield return type;
                 }
             }
 
