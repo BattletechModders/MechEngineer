@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BattleTech.UI;
-using Harmony;
 using HBS;
 using HBS.Scripting.Reflection;
 using TMPro;
 
-namespace MechEngineer
+namespace MechEngineer.Features.DebugCycleCombatSounds.Patches
 {
     //[HarmonyPatch(typeof(MainMenu), "ReceiveButtonPress")]
     public static class MainMenu_ReceiveButtonPress_Patch

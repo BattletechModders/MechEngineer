@@ -48,6 +48,7 @@ namespace MechEngineer
         public bool FeatureMoveMultiplierEnabled = true;
 
         public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
+        public bool DebugCycleCombatSoundsFeatureEnabled = false;
 
         public int MechLabGeneralSlots = 3;
         public int MechLabArmTopPadding = 120;

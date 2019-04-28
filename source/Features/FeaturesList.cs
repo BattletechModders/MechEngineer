@@ -2,6 +2,8 @@
 using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
+using MechEngineer.Features.DebugCycleCombatSounds;
+using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MoveMultiplierStat;
@@ -23,6 +25,8 @@ namespace MechEngineer.Features
             ArmActuatorFeature.Shared,
             DynamicSlotFeature.Shared, // not nicely modularized yet
             ShutdownInjuryProtectionFeature.Shared,
+            DebugSaveMechToFileFeature.Shared,
+            DebugCycleCombatSoundsFeature.Shared
         };
     }
 }

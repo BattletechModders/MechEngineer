@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using BattleTech.UI;
 using fastJSON;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.DebugSaveMechToFile.Patches
 {
     [HarmonyPatch(typeof(MechLabPanel), "DoConfirmRefit")]
     public static class MechLabPanel_DoConfirmRefit_Patch
@@ -15,11 +13,6 @@ namespace MechEngineer
         {
             try
             {
-                if (!Control.settings.SaveMechDefOnMechLabConfirm)
-                {
-                    return;
-                }
-
                 var mechDef = __instance.activeMechDef;
 
                 var id = $"{mechDef.Description.Name}_{mechDef.Description.Id}";

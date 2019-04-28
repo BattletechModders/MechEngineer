@@ -41,12 +41,10 @@ namespace MechEngineer
                     feature.SetupFeature();
                 }
 
-                //harmony.PatchAll(Assembly.GetExecutingAssembly());
-                //harmony.Patch(typeof(MechLabPanelLoadMechPatch));
-
                 mod.Logger.LogDebug("setting up CustomComponents");
                 Registry.RegisterSimpleCustomComponents(typeof(Weights));
                 Registry.RegisterSimpleCustomComponents(typeof(EngineCoreDef));
+                Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
 
                 // TODO find and replace loading of custom components
                 // new getter with list of ICustom?
@@ -56,17 +54,9 @@ namespace MechEngineer
                 Registry.RegisterPreProcessor(GyroHandler.Shared);
                 Registry.RegisterPreProcessor(LegActuatorHandler.Shared);
 
-                Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
-
-                //Validator.RegisterMechValidator(ArmActuatorHandler.Shared.CCValidation.ValidateMech, ArmActuatorHandler.Shared.CCValidation.ValidateMechCanBeFielded);
-                //Validator.RegisterDropValidator(check: ArmActuatorHandler.Shared.CCValidation.ValidateDrop);
-
                 mod.Logger.LogDebug("setting up mechdef auto fixers");
-
                 AutoFixer.Shared.RegisterMechFixer(MEAutoFixer.Shared.AutoFix);
 
-                // logging output can be found under BATTLETECH\BattleTech_Data\output_log.txt
-                // or also under yourmod/log.txt
                 mod.Logger.Log("started");
             }
             catch (Exception e)
