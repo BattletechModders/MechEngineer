@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
 {
     [HarmonyPatch(typeof(Mech), "CheckForHeatDamage")]
     public static class Mech_CheckForHeatDamage_Patch

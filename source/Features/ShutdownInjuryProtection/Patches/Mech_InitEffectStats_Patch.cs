@@ -2,10 +2,10 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
 {
     [HarmonyPatch(typeof(Mech), "InitEffectStats")]
-    public static class Mech_InitEffectStats_Patch2
+    public static class Mech_InitEffectStats_Patch
     {
         public static void Prefix(Mech __instance)
         {

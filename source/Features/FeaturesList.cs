@@ -6,6 +6,7 @@ using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OverrideDescriptions;
+using MechEngineer.Features.ShutdownInjuryProtection;
 
 namespace MechEngineer.Features
 {
@@ -20,7 +21,8 @@ namespace MechEngineer.Features
             AccuracyEffectsFeature.Shared,
             OverrideDescriptionsFeature.Shared,
             ArmActuatorFeature.Shared,
-            DynamicSlotFeature.Shared // not nicely modularized yet
+            DynamicSlotFeature.Shared, // not nicely modularized yet
+            ShutdownInjuryProtectionFeature.Shared,
         };
     }
 }

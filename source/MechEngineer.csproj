@@ -161,6 +161,7 @@
     <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SettingsSetter_Patch.cs" />
     <Compile Include="Features\NewSaveFolder\Patches\WriteLocation_Constructor_Patch.cs" />
     <Compile Include="Features\SaveMechToFile\MainMenu_ReceiveButtonPress_Patch.cs" />
+    <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtection.cs" />
     <Compile Include="Helper\MechExtensions.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_DamageLocation_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\AmmunitionBox_DamageComponent_Patch.cs" />
@@ -169,7 +170,7 @@
     <Compile Include="Features\ArmorStructureChanges\Patches\Mech_get_StructureMultiplier_Patch.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChanges.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_CheckForHeatDamage_Patch.cs" />
-    <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_InitEffectStats_Patch2.cs" />
+    <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustTooltip.cs" />
     <Compile Include="Misc\CCValidationAdapter.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />

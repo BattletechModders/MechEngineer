@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
 {
     [HarmonyPatch(typeof(MechShutdownSequence), "CheckForHeatDamage")]
     public static class MechShutdownSequence_CheckForHeatDamage_Patch

@@ -5,7 +5,7 @@ using Harmony;
 namespace MechEngineer
 {
     [HarmonyPatch(typeof(Mech), "InitEffectStats")]
-    public static class Mech_InitEffectStats_Patch
+    public static class Mech_InitEffectStats2_Patch
     {
         // change the movement stats when loading into a combat game the first time
         public static void Postfix(Mech __instance)
