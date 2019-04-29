@@ -45,53 +45,67 @@ namespace MechEngineer.Features
                 var type = feature.GetType();
                 var topic = type.Name;
                 var enabled = feature.Enabled;
+                Control.mod.Logger.LogDebug($"{topic} setting up (Enabled={enabled} Namespace={type.Namespace})");
                 if (enabled)
                 {
+                    var typesInNamespace = FindTypesInNamespace(type).ToList();
                     try
                     {
-                        Control.mod.Logger.LogDebug($"patching in namespace {type.Namespace}");
-                        var types = FindHarmonyPatchTypesInNamespace(type);
-                        //HarmonyInstance.DEBUG = true;
-                        var harmony = HarmonyInstance.Create(type.Namespace);
-                        PatchTypes(harmony, types);
+                        PatchCandidates(type, typesInNamespace);
                     }
                     catch (Exception e)
                     {
-                        Control.mod.Logger.Log($"Feature {topic} failed patching", e);
+                        Control.mod.Logger.LogWarning($"{topic} failed patching", e);
                         return false;
                     }
 
                     try
                     {
-                        Control.mod.Logger.LogDebug($"registering customs in namespace {type.Namespace}");
-                        var types = FindCustomTypesInNamespace(type).ToArray();
-                        Registry.RegisterSimpleCustomComponents(types);
+                        RegisterCustomCandidates(type, typesInNamespace);
                     }
                     catch (Exception e)
                     {
-                        Control.mod.Logger.Log($"Feature {topic} failed registering customs", e);
+                        Control.mod.Logger.LogWarning($"{topic} failed registering customs", e);
                         return false;
                     }
 
-                    Control.mod.Logger.Log($"Feature {topic} enabled");
+                    Control.mod.Logger.Log($"{topic} enabled");
                 }
                 else
                 {
-                    Control.mod.Logger.Log($"Feature {topic} disabled");
+                    Control.mod.Logger.Log($"{topic} disabled");
                 }
 
                 return enabled;
             }
 
-            private static IEnumerable<Type> FindCustomTypesInNamespace(Type rootType)
+            private static void PatchCandidates(Type rootType, List<Type> candidates)
             {
-                var customType = typeof(ICustom);
-                return FindTypesInNamespace(rootType).Where(type => customType.IsAssignableFrom(type));
+                var types = candidates.Where(type => type.GetCustomAttributes(typeof(HarmonyPatch), true).Length > 0).ToList();
+                if (types.Count < 1)
+                {
+                    return;
+                }
+
+                //HarmonyInstance.DEBUG = true;
+                var harmony = HarmonyInstance.Create(rootType.Namespace);
+                PatchTypes(harmony, types);
             }
 
-            private static IEnumerable<Type> FindHarmonyPatchTypesInNamespace(Type rootType)
+            private static void RegisterCustomCandidates(Type rootType, List<Type> candidates)
             {
-                return FindTypesInNamespace(rootType).Where(type => type.GetCustomAttributes(typeof(HarmonyPatch), true).Length > 0);
+                var customType = typeof(ICustom);
+                var types = candidates.Where(type => customType.IsAssignableFrom(type)).ToArray();
+                if (types.Length < 1)
+                {
+                    return;
+                }
+
+                foreach (var type in types)
+                {
+                    Control.mod.Logger.LogDebug($" Custom {type.Name}");
+                    Registry.RegisterSimpleCustomComponents(type);
+                }
             }
 
             private static IEnumerable<Type> FindTypesInNamespace(Type rootType)
@@ -113,30 +127,32 @@ namespace MechEngineer.Features
                         continue;
                     }
 
+                    //Control.mod.Logger.LogDebug($"found {type.Namespace}.{type.Name}");
+
                     yield return type;
                 }
             }
 
-            private static void PatchTypes(HarmonyInstance harmony, IEnumerable<Type> types)
+            private static void PatchTypes(HarmonyInstance harmony, List<Type> types)
             {
                 var hooks = new List<Hook>();
-                try
+                foreach (var type in types)
                 {
-                    foreach (var type in types)
+                    try
                     {
-                        Control.mod.Logger.LogDebug($"patching {type.Namespace}.{type.Name}");
+                        Control.mod.Logger.LogDebug($" Patch {type.Name}");
                         var hook = Patch(harmony, type);
                         hooks.Add(hook);
                     }
-                }
-                catch
-                {
-                    foreach (var hook in hooks)
+                    catch
                     {
-                        hook.UnPatch();
-                    }
+                        foreach (var hook in hooks)
+                        {
+                            hook.UnPatch();
+                        }
 
-                    throw;
+                        throw;
+                    }
                 }
             }
 
