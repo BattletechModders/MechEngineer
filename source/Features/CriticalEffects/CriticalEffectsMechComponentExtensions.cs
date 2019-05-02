@@ -87,22 +87,38 @@ namespace MechEngineer.Features.CriticalEffects
 
         internal static string ScopedId(this MechComponent mechComponent, string id, bool isLinked)
         {
-            var scopeId = LocationalEffectsFeature.InterpolateEffectId(id, mechComponent.mechComponentRef.MountedLocation);
-            if (scopeId == id && !isLinked)
+            if (LocationNaming.Localize(id, mechComponent, out var localizedId))
+            {
+                return localizedId;
+            }
+
+            if (!isLinked)
             {
                 var uid = mechComponent.uid;
                 return $"{id}_{uid}";
             }
-            return scopeId;
+
+            return id;
         }
 
         internal static CriticalEffects GetCriticalEffects(this MechComponent component)
         {
-            if (component.parent is Vehicle && component.componentDef.Is<VehicleCriticalEffects>(out var ce))
+            var customs = component.componentDef.GetComponents<CriticalEffects>();
+            foreach (var custom in customs)
             {
-                return ce;
+                if (custom is VehicleCriticalEffects)
+                {
+                    if (component.parent is Vehicle)
+                    {
+                        return custom;
+                    }
+                }
+                else
+                {
+                    return custom;
+                }
             }
-            return component.componentDef.GetComponent<CriticalEffects>();
+            return null;
         }
     }
 }

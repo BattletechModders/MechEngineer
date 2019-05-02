@@ -20,7 +20,8 @@ namespace MechEngineer.Features.AccuracyEffects
         
         internal static float AccuracyForLocation(StatCollection statCollection, ChassisLocations location)
         {
-            var key = LocationalEffectsFeature.LocationalStatisticName("Accuracy", location);
+            var naming = new MechLocationNaming(location);
+            var key = naming.LocationalStatisticName("Accuracy");
             return AccuracyForKey(statCollection, key);
         }
         

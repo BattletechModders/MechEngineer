@@ -83,7 +83,7 @@ namespace MechEngineer.Features.CriticalEffects
                 mechComponent.CriticalSlotsHit(slotsHitPrev + critsAdded);
 
                 Control.mod.Logger.LogDebug(
-                    $"{criticalEffects.Def.Description.Id} on {mechComponent.mechComponentRef.MountedLocation} " +
+                    $"{criticalEffects.Def.Description.Id} on {mechComponent.Location} " +
                     $"critsAdded={critsAdded} critsMax={critsMax} " +
                     $"critsPrev={critsPrev} critsNext={critsNext} " +
                     $"critsHit={critsHit} " +
@@ -102,8 +102,7 @@ namespace MechEngineer.Features.CriticalEffects
                 
                     foreach (var mc in actor.allComponents)
                     {
-                        var r = mc.mechComponentRef;
-                        if (r.DamageLevel == ComponentDamageLevel.Destroyed)
+                        if (mc.DamageLevel == ComponentDamageLevel.Destroyed)
                         {
                             continue;
                         }

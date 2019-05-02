@@ -90,6 +90,9 @@
     <Compile Include="Features\HardpointFix\limits\Patches\ChassisDef_refreshLocationReferences_Patch.cs" />
     <Compile Include="Features\InvalidInventory\InvalidInventoryFeature.cs" />
     <Compile Include="Features\LocationalEffects\LocationalEffectsFeature.cs" />
+    <Compile Include="Features\LocationalEffects\LocationNaming.cs" />
+    <Compile Include="Features\LocationalEffects\VehicleLocationNaming.cs" />
+    <Compile Include="Features\LocationalEffects\MechLocationNaming.cs" />
     <Compile Include="Features\LocationalEffects\Patches\MechComponent_ApplyPassiveEffectToTarget_Patch.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
