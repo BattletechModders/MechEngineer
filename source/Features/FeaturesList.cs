@@ -11,6 +11,7 @@ using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
+using MechEngineer.Features.Globals;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.LocationalEffects;
@@ -49,6 +50,7 @@ namespace MechEngineer.Features
             ArmorStructureChangesFeature.Shared,
             HardpointFixFeature.Shared,
             AutoFixerFeature.Shared,
+            GlobalsFeature.Shared
         };
     }
 }

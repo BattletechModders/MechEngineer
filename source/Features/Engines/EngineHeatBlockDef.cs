@@ -3,6 +3,7 @@ using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
 
 namespace MechEngineer.Features.Engines

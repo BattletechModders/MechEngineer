@@ -5,6 +5,7 @@ using BattleTech.UI.Tooltips;
 using CustomComponents;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
 using UnityEngine;
 

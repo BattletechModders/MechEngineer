@@ -4,6 +4,7 @@ using BattleTech.UI.Tooltips;
 using CustomComponents;
 using fastJSON;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
 using UnityEngine;
 
