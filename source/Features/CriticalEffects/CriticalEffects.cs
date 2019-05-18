@@ -26,36 +26,35 @@ namespace MechEngineer.Features.CriticalEffects
         public void OnLoaded(Dictionary<string, object> values)
         {
             var descriptions = new List<string>();
-            
+
+            void AddDescription(string prefix, string effectId)
+            {
+                var effectData = CriticalEffectsFeature.GetEffectData(effectId);
+                if (effectData == null || effectData.targetingData.showInStatusPanel == false)
+                {
+                    return;
+                }
+
+                var description = Control.settings.CriticalEffectsDescriptionUseName ? effectData.Description.Name : effectData.Description.Details;
+                    
+                var text = $"{prefix}: {description}";
+                    
+                descriptions.Add(text);
+            }
+
             var i = 0;
             foreach (var effectIDs in PenalizedEffectIDs)
             {
                 i++;
                 foreach (var id in effectIDs)
                 {
-                    var effectData = CriticalEffectsFeature.GetEffectData(id);
-                    if (effectData == null || effectData.targetingData.showInStatusPanel == false)
-                    {
-                        continue;
-                    }
-                    
-                    var text = $"HIT {i}: {effectData.Description.Details}";
-                    
-                    descriptions.Add(text);
+                    AddDescription($"HIT {i}", id);
                 }
             }
             
             foreach (var id in OnDestroyedEffectIDs)
             {
-                var effectData = CriticalEffectsFeature.GetEffectData(id);
-                if (effectData == null || effectData.targetingData.showInStatusPanel == false)
-                {
-                    continue;
-                }
-                
-                var text = $"DESTROYED: {effectData.Description.Details}";
-                    
-                descriptions.Add(text);
+                AddDescription($"DESTROYED", id);
             }
 
             if (DeathMethod != DeathMethod.NOT_SET)
