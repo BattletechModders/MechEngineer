@@ -81,6 +81,7 @@
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesFeature.cs" />
     <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixFeature.cs" />
+    <Compile Include="Features\ComponentExplosions\TurretPrivateExtensions.cs" />
     <Compile Include="Features\CriticalEffects\MechCriticalEffects.cs" />
     <Compile Include="Features\CriticalEffects\TurretCriticalEffects.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\DebugCycleCombatSoundsFeature.cs" />

@@ -95,6 +95,13 @@ namespace MechEngineer.Features.ComponentExplosions
 
                     vehicle.DamageLocation(hitInfo, component.Location, (VehicleChassisLocations)component.Location, weapon, explosionDamage, AttackImpactQuality.Solid);
                 }
+                else if (actor is Turret turret)
+                {
+                    // this is very hacky as this is an invalid weapon
+                    var weapon = new Weapon(turret, actor.Combat, component.turretComponentRef, component.uid);
+
+                    turret.DamageLocation(hitInfo, (BuildingLocation)component.Location, weapon, explosionDamage);
+                }
             }
             finally
             {
