@@ -2,12 +2,12 @@
 
 namespace MechEngineer.Features.CriticalEffects
 {
-    [CustomComponent("VehicleCriticalEffects")]
-    public class VehicleCriticalEffects : CriticalEffects
+    [CustomComponent("MechCriticalEffects")]
+    public class MechCriticalEffects : CriticalEffects
     {
         public override string GetActorTypeDescription()
         {
-            return "Vehicle";
+            return "Mech";
         }
     }
 }

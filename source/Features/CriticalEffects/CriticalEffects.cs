@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
 using MechEngineer.Features.OverrideDescriptions;
@@ -22,6 +23,11 @@ namespace MechEngineer.Features.CriticalEffects
         
         public string CritFloatieMessage = null;
         public string DestroyedFloatieMessage = null;
+
+        public virtual string GetActorTypeDescription()
+        {
+            return null;
+        }
         
         public void OnLoaded(Dictionary<string, object> values)
         {
@@ -66,13 +72,21 @@ namespace MechEngineer.Features.CriticalEffects
             {
                 descriptions.Add($"Critical hits are linked to '{LinkedStatisticName}'");
             }
-
+            
+            var descriptionTemplate = Control.settings.CriticalEffectsDescriptionTemplate;
+            {
+                var actorDescription = GetActorTypeDescription();
+                if (actorDescription != null)
+                {
+                    descriptionTemplate = $"{actorDescription} {descriptionTemplate}";
+                }
+            }
             
             BonusDescriptions.AddBonusDescriptions(
                 Def.Description,
                 descriptions,
                 Control.settings.BonusDescriptionsElementTemplate,
-                Control.settings.CriticalEffectsDescriptionTemplate
+                descriptionTemplate
             );
         }
 

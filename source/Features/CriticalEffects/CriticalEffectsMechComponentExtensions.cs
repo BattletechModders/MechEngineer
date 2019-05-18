@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BattleTech;
 using CustomComponents;
 using MechEngineer.Features.LocationalEffects;
@@ -103,22 +104,39 @@ namespace MechEngineer.Features.CriticalEffects
 
         internal static CriticalEffects GetCriticalEffects(this MechComponent component)
         {
-            var customs = component.componentDef.GetComponents<CriticalEffects>();
-            foreach (var custom in customs)
+            var customs = component.componentDef.GetComponents<CriticalEffects>().ToList();
+
+            if (component.parent is Mech)
             {
-                if (custom is VehicleCriticalEffects)
-                {
-                    if (component.parent is Vehicle)
-                    {
-                        return custom;
-                    }
-                }
-                else
+                var custom = customs.FirstOrDefault(x => x is MechCriticalEffects);
+                if (custom != null)
                 {
                     return custom;
                 }
             }
-            return null;
+
+            if (component.parent is Turret)
+            {
+                var custom = customs.FirstOrDefault(x => x is TurretCriticalEffects);
+                if (custom != null)
+                {
+                    return custom;
+                }
+            }
+
+            if (component.parent is Vehicle)
+            {
+                var custom = customs.FirstOrDefault(x => x is VehicleCriticalEffects);
+                if (custom != null)
+                {
+                    return custom;
+                }
+            }
+
+            {
+                var custom = customs.FirstOrDefault(x => !(x is MechCriticalEffects) && !(x is TurretCriticalEffects) && !(x is VehicleCriticalEffects));
+                return custom;
+            }
         }
     }
 }
