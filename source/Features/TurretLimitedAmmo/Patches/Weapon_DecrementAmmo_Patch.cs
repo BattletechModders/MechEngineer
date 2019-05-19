@@ -3,7 +3,7 @@ using System.Reflection.Emit;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.TurretMechComponents.Patches
+namespace MechEngineer.Features.TurretLimitedAmmo.Patches
 {
     [HarmonyPatch(typeof(Weapon), nameof(Weapon.DecrementAmmo))]
     public static class Weapon_DecrementAmmo_Patch
