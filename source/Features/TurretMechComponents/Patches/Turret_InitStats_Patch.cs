@@ -5,13 +5,18 @@ using Harmony;
 
 namespace MechEngineer.Features.TurretMechComponents.Patches
 {
-    [HarmonyPatch(typeof(Turret), "Init")]
-    public static class Turret_Init_Patch
+    [HarmonyPatch(typeof(Turret), "InitStats")]
+    public static class Turret_InitStats_Patch
     {
-        public static void Postfix(Turret __instance)
+        public static void Prefix(Turret __instance)
         {
             try
             {
+                if (__instance.Combat.IsLoadingFromSave)
+                {
+                    return;
+                }
+
                 var turret = __instance;
                 var num = __instance.allComponents.Select(x => int.Parse(x.uid)).DefaultIfEmpty().Max();
                 foreach (var componentRef in turret.TurretDef.Inventory)
