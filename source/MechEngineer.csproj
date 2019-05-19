@@ -183,6 +183,8 @@
     <Compile Include="Features\DebugCycleCombatSounds\Patches\MainMenu_ReceiveButtonPress_Patch.cs" />
     <Compile Include="Features\OverrideTonnage\OverrideTonnageFeature.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionFeature.cs" />
+    <Compile Include="Features\TurretLimitedAmmo\Patches\Weapon_DecrementAmmo_Patch.cs" />
+    <Compile Include="Features\TurretLimitedAmmo\TurretLimitedAmmoFeature.cs" />
     <Compile Include="Features\TurretMechComponents\Patches\Turret_InitStats_Patch.cs" />
     <Compile Include="Features\TurretMechComponents\TurretMechComponentsFeature.cs" />
     <Compile Include="Helper\MechExtensions.cs" />

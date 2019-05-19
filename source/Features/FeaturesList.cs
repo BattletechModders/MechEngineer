@@ -21,6 +21,7 @@ using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
+using MechEngineer.Features.TurretLimitedAmmo;
 using MechEngineer.Features.TurretMechComponents;
 
 namespace MechEngineer.Features
@@ -53,6 +54,7 @@ namespace MechEngineer.Features
             AutoFixerFeature.Shared,
             GlobalsFeature.Shared,
             TurretMechComponentsFeature.Shared,
+            TurretLimitedAmmoFeature.Shared,
         };
     }
 }

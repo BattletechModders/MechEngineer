@@ -54,6 +54,8 @@ namespace MechEngineer
         public bool FeatureMoveMultiplierEnabled = true;
         public bool NewSaveFolderFeatureEnabled = false;
 
+        public bool FeatureTurretLimitedAmmoEnabled = true;
+
         public bool DebugCycleCombatSoundsFeatureEnabled = false;
 
         #endregion
