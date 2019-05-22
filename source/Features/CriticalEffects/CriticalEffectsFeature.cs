@@ -190,6 +190,7 @@ namespace MechEngineer.Features.CriticalEffects
                         hitInfo.stackItemUID,
                         hitInfo.attackerId,
                         false);
+                    actor.HandleDeath(hitInfo.attackerId);
                 }
 
                 if (!string.IsNullOrEmpty(criticalEffects.OnDestroyedVFXName))
