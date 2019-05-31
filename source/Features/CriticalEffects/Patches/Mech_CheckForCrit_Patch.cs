@@ -11,7 +11,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches
         {
             return instructions.MethodReplacer(
                 AccessTools.Method(typeof(MessageCenter), nameof(MessageCenter.PublishMessage)),
-                AccessTools.Method(typeof(Mech_CheckForCrit_Patch), nameof(Mech_CheckForCrit_Patch.PublishMessage))
+                AccessTools.Method(typeof(Mech_CheckForCrit_Patch), nameof(PublishMessage))
             );
         }
 

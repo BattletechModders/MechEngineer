@@ -48,7 +48,7 @@ namespace MechEngineer
         public bool FeatureOverrideDescriptionsEnabled = true;
 
         public bool FeatureCompressFloatieMessagesEnabled = true;
-        public bool DebugDestroyedFloaties = true;
+        public bool DebugDestroyedFloaties = false;
 
         public bool FeatureCriticalEffectsEnabled = true;
         public bool FeatureMoveMultiplierEnabled = true;
