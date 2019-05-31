@@ -46,7 +46,7 @@ namespace MechEngineer.Features.ComponentExplosions
             if (!Mathf.Approximately(heatDamage, 0))
             {
                 actor.AddExternalHeat("AMMO EXPLOSION HEAT", (int)heatDamage);
-                attackSequence?.FlagAttackDidHeatDamage();
+                attackSequence?.FlagAttackDidHeatDamage(actor.GUID);
             }
 
             { // only applies for mechs, vehicles don't have stability
@@ -72,7 +72,7 @@ namespace MechEngineer.Features.ComponentExplosions
             IsInternalExplosion = true;
             try
             {
-                attackSequence?.FlagAttackCausedAmmoExplosion();
+                attackSequence?.FlagAttackCausedAmmoExplosion(actor.GUID);
 
                 actor.PublishFloatieMessage($"{component.Name} EXPLOSION");
                 if (actor.Combat.Constants.PilotingConstants.InjuryFromAmmoExplosion)
