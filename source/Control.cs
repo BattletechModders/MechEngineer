@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using BattleTech;
 using MechEngineer.Features;
+using MechEngineer.Features.BetterLog;
 
 namespace MechEngineer
 {
@@ -17,6 +19,8 @@ namespace MechEngineer
             mod = new Mod(modDirectory);
             try
             {
+                BetterLog.SetupModLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), new BetterLogSettings { Enabled = true });
+
                 mod.SaveSettings(settings, mod.SettingsDefaultsPath);
                 mod.LoadSettings(settings);
                 mod.SaveSettings(settings, mod.SettingsLastPath);

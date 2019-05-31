@@ -81,6 +81,10 @@
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesFeature.cs" />
     <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixFeature.cs" />
+    <Compile Include="Features\BetterLog\BetterLog.cs" />
+    <Compile Include="Features\BetterLog\BetterLogFormatter.cs" />
+    <Compile Include="Features\BetterLog\BetterLogFormatterSettings.cs" />
+    <Compile Include="Features\BetterLog\BetterLogSettings.cs" />
     <Compile Include="Features\ComponentExplosions\TurretPrivateExtensions.cs" />
     <Compile Include="Features\CriticalEffects\MechCriticalEffects.cs" />
     <Compile Include="Features\CriticalEffects\TurretCriticalEffects.cs" />
