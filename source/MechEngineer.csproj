@@ -92,7 +92,11 @@
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileFeature.cs" />
     <Compile Include="Features\Engines\EngineFeatureSetup.cs" />
     <Compile Include="Features\FeaturesList.cs" />
+    <Compile Include="Features\OverrideGhostVFX\OverrideGhostVFXFeatureSettings.cs" />
+    <Compile Include="Features\OverrideGhostVFX\OverrideGhostVFXFeature.cs" />
+    <Compile Include="Features\OverrideGhostVFX\Patches\PilotableActorRepresentation_OnPlayerVisibilityChanged_Patch.cs" />
     <Compile Include="Features\Globals\GlobalsFeature.cs" />
+    <Compile Include="Features\OverrideGhostVFX\Patches\GameRepresentation_PlayVFXAt_Patch.cs" />
     <Compile Include="Features\Globals\Patches\MechBayPanel_CloseMechBay_Patch.cs" />
     <Compile Include="Features\Globals\Patches\MechBayPanel_SelectMech_Patch.cs" />
     <Compile Include="Features\Globals\Patches\MechLabPanel_ExitMechLab_Patch.cs" />

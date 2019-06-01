@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using MechEngineer.Features.AutoFix;
+using MechEngineer.Features.OverrideGhostVFX;
 
 namespace MechEngineer
 {
@@ -55,6 +56,8 @@ namespace MechEngineer
         public bool NewSaveFolderFeatureEnabled = false;
 
         public bool FeatureTurretLimitedAmmoEnabled = true;
+
+        public OverrideGhostVFXFeatureSettings FeatureOverrideGhostVFX = new OverrideGhostVFXFeatureSettings();
 
         public bool DebugCycleCombatSoundsFeatureEnabled = false;
 
