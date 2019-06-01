@@ -123,6 +123,39 @@
 					"prefabName" : null,
 					"hasPrefabName" : false
 				},
+				{
+					"ComponentDefID": "Gear_Cockpit_SLDF_Custom",
+					"ComponentDefType": "Upgrade",
+					"DamageLevel": "Functional",
+					"GUID": null,
+					"HardpointSlot": -1,
+					"MountedLocation": "Head",
+					"SimGameUID": "",
+					"hasPrefabName": false,
+					"prefabName": null
+				},
+				{
+					"ComponentDefID": "emod_engine_cooling_2",
+					"ComponentDefType": "HeatSink",
+					"DamageLevel": "Functional",
+					"GUID": null,
+					"HardpointSlot": -1,
+					"MountedLocation": "CenterTorso",
+					"SimGameUID": "",
+					"hasPrefabName": false,
+					"prefabName": null
+				},
+				{
+					"ComponentDefID": "Gear_TargetingTrackingSystem_RCA_InstaTrac-XII",
+					"ComponentDefType": "Upgrade",
+					"DamageLevel": "Functional",
+					"GUID": null,
+					"HardpointSlot": -1,
+					"MountedLocation": "CenterTorso",
+					"SimGameUID": "",
+					"hasPrefabName": false,
+					"prefabName": null
+				}
 			]
 		}
 	]

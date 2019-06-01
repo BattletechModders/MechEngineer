@@ -105,6 +105,17 @@
 					"prefabName" : null,
 					"hasPrefabName" : false
 				},
+				{
+					"ComponentDefID": "Gear_Cockpit_SLDF_Custom",
+					"ComponentDefType": "Upgrade",
+					"DamageLevel": "Functional",
+					"GUID": null,
+					"HardpointSlot": -1,
+					"MountedLocation": "Head",
+					"SimGameUID": "",
+					"hasPrefabName": false,
+					"prefabName": null
+				}
 			]
 		}
 	]

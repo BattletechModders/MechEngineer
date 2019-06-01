@@ -138,6 +138,28 @@
 					"prefabName" : null,
 					"hasPrefabName" : false
 				},
+				{
+					"ComponentDefID": "Gear_Cockpit_SLDF_Custom",
+					"ComponentDefType": "Upgrade",
+					"DamageLevel": "Functional",
+					"GUID": null,
+					"HardpointSlot": -1,
+					"MountedLocation": "Head",
+					"SimGameUID": "",
+					"hasPrefabName": false,
+					"prefabName": null
+				},
+				{
+					"ComponentDefID": "Gear_TargetingTrackingSystem_Hartford_S2000",
+					"ComponentDefType": "Upgrade",
+					"DamageLevel": "Functional",
+					"GUID": null,
+					"HardpointSlot": -1,
+					"MountedLocation": "CenterTorso",
+					"SimGameUID": "",
+					"hasPrefabName": false,
+					"prefabName": null
+				}
 			]
 		}
 	]
