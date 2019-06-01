@@ -14,6 +14,12 @@ namespace MechEngineer.Features.NewSaveFolder
 
         internal override bool Enabled => Control.settings.FeatureNewSaveFolder?.Enabled ?? false;
 
+        internal class Settings
+        {
+            public bool Enabled = false;
+            public string Path = "Mods/Saves";
+        }
+
         private static string PathByKey(string key)
         {
             return Path.Combine(SavesPath, key + ".pref");
