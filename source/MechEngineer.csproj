@@ -92,6 +92,7 @@
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileFeature.cs" />
     <Compile Include="Features\Engines\EngineFeatureSetup.cs" />
     <Compile Include="Features\FeaturesList.cs" />
+    <Compile Include="Features\NewSaveFolder\NewSaveFolderFeatureSettings.cs" />
     <Compile Include="Features\OverrideGhostVFX\OverrideGhostVFXFeatureSettings.cs" />
     <Compile Include="Features\OverrideGhostVFX\OverrideGhostVFXFeature.cs" />
     <Compile Include="Features\OverrideGhostVFX\Patches\PilotableActorRepresentation_OnPlayerVisibilityChanged_Patch.cs" />

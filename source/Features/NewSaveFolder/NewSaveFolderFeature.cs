@@ -12,7 +12,7 @@ namespace MechEngineer.Features.NewSaveFolder
     {
         internal static NewSaveFolderFeature Shared = new NewSaveFolderFeature();
 
-        internal override bool Enabled => Control.settings.NewSaveFolderFeatureEnabled;
+        internal override bool Enabled => Control.settings.FeatureNewSaveFolder?.Enabled ?? false;
 
         private static string PathByKey(string key)
         {
@@ -23,9 +23,9 @@ namespace MechEngineer.Features.NewSaveFolder
             return Path.Combine(SavesPath, usePlatform ? "cloud" : "local");
         }
 
-        internal static string SavesPath => Path.Combine(ModsPath, "Saves");
+        internal static string SavesPath => Path.GetFullPath(Path.Combine(BattleTechPath, Control.settings.FeatureNewSaveFolder.Path));
 
-        internal static string ModsPath // copied from ModTek sources
+        internal static string BattleTechPath
         {
             get
             {
@@ -39,11 +39,11 @@ namespace MechEngineer.Features.NewSaveFolder
                     Path.Combine(manifestDirectory,
                         Path.Combine(
                             Path.Combine(
-                                Path.Combine("..", "..")
-                                ,
+                                "..",
                                 ".."
                             ),
-                            "Mods")
+                            ".."
+                        )
                     )
                 );
             }

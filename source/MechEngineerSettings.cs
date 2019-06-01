@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using MechEngineer.Features.AutoFix;
+using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideGhostVFX;
 
 namespace MechEngineer
@@ -53,7 +54,7 @@ namespace MechEngineer
 
         public bool FeatureCriticalEffectsEnabled = true;
         public bool FeatureMoveMultiplierEnabled = true;
-        public bool NewSaveFolderFeatureEnabled = false;
+        public NewSaveFolderFeatureSettings FeatureNewSaveFolder = new NewSaveFolderFeatureSettings();
 
         public bool FeatureTurretLimitedAmmoEnabled = true;
 
