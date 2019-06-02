@@ -8,6 +8,15 @@ namespace MechEngineer.Features.ArmorStructureChanges
     {
         internal static ArmorStructureChangesFeature Shared = new ArmorStructureChangesFeature();
 
+        internal override bool Enabled => settings?.Enabled ?? false;
+
+        internal static Settings settings => Control.settings.ArmorStructureChanges;
+
+        public class Settings
+        {
+            public bool Enabled = true;
+        }
+
         internal static float GetArmorFactorForMech(Mech mech)
         {
             const string key = "ArmorMultiplier";

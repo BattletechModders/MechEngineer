@@ -9,6 +9,15 @@ namespace MechEngineer.Features.ComponentExplosions
     {
         internal static ComponentExplosionsFeature Shared = new ComponentExplosionsFeature();
 
+        internal override bool Enabled => settings?.Enabled ?? false;
+
+        internal static Settings settings => Control.settings.ComponentExplosions;
+
+        public class Settings
+        {
+            public bool Enabled = true;
+        }
+
         internal void CheckForExplosion(MechComponent component, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
         {
             if (!applyEffects)

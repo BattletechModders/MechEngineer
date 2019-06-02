@@ -1,8 +1,11 @@
 ﻿using BattleTech;
 using MechEngineer.Features.AccuracyEffects;
 using MechEngineer.Features.ArmActuators;
+using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
+using MechEngineer.Features.BattleTechLoadFix;
+using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.DebugCycleCombatSounds;
@@ -10,6 +13,7 @@ using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
+using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
@@ -18,6 +22,7 @@ using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
 using MechEngineer.Features.TurretLimitedAmmo;
+using MechEngineer.Features.TurretMechComponents;
 
 namespace MechEngineer
 {
@@ -49,5 +54,10 @@ namespace MechEngineer
         public OverrideDescriptionsFeature.Settings OverrideDescriptions = new OverrideDescriptionsFeature.Settings();
         public CriticalEffectsFeature.Settings CriticalEffects = new CriticalEffectsFeature.Settings();
         public AutoFixerFeature.Settings AutoFixer = new AutoFixerFeature.Settings();
+        public ArmorStructureChangesFeature.Settings ArmorStructureChanges = new ArmorStructureChangesFeature.Settings();
+        public BattleTechLoadFixFeature.Settings BattleTechLoadFix = new BattleTechLoadFixFeature.Settings();
+        public ComponentExplosionsFeature.Settings ComponentExplosions = new ComponentExplosionsFeature.Settings();
+        public TurretMechComponentsFeature.Settings TurretMechComponents = new TurretMechComponentsFeature.Settings();
+        public InvalidInventoryFeature.Settings InvalidInventory = new InvalidInventoryFeature.Settings();
     }
 }

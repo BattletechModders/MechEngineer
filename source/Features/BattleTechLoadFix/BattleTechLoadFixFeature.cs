@@ -7,6 +7,15 @@ namespace MechEngineer.Features.BattleTechLoadFix
     {
         internal static BattleTechLoadFixFeature Shared = new BattleTechLoadFixFeature();
 
+        internal override bool Enabled => settings?.Enabled ?? false;
+
+        internal static Settings settings => Control.settings.BattleTechLoadFix;
+
+        public class Settings
+        {
+            public bool Enabled = true;
+        }
+
         internal static void PreloadComponents(DataManager manager)
         {
             var loadRequest = manager.CreateLoadRequest();

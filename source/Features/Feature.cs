@@ -10,7 +10,7 @@ namespace MechEngineer.Features
 {
     internal abstract class Feature
     {
-        internal virtual bool Enabled => true;
+        internal abstract bool Enabled { get; }
 
         // called when the feature is enabled and its patches have been successfully loaded
         internal virtual void SetupFeatureLoaded()
