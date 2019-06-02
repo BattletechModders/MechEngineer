@@ -8,7 +8,14 @@ namespace MechEngineer.Features.AccuracyEffects
     {
         internal static AccuracyEffectsFeature Shared = new AccuracyEffectsFeature();
 
-        internal override bool Enabled => LocationalEffectsFeature.Shared.Loaded && Control.settings.FeatureAccuracyEffectsEnabled;
+        internal override bool Enabled => (settings?.Enabled ?? false) && LocationalEffectsFeature.Shared.Loaded;
+
+        internal static Settings settings => Control.settings.AccuracyEffects;
+
+        public class Settings
+        {
+            public bool Enabled = true;
+        }
 
         internal static void SetupAccuracyStatistics(StatCollection statCollection)
         {

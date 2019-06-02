@@ -1,4 +1,5 @@
 ﻿using BattleTech;
+using MechEngineer.Features.AccuracyEffects;
 using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
@@ -43,12 +44,7 @@ namespace MechEngineer
         public EngineFeature.Settings Engine = new EngineFeature.Settings();
         public MechLabSlotsFeature.Settings MechLabSlots = new MechLabSlotsFeature.Settings();
         public DynamicSlotsFeature.Settings DynamicSlots = new DynamicSlotsFeature.Settings();
-        #endregion
-
-        #region AccuracyEffects
-        #region LocationalEffects
-        public bool FeatureAccuracyEffectsEnabled = true;
-        #endregion
+        public AccuracyEffectsFeature.Settings AccuracyEffects = new AccuracyEffectsFeature.Settings();
         #endregion
 
         #region OverrideDesciptions
