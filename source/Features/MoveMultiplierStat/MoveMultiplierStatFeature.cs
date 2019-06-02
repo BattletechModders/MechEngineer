@@ -13,7 +13,7 @@ namespace MechEngineer.Features.MoveMultiplierStat
 
         public class Settings
         {
-            public bool Enabled = false;
+            public bool Enabled = true;
         }
 
         internal void InitEffectStats(Mech mech)

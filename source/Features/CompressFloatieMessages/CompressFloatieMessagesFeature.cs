@@ -15,7 +15,7 @@ namespace MechEngineer.Features.CompressFloatieMessages
 
         public class Settings
         {
-            public bool Enabled = false;
+            public bool Enabled = true;
             public bool DebugDestroyedFloaties = false;
         }
 
