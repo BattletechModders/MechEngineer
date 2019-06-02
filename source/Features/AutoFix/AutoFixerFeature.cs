@@ -16,6 +16,12 @@ namespace MechEngineer.Features.AutoFix
             public bool Enabled = true;
 
             public string[] MechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
+
+            public bool MechDefEngine = true; // adds missing engine and removes too many jump jets
+            public string MechDefCoolingDef = "emod_kit_shs";
+            public string MechDefHeatBlockDef = "emod_engine_cooling";
+            public string MechDefCoreDummy = "emod_engine_dummy";
+            
             public string[] UpgradeDefSkip = {
                 "Gear_Cockpit_SLDF_Custom",
                 "Gear_Cockpit_Generic_Small",
@@ -34,11 +40,6 @@ namespace MechEngineer.Features.AutoFix
                 "emod_leg_lower",
                 "emod_leg_foot",
             }; // upgrades to not autofix
-
-            public bool MechDefEngine = true; // adds missing engine and removes too many jump jets
-            public string MechDefCoolingDef = "emod_kit_shs";
-            public string MechDefHeatBlockDef = "emod_engine_cooling";
-            public string MechDefCoreDummy = "emod_engine_dummy";
 
             public IdentityHelper GyroCategorizer = new IdentityHelper
             {
