@@ -15,16 +15,16 @@ namespace MechEngineer.Features.AutoFix
 
         public LegActuatorHandler()
         {
-            identity = Control.settings.AutoFixLegUpgradesCategorizer;
+            identity = AutoFixerFeature.settings.LegUpgradesCategorizer;
 
             if (identity == null)
             {
                 return;
             }
 
-            if (Control.settings.AutoFixLegUpgradesSlotChange != null)
+            if (AutoFixerFeature.settings.LegUpgradesSlotChange != null)
             {
-                resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixLegUpgradesSlotChange);
+                resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.LegUpgradesSlotChange);
             }
         }
 

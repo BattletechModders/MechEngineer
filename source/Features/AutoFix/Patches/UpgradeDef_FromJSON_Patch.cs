@@ -13,7 +13,7 @@ namespace MechEngineer.Features.AutoFix.Patches
         {
             try
             {
-                if (Control.settings.AutoFixUpgradeDefSkip.Contains(__instance.Description.Id))
+                if (AutoFixerFeature.settings.UpgradeDefSkip.Contains(__instance.Description.Id))
                 {
                     Control.mod.Logger.LogDebug($"AutoFixer: {__instance.Description.Id} - skipped by options");
                     return;

@@ -12,7 +12,7 @@ namespace MechEngineer.Features.AutoFix.Patches
         {
             try
             {
-                var changes = Control.settings.AutoFixWeaponDefSlotsChanges;
+                var changes = AutoFixerFeature.settings.AutoFixWeaponDefSlotsChanges;
                 if (changes == null)
                 {
                     return;

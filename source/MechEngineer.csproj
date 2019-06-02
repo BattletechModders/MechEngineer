@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\ArmActuators\ArmActuatorCC.cs" />
+    <Compile Include="Features\AutoFix\AutoFixerFeature.cs" />
     <Compile Include="Features\AutoFix\ChassisSlotsChange.cs" />
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesFeature.cs" />
@@ -144,7 +145,7 @@
     <Compile Include="Features\Engines\EngineCoreDef.cs" />
     <Compile Include="Features\Engines\EngineHeatBlockDef.cs" />
     <Compile Include="Features\Engines\EngineHeatSinkDef.cs" />
-    <Compile Include="Features\AutoFix\AutoFixerFeature.cs" />
+    <Compile Include="Features\AutoFix\AutoFixer.cs" />
     <Compile Include="Features\Engines\Handler\EngineValidation.cs" />
     <Compile Include="Features\Engines\Helper\EngineExtensions.cs" />
     <Compile Include="Features\Engines\Helper\EngineMovement.cs" />

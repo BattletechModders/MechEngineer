@@ -14,7 +14,7 @@ namespace MechEngineer.Features.AutoFix
 
         internal static void OverrideChassisSettings(ChassisDef chassisDef)
         {
-            if (Control.settings.AutoFixChassisDefSkip.Contains(chassisDef.Description.Id))
+            if (AutoFixerFeature.settings.ChassisDefSkip.Contains(chassisDef.Description.Id))
             {
                 return;
             }
@@ -47,10 +47,10 @@ namespace MechEngineer.Features.AutoFix
 
         private static void AutoFixChassisDef(ChassisDef chassisDef)
         {
-            if (Control.settings.AutoFixChassisDefInitialTonnage)
+            if (AutoFixerFeature.settings.ChassisDefInitialTonnage)
             {
                 SetOriginalTonnage(chassisDef);
-                var tonnage = chassisDef.Tonnage * Control.settings.AutoFixChassisDefInitialToTotalTonnageFactor;
+                var tonnage = chassisDef.Tonnage * AutoFixerFeature.settings.ChassisDefInitialToTotalTonnageFactor;
                 var info = typeof(ChassisDef).GetProperty("InitialTonnage");
                 var value = Convert.ChangeType(tonnage, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
@@ -58,11 +58,11 @@ namespace MechEngineer.Features.AutoFix
                 Control.mod.Logger.LogDebug($"set InitialTonnage={tonnage}");
             }
 
-            if (Control.settings.AutoFixChassisDefMaxJumpjets)
+            if (AutoFixerFeature.settings.ChassisDefMaxJumpjets)
             {
-                var coreDef = new EngineCoreDef {Rating = Control.settings.AutoFixChassisDefMaxJumpjetsRating };
+                var coreDef = new EngineCoreDef {Rating = AutoFixerFeature.settings.ChassisDefMaxJumpjetsRating };
                 var maxCount = Mathf.Min(
-                    Control.settings.AutoFixChassisDefMaxJumpjetsCount,
+                    AutoFixerFeature.settings.ChassisDefMaxJumpjetsCount,
                     coreDef.GetMovement(chassisDef.Tonnage).JumpJetCount
                 );
                 var info = typeof(ChassisDef).GetProperty("MaxJumpjets");
@@ -75,7 +75,7 @@ namespace MechEngineer.Features.AutoFix
 
         private static void AutoFixSlots(ChassisDef chassisDef)
         {
-            var changes = Control.settings.AutoFixChassisDefSlotsChanges;
+            var changes = AutoFixerFeature.settings.ChassisDefSlotsChanges;
             if (changes == null)
             {
                 return;

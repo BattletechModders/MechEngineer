@@ -14,16 +14,16 @@ namespace MechEngineer.Features.AutoFix
 
         public GyroHandler()
         {
-            identity = Control.settings.AutoFixGyroCategorizer;
+            identity = AutoFixerFeature.settings.GyroCategorizer;
 
             if (identity == null)
             {
                 return;
             }
 
-            if (Control.settings.AutoFixGyroSlotChange != null)
+            if (AutoFixerFeature.settings.GyroSlotChange != null)
             {
-                resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixGyroSlotChange);
+                resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.GyroSlotChange);
             }
         }
 

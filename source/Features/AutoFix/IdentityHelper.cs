@@ -67,7 +67,7 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            if (Control.settings.AutoFixUpgradeDefSkip.Contains(def.Description.Id))
+            if (AutoFixerFeature.settings.UpgradeDefSkip.Contains(def.Description.Id))
             {
                 return;
             }

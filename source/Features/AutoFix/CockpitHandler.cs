@@ -15,21 +15,21 @@ namespace MechEngineer.Features.AutoFix
 
         public CockpitHandler()
         {
-            identity = Control.settings.AutoFixCockpitCategorizer;
+            identity = AutoFixerFeature.settings.CockpitCategorizer;
 
             if (identity == null)
             {
                 return;
             }
 
-            if (Control.settings.AutoFixCockpitTonnageChange != null)
+            if (AutoFixerFeature.settings.CockpitTonnageChange != null)
             {
-                reweighter = new AdjustCompDefTonnageHelper(identity, Control.settings.AutoFixCockpitTonnageChange);
+                reweighter = new AdjustCompDefTonnageHelper(identity, AutoFixerFeature.settings.CockpitTonnageChange);
             }
 
-            if (Control.settings.AutoFixCockpitSlotChange != null)
+            if (AutoFixerFeature.settings.CockpitSlotChange != null)
             {
-                resizer = new AdjustCompDefInvSizeHelper(identity, Control.settings.AutoFixCockpitSlotChange);
+                resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.CockpitSlotChange);
             }
         }
 
