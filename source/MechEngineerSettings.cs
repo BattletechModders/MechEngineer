@@ -3,6 +3,7 @@ using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
 using MechEngineer.Features.CompressFloatieMessages;
+using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
@@ -11,6 +12,7 @@ using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
+using MechEngineer.Features.TurretLimitedAmmo;
 
 namespace MechEngineer
 {
@@ -34,14 +36,8 @@ namespace MechEngineer
         public OverrideTonnageFeature.Settings OverrideTonnage = new OverrideTonnageFeature.Settings();
         public CompressFloatieMessagesFeature.Settings CompressFloatieMessages = new CompressFloatieMessagesFeature.Settings();
         public MoveMultiplierStatFeature.Settings MoveMultiplierStat = new MoveMultiplierStatFeature.Settings();
-        #endregion
-
-        #region TurretLimitedAmmo
-        public bool FeatureTurretLimitedAmmoEnabled = true;
-        #endregion
-
-        #region DebugCycleCombatSounds
-        public bool DebugCycleCombatSoundsFeatureEnabled = false;
+        public TurretLimitedAmmoFeature.Settings TurretLimitedAmmo = new TurretLimitedAmmoFeature.Settings();
+        public DebugCycleCombatSoundsFeature.Settings DebugCycleCombatSounds = new DebugCycleCombatSoundsFeature.Settings();
         #endregion
 
         #region MechLabSlots
