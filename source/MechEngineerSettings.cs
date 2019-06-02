@@ -38,6 +38,7 @@ namespace MechEngineer
         public MoveMultiplierStatFeature.Settings MoveMultiplierStat = new MoveMultiplierStatFeature.Settings();
         public TurretLimitedAmmoFeature.Settings TurretLimitedAmmo = new TurretLimitedAmmoFeature.Settings();
         public DebugCycleCombatSoundsFeature.Settings DebugCycleCombatSounds = new DebugCycleCombatSoundsFeature.Settings();
+        public EngineFeature.Settings Engine = new EngineFeature.Settings();
         #endregion
 
         #region MechLabSlots
@@ -54,17 +55,6 @@ namespace MechEngineer
         // battletech allows overweight, to stay consistent so we also allow overspace usage by default
         // set to true to switch to MWO style
         public bool DynamicSlotsValidateDropEnabled = false;
-        #endregion
-
-        #region Engine
-        public int MinimumHeatSinksOnMech = 10; // minimum heatsinks a mech requires
-        public bool EnforceRulesForAdditionalInternalHeatSinks = true; // can't have those juicy ++ cooling systems with smaller fusion cores than the rules allow it
-        #region AutoFix
-        public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
-        #endregion
-        public string DefaultEngineHeatSinkId = "Gear_HeatSink_Generic_Standard"; // default heat sink type for engines without a kit
-        public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
-        public CBTMovementSettings CBTMovement = new CBTMovementSettings();
         #endregion
 
         #region AccuracyEffects

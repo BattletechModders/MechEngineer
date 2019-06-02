@@ -37,13 +37,13 @@ namespace MechEngineer.Features.Engines.Handler
                 }
             }
 
-            if (Control.settings.MinimumHeatSinksOnMech > 0)
+            if (EngineFeature.settings.MinimumHeatSinksOnMech > 0)
             {
                 var externalCount = mechDef.Inventory.Count(c => c.Is<EngineHeatSinkDef>());
                 var internalCount = engine.CoreDef.InternalHeatSinks;
                 var count = internalCount + externalCount;
 
-                var min = Control.settings.MinimumHeatSinksOnMech;
+                var min = EngineFeature.settings.MinimumHeatSinksOnMech;
 
                 if (count < min)
                 {
@@ -54,7 +54,7 @@ namespace MechEngineer.Features.Engines.Handler
                 }
             }
 
-            if (!Control.settings.AllowMixingHeatSinkTypes)
+            if (!EngineFeature.settings.AllowMixingHeatSinkTypes)
             {
                 var types = new HashSet<string>();
 
@@ -75,7 +75,7 @@ namespace MechEngineer.Features.Engines.Handler
                 }
             }
 
-            if (Control.settings.EnforceRulesForAdditionalInternalHeatSinks)
+            if (EngineFeature.settings.EnforceRulesForAdditionalInternalHeatSinks)
             {
                 var count = engine.HeatBlockDef.HeatSinkCount;
                 var max = engine.CoreDef.InternalHeatSinkAdditionalMaxCount;

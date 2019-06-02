@@ -10,7 +10,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
             var engine = inventory.GetEngine();
             if (engine == null)
             {
-                return Control.settings.EngineMissingFallbackHeatSinkCapacity;
+                return EngineFeature.settings.EngineMissingFallbackHeatSinkCapacity;
             }
 
             return engine.EngineHeatDissipation;

@@ -34,7 +34,7 @@ namespace MechEngineer.Features.Engines
 
         internal static EngineHeatSinkDef GetDefaultEngineHeatSinkDef(this DataManager @this)
         {
-            return GetEngineHeatSinkDef(@this, Control.settings.DefaultEngineHeatSinkId);
+            return GetEngineHeatSinkDef(@this, EngineFeature.settings.DefaultEngineHeatSinkId);
         }
     }
 }

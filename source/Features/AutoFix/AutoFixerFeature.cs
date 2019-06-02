@@ -166,7 +166,7 @@ namespace MechEngineer.Features.AutoFix
             // add engine
             builder.Add(maxEngine.CoreDef.Def,ChassisLocations.CenterTorso, true);
 
-            if (!Control.settings.AllowMixingHeatSinkTypes)
+            if (!EngineFeature.settings.AllowMixingHeatSinkTypes)
             {
                 // remove incompatible heat sinks
                 var incompatibleHeatSinks = builder.Inventory

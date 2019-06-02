@@ -80,7 +80,6 @@
   <ItemGroup>
     <Compile Include="Features\ArmActuators\ArmActuatorCC.cs" />
     <Compile Include="Features\AutoFix\ChassisSlotsChange.cs" />
-    <Compile Include="Features\Engines\CBTMovementSettings.cs" />
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesFeature.cs" />
     <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixFeature.cs" />
@@ -93,7 +92,7 @@
     <Compile Include="Features\CriticalEffects\TurretCriticalEffects.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\DebugCycleCombatSoundsFeature.cs" />
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileFeature.cs" />
-    <Compile Include="Features\Engines\EngineFeatureSetup.cs" />
+    <Compile Include="Features\Engines\EngineFeature.cs" />
     <Compile Include="Features\FeaturesList.cs" />
     <Compile Include="Features\OverrideGhostVFX\OverrideGhostVFXFeature.cs" />
     <Compile Include="Features\OverrideGhostVFX\Patches\PilotableActorRepresentation_OnPlayerVisibilityChanged_Patch.cs" />
