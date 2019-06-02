@@ -7,10 +7,18 @@ using UnityEngine;
 
 namespace MechEngineer.Features.ArmorStructureRatio
 {
-    internal class ArmorStructureRatioValidationFeature : Feature
+    internal class ArmorStructureRatioFeature : Feature
     {
-        internal static ArmorStructureRatioValidationFeature Shared = new ArmorStructureRatioValidationFeature();
-        internal override bool Enabled => Control.settings.ArmorStructureRatioEnforcement;
+        internal static ArmorStructureRatioFeature Shared = new ArmorStructureRatioFeature();
+        internal override bool Enabled => settings?.Enabled ?? false;
+
+        internal static Settings settings => Control.settings.ArmorStructureRatio;
+
+        internal class Settings
+        {
+            public bool Enabled = true;
+            public string[] SkipMechDefs = { };
+        }
 
         public void AutoFixMechDef(MechDef mechDef)
         {
@@ -19,7 +27,7 @@ namespace MechEngineer.Features.ArmorStructureRatio
                 return;
             }
 
-            if (Control.settings.ArmorStructureRatioEnforcementSkipMechDefs.Contains(mechDef.Description.Id))
+            if (settings.SkipMechDefs.Contains(mechDef.Description.Id))
             {
                 return;
             }
@@ -34,7 +42,7 @@ namespace MechEngineer.Features.ArmorStructureRatio
             MechDef mechDef,
             Dictionary<MechValidationType, List<Text>> errorMessages = null)
         {
-            if (Control.settings.ArmorStructureRatioEnforcementSkipMechDefs.Contains(mechDef.Description.Id))
+            if (settings.SkipMechDefs.Contains(mechDef.Description.Id))
             {
                 return true;
             }

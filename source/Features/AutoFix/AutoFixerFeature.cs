@@ -65,7 +65,7 @@ namespace MechEngineer.Features.AutoFix
 
             Control.mod.Logger.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
 
-            ArmorStructureRatioValidationFeature.Shared.AutoFixMechDef(mechDef);
+            ArmorStructureRatioFeature.Shared.AutoFixMechDef(mechDef);
             
             var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
             var standardHeatSinkDef = mechDef.DataManager.GetDefaultEngineHeatSinkDef();

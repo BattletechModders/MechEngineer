@@ -49,7 +49,7 @@ namespace MechEngineer.Features
             InvalidInventoryFeature.Shared,
             ComponentExplosionsFeature.Shared,
             BattleTechLoadFixFeature.Shared,
-            ArmorStructureRatioValidationFeature.Shared,
+            ArmorStructureRatioFeature.Shared,
             ArmorStructureChangesFeature.Shared,
             HardpointFixFeature.Shared,
             AutoFixerFeature.Shared,

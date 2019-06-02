@@ -117,7 +117,7 @@
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorFeature.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
-    <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioValidationFeature.cs" />
+    <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioFeature.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructureSimple_Patch.cs" />
     <Compile Include="Features\ArmorStructureRatio\Patches\MechValidationRules_ValidateMechStructure_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\MechPrivateExtensions.cs" />

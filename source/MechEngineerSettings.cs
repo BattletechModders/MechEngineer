@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using MechEngineer.Features.ArmActuators;
+using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
@@ -20,11 +21,6 @@ namespace MechEngineer
     {
         #region misc
         public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
-        #endregion
-
-        #region ArmorStructureRatio
-        public bool ArmorStructureRatioEnforcement = true;
-        public string[] ArmorStructureRatioEnforcementSkipMechDefs = { }; // mech defs to skip
         #endregion
 
         #region DebugSaveMechToFile
@@ -107,6 +103,7 @@ namespace MechEngineer
         public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
         public ArmActuatorFeature.Settings ArmActuator = new ArmActuatorFeature.Settings();
         public ShutdownInjuryProtectionFeature.Settings ShutdownInjuryProtection = new ShutdownInjuryProtectionFeature.Settings();
+        public ArmorStructureRatioFeature.Settings ArmorStructureRatio = new ArmorStructureRatioFeature.Settings();
         #endregion
 
         #region AutoFix

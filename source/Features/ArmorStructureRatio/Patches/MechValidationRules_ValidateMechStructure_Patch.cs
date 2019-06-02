@@ -13,7 +13,7 @@ namespace MechEngineer.Features.ArmorStructureRatio.Patches
         {
             try
             {
-                ArmorStructureRatioValidationFeature.ValidateMechArmorStructureRatio(mechDef, errorMessages);
+                ArmorStructureRatioFeature.ValidateMechArmorStructureRatio(mechDef, errorMessages);
             }
             catch (Exception e)
             {
