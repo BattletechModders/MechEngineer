@@ -50,7 +50,7 @@ namespace MechEngineer.Features.OverrideDescriptions
                 var split = bonus.Split(new[]{':'}, 2);
                 var bonusKey = split[0].Trim();
 
-                if (!OverrideDescriptionsFeature.Settings.TryGetValue(bonusKey, out var settings))
+                if (!OverrideDescriptionsFeature.Resources.TryGetValue(bonusKey, out var settings))
                 {
                     Control.mod.Logger.LogError($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
                     continue;
@@ -82,8 +82,8 @@ namespace MechEngineer.Features.OverrideDescriptions
             AddBonusDescriptions(
                 Def.Description,
                 descriptions.Select(x => x.Full),
-                Control.settings.BonusDescriptionsElementTemplate,
-                Control.settings.BonusDescriptionsDescriptionTemplate
+                OverrideDescriptionsFeature.settings.BonusDescriptionsElementTemplate,
+                OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate
             );
         }
 

@@ -12,6 +12,7 @@ using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
+using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
@@ -45,14 +46,7 @@ namespace MechEngineer
         public MechLabSlotsFeature.Settings MechLabSlots = new MechLabSlotsFeature.Settings();
         public DynamicSlotsFeature.Settings DynamicSlots = new DynamicSlotsFeature.Settings();
         public AccuracyEffectsFeature.Settings AccuracyEffects = new AccuracyEffectsFeature.Settings();
-        #endregion
-
-        #region OverrideDesciptions
-        public bool FeatureOverrideDescriptionsEnabled = true;
-        public string BonusDescriptionsDescriptionTemplate = "Traits:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
-        #region CriticalEffects
-        public string BonusDescriptionsElementTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{element}}</line-height></line-indent></indent>\r\n";
-        #endregion
+        public OverrideDescriptionsFeature.Settings OverrideDescriptions = new OverrideDescriptionsFeature.Settings();
         #endregion
 
         #region CriticalEffects

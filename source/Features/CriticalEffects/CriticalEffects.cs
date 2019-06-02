@@ -85,7 +85,7 @@ namespace MechEngineer.Features.CriticalEffects
             BonusDescriptions.AddBonusDescriptions(
                 Def.Description,
                 descriptions,
-                Control.settings.BonusDescriptionsElementTemplate,
+                OverrideDescriptionsFeature.settings.BonusDescriptionsElementTemplate,
                 descriptionTemplate
             );
         }

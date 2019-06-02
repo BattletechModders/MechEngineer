@@ -1,4 +1,5 @@
 using BattleTech;
+using MechEngineer.Features.AccuracyEffects;
 
 namespace MechEngineer.Features.LocationalEffects
 {
@@ -6,7 +7,7 @@ namespace MechEngineer.Features.LocationalEffects
     {
         internal static LocationalEffectsFeature Shared = new LocationalEffectsFeature();
 
-        internal override bool Enabled => Control.settings.FeatureAccuracyEffectsEnabled || Control.settings.FeatureCriticalEffectsEnabled;
+        internal override bool Enabled => AccuracyEffectsFeature.settings.Enabled || Control.settings.FeatureCriticalEffectsEnabled;
 
         internal static bool ProcessLocationalEffectData(ref EffectData effect, MechComponent mechComponent)
         {

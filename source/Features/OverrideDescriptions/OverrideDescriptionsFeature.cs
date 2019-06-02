@@ -12,18 +12,28 @@ namespace MechEngineer.Features.OverrideDescriptions
     {
         internal static OverrideDescriptionsFeature Shared = new OverrideDescriptionsFeature();
 
-        internal override bool Enabled => Control.settings.FeatureOverrideDescriptionsEnabled;
+        internal override bool Enabled => settings?.Enabled ?? false;
+
+        internal static Settings settings => Control.settings.OverrideDescriptions;
+
+        public class Settings
+        {
+            public bool Enabled = true;
+
+            public string BonusDescriptionsDescriptionTemplate = "Traits:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
+            public string BonusDescriptionsElementTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{element}}</line-height></line-indent></indent>\r\n";
+        }
 
         internal override void SetupFeatureLoaded()
         {
             Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
         }
 
-        internal static Dictionary<string, BonusDescriptionSettings> Settings { get; set; } = new Dictionary<string, BonusDescriptionSettings>();
+        internal static Dictionary<string, BonusDescriptionSettings> Resources { get; set; } = new Dictionary<string, BonusDescriptionSettings>();
 
         internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
-            Settings = SettingsResourcesTools.Enumerate<BonusDescriptionSettings>("MEBonusDescriptions", customResources)
+            Resources = SettingsResourcesTools.Enumerate<BonusDescriptionSettings>("MEBonusDescriptions", customResources)
                 .ToDictionary(entry => entry.Bonus);
         }
 
