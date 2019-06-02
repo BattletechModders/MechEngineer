@@ -5,8 +5,12 @@ namespace MechEngineer.Features.HardpointFix
     {
         internal static HardpointFixFeature Shared = new HardpointFixFeature();
 
+        internal override bool Enabled => Control.settings.HardpointFix?.Enabled ?? false;
+
         public class Settings
         {
+            public bool Enabled = true;
+
             // TODO add set to 4 slots per chassis location autofix variant
             // TODO make enum so we have: set to 4, set to encountered prefabs, disabled
             public bool AutoFixChassisDefWeaponHardpointCounts = false; // true = hardpoint counts derived from prefab hardpoints
@@ -16,8 +20,7 @@ namespace MechEngineer.Features.HardpointFix
             // from: /data/weapon$ grep -R "PrefabIdentifier" . | cut -d\" -f 4 | sort | uniq
             // to: /data/hardpoints$ grep -R "chrPrfWeap" . | cut -d_ -f 5 | sort | uniq
             // default mapping = prefabid -> lower case prefab id (e.g. Flamer -> flamer, PPC -> ppc)
-            public WeaponPrefabMapping[] WeaponPrefabMappings = new WeaponPrefabMapping[]
-            {
+            public WeaponPrefabMapping[] WeaponPrefabMappings = {
                 new WeaponPrefabMapping
                 {
                     PrefabIdentifier= "AC2",
