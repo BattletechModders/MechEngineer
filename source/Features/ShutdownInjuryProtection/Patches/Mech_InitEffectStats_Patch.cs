@@ -11,11 +11,11 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
         {
             try
             {
-                if (Control.settings.ShutdownInjuryEnabled)
+                if (ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled)
                 {
                     __instance.StatCollection.ReceiveShutdownInjury(true);
                 }
-                if (Control.settings.HeatDamageInjuryEnabled)
+                if (ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled)
                 {
                     __instance.StatCollection.ReceiveHeatDamageInjury(true);
                 }

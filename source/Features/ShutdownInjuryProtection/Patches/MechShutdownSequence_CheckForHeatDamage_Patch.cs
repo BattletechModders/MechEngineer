@@ -19,7 +19,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
         public static HeatConstantsDef OverrideHeat(this CombatGameConstants @this)
         {
             var heat = @this.Heat;
-            if (Control.settings.ShutdownInjuryEnabled)
+            if (ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled)
             {
                 heat.ShutdownCausesInjury = receiveShutdownInjury;
             }
@@ -31,7 +31,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
         {
             try
             {
-                if (!Control.settings.ShutdownInjuryEnabled)
+                if (!ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled)
                 {
                     return;
                 }

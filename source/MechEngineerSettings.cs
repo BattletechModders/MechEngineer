@@ -5,6 +5,7 @@ using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideGhostVFX;
+using MechEngineer.Features.ShutdownInjuryProtection;
 
 namespace MechEngineer
 {
@@ -17,11 +18,6 @@ namespace MechEngineer
 
     internal class MechEngineerSettings
     {
-        #region ShutdownInjuryProtection
-        public bool HeatDamageInjuryEnabled = true;
-        public bool ShutdownInjuryEnabled = true;
-        #endregion
-
         #region misc
         public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
         #endregion
@@ -110,6 +106,7 @@ namespace MechEngineer
         public OverrideGhostVFXFeature.Settings OverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
         public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
         public ArmActuatorFeature.Settings ArmActuator = new ArmActuatorFeature.Settings();
+        public ShutdownInjuryProtectionFeature.Settings ShutdownInjuryProtection = new ShutdownInjuryProtectionFeature.Settings();
         #endregion
 
         #region AutoFix

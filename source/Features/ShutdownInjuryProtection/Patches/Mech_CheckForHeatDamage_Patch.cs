@@ -11,7 +11,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
         {
             try
             {
-                if (!Control.settings.HeatDamageInjuryEnabled)
+                if (!ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled)
                 {
                     return;
                 }
