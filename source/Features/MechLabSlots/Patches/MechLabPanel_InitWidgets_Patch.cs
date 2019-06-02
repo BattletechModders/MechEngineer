@@ -68,7 +68,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                     var container = __instance.rightArmWidget.transform.parent.gameObject;
                     var clg = container.GetComponent<VerticalLayoutGroup>();
                     //clg.spacing = 20;
-                    clg.padding = new RectOffset(0, 0, Control.settings.MechLabArmTopPadding, 0);
+                    clg.padding = new RectOffset(0, 0, MechLabSlotsFeature.settings.MechLabArmTopPadding, 0);
                     var go = UnityEngine.Object.Instantiate(template.gameObject, null);
                     //go.transform.SetAsFirstSibling();
 
@@ -86,7 +86,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                     
                     go.name = "MechPropertiesWidget";
                     go.transform.GetChild("layout_locationText").GetChild("txt_location").GetComponent<TextMeshProUGUI>().text = "General";
-                    go.SetActive(Control.settings.MechLabGeneralWidgetEnabled);
+                    go.SetActive(MechLabSlotsFeature.settings.MechLabGeneralWidgetEnabled);
                     MechPropertiesWidget = go.GetComponent<MechLabLocationWidget>();
                     MechPropertiesWidget.Init(__instance);
                     var layout = new MechLabLocationWidget_SetData_Patch.WidgetLayout(MechPropertiesWidget);
@@ -136,7 +136,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
 
                     var leftArm = OBJ_mech.GetChild("LeftArm");
                     var vlg = leftArm.GetComponent<VerticalLayoutGroup>();
-                    vlg.padding = new RectOffset(0, 0, Control.settings.MechLabArmTopPadding, 0);
+                    vlg.padding = new RectOffset(0, 0, MechLabSlotsFeature.settings.MechLabArmTopPadding, 0);
                     //layout_details.parent = leftArm;
                     //layout_details.SetAsFirstSibling();
 

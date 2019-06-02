@@ -39,7 +39,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
 
                 if (__instance == (__instance.parentDropTarget as MechLabPanel).centerTorsoWidget)
                 {
-                    ___maxSlots -= Control.settings.MechLabGeneralSlots;
+                    ___maxSlots -= MechLabSlotsFeature.settings.MechLabGeneralSlots;
                 }
 
                 ModifySlotCount(widgetLayout, ___maxSlots);

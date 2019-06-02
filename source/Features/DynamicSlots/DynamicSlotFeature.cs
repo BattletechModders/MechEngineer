@@ -2,6 +2,7 @@
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
+using MechEngineer.Features.MechLabSlots;
 using MechLabLocationWidget_SetData_Patch = MechEngineer.Features.MechLabSlots.Patches.MechLabLocationWidget_SetData_Patch;
 
 namespace MechEngineer.Features.DynamicSlots
@@ -44,10 +45,10 @@ namespace MechEngineer.Features.DynamicSlots
                     var widget = mechLab.GetLocationWidget((ArmorLocation)location); // by chance armorlocation = chassislocation for main locations
                     var adapter = new MechLabLocationWidgetAdapter(widget);
                     var used = adapter.usedSlots;
-                    var start = location == ChassisLocations.CenterTorso ? Control.settings.MechLabGeneralSlots : 0;
+                    var start = location == ChassisLocations.CenterTorso ? MechLabSlotsFeature.settings.MechLabGeneralSlots : 0;
                     for (var i = start; i < adapter.maxSlots; i++)
                     {
-                        var fillerIndex = location == ChassisLocations.CenterTorso ? i - Control.settings.MechLabGeneralSlots : i;
+                        var fillerIndex = location == ChassisLocations.CenterTorso ? i - MechLabSlotsFeature.settings.MechLabGeneralSlots : i;
                         var filler = fillers[fillerIndex];
                         if (i >= used && reservedSlots.MoveNext())
                         {

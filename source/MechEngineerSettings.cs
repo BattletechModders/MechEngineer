@@ -7,6 +7,7 @@ using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
+using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideGhostVFX;
@@ -39,14 +40,7 @@ namespace MechEngineer
         public TurretLimitedAmmoFeature.Settings TurretLimitedAmmo = new TurretLimitedAmmoFeature.Settings();
         public DebugCycleCombatSoundsFeature.Settings DebugCycleCombatSounds = new DebugCycleCombatSoundsFeature.Settings();
         public EngineFeature.Settings Engine = new EngineFeature.Settings();
-        #endregion
-
-        #region MechLabSlots
-        public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
-        public int MechLabArmTopPadding = 120;
-        #region DynamicSlots
-        public int MechLabGeneralSlots = 3;
-        #endregion
+        public MechLabSlotsFeature.Settings MechLabSlots = new MechLabSlotsFeature.Settings();
         #endregion
 
         #region DynamicSlots
