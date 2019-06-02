@@ -7,7 +7,14 @@ namespace MechEngineer.Features.MoveMultiplierStat
     {
         internal static MoveMultiplierStatFeature Shared = new MoveMultiplierStatFeature();
 
-        internal override bool Enabled => Control.settings.FeatureMoveMultiplierEnabled;
+        internal override bool Enabled => settings?.Enabled ?? false;
+
+        internal static Settings settings => Control.settings.MoveMultiplierStat;
+
+        public class Settings
+        {
+            public bool Enabled = false;
+        }
 
         internal void InitEffectStats(Mech mech)
         {

@@ -6,6 +6,7 @@ using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
+using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideTonnage;
@@ -32,10 +33,7 @@ namespace MechEngineer
         public DebugSaveMechToFileFeature.Settings DebugSaveMechToFile = new DebugSaveMechToFileFeature.Settings();
         public OverrideTonnageFeature.Settings OverrideTonnage = new OverrideTonnageFeature.Settings();
         public CompressFloatieMessagesFeature.Settings CompressFloatieMessages = new CompressFloatieMessagesFeature.Settings();
-        #endregion
-
-        #region MoveMultiplier
-        public bool FeatureMoveMultiplierEnabled = true;
+        public MoveMultiplierStatFeature.Settings MoveMultiplierStat = new MoveMultiplierStatFeature.Settings();
         #endregion
 
         #region TurretLimitedAmmo
