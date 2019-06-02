@@ -8,21 +8,15 @@ using UnityEngine;
 
 namespace MechEngineer.Features.CriticalEffects
 {
-    internal class CriticalEffectsFeature : Feature
+    internal class CriticalEffectsFeature : Feature<CriticalEffectsSettings>
     {
         internal static readonly CriticalEffectsFeature Shared = new CriticalEffectsFeature();
 
-        internal override bool Enabled => (settings?.Enabled ?? false) && LocationalEffectsFeature.Shared.Loaded;
+        internal override bool Enabled => base.Enabled && LocationalEffectsFeature.Shared.Loaded;
 
-        internal static Settings settings => Control.settings.CriticalEffects;
+        internal override CriticalEffectsSettings Settings => Control.settings.CriticalEffects;
 
-        public class Settings
-        {
-            public bool Enabled = true;
-
-            public string DescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
-            public bool DescriptionUseName = false;
-        }
+        internal static CriticalEffectsSettings settings => Shared.Settings;
 
         internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {

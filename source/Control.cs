@@ -51,7 +51,7 @@ namespace MechEngineer
             {
                 foreach (var feature in FeaturesList.Features)
                 {
-                    feature.SetupResources(customResources);
+                    feature.SetupFeatureResources(customResources);
                 }
 
                 mod.Logger.Log("loaded");

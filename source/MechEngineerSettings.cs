@@ -1,5 +1,5 @@
 ﻿using BattleTech;
-using MechEngineer.Features.AccuracyEffects;
+using MechEngineer.Features;
 using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
@@ -35,29 +35,31 @@ namespace MechEngineer
 
     internal class MechEngineerSettings
     {
-        public NewSaveFolderFeature.Settings NewSaveFolder = new NewSaveFolderFeature.Settings();
-        public OverrideGhostVFXFeature.Settings OverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
-        public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
-        public ArmActuatorFeature.Settings ArmActuator = new ArmActuatorFeature.Settings();
-        public ShutdownInjuryProtectionFeature.Settings ShutdownInjuryProtection = new ShutdownInjuryProtectionFeature.Settings();
-        public ArmorStructureRatioFeature.Settings ArmorStructureRatio = new ArmorStructureRatioFeature.Settings();
-        public DebugSaveMechToFileFeature.Settings DebugSaveMechToFile = new DebugSaveMechToFileFeature.Settings();
-        public OverrideTonnageFeature.Settings OverrideTonnage = new OverrideTonnageFeature.Settings();
-        public CompressFloatieMessagesFeature.Settings CompressFloatieMessages = new CompressFloatieMessagesFeature.Settings();
-        public MoveMultiplierStatFeature.Settings MoveMultiplierStat = new MoveMultiplierStatFeature.Settings();
-        public TurretLimitedAmmoFeature.Settings TurretLimitedAmmo = new TurretLimitedAmmoFeature.Settings();
-        public DebugCycleCombatSoundsFeature.Settings DebugCycleCombatSounds = new DebugCycleCombatSoundsFeature.Settings();
-        public EngineFeature.Settings Engine = new EngineFeature.Settings();
-        public MechLabSlotsFeature.Settings MechLabSlots = new MechLabSlotsFeature.Settings();
-        public DynamicSlotsFeature.Settings DynamicSlots = new DynamicSlotsFeature.Settings();
-        public AccuracyEffectsFeature.Settings AccuracyEffects = new AccuracyEffectsFeature.Settings();
-        public OverrideDescriptionsFeature.Settings OverrideDescriptions = new OverrideDescriptionsFeature.Settings();
-        public CriticalEffectsFeature.Settings CriticalEffects = new CriticalEffectsFeature.Settings();
-        public AutoFixerFeature.Settings AutoFixer = new AutoFixerFeature.Settings();
-        public ArmorStructureChangesFeature.Settings ArmorStructureChanges = new ArmorStructureChangesFeature.Settings();
-        public BattleTechLoadFixFeature.Settings BattleTechLoadFix = new BattleTechLoadFixFeature.Settings();
-        public ComponentExplosionsFeature.Settings ComponentExplosions = new ComponentExplosionsFeature.Settings();
-        public TurretMechComponentsFeature.Settings TurretMechComponents = new TurretMechComponentsFeature.Settings();
-        public InvalidInventoryFeature.Settings InvalidInventory = new InvalidInventoryFeature.Settings();
+        public BaseSettings AccuracyEffects = new BaseSettings();
+        public ArmActuatorSettings ArmActuator = new ArmActuatorSettings();
+        public BaseSettings ArmorStructureChanges = new BaseSettings();
+        public ArmorStructureRatioSettings ArmorStructureRatio = new ArmorStructureRatioSettings();
+        public AutoFixerSettings AutoFixer = new AutoFixerSettings();
+        public BaseSettings BattleTechLoadFix = new BaseSettings();
+        public BaseSettings ComponentExplosions = new BaseSettings();
+        public CompressFloatieMessagesSettings CompressFloatieMessages = new CompressFloatieMessagesSettings();
+        public CriticalEffectsSettings CriticalEffects = new CriticalEffectsSettings();
+        public BaseSettings DebugCycleCombatSounds = new BaseSettings { Enabled = false };
+        public BaseSettings DebugSaveMechToFile = new BaseSettings { Enabled = false };
+        public DynamicSlotsSettings DynamicSlots = new DynamicSlotsSettings();
+        public EngineSettings Engine = new EngineSettings();
+        
+        public HardpointFixSettings HardpointFix = new HardpointFixSettings();
+        public BaseSettings InvalidInventory = new BaseSettings();
+        
+        public MechLabSlotsSettings MechLabSlots = new MechLabSlotsSettings();
+        public BaseSettings MoveMultiplierStat = new BaseSettings();
+        public NewSaveFolderSettings NewSaveFolder = new NewSaveFolderSettings();
+        public OverrideDescriptionsSettings OverrideDescriptions = new OverrideDescriptionsSettings();
+        public OverrideGhostVFXSettings OverrideGhostVFX = new OverrideGhostVFXSettings();
+        public OverrideTonnageSettings OverrideTonnage = new OverrideTonnageSettings();
+        public ShutdownInjuryProtectionSettings ShutdownInjuryProtection = new ShutdownInjuryProtectionSettings();
+        public BaseSettings TurretLimitedAmmo = new BaseSettings();
+        public BaseSettings TurretMechComponents = new BaseSettings();
     }
 }

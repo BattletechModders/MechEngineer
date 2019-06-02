@@ -4,18 +4,13 @@ using MechEngineer.Features.LocationalEffects;
 
 namespace MechEngineer.Features.AccuracyEffects
 {
-    internal class AccuracyEffectsFeature : Feature
+    internal class AccuracyEffectsFeature : Feature<BaseSettings>
     {
         internal static AccuracyEffectsFeature Shared = new AccuracyEffectsFeature();
 
-        internal override bool Enabled => (settings?.Enabled ?? false) && LocationalEffectsFeature.Shared.Loaded;
+        internal override BaseSettings Settings => Control.settings.AccuracyEffects;
 
-        internal static Settings settings => Control.settings.AccuracyEffects;
-
-        public class Settings
-        {
-            public bool Enabled = true;
-        }
+        internal override bool Enabled => base.Enabled && LocationalEffectsFeature.Shared.Loaded;
 
         internal static void SetupAccuracyStatistics(StatCollection statCollection)
         {

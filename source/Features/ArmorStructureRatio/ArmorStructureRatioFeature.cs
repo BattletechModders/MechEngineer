@@ -8,18 +8,13 @@ using UnityEngine;
 
 namespace MechEngineer.Features.ArmorStructureRatio
 {
-    internal class ArmorStructureRatioFeature : Feature
+    internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
     {
         internal static ArmorStructureRatioFeature Shared = new ArmorStructureRatioFeature();
-        internal override bool Enabled => settings?.Enabled ?? false;
 
-        internal static Settings settings => Control.settings.ArmorStructureRatio;
+        internal override ArmorStructureRatioSettings Settings => Control.settings.ArmorStructureRatio;
 
-        internal class Settings
-        {
-            public bool Enabled = true;
-            public string[] SkipMechDefs = { };
-        }
+        internal static ArmorStructureRatioSettings settings => Shared.Settings;
 
         public void AutoFixMechDef(MechDef mechDef)
         {

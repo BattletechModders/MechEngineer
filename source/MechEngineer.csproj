@@ -79,7 +79,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\ArmActuators\ArmActuatorCC.cs" />
+    <Compile Include="Features\ArmActuators\ArmActuatorSettings.cs" />
+    <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioSettings.cs" />
     <Compile Include="Features\AutoFix\AutoFixerFeature.cs" />
+    <Compile Include="Features\AutoFix\AutoFixerSettings.cs" />
     <Compile Include="Features\AutoFix\ChassisSlotsChange.cs" />
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesFeature.cs" />
@@ -89,13 +92,22 @@
     <Compile Include="Features\BetterLog\BetterLogFormatterSettings.cs" />
     <Compile Include="Features\BetterLog\BetterLogSettings.cs" />
     <Compile Include="Features\ComponentExplosions\TurretPrivateExtensions.cs" />
+    <Compile Include="Features\CompressFloatieMessages\CompressFloatieMessagesSettings.cs" />
+    <Compile Include="Features\CriticalEffects\CriticalEffectsSettings.cs" />
     <Compile Include="Features\CriticalEffects\MechCriticalEffects.cs" />
     <Compile Include="Features\CriticalEffects\TurretCriticalEffects.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\DebugCycleCombatSoundsFeature.cs" />
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileFeature.cs" />
+    <Compile Include="Features\DynamicSlots\DynamicSlotsSettings.cs" />
     <Compile Include="Features\Engines\EngineFeature.cs" />
+    <Compile Include="Features\Engines\EngineSettings.cs" />
     <Compile Include="Features\FeaturesList.cs" />
+    <Compile Include="Features\HardpointFix\HardpointFixSettings.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabSlotsSettings.cs" />
+    <Compile Include="Features\NewSaveFolder\NewSaveFolderSettings.cs" />
+    <Compile Include="Features\OverrideDescriptions\OverrideDescriptionsSettings.cs" />
     <Compile Include="Features\OverrideGhostVFX\OverrideGhostVFXFeature.cs" />
+    <Compile Include="Features\OverrideGhostVFX\OverrideGhostVFXSettings.cs" />
     <Compile Include="Features\OverrideGhostVFX\Patches\PilotableActorRepresentation_OnPlayerVisibilityChanged_Patch.cs" />
     <Compile Include="Features\Globals\GlobalsFeature.cs" />
     <Compile Include="Features\OverrideGhostVFX\Patches\GameRepresentation_PlayVFXAt_Patch.cs" />
@@ -192,7 +204,9 @@
     <Compile Include="Features\NewSaveFolder\Patches\WriteLocation_Constructor_Patch.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\Patches\MainMenu_ReceiveButtonPress_Patch.cs" />
     <Compile Include="Features\OverrideTonnage\OverrideTonnageFeature.cs" />
+    <Compile Include="Features\OverrideTonnage\OverrideTonnageSettings.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionFeature.cs" />
+    <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionSettings.cs" />
     <Compile Include="Features\TurretLimitedAmmo\Patches\Turret_OnNewRound_Patch.cs" />
     <Compile Include="Features\TurretLimitedAmmo\Patches\Weapon_DecrementAmmo_Patch.cs" />
     <Compile Include="Features\TurretLimitedAmmo\TurretLimitedAmmoFeature.cs" />

@@ -1,18 +1,13 @@
 ﻿namespace MechEngineer.Features.ShutdownInjuryProtection
 {
-    internal class ShutdownInjuryProtectionFeature : Feature
+    internal class ShutdownInjuryProtectionFeature : Feature<ShutdownInjuryProtectionSettings>
     {
         internal static ShutdownInjuryProtectionFeature Shared = new ShutdownInjuryProtectionFeature();
 
-        internal override bool Enabled => (settings?.Enabled ?? false) && (settings.ShutdownInjuryEnabled || settings.HeatDamageInjuryEnabled);
+        internal override bool Enabled => base.Enabled && (settings.ShutdownInjuryEnabled || settings.HeatDamageInjuryEnabled);
 
-        internal static Settings settings => Control.settings.ShutdownInjuryProtection;
+        internal override ShutdownInjuryProtectionSettings Settings => Control.settings.ShutdownInjuryProtection;
 
-        public class Settings
-        {
-            public bool Enabled = true;
-            public bool HeatDamageInjuryEnabled = true;
-            public bool ShutdownInjuryEnabled = true;
-        }
+        internal static ShutdownInjuryProtectionSettings settings => Shared.Settings;
     }
 }

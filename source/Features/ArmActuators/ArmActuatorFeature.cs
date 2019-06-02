@@ -3,13 +3,13 @@ using CustomComponents;
 
 namespace MechEngineer.Features.ArmActuators
 {
-    internal class ArmActuatorFeature: Feature
+    internal class ArmActuatorFeature: Feature<ArmActuatorSettings>
     {
         internal static ArmActuatorFeature Shared = new ArmActuatorFeature();
 
-        internal override bool Enabled => settings?.Enabled ?? false;
+        internal override ArmActuatorSettings Settings => Control.settings.ArmActuator;
 
-        internal static Settings settings => Control.settings.ArmActuator;
+        internal static ArmActuatorSettings settings => Shared.Settings;
 
         internal override void SetupFeatureLoaded()
         {
@@ -27,21 +27,6 @@ namespace MechEngineer.Features.ArmActuators
 
                 AutoFixer.Shared.RegisterMechFixer(ArmActuatorCC.FixCBTActuators);
             }
-        }
-
-        public class Settings
-        {
-            public bool Enabled = true;
-            public bool ForceFullDefaultActuators = false;
-            public string IgnoreFullActuatorsTag = null;
-            public string DefaultCBTShoulder = "emod_arm_part_shoulder";
-            public string DefaultCBTLower = "emod_arm_part_lower";
-            public string DefaultCBTUpper = "emod_arm_part_upper";
-            public string DefaultCBTHand = "emod_arm_part_hand";
-            public string DefaultCBTDefLower = "emod_arm_part_lower";
-            public string DefaultCBTDefHand = "emod_arm_part_hand";
-            public bool InterruptHandDropIfNoLower = false;
-            public bool ExtendHandLimit = true;
         }
     }
 }

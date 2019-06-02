@@ -5,19 +5,13 @@ using BattleTech;
 
 namespace MechEngineer.Features.CompressFloatieMessages
 {
-    internal class CompressFloatieMessagesFeature : Feature
+    internal class CompressFloatieMessagesFeature : Feature<CompressFloatieMessagesSettings>
     {
         internal static CompressFloatieMessagesFeature Shared = new CompressFloatieMessagesFeature();
 
-        internal override bool Enabled => settings?.Enabled ?? false;
+        internal override CompressFloatieMessagesSettings Settings => Control.settings.CompressFloatieMessages;
 
-        internal static Settings settings => Control.settings.CompressFloatieMessages;
-
-        public class Settings
-        {
-            public bool Enabled = true;
-            public bool DebugDestroyedFloaties = false;
-        }
+        internal static CompressFloatieMessagesSettings settings => Shared.Settings;
 
         public static bool CompressFloatieMessages(FloatieMessage incoming, Queue<FloatieMessage> queue)
         {

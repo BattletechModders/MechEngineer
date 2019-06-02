@@ -8,17 +8,11 @@ using UnityEngine;
 
 namespace MechEngineer.Features.NewSaveFolder
 {
-    internal class NewSaveFolderFeature: Feature
+    internal class NewSaveFolderFeature: Feature<NewSaveFolderSettings>
     {
         internal static NewSaveFolderFeature Shared = new NewSaveFolderFeature();
 
-        internal override bool Enabled => Control.settings.NewSaveFolder?.Enabled ?? false;
-
-        internal class Settings
-        {
-            public bool Enabled = false;
-            public string Path = "Mods/Saves";
-        }
+        internal override NewSaveFolderSettings Settings => Control.settings.NewSaveFolder;
 
         private static string PathByKey(string key)
         {

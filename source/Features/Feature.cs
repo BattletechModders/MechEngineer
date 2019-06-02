@@ -8,9 +8,20 @@ using Harmony;
 
 namespace MechEngineer.Features
 {
-    internal abstract class Feature
+    public class BaseSettings
     {
-        internal abstract bool Enabled { get; }
+        public bool Enabled = true;
+    }
+
+    interface IFeature
+    {
+        void SetupFeature();
+        void SetupFeatureResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources);
+    }
+
+    internal abstract class Feature<T> : IFeature where T: BaseSettings
+    {
+        internal virtual bool Enabled => Settings?.Enabled ?? false;
 
         // called when the feature is enabled and its patches have been successfully loaded
         internal virtual void SetupFeatureLoaded()
@@ -28,7 +39,7 @@ namespace MechEngineer.Features
 
         // TODO remove the feature loaded method and make this virtual again? => only if loading becomes again because of sub features
         // setup a feature using patching
-        internal void SetupFeature()
+        public void SetupFeature()
         {
             Loaded = FeatureUtils.Setup(this);
 
@@ -38,9 +49,19 @@ namespace MechEngineer.Features
             }
         }
 
+        public void SetupFeatureResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+        {
+            if (Loaded)
+            {
+                SetupResources(customResources);
+            }
+        }
+
+        internal abstract T Settings { get; }
+
         private static class FeatureUtils
         {
-            internal static bool Setup(Feature feature)
+            internal static bool Setup<TS>(Feature<TS> feature) where TS: BaseSettings
             {
                 var type = feature.GetType();
                 var topic = type.Name;

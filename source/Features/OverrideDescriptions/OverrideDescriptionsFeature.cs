@@ -8,21 +8,13 @@ using MechEngineer.Features.DynamicSlots;
 
 namespace MechEngineer.Features.OverrideDescriptions
 {
-    internal class OverrideDescriptionsFeature: Feature, IAdjustSlotElement, IAdjustTooltip, IAdjustInventoryElement
+    internal class OverrideDescriptionsFeature: Feature<OverrideDescriptionsSettings>, IAdjustSlotElement, IAdjustTooltip, IAdjustInventoryElement
     {
         internal static OverrideDescriptionsFeature Shared = new OverrideDescriptionsFeature();
 
-        internal override bool Enabled => settings?.Enabled ?? false;
+        internal override OverrideDescriptionsSettings Settings => Control.settings.OverrideDescriptions;
 
-        internal static Settings settings => Control.settings.OverrideDescriptions;
-
-        public class Settings
-        {
-            public bool Enabled = true;
-
-            public string BonusDescriptionsDescriptionTemplate = "Traits:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
-            public string BonusDescriptionsElementTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{element}}</line-height></line-indent></indent>\r\n";
-        }
+        internal static OverrideDescriptionsSettings settings => Shared.Settings;
 
         internal override void SetupFeatureLoaded()
         {

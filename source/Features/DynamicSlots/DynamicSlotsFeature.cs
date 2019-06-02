@@ -7,23 +7,13 @@ using MechLabLocationWidget_SetData_Patch = MechEngineer.Features.MechLabSlots.P
 
 namespace MechEngineer.Features.DynamicSlots
 {
-    internal class DynamicSlotsFeature : Feature, IValidateMech
+    internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMech
     {
         internal static DynamicSlotsFeature Shared = new DynamicSlotsFeature();
 
-        internal override bool Enabled => settings?.Enabled ?? false;
+        internal override DynamicSlotsSettings Settings => Control.settings.DynamicSlots;
 
-        internal static Settings settings => Control.settings.DynamicSlots;
-
-        public class Settings
-        {
-            public bool Enabled = true;
-
-            // MWO does not allow to drop if that would mean to go overweight
-            // battletech allows overweight, to stay consistent so we also allow overspace usage by default
-            // set to true to switch to MWO style
-            public bool DynamicSlotsValidateDropEnabled = false;
-        }
+        internal static DynamicSlotsSettings settings => Shared.Settings;
 
         internal override void SetupFeatureLoaded()
         {

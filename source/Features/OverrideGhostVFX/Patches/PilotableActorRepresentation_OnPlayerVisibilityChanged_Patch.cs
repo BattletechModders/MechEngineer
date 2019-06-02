@@ -12,7 +12,7 @@ namespace MechEngineer.Features.OverrideGhostVFX.Patches
             try
             {
                 var rep = __instance;
-                OverrideGhostVFXFeature.Settings.BlipGhostType blip;
+                OverrideGhostVFXSettings.BlipGhostType blip;
                 if (rep.BlipObjectGhostWeak.activeSelf)
                 {
                     blip = Control.settings.OverrideGhostVFX.BlipWeak;
@@ -28,11 +28,11 @@ namespace MechEngineer.Features.OverrideGhostVFX.Patches
 
                 rep.BlipObjectGhostWeak.SetActive(false);
                 rep.BlipObjectGhostStrong.SetActive(false);
-                if (blip == OverrideGhostVFXFeature.Settings.BlipGhostType.Weak)
+                if (blip == OverrideGhostVFXSettings.BlipGhostType.Weak)
                 {
                     rep.BlipObjectGhostWeak.SetActive(true);
                 }
-                else if (blip == OverrideGhostVFXFeature.Settings.BlipGhostType.Strong)
+                else if (blip == OverrideGhostVFXSettings.BlipGhostType.Strong)
                 {
                     rep.BlipObjectGhostStrong.SetActive(true);
                 }
