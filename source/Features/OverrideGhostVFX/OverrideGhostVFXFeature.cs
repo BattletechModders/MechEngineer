@@ -5,7 +5,7 @@ namespace MechEngineer.Features.OverrideGhostVFX
     {
         internal static OverrideGhostVFXFeature Shared = new OverrideGhostVFXFeature();
 
-        internal override bool Enabled => Control.settings.FeatureOverrideGhostVFX?.Enabled ?? false;
+        internal override bool Enabled => Control.settings.OverrideGhostVFX?.Enabled ?? false;
 
         internal class Settings
         {

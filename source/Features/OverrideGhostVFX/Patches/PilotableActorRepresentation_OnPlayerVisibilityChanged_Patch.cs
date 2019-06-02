@@ -15,11 +15,11 @@ namespace MechEngineer.Features.OverrideGhostVFX.Patches
                 OverrideGhostVFXFeature.Settings.BlipGhostType blip;
                 if (rep.BlipObjectGhostWeak.activeSelf)
                 {
-                    blip = Control.settings.FeatureOverrideGhostVFX.BlipWeak;
+                    blip = Control.settings.OverrideGhostVFX.BlipWeak;
                 }
                 else if (rep.BlipObjectGhostStrong.activeSelf)
                 {
-                    blip = Control.settings.FeatureOverrideGhostVFX.BlipStrong;
+                    blip = Control.settings.OverrideGhostVFX.BlipStrong;
                 }
                 else
                 {

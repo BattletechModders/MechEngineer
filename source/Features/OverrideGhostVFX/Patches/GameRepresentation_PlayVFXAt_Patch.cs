@@ -13,7 +13,7 @@ namespace MechEngineer.Features.OverrideGhostVFX.Patches
         {
             try
             {
-                if (Control.settings.FeatureOverrideGhostVFX.Blacklisted.Contains(vfxName))
+                if (Control.settings.OverrideGhostVFX.Blacklisted.Contains(vfxName))
                 {
                     Control.mod.Logger.LogDebug($"skipped {vfxName}");
                     return false;

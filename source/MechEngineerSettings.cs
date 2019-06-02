@@ -106,8 +106,8 @@ namespace MechEngineer
         #endregion
 
         #region Settings
-        public NewSaveFolderFeature.Settings FeatureNewSaveFolder = new NewSaveFolderFeature.Settings();
-        public OverrideGhostVFXFeature.Settings FeatureOverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
+        public NewSaveFolderFeature.Settings NewSaveFolder = new NewSaveFolderFeature.Settings();
+        public OverrideGhostVFXFeature.Settings OverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
         public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
         public ArmActuatorFeature.Settings ArmActuator = new ArmActuatorFeature.Settings();
         #endregion

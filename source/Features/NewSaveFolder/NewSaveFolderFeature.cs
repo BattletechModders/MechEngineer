@@ -12,7 +12,7 @@ namespace MechEngineer.Features.NewSaveFolder
     {
         internal static NewSaveFolderFeature Shared = new NewSaveFolderFeature();
 
-        internal override bool Enabled => Control.settings.FeatureNewSaveFolder?.Enabled ?? false;
+        internal override bool Enabled => Control.settings.NewSaveFolder?.Enabled ?? false;
 
         internal class Settings
         {
@@ -29,7 +29,7 @@ namespace MechEngineer.Features.NewSaveFolder
             return Path.Combine(SavesPath, usePlatform ? "cloud" : "local");
         }
 
-        internal static string SavesPath => Path.GetFullPath(Path.Combine(BattleTechPath, Control.settings.FeatureNewSaveFolder.Path));
+        internal static string SavesPath => Path.GetFullPath(Path.Combine(BattleTechPath, Control.settings.NewSaveFolder.Path));
 
         internal static string BattleTechPath
         {
