@@ -9,13 +9,21 @@ namespace MechEngineer.Features.CompressFloatieMessages
     {
         internal static CompressFloatieMessagesFeature Shared = new CompressFloatieMessagesFeature();
 
-        internal override bool Enabled => Control.settings.FeatureCompressFloatieMessagesEnabled;
+        internal override bool Enabled => settings?.Enabled ?? false;
+
+        internal static Settings settings => Control.settings.CompressFloatieMessages;
+
+        public class Settings
+        {
+            public bool Enabled = false;
+            public bool DebugDestroyedFloaties = false;
+        }
 
         public static bool CompressFloatieMessages(FloatieMessage incoming, Queue<FloatieMessage> queue)
         {
             var incomingString = incoming.text.ToString();
             Control.mod.Logger.LogDebug($"Floatie {incomingString}");
-            if (Control.settings.DebugDestroyedFloaties && !string.IsNullOrEmpty(incomingString) && incomingString.EndsWith("DESTROYED"))
+            if (settings.DebugDestroyedFloaties && !string.IsNullOrEmpty(incomingString) && incomingString.EndsWith("DESTROYED"))
             {
                 Control.mod.Logger.LogDebug("DEBUG DESTROYED FLOATIE " + new System.Diagnostics.StackTrace());
             }

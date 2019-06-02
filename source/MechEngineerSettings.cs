@@ -2,6 +2,7 @@
 using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
+using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
@@ -30,11 +31,7 @@ namespace MechEngineer
         public ArmorStructureRatioFeature.Settings ArmorStructureRatio = new ArmorStructureRatioFeature.Settings();
         public DebugSaveMechToFileFeature.Settings DebugSaveMechToFile = new DebugSaveMechToFileFeature.Settings();
         public OverrideTonnageFeature.Settings OverrideTonnage = new OverrideTonnageFeature.Settings();
-        #endregion
-
-        #region CompressFloatieMessages
-        public bool FeatureCompressFloatieMessagesEnabled = true;
-        public bool DebugDestroyedFloaties = false;
+        public CompressFloatieMessagesFeature.Settings CompressFloatieMessages = new CompressFloatieMessagesFeature.Settings();
         #endregion
 
         #region MoveMultiplier
