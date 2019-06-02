@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\ArmActuators\ArmActuatorCC.cs" />
     <Compile Include="Features\AutoFix\ChassisSlotsChange.cs" />
     <Compile Include="Features\Engines\CBTMovementSettings.cs" />
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />

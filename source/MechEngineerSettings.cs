@@ -1,4 +1,5 @@
 ﻿using BattleTech;
+using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.AutoFix;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
@@ -16,20 +17,6 @@ namespace MechEngineer
 
     internal class MechEngineerSettings
     {
-        #region ArmActuators
-        public bool UseArmActuators = true;
-        public bool ForceFullDefaultActuators = false;
-        public string IgnoreFullActuatorsTag = null;
-        public string DefaultCBTShoulder = "emod_arm_part_shoulder";
-        public string DefaultCBTLower = "emod_arm_part_lower";
-        public string DefaultCBTUpper = "emod_arm_part_upper";
-        public string DefaultCBTHand = "emod_arm_part_hand";
-        public string DefaultCBTDefLower = "emod_arm_part_lower";
-        public string DefaultCBTDefHand = "emod_arm_part_hand";
-        public bool InterruptHandDropIfNoLower = false;
-        public bool ExtendHandLimit = true;
-        #endregion
-
         #region ShutdownInjuryProtection
         public bool HeatDamageInjuryEnabled = true;
         public bool ShutdownInjuryEnabled = true;
@@ -122,6 +109,7 @@ namespace MechEngineer
         public NewSaveFolderFeature.Settings FeatureNewSaveFolder = new NewSaveFolderFeature.Settings();
         public OverrideGhostVFXFeature.Settings FeatureOverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
         public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
+        public ArmActuatorFeature.Settings ArmActuator = new ArmActuatorFeature.Settings();
         #endregion
 
         #region AutoFix

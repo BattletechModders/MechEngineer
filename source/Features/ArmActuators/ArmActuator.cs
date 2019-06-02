@@ -109,10 +109,10 @@ namespace MechEngineer.Features.ArmActuators
                     return;
                 }
 
-                if (add_item(ArmActuatorFeature.GetDefaultActuator(mech, mount_loc, slot)))
+                if (add_item(ArmActuatorCC.GetDefaultActuator(mech, mount_loc, slot)))
                     return;
 
-                add_item(ArmActuatorFeature.GetDefaultActuator(null, mount_loc, slot));
+                add_item(ArmActuatorCC.GetDefaultActuator(null, mount_loc, slot));
             }
 
             foreach (var item in location.LocalInventory.Where(i => i.ComponentRef.Is<ArmActuator>()))
@@ -139,7 +139,7 @@ namespace MechEngineer.Features.ArmActuators
             add_default(ArmActuatorSlot.PartShoulder);
             add_default(ArmActuatorSlot.PartUpper);
 
-            if (ArmActuatorFeature.IsIgnoreFullActuators(mech))
+            if (ArmActuatorCC.IsIgnoreFullActuators(mech))
             {
 
                 if (!total_slot.HasFlag(ArmActuatorSlot.PartLower) && total_slot.HasFlag(ArmActuatorSlot.PartHand))
@@ -147,11 +147,11 @@ namespace MechEngineer.Features.ArmActuators
                     CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- adding Lower to {total_slot}");
                     var change = AddFromInventoryChange.FoundInInventory(mount_loc, new MechLabHelper(mechlab),
                         item => item.Is<ArmActuator>(out var actuator) && actuator.Type == ArmActuatorSlot.PartLower,
-                        item => item.Description.Id == Control.settings.DefaultCBTLower
+                        item => item.Description.Id == ArmActuatorFeature.settings.DefaultCBTLower
                     );
                     if (change != null)
                         changes.Add(change);
-                    else if (Control.settings.InterruptHandDropIfNoLower)
+                    else if (ArmActuatorFeature.settings.InterruptHandDropIfNoLower)
                         return $"Cannot found LowerArm";
                 }
                 else
@@ -226,10 +226,10 @@ namespace MechEngineer.Features.ArmActuators
                     return;
                 }
 
-                if (add_item(ArmActuatorFeature.GetDefaultActuator(mechLab.activeMechDef, mount_loc, slot)))
+                if (add_item(ArmActuatorCC.GetDefaultActuator(mechLab.activeMechDef, mount_loc, slot)))
                     return;
 
-                add_item(ArmActuatorFeature.GetDefaultActuator(null, mount_loc, slot));
+                add_item(ArmActuatorCC.GetDefaultActuator(null, mount_loc, slot));
             }
 
             for (int i = loc_helper.LocalInventory.Count - 1; i >= 0; i--)
@@ -262,7 +262,7 @@ namespace MechEngineer.Features.ArmActuators
             add_default(ArmActuatorSlot.PartShoulder);
             add_default(ArmActuatorSlot.PartUpper);
 
-            if (ArmActuatorFeature.IsIgnoreFullActuators(mechLab.activeMechDef))
+            if (ArmActuatorCC.IsIgnoreFullActuators(mechLab.activeMechDef))
             {
                 if (total_slot.HasFlag(ArmActuatorSlot.PartHand) && !total_slot.HasFlag(ArmActuatorSlot.PartLower))
                 {
@@ -303,26 +303,26 @@ namespace MechEngineer.Features.ArmActuators
                     if (order.DesiredLocation != ChassisLocations.None &&
                         ChassisLocations.Arms.HasFlag(order.DesiredLocation))
                     {
-                        var slots = ArmActuatorFeature.ClearDefaultActuators(mech, order.DesiredLocation);
+                        var slots = ArmActuatorCC.ClearDefaultActuators(mech, order.DesiredLocation);
                         CustomComponents.Control.LogDebug(DType.ComponentInstall,
                             $"- ArmActuator removing, left {slots}");
 
-                        ArmActuatorFeature.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                        ArmActuatorCC.AddDefaultToInventory(mech, state, order.DesiredLocation,
                             ArmActuatorSlot.PartShoulder, ref slots);
-                        ArmActuatorFeature.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                        ArmActuatorCC.AddDefaultToInventory(mech, state, order.DesiredLocation,
                             ArmActuatorSlot.PartUpper, ref slots);
                         CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
 
-                        if (!ArmActuatorFeature.IsIgnoreFullActuators(mech))
+                        if (!ArmActuatorCC.IsIgnoreFullActuators(mech))
                         {
                             var limit = mech.Chassis.Is<ArmActuatorSupport>(out var s)
                                 ? s.GetLimit(order.DesiredLocation)
                                 : ArmActuatorSlot.Hand;
                             if (limit.HasFlag(ArmActuatorSlot.PartLower))
-                                ArmActuatorFeature.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                                ArmActuatorCC.AddDefaultToInventory(mech, state, order.DesiredLocation,
                                     ArmActuatorSlot.PartLower, ref slots);
                             if (limit.HasFlag(ArmActuatorSlot.PartHand))
-                                ArmActuatorFeature.AddDefaultToInventory(mech, state, order.DesiredLocation,
+                                ArmActuatorCC.AddDefaultToInventory(mech, state, order.DesiredLocation,
                                     ArmActuatorSlot.PartHand, ref slots);
                         }
                     }
@@ -330,26 +330,26 @@ namespace MechEngineer.Features.ArmActuators
                     if (order.PreviousLocation != ChassisLocations.None &&
                         ChassisLocations.Arms.HasFlag(order.PreviousLocation))
                     {
-                        var slots = ArmActuatorFeature.ClearDefaultActuators(mech, order.PreviousLocation);
+                        var slots = ArmActuatorCC.ClearDefaultActuators(mech, order.PreviousLocation);
                         CustomComponents.Control.LogDebug(DType.ComponentInstall,
                             $"- ArmActuator adding, left {slots}");
 
-                        ArmActuatorFeature.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                        ArmActuatorCC.AddDefaultToInventory(mech, state, order.PreviousLocation,
                             ArmActuatorSlot.PartShoulder, ref slots);
-                        ArmActuatorFeature.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                        ArmActuatorCC.AddDefaultToInventory(mech, state, order.PreviousLocation,
                             ArmActuatorSlot.PartUpper, ref slots);
                         CustomComponents.Control.LogDebug(DType.ComponentInstall, $"-- done");
 
-                        if (!ArmActuatorFeature.IsIgnoreFullActuators(mech))
+                        if (!ArmActuatorCC.IsIgnoreFullActuators(mech))
                         {
                             var limit = mech.Chassis.Is<ArmActuatorSupport>(out var s)
                                 ? s.GetLimit(order.PreviousLocation)
                                 : ArmActuatorSlot.Hand;
                             if (limit.HasFlag(ArmActuatorSlot.PartLower))
-                                ArmActuatorFeature.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                                ArmActuatorCC.AddDefaultToInventory(mech, state, order.PreviousLocation,
                                     ArmActuatorSlot.PartLower, ref slots);
                             if (limit.HasFlag(ArmActuatorSlot.PartHand))
-                                ArmActuatorFeature.AddDefaultToInventory(mech, state, order.PreviousLocation,
+                                ArmActuatorCC.AddDefaultToInventory(mech, state, order.PreviousLocation,
                                     ArmActuatorSlot.PartHand, ref slots);
                         }
                     }
