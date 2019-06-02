@@ -172,14 +172,14 @@ namespace MechEngineer.Features.OverrideTonnage
         }
 
         private static float ArmorRoundingPrecision { get; }
-            = Control.settings.ArmorRoundingPrecision ??
+            = OverrideTonnageFeature.settings.ArmorRoundingPrecision ??
               UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_STEP
               * UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
 
         private static float CalcChanges(float unmodified, float factor, float? precision = null)
         {
             var modified = unmodified * factor;
-            var modifiedRounded = modified.RoundUp(precision);
+            var modifiedRounded = PrecisionUtils.RoundUp(modified, precision);
             var changes = modifiedRounded - unmodified;
             return changes;
         }

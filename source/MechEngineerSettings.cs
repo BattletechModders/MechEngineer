@@ -7,6 +7,7 @@ using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideGhostVFX;
+using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
 
 namespace MechEngineer
@@ -28,14 +29,7 @@ namespace MechEngineer
         public ShutdownInjuryProtectionFeature.Settings ShutdownInjuryProtection = new ShutdownInjuryProtectionFeature.Settings();
         public ArmorStructureRatioFeature.Settings ArmorStructureRatio = new ArmorStructureRatioFeature.Settings();
         public DebugSaveMechToFileFeature.Settings DebugSaveMechToFile = new DebugSaveMechToFileFeature.Settings();
-        #endregion
-
-        #region misc
-        public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
-        #endregion
-
-        #region OverrideTonnage
-        public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
+        public OverrideTonnageFeature.Settings OverrideTonnage = new OverrideTonnageFeature.Settings();
         #endregion
 
         #region CompressFloatieMessages

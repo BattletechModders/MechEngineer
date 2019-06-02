@@ -1,4 +1,5 @@
 ﻿using BattleTech;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Helper
@@ -71,7 +72,7 @@ namespace MechEngineer.Features.Engines.Helper
 
         private static float RoundBy5(float value)
         {
-            return value.Round(Mathf.Floor, 5);
+            return PrecisionUtils.Round(value, Mathf.Floor, 5);
         }
     }
 }

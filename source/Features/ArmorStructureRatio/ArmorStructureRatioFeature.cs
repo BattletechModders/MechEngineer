@@ -3,6 +3,7 @@ using System.Linq;
 using BattleTech;
 using Localize;
 using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.ArmorStructureRatio
@@ -101,9 +102,9 @@ namespace MechEngineer.Features.ArmorStructureRatio
 
                 if ((location & ChassisLocations.Torso) != 0)
                 {
-                    mechLocationDef.AssignedArmor = (totalMax * 2 / 3).Round(Mathf.Ceil, 5);
+                    mechLocationDef.AssignedArmor = PrecisionUtils.Round((totalMax * 2 / 3), Mathf.Ceil, 5);
                     mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
-                    mechLocationDef.AssignedRearArmor = (totalMax * 1 / 3).Round(Mathf.Floor, 5);
+                    mechLocationDef.AssignedRearArmor = PrecisionUtils.Round((totalMax * 1 / 3), Mathf.Floor, 5);
                     mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
                 }
                 else

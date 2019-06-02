@@ -262,7 +262,7 @@
     <Compile Include="Features\AutoFix\Patches\UpgradeDef_FromJSON_Patch.cs" />
     <Compile Include="Features\AutoFix\Patches\ChassisDef_FromJSON_Patch.cs" />
     <Compile Include="MechEngineerSettings.cs" />
-    <Compile Include="Misc\Extensions.cs" />
+    <Compile Include="Features\OverrideTonnage\PrecisionUtils.cs" />
     <Compile Include="Misc\OrderedSet.cs" />
     <Compile Include="Features\AutoFix\ValueChange.cs" />
     <Compile Include="Features\AutoFix\WeaponSlotChange.cs" />
