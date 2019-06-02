@@ -2,6 +2,7 @@
 using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
+using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.NewSaveFolder;
@@ -19,12 +20,18 @@ namespace MechEngineer
 
     internal class MechEngineerSettings
     {
-        #region misc
-        public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
+        #region Settings
+        public NewSaveFolderFeature.Settings NewSaveFolder = new NewSaveFolderFeature.Settings();
+        public OverrideGhostVFXFeature.Settings OverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
+        public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
+        public ArmActuatorFeature.Settings ArmActuator = new ArmActuatorFeature.Settings();
+        public ShutdownInjuryProtectionFeature.Settings ShutdownInjuryProtection = new ShutdownInjuryProtectionFeature.Settings();
+        public ArmorStructureRatioFeature.Settings ArmorStructureRatio = new ArmorStructureRatioFeature.Settings();
+        public DebugSaveMechToFileFeature.Settings DebugSaveMechToFile = new DebugSaveMechToFileFeature.Settings();
         #endregion
 
-        #region DebugSaveMechToFile
-        public bool SaveMechDefOnMechLabConfirm = false;
+        #region misc
+        public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
         #endregion
 
         #region OverrideTonnage
@@ -95,15 +102,6 @@ namespace MechEngineer
         #region LocationalEffects
         public bool FeatureCriticalEffectsEnabled = true;
         #endregion
-        #endregion
-
-        #region Settings
-        public NewSaveFolderFeature.Settings NewSaveFolder = new NewSaveFolderFeature.Settings();
-        public OverrideGhostVFXFeature.Settings OverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
-        public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
-        public ArmActuatorFeature.Settings ArmActuator = new ArmActuatorFeature.Settings();
-        public ShutdownInjuryProtectionFeature.Settings ShutdownInjuryProtection = new ShutdownInjuryProtectionFeature.Settings();
-        public ArmorStructureRatioFeature.Settings ArmorStructureRatio = new ArmorStructureRatioFeature.Settings();
         #endregion
 
         #region AutoFix
