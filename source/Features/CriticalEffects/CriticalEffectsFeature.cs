@@ -12,19 +12,29 @@ namespace MechEngineer.Features.CriticalEffects
     {
         internal static readonly CriticalEffectsFeature Shared = new CriticalEffectsFeature();
 
-        internal override bool Enabled => LocationalEffectsFeature.Shared.Loaded && Control.settings.FeatureCriticalEffectsEnabled;
+        internal override bool Enabled => (settings?.Enabled ?? false) && LocationalEffectsFeature.Shared.Loaded;
+
+        internal static Settings settings => Control.settings.CriticalEffects;
+
+        public class Settings
+        {
+            public bool Enabled = true;
+
+            public string DescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
+            public bool DescriptionUseName = false;
+        }
 
         internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
-            Settings = SettingsResourcesTools.Enumerate<EffectData>("MECriticalEffects", customResources)
+            Resources = SettingsResourcesTools.Enumerate<EffectData>("MECriticalEffects", customResources)
                 .ToDictionary(entry => entry.Description.Id);
         }
 
-        private static Dictionary<string, EffectData> Settings { get; set; } = new Dictionary<string, EffectData>();
+        private static Dictionary<string, EffectData> Resources { get; set; } = new Dictionary<string, EffectData>();
 
         internal static EffectData GetEffectData(string effectId)
         {
-            if (Settings.TryGetValue(effectId, out var effectData))
+            if (Resources.TryGetValue(effectId, out var effectData))
             {
                 return effectData;
             }

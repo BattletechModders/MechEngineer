@@ -4,6 +4,7 @@ using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
 using MechEngineer.Features.CompressFloatieMessages;
+using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
@@ -47,14 +48,7 @@ namespace MechEngineer
         public DynamicSlotsFeature.Settings DynamicSlots = new DynamicSlotsFeature.Settings();
         public AccuracyEffectsFeature.Settings AccuracyEffects = new AccuracyEffectsFeature.Settings();
         public OverrideDescriptionsFeature.Settings OverrideDescriptions = new OverrideDescriptionsFeature.Settings();
-        #endregion
-
-        #region CriticalEffects
-        public string CriticalEffectsDescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
-        public bool CriticalEffectsDescriptionUseName = false;
-        #region LocationalEffects
-        public bool FeatureCriticalEffectsEnabled = true;
-        #endregion
+        public CriticalEffectsFeature.Settings CriticalEffects = new CriticalEffectsFeature.Settings();
         #endregion
 
         #region AutoFix

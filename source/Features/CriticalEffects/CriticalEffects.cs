@@ -41,7 +41,7 @@ namespace MechEngineer.Features.CriticalEffects
                     return;
                 }
 
-                var description = Control.settings.CriticalEffectsDescriptionUseName ? effectData.Description.Name : effectData.Description.Details;
+                var description = CriticalEffectsFeature.settings.DescriptionUseName ? effectData.Description.Name : effectData.Description.Details;
                     
                 var text = $"{prefix}: {description}";
                     
@@ -73,7 +73,7 @@ namespace MechEngineer.Features.CriticalEffects
                 descriptions.Add($"Critical hits are linked to '{LinkedStatisticName}'");
             }
             
-            var descriptionTemplate = Control.settings.CriticalEffectsDescriptionTemplate;
+            var descriptionTemplate = CriticalEffectsFeature.settings.DescriptionTemplate;
             {
                 var actorDescription = GetActorTypeDescription();
                 if (actorDescription != null)
