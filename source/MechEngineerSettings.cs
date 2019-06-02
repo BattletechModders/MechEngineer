@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using MechEngineer.Features.AutoFix;
+using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.NewSaveFolder;
 using MechEngineer.Features.OverrideGhostVFX;
@@ -15,68 +16,115 @@ namespace MechEngineer
 
     internal class MechEngineerSettings
     {
-        #region misc
-        
-        public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
+        #region ArmActuators
+        public bool UseArmActuators = true;
+        public bool ForceFullDefaultActuators = false;
+        public string IgnoreFullActuatorsTag = null;
+        public string DefaultCBTShoulder = "emod_arm_part_shoulder";
+        public string DefaultCBTLower = "emod_arm_part_lower";
+        public string DefaultCBTUpper = "emod_arm_part_upper";
+        public string DefaultCBTHand = "emod_arm_part_hand";
+        public string DefaultCBTDefLower = "emod_arm_part_lower";
+        public string DefaultCBTDefHand = "emod_arm_part_hand";
+        public bool InterruptHandDropIfNoLower = false;
+        public bool ExtendHandLimit = true;
+        #endregion
 
-        public int MechLabGeneralSlots = 3;
-        public int MechLabArmTopPadding = 120;
-
+        #region ShutdownInjuryProtection
         public bool HeatDamageInjuryEnabled = true;
         public bool ShutdownInjuryEnabled = true;
+        #endregion
 
-        public int MinimumHeatSinksOnMech = 10; // minimum heatsinks a mech requires
-        public bool EnforceRulesForAdditionalInternalHeatSinks = true; // can't have those juicy ++ cooling systems with smaller fusion cores than the rules allow it
-        public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
+        #region misc
         public float FractionalAccountingPrecision = 0.5f; // change to 0.001 for kg fractional accounting precision
+        #endregion
 
+        #region ArmorStructureRatio
         public bool ArmorStructureRatioEnforcement = true;
         public string[] ArmorStructureRatioEnforcementSkipMechDefs = { }; // mech defs to skip
+        #endregion
 
+        #region DebugSaveMechToFile
         public bool SaveMechDefOnMechLabConfirm = false;
+        #endregion
 
-        public string DefaultEngineHeatSinkId = "Gear_HeatSink_Generic_Standard"; // default heat sink type for engines without a kit
+        #region OverrideTonnage
+        public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
+        #endregion
 
-        public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
-        
+        #region CompressFloatieMessages
+        public bool FeatureCompressFloatieMessagesEnabled = true;
+        public bool DebugDestroyedFloaties = false;
+        #endregion
+
+        #region MoveMultiplier
+        public bool FeatureMoveMultiplierEnabled = true;
+        #endregion
+
+        #region TurretLimitedAmmo
+        public bool FeatureTurretLimitedAmmoEnabled = true;
+        #endregion
+
+        #region DebugCycleCombatSounds
+        public bool DebugCycleCombatSoundsFeatureEnabled = false;
+        #endregion
+
+        #region MechLabSlots
+        public bool MechLabGeneralWidgetEnabled => MechLabGeneralSlots > 0;
+        public int MechLabArmTopPadding = 120;
+        #region DynamicSlots
+        public int MechLabGeneralSlots = 3;
+        #endregion
+        #endregion
+
+        #region DynamicSlots
         public bool FeatureDynamicSlotsEnabled = true;
         // MWO does not allow to drop if that would mean to go overweight
         // battletech allows overweight, to stay consistent so we also allow overspace usage by default
         // set to true to switch to MWO style
         public bool DynamicSlotsValidateDropEnabled = false;
-
-        public float? ArmorRoundingPrecision = null; // default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT
-        
-        public bool FeatureAccuracyEffectsEnabled = true;
-        public bool FeatureOverrideDescriptionsEnabled = true;
-
-        public bool FeatureCompressFloatieMessagesEnabled = true;
-        public bool DebugDestroyedFloaties = false;
-
-        public bool FeatureCriticalEffectsEnabled = true;
-        public bool FeatureMoveMultiplierEnabled = true;
-        public NewSaveFolderFeature.Settings FeatureNewSaveFolder = new NewSaveFolderFeature.Settings();
-
-        public bool FeatureTurretLimitedAmmoEnabled = true;
-
-        public OverrideGhostVFXFeature.Settings FeatureOverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
-
-        public bool DebugCycleCombatSoundsFeatureEnabled = false;
-
-        public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
-
         #endregion
 
-        #region bonus descriptions
+        #region Engine
+        public int MinimumHeatSinksOnMech = 10; // minimum heatsinks a mech requires
+        public bool EnforceRulesForAdditionalInternalHeatSinks = true; // can't have those juicy ++ cooling systems with smaller fusion cores than the rules allow it
+        #region AutoFix
+        public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior
+        #endregion
+        public string DefaultEngineHeatSinkId = "Gear_HeatSink_Generic_Standard"; // default heat sink type for engines without a kit
+        public int EngineMissingFallbackHeatSinkCapacity = 30; // for stuff that wasn't auto fixed and still missing an engine, use a fallback
+        public CBTMovementSettings CBTMovement = new CBTMovementSettings();
+        #endregion
 
-        public string BonusDescriptionsElementTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{element}}</line-height></line-indent></indent>\r\n";
+        #region AccuracyEffects
+        #region LocationalEffects
+        public bool FeatureAccuracyEffectsEnabled = true;
+        #endregion
+        #endregion
+
+        #region OverrideDesciptions
+        public bool FeatureOverrideDescriptionsEnabled = true;
         public string BonusDescriptionsDescriptionTemplate = "Traits:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
+        #region CriticalEffects
+        public string BonusDescriptionsElementTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{element}}</line-height></line-indent></indent>\r\n";
+        #endregion
+        #endregion
+
+        #region CriticalEffects
         public string CriticalEffectsDescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
         public bool CriticalEffectsDescriptionUseName = false;
-
+        #region LocationalEffects
+        public bool FeatureCriticalEffectsEnabled = true;
+        #endregion
         #endregion
 
-        #region auto fixes
+        #region Settings
+        public NewSaveFolderFeature.Settings FeatureNewSaveFolder = new NewSaveFolderFeature.Settings();
+        public OverrideGhostVFXFeature.Settings FeatureOverrideGhostVFX = new OverrideGhostVFXFeature.Settings();
+        public HardpointFixFeature.Settings HardpointFix = new HardpointFixFeature.Settings();
+        #endregion
+
+        #region AutoFix
 
         public string[] AutoFixMechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
         public string[] AutoFixUpgradeDefSkip =
@@ -207,11 +255,6 @@ namespace MechEngineer
                 Change = new ValueChange<int> {From = 11, By = 1}
             },
         };
-        public class ChassisSlotsChange
-        {
-            public ChassisLocations Location;
-            public ValueChange<int> Change;
-        }
 
         public bool AutoFixChassisDefInitialTonnage = true;
         public float AutoFixChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
@@ -247,66 +290,6 @@ namespace MechEngineer
                 Change = new ValueChange<int> {From = 4, By = 1}
             }
         };
-        public class WeaponSlotChange
-        {
-            public WeaponSubType Type;
-            public ValueChange<int> Change;
-        }
-
-        #endregion
-
-        #region arm actuators
-
-        public bool UseArmActuators = true;
-        public bool ForceFullDefaultActuators = false;
-        public string IgnoreFullActuatorsTag = null;
-        public string DefaultCBTShoulder = "emod_arm_part_shoulder";
-        public string DefaultCBTLower = "emod_arm_part_lower";
-        public string DefaultCBTUpper = "emod_arm_part_upper";
-        public string DefaultCBTHand = "emod_arm_part_hand";
-        public string DefaultCBTDefLower = "emod_arm_part_lower";
-        public string DefaultCBTDefHand = "emod_arm_part_hand";
-        public bool InterruptHandDropIfNoLower = false;
-        public bool ExtendHandLimit = true;
-
-        #endregion
-        
-        #region movement
-
-        public CBTMovementSettings CBTMovement = new CBTMovementSettings();
-        public class CBTMovementSettings
-        {
-            /* 
-            set to false to use TT walk values
-            using the default game values, slow mechs move a bit faster, and fast mechs move a bit slower
-            Examples if set to true:
-                Walk 2  70 / 125
-                Walk 3  95 / 165
-                Walk 4 120 / 200
-                Walk 5 140 / 240
-                Walk 6 165 / 275
-                Walk 7 190 / 315
-                Walk 8 210 / 350
-            */
-            public bool UseGameWalkValues = true;
-
-            //// set to false to only allow engines that produce integer walk values
-            //public bool AllowNonIntWalkValues = true;
-
-            // this setting controls if the allowed number of jump jets is rounded up or down
-            // example: if false, TT walk speed of 2.1 allows 2 jump jets, if true, it allows 3 jump jets
-            public bool JJRoundUp = false;
-
-            /*
-            not sure why you would want to change these, but they are set here
-            they are the multiples that translate TT movement values to game movement values
-            Example:
-                A griffin that walks 5 would walk 5 * 30 = 150 and sprint 5 * 50 = 250
-            NOTE: if you have the UseGameWalkValues set, the exact values are then changed based on a linear equasion
-            */
-            public float TTWalkMultiplier = 30f;
-            public float TTSprintMultiplier = 50f;
-        }
 
         #endregion
     }

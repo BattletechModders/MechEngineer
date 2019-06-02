@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MechEngineer
+namespace MechEngineer.Features.AutoFix
 {
     public class ValueChange<T> where T: struct, IComparable<T>, IEquatable<T>
     {

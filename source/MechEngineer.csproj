@@ -78,6 +78,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\AutoFix\ChassisSlotsChange.cs" />
+    <Compile Include="Features\Engines\CBTMovementSettings.cs" />
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesFeature.cs" />
     <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixFeature.cs" />
@@ -261,7 +263,8 @@
     <Compile Include="MechEngineerSettings.cs" />
     <Compile Include="Misc\Extensions.cs" />
     <Compile Include="Misc\OrderedSet.cs" />
-    <Compile Include="Misc\ValueChange.cs" />
+    <Compile Include="Features\AutoFix\ValueChange.cs" />
+    <Compile Include="Features\AutoFix\WeaponSlotChange.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\mod.json" />
