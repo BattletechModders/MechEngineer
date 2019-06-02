@@ -11,7 +11,7 @@ namespace MechEngineer.Features.DynamicSlots.Patches
         {
             try
             {
-                DynamicSlotFeature.Shared.RefreshData(__instance);
+                DynamicSlotsFeature.Shared.RefreshData(__instance);
             }
             catch (Exception e)
             {

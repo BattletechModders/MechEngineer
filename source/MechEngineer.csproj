@@ -228,7 +228,7 @@
     <Compile Include="Features\HardpointFix\utils\WeaponComponentPrefabCalculator.cs" />
     <Compile Include="Helper\MechDefExtensions.cs" />
     <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
-    <Compile Include="Features\DynamicSlots\DynamicSlotFeature.cs" />
+    <Compile Include="Features\DynamicSlots\DynamicSlotsFeature.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
     <Compile Include="Misc\Adapter.cs" />
     <Compile Include="Misc\MELazy.cs" />

@@ -40,7 +40,7 @@ namespace MechEngineer.Features
             AccuracyEffectsFeature.Shared,
             OverrideDescriptionsFeature.Shared,
             ArmActuatorFeature.Shared,
-            DynamicSlotFeature.Shared,
+            DynamicSlotsFeature.Shared,
             ShutdownInjuryProtectionFeature.Shared,
             DebugSaveMechToFileFeature.Shared,
             DebugCycleCombatSoundsFeature.Shared,

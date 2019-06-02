@@ -7,16 +7,28 @@ using MechLabLocationWidget_SetData_Patch = MechEngineer.Features.MechLabSlots.P
 
 namespace MechEngineer.Features.DynamicSlots
 {
-    internal class DynamicSlotFeature : Feature, IValidateMech
+    internal class DynamicSlotsFeature : Feature, IValidateMech
     {
-        internal static DynamicSlotFeature Shared = new DynamicSlotFeature();
+        internal static DynamicSlotsFeature Shared = new DynamicSlotsFeature();
 
-        internal override bool Enabled => Control.settings.FeatureDynamicSlotsEnabled;
+        internal override bool Enabled => settings?.Enabled ?? false;
+
+        internal static Settings settings => Control.settings.DynamicSlots;
+
+        public class Settings
+        {
+            public bool Enabled = true;
+
+            // MWO does not allow to drop if that would mean to go overweight
+            // battletech allows overweight, to stay consistent so we also allow overspace usage by default
+            // set to true to switch to MWO style
+            public bool DynamicSlotsValidateDropEnabled = false;
+        }
 
         internal override void SetupFeatureLoaded()
         {
             Validator.RegisterMechValidator(CCValidation.ValidateMech, CCValidation.ValidateMechCanBeFielded);
-            if (Control.settings.DynamicSlotsValidateDropEnabled)
+            if (settings.DynamicSlotsValidateDropEnabled)
             {
                 Validator.RegisterDropValidator(check: CCValidation.ValidateDrop);
             }
@@ -24,7 +36,7 @@ namespace MechEngineer.Features.DynamicSlots
 
         internal CCValidationAdapter CCValidation;
 
-        private DynamicSlotFeature()
+        private DynamicSlotsFeature()
         {
             CCValidation = new CCValidationAdapter(this);
         }

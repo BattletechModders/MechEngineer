@@ -5,6 +5,7 @@ using MechEngineer.Features.AutoFix;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
+using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.MechLabSlots;
@@ -41,14 +42,7 @@ namespace MechEngineer
         public DebugCycleCombatSoundsFeature.Settings DebugCycleCombatSounds = new DebugCycleCombatSoundsFeature.Settings();
         public EngineFeature.Settings Engine = new EngineFeature.Settings();
         public MechLabSlotsFeature.Settings MechLabSlots = new MechLabSlotsFeature.Settings();
-        #endregion
-
-        #region DynamicSlots
-        public bool FeatureDynamicSlotsEnabled = true;
-        // MWO does not allow to drop if that would mean to go overweight
-        // battletech allows overweight, to stay consistent so we also allow overspace usage by default
-        // set to true to switch to MWO style
-        public bool DynamicSlotsValidateDropEnabled = false;
+        public DynamicSlotsFeature.Settings DynamicSlots = new DynamicSlotsFeature.Settings();
         #endregion
 
         #region AccuracyEffects
