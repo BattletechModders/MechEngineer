@@ -7,7 +7,7 @@ namespace MechEngineer.Features.ArmActuators
     {
         internal static ArmActuatorFeature Shared = new ArmActuatorFeature();
 
-        internal override bool Enabled => settings.Enabled;
+        internal override bool Enabled => settings?.Enabled ?? false;
 
         internal static Settings settings => Control.settings.ArmActuator;
 
