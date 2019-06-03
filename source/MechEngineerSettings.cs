@@ -54,7 +54,7 @@ namespace MechEngineer
         
         public MechLabSlotsSettings MechLabSlots = new MechLabSlotsSettings();
         public BaseSettings MoveMultiplierStat = new BaseSettings();
-        public NewSaveFolderSettings NewSaveFolder = new NewSaveFolderSettings();
+        public NewSaveFolderSettings NewSaveFolder = new NewSaveFolderSettings { Enabled =  false };
         public OverrideDescriptionsSettings OverrideDescriptions = new OverrideDescriptionsSettings();
         public OverrideGhostVFXSettings OverrideGhostVFX = new OverrideGhostVFXSettings();
         public OverrideTonnageSettings OverrideTonnage = new OverrideTonnageSettings();
