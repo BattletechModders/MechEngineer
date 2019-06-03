@@ -201,6 +201,8 @@
             "DisplayName" : "Engine Part",
             "DefaultCustoms" : {
                 "CriticalEffects" : {
+                    "CritFloatieMessage" : "Engine CRIT",
+                    "DestroyedFloatieMessage" : "Engine DESTROYED",
                     "LinkedStatisticName" : "EngineCrits",
                     "PenalizedEffectIDs" : [
                         ["CriticalEffect-EngineCrit1"],

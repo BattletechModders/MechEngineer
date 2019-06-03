@@ -9,7 +9,7 @@ namespace MechEngineer.Features.CriticalEffects
         {
             if (mechComponent.DamageLevel == ComponentDamageLevel.Penalized)
             {
-                var critMessage = new Text("{0} CRIT", mechComponent.UIName);
+                var critMessage = new Text(CriticalEffectsFeature.settings.CritFloatieMessage, mechComponent.UIName);
 
                 var ce = mechComponent.GetCriticalEffects();
                 if (ce?.CritFloatieMessage != null)
@@ -45,7 +45,7 @@ namespace MechEngineer.Features.CriticalEffects
                 //    }
                 //}
 
-                var destroyedMessage = new Text("{0} DESTROYED", mechComponent.UIName);
+                var destroyedMessage = new Text(CriticalEffectsFeature.settings.DestroyedFloatieMessage, mechComponent.UIName);
                 var ce = mechComponent.GetCriticalEffects();
                 if (ce?.DestroyedFloatieMessage != null)
                 {
