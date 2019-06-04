@@ -51,7 +51,7 @@ namespace MechEngineer
                     SerializeToLowerCaseNames = false,
                     UseFastGuid = false,
                     KVStyleStringDictionary = false,
-                    SerializeNullValues = false
+                    SerializeNullValues = true
                 };
 
                 var json = JSON.ToNiceJSON(settings, p);
