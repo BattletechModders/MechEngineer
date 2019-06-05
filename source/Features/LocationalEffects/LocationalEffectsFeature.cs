@@ -4,14 +4,14 @@ using MechEngineer.Features.CriticalEffects;
 
 namespace MechEngineer.Features.LocationalEffects
 {
-    internal class LocationalEffectsFeature : Feature<BaseSettings>
+    internal class LocationalEffectsFeature : Feature<LocationalEffectsSettings>
     {
         internal static LocationalEffectsFeature Shared = new LocationalEffectsFeature();
 
         // TODO introduce nice dependency resolver
-        internal override bool Enabled => (AccuracyEffectsFeature.Shared.Settings?.Enabled ?? false) || (CriticalEffectsFeature.Shared.Settings?.Enabled ?? false);
+        internal override bool Enabled => Settings.Enabled && (AccuracyEffectsFeature.Shared.Settings?.Enabled ?? false) || (CriticalEffectsFeature.Shared.Settings?.Enabled ?? false);
 
-        internal override BaseSettings Settings => new BaseSettings();
+        internal override LocationalEffectsSettings Settings => Control.settings.LocationalEffects;
 
         internal static bool ProcessLocationalEffectData(ref EffectData effect, MechComponent mechComponent)
         {

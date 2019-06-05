@@ -14,7 +14,7 @@ namespace MechEngineer.Features.DebugCycleCombatSounds.Patches
 
         public static bool Prefix(TextMeshProUGUI ____version, string button)
         {
-            if (Iterator == null || (button == "Skirmish" && !Iterator.MoveNext()))
+            if (Iterator == null || (button == DebugCycleCombatSoundsFeature.Shared.Settings.SpecificButton && !Iterator.MoveNext()))
             {
                 SceneSingletonBehavior<WwiseManager>.Instance.LoadCombatBanks();
                 SceneSingletonBehavior<WwiseManager>.Instance.LoadCombatBanks();

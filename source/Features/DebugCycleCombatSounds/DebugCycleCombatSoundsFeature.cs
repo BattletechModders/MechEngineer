@@ -1,9 +1,9 @@
 ﻿namespace MechEngineer.Features.DebugCycleCombatSounds
 {
-    internal class DebugCycleCombatSoundsFeature : Feature<BaseSettings>
+    internal class DebugCycleCombatSoundsFeature : Feature<DebugCycleCombatSoundsSettings>
     {
         internal static DebugCycleCombatSoundsFeature Shared = new DebugCycleCombatSoundsFeature();
 
-        internal override BaseSettings Settings => Control.settings.DebugCycleCombatSounds;
+        internal override DebugCycleCombatSoundsSettings Settings => Control.settings.DebugCycleCombatSounds;
     }
 }

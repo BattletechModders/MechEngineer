@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace MechEngineer.Features.MoveMultiplierStat
 {
-    internal class MoveMultiplierStatFeature : Feature<BaseSettings>
+    internal class MoveMultiplierStatFeature : Feature<MoveMultiplierStatSettings>
     {
         internal static MoveMultiplierStatFeature Shared = new MoveMultiplierStatFeature();
 
-        internal override BaseSettings Settings => Control.settings.MoveMultiplierStat;
+        internal override MoveMultiplierStatSettings Settings => Control.settings.MoveMultiplierStat;
 
         internal void InitEffectStats(Mech mech)
         {

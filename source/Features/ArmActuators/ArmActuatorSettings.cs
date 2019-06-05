@@ -1,7 +1,10 @@
 ﻿namespace MechEngineer.Features.ArmActuators
 {
-    public class ArmActuatorSettings : BaseSettings
+    public class ArmActuatorSettings : ISettings
     {
+        public bool Enabled { get; set; } = true;
+        public string EnabledDescription => "Enables CBT arm actuators with CC like handling.";
+
         public bool ForceFullDefaultActuators = false;
         public string IgnoreFullActuatorsTag = null;
         public string DefaultCBTShoulder = "emod_arm_part_shoulder";

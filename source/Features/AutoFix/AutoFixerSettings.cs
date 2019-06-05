@@ -2,8 +2,11 @@
 
 namespace MechEngineer.Features.AutoFix
 {
-    internal class AutoFixerSettings : BaseSettings
+    internal class AutoFixerSettings : ISettings
     {
+        public bool Enabled { get; set; } = true;
+        public string EnabledDescription => "Fixes up mechs, chassis and components to adhere to CBT rules and defaults.";
+
         public string[] MechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
 
         public bool MechDefEngine = true; // adds missing engine and removes too many jump jets

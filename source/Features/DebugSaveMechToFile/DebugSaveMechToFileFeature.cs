@@ -1,9 +1,9 @@
 ﻿namespace MechEngineer.Features.DebugSaveMechToFile
 {
-    internal class DebugSaveMechToFileFeature : Feature<BaseSettings>
+    internal class DebugSaveMechToFileFeature : Feature<DebugSaveMechToFileSettings>
     {
         internal static DebugSaveMechToFileFeature Shared = new DebugSaveMechToFileFeature();
 
-        internal override BaseSettings Settings => Control.settings.DebugSaveMechToFile;
+        internal override DebugSaveMechToFileSettings Settings => Control.settings.DebugSaveMechToFile;
     }
 }

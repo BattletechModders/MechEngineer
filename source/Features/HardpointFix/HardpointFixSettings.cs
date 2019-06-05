@@ -1,7 +1,10 @@
 namespace MechEngineer.Features.HardpointFix
 {
-    internal class HardpointFixSettings : BaseSettings
+    internal class HardpointFixSettings : ISettings
     {
+        public bool Enabled { get; set; } = true;
+        public string EnabledDescription => "Modifies the way installed weapons are shown on a mech model.";
+
         // TODO add set to 4 slots per chassis location autofix variant
         // TODO make enum so we have: set to 4, set to encountered prefabs, disabled
         public bool AutoFixChassisDefWeaponHardpointCounts = false; // true = hardpoint counts derived from prefab hardpoints

@@ -4,11 +4,11 @@ using CustomComponents;
 
 namespace MechEngineer.Features.ArmorStructureChanges
 {
-    internal class ArmorStructureChangesFeature : Feature<BaseSettings>
+    internal class ArmorStructureChangesFeature : Feature<ArmorStructureChangesSettings>
     {
         internal static ArmorStructureChangesFeature Shared = new ArmorStructureChangesFeature();
 
-        internal override BaseSettings Settings => Control.settings.ArmorStructureChanges;
+        internal override ArmorStructureChangesSettings Settings => Control.settings.ArmorStructureChanges;
 
         internal static float GetArmorFactorForMech(Mech mech)
         {

@@ -1,9 +1,9 @@
 ﻿namespace MechEngineer.Features.TurretLimitedAmmo
 {
-    internal class TurretLimitedAmmoFeature : Feature<BaseSettings>
+    internal class TurretLimitedAmmoFeature : Feature<TurretLimitedAmmoSettings>
     {
         internal static TurretLimitedAmmoFeature Shared = new TurretLimitedAmmoFeature();
 
-        internal override BaseSettings Settings => Control.settings.TurretLimitedAmmo;
+        internal override TurretLimitedAmmoSettings Settings => Control.settings.TurretLimitedAmmo;
     }
 }

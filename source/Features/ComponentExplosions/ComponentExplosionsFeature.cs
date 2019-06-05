@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace MechEngineer.Features.ComponentExplosions
 {
-    internal class ComponentExplosionsFeature: Feature<BaseSettings>
+    internal class ComponentExplosionsFeature: Feature<ComponentExplosionsSettings>
     {
         internal static ComponentExplosionsFeature Shared = new ComponentExplosionsFeature();
 
-        internal override BaseSettings Settings => Control.settings.ComponentExplosions;
+        internal override ComponentExplosionsSettings Settings => Control.settings.ComponentExplosions;
 
         internal void CheckForExplosion(MechComponent component, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
         {

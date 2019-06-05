@@ -1,7 +1,10 @@
 namespace MechEngineer.Features.Engines
 {
-    internal class EngineSettings : BaseSettings
+    internal class EngineSettings : ISettings
     {
+        public bool Enabled { get; set; } = true;
+        public string EnabledDescription => "Provides engines that can be installed on mechs similar to how CBT works.";
+
         public int MinimumHeatSinksOnMech = 10; // minimum heatsinks a mech requires
         public bool EnforceRulesForAdditionalInternalHeatSinks = true; // can't have those juicy ++ cooling systems with smaller fusion cores than the rules allow it
         public bool AllowMixingHeatSinkTypes = false; // only useful for patchwork like behavior

@@ -8,9 +8,10 @@ using Harmony;
 
 namespace MechEngineer.Features
 {
-    public class BaseSettings
+    public interface ISettings
     {
-        public bool Enabled = true;
+        bool Enabled { get; }
+        string EnabledDescription { get; }
     }
 
     interface IFeature
@@ -19,7 +20,7 @@ namespace MechEngineer.Features
         void SetupFeatureResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources);
     }
 
-    internal abstract class Feature<T> : IFeature where T: BaseSettings
+    internal abstract class Feature<T> : IFeature where T: ISettings
     {
         internal virtual bool Enabled => Settings?.Enabled ?? false;
 
@@ -61,7 +62,7 @@ namespace MechEngineer.Features
 
         private static class FeatureUtils
         {
-            internal static bool Setup<TS>(Feature<TS> feature) where TS: BaseSettings
+            internal static bool Setup<TS>(Feature<TS> feature) where TS: ISettings
             {
                 var type = feature.GetType();
                 var topic = type.Name;
