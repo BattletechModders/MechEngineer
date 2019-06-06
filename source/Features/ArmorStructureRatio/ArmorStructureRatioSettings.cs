@@ -3,7 +3,7 @@
     public class ArmorStructureRatioSettings : ISettings
     {
         public bool Enabled { get; set; } = true;
-        public string EnabledDescription => "Enforces CBT armor to structure ratios for all compartments of a mech.";
+        public string EnabledDescription => "CBT rule enforcement, that armor at every mechs location is not more than 2 times the structure, head is allowed to be 3 times.";
 
         public string[] SkipMechDefs = { };
     }

@@ -3,13 +3,18 @@ namespace MechEngineer.Features.HardpointFix
     internal class HardpointFixSettings : ISettings
     {
         public bool Enabled { get; set; } = true;
-        public string EnabledDescription => "Modifies the way installed weapons are shown on a mech model.";
+        public string EnabledDescription => "Optimizes the way installed weapons are shown on a mech model.";
 
         // TODO add set to 4 slots per chassis location autofix variant
         // TODO make enum so we have: set to 4, set to encountered prefabs, disabled
-        public bool AutoFixChassisDefWeaponHardpointCounts = false; // true = hardpoint counts derived from prefab hardpoints
-        public bool EnforceHardpointLimits = false; // true = use prefab hardpoints
+        public bool AutoFixChassisDefWeaponHardpointCounts = false;
+        public string AutoFixChassisDefWeaponHardpointCountsDescription = "Changes chassis hardpoints based on configured prefabs.";
+
+        public bool EnforceHardpointLimits = false;
+        public string EnforceHardpointLimitsDescription = "Enforces hardpoint limits in mechlab only allowing configured prefabs.";
+
         public bool AllowDefaultLoadoutWeapons = false;
+        public string AllowDefaultLoadoutWeaponsDescription = "Ignore limits that would prevent mounting default loadouts.";
 
         // from: /data/weapon$ grep -R "PrefabIdentifier" . | cut -d\" -f 4 | sort | uniq
         // to: /data/hardpoints$ grep -R "chrPrfWeap" . | cut -d_ -f 5 | sort | uniq

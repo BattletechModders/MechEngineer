@@ -5,7 +5,7 @@ namespace MechEngineer.Features.AutoFix
     internal class AutoFixerSettings : ISettings
     {
         public bool Enabled { get; set; } = true;
-        public string EnabledDescription => "Fixes up mechs, chassis and components to adhere to CBT rules and defaults.";
+        public string EnabledDescription => "Fixes up mechs, chassis and components to adhere to CBT rules and defaults. Done programmatically to be compatible to new mechs in the future.";
 
         public string[] MechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
 

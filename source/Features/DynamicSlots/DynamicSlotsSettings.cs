@@ -9,5 +9,6 @@
         // battletech allows overweight, to stay consistent so we also allow overspace usage by default
         // set to true to switch to MWO style
         public bool DynamicSlotsValidateDropEnabled = false;
+        public string DynamicSlotsValidateDropEnabledDescription = "Don't allow dropping of items that would exceed the available slots.";
     }
 }
