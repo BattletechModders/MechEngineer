@@ -23,12 +23,19 @@ namespace MechEngineer.Features.Engines.Helper
         {
             get
             {
-                if (RunSpeed < UnityGameInstance.BattleTechGame.MechStatisticsConstants.MinSprintFactor)
+                if (EngineFeature.settings.AllowMountingAllRatings)
+                {
+                    return true;
+                }
+
+                var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
+
+                if (RunSpeed < constants.MinSprintFactor)
                 {
                     return false;
                 }
 
-                if (RunSpeed > UnityGameInstance.BattleTechGame.MechStatisticsConstants.MaxSprintFactor)
+                if (RunSpeed > constants.MaxSprintFactor)
                 {
                     return false;
                 }
