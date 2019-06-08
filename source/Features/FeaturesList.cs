@@ -18,6 +18,7 @@ using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.NewSaveFolder;
+using MechEngineer.Features.OmniSlots;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideTonnage;
@@ -57,6 +58,7 @@ namespace MechEngineer.Features
             TurretMechComponentsFeature.Shared,
             TurretLimitedAmmoFeature.Shared,
             OverrideGhostVFXFeature.Shared,
+            OmniSlotsFeature.Shared
         };
     }
 }
