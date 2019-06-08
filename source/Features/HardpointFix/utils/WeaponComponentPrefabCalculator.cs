@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using MechEngineer.Features.DynamicSlots;
@@ -47,7 +48,7 @@ namespace MechEngineer.Features.HardpointFix.utils
         internal string GetNewPrefabName(MechComponentRef componentRef, ChassisLocations location)
         {
             var availablePrefabNames = GetAvailablePrefabNamesForLocation(location);
-            return GetAvailableWeaponComponentPrefabName(componentRef.Def.PrefabIdentifier.ToLower(), availablePrefabNames);
+            return GetAvailableWeaponComponentPrefabName(componentRef.Def.PrefabIdentifier, availablePrefabNames);
         }
 
         private void CalculateMappingForLocation(ChassisLocations location, List<MechComponentRef> locationComponentRefs)
@@ -57,7 +58,7 @@ namespace MechEngineer.Features.HardpointFix.utils
                 var prefabName = GetNewPrefabName(componentRef, location);
                 if (prefabName == null)
                 {
-                    //Control.mod.Logger.LogDebug("could not find prefabName for " + (componentRef != null ? (componentRef.Def != null ? componentRef.Def.PrefabIdentifier : null) : null));
+                    //Control.mod.Logger.LogDebug("could not find prefabName for " + componentRef?.Def?.PrefabIdentifier);
                     NotMappedPrefabNameCount++;
                     continue;
                 }
@@ -69,7 +70,7 @@ namespace MechEngineer.Features.HardpointFix.utils
         private static string GetAvailableWeaponComponentPrefabName(string prefabId, List<string> availablePrefabNames)
         {
             var compatibleTerms = Control.settings.HardpointFix.WeaponPrefabMappings
-                .Where(x => x.PrefabIdentifier == prefabId)
+                .Where(x => string.Equals(x.PrefabIdentifier, prefabId, StringComparison.CurrentCultureIgnoreCase))
                 .Select(x => x.HardpointCandidates)
                 .SingleOrDefault();
 
@@ -79,7 +80,7 @@ namespace MechEngineer.Features.HardpointFix.utils
             }
 
             var prefabName = compatibleTerms.Select(t => availablePrefabNames.FirstOrDefault(n => n.Contains("_" + t + "_"))).FirstOrDefault(n => n != null);
-            //Control.mod.Logger.LogDebug("found prefabName " + prefabName);
+            //Control.mod.Logger.LogDebug($"prefabId={prefabId} prefabName={prefabName} compatibleTerms={string.Join(",", compatibleTerms)} availablePrefabNames={string.Join(",", availablePrefabNames.ToArray())}");
             return prefabName;
         }
 
