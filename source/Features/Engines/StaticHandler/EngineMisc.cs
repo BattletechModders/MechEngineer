@@ -2,6 +2,7 @@
 using BattleTech.UI;
 using CustomComponents;
 using MechEngineer.Features.Engines.Helper;
+using UnityEngine;
 
 namespace MechEngineer.Features.Engines.StaticHandler
 {
@@ -61,6 +62,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
             {
                 widget.totalJumpjets = engine.CoreDef.GetMovement(mechLab.activeMechDef.Chassis.Tonnage).JumpJetCount;
             }
+            widget.totalJumpjets = Mathf.Min(widget.totalJumpjets, mechLab.activeMechDef.Chassis.MaxJumpjets);
 
             if (hardpoints == null || hardpoints[4] == null)
             {
