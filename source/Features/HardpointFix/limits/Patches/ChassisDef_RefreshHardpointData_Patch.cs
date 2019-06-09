@@ -34,6 +34,7 @@ namespace MechEngineer.Features.HardpointFix.limits.Patches
                 var hardpointCounts = new Dictionary<ChassisLocations, HardpointCounter>();
                 foreach (var hardpointData in hardpointDataDef.HardpointData)
                 {
+                    //Control.mod.Logger.LogDebug($"id={__instance.Description.Id} location={hardpointData.location}");
                     var location = VHLUtils.GetLocationByString(hardpointData.location);
                     var counter = new HardpointCounter(hardpointData.weapons);
                     hardpointCounts[location] = counter;
