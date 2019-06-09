@@ -10,6 +10,30 @@ namespace MechEngineer.Features.HardpointFix.utils
         internal readonly int numMissile;
         internal readonly int numSmall;
 
+        private static bool isBH(string prefabName)
+        {
+            return prefabName.Contains("_bh") || prefabName.Contains("_ac");
+        }
+
+        private static bool isMH(string prefabName)
+        {
+            return prefabName.Contains("_mh") || prefabName.Contains("_lrm10");
+        }
+
+        private static bool isEH(string prefabName)
+        {
+            return prefabName.Contains("_eh") || prefabName.Contains("_laser");
+        }
+
+        private static bool isAH(string prefabName)
+        {
+            return prefabName.Contains("_ah")
+                   || prefabName.Contains("_laser_eh")
+                   || prefabName.Contains("_flamer_eh")
+                   || prefabName.Contains("_machinegun_bh")
+                   || prefabName.Contains("_mg_bh");
+        }
+
         internal HardpointCounter(string[][] weaponHardpoints)
         {
             foreach (var hardpoint in weaponHardpoints)
@@ -17,22 +41,22 @@ namespace MechEngineer.Features.HardpointFix.utils
                 bool bh = false, mh = false, eh = false, ah = false;
                 foreach (var prefab in hardpoint)
                 {
-                    if (prefab.Contains("_bh") || prefab.Contains("_ac"))
+                    if (isBH(prefab))
                     {
                         bh = true;
                     }
 
-                    if (prefab.Contains("_mh") || prefab.Contains("_lrm10"))
+                    if (isMH(prefab))
                     {
                         mh = true;
                     }
 
-                    if (prefab.Contains("_eh") || prefab.Contains("_laser"))
+                    if (isEH(prefab))
                     {
                         eh = true;
                     }
 
-                    if (prefab.Contains("_ah") || prefab.Contains("_laser_eh") || prefab.Contains("_flamer_eh") || prefab.Contains("_machinegun_bh") || prefab.Contains("_mg_bh"))
+                    if (isAH(prefab))
                     {
                         ah = true;
                     }
@@ -59,6 +83,32 @@ namespace MechEngineer.Features.HardpointFix.utils
                 }
             }
         }
+
+        //internal string[] RemoveUnwantedHardpoints(string[] hardpointSet)
+        //{
+        //    IEnumerable<string> hardpoints = hardpointSet;
+        //    if (numBallistic == 0)
+        //    {
+        //        hardpoints = hardpoints.Where(hp => !hp.Contains("_bh"));
+        //    }
+
+        //    if (numEnergy == 0 && numSmall == 0)
+        //    {
+        //        hardpoints = hardpoints.Where(hp => !hp.Contains("_eh"));
+        //    }
+
+        //    if (numMissile == 0)
+        //    {
+        //        hardpoints = hardpoints.Where(hp => !hp.Contains("_mh"));
+        //    }
+
+        //    if (numSmall == 0)
+        //    {
+        //        hardpoints = hardpoints.Where(hp => !hp.Contains("_ah"));
+        //    }
+
+        //    return hardpoints.ToArray();
+        //}
 
         internal HardpointDef[] HardpointsDefs
         {
