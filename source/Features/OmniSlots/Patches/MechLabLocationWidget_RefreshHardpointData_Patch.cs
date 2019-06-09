@@ -47,10 +47,10 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 ___currentMissileCount = calc.Missile.VanillaUsage;
                 ___currentSmallCount = calc.Small.VanillaUsage;
 
-                ___totalBallisticHardpoints = calc.Ballistic.VanillaMax;
-                ___totalEnergyHardpoints = calc.Energy.VanillaMax;
-                ___totalMissileHardpoints = calc.Missile.VanillaMax;
-                ___totalSmallHardpoints = calc.Small.VanillaMax;
+                ___totalBallisticHardpoints = calc.Ballistic.DynamicMax;
+                ___totalEnergyHardpoints = calc.Energy.DynamicMax;
+                ___totalMissileHardpoints = calc.Missile.DynamicMax;
+                ___totalSmallHardpoints = calc.Small.DynamicMax;
 
                 ___hardpoints[0].SetData(calc.Ballistic.CategoryForLocationWidget, calc.Ballistic.HardpointString);
                 ___hardpoints[1].SetData(calc.Energy.CategoryForLocationWidget, calc.Energy.HardpointString);

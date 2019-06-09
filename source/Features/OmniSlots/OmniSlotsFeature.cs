@@ -35,7 +35,10 @@ namespace MechEngineer.Features.OmniSlots
 
                 if (calc.OmniFree < 0)
                 {
-                    errors.Add(MechValidationType.InvalidHardpoints, ErrorMessage(location));
+                    if (errors.Add(MechValidationType.InvalidHardpoints, ErrorMessage(location)))
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -48,6 +51,7 @@ namespace MechEngineer.Features.OmniSlots
 
         // TODO move to CC, probably a new thing that is a cross between ValidateMech + drop check
         internal bool ValidateAdd(
+            bool dropCheck,
             ref List<MechLabItemSlotElement> localInventory,
             ref LocationDef chassisLocationDef,
             MechComponentDef newComponentDef)
@@ -67,7 +71,7 @@ namespace MechEngineer.Features.OmniSlots
             }
                 
             var calc = new HardpointOmniUsageCalculator(inventory, hardpoints);
-            return calc.CanAdd(newComponentDef);
+            return calc.CanAdd(dropCheck, newComponentDef);
         }
 
         private string HardpointValidator(MechLabItemSlotElement drop_item, LocationHelper locationHelper, List<IChange> changes)
@@ -85,7 +89,7 @@ namespace MechEngineer.Features.OmniSlots
 
             var calc = new HardpointOmniUsageCalculator(inventory, hardpoints);
 
-            if (calc.CanAdd(componentDef))
+            if (calc.CanAdd(true, componentDef))
             {
                 return null;
             }

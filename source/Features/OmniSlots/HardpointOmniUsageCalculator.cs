@@ -72,7 +72,7 @@ namespace MechEngineer.Features.OmniSlots
             }
         }
 
-        internal bool CanAdd(MechComponentDef newComponentDef)
+        internal bool CanAdd(bool dropCheck, MechComponentDef newComponentDef)
         {
             if (newComponentDef.ComponentType != ComponentType.Weapon)
             {
@@ -82,7 +82,7 @@ namespace MechEngineer.Features.OmniSlots
             var weapon = newComponentDef as WeaponDef;
             if (stats.TryGetValue(weapon.Category, out var stat))
             {
-                return stat.DynamicFree > 0;
+                return dropCheck ? stat.DynamicFree > 0 : stat.TheoreticalMax > 0;
             }
             else
             {

@@ -29,7 +29,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
                     return;
                 }
 
-                __result = OmniSlotsFeature.Shared.ValidateAdd(ref ___localInventory, ref ___chassisLocationDef, newComponentDef);
+                __result = OmniSlotsFeature.Shared.ValidateAdd(true, ref ___localInventory, ref ___chassisLocationDef, newComponentDef);
             }
             catch (Exception e)
             {
