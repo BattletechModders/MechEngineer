@@ -30,6 +30,11 @@ namespace MechEngineer.Features.OmniSlots
 
         private void SetUsage(IEnumerable<MechComponentDef> items)
         {
+            if (items == null)
+            {
+                return;
+            }
+
             foreach (var item in items)
             {
                 if (item.ComponentType == ComponentType.Weapon && item is WeaponDef weaponDef && stats.TryGetValue(weaponDef.Category, out var stat))
@@ -72,7 +77,7 @@ namespace MechEngineer.Features.OmniSlots
             }
         }
 
-        internal bool CanAdd(bool dropCheck, MechComponentDef newComponentDef)
+        internal bool CanAdd(MechComponentDef newComponentDef)
         {
             if (newComponentDef.ComponentType != ComponentType.Weapon)
             {
@@ -82,7 +87,7 @@ namespace MechEngineer.Features.OmniSlots
             var weapon = newComponentDef as WeaponDef;
             if (stats.TryGetValue(weapon.Category, out var stat))
             {
-                return dropCheck ? stat.DynamicFree > 0 : stat.TheoreticalMax > 0;
+                return stat.TheoreticalMax > 0;
             }
             else
             {

@@ -11,30 +11,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
     {
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return OmniSlotsFeature.Transpiler(instructions);
-        }
-
-        internal static void Postfix(
-            ref LocationDef ___chassisLocationDef,
-
-            MechComponentDef newComponentDef,
-
-            ref List<MechLabItemSlotElement> ___localInventory,
-            ref bool __result)
-        {
-            try
-            {
-                if (!__result)
-                {
-                    return;
-                }
-
-                __result = OmniSlotsFeature.Shared.ValidateAdd(true, ref ___localInventory, ref ___chassisLocationDef, newComponentDef);
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
+            return OmniSlotsFeature.DisableHardpointValidatorsTranspiler(instructions);
         }
     }
 }

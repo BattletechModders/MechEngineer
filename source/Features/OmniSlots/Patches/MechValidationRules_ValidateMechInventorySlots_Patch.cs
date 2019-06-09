@@ -9,7 +9,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
     {
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return OmniSlotsFeature.Transpiler(instructions);
+            return OmniSlotsFeature.DisableHardpointValidatorsTranspiler(instructions);
         }
     }
 }

@@ -11,15 +11,13 @@ namespace MechEngineer.Features.OmniSlots.Patches
     {
         internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            return OmniSlotsFeature.Transpiler(instructions);
+            return OmniSlotsFeature.DisableHardpointValidatorsTranspiler(instructions);
         }
 
         internal static void Postfix(
-            ref LocationDef ___chassisLocationDef,
-
+            ref LocationLoadoutDef ___loadout,
+            ref MechLabPanel ___mechLab,
             MechComponentDef newComponentDef,
-
-            ref List<MechLabItemSlotElement> ___localInventory,
             ref bool __result)
         {
             try
@@ -29,7 +27,21 @@ namespace MechEngineer.Features.OmniSlots.Patches
                     return;
                 }
 
-                __result = OmniSlotsFeature.Shared.ValidateAdd(false, ref ___localInventory, ref ___chassisLocationDef, newComponentDef);
+                var chassisDef = ___mechLab?.activeMechDef?.Chassis;
+
+                if (chassisDef == null)
+                {
+                    return;
+                }
+
+                var location = ___loadout.Location;
+                if (location == ChassisLocations.None)
+                {
+
+                    return;
+                }
+
+                __result = OmniSlotsFeature.Shared.ValidateAddSimple(chassisDef, location, newComponentDef);
             }
             catch (Exception e)
             {

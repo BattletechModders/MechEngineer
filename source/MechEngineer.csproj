@@ -120,9 +120,9 @@
     <Compile Include="Features\OmniSlots\HardpointOmniUsageCalculator.cs" />
     <Compile Include="Features\OmniSlots\HardpointStat.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechBayMechInfoWidget_GetTotalHardpoints_Patch.cs" />
+    <Compile Include="Features\OmniSlots\Patches\MechLabLocationWidget_ValidateAdd_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\SG_Shop_ItemSelectedPanel_FillInHardPoints_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechBayMechInfoWidget_SetHardpoints_Patch.cs" />
-    <Compile Include="Features\OmniSlots\Patches\MechLabLocationWidget_ValidateAdd_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechLabLocationWidget_ValidateAddSimple_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechLabLocationWidget_RefreshHardpointData_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechLabLocationWidget_ShowHighlightFrame_Patch.cs" />

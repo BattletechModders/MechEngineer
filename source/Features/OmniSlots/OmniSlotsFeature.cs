@@ -20,8 +20,16 @@ namespace MechEngineer.Features.OmniSlots
             base.SetupFeatureLoaded();
 
             Validator.HardpointValidator = HardpointValidator;
+
             var ccValidator = new CCValidationAdapter(this);
             Validator.RegisterMechValidator(ccValidator.ValidateMech, ccValidator.ValidateMechCanBeFielded);
+            Validator.RegisterDropValidator(check: ccValidator.ValidateDrop);
+        }
+
+        private string HardpointValidator(MechLabItemSlotElement drop_item, LocationHelper locationHelper, List<IChange> changes)
+        {
+            // noop, handled by drop validator
+            return null;
         }
 
         public void ValidateMech(MechDef mechDef, Errors errors)
@@ -49,19 +57,15 @@ namespace MechEngineer.Features.OmniSlots
             return $"'Mech has too many weapons mounted in the {locationName}";
         }
 
-        // TODO move to CC, probably a new thing that is a cross between ValidateMech + drop check
-        internal bool ValidateAdd(
-            bool dropCheck,
-            ref List<MechLabItemSlotElement> localInventory,
-            ref LocationDef chassisLocationDef,
-            MechComponentDef newComponentDef)
+        // TODO move to CC
+        internal bool ValidateAddSimple(ChassisDef chassisDef, ChassisLocations location, MechComponentDef newComponentDef)
         {
             if (newComponentDef.ComponentType != ComponentType.Weapon)
             {
                 return true;
             }
 
-            var inventory = localInventory.Select(x => x.ComponentRef.Def);
+            var chassisLocationDef = chassisDef.GetLocationDef(location);
             var hardpoints = chassisLocationDef.Hardpoints;
             if (hardpoints == null)
             {
@@ -70,36 +74,11 @@ namespace MechEngineer.Features.OmniSlots
                 return true;
             }
                 
-            var calc = new HardpointOmniUsageCalculator(inventory, hardpoints);
-            return calc.CanAdd(dropCheck, newComponentDef);
+            var calc = new HardpointOmniUsageCalculator(null, hardpoints);
+            return calc.CanAdd(newComponentDef);
         }
 
-        private string HardpointValidator(MechLabItemSlotElement drop_item, LocationHelper locationHelper, List<IChange> changes)
-        {
-            var componentDef = drop_item.ComponentRef.Def;
-            if (componentDef.ComponentType != ComponentType.Weapon)
-            {
-                return null;
-            }
-
-            var inventory = locationHelper.LocalInventory.Select(x => x.ComponentRef.Def);
-            var location = locationHelper.widget.loadout.Location;
-            var mechDef = locationHelper.mechLab.activeMechDef;
-            var hardpoints = mechDef.Chassis.GetLocationDef(location).Hardpoints;
-
-            var calc = new HardpointOmniUsageCalculator(inventory, hardpoints);
-
-            if (calc.CanAdd(true, componentDef))
-            {
-                return null;
-            }
-            else
-            {
-                return ErrorMessage(location);
-            }
-        }
-
-        internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        internal static IEnumerable<CodeInstruction> DisableHardpointValidatorsTranspiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
                 AccessTools.Property(typeof(MechComponentDef), nameof(MechComponentDef.ComponentType)).GetGetMethod(),

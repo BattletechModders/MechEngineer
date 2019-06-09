@@ -32,28 +32,32 @@ namespace MechEngineer
             return !errors.Any();
         }
 
-        public string ValidateDrop(MechLabItemSlotElement drop_item, MechDef mech, List<InvItem> new_inventory, List<IChange> changes)
+        public string ValidateDrop(MechLabItemSlotElement drop_item, MechDef mechDef1, List<InvItem> iteminventory2, List<IChange> changes)
         {
-            var inventory = new_inventory.Select(x =>
+            var errors1 = new Errors();
+            validator.ValidateMech(mechDef1, errors1);
+
+            var mechDef2 = new MechDef(mechDef1);
+            var inventory2 = iteminventory2.Select(x =>
             {
                 var r = new MechComponentRef(x.item);
                 Traverse.Create(r).Property(nameof(MechComponentRef.MountedLocation)).SetValue(x.location);
                 return r;
             }).ToList();
 
-            var mechDef = new MechDef(mech);
-            mechDef.SetInventory(inventory.ToArray());
+            mechDef2.SetInventory(inventory2.ToArray());
 
-            var errors = new Errors();
-            validator.ValidateMech(mechDef, errors);
+            var errors2 = new Errors();
+            validator.ValidateMech(mechDef2, errors2);
 
-            return errors.FirstOrDefault()?.Message ?? string.Empty;
+            var newErrors = errors2.Except(errors1);
+            return newErrors.FirstOrDefault()?.Message ?? string.Empty;
         }
     }
 
     public class Errors: IEnumerable<Error>
     {
-        internal OrderedSet<Error> Messages = new OrderedSet<Error>();
+        internal readonly OrderedSet<Error> Messages = new OrderedSet<Error>();
         internal bool FailOnFirstError = false;
 
         internal bool Add(MechValidationType type, string message)
@@ -111,6 +115,11 @@ namespace MechEngineer
             hashCode = hashCode * -1521134295 + Type.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Message);
             return hashCode;
+        }
+
+        public override string ToString()
+        {
+            return $"{Type}: {Message}";
         }
     }
 }
