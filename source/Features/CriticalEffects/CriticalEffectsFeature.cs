@@ -3,6 +3,7 @@ using System.Linq;
 using BattleTech;
 using CustomComponents;
 using FluffyUnderware.DevTools.Extensions;
+using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.LocationalEffects;
 using UnityEngine;
 
@@ -282,6 +283,8 @@ namespace MechEngineer.Features.CriticalEffects
                     effectData, scopedId, -1,
                     actor, actor,
                     default(WeaponHitInfo), 0, false);
+
+                //DebugUtils.LogActor("CreateCriticalEffect", actor);
     
                 if (tracked)
                 {
