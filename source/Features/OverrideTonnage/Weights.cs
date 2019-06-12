@@ -13,6 +13,7 @@ namespace MechEngineer.Features.OverrideTonnage
         public float ArmorFactor { get; set; } = 1;
         public float StructureFactor { get; set; } = 1;
         public float EngineFactor { get; set; } = 1;
+        public float EngineFactorFactor { get; set; } = 1;
         public float GyroFactor { get; set; } = 1;
         public float ChassisFactor { get; set; } = 1;
 
@@ -22,6 +23,7 @@ namespace MechEngineer.Features.OverrideTonnage
             ArmorFactor += savings.ArmorFactor - 1;
             StructureFactor += savings.StructureFactor - 1;
             EngineFactor += savings.EngineFactor - 1;
+            EngineFactorFactor += savings.EngineFactorFactor - 1;
             GyroFactor += savings.GyroFactor - 1;
             ChassisFactor += savings.ChassisFactor - 1;
         }

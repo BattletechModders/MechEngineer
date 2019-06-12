@@ -62,9 +62,9 @@ namespace MechEngineer.Features.Engines
 
         internal float ExternalHeatSinkFreeTonnage => ExternalHeatSinkFreeCount * EngineHeatSinkDef.Def.Tonnage;
 
-        internal float GyroTonnage => PrecisionUtils.RoundUp((CoreDef.StandardGyroTonnage * Weights.GyroFactor));
+        internal float GyroTonnage => PrecisionUtils.RoundUp(CoreDef.StandardGyroTonnage * Weights.GyroFactor);
 
-        internal float EngineTonnage => PrecisionUtils.RoundUp((CoreDef.StandardEngineTonnage * Weights.EngineFactor));
+        internal float EngineTonnage => PrecisionUtils.RoundUp(CoreDef.StandardEngineTonnage * Weights.EngineFactor * Weights.EngineFactorFactor);
  
         internal float HeatSinkTonnage => - ExternalHeatSinkFreeTonnage; // InternalHeatSinkTonnage
 
