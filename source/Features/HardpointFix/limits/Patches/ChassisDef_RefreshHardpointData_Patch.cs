@@ -36,8 +36,11 @@ namespace MechEngineer.Features.HardpointFix.limits.Patches
                 {
                     //Control.mod.Logger.LogDebug($"id={__instance.Description.Id} location={hardpointData.location}");
                     var location = VHLUtils.GetLocationByString(hardpointData.location);
-                    var counter = new HardpointCounter(hardpointData.weapons);
-                    hardpointCounts[location] = counter;
+                    if (location.HasValue)
+                    {
+                        var counter = new HardpointCounter(hardpointData.weapons);
+                        hardpointCounts[location.Value] = counter;
+                    }
                 }
 
                 var adapter = new ChassisDefAdapter(__instance);

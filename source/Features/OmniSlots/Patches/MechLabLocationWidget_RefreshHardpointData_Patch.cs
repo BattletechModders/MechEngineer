@@ -34,7 +34,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 if (hardpoints == null)
                 {
                     // how can this happen? is this from the properties widget?
-                    Control.mod.Logger.LogDebug($"hardpoints is null in location={__instance.loadout?.Location}");
+                    //Control.mod.Logger.LogDebug($"hardpoints is null in location={__instance.loadout?.Location}");
                     return;
                 }
                 
