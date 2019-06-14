@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
@@ -9,14 +10,16 @@ namespace MechEngineer.Features.HardpointFix.utils
     internal class WeaponComponentPrefabCalculator
     {
         private readonly ChassisDef chassisDef;
-        private readonly IDictionary<MechComponentRef, string> mapping = new Dictionary<MechComponentRef, string>();
+        private readonly IDictionary<MechComponentRef, string> cacheMappings = new Dictionary<MechComponentRef, string>();
 
         internal WeaponComponentPrefabCalculator(ChassisDef chassisDef, List<MechComponentRef> componentRefs, ChassisLocations location = ChassisLocations.All)
         {
             this.chassisDef = chassisDef;
             componentRefs = componentRefs
-                .OrderByDescending(c => ((WeaponDef) c.Def).InventorySize)
-                .ThenByDescending(c => ((WeaponDef) c.Def).Tonnage)
+                .OrderByDescending(c => ((WeaponDef)c.Def).InventorySize)
+                .ThenByDescending(c => ((WeaponDef)c.Def).Tonnage)
+                .ThenByDescending(c => ((WeaponDef)c.Def).Damage)
+                .ThenByDescending(c => c.ComponentDefID)
                 .ToList();
 
             if (!MechDefBuilder.Locations.Contains(location))
@@ -38,74 +41,246 @@ namespace MechEngineer.Features.HardpointFix.utils
             }
         }
 
-        internal int NotMappedPrefabNameCount { private set; get; }
+        internal int MappedComponentRefCount => cacheMappings.Count;
 
         internal string GetPrefabName(MechComponentRef componentRef)
         {
-            return mapping.TryGetValue(componentRef, out var value) ? value : null;
+            return cacheMappings.TryGetValue(componentRef, out var value) ? value : null;
         }
 
-        internal string GetNewPrefabName(MechComponentRef componentRef, ChassisLocations location)
+        private void CalculateMappingForLocation(ChassisLocations location, List<MechComponentRef> sortedComponentRefs)
         {
-            var availablePrefabNames = GetAvailablePrefabNamesForLocation(location);
-            return GetAvailableWeaponComponentPrefabName(componentRef.Def.PrefabIdentifier, availablePrefabNames);
-        }
+            var bestSelection = new PrefabSelectionCandidate(GetAvailablePrefabSetsForLocation(location), new List<PrefabMapping>());
+            var currentCandidates = new List<PrefabSelectionCandidate> { bestSelection };
 
-        private void CalculateMappingForLocation(ChassisLocations location, List<MechComponentRef> locationComponentRefs)
-        {
-            foreach (var componentRef in locationComponentRefs)
+            foreach (var componentRef in sortedComponentRefs)
             {
-                var prefabName = GetNewPrefabName(componentRef, location);
-                if (prefabName == null)
+                var newCandidates = new List<PrefabSelectionCandidate>();
+                foreach (var candidate in currentCandidates)
                 {
-                    //Control.mod.Logger.LogDebug("could not find prefabName for " + componentRef?.Def?.PrefabIdentifier);
-                    NotMappedPrefabNameCount++;
-                    continue;
+                    var hasNew = false;
+                    foreach (var set in candidate.Sets)
+                    {
+                        var prefabName = set.GetCompatiblePrefab(componentRef.Def.PrefabIdentifier);
+                        if (prefabName == null)
+                        {
+                            //Control.mod.Logger.LogDebug("could not find prefabName for " + componentRef?.Def?.PrefabIdentifier);
+                            continue;
+                        }
+
+                        var newMapping = new PrefabMapping(prefabName, componentRef);
+                        var newCandidate = candidate.CreateWithoutSet(set, newMapping);
+                        newCandidates.Add(newCandidate);
+                        hasNew = true;
+                    }
+
+                    if (!hasNew) // we didn't find anything better, so re-add the old one
+                    {
+                        newCandidates.Add(candidate);
+                    }
                 }
 
-                mapping[componentRef] = prefabName;
-            }
-        }
-        
-        private static string GetAvailableWeaponComponentPrefabName(string prefabId, List<string> availablePrefabNames)
-        {
-            var compatibleTerms = Control.settings.HardpointFix.WeaponPrefabMappings
-                .Where(x => string.Equals(x.PrefabIdentifier, prefabId, StringComparison.CurrentCultureIgnoreCase))
-                .Select(x => x.HardpointCandidates)
-                .SingleOrDefault();
-
-            if (compatibleTerms == null)
-            {
-                compatibleTerms = new[] {prefabId.ToLowerInvariant()};
+                currentCandidates = newCandidates;
             }
 
-            var prefabName = compatibleTerms.Select(t => availablePrefabNames.FirstOrDefault(n => n.Contains("_" + t + "_"))).FirstOrDefault(n => n != null);
-            //Control.mod.Logger.LogDebug($"prefabId={prefabId} prefabName={prefabName} compatibleTerms={string.Join(",", compatibleTerms)} availablePrefabNames={string.Join(",", availablePrefabNames.ToArray())}");
-            return prefabName;
-        }
-
-        private List<string> GetAvailablePrefabNamesForLocation(ChassisLocations location)
-        {
-            var hardpointDatas = chassisDef.HardpointDataDef.HardpointData
-                .Where(x => x.location == VHLUtils.GetStringFromLocation(location));
-
-            // SelectMany with string[][] crashes if compiled with Mono.CSharp (2.1.0.0) for Unity, newer Mono and VS compilers are fine
-            var hpsets = new List<string[]>();
-            foreach (var hardpointData in hardpointDatas)
+            foreach (var candidate in currentCandidates)
             {
-                foreach (var hpset in hardpointData.weapons)
+                if (candidate.CompareTo(bestSelection) > 0)
                 {
-                    hpsets.Add(hpset);
+                    bestSelection = candidate;
                 }
             }
 
-            return hpsets
-                .Where(hpset => !hpset.Intersect(mapping.Values).Any()) // only include hardpoint sets not yet used
-                // commented out code not required, instead of filling the least used, we get the complete weapons list and sort by weapon sizes and fill from nicest index to ugliest index
-                //.Select(hpset => RemoveUnwantedHardpoints(location, hpset)) // that allows our length order to work better
-                //.OrderBy(hpset => hpset.Length) // sort hardpoints by how many weapon types are supported (use up the ones with less options first) - no -> use index order, lower index = nicer looking
-                .SelectMany(hpset => hpset) // we don't care about groups anymore, just flatten everything into one stream
-                .ToList();
+            var text = $"Mappings for chassis {chassisDef.Description.Id} at {location}";
+            foreach (var mapping in bestSelection.Mappings)
+            {
+                text += $"\n{mapping.MechComponentRef.Def.Description.Id} {mapping.PrefabName}";
+                cacheMappings[mapping.MechComponentRef] = mapping.PrefabName;
+            }
+            Control.mod.Logger.LogDebug(text);
+        }
+
+        private class PrefabSelectionCandidate : IComparable<PrefabSelectionCandidate>
+        {
+            internal PrefabSets Sets { get; }
+            internal List<PrefabMapping> Mappings { get; }
+
+            private int MajorScore { get; }
+            private int MinorScore { get; }
+
+            internal PrefabSelectionCandidate(PrefabSets sets, List<PrefabMapping> prefabsMappings)
+            {
+                Sets = sets;
+                Mappings = prefabsMappings ?? new List<PrefabMapping>();
+
+                MajorScore = Mappings.Count;
+                MinorScore = Mappings.Select(x => x.MechComponentRef.Def.InventorySize).Sum();
+            }
+
+            public int CompareTo(PrefabSelectionCandidate other)
+            {
+                var major = MajorScore - other.MajorScore;
+                if (major != 0)
+                {
+                    return major;
+                }
+
+                return MinorScore - other.MinorScore;
+            }
+
+            internal PrefabSelectionCandidate CreateWithoutSet(PrefabSet exclude, PrefabMapping newMapping)
+            {
+                var sets = Sets.Except(exclude);
+                var mappings = new List<PrefabMapping>(Mappings) { newMapping };
+                return new PrefabSelectionCandidate(sets, mappings);
+            }
+        }
+
+        private class PrefabSets : IEnumerable<PrefabSet>
+        {
+            private readonly HashSet<PrefabSet> hashSet;
+
+            internal PrefabSets()
+            {
+                hashSet = new HashSet<PrefabSet>(new IndexEqualityComparer());
+            }
+
+            internal void Add(PrefabSet set)
+            {
+                hashSet.Add(set);
+            }
+
+            internal int Count => hashSet.Count;
+
+            internal PrefabSets Except(PrefabSet set)
+            {
+                var newHashSet = new HashSet<PrefabSet>(hashSet, new IndexEqualityComparer());
+                newHashSet.Remove(set);
+                return new PrefabSets(newHashSet);
+            }
+
+            private PrefabSets(HashSet<PrefabSet> hashSet)
+            {
+                this.hashSet = hashSet;
+            }
+
+            private sealed class IndexEqualityComparer : IEqualityComparer<PrefabSet>
+            {
+                public bool Equals(PrefabSet x, PrefabSet y)
+                {
+                    if (ReferenceEquals(x, y))
+                    {
+                        return true;
+                    }
+
+                    if (ReferenceEquals(x, null))
+                    {
+                        return false;
+                    }
+
+                    if (ReferenceEquals(y, null))
+                    {
+                        return false;
+                    }
+
+                    if (x.GetType() != y.GetType())
+                    {
+                        return false;
+                    }
+
+                    return x.Index == y.Index;
+                }
+
+                public int GetHashCode(PrefabSet obj)
+                {
+                    return obj.Index;
+                }
+            }
+
+            public IEnumerator<PrefabSet> GetEnumerator()
+            {
+                return hashSet.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+        }
+
+        private class PrefabSet
+        {
+            internal int Index { get; }
+            private string[] Prefabs { get; }
+
+            internal PrefabSet(int index, string[] prefabs)
+            {
+                Index = index;
+                Prefabs = prefabs;
+            }
+
+            internal string GetCompatiblePrefab(string prefabIdentifier)
+            {
+                var compatibleTerms = GetCompatiblePrefabTerms(prefabIdentifier);
+                var prefabName = compatibleTerms.Select(x => Prefabs.FirstOrDefault(n => n.Contains("_" + x + "_"))).FirstOrDefault(x => x != null);
+                return prefabName;
+            }
+
+            private static readonly Dictionary<string, string[]> cachedCompatibleTerms = new Dictionary<string, string[]>();
+
+            private static string[] GetCompatiblePrefabTerms(string prefabIdentifier)
+            {
+                var prefabIdentifierNormalized = prefabIdentifier.ToLowerInvariant();
+
+                if (!cachedCompatibleTerms.TryGetValue(prefabIdentifierNormalized, out var compatibleTerms))
+                {
+                    compatibleTerms = Control.settings.HardpointFix.WeaponPrefabMappings
+                        .Where(x => String.Equals(x.PrefabIdentifier, prefabIdentifierNormalized, StringComparison.CurrentCultureIgnoreCase))
+                        .Select(x => x.HardpointCandidates)
+                        .SingleOrDefault();
+
+                    if (compatibleTerms == null)
+                    {
+                        compatibleTerms = new[] { prefabIdentifierNormalized };
+                    }
+
+                    cachedCompatibleTerms[prefabIdentifierNormalized] = compatibleTerms;
+                }
+
+                return compatibleTerms;
+            }
+        }
+
+        private class PrefabMapping
+        {
+            internal string PrefabName { get; }
+            internal MechComponentRef MechComponentRef { get; }
+
+            public PrefabMapping(string prefabName, MechComponentRef mechComponentRef)
+            {
+                PrefabName = prefabName;
+                MechComponentRef = mechComponentRef;
+            }
+        }
+
+        private PrefabSets GetAvailablePrefabSetsForLocation(ChassisLocations location)
+        {
+            var locationString = VHLUtils.GetStringFromLocation(location);
+            var weaponsData = chassisDef.HardpointDataDef.HardpointData.FirstOrDefault(x => x.location == locationString);
+            var sets = new PrefabSets();
+            if (weaponsData.weapons == null)
+            {
+                //Control.mod.Logger.LogDebug($"no hardpoint data found for {chassisDef.Description.Id} at {location}");
+            }
+            else
+            {
+                foreach (var x in weaponsData.weapons)
+                {
+                    var set = new PrefabSet(sets.Count, x);
+                    sets.Add(set);
+                }
+            }
+            return sets;
         }
     }
 }

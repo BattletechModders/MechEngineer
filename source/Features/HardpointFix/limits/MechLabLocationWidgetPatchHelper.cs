@@ -40,7 +40,7 @@ namespace MechEngineer.Features.HardpointFix.limits
                 return true;
             }
 
-            if (GetNotMappedPrefabNameCount(componentRef) > 0)
+            if (HasUnmappedPrefabs(componentRef))
             {
                 var dropErrorMessage = $"Cannot add {componentRef.Def.Description.Name} to {_adapter.LocationName.text}: There are no available {componentRef.Def.PrefabIdentifier.ToUpper()} hardpoints.";
                 _adapter.MechLab.ShowDropErrorMessage(new Localize.Text(dropErrorMessage));
@@ -77,7 +77,7 @@ namespace MechEngineer.Features.HardpointFix.limits
             return false;
         }
 
-        private int GetNotMappedPrefabNameCount(MechComponentRef newComponentRef)
+        private bool HasUnmappedPrefabs(MechComponentRef newComponentRef)
         {
             var chassis = _adapter.MechLab.activeMechDef.Chassis;
             var location = _adapter.Loadout.Location;
@@ -90,7 +90,7 @@ namespace MechEngineer.Features.HardpointFix.limits
             componentRefs.Add(newComponentRef);
 
             var calculator = new WeaponComponentPrefabCalculator(chassis, componentRefs, location);
-            return calculator.NotMappedPrefabNameCount;
+            return calculator.MappedComponentRefCount != componentRefs.Count;
         }
     }
 }
