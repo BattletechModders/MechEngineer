@@ -150,7 +150,14 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                 }
 
                 adapter.icon.gameObject.SetActive(dynamicSlots.ShowIcon);
-                
+
+                adapter.spacers[0].SetActive(true);
+                foreach (var spacer in adapter.spacers)
+                {
+                    spacer.SetActive(false);
+                }
+                element.thisRectTransform.sizeDelta = new Vector2(element.thisRectTransform.sizeDelta.x, 32f * 1);
+
                 gameObject.SetActive(true);
                 element.SetDraggable(false);
             }

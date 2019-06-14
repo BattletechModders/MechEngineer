@@ -1,11 +1,15 @@
-﻿using BattleTech.UI;
+﻿using System.Collections.Generic;
+using BattleTech.UI;
 using SVGImporter;
 using TMPro;
+using UnityEngine;
 
 namespace MechEngineer
 {
     public class MechLabItemSlotElementAdapter : Adapter<MechLabItemSlotElement>
     {
+        public object thisRectTransform;
+
         public MechLabItemSlotElementAdapter(MechLabItemSlotElement instance) : base(instance)
         {
         }
@@ -19,5 +23,7 @@ namespace MechEngineer
         public TextMeshProUGUI nameText => traverse.Field("nameText").GetValue<TextMeshProUGUI>();
 
         public UIColorRefTracker backgroundColor => traverse.Field("backgroundColor").GetValue<UIColorRefTracker>();
+
+        public List<GameObject> spacers => traverse.Field("spacers").GetValue<List<GameObject>>();
     }
 }
