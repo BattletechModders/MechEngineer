@@ -23,7 +23,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
                 }
                 if (mech.StatCollection.ReceiveHeatDamageInjury())
                 {
-                    mech.pilot?.SetNeedsInjury(InjuryReason.NotSet);
+                    mech.pilot?.SetNeedsInjury(Pilot_InjuryReasonDescription_Patch.InjuryReasonOverheated);
                 }
             }
             catch (Exception e)
