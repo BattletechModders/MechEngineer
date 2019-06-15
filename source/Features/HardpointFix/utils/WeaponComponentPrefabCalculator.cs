@@ -91,6 +91,11 @@ namespace MechEngineer.Features.HardpointFix.utils
                 }
             }
 
+            if (bestSelection.Mappings.Count < 1)
+            {
+                return;
+            }
+
             var text = $"Mappings for chassis {chassisDef.Description.Id} at {location}";
             foreach (var mapping in bestSelection.Mappings)
             {
@@ -211,44 +216,73 @@ namespace MechEngineer.Features.HardpointFix.utils
         private class PrefabSet
         {
             internal int Index { get; }
-            private string[] Prefabs { get; }
+            private Dictionary<string, Prefab> Prefabs { get; }
 
             internal PrefabSet(int index, string[] prefabs)
             {
                 Index = index;
-                Prefabs = prefabs;
+                Prefabs = prefabs.Select(x => new Prefab(x)).ToDictionary(x => NormIdentifier(x.Identifier));
             }
 
-            internal string GetCompatiblePrefab(string prefabIdentifier)
+            internal string GetCompatiblePrefab(string prefabIdentifierNotNormalized)
             {
+                var prefabIdentifier = NormIdentifier(prefabIdentifierNotNormalized);
                 var compatibleTerms = GetCompatiblePrefabTerms(prefabIdentifier);
-                var prefabName = compatibleTerms.Select(x => Prefabs.FirstOrDefault(n => n.Contains("_" + x + "_"))).FirstOrDefault(x => x != null);
+                var prefabName = compatibleTerms
+                    .Select(x => Prefabs.TryGetValue(prefabIdentifier, out var prefab) ? prefab.Name : null)
+                    .FirstOrDefault(x => x != null);
                 return prefabName;
+            }
+
+            private static string NormIdentifier(string identifier)
+            {
+                return identifier.ToLowerInvariant();
             }
 
             private static readonly Dictionary<string, string[]> cachedCompatibleTerms = new Dictionary<string, string[]>();
 
             private static string[] GetCompatiblePrefabTerms(string prefabIdentifier)
             {
-                var prefabIdentifierNormalized = prefabIdentifier.ToLowerInvariant();
-
-                if (!cachedCompatibleTerms.TryGetValue(prefabIdentifierNormalized, out var compatibleTerms))
+                if (!cachedCompatibleTerms.TryGetValue(prefabIdentifier, out var compatibleTerms))
                 {
                     compatibleTerms = Control.settings.HardpointFix.WeaponPrefabMappings
-                        .Where(x => String.Equals(x.PrefabIdentifier, prefabIdentifierNormalized, StringComparison.CurrentCultureIgnoreCase))
+                        .Where(x => string.Equals(x.PrefabIdentifier, prefabIdentifier, StringComparison.CurrentCultureIgnoreCase))
                         .Select(x => x.HardpointCandidates)
                         .SingleOrDefault();
 
                     if (compatibleTerms == null)
                     {
-                        compatibleTerms = new[] { prefabIdentifierNormalized };
+                        compatibleTerms = new[] { prefabIdentifier };
                     }
 
-                    cachedCompatibleTerms[prefabIdentifierNormalized] = compatibleTerms;
+                    cachedCompatibleTerms[prefabIdentifier] = compatibleTerms;
                 }
 
                 return compatibleTerms;
             }
+        }
+
+        private class Prefab
+        {
+            internal string Identifier { get; }
+            internal string Name { get; }
+
+            internal Prefab(string name)
+            {
+                Name = name;
+                var parts = Name.Split('_');
+                
+                // chrPrfWeap_thunderbolt_righttorso_hardpoint_eh1
+                Identifier = parts[3];
+            }
+            
+            // not needed
+            //internal int Index;
+            //private PrefabType Type;
+            //private enum PrefabType
+            //{
+            //    AH, BH, EH, MH
+            //}
         }
 
         private class PrefabMapping
@@ -274,9 +308,9 @@ namespace MechEngineer.Features.HardpointFix.utils
             }
             else
             {
-                foreach (var x in weaponsData.weapons)
+                foreach (var weapons in weaponsData.weapons)
                 {
-                    var set = new PrefabSet(sets.Count, x);
+                    var set = new PrefabSet(sets.Count, weapons);
                     sets.Add(set);
                 }
             }
