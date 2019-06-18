@@ -5,7 +5,7 @@ using Harmony;
 
 namespace MechEngineer.Features.AutoFix.Patches
 {
-    [HarmonyPatch(typeof(WeaponDef), "FromJSON")]
+    [HarmonyPatch(typeof(WeaponDef), nameof(Weapon.FromJSON))]
     public static class WeaponDef_FromJSON_Patch
     {
         public static void Postfix(WeaponDef __instance)
@@ -14,6 +14,11 @@ namespace MechEngineer.Features.AutoFix.Patches
             {
                 var changes = AutoFixerFeature.settings.AutoFixWeaponDefSlotsChanges;
                 if (changes == null)
+                {
+                    return;
+                }
+
+                if (AutoFixUtils.IsIgnoredByTags(__instance.ComponentTags, AutoFixerFeature.settings.WeaponDefTagsSkip))
                 {
                     return;
                 }

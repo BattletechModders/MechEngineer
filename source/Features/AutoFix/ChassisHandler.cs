@@ -14,7 +14,17 @@ namespace MechEngineer.Features.AutoFix
 
         internal static void OverrideChassisSettings(ChassisDef chassisDef)
         {
+            if (AutoFixerFeature.settings.ChassisDefSkip == null)
+            {
+                return;
+            }
+
             if (AutoFixerFeature.settings.ChassisDefSkip.Contains(chassisDef.Description.Id))
+            {
+                return;
+            }
+
+            if (AutoFixUtils.IsIgnoredByTags(chassisDef.ChassisTags, AutoFixerFeature.settings.ChassisDefTagsSkip))
             {
                 return;
             }

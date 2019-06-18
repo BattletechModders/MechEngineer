@@ -88,6 +88,7 @@
     <Compile Include="Features\AutoFix\ChassisSlotsChange.cs" />
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesFeature.cs" />
+    <Compile Include="Features\AutoFix\AutoFixUtils.cs" />
     <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixSettings.cs" />
     <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixFeature.cs" />
     <Compile Include="Features\BetterLog\BetterLog.cs" />

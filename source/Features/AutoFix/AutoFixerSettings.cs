@@ -8,30 +8,15 @@ namespace MechEngineer.Features.AutoFix
         public string EnabledDescription => "Fixes up mechs, chassis and components to adhere to CBT rules and defaults. Done programmatically to be compatible to new mechs in the future.";
 
         public string[] MechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
+        public string[] MechDefTagsSkip = {"noautofix"};
 
         public bool MechDefEngine = true; // adds missing engine and removes too many jump jets
         public string MechDefCoolingDef = "emod_kit_shs";
         public string MechDefHeatBlockDef = "emod_engine_cooling";
         public string MechDefCoreDummy = "emod_engine_dummy";
             
-        public string[] UpgradeDefSkip = {
-            "Gear_Cockpit_SLDF_Custom",
-            "Gear_Cockpit_Generic_Small",
-            "Gear_Cockpit_Generic_Standard",
-            "Gear_Cockpit_LifeSupportA_Standard",
-            "Gear_Cockpit_LifeSupportB_Standard",
-            "Gear_Cockpit_SensorsA_Standard",
-            "Gear_Cockpit_SensorsB_Standard",
-            "Gear_Gyro_Generic_Standard",
-            "emod_arm_part_shoulder",
-            "emod_arm_part_upper",
-            "emod_arm_part_lower",
-            "emod_arm_part_hand",
-            "emod_leg_hip",
-            "emod_leg_upper",
-            "emod_leg_lower",
-            "emod_leg_foot",
-        }; // upgrades to not autofix
+        public string[] UpgradeDefSkip = { }; // upgrades to not autofix
+        public string[] UpgradeDefTagsSkip = {"noautofix"};
 
         public IdentityHelper GyroCategorizer = new IdentityHelper
         {
@@ -65,6 +50,7 @@ namespace MechEngineer.Features.AutoFix
         public ValueChange<int> LegUpgradesSlotChange = new ValueChange<int> { From = 3, By = -1, FromIsMin = true, NewMin = 1 };
 
         public string[] ChassisDefSkip = { };
+        public string[] ChassisDefTagsSkip = {"noautofix"};
 
         public ChassisSlotsChange[] ChassisDefSlotsChanges = {
             // vanilla mechs
@@ -141,7 +127,8 @@ namespace MechEngineer.Features.AutoFix
         public bool ChassisDefMaxJumpjets = true;
         public int ChassisDefMaxJumpjetsCount = 8;
         public int ChassisDefMaxJumpjetsRating = 400;
-
+        
+        public string[] WeaponDefTagsSkip = {"noautofix"};
         public WeaponSlotChange[] AutoFixWeaponDefSlotsChanges = {
             new WeaponSlotChange
             {

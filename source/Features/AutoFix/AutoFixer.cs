@@ -47,6 +47,12 @@ namespace MechEngineer.Features.AutoFix
             {
                 return;
             }
+
+            if (AutoFixUtils.IsIgnoredByTags(mechDef.Chassis.ChassisTags, AutoFixerFeature.settings.ChassisDefTagsSkip)
+                || AutoFixUtils.IsIgnoredByTags(mechDef.MechTags, AutoFixerFeature.settings.MechDefTagsSkip))
+            {
+                return;
+            }
             
             //DumpAllAsTable();
             if (mechDef.Inventory.Any(c => c.Def.GetComponent<EngineCoreDef>() != null))
