@@ -18,7 +18,14 @@ namespace MechEngineer.Features.TurretMechComponents.Patches
                 }
 
                 var turret = __instance;
-                var num = __instance.allComponents.Select(x => int.Parse(x.uid)).DefaultIfEmpty().Max();
+                
+                var num = __instance.allComponents
+                    .Where(x => x != null)
+                    .Select(x => int.TryParse(x.uid, out var result) ? result : (int?)null)
+                    .Where(x => x != null)
+                    .DefaultIfEmpty()
+                    .Max();
+
                 foreach (var componentRef in turret.TurretDef.Inventory)
                 {
                     if (componentRef.ComponentDefType == ComponentType.Weapon)
