@@ -6,52 +6,20 @@ using fastJSON;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines
 {
     [CustomComponent("EngineCore")]
-    public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltip, IAdjustSlotElement
+    public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltip, IAdjustSlotElement, EngineCoreDef.ICalculator
     {
-        [JsonIgnore]
-        private int _rating;
+        public int Rating { get; set; }
 
-        public int Rating
+        public EngineCoreDef()
         {
-            get => _rating;
-            set
-            {
-                _rating = value;
-                CalcHeatSinks();
-                CalcTonnages();
-            }
+            Calculator = new MechCalculator(this);
         }
-
-        private void CalcHeatSinks()
-        {
-            var free = 10;
-            var total = Rating / 25;
-            InternalHeatSinks = Mathf.Min(free, total);
-            InternalHeatSinkAdditionalMaxCount = Mathf.Max(0, total - free);
-            ExternalHeatSinksFreeMaxCount = free - InternalHeatSinks;
-        }
-
-        [JsonIgnore]
-        internal int InternalHeatSinks { get; private set; }
-        [JsonIgnore]
-        internal int InternalHeatSinkAdditionalMaxCount { get; private set; }
-        [JsonIgnore]
-        internal int ExternalHeatSinksFreeMaxCount { get; private set; }
-
-        private void CalcTonnages()
-        {
-            StandardGyroTonnage = Mathf.Ceil(Rating / 100f);
-        }
-
-        [JsonIgnore]
-        internal float StandardGyroTonnage { get; private set; }
-
-        internal float StandardEngineTonnage => Def.Tonnage - StandardGyroTonnage;
 
         internal EngineMovement GetMovement(float tonnage)
         {
@@ -131,7 +99,79 @@ namespace MechEngineer.Features.Engines
 
         private static string BonusValueEngineHeatSinkCounts(Engine engine)
         {
-            return $"+ {engine.EngineHeatSinkDef.Abbreviation} {engine.CoreDef.InternalHeatSinks}";
+            return $"+ {engine.EngineHeatSinkDef.Abbreviation} {engine.CoreDef.Calculator.InternalHeatSinks}";
+        }
+
+        [JsonIgnore]
+        internal ICalculator Calculator { get; set; }
+
+        public int InternalHeatSinks => Calculator.InternalHeatSinks;
+        public int InternalHeatSinkAdditionalMaxCount => Calculator.InternalHeatSinkAdditionalMaxCount;
+        public int ExternalHeatSinksFreeMaxCount => Calculator.ExternalHeatSinksFreeMaxCount;
+        public float StandardGyroTonnage => Calculator.StandardGyroTonnage;
+        public float StandardEngineTonnage => Calculator.StandardEngineTonnage;
+        public float EngineWeightPrecision => Calculator.EngineWeightPrecision;
+        
+        internal interface ICalculator
+        {
+            int InternalHeatSinks { get; }
+            int InternalHeatSinkAdditionalMaxCount { get; }
+            int ExternalHeatSinksFreeMaxCount { get; }
+
+            float StandardGyroTonnage { get; }
+            float StandardEngineTonnage { get; }
+
+            float EngineWeightPrecision { get; }
+        }
+
+        internal class MechCalculator : ICalculator
+        {
+            public MechCalculator(EngineCoreDef coreDef)
+            {
+                CoreDef = coreDef;
+            }
+
+            internal EngineCoreDef CoreDef { get; }
+
+            private int FreeHeatSinks => 10;
+            private int InternalHeatSinksMaxCount => CoreDef.Rating / 25;
+
+            public int InternalHeatSinks => Mathf.Min(FreeHeatSinks, InternalHeatSinksMaxCount);
+            public int InternalHeatSinkAdditionalMaxCount => Mathf.Max(0, InternalHeatSinksMaxCount - FreeHeatSinks);
+            public int ExternalHeatSinksFreeMaxCount => FreeHeatSinks - InternalHeatSinks;
+
+            public float StandardGyroTonnage => PrecisionUtils.RoundUpOverridableDefault(CoreDef.Rating / 100f, 1f);
+
+            public float StandardEngineTonnage => CoreDef.Def.Tonnage - StandardGyroTonnage;
+            public float EngineWeightPrecision => 0.5f;
+        }
+    }
+
+    [CustomComponent("ProtoEngineCore")]
+    public class ProtoEngineCoreDef : EngineCoreDef
+    {
+        public ProtoEngineCoreDef()
+        {
+            Calculator = new ProtoMechCalculator(this);
+        }
+
+        internal class ProtoMechCalculator : ICalculator
+        {
+            public ProtoMechCalculator(EngineCoreDef coreDef)
+            {
+                CoreDef = coreDef;
+            }
+
+            internal EngineCoreDef CoreDef { get; }
+
+            public int InternalHeatSinks => 0;
+            public int InternalHeatSinkAdditionalMaxCount => 0;
+            public int ExternalHeatSinksFreeMaxCount => 0;
+
+            public float StandardGyroTonnage => 0;
+
+            public float StandardEngineTonnage => CoreDef.Def.Tonnage;
+            public float EngineWeightPrecision =>  0.025f;
         }
     }
 }

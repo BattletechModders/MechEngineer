@@ -24,11 +24,6 @@ namespace MechEngineer.Features.Engines.Helper
             return new Engine(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks);
         }
 
-        internal static bool IsEnginePart(this MechComponentDef componentDef)
-        {
-            return componentDef.IsCategory("EnginePart");
-        }
-
         internal static bool HasDestroyedEngine(this MechDef mechDef)
         {
             return mechDef.Inventory.Any(x => x.DamageLevel == ComponentDamageLevel.Destroyed && x.Is<EngineCoreDef>());
