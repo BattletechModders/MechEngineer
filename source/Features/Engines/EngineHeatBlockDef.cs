@@ -41,10 +41,10 @@ namespace MechEngineer.Features.Engines
             
             tooltip.detailText.text += $"<i>{engine.EngineHeatSinkDef.FullName}</i>" +
                                        $"\r\n   Internal" +
-                                       $"   Free: <b>{engine.CoreDef.InternalHeatSinks}</b> " +
+                                       $"   Free: <b>{engine.CoreDef.InternalHeatSinkCount}</b> " +
                                        $"   Additional: <b>{engine.HeatBlockDef.HeatSinkCount} / {engine.CoreDef.InternalHeatSinkAdditionalMaxCount}</b>" +
                                        $"\r\n   External" +
-                                       $"   Free: <b>{engine.ExternalHeatSinkFreeCount} / {engine.CoreDef.ExternalHeatSinksFreeMaxCount}</b> " +
+                                       $"   Free: <b>{engine.ExternalHeatSinkFreeCount} / {engine.CoreDef.ExternalHeatSinkFreeMaxCount}</b> " +
                                        $"   Additional: <b>{engine.ExternalHeatSinkAdditionalCount}</b>" +
                                        "\r\n";
 
@@ -83,7 +83,7 @@ namespace MechEngineer.Features.Engines
 
         private static string BonusValueEngineHeatSinkCounts(Engine engine)
         {
-            return $"{engine.EngineHeatSinkDef.Abbreviation} {engine.CoreDef.InternalHeatSinks + engine.HeatBlockDef.HeatSinkCount}";
+            return $"{engine.EngineHeatSinkDef.Abbreviation} {engine.CoreDef.InternalHeatSinkCount + engine.HeatBlockDef.HeatSinkCount}";
         }
     }
 }

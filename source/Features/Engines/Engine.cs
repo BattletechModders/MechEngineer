@@ -53,8 +53,10 @@ namespace MechEngineer.Features.Engines
 
         internal List<MechComponentRef> ExternalHeatSinks { get; }
         internal int ExternalHeatSinkCount { get; private set; }
-        internal int ExternalHeatSinkFreeCount => Mathf.Min(ExternalHeatSinkCount, CoreDef.ExternalHeatSinksFreeMaxCount);
+        internal int ExternalHeatSinkFreeCount => Mathf.Min(ExternalHeatSinkCount, CoreDef.ExternalHeatSinkFreeMaxCount);
         internal int ExternalHeatSinkAdditionalCount => ExternalHeatSinkCount - ExternalHeatSinkFreeCount;
+
+        internal int TotalHeatSinkCount => CoreDef.InternalHeatSinkCount + ExternalHeatSinkCount;
 
         /* dynamic stuff below */
 
@@ -76,7 +78,7 @@ namespace MechEngineer.Features.Engines
         {
             get
             {
-                var dissipation = EngineHeatSinkDef.Def.DissipationCapacity * ( CoreDef.InternalHeatSinks + HeatBlockDef.HeatSinkCount );
+                var dissipation = EngineHeatSinkDef.Def.DissipationCapacity * ( CoreDef.InternalHeatSinkCount + HeatBlockDef.HeatSinkCount );
                 dissipation += CoreDef.Def.DissipationCapacity;
                 dissipation += CoolingDef.Def.DissipationCapacity;
 

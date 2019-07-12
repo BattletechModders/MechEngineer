@@ -99,24 +99,29 @@ namespace MechEngineer.Features.Engines
 
         private static string BonusValueEngineHeatSinkCounts(Engine engine)
         {
-            return $"+ {engine.EngineHeatSinkDef.Abbreviation} {engine.CoreDef.Calculator.InternalHeatSinks}";
+            return $"+ {engine.EngineHeatSinkDef.Abbreviation} {engine.CoreDef.Calculator.InternalHeatSinkCount}";
         }
 
         [JsonIgnore]
         internal ICalculator Calculator { get; set; }
 
-        public int InternalHeatSinks => Calculator.InternalHeatSinks;
+        public int InternalHeatSinkCount => Calculator.InternalHeatSinkCount;
         public int InternalHeatSinkAdditionalMaxCount => Calculator.InternalHeatSinkAdditionalMaxCount;
-        public int ExternalHeatSinksFreeMaxCount => Calculator.ExternalHeatSinksFreeMaxCount;
+        public int ExternalHeatSinkFreeMaxCount => Calculator.ExternalHeatSinkFreeMaxCount;
+
+        public int TotalHeatSinkMinCount => Calculator.TotalHeatSinkMinCount;
+
         public float StandardGyroTonnage => Calculator.StandardGyroTonnage;
         public float StandardEngineTonnage => Calculator.StandardEngineTonnage;
         public float EngineWeightPrecision => Calculator.EngineWeightPrecision;
         
         internal interface ICalculator
         {
-            int InternalHeatSinks { get; }
+            int InternalHeatSinkCount { get; }
             int InternalHeatSinkAdditionalMaxCount { get; }
-            int ExternalHeatSinksFreeMaxCount { get; }
+            int ExternalHeatSinkFreeMaxCount { get; }
+
+            int TotalHeatSinkMinCount { get; }
 
             float StandardGyroTonnage { get; }
             float StandardEngineTonnage { get; }
@@ -133,12 +138,14 @@ namespace MechEngineer.Features.Engines
 
             internal EngineCoreDef CoreDef { get; }
 
-            private int FreeHeatSinks => 10;
+            private int FreeHeatSinks => EngineFeature.settings.MinimumHeatSinksOnMech;
             private int InternalHeatSinksMaxCount => CoreDef.Rating / 25;
 
-            public int InternalHeatSinks => Mathf.Min(FreeHeatSinks, InternalHeatSinksMaxCount);
+            public int TotalHeatSinkMinCount => FreeHeatSinks;
+
+            public int InternalHeatSinkCount => Mathf.Min(FreeHeatSinks, InternalHeatSinksMaxCount);
             public int InternalHeatSinkAdditionalMaxCount => Mathf.Max(0, InternalHeatSinksMaxCount - FreeHeatSinks);
-            public int ExternalHeatSinksFreeMaxCount => FreeHeatSinks - InternalHeatSinks;
+            public int ExternalHeatSinkFreeMaxCount => FreeHeatSinks - InternalHeatSinkCount;
 
             public float StandardGyroTonnage => PrecisionUtils.RoundUpOverridableDefault(CoreDef.Rating / 100f, 1f);
 
@@ -164,9 +171,11 @@ namespace MechEngineer.Features.Engines
 
             internal EngineCoreDef CoreDef { get; }
 
-            public int InternalHeatSinks => 0;
+            public int TotalHeatSinkMinCount => 0;
+
+            public int InternalHeatSinkCount => 0;
             public int InternalHeatSinkAdditionalMaxCount => 0;
-            public int ExternalHeatSinksFreeMaxCount => 0;
+            public int ExternalHeatSinkFreeMaxCount => 0;
 
             public float StandardGyroTonnage => 0;
 

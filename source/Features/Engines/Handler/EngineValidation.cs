@@ -37,14 +37,9 @@ namespace MechEngineer.Features.Engines.Handler
                 }
             }
 
-            if (EngineFeature.settings.MinimumHeatSinksOnMech > 0)
             {
-                var externalCount = mechDef.Inventory.Count(c => c.Is<EngineHeatSinkDef>());
-                var internalCount = engine.CoreDef.InternalHeatSinks;
-                var count = internalCount + externalCount;
-
-                var min = EngineFeature.settings.MinimumHeatSinksOnMech;
-
+                var min = engine.CoreDef.TotalHeatSinkMinCount;
+                var count = engine.TotalHeatSinkCount;
                 if (count < min)
                 {
                     if (errors.Add(MechValidationType.InvalidInventorySlots, $"HEAT SINKS: This Mech has too few heat sinks ({count} / {min})"))
