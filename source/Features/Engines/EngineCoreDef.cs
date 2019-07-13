@@ -12,7 +12,7 @@ using UnityEngine;
 namespace MechEngineer.Features.Engines
 {
     [CustomComponent("EngineCore")]
-    public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltip, IAdjustSlotElement, EngineCoreDef.ICalculator
+    public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltip, IAdjustSlotElement, EngineCoreDef.ICalculator, IMechLabFilter
     {
         public int Rating { get; set; }
 
@@ -29,6 +29,11 @@ namespace MechEngineer.Features.Engines
         public override string ToString()
         {
             return Def.Description.Id + " Rating=" + Rating;
+        }
+
+        public bool CheckFilter(MechLabPanel panel)
+        {
+            return GetMovement(panel.activeMechDef.Chassis.Tonnage).Mountable;
         }
 
         public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
