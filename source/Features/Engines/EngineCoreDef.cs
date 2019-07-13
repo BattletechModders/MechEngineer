@@ -33,7 +33,18 @@ namespace MechEngineer.Features.Engines
 
         public bool CheckFilter(MechLabPanel panel)
         {
-            return GetMovement(panel.activeMechDef.Chassis.Tonnage).Mountable;
+            if (Control.settings.Engine.LimitEngineCoresToTonnage)
+            {
+
+                if (!string.IsNullOrEmpty(Control.settings.Engine.IgnoreLimitEngineChassisTag) &&
+                    panel.activeMechDef.Chassis.ChassisTags.Contains(
+                        Control.settings.Engine.IgnoreLimitEngineChassisTag))
+                    return true;
+
+                return GetMovement(panel.activeMechDef.Chassis.Tonnage).Mountable;
+            }
+
+            return true;
         }
 
         public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)

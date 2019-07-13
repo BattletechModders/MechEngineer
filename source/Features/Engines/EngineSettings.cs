@@ -50,5 +50,8 @@ namespace MechEngineer.Features.Engines
         */
         public float TTWalkMultiplier = 30f;
         public float TTSprintMultiplier = 50f;
+
+        public bool LimitEngineCoresToTonnage = true;
+        public string IgnoreLimitEngineChassisTag = "";
     }
 }
