@@ -27,7 +27,7 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            var engine = panel.activeMechInventory.GetEngine();
+            var engine = panel.GetEngine();
             if (engine == null)
             {
                 return;
@@ -41,10 +41,10 @@ namespace MechEngineer.Features.Engines
             
             tooltip.detailText.text += $"<i>{engine.EngineHeatSinkDef.FullName}</i>" +
                                        $"\r\n   Internal" +
-                                       $"   Free: <b>{engine.CoreDef.InternalHeatSinkCount}</b> " +
-                                       $"   Additional: <b>{engine.HeatBlockDef.HeatSinkCount} / {engine.CoreDef.InternalHeatSinkAdditionalMaxCount}</b>" +
+                                       $"   Free: <b>{engine.InternalHeatSinkCount}</b> " +
+                                       $"   Additional: <b>{engine.HeatBlockDef.HeatSinkCount} / {engine.InternalHeatSinkAdditionalMaxCount}</b>" +
                                        $"\r\n   External" +
-                                       $"   Free: <b>{engine.ExternalHeatSinkFreeCount} / {engine.CoreDef.ExternalHeatSinkFreeMaxCount}</b> " +
+                                       $"   Free: <b>{engine.ExternalHeatSinkFreeCount} / {engine.ExternalHeatSinkFreeMaxCount}</b> " +
                                        $"   Additional: <b>{engine.ExternalHeatSinkAdditionalCount}</b>" +
                                        "\r\n";
 
@@ -65,7 +65,12 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            var engine = panel.activeMechDef?.Inventory.GetEngine();
+            if (panel.activeMechDef == null || panel.activeMechDef.Chassis == null)
+            {
+                return;
+            }
+
+            var engine = panel.GetEngine();
             if (engine == null)
             {
                 return;
@@ -83,7 +88,7 @@ namespace MechEngineer.Features.Engines
 
         private static string BonusValueEngineHeatSinkCounts(Engine engine)
         {
-            return $"{engine.EngineHeatSinkDef.Abbreviation} {engine.CoreDef.InternalHeatSinkCount + engine.HeatBlockDef.HeatSinkCount}";
+            return $"{engine.EngineHeatSinkDef.Abbreviation} {engine.InternalHeatSinkCount + engine.HeatBlockDef.HeatSinkCount}";
         }
     }
 }

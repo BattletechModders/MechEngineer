@@ -79,7 +79,7 @@ namespace MechEngineer.Features.Engines.Helper
 
         private static float RoundBy5(float value)
         {
-            return PrecisionUtils.Round(value, Mathf.Floor, 5);
+            return PrecisionUtils.RoundDown(value, 5);
         }
     }
 }

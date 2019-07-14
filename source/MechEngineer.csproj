@@ -229,6 +229,7 @@
     <Compile Include="Features\DebugCycleCombatSounds\Patches\MainMenu_ReceiveButtonPress_Patch.cs" />
     <Compile Include="Features\OverrideTonnage\OverrideTonnageFeature.cs" />
     <Compile Include="Features\OverrideTonnage\OverrideTonnageSettings.cs" />
+    <Compile Include="Features\OverrideTonnage\Patches\MechValidationRules_ValidateMechTonnage_Patch.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Pilot_InjuryReasonDescription_Patch.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionFeature.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionSettings.cs" />

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using BattleTech;
+using BattleTech.UI;
 using CustomComponents;
 
 namespace MechEngineer.Features.Engines.Helper
@@ -9,19 +9,12 @@ namespace MechEngineer.Features.Engines.Helper
     {
         internal static Engine GetEngine(this MechDef @this)
         {
-            return GetEngine(@this.Inventory);
+            return Engine.GetEngine(@this.Chassis, @this.Inventory);
         }
 
-        internal static Engine GetEngine(this IEnumerable<MechComponentRef> componentRefs)
+        internal static Engine GetEngine(this MechLabPanel @this)
         {
-            var result = EngineSearcher.SearchInventory(componentRefs);
-
-            if (result.CoolingDef == null || result.CoreDef == null || result.HeatBlockDef == null)
-            {
-                return null;
-            }
-
-            return new Engine(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks);
+            return Engine.GetEngine(@this.activeMechDef.Chassis, @this.activeMechInventory);
         }
 
         internal static bool HasDestroyedEngine(this MechDef mechDef)

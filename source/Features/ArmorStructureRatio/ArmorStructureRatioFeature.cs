@@ -97,9 +97,9 @@ namespace MechEngineer.Features.ArmorStructureRatio
 
                 if ((location & ChassisLocations.Torso) != 0)
                 {
-                    mechLocationDef.AssignedArmor = PrecisionUtils.Round((totalMax * 2 / 3), Mathf.Ceil, 5);
+                    mechLocationDef.AssignedArmor = PrecisionUtils.RoundUp((totalMax * 2 / 3), 5);
                     mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
-                    mechLocationDef.AssignedRearArmor = PrecisionUtils.Round((totalMax * 1 / 3), Mathf.Floor, 5);
+                    mechLocationDef.AssignedRearArmor = PrecisionUtils.RoundDown((totalMax * 1 / 3), 5);
                     mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
                 }
                 else

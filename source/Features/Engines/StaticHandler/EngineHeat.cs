@@ -5,9 +5,9 @@ namespace MechEngineer.Features.Engines.StaticHandler
 {
     internal class EngineHeat
     {
-        internal static float GetEngineHeatDissipation(MechComponentRef[] inventory)
+        internal static float GetEngineHeatDissipation(MechDef mechDef)
         {
-            var engine = inventory.GetEngine();
+            var engine = mechDef.GetEngine();
             if (engine == null)
             {
                 return EngineFeature.settings.EngineMissingFallbackHeatSinkCapacity;

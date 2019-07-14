@@ -10,7 +10,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
     {
         internal static void InitEffectStats(Mech mech)
         {
-            var engine = mech.MechDef.Inventory.GetEngine();
+            var engine = mech.MechDef.GetEngine();
 
             if (engine == null)
             {
@@ -27,7 +27,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
 
         internal static EngineMovement GetEngineMovement(this MechDef mechDef)
         {
-            var engine = mechDef.Inventory.GetEngine();
+            var engine = mechDef.GetEngine();
             return engine?.CoreDef.GetMovement(mechDef.Chassis.Tonnage);
         }
 
@@ -43,7 +43,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
                 return;
             }
 
-            var engine = mechLab.activeMechInventory.GetEngine();
+            var engine = mechLab.GetEngine();
 
             var current = mechLab.headWidget.currentJumpjetCount
                           + mechLab.centerTorsoWidget.currentJumpjetCount

@@ -50,7 +50,7 @@ namespace MechEngineer.Features.Engines.Patches
             {
                 if (mechDef != null && @this.Is<EngineCoreDef>())
                 {
-                    return EngineHeat.GetEngineHeatDissipation(mechDef.Inventory);
+                    return EngineHeat.GetEngineHeatDissipation(mechDef);
                 }
             }
             catch (Exception e)

@@ -38,7 +38,7 @@ namespace MechEngineer.Features.Engines.Handler
             }
 
             {
-                var min = engine.CoreDef.TotalHeatSinkMinCount;
+                var min = engine.TotalHeatSinkMinCount;
                 var count = engine.TotalHeatSinkCount;
                 if (count < min)
                 {
@@ -73,7 +73,7 @@ namespace MechEngineer.Features.Engines.Handler
             if (EngineFeature.settings.EnforceRulesForAdditionalInternalHeatSinks)
             {
                 var count = engine.HeatBlockDef.HeatSinkCount;
-                var max = engine.CoreDef.InternalHeatSinkAdditionalMaxCount;
+                var max = engine.InternalHeatSinkAdditionalMaxCount;
                 if (count > max)
                 {
                     if (errors.Add(MechValidationType.InvalidInventorySlots, $"HEAT SINKS: This Mech has too many internal heat sinks ({count} / {max})"))
