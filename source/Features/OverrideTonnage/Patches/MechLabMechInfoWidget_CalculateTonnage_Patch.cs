@@ -11,7 +11,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
     {
         public static void Postfix(
             MechLabPanel ___mechLab,
-            float ___currentTonnage,
+            ref float ___currentTonnage,
             TextMeshProUGUI ___totalTonnage,
             UIColorRefTracker ___totalTonnageColor,
             TextMeshProUGUI ___remainingTonnage,
@@ -21,7 +21,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
             {
                 var totalTonnage = ___totalTonnage;
                 var mechLab = ___mechLab;
-                var currentTonnage = ___currentTonnage;
+                ref var currentTonnage = ref ___currentTonnage;
                 var totalTonnageColor = ___totalTonnageColor;
                 var remainingTonnage = ___remainingTonnage;
                 var remainingTonnageColor = ___remainingTonnageColor;
@@ -30,6 +30,8 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
                 {
                     return;
                 }
+
+                currentTonnage += WeightsHandler.Shared.TonnageChanges(mechLab.activeMechDef);
 
                 var precisionHelper = InfoTonnageHelper.KilogramStandard;
 
