@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using BattleTech;
 using Harmony;
 
@@ -18,13 +17,8 @@ namespace MechEngineer.Features.TurretMechComponents.Patches
                 }
 
                 var turret = __instance;
-                
-                var num = __instance.allComponents
-                    .Where(x => x != null)
-                    .Select(x => int.TryParse(x.uid, out var result) ? result : (int?)null)
-                    .Where(x => x != null)
-                    .DefaultIfEmpty()
-                    .Max();
+
+                var num = 0;
 
                 foreach (var componentRef in turret.TurretDef.Inventory)
                 {
@@ -36,8 +30,11 @@ namespace MechEngineer.Features.TurretMechComponents.Patches
                     }
                     else
                     {
-                        num++;
-                        var component = new MechComponent(turret, turret.Combat, componentRef, num.ToString());
+                        componentRef.DataManager = turret.TurretDef.DataManager;
+                        componentRef.RefreshComponentDef();
+
+                        var uid = $"{num++}_addedByME";
+                        var component = new MechComponent(turret, turret.Combat, componentRef, uid);
                         turret.allComponents.Add(component);
                     }
                 }
