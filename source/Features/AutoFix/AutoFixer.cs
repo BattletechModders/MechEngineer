@@ -188,7 +188,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 //var maxFree = maxEngine.CoreDef.ExternalHeatSinksFreeMaxCount;
                 //var current = maxEngine.ExternalHeatSinkCount;
-                var maxFree = maxEngine.ExternalHeatSinkFreeMaxCount;
+                var maxFree = maxEngine.HeatSinkExternalFreeMaxCount;
                 var current = 0; //we assume exiting heatsinks on the mech are additional and not free
                 for (var i = current; i < maxFree; i++)
                 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
-using UnityEngine;
 
 namespace MechEngineer.Features.OverrideTonnage.Patches
 {

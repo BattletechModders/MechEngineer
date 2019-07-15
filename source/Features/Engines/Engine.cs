@@ -34,13 +34,13 @@ namespace MechEngineer.Features.Engines
         // should be private but used during autofixer, rename EngineSearcher.Result to .Builder and apply new semantics
         internal Engine(
             CoolingDef coolingDef,
-            EngineHeatBlockDef engineHeatBlockDef,
+            EngineHeatBlockDef engineEngineHeatBlockDef,
             EngineCoreDef coreDef,
             Weights weights,
-            List<MechComponentRef> externalHeatSinks)
+            List<MechComponentRef> heatSinksExternal)
         {
-            ExternalHeatSinks = externalHeatSinks;
-            HeatBlockDef = engineHeatBlockDef;
+            HeatSinksExternal = heatSinksExternal;
+            EngineHeatBlockDef = engineEngineHeatBlockDef;
             CoreDef = coreDef;
             Weights = weights;
             CoolingDef = coolingDef; // last as it also CalculateStats()
@@ -60,48 +60,31 @@ namespace MechEngineer.Features.Engines
                 _coolingDef = value;
                 var id = _coolingDef.HeatSinkDefId;
                 var def = UnityGameInstance.BattleTechGame.DataManager.HeatSinkDefs.Get(id);
-                EngineHeatSinkDef = def.GetComponent<EngineHeatSinkDef>();
+                MechHeatSinkDef = def.GetComponent<EngineHeatSinkDef>();
                 CalculateStats();
             }
         }
-        
-        internal EngineHeatBlockDef HeatBlockDef { get; set; }
-        internal EngineCoreDef CoreDef { get; set; }
 
         internal void CalculateStats()
         {
-            ExternalHeatSinkCount = MatchingCount(ExternalHeatSinks, EngineHeatSinkDef.Def);
-            //Control.mod.Logger.LogDebug($"ExternalHeatSinkCount={ExternalHeatSinkCount} ExternalHeatSinks.Count={ExternalHeatSinks.Count} EngineHeatSinkDef.Id={EngineHeatSinkDef.Def.Description.Id}");
+            HeatSinkExternalCount = MatchingCount(HeatSinksExternal, MechHeatSinkDef.Def);
+            //Control.mod.Logger.LogDebug($"HeatSinkExternalFreeCount={HeatSinkExternalFreeCount} " +
+            //                            $"MechHeatSinkDef.Def.Tonnage={MechHeatSinkDef.Def.Tonnage}");
         }
 
-        internal List<MechComponentRef> ExternalHeatSinks { get; }
-        internal int ExternalHeatSinkCount { get; private set; }
-        internal int ExternalHeatSinkFreeCount => Mathf.Min(ExternalHeatSinkCount, ExternalHeatSinkFreeMaxCount);
-        internal int ExternalHeatSinkAdditionalCount => ExternalHeatSinkCount - ExternalHeatSinkFreeCount;
-
-        internal int TotalHeatSinkCount => InternalHeatSinkCount + ExternalHeatSinkCount;
-
-        /* dynamic stuff below */
-
+        private List<MechComponentRef> HeatSinksExternal { get; }
+        private int HeatSinkExternalCount { get; set; }
+        
+        internal EngineCoreDef CoreDef { get; set; }
         internal Weights Weights { get; set; }
-
-        internal float ExternalHeatSinkFreeTonnage => ExternalHeatSinkFreeCount * EngineHeatSinkDef.Def.Tonnage;
-
-        internal float GyroTonnage => PrecisionUtils.RoundUp(StandardGyroTonnage * Weights.GyroFactor, WeightPrecision);
-
-        internal float EngineTonnage => PrecisionUtils.RoundUp(StandardEngineTonnage * Weights.EngineFactor, WeightPrecision);
-
-        internal float HeatSinkTonnage => - ExternalHeatSinkFreeTonnage; // InternalHeatSinkTonnage
-
-        internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;
-
-        internal EngineHeatSinkDef EngineHeatSinkDef { get; set; }
+        internal EngineHeatBlockDef EngineHeatBlockDef { get; set; } // amount of internal heat sinks
+        internal EngineHeatSinkDef MechHeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
 
         internal float EngineHeatDissipation
         {
             get
             {
-                var dissipation = EngineHeatSinkDef.Def.DissipationCapacity * ( InternalHeatSinkCount + HeatBlockDef.HeatSinkCount );
+                var dissipation = MechHeatSinkDef.Def.DissipationCapacity * ( HeatSinkInternalFreeMaxCount + EngineHeatBlockDef.HeatSinkCount );
                 dissipation += CoreDef.Def.DissipationCapacity;
                 dissipation += CoolingDef.Def.DissipationCapacity;
 
@@ -111,24 +94,46 @@ namespace MechEngineer.Features.Engines
             }
         }
 
-        internal EngineHeatSinkDef GetInternalEngineHeatSinkTypes()
+        #region heat sink counting
+
+        internal int HeatSinkExternalFreeCount => Mathf.Min(HeatSinkExternalCount, HeatSinkExternalFreeMaxCount);
+        internal int HeatSinkExternalAdditionalCount => HeatSinkExternalCount - HeatSinkExternalFreeCount;
+
+        private int HeatSinkTotalCount => HeatSinkInternalCount + HeatSinkExternalCount;
+        internal int HeatSinkInternalCount => HeatSinkInternalFreeMaxCount + EngineHeatBlockDef.HeatSinkCount;
+
+        private int HeatSinksFreeMaxCount => EngineFeature.settings.MinimumHeatSinksOnMech;
+        private int HeatSinksInternalMaxCount => CoreDef.Rating / 25;
+
+        protected virtual int HeatSinkTotalMinCount => HeatSinksFreeMaxCount;
+
+        internal virtual int HeatSinkInternalFreeMaxCount => Mathf.Min(HeatSinksFreeMaxCount, HeatSinksInternalMaxCount);
+        internal virtual int HeatSinkInternalAdditionalMaxCount => Mathf.Max(0, HeatSinksInternalMaxCount - HeatSinksFreeMaxCount);
+        internal virtual int HeatSinkExternalFreeMaxCount => HeatSinksFreeMaxCount - HeatSinkInternalFreeMaxCount;
+
+        internal bool IsMissingHeatSinks(out int min, out int count)
         {
-            return EngineHeatSinkDef;
+            min = HeatSinkTotalMinCount;
+            count = HeatSinkTotalCount;
+            return count < min;
         }
 
-        private int FreeHeatSinks => EngineFeature.settings.MinimumHeatSinksOnMech;
-        private int InternalHeatSinksMaxCount => CoreDef.Rating / 25;
+        #endregion
 
-        internal virtual int TotalHeatSinkMinCount => FreeHeatSinks;
+        #region weights
 
-        internal virtual int InternalHeatSinkCount => Mathf.Min(FreeHeatSinks, InternalHeatSinksMaxCount);
-        internal virtual int InternalHeatSinkAdditionalMaxCount => Mathf.Max(0, InternalHeatSinksMaxCount - FreeHeatSinks);
-        internal virtual int ExternalHeatSinkFreeMaxCount => FreeHeatSinks - InternalHeatSinkCount;
+        internal float HeatSinkExternalFreeTonnage => HeatSinkExternalFreeCount * MechHeatSinkDef.Def.Tonnage;
+        internal float GyroTonnage => PrecisionUtils.RoundUp(StandardGyroTonnage * Weights.GyroFactor, WeightPrecision);
+        internal float EngineTonnage => PrecisionUtils.RoundUp(StandardEngineTonnage * Weights.EngineFactor, WeightPrecision);
+        internal float HeatSinkTonnage => - HeatSinkExternalFreeTonnage;
+        internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;
 
         internal virtual float StandardGyroTonnage => PrecisionUtils.RoundUp(CoreDef.Rating / 100f, 1f);
         internal virtual float StandardEngineTonnage => CoreDef.Def.Tonnage - StandardGyroTonnage;
 
         internal virtual float WeightPrecision => OverrideTonnageFeature.settings.TonnageStandardPrecision;
+
+        #endregion
     }
 
     internal class ProtoMechEngine : Engine
@@ -137,11 +142,11 @@ namespace MechEngineer.Features.Engines
         {
         }
 
-        internal override int TotalHeatSinkMinCount => 0;
+        protected override int HeatSinkTotalMinCount => 0;
 
-        internal override int InternalHeatSinkCount => 0;
-        internal override int InternalHeatSinkAdditionalMaxCount => 0;
-        internal override int ExternalHeatSinkFreeMaxCount => 0;
+        internal override int HeatSinkInternalFreeMaxCount => 0;
+        internal override int HeatSinkInternalAdditionalMaxCount => 0;
+        internal override int HeatSinkExternalFreeMaxCount => 0;
 
         internal override float StandardGyroTonnage => 0;
         internal override float StandardEngineTonnage => CoreDef.Def.Tonnage;

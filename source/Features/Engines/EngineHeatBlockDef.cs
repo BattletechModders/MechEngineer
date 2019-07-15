@@ -33,19 +33,19 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            engine.HeatBlockDef = def;
+            engine.EngineHeatBlockDef = def;
 
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
             
-            tooltip.detailText.text += $"<i>{engine.EngineHeatSinkDef.FullName}</i>" +
+            tooltip.detailText.text += $"<i>{engine.MechHeatSinkDef.FullName}</i>" +
                                        $"\r\n   Internal" +
-                                       $"   Free: <b>{engine.InternalHeatSinkCount}</b> " +
-                                       $"   Additional: <b>{engine.HeatBlockDef.HeatSinkCount} / {engine.InternalHeatSinkAdditionalMaxCount}</b>" +
+                                       $"   Free: <b>{engine.HeatSinkInternalFreeMaxCount}</b> " +
+                                       $"   Additional: <b>{engine.EngineHeatBlockDef.HeatSinkCount} / {engine.HeatSinkInternalAdditionalMaxCount}</b>" +
                                        $"\r\n   External" +
-                                       $"   Free: <b>{engine.ExternalHeatSinkFreeCount} / {engine.ExternalHeatSinkFreeMaxCount}</b> " +
-                                       $"   Additional: <b>{engine.ExternalHeatSinkAdditionalCount}</b>" +
+                                       $"   Free: <b>{engine.HeatSinkExternalFreeCount} / {engine.HeatSinkExternalFreeMaxCount}</b> " +
+                                       $"   Additional: <b>{engine.HeatSinkExternalAdditionalCount}</b>" +
                                        "\r\n";
 
             tooltip.detailText.text += "\r\n";
@@ -88,7 +88,7 @@ namespace MechEngineer.Features.Engines
 
         private static string BonusValueEngineHeatSinkCounts(Engine engine)
         {
-            return $"{engine.EngineHeatSinkDef.Abbreviation} {engine.InternalHeatSinkCount + engine.HeatBlockDef.HeatSinkCount}";
+            return $"{engine.MechHeatSinkDef.Abbreviation} {engine.HeatSinkInternalCount}";
         }
     }
 }

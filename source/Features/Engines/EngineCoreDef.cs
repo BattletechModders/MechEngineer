@@ -110,7 +110,7 @@ namespace MechEngineer.Features.Engines
 
         private static string BonusValueEngineHeatSinkCounts(Engine engine)
         {
-            return $"+ {engine.EngineHeatSinkDef.Abbreviation} {engine.InternalHeatSinkCount}";
+            return $"+ {engine.MechHeatSinkDef.Abbreviation} {engine.HeatSinkInternalFreeMaxCount}";
         }
     }
 }
