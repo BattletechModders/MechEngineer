@@ -104,7 +104,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                     //emptySpace.transform.SetAsFirstSibling();
                     //emptySpace.SetActive(true);
 
-                    MechLabLocationWidget_SetData_Patch.ModifySlotCount(layout, 3);
+                    MechLabLocationWidget_SetData_Patch.ModifySlotCount(layout, MechLabSlotsFeature.settings.MechLabGeneralSlots);
                 }
 
                 {
