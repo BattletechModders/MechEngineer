@@ -88,7 +88,7 @@ namespace MechEngineer.Features.CriticalEffects
                 mechComponent.CriticalSlotsHit(slotsHitPrev + critsAdded);
 
                 Control.mod.Logger.LogDebug(
-                    $"{criticalEffects.Def.Description.Id} on {mechComponent.Location} " +
+                    $"uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location}) " +
                     $"critsAdded={critsAdded} critsMax={critsMax} " +
                     $"critsPrev={critsPrev} critsNext={critsNext} " +
                     $"critsHit={critsHit} " +
@@ -105,28 +105,29 @@ namespace MechEngineer.Features.CriticalEffects
                 {
                     var scopedId = mechComponent.ScopedId(criticalEffects.LinkedStatisticName, true);
                 
-                    foreach (var mc in actor.allComponents)
+                    Control.mod.Logger.LogDebug($"HasLinked scopeId={scopedId}");
+                    foreach (var otherMechComponent in actor.allComponents)
                     {
-                        if (mc.DamageLevel == ComponentDamageLevel.Destroyed)
+                        if (otherMechComponent.DamageLevel == ComponentDamageLevel.Destroyed)
                         {
                             continue;
                         }
 
-                        var ce = mc.GetCriticalEffects();
-                        if (ce == null)
+                        var otherCriticalEffects = otherMechComponent.GetCriticalEffects();
+                        if (otherCriticalEffects == null)
                         {
                             continue;
                         }
                         
-                        if (!ce.HasLinked)
+                        if (!otherCriticalEffects.HasLinked)
                         {
                             continue;
                         }
                     
-                        var otherScopedId = mc.ScopedId(ce.LinkedStatisticName, true);
+                        var otherScopedId = otherMechComponent.ScopedId(otherCriticalEffects.LinkedStatisticName, true);
                         if (scopedId == otherScopedId)
                         {
-                            SetDamageLevel(mc, hitInfo, damageLevel);
+                            SetDamageLevel(otherMechComponent, hitInfo, damageLevel);
                         }
                     }
                 }
@@ -212,6 +213,7 @@ namespace MechEngineer.Features.CriticalEffects
 
         private static void SetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
         {
+            Control.mod.Logger.LogDebug($"damageLevel={damageLevel} uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location})");
             mechComponent.StatCollection.ModifyStat(
                 hitInfo.attackerId,
                 hitInfo.stackItemUID,
