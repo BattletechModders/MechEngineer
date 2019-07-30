@@ -1,11 +1,9 @@
 ﻿using BattleTech;
-using MechEngineer.Features;
 using MechEngineer.Features.AccuracyEffects;
 using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
-using MechEngineer.Features.BattleTechLoadFix;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
@@ -43,7 +41,6 @@ namespace MechEngineer
         public ArmorStructureChangesSettings ArmorStructureChanges = new ArmorStructureChangesSettings();
         public ArmorStructureRatioSettings ArmorStructureRatio = new ArmorStructureRatioSettings();
         public AutoFixerSettings AutoFixer = new AutoFixerSettings();
-        public BattleTechLoadFixSettings BattleTechLoadFix = new BattleTechLoadFixSettings();
         public ComponentExplosionsSettings ComponentExplosions = new ComponentExplosionsSettings();
         public CompressFloatieMessagesSettings CompressFloatieMessages = new CompressFloatieMessagesSettings();
         public CriticalEffectsSettings CriticalEffects = new CriticalEffectsSettings();

@@ -89,8 +89,6 @@
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsFeature.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesFeature.cs" />
     <Compile Include="Features\AutoFix\AutoFixUtils.cs" />
-    <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixSettings.cs" />
-    <Compile Include="Features\BattleTechLoadFix\BattleTechLoadFixFeature.cs" />
     <Compile Include="Features\BetterLog\BetterLog.cs" />
     <Compile Include="Features\BetterLog\BetterLogFormatter.cs" />
     <Compile Include="Features\BetterLog\BetterLogFormatterSettings.cs" />
@@ -174,8 +172,6 @@
     <Compile Include="Features\OverrideDescriptions\IAdjustInventoryElement.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustSlotElement.cs" />
     <Compile Include="Features\OverrideDescriptions\MechComponentDefAdapter.cs" />
-    <Compile Include="Features\BattleTechLoadFix\Patches\SkirmishMechBayPanel_RequestResources_Patch.cs" />
-    <Compile Include="Features\BattleTechLoadFix\Patches\SkirmishSettings_Beta_LoadLanceConfiguratorData_Patch.cs" />
     <Compile Include="Features\Engines\CoolingDef.cs" />
     <Compile Include="Features\Engines\Engine.cs" />
     <Compile Include="Features\Engines\EngineCoreDef.cs" />
