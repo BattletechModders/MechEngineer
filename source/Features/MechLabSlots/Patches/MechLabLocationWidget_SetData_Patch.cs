@@ -5,6 +5,7 @@ using BattleTech;
 using BattleTech.Data;
 using BattleTech.UI;
 using Harmony;
+using MechEngineer.Features.DynamicSlots;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -117,6 +118,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                 var @ref = new MechComponentRef(def.Description.Id, null, def.ComponentType, ChassisLocations.None) {DataManager = def.DataManager};
                 @ref.RefreshComponentDef();
                 element.SetData(@ref, ChassisLocations.None, def.DataManager, null);
+                
                 var adapter = new MechLabItemSlotElementAdapter(element);
 
                 if (dynamicSlots.NameText != null)
@@ -144,20 +146,30 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                     adapter.bonusTextB.gameObject.SetActive(true);
                 }
 
-                if (dynamicSlots.BackgroundColor != null)
+                if (dynamicSlots.BackgroundColor.HasValue)
                 {
                     adapter.backgroundColor.SetUIColor(dynamicSlots.BackgroundColor.Value);
                 }
 
-                adapter.icon.gameObject.SetActive(dynamicSlots.ShowIcon);
-
-                adapter.spacers[0].SetActive(true);
-                foreach (var spacer in adapter.spacers)
+                if (dynamicSlots.ShowIcon.HasValue)
                 {
-                    spacer.SetActive(false);
+                    adapter.icon.gameObject.SetActive(dynamicSlots.ShowIcon.Value);
                 }
-                element.thisRectTransform.sizeDelta = new Vector2(element.thisRectTransform.sizeDelta.x, 32f * 1);
 
+                if (dynamicSlots.ShowFixedEquipmentOverlay.HasValue)
+                {
+                    adapter.fixedEquipmentOverlay.gameObject.SetActive(dynamicSlots.ShowFixedEquipmentOverlay.Value);
+                }
+
+                {
+                    adapter.spacers[0].SetActive(true);
+                    foreach (var spacer in adapter.spacers)
+                    {
+                        spacer.SetActive(false);
+                    }
+                    element.thisRectTransform.sizeDelta = new Vector2(element.thisRectTransform.sizeDelta.x, 32f * 1);
+
+                }
                 gameObject.SetActive(true);
                 element.SetDraggable(false);
             }

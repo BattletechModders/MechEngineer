@@ -105,6 +105,7 @@
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileSettings.cs" />
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileFeature.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotsSettings.cs" />
+    <Compile Include="Features\DynamicSlots\Patches\MechLabItemSlotElement_SetIconAndText_Patch.cs" />
     <Compile Include="Features\Engines\EngineFeature.cs" />
     <Compile Include="Features\Engines\EngineSettings.cs" />
     <Compile Include="Features\FeaturesList.cs" />

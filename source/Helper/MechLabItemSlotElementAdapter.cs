@@ -8,8 +8,6 @@ namespace MechEngineer
 {
     public class MechLabItemSlotElementAdapter : Adapter<MechLabItemSlotElement>
     {
-        public object thisRectTransform;
-
         public MechLabItemSlotElementAdapter(MechLabItemSlotElement instance) : base(instance)
         {
         }
@@ -19,11 +17,13 @@ namespace MechEngineer
         public TextMeshProUGUI bonusTextA => traverse.Field("bonusTextA").GetValue<TextMeshProUGUI>();
 
         public TextMeshProUGUI bonusTextB => traverse.Field("bonusTextB").GetValue<TextMeshProUGUI>();
-
+        
         public TextMeshProUGUI nameText => traverse.Field("nameText").GetValue<TextMeshProUGUI>();
 
         public UIColorRefTracker backgroundColor => traverse.Field("backgroundColor").GetValue<UIColorRefTracker>();
 
         public List<GameObject> spacers => traverse.Field("spacers").GetValue<List<GameObject>>();
+
+        public GameObject fixedEquipmentOverlay => traverse.Field("fixedEquipmentOverlay").GetValue<GameObject>();
     }
 }
