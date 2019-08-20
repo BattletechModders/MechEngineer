@@ -38,7 +38,7 @@ namespace MechEngineer.Features.ComponentExplosions
             }
             else if (component is Weapon w2)
             {
-                ammoCount = w2.InternalAmmo;
+                ammoCount = Mathf.Max(w2.InternalAmmo, Mathf.Min(w2.ShotsWhenFired, w2.CurrentAmmo));
             }
             
             var attackSequence = actor.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
