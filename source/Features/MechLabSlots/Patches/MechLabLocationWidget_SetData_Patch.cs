@@ -126,10 +126,14 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                 if (dynamicSlots.NameText != null)
                 {
                     adapter.nameText.text = dynamicSlots.NameText;
-                    if (tcolor != null && !tcolor.SkipText)
+                    if (tcolor != null) // && !tcolor.SkipText)
+                    {
                         adapter.nameTextColor.SetCustomColor(tcolor.UIColor, tcolor.RGBColor);
+                    }
                     else
+                    {
                         adapter.nameTextColor.SetUIColor(UIColor.White);
+                    }
                 }
 
                 if (dynamicSlots.BonusAText == "")
@@ -168,10 +172,14 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                 if (dynamicSlots.ShowIcon.HasValue)
                 {
                     adapter.icon.gameObject.SetActive(dynamicSlots.ShowIcon.Value);
-                    if (tcolor != null && !tcolor.SkipIcon)
+                    if (tcolor != null) // && !tcolor.SkipIcon)
+                    {
                         adapter.iconColor.SetCustomColor(tcolor.UIColor, tcolor.RGBColor);
+                    }
                     else
+                    {
                         adapter.iconColor.SetUIColor(UIColor.White);
+                    }
                 }
 
                 if (dynamicSlots.ShowFixedEquipmentOverlay.HasValue)
