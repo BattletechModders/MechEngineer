@@ -25,5 +25,9 @@ namespace MechEngineer
         public List<GameObject> spacers => traverse.Field("spacers").GetValue<List<GameObject>>();
 
         public GameObject fixedEquipmentOverlay => traverse.Field("fixedEquipmentOverlay").GetValue<GameObject>();
+
+        public UIColorRefTracker iconColor => traverse.Field("iconColor").GetValue<UIColorRefTracker>();
+
+        public UIColorRefTracker nameTextColor => traverse.Field("nameTextColor").GetValue<UIColorRefTracker>();
     }
 }

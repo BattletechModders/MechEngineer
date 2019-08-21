@@ -16,7 +16,10 @@
                 "CriticalEffects" : {
                     "LinkedStatisticName" : "LifeSupport",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LifeSupport1", "CriticalEffect-LifeSupport2"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "cyan"
+				}
             }
         },
         {
@@ -38,7 +41,10 @@
                         ["CriticalEffect-Sensors1"]
                     ],
                     "OnDestroyedEffectIDs" : ["CriticalEffect-Sensors2"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "cyan"
+				}
             }
         },
         {
@@ -56,7 +62,10 @@
                 },
                 "CriticalEffects" : {
                     "DeathMethod" : "PilotKilled"
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "cyan"
+				}
             }
         },
         {
@@ -78,7 +87,10 @@
                         ["CriticalEffect-Sensors1"]
                     ],
                     "OnDestroyedEffectIDs" : ["CriticalEffect-Sensors2"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "cyan"
+				}
             }
         },
         {
@@ -97,7 +109,10 @@
                 "CriticalEffects" : {
                     "LinkedStatisticName" : "LifeSupport",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LifeSupport1", "CriticalEffect-LifeSupport2"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "cyan"
+				}
             }
         },
         {
@@ -112,8 +127,8 @@
                 "InventorySorter" : {
                     "SortKey" : "CzOrder0"
                 },
-                "Color" : {
-                    "UIColor" : "ArmorDamaged"
+                "TRGBColor" : {
+                    "Color" : "#FFFF00"
                 },
                 "Sorter" : {
                     "Order" : 0
@@ -135,8 +150,8 @@
             "DefaultCustoms" : {
                 "MechConfiguration" : {
                 },
-                "Color" : {
-                    "UIColor" : "OrangeHalf"
+                "TRGBColor" : {
+                    "Color" : "#FFA500"
                 },
                 "InventorySorter" : {
                     "SortKey" : "CzOrder1"
@@ -172,7 +187,10 @@
                         "ignore_damage",
                         "no_salvage"
                     ]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#7FFFD4"
+				}
             }
         },
         {
@@ -209,7 +227,10 @@
                         ["CriticalEffect-EngineCrit2"]
                     ],
                     "DeathMethod" : "EngineDestroyed"
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#7FFFD4"
+				}
             }
         },
         {
@@ -224,7 +245,10 @@
                 },
                 "Sorter" : {
                     "Order" : 4
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#7FFFD4"
+				}
             }
         },
         {
@@ -239,7 +263,10 @@
                 },
                 "Sorter" : {
                     "Order" : 5
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#7FFFD4"
+				}
             }
         },
         {
@@ -254,7 +281,10 @@
                 },
                 "Sorter" : {
                     "Order" : 6
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#7FFFD4"
+				}
             }
         },
         {
@@ -269,7 +299,10 @@
                         "not_broken",
                         "default"
                     ]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#7FFFD4"
+				}
             }
         },
         {
@@ -293,7 +326,10 @@
 						"CriticalEffect-LegLowerActuatorDestroyed-{location}",
 						"CriticalEffect-LegFootActuatorDestroyed-{location}"
 					]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#00FF00"
+				}
             }
         },
         {
@@ -312,7 +348,10 @@
                 "CriticalEffects" : {
                     "DestroyedFloatieMessage" : "Actuator DESTROYED",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LegUpperActuatorDestroyed-{location}"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#00FF00"
+				}
             }
         },
         {
@@ -331,7 +370,10 @@
                 "CriticalEffects" : {
                     "DestroyedFloatieMessage" : "Actuator DESTROYED",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LegLowerActuatorDestroyed-{location}"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#00FF00"
+				}
             }
         },
         {
@@ -350,7 +392,10 @@
                 "CriticalEffects" : {
                     "DestroyedFloatieMessage" : "Actuator DESTROYED",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-LegFootActuatorDestroyed-{location}"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#00FF00"
+				}
             }
         },
         {
@@ -386,7 +431,10 @@
 						"CriticalEffect-ArmLowerActuatorDestroyed-{location}",
 						"CriticalEffect-ArmHandActuatorDestroyed-{location}"
 					]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#00FF00"
+				}
             }
         },
         {
@@ -399,7 +447,10 @@
                 "CriticalEffects" : {
                     "DestroyedFloatieMessage" : "Actuator DESTROYED",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-ArmUpperActuatorDestroyed-{location}"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#00FF00"
+				}
             }
         },
         {
@@ -412,7 +463,10 @@
                 "CriticalEffects" : {
                     "DestroyedFloatieMessage" : "Actuator DESTROYED",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-ArmLowerActuatorDestroyed-{location}"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#00FF00"
+				}
             }
         },
         {
@@ -425,7 +479,10 @@
                 "CriticalEffects" : {
                     "DestroyedFloatieMessage" : "Actuator DESTROYED",
                     "OnDestroyedEffectIDs" : ["CriticalEffect-ArmHandActuatorDestroyed-{location}"]
-                }
+                },
+				"TRGBColor" : {
+					"Color" : "#00FF00"
+				}
             }
         }
     ]
