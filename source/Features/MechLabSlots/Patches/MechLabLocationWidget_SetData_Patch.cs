@@ -121,19 +121,10 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                 element.SetData(@ref, ChassisLocations.None, def.DataManager, null);
                 
                 var adapter = new MechLabItemSlotElementAdapter(element);
-                var tcolor = def.GetComponent<ITColorComponent>();
 
                 if (dynamicSlots.NameText != null)
                 {
                     adapter.nameText.text = dynamicSlots.NameText;
-                    if (tcolor != null) // && !tcolor.SkipText)
-                    {
-                        adapter.nameTextColor.SetCustomColor(tcolor.UIColor, tcolor.RGBColor);
-                    }
-                    else
-                    {
-                        adapter.nameTextColor.SetUIColor(UIColor.White);
-                    }
                 }
 
                 if (dynamicSlots.BonusAText == "")
@@ -156,30 +147,14 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                     adapter.bonusTextB.gameObject.SetActive(true);
                 }
 
-                if (dynamicSlots.BackgroundColor.HasValue)
+                if (!string.IsNullOrEmpty(dynamicSlots.BackgroundColor))
                 {
-                    adapter.backgroundColor.SetCustomColor(dynamicSlots.BackgroundColor.Value, dynamicSlots.CustomColor);
-                }
-                else if(def.Is<IColorComponent>(out var color))
-                {
-                    adapter.backgroundColor.SetCustomColor(color.UIColor, color.RGBColor);
-                }
-                else
-                {
-                    adapter.backgroundColor.SetUIColor(MechComponentDef.GetUIColor(def));
+                    adapter.backgroundColor.SetColorFromString(dynamicSlots.BackgroundColor);
                 }
 
                 if (dynamicSlots.ShowIcon.HasValue)
                 {
                     adapter.icon.gameObject.SetActive(dynamicSlots.ShowIcon.Value);
-                    if (tcolor != null) // && !tcolor.SkipIcon)
-                    {
-                        adapter.iconColor.SetCustomColor(tcolor.UIColor, tcolor.RGBColor);
-                    }
-                    else
-                    {
-                        adapter.iconColor.SetUIColor(UIColor.White);
-                    }
                 }
 
                 if (dynamicSlots.ShowFixedEquipmentOverlay.HasValue)

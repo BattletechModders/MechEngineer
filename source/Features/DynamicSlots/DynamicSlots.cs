@@ -7,7 +7,7 @@ using UnityEngine;
 namespace MechEngineer.Features.DynamicSlots
 {
     [CustomComponent("DynamicSlots")]
-    public class DynamicSlots : SimpleCustomComponent, IAfterLoad
+    public class DynamicSlots : SimpleCustomComponent
     {
         public int ReservedSlots { get; set; }
 
@@ -17,20 +17,6 @@ namespace MechEngineer.Features.DynamicSlots
         public string NameText { get; set; } = ""; // null: use component name
         public string BonusAText { get; set; } = "dynamic slot"; // null: use component bonus, "": dont show
         public string BonusBText { get; set; } = ""; // null: use component bonus, "": dont show
-        public UIColor? BackgroundColor { get; set; } = null; // null: use component color
-        public string BackgroundRGBColor { get; set; } = null;
-        [JsonIgnore]
-        public Color CustomColor { get; set; }
-
-        public void OnLoaded(Dictionary<string, object> values)
-        {
-            if (ColorUtility.TryParseHtmlString(BackgroundRGBColor, out var color))
-            {
-                CustomColor = color;
-                BackgroundColor = UIColor.Custom;
-            }
-            else
-                CustomColor = UnityEngine.Color.magenta;
-        }
+        public string BackgroundColor { get; set; } = null; // null: use component color
     }
 }
