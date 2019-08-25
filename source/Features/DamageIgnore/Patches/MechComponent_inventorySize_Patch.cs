@@ -1,20 +1,21 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
-using MechEngineer.Features.DamageIgnore;
 
-namespace MechEngineer.Features.CriticalEffects.Patches
+namespace MechEngineer.Features.DamageIgnore.Patches
 {
     [HarmonyPatch(typeof(MechComponent))]
     [HarmonyPatch(nameof(MechComponent.inventorySize), MethodType.Getter)]
-    internal static class MechComponent_inventorySize_Patch
+    public static class MechComponent_inventorySize_Patch
     {
-        [HarmonyBefore(DamageIgnoreFeature.Namespace)]
         public static void Postfix(MechComponent __instance, ref int __result)
         {
             try
             {
-                __result = __instance.CriticalSlots();
+                if (__result != 0 && (__instance.mechComponentRef?.Def?.IsIgnoreDamage() ?? false))
+                {
+                    __result = 0;
+                }
             }
             catch (Exception e)
             {

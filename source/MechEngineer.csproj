@@ -100,6 +100,10 @@
     <Compile Include="Features\CriticalEffects\MechCriticalEffects.cs" />
     <Compile Include="Features\CriticalEffects\Patches\DebugShowEffects.cs" />
     <Compile Include="Features\CriticalEffects\TurretCriticalEffects.cs" />
+    <Compile Include="Features\DamageIgnore\DamageIgnoreFeature.cs" />
+    <Compile Include="Features\DamageIgnore\DamageIgnoreSettings.cs" />
+    <Compile Include="Features\DamageIgnore\Patches\MechComponent_DamageComponent_Patch.cs" />
+    <Compile Include="Features\DamageIgnore\Patches\MechComponent_inventorySize_Patch.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\DebugCycleCombatSoundsSettings.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\DebugCycleCombatSoundsFeature.cs" />
     <Compile Include="Features\DebugSaveMechToFile\DebugSaveMechToFileSettings.cs" />
@@ -202,8 +206,8 @@
     <Compile Include="Features\ComponentExplosions\ComponentExplosionsFeature.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosion.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\MechComponent_DamageComponent_Patch.cs" />
-    <Compile Include="Features\CriticalEffects\DamageIgnoreHelper.cs" />
-    <Compile Include="Features\CriticalEffects\Patches\Mech_OnLocationDestroyed_Patch.cs" />
+    <Compile Include="Features\DamageIgnore\DamageIgnoreHelper.cs" />
+    <Compile Include="Features\DamageIgnore\Patches\Mech_OnLocationDestroyed_Patch.cs" />
     <Compile Include="Features\MechLabSlots\GUILogUtils.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_OnAddItem_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_OnDrop_Patch.cs" />
@@ -286,7 +290,7 @@
     <Compile Include="Features\AutoFix\LegActuatorHandler.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />
     <Compile Include="Features\Globals\Global.cs" />
-    <Compile Include="Features\CriticalEffects\Patches\Mech_GetComponentInSlot_Patch.cs" />
+    <Compile Include="Features\DamageIgnore\Patches\Mech_GetComponentInSlot_Patch.cs" />
     <Compile Include="Features\AutoFix\CockpitHandler.cs" />
     <Compile Include="Misc\Interfaces.cs" />
     <Compile Include="Control.cs" />

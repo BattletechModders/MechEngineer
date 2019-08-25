@@ -6,6 +6,7 @@ using MechEngineer.Features.AutoFix;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
+using MechEngineer.Features.DamageIgnore;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
@@ -35,6 +36,7 @@ namespace MechEngineer.Features
             EngineFeature.Shared,
             MoveMultiplierStatFeature.Shared,
             CompressFloatieMessagesFeature.Shared,
+            DamageIgnoreFeature.Shared,
             LocationalEffectsFeature.Shared,
             CriticalEffectsFeature.Shared,
             AccuracyEffectsFeature.Shared,

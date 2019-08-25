@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.DamageIgnore;
 
 namespace MechEngineer.Features.CriticalEffects.Patches
 {
@@ -23,25 +24,19 @@ namespace MechEngineer.Features.CriticalEffects.Patches
                 mechComponent.CancelCreatedEffects(performAuraRefresh);
             }
         }
-
-        public static bool Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
+        
+        [HarmonyAfter(DamageIgnoreFeature.Namespace)]
+        public static void Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
         {
             try
             {
                 var mechComponent = __instance;
-                if (mechComponent.componentDef.IsIgnoreDamage())
-                {
-                    return false;
-                }
-
                 CriticalEffectsFeature.Shared.ProcessWeaponHit(mechComponent, hitInfo, ref damageLevel);
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
-
-            return true;
         }
 
         public static void Postfix(MechComponent __instance)

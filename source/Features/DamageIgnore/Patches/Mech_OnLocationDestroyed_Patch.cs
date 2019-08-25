@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.CriticalEffects.Patches
+namespace MechEngineer.Features.DamageIgnore.Patches
 {
     [HarmonyPatch(typeof(Mech), "OnLocationDestroyed")]
     internal static class Mech_OnLocationDestroyed_Patch

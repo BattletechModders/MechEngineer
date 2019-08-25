@@ -7,6 +7,7 @@ using MechEngineer.Features.AutoFix;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
+using MechEngineer.Features.DamageIgnore;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
 using MechEngineer.Features.DynamicSlots;
@@ -44,6 +45,7 @@ namespace MechEngineer
         public ComponentExplosionsSettings ComponentExplosions = new ComponentExplosionsSettings();
         public CompressFloatieMessagesSettings CompressFloatieMessages = new CompressFloatieMessagesSettings();
         public CriticalEffectsSettings CriticalEffects = new CriticalEffectsSettings();
+        public DamageIgnoreSettings DamageIgnore = new DamageIgnoreSettings();
         public DebugCycleCombatSoundsSettings DebugCycleCombatSounds = new DebugCycleCombatSoundsSettings();
         public DebugSaveMechToFileSettings DebugSaveMechToFile = new DebugSaveMechToFileSettings();
         public DynamicSlotsSettings DynamicSlots = new DynamicSlotsSettings();
