@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsSettings.cs" />
+    <Compile Include="Features\AccuracyEffects\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorCC.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSettings.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesSettings.cs" />
@@ -152,7 +153,7 @@
     <Compile Include="Features\LocationalEffects\MechLocationNaming.cs" />
     <Compile Include="Features\LocationalEffects\Patches\MechComponent_ApplyPassiveEffectToTarget_Patch.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\Mech_InitEffectStats_Patch.cs" />
-    <Compile Include="Features\AccuracyEffects\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
+    <Compile Include="Features\AccuracyEffects\Patches\CombatHUDWeaponSlot_AddToolTipDetail_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorFeature.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSupport.cs" />
