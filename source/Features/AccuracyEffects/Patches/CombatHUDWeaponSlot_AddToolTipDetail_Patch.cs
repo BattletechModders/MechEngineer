@@ -8,24 +8,19 @@ namespace MechEngineer.Features.AccuracyEffects.Patches
     [HarmonyPatch(typeof(CombatHUDWeaponSlot), "AddToolTipDetail")]
     public static class CombatHUDWeaponSlot_AddToolTipDetail_Patch
     {
-        public static bool Prefix(Weapon ___displayedWeapon, ref string description)
+        public static void Prefix(ref string description)
         {
             try
             {
                 if (description == "ARM MOUNTED")
                 {
-                    var location = Mech.GetAbbreviatedChassisLocation((ChassisLocations) ___displayedWeapon.Location);
-                    description = $"{location} MOUNTED";
-
-                    return false;
+                    description = AccuracyEffectsFeature.Shared.Settings.CombatHUDTooltipName;
                 }
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
-
-            return true;
         }
     }
 }
