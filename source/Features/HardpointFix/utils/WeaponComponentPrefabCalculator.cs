@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.DynamicSlots;
 
 namespace MechEngineer.Features.HardpointFix.utils
@@ -50,21 +51,28 @@ namespace MechEngineer.Features.HardpointFix.utils
 
         private void CalculateMappingForLocation(ChassisLocations location, List<MechComponentRef> sortedComponentRefs)
         {
+            //Control.mod.Logger.LogDebug($"CalculateMappingForLocation chassisDef={chassisDef.Description.Id} location={location} sortedComponentRefs=[{sortedComponentRefs.Select(x => x.ComponentDefID).JoinAsString()}]");
+
             var bestSelection = new PrefabSelectionCandidate(GetAvailablePrefabSetsForLocation(location), new List<PrefabMapping>());
             var currentCandidates = new List<PrefabSelectionCandidate> { bestSelection };
 
             foreach (var componentRef in sortedComponentRefs)
             {
+               // Control.mod.Logger.LogDebug($" componentRef={componentRef.ComponentDefID}");
+
                 var newCandidates = new List<PrefabSelectionCandidate>();
                 foreach (var candidate in currentCandidates)
                 {
+                    //Control.mod.Logger.LogDebug($"  candidate={candidate}");
+
                     var hasNew = false;
-                    foreach (var set in candidate.Sets)
+                    foreach (var set in candidate.FreeSets)
                     {
+                        //Control.mod.Logger.LogDebug($"   set={set}");
+
                         var prefabName = set.GetCompatiblePrefab(componentRef.Def.PrefabIdentifier);
                         if (prefabName == null)
                         {
-                            //Control.mod.Logger.LogDebug("could not find prefabName for " + componentRef?.Def?.PrefabIdentifier);
                             continue;
                         }
 
@@ -96,26 +104,24 @@ namespace MechEngineer.Features.HardpointFix.utils
                 return;
             }
 
-            var text = $"Mappings for chassis {chassisDef.Description.Id} at {location}";
+            Control.mod.Logger.LogDebug($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
             foreach (var mapping in bestSelection.Mappings)
             {
-                text += $"\n{mapping.MechComponentRef.Def.Description.Id} {mapping.PrefabName}";
                 cacheMappings[mapping.MechComponentRef] = mapping.PrefabName;
             }
-            Control.mod.Logger.LogDebug(text);
         }
 
         private class PrefabSelectionCandidate : IComparable<PrefabSelectionCandidate>
         {
-            internal PrefabSets Sets { get; }
+            internal PrefabSets FreeSets { get; }
             internal List<PrefabMapping> Mappings { get; }
 
             private int MajorScore { get; }
             private int MinorScore { get; }
 
-            internal PrefabSelectionCandidate(PrefabSets sets, List<PrefabMapping> prefabsMappings)
+            internal PrefabSelectionCandidate(PrefabSets freeSets, List<PrefabMapping> prefabsMappings)
             {
-                Sets = sets;
+                FreeSets = freeSets;
                 Mappings = prefabsMappings ?? new List<PrefabMapping>();
 
                 MajorScore = Mappings.Count;
@@ -135,9 +141,14 @@ namespace MechEngineer.Features.HardpointFix.utils
 
             internal PrefabSelectionCandidate CreateWithoutSet(PrefabSet exclude, PrefabMapping newMapping)
             {
-                var sets = Sets.Except(exclude);
+                var sets = FreeSets.Except(exclude);
                 var mappings = new List<PrefabMapping>(Mappings) { newMapping };
                 return new PrefabSelectionCandidate(sets, mappings);
+            }
+
+            public override string ToString()
+            {
+                return $"[freeSets={FreeSets},mappings=[{Mappings.JoinAsString()}]]";
             }
         }
 
@@ -211,6 +222,11 @@ namespace MechEngineer.Features.HardpointFix.utils
             {
                 return GetEnumerator();
             }
+
+            public override string ToString()
+            {
+                return $"[{hashSet.JoinAsString()}]";
+            }
         }
 
         private class PrefabSet
@@ -228,9 +244,12 @@ namespace MechEngineer.Features.HardpointFix.utils
             {
                 var prefabIdentifier = NormIdentifier(prefabIdentifierNotNormalized);
                 var compatibleTerms = GetCompatiblePrefabTerms(prefabIdentifier);
+
                 var prefabName = compatibleTerms
-                    .Select(x => Prefabs.TryGetValue(prefabIdentifier, out var prefab) ? prefab.Name : null)
+                    .Select(x => Prefabs.TryGetValue(x, out var prefab) ? prefab.Name : null)
                     .FirstOrDefault(x => x != null);
+                
+                //Control.mod.Logger.LogDebug($"    prefabIdentifier={prefabIdentifier} compatibleTerms={compatibleTerms.JoinAsString()} prefabName={prefabName}");
                 return prefabName;
             }
 
@@ -260,6 +279,11 @@ namespace MechEngineer.Features.HardpointFix.utils
 
                 return compatibleTerms;
             }
+
+            public override string ToString()
+            {
+                return $"[index={Index}, Prefabs=[{Prefabs.Values.JoinAsString()}]]";
+            }
         }
 
         private class Prefab
@@ -283,6 +307,11 @@ namespace MechEngineer.Features.HardpointFix.utils
             //{
             //    AH, BH, EH, MH
             //}
+
+            public override string ToString()
+            {
+                return Identifier;
+            }
         }
 
         private class PrefabMapping
@@ -294,6 +323,11 @@ namespace MechEngineer.Features.HardpointFix.utils
             {
                 PrefabName = prefabName;
                 MechComponentRef = mechComponentRef;
+            }
+
+            public override string ToString()
+            {
+                return $"[PrefabName={PrefabName}, MechComponentRef={MechComponentRef.ComponentDefID}]";
             }
         }
 

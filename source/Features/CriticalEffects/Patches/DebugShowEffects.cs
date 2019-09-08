@@ -75,9 +75,9 @@ namespace MechEngineer.Features.CriticalEffects.Patches
             Control.mod.Logger.LogDebug($"{topic} effects on actor {actor.GUID} {effects.Select(x => x.EffectData.Description.Id).JoinAsString()}");
         }
 
-        internal static string JoinAsString(this IEnumerable<string> @this)
+        internal static string JoinAsString<T>(this IEnumerable<T> @this) where T : class
         {
-            return string.Join(", ", @this.ToArray());
+            return string.Join(", ", @this.Select(x => x.ToString()).ToArray());
         }
     }
 
