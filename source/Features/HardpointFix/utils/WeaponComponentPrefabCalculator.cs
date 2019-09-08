@@ -344,14 +344,15 @@ namespace MechEngineer.Features.HardpointFix.utils
             {
                 foreach (var weapons in weaponsData.weapons)
                 {
+                    var index = sets.Count;
                     try
                     {
-                        var set = new PrefabSet(sets.Count, weapons);
+                        var set = new PrefabSet(index, weapons);
                         sets.Add(set);
                     }
                     catch (Exception e)
                     {
-                        Control.mod.Logger.LogDebug($"error processing hardpoint data for {chassisDef.Description.Id} at {location}", e);
+                        Control.mod.Logger.LogDebug($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
                         throw;
                     }
                 }
