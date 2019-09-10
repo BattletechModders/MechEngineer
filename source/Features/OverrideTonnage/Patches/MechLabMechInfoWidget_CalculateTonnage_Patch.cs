@@ -55,19 +55,19 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
                     }
                 }
             
-                totalTonnage.SetText("{0} / {1}", InfoTonnageHelper.TonnageStandard.AsString(currentTonnage), maxTonnage);
+                totalTonnage.SetText(string.Format("{0} / {1}", InfoTonnageHelper.TonnageStandard.AsString(currentTonnage), maxTonnage));
                 if (precisionHelper.IsSmaller(maxTonnage, currentTonnage, out var tonnageLeft))
                 {
                     tonnageLeft = Mathf.Abs(tonnageLeft);
                     var left = precisionHelper.AsString(tonnageLeft);
                     var s = precisionHelper.IsSame(tonnageLeft, 1f) ? "s" : string.Empty;
-                    remainingTonnage.SetText("{0} ton{1} overweight", left, s);
+                    remainingTonnage.SetText(string.Format("{0} ton{1} overweight", left, s));
                 }
                 else
                 {
                     var left = precisionHelper.AsString(tonnageLeft);
                     var s = precisionHelper.IsSame(tonnageLeft, 1f) ? "s" : string.Empty;
-                    remainingTonnage.SetText("{0} ton{1} remaining", left, s);
+                    remainingTonnage.SetText(string.Format("{0} ton{1} remaining", left, s));
                 }
             }
             catch (Exception e)
