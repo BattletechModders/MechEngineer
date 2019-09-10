@@ -78,21 +78,12 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
