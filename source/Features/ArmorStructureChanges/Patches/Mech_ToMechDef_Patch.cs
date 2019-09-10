@@ -50,6 +50,10 @@ namespace MechEngineer.Features.ArmorStructureChanges.Patches
             {
                 current = max;
             }
+            else if (Mathf.Approximately(current, 0))
+            {
+                current = 0;
+            }
 
             return current;
         }

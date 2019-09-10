@@ -83,6 +83,8 @@
     <Compile Include="Features\ArmActuators\ArmActuatorCC.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorSettings.cs" />
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesSettings.cs" />
+    <Compile Include="Features\ArmorStructureChanges\Patches\Mech_GetMaxArmor_Patch.cs" />
+    <Compile Include="Features\ArmorStructureChanges\Patches\Mech_GetMaxStructure_Patch.cs" />
     <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioSettings.cs" />
     <Compile Include="Features\AutoFix\AutoFixerFeature.cs" />
     <Compile Include="Features\AutoFix\AutoFixerSettings.cs" />
