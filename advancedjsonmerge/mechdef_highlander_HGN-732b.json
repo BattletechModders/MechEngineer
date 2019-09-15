@@ -2,6 +2,11 @@
 	"TargetID": "mechdef_highlander_HGN-732b",
 	"Instructions": [
 		{
+			"JSONPath": "MechTags.items",
+			"Action": "ArrayConcat",
+			"Value": ["unit_release", "unit_lostech"]
+		},
+		{
 			"JSONPath": "Locations[?(@.Location == 'Head')]",
 			"Action": "ObjectMerge",
 			"Value": {

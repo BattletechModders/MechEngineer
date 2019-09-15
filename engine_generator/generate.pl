@@ -62,7 +62,7 @@ foreach my $row_ref (@engine_tonnages) {
 	my $hs_free_tonnage = $ehs_count * 1;
 	my $heat_dissipation = min($total, 10) * 3;
 	
-	my $tag = exists $stockratings{$rating} ? "component_type_stock" : "BLACKLISTED";
+	my $tag = exists $stockratings{$rating} ? "component_type_stock" : "component_type_variant";
 	
 	push(@overview_rows, {
 			rating => $rating,

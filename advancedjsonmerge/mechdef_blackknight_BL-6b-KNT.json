@@ -2,6 +2,11 @@
 	"TargetID": "mechdef_blackknight_BL-6b-KNT",
 	"Instructions": [
 		{
+			"JSONPath": "MechTags.items",
+			"Action": "ArrayConcat",
+			"Value": ["unit_release", "unit_lostech"]
+		},
+		{
 			"JSONPath": "Locations[?(@.Location == 'Head')]",
 			"Action": "ObjectMerge",
 			"Value": {

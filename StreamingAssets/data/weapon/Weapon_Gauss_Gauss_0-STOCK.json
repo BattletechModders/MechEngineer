@@ -1,7 +1,7 @@
 {
 	"Custom": {
 		"ComponentExplosion": {
-			"ExplosionDamage": 70
+			"ExplosionDamagePerAmmo": 70
 		}
 	}
 }

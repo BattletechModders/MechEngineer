@@ -104,7 +104,7 @@ namespace MechEngineer.Features.HardpointFix.utils
                 return;
             }
 
-            Control.mod.Logger.LogDebug($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
+            //Control.mod.Logger.LogDebug($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
             foreach (var mapping in bestSelection.Mappings)
             {
                 cacheMappings[mapping.MechComponentRef] = mapping.PrefabName;

@@ -110,6 +110,7 @@
     <Compile Include="Features\BetterLog\BetterLogFormatter.cs" />
     <Compile Include="Features\BetterLog\BetterLogFormatterSettings.cs" />
     <Compile Include="Features\BetterLog\BetterLogSettings.cs" />
+    <Compile Include="Features\TagManager\Patches\JSONSerializationUtility_RehydrateObjectFromDictionary_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosionsSettings.cs" />
     <Compile Include="Features\ComponentExplosions\TurretPrivateExtensions.cs" />
     <Compile Include="Features\CompressFloatieMessages\CompressFloatieMessagesSettings.cs" />
@@ -251,6 +252,9 @@
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Pilot_InjuryReasonDescription_Patch.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionFeature.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionSettings.cs" />
+    <Compile Include="Features\TagManager\Patches\MechLabPanel_ComponentDefTagsValid_Patch.cs" />
+    <Compile Include="Features\TagManager\TagManagerFeature.cs" />
+    <Compile Include="Features\TagManager\TagManagerSettings.cs" />
     <Compile Include="Features\TurretLimitedAmmo\TurretLimitedAmmoSettings.cs" />
     <Compile Include="Features\TurretLimitedAmmo\Patches\Turret_OnNewRound_Patch.cs" />
     <Compile Include="Features\TurretLimitedAmmo\Patches\Weapon_DecrementAmmo_Patch.cs" />

@@ -23,6 +23,7 @@ using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
+using MechEngineer.Features.TagManager;
 using MechEngineer.Features.TurretLimitedAmmo;
 using MechEngineer.Features.TurretMechComponents;
 
@@ -58,7 +59,8 @@ namespace MechEngineer.Features
             TurretMechComponentsFeature.Shared,
             TurretLimitedAmmoFeature.Shared,
             OverrideGhostVFXFeature.Shared,
-            OmniSlotsFeature.Shared
+            OmniSlotsFeature.Shared,
+            TagManagerFeature.Shared
         };
     }
 }

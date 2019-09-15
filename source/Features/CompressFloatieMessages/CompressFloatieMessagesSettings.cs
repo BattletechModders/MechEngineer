@@ -4,7 +4,5 @@
     {
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Compresses similar floatie messages to a single message with a multiplier. E.g. MEDIUM LASER DESTROYED x 4";
-
-        public bool DebugDestroyedFloaties = false;
     }
 }

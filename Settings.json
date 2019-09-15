@@ -1,2 +1,8 @@
 {
+    "NewSaveFolder" : {
+        "Enabled" : true
+    },
+    "TagManager" : {
+        "Enabled" : true
+    }
 }

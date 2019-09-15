@@ -16,11 +16,7 @@ namespace MechEngineer.Features.CompressFloatieMessages
         public static bool CompressFloatieMessages(FloatieMessage incoming, Queue<FloatieMessage> queue)
         {
             var incomingString = incoming.text.ToString();
-            Control.mod.Logger.LogDebug($"Floatie {incomingString}");
-            if (settings.DebugDestroyedFloaties && !string.IsNullOrEmpty(incomingString) && incomingString.EndsWith("DESTROYED"))
-            {
-                Control.mod.Logger.LogDebug("DEBUG DESTROYED FLOATIE " + new System.Diagnostics.StackTrace());
-            }
+            //Control.mod.Logger.LogDebug($"Floatie {incomingString}");
             foreach (var message in queue)
             {
                 // quick preliminary check
