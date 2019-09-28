@@ -69,7 +69,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
                 return;
             }
 
-            hardpoints[4].SetData(WeaponCategory.AMS, $"{current} / {widget.totalJumpjets}");
+            hardpoints[4].SetData(WeaponCategoryEnumeration.GetAMS(), $"{current} / {widget.totalJumpjets}");
         }
 
         //internal static void RefreshAvailability(MechLabInventoryWidget widget, float tonnage)

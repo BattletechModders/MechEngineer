@@ -5,8 +5,12 @@ namespace MechEngineer.Features.OmniSlots
 {
     internal class HardpointStat
     {
-        internal readonly WeaponCategory Category;
-        internal HardpointStat(WeaponCategory category)
+        internal enum WCTypes
+        {
+            NotSet, Ballistic,
+        }
+        internal readonly WeaponCategoryValue Category;
+        internal HardpointStat(WeaponCategoryValue category)
         {
             Category = category;
         }
@@ -31,6 +35,6 @@ namespace MechEngineer.Features.OmniSlots
         internal string HardpointString => $"{VanillaUsage}/{MaxString}";
         internal string HardpointTotalString => OmniHas ? (VanillaHas ? $"<color=#F79B26FF>{VanillaMax}+{OmniMax}</color>" : $"<color=#F79B26FF>{OmniMax}</color>") : $"{VanillaMax}";
 
-        internal WeaponCategory CategoryForLocationWidget => OmniHas || VanillaMax > 0 ? Category : WeaponCategory.NotSet;
+        internal WeaponCategoryValue CategoryForLocationWidget => OmniHas || VanillaMax > 0 ? Category : WeaponCategoryEnumeration.GetNotSetValue();
     }
 }

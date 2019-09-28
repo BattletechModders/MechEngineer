@@ -5,12 +5,36 @@ namespace MechEngineer.Features.OmniSlots
 {
     internal class HardpointOmniUsageCalculator
     {
-        internal HardpointStat Ballistic => stats[WeaponCategory.Ballistic];
-        internal HardpointStat Energy => stats[WeaponCategory.Energy];
-        internal HardpointStat Missile => stats[WeaponCategory.Missile];
-        internal HardpointStat Small => stats[WeaponCategory.AntiPersonnel];
+        internal HardpointStat Ballistic => stats[WeaponCategoryEnumeration.GetBallistic()];
+        internal HardpointStat Energy => stats[WeaponCategoryEnumeration.GetEnergy()];
+        internal HardpointStat Missile => stats[WeaponCategoryEnumeration.GetMissile()];
+        internal HardpointStat Small => stats[WeaponCategoryEnumeration.GetSupport()];
 
-        private readonly Dictionary<WeaponCategory, HardpointStat> stats = new Dictionary<WeaponCategory, HardpointStat>();
+        internal static WeaponCategoryValue MapToBasicType(WeaponCategoryValue value)
+        {
+            if (value.IsBallistic)
+            {
+                return WeaponCategoryEnumeration.GetBallistic();
+            }
+            else if (value.IsEnergy)
+            {
+                return WeaponCategoryEnumeration.GetEnergy();
+            }
+            else if (value.IsMissile)
+            {
+                return WeaponCategoryEnumeration.GetMissile();
+            }
+            else if (value.IsSupport)
+            {
+                return WeaponCategoryEnumeration.GetSupport();
+            }
+            else
+            {
+                throw new System.Exception("nope");
+            }
+        }
+
+        private readonly Dictionary<WeaponCategoryValue, HardpointStat> stats = new Dictionary<WeaponCategoryValue, HardpointStat>();
 
         public override string ToString()
         {
@@ -19,10 +43,10 @@ namespace MechEngineer.Features.OmniSlots
 
         internal HardpointOmniUsageCalculator(IEnumerable<MechComponentDef> items, HardpointDef[] hardpoints)
         {
-            stats[WeaponCategory.Ballistic] = new HardpointStat(WeaponCategory.Ballistic);
-            stats[WeaponCategory.Energy] = new HardpointStat(WeaponCategory.Energy);
-            stats[WeaponCategory.Missile] = new HardpointStat(WeaponCategory.Missile);
-            stats[WeaponCategory.AntiPersonnel] = new HardpointStat(WeaponCategory.AntiPersonnel);
+            stats[WeaponCategoryEnumeration.GetBallistic()] = new HardpointStat(WeaponCategoryEnumeration.GetBallistic());
+            stats[WeaponCategoryEnumeration.GetEnergy()] = new HardpointStat(WeaponCategoryEnumeration.GetEnergy());
+            stats[WeaponCategoryEnumeration.GetMissile()] = new HardpointStat(WeaponCategoryEnumeration.GetMissile());
+            stats[WeaponCategoryEnumeration.GetSupport()] = new HardpointStat(WeaponCategoryEnumeration.GetSupport());
 
             SetUsage(items);
             SetMax(hardpoints);
@@ -37,7 +61,7 @@ namespace MechEngineer.Features.OmniSlots
 
             foreach (var item in items)
             {
-                if (item.ComponentType == ComponentType.Weapon && item is WeaponDef weaponDef && stats.TryGetValue(weaponDef.Category, out var stat))
+                if (item.ComponentType == ComponentType.Weapon && item is WeaponDef weaponDef && stats.TryGetValue(MapToBasicType(weaponDef.WeaponCategoryValue), out var stat))
                 {
                     stat.VanillaUsage++;
                 }
@@ -58,7 +82,7 @@ namespace MechEngineer.Features.OmniSlots
                     continue;
                 }
 
-                if (stats.TryGetValue(hardpoint.WeaponMount, out var stat))
+                if (stats.TryGetValue(MapToBasicType(hardpoint.WeaponMountValue), out var stat))
                 {
                     stat.VanillaMax++;
                 }
@@ -85,7 +109,7 @@ namespace MechEngineer.Features.OmniSlots
             }
 
             var weapon = newComponentDef as WeaponDef;
-            if (stats.TryGetValue(weapon.Category, out var stat))
+            if (stats.TryGetValue(MapToBasicType(weapon.WeaponCategoryValue), out var stat))
             {
                 return stat.TheoreticalMax > 0;
             }

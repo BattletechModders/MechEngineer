@@ -31,10 +31,10 @@ namespace MechEngineer.Features.OmniSlots.Patches
 
                 //Control.mod.Logger.Log(calc);
 
-                ___BallisticHardPointElement.SetData(WeaponCategory.Ballistic, calc.Ballistic.HardpointString);
-                ___EnergyHardPointElement.SetData(WeaponCategory.Energy, calc.Energy.HardpointString);
-                ___MissileHardPointElement.SetData(WeaponCategory.Missile, calc.Missile.HardpointString);
-                ___SmallHardPointElement.SetData(WeaponCategory.AntiPersonnel, calc.Small.HardpointString);
+                ___BallisticHardPointElement.SetData(WeaponCategoryEnumeration.GetBallistic(), calc.Ballistic.HardpointString);
+                ___EnergyHardPointElement.SetData(WeaponCategoryEnumeration.GetEnergy(), calc.Energy.HardpointString);
+                ___MissileHardPointElement.SetData(WeaponCategoryEnumeration.GetMissile(), calc.Missile.HardpointString);
+                ___SmallHardPointElement.SetData(WeaponCategoryEnumeration.GetSupport(), calc.Small.HardpointString);
             }
             catch (Exception e)
             {

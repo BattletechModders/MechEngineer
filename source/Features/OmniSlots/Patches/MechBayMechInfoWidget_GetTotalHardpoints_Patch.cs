@@ -35,10 +35,10 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 __instance.totalMissileHardpoints = calc.Missile.TheoreticalMax;
                 __instance.totalSmallHardpoints = calc.Small.TheoreticalMax;
 
-                ___hardpoints[0].SetData(WeaponCategory.Ballistic, calc.Ballistic.HardpointTotalString);
-                ___hardpoints[1].SetData(WeaponCategory.Energy, calc.Energy.HardpointTotalString);
-                ___hardpoints[2].SetData(WeaponCategory.Missile, calc.Missile.HardpointTotalString);
-                ___hardpoints[3].SetData(WeaponCategory.AntiPersonnel, calc.Small.HardpointTotalString);
+                ___hardpoints[0].SetData(WeaponCategoryEnumeration.GetBallistic(), calc.Ballistic.HardpointTotalString);
+                ___hardpoints[1].SetData(WeaponCategoryEnumeration.GetEnergy(), calc.Energy.HardpointTotalString);
+                ___hardpoints[2].SetData(WeaponCategoryEnumeration.GetMissile(), calc.Missile.HardpointTotalString);
+                ___hardpoints[3].SetData(WeaponCategoryEnumeration.GetSupport(), calc.Small.HardpointTotalString);
             }
             catch (Exception e)
             {

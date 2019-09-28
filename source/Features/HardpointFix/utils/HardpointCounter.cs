@@ -115,15 +115,15 @@ namespace MechEngineer.Features.HardpointFix.utils
             get
             {
                 var list = new List<HardpointDef>();
-                list.AddRange(CreateEntries(WeaponCategory.Ballistic, numBallistic));
-                list.AddRange(CreateEntries(WeaponCategory.Energy, numEnergy));
-                list.AddRange(CreateEntries(WeaponCategory.Missile, numMissile));
-                list.AddRange(CreateEntries(WeaponCategory.AntiPersonnel, numSmall));
+                list.AddRange(CreateEntries(WeaponCategoryEnumeration.GetBallistic(), numBallistic));
+                list.AddRange(CreateEntries(WeaponCategoryEnumeration.GetEnergy(), numEnergy));
+                list.AddRange(CreateEntries(WeaponCategoryEnumeration.GetMissile(), numMissile));
+                list.AddRange(CreateEntries(WeaponCategoryEnumeration.GetSupport(), numSmall));
                 return list.ToArray();
             }
         }
 
-        private IEnumerable<HardpointDef> CreateEntries(WeaponCategory category, int count)
+        private IEnumerable<HardpointDef> CreateEntries(WeaponCategoryValue category, int count)
         {
             for (var i = 0; i < count; i++)
             {
