@@ -154,6 +154,51 @@ namespace MechEngineer.Features.AutoFix
             {
                 Type = WeaponSubType.LRM20,
                 Change = new ValueChange<int> {From = 4, By = 1}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.TAG,
+                Change = new ValueChange<int> {From = 3, By = -2}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.LB2X,
+                Change = new ValueChange<int> {From = 1, By = 3}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.LB5X,
+                Change = new ValueChange<int> {From = 2, By = 3}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.LB10X,
+                Change = new ValueChange<int> {From = 4, By = 2}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.LB20X,
+                Change = new ValueChange<int> {From = 6, By = 5}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.UAC2,
+                Change = new ValueChange<int> {From = 1, By = 2}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.UAC5,
+                Change = new ValueChange<int> {From = 2, By = 3}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.UAC10,
+                Change = new ValueChange<int> {From = 3, By = 4}
+            },
+            new WeaponSlotChange
+            {
+                Type = WeaponSubType.UAC20,
+                Change = new ValueChange<int> {From = 4, By = 6}
             }
         };
     }
