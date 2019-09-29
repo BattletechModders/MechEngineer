@@ -2,9 +2,10 @@
 
 namespace MechEngineer.Features.AutoFix
 {
-    internal class WeaponSlotChange
+    internal class WeaponDefChange
     {
         public WeaponSubType Type;
-        public ValueChange<int> Change;
+        public ValueChange<int> SlotChange;
+        public ValueChange<float> TonnageChange;
     }
 }

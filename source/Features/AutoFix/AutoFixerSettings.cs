@@ -26,7 +26,7 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "Gyro", // required
             AutoAddCategoryIdIfMissing = true // adds category id to items matched by optional filters
         };
-        public ValueChange<int> GyroSlotChange = new ValueChange<int> { From = 3, By = 1 };
+        public SlotChange GyroSlotChange = new SlotChange { From = 3, By = 1 };
 
         public IdentityHelper CockpitCategorizer = new IdentityHelper
         {
@@ -36,8 +36,8 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "Cockpit",
             AutoAddCategoryIdIfMissing = true
         };
-        public ValueChange<float> CockpitTonnageChange = new ValueChange<float> { From = 0, By = 3 };
-        public ValueChange<int> CockpitSlotChange = new ValueChange<int> { From = 1, By = 0 };
+        public TonnageChange CockpitTonnageChange = new TonnageChange { From = 0, By = 3 };
+        public SlotChange CockpitSlotChange = new SlotChange { From = 1, By = 0 };
 
         public IdentityHelper LegUpgradesCategorizer = new IdentityHelper
         {
@@ -47,7 +47,7 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "LegFootActuator",
             AutoAddCategoryIdIfMissing = true
         };
-        public ValueChange<int> LegUpgradesSlotChange = new ValueChange<int> { From = 3, By = -1, FromIsMin = true, NewMin = 1 };
+        public SlotChange LegUpgradesSlotChange = new SlotChange { From = 3, By = -1, FromIsMin = true, NewMin = 1 };
 
         public string[] ChassisDefSkip = { };
         public string[] ChassisDefTagsSkip = {"noautofix"};
@@ -57,68 +57,68 @@ namespace MechEngineer.Features.AutoFix
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.LeftTorso,
-                Change = new ValueChange<int> {From = 10, By = 2}
+                Change = new SlotChange {From = 10, By = 2}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.RightTorso,
-                Change = new ValueChange<int> {From = 10, By = 2}
+                Change = new SlotChange {From = 10, By = 2}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.LeftLeg,
-                Change = new ValueChange<int> {From = 4, By = 2}
+                Change = new SlotChange {From = 4, By = 2}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.RightLeg,
-                Change = new ValueChange<int> {From = 4, By = 2}
+                Change = new SlotChange {From = 4, By = 2}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.Head,
-                Change = new ValueChange<int> {From = 1, By = 5}
+                Change = new SlotChange {From = 1, By = 5}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.CenterTorso,
-                Change = new ValueChange<int> {From = 4, By = 11}
+                Change = new SlotChange {From = 4, By = 11}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.LeftArm,
-                Change = new ValueChange<int> {From = 8, By = 4}
+                Change = new SlotChange {From = 8, By = 4}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.RightArm,
-                Change = new ValueChange<int> {From = 8, By = 4}
+                Change = new SlotChange {From = 8, By = 4}
             },
             // old ME values
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.LeftLeg,
-                Change = new ValueChange<int> {From = 2, By = 4}
+                Change = new SlotChange {From = 2, By = 4}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.RightLeg,
-                Change = new ValueChange<int> {From = 2, By = 4}
+                Change = new SlotChange {From = 2, By = 4}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.Head,
-                Change = new ValueChange<int> {From = 3, By = 3}
+                Change = new SlotChange {From = 3, By = 3}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.LeftArm,
-                Change = new ValueChange<int> {From = 11, By = 1}
+                Change = new SlotChange {From = 11, By = 1}
             },
             new ChassisSlotsChange
             {
                 Location = ChassisLocations.RightArm,
-                Change = new ValueChange<int> {From = 11, By = 1}
+                Change = new SlotChange {From = 11, By = 1}
             },
         };
 
@@ -129,76 +129,77 @@ namespace MechEngineer.Features.AutoFix
         public int ChassisDefMaxJumpjetsRating = 400;
         
         public string[] WeaponDefTagsSkip = {"noautofix"};
-        public WeaponSlotChange[] AutoFixWeaponDefSlotsChanges = {
-            new WeaponSlotChange
+        public WeaponDefChange[] AutoFixWeaponDefSlotsChanges = {
+            new WeaponDefChange
             {
                 Type = WeaponSubType.AC5,
-                Change = new ValueChange<int> {From = 2, By = 2}
+                SlotChange = new SlotChange {From = 2, By = 2}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.AC10,
-                Change = new ValueChange<int> {From = 3, By = 4}
+                SlotChange = new SlotChange {From = 3, By = 4}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.AC20,
-                Change = new ValueChange<int> {From = 4, By = 6}
+                SlotChange = new SlotChange {From = 4, By = 6}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.Gauss,
-                Change = new ValueChange<int> {From = 5, By = 2}
+                SlotChange = new SlotChange {From = 5, By = 2}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.LRM20,
-                Change = new ValueChange<int> {From = 4, By = 1}
+                SlotChange = new SlotChange {From = 4, By = 1}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.TAG,
-                Change = new ValueChange<int> {From = 3, By = -2}
+                SlotChange = new SlotChange {From = 3, By = -2}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.LB2X,
-                Change = new ValueChange<int> {From = 1, By = 3}
+                SlotChange = new SlotChange {From = 1, By = 3},
+                TonnageChange = new TonnageChange {From = 5, By = 1}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.LB5X,
-                Change = new ValueChange<int> {From = 2, By = 3}
+                SlotChange = new SlotChange {From = 2, By = 3}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.LB10X,
-                Change = new ValueChange<int> {From = 4, By = 2}
+                SlotChange = new SlotChange {From = 4, By = 2}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.LB20X,
-                Change = new ValueChange<int> {From = 6, By = 5}
+                SlotChange = new SlotChange {From = 6, By = 5}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.UAC2,
-                Change = new ValueChange<int> {From = 1, By = 2}
+                SlotChange = new SlotChange {From = 1, By = 2}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.UAC5,
-                Change = new ValueChange<int> {From = 2, By = 3}
+                SlotChange = new SlotChange {From = 2, By = 3}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.UAC10,
-                Change = new ValueChange<int> {From = 3, By = 4}
+                SlotChange = new SlotChange {From = 3, By = 4}
             },
-            new WeaponSlotChange
+            new WeaponDefChange
             {
                 Type = WeaponSubType.UAC20,
-                Change = new ValueChange<int> {From = 4, By = 6}
+                SlotChange = new SlotChange {From = 4, By = 6}
             }
         };
     }

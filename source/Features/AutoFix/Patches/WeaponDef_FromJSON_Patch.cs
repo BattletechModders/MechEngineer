@@ -23,14 +23,27 @@ namespace MechEngineer.Features.AutoFix.Patches
                     return;
                 }
                 
-                foreach (var change in changes.Where(x => x.Type == __instance.WeaponSubType).Select(x => x.Change))
+                foreach (var change in changes.Where(x => x.Type == __instance.WeaponSubType))
                 {
-                    var newValue = change.Change(__instance.InventorySize);
-                    if (!newValue.HasValue)
+                    if (change.SlotChange != null)
                     {
-                        return;
+                        var newValue = change.SlotChange.Change(__instance.InventorySize);
+                        if (!newValue.HasValue)
+                        {
+                            return;
+                        }
+                        Traverse.Create(__instance).Property("InventorySize").SetValue(newValue);
                     }
-                    Traverse.Create(__instance).Property("InventorySize").SetValue(newValue);
+
+                    if (change.TonnageChange != null)
+                    {
+                        var newValue = change.TonnageChange.Change(__instance.Tonnage);
+                        if (!newValue.HasValue)
+                        {
+                            return;
+                        }
+                        Traverse.Create(__instance).Property("Tonnage").SetValue(newValue);
+                    }
                 }
             }
             catch (Exception e)

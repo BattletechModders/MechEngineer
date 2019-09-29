@@ -1,7 +1,16 @@
 ﻿using System;
+using UnityEngine;
 
 namespace MechEngineer.Features.AutoFix
 {
+    public class TonnageChange : ValueChange<float>
+    {
+    }
+
+    public class SlotChange : ValueChange<int>
+    {
+    }
+
     public class ValueChange<T> where T: struct, IComparable<T>, IEquatable<T>
     {
         public T From;
@@ -12,7 +21,7 @@ namespace MechEngineer.Features.AutoFix
 
         internal T? Change(T originalValue)
         {
-            if (!FromIsMin && !originalValue.Equals(From))
+            if (!FromIsMin && !Equals(originalValue, From))
             {
                 return null;
             }
@@ -31,7 +40,31 @@ namespace MechEngineer.Features.AutoFix
             return newValue;
         }
 
-        private T Add(T a, T b)
+        private static bool Equals(T a, T b)
+        {
+            if (typeof(T) == typeof(float))
+            {
+                var a1 = a as float?;
+                var b1 = b as float?;
+                if (a1.HasValue && b1.HasValue)
+                {
+                    return Mathf.Approximately(a1.Value, b1.Value);
+                }
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                var a1 = a as int?;
+                var b1 = b as int?;
+                if (a1.HasValue && b1.HasValue)
+                {
+                    return a1.Value == b1.Value;
+                }
+            }
+
+            return false;
+        }
+
+        private static T Add(T a, T b)
         {
             if (typeof(T) == typeof(float))
             {
