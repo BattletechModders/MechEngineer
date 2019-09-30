@@ -10,6 +10,7 @@ using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.DamageIgnore;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
+using MechEngineer.Features.DebugScreenshotMechs;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Globals;
@@ -47,8 +48,6 @@ namespace MechEngineer
         public CompressFloatieMessagesSettings CompressFloatieMessages = new CompressFloatieMessagesSettings();
         public CriticalEffectsSettings CriticalEffects = new CriticalEffectsSettings();
         public DamageIgnoreSettings DamageIgnore = new DamageIgnoreSettings();
-        public DebugCycleCombatSoundsSettings DebugCycleCombatSounds = new DebugCycleCombatSoundsSettings();
-        public DebugSaveMechToFileSettings DebugSaveMechToFile = new DebugSaveMechToFileSettings();
         public DynamicSlotsSettings DynamicSlots = new DynamicSlotsSettings();
         public EngineSettings Engine = new EngineSettings();
         public GlobalsSettings Globals = new GlobalsSettings();
@@ -65,5 +64,9 @@ namespace MechEngineer
         public TurretLimitedAmmoSettings TurretLimitedAmmo = new TurretLimitedAmmoSettings();
         public TurretMechComponentSettings TurretMechComponents = new TurretMechComponentSettings();
         public TagManagerSettings TagManager = new TagManagerSettings();
+        
+        public DebugCycleCombatSoundsSettings DebugCycleCombatSounds = new DebugCycleCombatSoundsSettings();
+        public DebugSaveMechToFileSettings DebugSaveMechToFile = new DebugSaveMechToFileSettings();
+        public DebugScreenshotMechsSettings DebugScreenshotMechs = new DebugScreenshotMechsSettings();
     }
 }

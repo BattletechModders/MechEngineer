@@ -77,6 +77,14 @@
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>..\..\..\BattleTech_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
@@ -105,6 +113,9 @@
     <Compile Include="Features\BetterLog\BetterLogFormatter.cs" />
     <Compile Include="Features\BetterLog\BetterLogFormatterSettings.cs" />
     <Compile Include="Features\BetterLog\BetterLogSettings.cs" />
+    <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsFeature.cs" />
+    <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsSettings.cs" />
+    <Compile Include="Features\DebugScreenshotMechs\Patches\SkirmishMechBayPanel_OnMechLabCancel_Patch.cs" />
     <Compile Include="Features\TagManager\Patches\JSONSerializationUtility_RehydrateObjectFromDictionary_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosionsSettings.cs" />
     <Compile Include="Features\ComponentExplosions\TurretPrivateExtensions.cs" />
@@ -247,6 +258,7 @@
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Pilot_InjuryReasonDescription_Patch.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionFeature.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\ShutdownInjuryProtectionSettings.cs" />
+    <Compile Include="Features\DebugScreenshotMechs\Patches\MechLabPanel_OnRequestResourcesComplete_Patch.cs" />
     <Compile Include="Features\TagManager\Patches\MechLabPanel_ComponentDefTagsValid_Patch.cs" />
     <Compile Include="Features\TagManager\TagManagerFeature.cs" />
     <Compile Include="Features\TagManager\TagManagerSettings.cs" />

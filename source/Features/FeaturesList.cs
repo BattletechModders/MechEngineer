@@ -9,6 +9,7 @@ using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.DamageIgnore;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
+using MechEngineer.Features.DebugScreenshotMechs;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Globals;
@@ -45,8 +46,6 @@ namespace MechEngineer.Features
             ArmActuatorFeature.Shared,
             DynamicSlotsFeature.Shared,
             ShutdownInjuryProtectionFeature.Shared,
-            DebugSaveMechToFileFeature.Shared,
-            DebugCycleCombatSoundsFeature.Shared,
             NewSaveFolderFeature.Shared,
             MechLabSlotsFeature.Shared,
             InvalidInventoryFeature.Shared,
@@ -60,7 +59,11 @@ namespace MechEngineer.Features
             TurretLimitedAmmoFeature.Shared,
             OverrideGhostVFXFeature.Shared,
             OmniSlotsFeature.Shared,
-            TagManagerFeature.Shared
+            TagManagerFeature.Shared,
+
+            DebugSaveMechToFileFeature.Shared,
+            DebugCycleCombatSoundsFeature.Shared,
+            DebugScreenshotMechsFeature.Shared
         };
     }
 }
