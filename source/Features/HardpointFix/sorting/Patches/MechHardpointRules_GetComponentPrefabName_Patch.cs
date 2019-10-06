@@ -57,6 +57,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
                 if (calculator != null && componentRef is MechComponentRef mechComponentRef && mechComponentRef.ComponentDefType == ComponentType.Weapon)
                 {
                     __result = calculator.GetPrefabName(mechComponentRef) ?? hardpointDataDef.HardpointData[0].weapons[0][0];
+                    usedPrefabNames.Add(__result);
                     return false;
                 }
             }
@@ -66,5 +67,10 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             }
             return true;
         }
+
+        //public static void Postfix(BaseComponentRef componentRef, ref string __result)
+        //{
+        //    Control.mod.Logger.Log($"selected {__result} for {componentRef.ComponentDefID}");
+        //}
     }
 }
