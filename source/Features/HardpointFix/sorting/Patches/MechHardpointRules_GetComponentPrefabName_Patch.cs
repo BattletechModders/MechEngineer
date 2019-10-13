@@ -50,20 +50,15 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             calculator = null;
         }
 
-        public static bool Prefix(HardpointDataDef hardpointDataDef, BaseComponentRef componentRef, ref List<string> usedPrefabNames, ref string __result)
+        public static bool Prefix(BaseComponentRef componentRef, ref List<string> usedPrefabNames, ref string __result)
         {
             try
             {
                 if (calculator != null && componentRef is MechComponentRef mechComponentRef && mechComponentRef.ComponentDefType == ComponentType.Weapon)
                 {
-                    var prefabName = calculator.GetPrefabName(mechComponentRef);
-                    if (prefabName == null)
+                    __result = calculator.GetPrefabName(mechComponentRef);
+                    if (__result != null)
                     {
-                        __result = hardpointDataDef.HardpointData[0].weapons[0][0];
-                    }
-                    else
-                    {
-                        __result = prefabName;
                         usedPrefabNames.Add(__result);
                     }
                     
