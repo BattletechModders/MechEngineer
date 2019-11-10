@@ -37,8 +37,10 @@ namespace MechEngineer.Features.BetterLog
             }
 
             var log = Logger.GetLogger(name);
-            Logger.AddAppender(name, new BetterLog(path, settings));
+            var appender = new BetterLog(path, settings);
+            Logger.AddAppender(name, appender);
             Logger.SetLoggerLevel(name, settings.Level);
+            Logger.IsLogging = true; // workaround for logging being disabled in debug build?!?
 
             return log;
         }
