@@ -49,7 +49,7 @@
             "Description" : {
                 "Id" : "StatusEffect-ArmLowerActuator-{location}",
                 "Name" : "{side} Arm",
-                "Details" : "The {side} arm actuator.",
+                "Details" : "An arm actuator.",
                 "Icon" : "uixSvgIcon_equipment_ActuatorArm"
             },
             "statisticData" : {

@@ -14,7 +14,7 @@
             "Description" : {
                 "Id" : "CriticalEffect-ShoulderDestroyed-{location}",
                 "Name" : "{side} Shoulder Destroyed",
-                "Details" : "The {side} shoulder actuator was destroyed, reducing weapon accuracy by 5 for weapons in the same arm.",
+                "Details" : "A shoulder actuator was destroyed, reducing weapon accuracy by 5 for weapons in the same arm.",
                 "Icon" : "uixSvgIcon_equipment_ActuatorArm"
             },
             "statisticData" : {
@@ -39,7 +39,7 @@
 		    "Description" : {
 			    "Id" : "CriticalEffect-ArmUpperActuatorDestroyed-{location}",
 			    "Name" : "{side} Upper Arm Destroyed",
-			    "Details" : "The {side} upper arm actuator was destroyed, reducing weapon accuracy by 1 for weapons in the same arm.",
+			    "Details" : "An upper arm actuator was destroyed, reducing weapon accuracy by 1 for weapons in the same arm.",
 			    "Icon" : "uixSvgIcon_equipment_ActuatorArm"
 		    },
 		    "statisticData" : {
@@ -64,7 +64,7 @@
 		    "Description" : {
 			    "Id" : "CriticalEffect-ArmLowerActuatorDestroyed-{location}",
 			    "Name" : "{side} Lower Arm Destroyed",
-			    "Details" : "The {side} lower arm actuator was destroyed, reducing weapon accuracy by 1 for weapons in the same arm.",
+			    "Details" : "A lower arm actuator was destroyed, reducing weapon accuracy by 1 for weapons in the same arm.",
 			    "Icon" : "uixSvgIcon_equipment_ActuatorArm"
 		    },
 		    "statisticData" : {
