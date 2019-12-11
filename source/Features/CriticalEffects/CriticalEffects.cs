@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
+using Localize;
 using MechEngineer.Features.OverrideDescriptions;
 
 namespace MechEngineer.Features.CriticalEffects
@@ -41,7 +42,7 @@ namespace MechEngineer.Features.CriticalEffects
                     return;
                 }
 
-                var description = CriticalEffectsFeature.settings.DescriptionUseName ? effectData.Description.Name : effectData.Description.Details;
+                var description = CriticalEffectsFeature.settings.DescriptionUseName ? new Text(effectData.Description.Name).ToString() : new Text(effectData.Description.Details).ToString();
                     
                 var text = $"{prefix}: {description}";
                     
@@ -54,23 +55,23 @@ namespace MechEngineer.Features.CriticalEffects
                 i++;
                 foreach (var id in effectIDs)
                 {
-                    AddDescription($"HIT {i}", id);
+                    AddDescription(new Text(CriticalEffectsFeature.settings.CritHitPrefix,i).ToString(),id);
                 }
             }
             
             foreach (var id in OnDestroyedEffectIDs)
             {
-                AddDescription($"DESTROYED", id);
+                AddDescription(new Text(CriticalEffectsFeature.settings.CritDestroyedPrefix).ToString(), id);
             }
 
             if (DeathMethod != DeathMethod.NOT_SET)
             {
-                descriptions.Add($"DESTROYED: Mech is incapacitated, reason is {DeathMethod}");
+                descriptions.Add(new Text(CriticalEffectsFeature.settings.CritDestroyedPrefix).ToString() + new Text(DeathMethod.ToString()));
             }
 
             if (HasLinked)
             {
-                descriptions.Add($"Critical hits are linked to '{LinkedStatisticName}'");
+                descriptions.Add(new Text(CriticalEffectsFeature.settings.CritLinked).ToString()+"'"+ new Text(LinkedStatisticName)+"'");
             }
             
             var descriptionTemplate = CriticalEffectsFeature.settings.DescriptionTemplate;
