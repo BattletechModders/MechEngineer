@@ -11,9 +11,9 @@
 
         public string CritFloatieMessage = "{0} CRIT";
         public string DestroyedFloatieMessage = "{0} DESTROYED";
-        public string CritHitPrefix = "HIT {0}";
-        public string CritDestroyedPrefix = "DESTROYED";
-        public string CritDestroyedDeath = "DESTROYED: Mech is incapacitated, reason is ";
-        public string CritLinked = "Critical hits are linked to";
+        public string CritHitText = "HIT {0}: {1}";
+        public string CritDestroyedText = "DESTROYED: {0}";
+        public string CritDestroyedDeathText = "DESTROYED: Mech is incapacitated, reason is {0}";
+        public string CritLinkedText = "Critical hits are linked to '{0}'";
     }
 }

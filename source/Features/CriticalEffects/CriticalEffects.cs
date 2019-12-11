@@ -34,19 +34,14 @@ namespace MechEngineer.Features.CriticalEffects
         {
             var descriptions = new List<string>();
 
-            void AddDescription(string prefix, string effectId)
+            string GetEffectDescription(string effectId)
             {
                 var effectData = CriticalEffectsFeature.GetEffectData(effectId);
                 if (effectData == null || effectData.targetingData.showInStatusPanel == false)
                 {
-                    return;
+                    return null;
                 }
-
-                var description = CriticalEffectsFeature.settings.DescriptionUseName ? new Text(effectData.Description.Name).ToString() : new Text(effectData.Description.Details).ToString();
-                    
-                var text = $"{prefix}: {description}";
-                    
-                descriptions.Add(text);
+                return CriticalEffectsFeature.settings.DescriptionUseName ? effectData.Description.Name : effectData.Description.Details;
             }
 
             var i = 0;
@@ -55,23 +50,33 @@ namespace MechEngineer.Features.CriticalEffects
                 i++;
                 foreach (var id in effectIDs)
                 {
-                    AddDescription(new Text(CriticalEffectsFeature.settings.CritHitPrefix,i).ToString(),id);
+                    var effectDesc = GetEffectDescription(id);
+                    if (effectDesc == null)
+                    {
+                        continue;
+                    }
+                    descriptions.Add(new Text(CriticalEffectsFeature.settings.CritHitText, i, effectDesc).ToString());
                 }
             }
             
             foreach (var id in OnDestroyedEffectIDs)
             {
-                AddDescription(new Text(CriticalEffectsFeature.settings.CritDestroyedPrefix).ToString(), id);
+                var effectDesc = GetEffectDescription(id);
+                if (effectDesc == null)
+                {
+                    continue;
+                }
+                descriptions.Add(new Text(CriticalEffectsFeature.settings.CritDestroyedText, effectDesc).ToString());
             }
 
             if (DeathMethod != DeathMethod.NOT_SET)
             {
-                descriptions.Add(new Text(CriticalEffectsFeature.settings.CritDestroyedPrefix).ToString() + new Text(DeathMethod.ToString()));
+                descriptions.Add(new Text(CriticalEffectsFeature.settings.CritDestroyedDeathText, DeathMethod).ToString());
             }
 
             if (HasLinked)
             {
-                descriptions.Add(new Text(CriticalEffectsFeature.settings.CritLinked).ToString()+"'"+ new Text(LinkedStatisticName)+"'");
+                descriptions.Add(new Text(CriticalEffectsFeature.settings.CritLinkedText, LinkedStatisticName).ToString());
             }
             
             var descriptionTemplate = CriticalEffectsFeature.settings.DescriptionTemplate;
