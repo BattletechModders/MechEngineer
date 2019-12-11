@@ -6,6 +6,7 @@ using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
 using fastJSON;
+using Localize;
 
 namespace MechEngineer.Features.OverrideDescriptions
 {
@@ -118,7 +119,7 @@ namespace MechEngineer.Features.OverrideDescriptions
             {
                 try
                 {
-                    return string.IsNullOrEmpty(format) ? null : string.Format(format, values);
+                    return string.IsNullOrEmpty(format) ? null : new Text(format, values).ToString();
                 }
                 catch (Exception e)
                 {
