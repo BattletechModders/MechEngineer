@@ -49,6 +49,11 @@ namespace MechEngineer.Features.HardpointFix.utils
             return cacheMappings.TryGetValue(componentRef, out var value) ? value : null;
         }
 
+        internal IEnumerable<string> GetUsedPrefabNamesInLocation(ChassisLocations mountedLocation)
+        {
+            return cacheMappings.Where(x => x.Key.MountedLocation == mountedLocation).Select(x => x.Value);
+        }
+
         private void CalculateMappingForLocation(ChassisLocations location, List<MechComponentRef> sortedComponentRefs)
         {
             //Control.mod.Logger.LogDebug($"CalculateMappingForLocation chassisDef={chassisDef.Description.Id} location={location} sortedComponentRefs=[{sortedComponentRefs.Select(x => x.ComponentDefID).JoinAsString()}]");
@@ -352,8 +357,8 @@ namespace MechEngineer.Features.HardpointFix.utils
                     }
                     catch (Exception e)
                     {
-                        Control.mod.Logger.LogDebug($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
-                        throw;
+                        Control.mod.Logger.LogWarning($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
+                        //throw;
                     }
                 }
             }

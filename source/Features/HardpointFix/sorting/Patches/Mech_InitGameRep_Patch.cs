@@ -13,7 +13,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
         {
             try
             {
-                var componentRefs = __instance.Weapons
+                var componentRefs = __instance.Weapons.Union(__instance.supportComponents)
                     .Select(w => w.baseComponentRef as MechComponentRef)
                     .Where(c => c != null)
                     .ToList();
