@@ -144,7 +144,6 @@
     <Compile Include="Features\LocationalEffects\LocationalEffectsSettings.cs" />
     <Compile Include="Features\MechLabSlots\MechLabSlotsSettings.cs" />
     <Compile Include="Features\MoveMultiplierStat\MoveMultiplierStatSettings.cs" />
-    <Compile Include="Features\NewSaveFolder\NewSaveFolderSettings.cs" />
     <Compile Include="Features\OmniSlots\OmniSlotsFeature.cs" />
     <Compile Include="Features\OmniSlots\HardpointOmniUsageCalculator.cs" />
     <Compile Include="Features\OmniSlots\HardpointStat.cs" />
@@ -245,12 +244,6 @@
     <Compile Include="Features\MoveMultiplierStat\MoveMultiplierStatFeature.cs" />
     <Compile Include="Features\MoveMultiplierStat\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\MoveMultiplierStat\Patches\Mech_MoveMultiplier_Patch.cs" />
-    <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_ClearCachedSettings_Patch.cs" />
-    <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SettingsGetter_Patch.cs" />
-    <Compile Include="Features\NewSaveFolder\NewSaveFolderFeature.cs" />
-    <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SaveSettingsToPlayerPrefs_Patch.cs" />
-    <Compile Include="Features\NewSaveFolder\Patches\CachedSettings_SettingsSetter_Patch.cs" />
-    <Compile Include="Features\NewSaveFolder\Patches\WriteLocation_Constructor_Patch.cs" />
     <Compile Include="Features\DebugCycleCombatSounds\Patches\MainMenu_ReceiveButtonPress_Patch.cs" />
     <Compile Include="Features\OverrideTonnage\OverrideTonnageFeature.cs" />
     <Compile Include="Features\OverrideTonnage\OverrideTonnageSettings.cs" />
