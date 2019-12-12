@@ -88,21 +88,21 @@ namespace MechEngineer.Features.ComponentExplosions
                     // this is very hacky as this is an invalid weapon
                     var weapon = new Weapon(mech, actor.Combat, component.mechComponentRef, component.uid);
 
-                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation) component.Location, weapon, explosionDamage, 0, AttackImpactQuality.Solid, DamageType.AmmoExplosion);
+                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation) component.Location, weapon, 0, explosionDamage, 0, AttackImpactQuality.Solid, DamageType.AmmoExplosion);
                 }
                 else if (actor is Vehicle vehicle)
                 {
                     // this is very hacky as this is an invalid weapon
                     var weapon = new Weapon(vehicle, actor.Combat, component.vehicleComponentRef, component.uid);
 
-                    vehicle.DamageLocation(hitInfo, component.Location, (VehicleChassisLocations)component.Location, weapon, explosionDamage, AttackImpactQuality.Solid);
+                    vehicle.DamageLocation(hitInfo, component.Location, (VehicleChassisLocations)component.Location, weapon, 0, explosionDamage, AttackImpactQuality.Solid);
                 }
                 else if (actor is Turret turret)
                 {
                     // this is very hacky as this is an invalid weapon
                     var weapon = new Weapon(turret, actor.Combat, component.turretComponentRef, component.uid);
 
-                    turret.DamageLocation(hitInfo, (BuildingLocation)component.Location, weapon, explosionDamage);
+                    turret.DamageLocation(hitInfo, (BuildingLocation)component.Location, weapon, 0, explosionDamage);
                 }
             }
             finally

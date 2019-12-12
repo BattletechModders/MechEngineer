@@ -15,9 +15,9 @@ namespace MechEngineer.Features.ComponentExplosions
             Traverse.Create(vehicle).Method(nameof(applyStructureStatDamage), location, damage, hitInfo).GetValue();
         }
 
-        internal static bool DamageLocation(this Vehicle vehicle, WeaponHitInfo hitInfo, int originalHitLoc, VehicleChassisLocations vLoc, Weapon weapon, float totalDamage, AttackImpactQuality impactQuality)
+        internal static bool DamageLocation(this Vehicle vehicle, WeaponHitInfo hitInfo, int originalHitLoc, VehicleChassisLocations vLoc, Weapon weapon, float totalArmorDamage, float directStructureDamage, AttackImpactQuality impactQuality)
         {
-            return Traverse.Create(vehicle).Method(nameof(DamageLocation), hitInfo, originalHitLoc, vLoc, weapon, totalDamage, impactQuality).GetValue<bool>();
+            return Traverse.Create(vehicle).Method(nameof(DamageLocation), hitInfo, originalHitLoc, vLoc, weapon, totalArmorDamage, directStructureDamage, impactQuality).GetValue<bool>();
         }
     }
 }

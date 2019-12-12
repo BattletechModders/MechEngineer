@@ -13,10 +13,6 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
         {
             return instructions
                 .MethodReplacer(
-                    AccessTools.Method(typeof(Mech), nameof(Mech.GetCurrentArmor)),
-                    AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(GetCurrentArmor))
-                )
-                .MethodReplacer(
                     AccessTools.Method(typeof(Mech), nameof(Mech.ApplyStructureStatDamage)),
                     AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(ApplyStructureStatDamage))
                 )
@@ -24,25 +20,6 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                     AccessTools.Method(typeof(MechStructureRules), nameof(MechStructureRules.GetPassthroughLocation)),
                     AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(GetPassthroughLocation))
                 );
-        }
-
-        internal static float GetCurrentArmor(
-            this Mech mech,
-            ArmorLocation location
-            )
-        {
-            try
-            {
-                if (ComponentExplosionsFeature.IsInternalExplosion)
-                {
-                    return 0;
-                }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-            return mech.GetCurrentArmor(location);
         }
 
         internal static void ApplyStructureStatDamage(

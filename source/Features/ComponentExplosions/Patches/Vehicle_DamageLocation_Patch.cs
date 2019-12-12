@@ -13,32 +13,9 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
         {
             return instructions
                 .MethodReplacer(
-                    AccessTools.Method(typeof(Vehicle), nameof(Vehicle.GetCurrentArmor)),
-                    AccessTools.Method(typeof(Vehicle_DamageLocation_Patch), nameof(GetCurrentArmor))
-                )
-                .MethodReplacer(
                     AccessTools.Method(typeof(Vehicle), nameof(applyStructureStatDamage)),
                     AccessTools.Method(typeof(Vehicle_DamageLocation_Patch), nameof(applyStructureStatDamage))
                 );
-        }
-
-        internal static float GetCurrentArmor(
-            Vehicle vehicle,
-            VehicleChassisLocations location
-            )
-        {
-            try
-            {
-                if (ComponentExplosionsFeature.IsInternalExplosion)
-                {
-                    return 0;
-                }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-            return vehicle.GetCurrentArmor(location);
         }
 
         internal static void applyStructureStatDamage(
