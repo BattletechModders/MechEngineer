@@ -57,7 +57,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             {
                 if (componentRef is MechComponentRef mechComponentRef)
                 {
-                    if (usedPrefabNames.Count == 0)
+                    if (calculator != null && usedPrefabNames.Count == 0)
                     {
                         // make sure no other iteration can take away already reserved prefabs
                         usedPrefabNames.AddRange(calculator.GetUsedPrefabNamesInLocation(mechComponentRef.MountedLocation));
