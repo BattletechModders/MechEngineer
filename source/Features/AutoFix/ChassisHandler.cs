@@ -35,7 +35,7 @@ namespace MechEngineer.Features.AutoFix
             AutoFixSlots(chassisDef);
         }
 
-        public static float? GetOriginalTonnage(ChassisDef chassisDef)
+        public static float? GetOriginalInitialTonnage(ChassisDef chassisDef)
         {
             if (OriginalInitialTonnages.TryGetValue(chassisDef.Description.Id, out var value))
             {
@@ -45,7 +45,7 @@ namespace MechEngineer.Features.AutoFix
             return null;
         }
 
-        private static void SetOriginalTonnage(ChassisDef chassisDef)
+        private static void SetOriginalInitialTonnage(ChassisDef chassisDef)
         {
             if (OriginalInitialTonnages.ContainsKey(chassisDef.Description.Id))
             {
@@ -59,7 +59,7 @@ namespace MechEngineer.Features.AutoFix
         {
             if (AutoFixerFeature.settings.ChassisDefInitialTonnage)
             {
-                SetOriginalTonnage(chassisDef);
+                SetOriginalInitialTonnage(chassisDef);
                 var tonnage = chassisDef.Tonnage * AutoFixerFeature.settings.ChassisDefInitialToTotalTonnageFactor;
                 var info = typeof(ChassisDef).GetProperty("InitialTonnage");
                 var value = Convert.ChangeType(tonnage, info.PropertyType);

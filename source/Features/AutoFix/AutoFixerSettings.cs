@@ -10,6 +10,11 @@ namespace MechEngineer.Features.AutoFix
         public string[] MechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
         public string[] MechDefTagsSkip = {"noautofix"};
 
+        // mech defs that should use full free tonnage when autofixing (workaround that weight reduction items are not considered)
+        public string[] MechDefAutoFixAgainstMaxFreeTonnage = {"mechdef_atlas_AS7-D-HT", "mechdef_blackknight_BL-6b-KNT", "mechdef_highlander_HGN-732b"};
+        // how much more tonnage is allowed to be used for adding engines etc.. then what was given by reducing initial tonnage (can never exceed max tonnage anyway)
+        public float MechDefAutoFixInitialTonnageDiffThreshold = 0.4f; // less than 0.5 so no new engine can be put on
+
         public bool MechDefEngine = true; // adds missing engine and removes too many jump jets
         public string MechDefCoolingDef = "emod_kit_shs";
         public string MechDefHeatBlockDef = "emod_engine_cooling";

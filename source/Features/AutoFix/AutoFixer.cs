@@ -7,6 +7,7 @@ using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.OverrideTonnage;
+using UnityEngine;
 
 namespace MechEngineer.Features.AutoFix
 {
@@ -80,11 +81,24 @@ namespace MechEngineer.Features.AutoFix
                 MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
                 var maxFreeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
 
-                freeTonnage = maxFreeTonnage;
+                var initialTonnage = mechDef.Chassis.InitialTonnage;
+                var originalInitialTonnage = ChassisHandler.GetOriginalInitialTonnage(mechDef.Chassis) ?? initialTonnage;
+                var initialTonnageGain = Mathf.Max(0, originalInitialTonnage - initialTonnage);
+                if (AutoFixerFeature.settings.MechDefAutoFixAgainstMaxFreeTonnage.Contains(mechDef.Description.Id))
+                {
+                    freeTonnage = maxFreeTonnage;
+                }
+                else
+                {
+                    var freeTonnageThreshold = AutoFixerFeature.settings.MechDefAutoFixInitialTonnageDiffThreshold;
+                    freeTonnage = Mathf.Min(maxFreeTonnage, initialTonnageGain+freeTonnageThreshold);
+                }
 
-                Control.mod.Logger.LogDebug( $" currentTotalTonnage={currentTotalTonnage}" +
-                                            $" freeTonnage={freeTonnage}" +
-                                            $" maxFreeTonnage={maxFreeTonnage}");
+                Control.mod.Logger.LogDebug($"freeTonnage={freeTonnage}" +
+                                            $" currentTotalTonnage={currentTotalTonnage}" +
+                                            $" maxFreeTonnage={maxFreeTonnage}" +
+                                            $" initialTonnageGain={initialTonnageGain}" +
+                                            $" initialGainSmaller={initialTonnageGain < maxFreeTonnage}");
             }
 
             //Control.mod.Logger.LogDebug("C maxEngineTonnage=" + maxEngineTonnage);
