@@ -11,10 +11,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             try
             {
-                if (item == null)
-                {
-                    MechLabPanel_InitWidgets_Patch.MechPropertiesWidget.ShowHighlightFrame(false);
-                }
+                MechPropertiesWidget.RefreshDropHighlights(__instance, item);
             }
             catch (Exception e)
             {

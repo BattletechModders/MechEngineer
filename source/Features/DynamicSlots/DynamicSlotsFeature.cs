@@ -33,7 +33,7 @@ namespace MechEngineer.Features.DynamicSlots
 
         internal void RefreshData(MechLabPanel mechLab)
         {
-            if (MechLabLocationWidget_SetData_Patch.Fillers.Count < MechDefBuilder.Locations.Length)
+            if (MechLabSlotsFixer.Fillers.Count < MechDefBuilder.Locations.Length)
             {
                 return;
             }
@@ -43,7 +43,7 @@ namespace MechEngineer.Features.DynamicSlots
             {
                 foreach (var location in MechDefBuilder.Locations)
                 {
-                    var fillers = MechLabLocationWidget_SetData_Patch.Fillers[location];
+                    var fillers = MechLabSlotsFixer.Fillers[location];
                     var widget = mechLab.GetLocationWidget((ArmorLocation)location); // by chance armorlocation = chassislocation for main locations
                     var adapter = new MechLabLocationWidgetAdapter(widget);
                     var used = adapter.usedSlots;

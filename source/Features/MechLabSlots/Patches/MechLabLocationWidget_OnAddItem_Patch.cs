@@ -12,7 +12,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             return instructions.MethodReplacer(
                 AccessTools.Method(typeof(Transform), nameof(Transform.SetParent), new []{typeof(Transform), typeof(bool)}),
-                AccessTools.Method(typeof(MechConfiguration), nameof(MechConfiguration.SetParent))
+                AccessTools.Method(typeof(MechPropertiesWidget), nameof(MechPropertiesWidget.OnAdditem_SetParent))
             );
         }
     }

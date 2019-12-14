@@ -19,17 +19,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             try
             {
-                if (cRef != null)
-                {
-                    if (__instance != MechLabPanel_InitWidgets_Patch.MechPropertiesWidget)
-                    {
-                        if (MechConfiguration.IsMechConfiguration(cRef?.Def))
-                        {
-                            cRef = null;
-                            MechLabPanel_InitWidgets_Patch.MechPropertiesWidget.ShowHighlightFrame(true);
-                        }
-                    }
-                }
+                MechPropertiesWidget.ShowHighlightFrame(__instance, ref cRef);
             }
             catch (Exception e)
             {

@@ -12,10 +12,8 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             try
             {
-                if (__instance == MechLabPanel_InitWidgets_Patch.MechPropertiesWidget)
+                if (MechPropertiesWidget.OnDrop(__instance, eventData))
                 {
-                    var mechLab = (MechLabPanel) __instance.parentDropTarget;
-                    mechLab.centerTorsoWidget.OnDrop(eventData);
                     return false;
                 }
             }

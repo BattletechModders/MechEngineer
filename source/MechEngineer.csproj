@@ -116,6 +116,13 @@
     <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsFeature.cs" />
     <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsSettings.cs" />
     <Compile Include="Features\DebugScreenshotMechs\Patches\SkirmishMechBayPanel_OnMechLabCancel_Patch.cs" />
+    <Compile Include="Features\DynamicSlots\DynamicSlotsExtensions.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabMoveMechRoleInfo.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabFixWidgetLayouts.cs" />
+    <Compile Include="Features\MechLabSlots\MechPropertiesWidget.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabAutoZoom.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabSlotsFixer.cs" />
+    <Compile Include="Features\MechLabSlots\WidgetLayout.cs" />
     <Compile Include="Features\TagManager\Patches\JSONSerializationUtility_RehydrateObjectFromDictionary_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosionsSettings.cs" />
     <Compile Include="Features\ComponentExplosions\TurretPrivateExtensions.cs" />
@@ -222,8 +229,8 @@
     <Compile Include="Features\Engines\StaticHandler\EngineHeat.cs" />
     <Compile Include="Features\Engines\StaticHandler\EngineMisc.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\ListElementController_BASE_NotListView_SetComponentTooltipData_Patch.cs" />
-    <Compile Include="Features\MechLabSlots\Patches\MechLabItemSlotElement_OnPointerEnter_Patch.cs" />
-    <Compile Include="Features\MechLabSlots\Patches\MechLabItemSlotElement_OnPointerExit_Patch.cs" />
+    <Compile Include="Features\DynamicSlots\Patches\MechLabItemSlotElement_OnPointerEnter_Patch.cs" />
+    <Compile Include="Features\DynamicSlots\Patches\MechLabItemSlotElement_OnPointerExit_Patch.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\MechLabPanel_CreateMechComponentItem_Patch.cs" />
     <Compile Include="Features\ComponentExplosions\CASEComponent.cs" />
     <Compile Include="Features\ComponentExplosions\ComponentExplosionsFeature.cs" />
