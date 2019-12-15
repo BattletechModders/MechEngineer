@@ -11,14 +11,8 @@ namespace MechEngineer.Features.MechLabSlots
         {
             this.widget = widget;
             layout_slots = widget.transform.GetChild("layout_slots");
-            if (layout_slots == null)
-            {
-                return;
-            }
-
             slots = layout_slots.GetChildren()
                 .Where(x => x.name.StartsWith("slot"))
-                .OrderByDescending(x => x.localPosition.y)
                 .ToList();
         }
 

@@ -44,7 +44,7 @@ namespace MechEngineer.Features.DynamicSlots
                     var adapter = new MechLabLocationWidgetAdapter(widget);
                     var used = adapter.usedSlots;
                     var start = location == ChassisLocations.CenterTorso ? MechLabSlotsFeature.settings.MechLabGeneralSlots : 0;
-                    ClearFillers(location);
+                    ClearFillers(widget);
                     for (var i = start; i < adapter.maxSlots; i++)
                     {
                         var slotIndex = location == ChassisLocations.CenterTorso ? i - MechLabSlotsFeature.settings.MechLabGeneralSlots : i;
@@ -55,7 +55,7 @@ namespace MechEngineer.Features.DynamicSlots
                             {
                                 throw new NullReferenceException();
                             }
-                            ShowFiller(location, slotIndex, reservedSlot);
+                            ShowFiller(widget, slotIndex, reservedSlot);
                         }
                     }
                 }
@@ -77,17 +77,17 @@ namespace MechEngineer.Features.DynamicSlots
             AddFillersToSlots(widgetLayout);
         }
 
-        internal static void ClearFillers(ChassisLocations location)
+        internal static void ClearFillers(MechLabLocationWidget widget)
         {
-            foreach (var filler in Fillers[location])
+            foreach (var filler in Fillers[widget.loadout.Location])
             {
                 filler.Hide();
             }
         }
 
-        internal static void ShowFiller(ChassisLocations location, int slotIndex, DynamicSlots reservedSlot)
+        internal static void ShowFiller(MechLabLocationWidget widget, int slotIndex, DynamicSlots reservedSlot)
         {
-            Control.mod.Logger.Log($"ShowFiller location={location} slotIndex={slotIndex}");
+            ChassisLocations location = widget.loadout.Location;
             Fillers[location][slotIndex].Show(reservedSlot);
         }
 
@@ -106,14 +106,12 @@ namespace MechEngineer.Features.DynamicSlots
             }
 
             var fillers = new List<Filler>();
-
             foreach (var slot in layout.slots)
             {
                 fillers.Add(new Filler(slot));
             }
 
             Fillers[location] = fillers;
-            Control.mod.Logger.Log($"Added {fillers.Count} fillers to {location}");
         }
 
         private class Filler : IDisposable
