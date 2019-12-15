@@ -62,7 +62,7 @@ namespace MechEngineer.Features.MechLabSlots
                 //emptySpace.transform.SetAsFirstSibling();
                 //emptySpace.SetActive(true);
 
-                MechLabSlotsFixer.ModifySlotCount(layout, MechLabSlotsFeature.settings.MechLabGeneralSlots);
+                MechLabSlotsFixer.ModifyLayoutSlotCount(layout, MechLabSlotsFeature.settings.MechLabGeneralSlots);
             }
 
             {

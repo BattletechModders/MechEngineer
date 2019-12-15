@@ -25,7 +25,7 @@ namespace MechEngineer.Features.MechLabSlots
             if (layout_details != null)
             {
                 var go = layout_details.gameObject;
-                go.EnableLayout();
+                MechLabFixWidgetLayouts.EnableLayout(go);
                 go.GetComponent<LayoutElement>().ignoreLayout = true;
 
                 var leftArm = OBJ_mech.GetChild("LeftArm");

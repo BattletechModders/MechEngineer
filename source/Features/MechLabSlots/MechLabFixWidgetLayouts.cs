@@ -22,7 +22,7 @@ namespace MechEngineer.Features.MechLabSlots
             {
                 {
                     var go = container.gameObject;
-                    go.EnableLayout();
+                    EnableLayout(go);
                     var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
                     component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
                     component.enabled = true;
@@ -35,18 +35,65 @@ namespace MechEngineer.Features.MechLabSlots
                         continue;
                     }
 
-                    widget.gameObject.EnableLayout();
-                    widget.GetChild("layout_slots").gameObject.EnableLayout();
+                    EnableLayout(widget.gameObject);
+                    EnableLayout(widget.GetChild("layout_slots").gameObject);
                 }
             }
 
             {
                 var go = OBJ_mech.gameObject;
-                go.EnableLayout();
+                EnableLayout(go);
                 var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
                 component.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
                 component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
                 component.enabled = true;
+            }
+        }
+
+        internal static void EnableLayout(GameObject gameObject)
+        {
+            {
+                var component = gameObject.GetComponent<LayoutElement>();
+                if (component == null)
+                {
+                    component = gameObject.AddComponent<LayoutElement>();
+                }
+                component.ignoreLayout = false;
+                component.enabled = true;
+            }
+
+            {
+                var component = gameObject.GetComponent<HorizontalLayoutGroup>();
+                if (component != null)
+                {
+                    component.childForceExpandHeight = false;
+                    component.childAlignment = TextAnchor.UpperCenter;
+                    component.enabled = true;
+                }
+            }
+
+            {
+                var component = gameObject.GetComponent<VerticalLayoutGroup>();
+                if (component != null)
+                {
+                    component.enabled = true;
+                }
+            }
+
+            {
+                var component = gameObject.GetComponent<GridLayoutGroup>();
+                if (component != null)
+                {
+                    component.enabled = true;
+                }
+            }
+
+            {
+                var component = gameObject.GetComponent<ContentSizeFitter>();
+                if (component != null)
+                {
+                    component.enabled = true;
+                }
             }
         }
     }
