@@ -35,29 +35,41 @@ namespace MechEngineer.Features.DynamicSlots
 
         internal void RefreshData(MechLabPanel mechLab)
         {
-            var slots = new MechDefBuilder(mechLab.activeMechDef);
-            using (var reservedSlots = slots.GetReservedSlots().GetEnumerator())
+            var builder = new MechDefBuilder(mechLab.activeMechDef);
+            var totalFree = builder.TotalFree;
+
+            foreach (var location in MechDefBuilder.Locations)
             {
-                foreach (var location in MechDefBuilder.Locations)
+                 // armorlocation = chassislocation for main locations
+                var widget = mechLab.GetLocationWidget((ArmorLocation)location);
+                ClearFillers(widget);
+
+                var adapter = new MechLabLocationWidgetAdapter(widget);
+                var used = adapter.usedSlots;
+                var max = adapter.maxSlots;
+                var free = Mathf.Max(max - used, 0);
+
+                if (free == 0)
                 {
-                    var widget = mechLab.GetLocationWidget((ArmorLocation)location); // by chance armorlocation = chassislocation for main locations
-                    var adapter = new MechLabLocationWidgetAdapter(widget);
-                    var used = adapter.usedSlots;
-                    var start = location == ChassisLocations.CenterTorso ? MechLabSlotsFeature.settings.MechLabGeneralSlots : 0;
-                    ClearFillers(widget);
-                    for (var i = start; i < adapter.maxSlots; i++)
-                    {
-                        var slotIndex = location == ChassisLocations.CenterTorso ? i - MechLabSlotsFeature.settings.MechLabGeneralSlots : i;
-                        if (i >= used && reservedSlots.MoveNext())
-                        {
-                            var reservedSlot = reservedSlots.Current;
-                            if (reservedSlot == null)
-                            {
-                                throw new NullReferenceException();
-                            }
-                            ShowFiller(widget, slotIndex, reservedSlot);
-                        }
-                    }
+                    continue;
+                }
+
+                var dynUsage = free - totalFree;
+                if (dynUsage <= 0)
+                {
+                    continue;
+                }
+
+                var start = used;
+                if (location == ChassisLocations.CenterTorso)
+                {
+                    start += MechLabSlotsFeature.settings.MechLabGeneralSlots;
+                }
+
+                for (var i = start; i < used + dynUsage; i++)
+                {
+                    var slotIndex = location == ChassisLocations.CenterTorso ? i - MechLabSlotsFeature.settings.MechLabGeneralSlots : i;
+                    ShowFiller(widget, slotIndex);
                 }
             }
         }
@@ -85,10 +97,10 @@ namespace MechEngineer.Features.DynamicSlots
             }
         }
 
-        internal static void ShowFiller(MechLabLocationWidget widget, int slotIndex, DynamicSlots reservedSlot)
+        internal static void ShowFiller(MechLabLocationWidget widget, int slotIndex)
         {
             ChassisLocations location = widget.loadout.Location;
-            Fillers[location][slotIndex].Show(reservedSlot);
+            Fillers[location][slotIndex].Show();
         }
 
         private static Dictionary<ChassisLocations, List<Filler>> Fillers = new Dictionary<ChassisLocations, List<Filler>>();
@@ -119,64 +131,21 @@ namespace MechEngineer.Features.DynamicSlots
             private readonly GameObject gameObject;
             private readonly MechLabItemSlotElement element;
 
-            internal void Show(DynamicSlots dynamicSlots)
+            internal void Show()
             {
-                var def = dynamicSlots.Def;
-                var @ref = new MechComponentRef(def.Description.Id, null, def.ComponentType, ChassisLocations.None) {DataManager = def.DataManager};
+                var dataManager = UnityGameInstance.BattleTechGame.DataManager;
+                var id = settings.DynamicSlotComponentId;
+                var type = settings.DynamicSlotComponentType;
+                var @ref = new MechComponentRef(id, null, type, ChassisLocations.None) {DataManager = dataManager};
                 @ref.RefreshComponentDef();
-                element.SetData(@ref, ChassisLocations.None, def.DataManager, null);
+                element.SetData(@ref, ChassisLocations.None, dataManager, null);
                 
-                var adapter = new MechLabItemSlotElementAdapter(element);
-
-                if (dynamicSlots.NameText != null)
+                if (settings.ShowFixedEquipmentOverlay)
                 {
-                    adapter.nameText.text = dynamicSlots.NameText;
+                    var adapter = new MechLabItemSlotElementAdapter(element);
+                    adapter.fixedEquipmentOverlay.gameObject.SetActive(true);
                 }
 
-                if (dynamicSlots.BonusAText == "")
-                {
-                    adapter.bonusTextA.gameObject.SetActive(false);
-                }
-                else if (dynamicSlots.BonusAText != null)
-                {
-                    adapter.bonusTextA.text = dynamicSlots.BonusAText;
-                    adapter.bonusTextA.gameObject.SetActive(true);
-                }
-                
-                if (dynamicSlots.BonusBText == "")
-                {
-                    adapter.bonusTextB.gameObject.SetActive(false);
-                }
-                else if (dynamicSlots.BonusBText != null)
-                {
-                    adapter.bonusTextB.text = dynamicSlots.BonusBText;
-                    adapter.bonusTextB.gameObject.SetActive(true);
-                }
-
-                if (!string.IsNullOrEmpty(dynamicSlots.BackgroundColor))
-                {
-                    adapter.backgroundColor.SetColorFromString(dynamicSlots.BackgroundColor);
-                }
-
-                if (dynamicSlots.ShowIcon.HasValue)
-                {
-                    adapter.icon.gameObject.SetActive(dynamicSlots.ShowIcon.Value);
-                }
-
-                if (dynamicSlots.ShowFixedEquipmentOverlay.HasValue)
-                {
-                    adapter.fixedEquipmentOverlay.gameObject.SetActive(dynamicSlots.ShowFixedEquipmentOverlay.Value);
-                }
-
-                {
-                    adapter.spacers[0].SetActive(true);
-                    foreach (var spacer in adapter.spacers)
-                    {
-                        spacer.SetActive(false);
-                    }
-                    element.thisRectTransform.sizeDelta = new Vector2(element.thisRectTransform.sizeDelta.x, 32f * 1);
-
-                }
                 gameObject.SetActive(true);
                 element.SetDraggable(false);
             }
