@@ -18,6 +18,8 @@ namespace MechEngineer.Features.MechLabSlots
         {
             if (PropertiesWidget != null)
             {
+                PropertiesWidget.gameObject.transform.SetParent(mechLabPanel.rightArmWidget.transform, false);
+                PropertiesWidget.Init(mechLabPanel);
                 return;
             }
 

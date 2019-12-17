@@ -6,15 +6,8 @@ namespace MechEngineer.Features.MechLabSlots
 {
     internal class MechLabFixWidgetLayouts
     {
-        private static bool applied = false;
         internal static void FixWidgetLayouts(MechLabPanel mechLabPanel)
         {
-            if (applied)
-            {
-                return;
-            }
-            applied = true;
-
             var Representation = mechLabPanel.transform.GetChild("Representation");
             var OBJ_mech = Representation.GetChild("OBJ_mech");
 

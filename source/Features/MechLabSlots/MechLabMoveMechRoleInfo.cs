@@ -6,15 +6,8 @@ namespace MechEngineer.Features.MechLabSlots
 {
     internal class MechLabMoveMechRoleInfo
     {
-        private static bool applied;
         internal static void MoveMechRoleInfo(MechLabPanel mechLabPanel)
         {
-            if (applied)
-            {
-                return;
-            }
-            applied = true;
-
             var Representation = mechLabPanel.transform.GetChild("Representation");
             var OBJ_mech = Representation.GetChild("OBJ_mech");
 
