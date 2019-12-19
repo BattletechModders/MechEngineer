@@ -65,7 +65,9 @@ namespace MechEngineer.Features.DynamicSlots
                 {
                     return diff;
                 }
-                return location.CompareTo(other.location);
+                var index = Array.IndexOf(settings.LocationPriorityOrder, location);
+                var otherIndex = Array.IndexOf(settings.LocationPriorityOrder, other.location);
+                return -index.CompareTo(otherIndex);
             }
             
             internal bool currentFreeSlotFixed => currentFreeSlots > finalTotalFree;
