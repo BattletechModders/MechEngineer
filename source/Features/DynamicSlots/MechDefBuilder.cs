@@ -21,7 +21,7 @@ namespace MechEngineer.Features.DynamicSlots
         internal int TotalFree => Mathf.Max(TotalMax - TotalUsage - Reserved, 0);
 
         internal readonly List<DynamicSlots> DynamicSlots;
-        private int Reserved => DynamicSlots.Sum(c => c.ReservedSlots);
+        internal int Reserved => DynamicSlots.Sum(c => c.ReservedSlots);
         
         internal MechDefBuilder(MechDef mechDef) : this (mechDef.Chassis, mechDef.Inventory.ToList())
         {
@@ -46,6 +46,17 @@ namespace MechEngineer.Features.DynamicSlots
                 LocationUsage[location] = sum;
                 TotalUsage += sum;
                 //Control.mod.Logger.LogDebug($"location={location} sum={sum}");
+            }
+        }
+        
+        internal IEnumerable<DynamicSlots> GetReservedSlots()
+        {
+            foreach (var reservedSlot in DynamicSlots)
+            {
+                for (var i = 0; i < reservedSlot.ReservedSlots; i++)
+                {
+                    yield return reservedSlot;
+                }
             }
         }
 
@@ -185,7 +196,7 @@ namespace MechEngineer.Features.DynamicSlots
             return Chassis.GetLocationDef(location).InventorySlots;
         }
 
-        private int GetFreeSlots(ChassisLocations location)
+        internal int GetFreeSlots(ChassisLocations location)
         {
             return GetMaxSlots(location) - GetUsedSlots(location);
         }

@@ -116,7 +116,6 @@
     <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsFeature.cs" />
     <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsSettings.cs" />
     <Compile Include="Features\DebugScreenshotMechs\Patches\SkirmishMechBayPanel_OnMechLabCancel_Patch.cs" />
-    <Compile Include="Features\DynamicSlots\DynamicSlotPlaceholder.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotsExtensions.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMoveMechRoleInfo.cs" />
     <Compile Include="Features\MechLabSlots\MechLabFixWidgetLayouts.cs" />
