@@ -30,7 +30,8 @@ namespace MechEngineer.Features.OmniSlots
             }
             else
             {
-                throw new System.Exception("nope");
+                Control.mod.Logger.LogWarning($"Unsupported weapon category for {value.ID}");
+                return WeaponCategoryEnumeration.GetNotSetValue();
             }
         }
 
