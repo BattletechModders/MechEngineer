@@ -4,6 +4,7 @@ using Harmony;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace MechEngineer.Features.DebugScreenshotMechs
@@ -33,10 +34,17 @@ namespace MechEngineer.Features.DebugScreenshotMechs
                 {
                     mechDefsIterator = panel.allMechs.GetEnumerator();
                 }
-                if (mechDefsIterator.MoveNext())
+                while (mechDefsIterator.MoveNext())
                 {
-                    panel.SelectMech(mechDefsIterator.Current);
+                    var mechDef = mechDefsIterator.Current;
+                    var screenshotPath = DebugScreenshotMechsFeature.Shared.ScreenshotPath(mechDef);
+                    if (File.Exists(screenshotPath))
+                    {
+                        continue;
+                    }
+                    panel.SelectMech(mechDef);
                     panel.OnEditMechClicked();
+                    break;
                 }
             }
             catch (Exception e)
