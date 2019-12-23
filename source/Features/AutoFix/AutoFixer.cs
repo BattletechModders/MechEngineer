@@ -116,7 +116,7 @@ namespace MechEngineer.Features.AutoFix
             Engine maxEngine = null;
             {
                 //var heatSinks = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.HeatSink && x.Def.Is<EngineHeatSinkDef>()).ToList();
-                var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet);
+                var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
                 var engines = new LinkedList<Engine>();
                 
                 foreach (var coreDef in engineCoreDefs)
