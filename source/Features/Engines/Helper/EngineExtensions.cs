@@ -21,10 +21,5 @@ namespace MechEngineer.Features.Engines.Helper
         {
             return mechDef.Inventory.Any(x => x.DamageLevel == ComponentDamageLevel.Destroyed && x.Is<EngineCoreDef>());
         }
-
-        internal static bool IsImprovedJumpJet(this MechComponentDef def)
-        {
-            return def.HasComponentTag("improved_jj");
-        }
     }
 }

@@ -117,6 +117,9 @@
     <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsSettings.cs" />
     <Compile Include="Features\DebugScreenshotMechs\Patches\SkirmishMechBayPanel_OnMechLabCancel_Patch.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotsExtensions.cs" />
+    <Compile Include="Features\Engines\Patches\MechComponent_InitPassiveSelfEffects_Patch.cs" />
+    <Compile Include="Features\Engines\Patches\Mech_JumpDistance_Patch.cs" />
+    <Compile Include="Features\Engines\StaticHandler\EngineJumpJet.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMoveMechRoleInfo.cs" />
     <Compile Include="Features\MechLabSlots\MechLabFixWidgetLayouts.cs" />
     <Compile Include="Features\MechLabSlots\MechPropertiesWidget.cs" />

@@ -58,7 +58,7 @@ namespace MechEngineer.Features.Engines.Patches
                 var movement = def?.GetEngineMovement();
                 if (movement != null)
                 {
-                    return movement.RunSpeed;
+                    return movement.RunMaxSpeed;
                 }
             }
             catch (Exception e)

@@ -71,8 +71,8 @@ namespace MechEngineer.Features.Engines
             tooltip.detailText.text = "";
 
             tooltip.detailText.text += "<i>Speeds</i>" +
-                                       "   Cruise <b>" + movement.WalkSpeed + "</b>" +
-                                       " / Top <b>" + movement.RunSpeed + "</b>";
+                                       "   Cruise <b>" + movement.WalkMaxSpeed + "</b>" +
+                                       " / Top <b>" + movement.RunMaxSpeed + "</b>";
 
             tooltip.detailText.text += "\r\n" +
                                        "<i>Weights [Ton]</i>" +

@@ -1,6 +1,8 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
+using Localize;
+using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Engines.StaticHandler;
 using UnityEngine;
 
@@ -21,15 +23,23 @@ namespace MechEngineer.Features.Engines.Patches
                 }
 
                 var tooltipData = __instance;
+                void ReplaceDistance(string text, float meter)
+                {
+                    var meters = Mathf.FloorToInt(meter);
+                    var hexWidth = MechStatisticsRules.Combat.MoveConstants.ExperimentalGridDistance;
+                    var hexes = Mathf.FloorToInt(meters / hexWidth);
+                    var translatedText = Strings.T(text);
+                    var translatedValue = Strings.T("{0}m / {1} hex", meters, hexes);
+                    tooltipData.dataList.Remove(translatedText);
+                    tooltipData.dataList.Add(translatedText, translatedValue);
+                }
 
-                tooltipData.dataList.Remove("Max Move");
-                tooltipData.dataList.Remove("Max Sprint");
-                
-                var combat = CombatGameConstants.GetInstance(UnityGameInstance.BattleTechGame);
-                var hexWidth = combat.MoveConstants.ExperimentalGridDistance;
-                __instance.dataList.Add("Max Move", $"{movement.WalkSpeed}m / {Mathf.Round(movement.WalkSpeed / hexWidth)} hex");
-                __instance.dataList.Add("Max Sprint", $"{movement.RunSpeed}m / {Mathf.Round(movement.RunSpeed / hexWidth)} hex");
-                __instance.dataList.Add("TT Walk MP", $"{movement.MovementPoint}");
+                ReplaceDistance("Max Move", movement.WalkMaxSpeed);
+                ReplaceDistance("Max Sprint", movement.RunMaxSpeed);
+                var jumpCapacity = EngineJumpJet.GetJumpCapacity(def);
+                var jumpDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
+                ReplaceDistance("Max Jump", jumpDistance);
+                tooltipData.dataList.Add(Strings.T("TT Walk MP"), $"{movement.WalkMaxMovementPoint}");
             }
             catch (Exception e)
             {

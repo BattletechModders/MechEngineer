@@ -1,6 +1,5 @@
 ﻿using BattleTech;
 using BattleTech.UI;
-using CustomComponents;
 using MechEngineer.Features.Engines.Helper;
 using UnityEngine;
 
@@ -8,7 +7,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
 {
     internal static class EngineMisc
     {
-        internal static void InitEffectStats(Mech mech)
+        internal static void OverrideInitEffectStats(Mech mech)
         {
             var engine = mech.MechDef.GetEngine();
 
@@ -21,8 +20,8 @@ namespace MechEngineer.Features.Engines.StaticHandler
 
             var movement = engine.CoreDef.GetMovement(tonnage);
 
-            mech.StatCollection.GetStatistic("WalkSpeed").SetValue(movement.WalkSpeed);
-            mech.StatCollection.GetStatistic("RunSpeed").SetValue(movement.RunSpeed);
+            mech.StatCollection.GetStatistic("WalkSpeed").SetValue(movement.WalkMaxSpeed);
+            mech.StatCollection.GetStatistic("RunSpeed").SetValue(movement.RunMaxSpeed);
         }
 
         internal static EngineMovement GetEngineMovement(this MechDef mechDef)
@@ -60,7 +59,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
             }
             else
             {
-                widget.totalJumpjets = engine.CoreDef.GetMovement(mechLab.activeMechDef.Chassis.Tonnage).JumpJetCount;
+                widget.totalJumpjets = engine.CoreDef.GetMovement(mechLab.activeMechDef.Chassis.Tonnage).JumpJetMaxCount;
             }
             widget.totalJumpjets = Mathf.Min(widget.totalJumpjets, mechLab.activeMechDef.Chassis.MaxJumpjets);
 

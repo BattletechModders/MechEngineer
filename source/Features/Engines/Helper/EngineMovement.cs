@@ -8,16 +8,20 @@ namespace MechEngineer.Features.Engines.Helper
     {
         internal EngineMovement(int rating, float tonnage)
         {
-            MovementPoint = rating / tonnage;
-            WalkSpeed = CalcWalkDistance();
-            RunSpeed = CalcSprintDistance();
-            JumpJetCount = CalcJumpJets();
+            WalkMaxMovementPoint = rating / tonnage;
         }
 
-        internal float MovementPoint { get; }
-        internal float WalkSpeed { get; }
-        internal float RunSpeed { get; }
-        internal int JumpJetCount { get; }
+        internal EngineMovement(float walkMovementPoint)
+        {
+            WalkMaxMovementPoint = walkMovementPoint;
+        }
+
+        internal float WalkMaxMovementPoint { get; }
+
+        internal float WalkMaxSpeed => ConvertMPToGameDistance(WalkMaxMovementPoint);
+        internal float RunMaxMovementPoint => WalkMaxMovementPoint * EngineFeature.settings.RunMultiplier;
+        internal float RunMaxSpeed => ConvertMPToGameDistance(RunMaxMovementPoint);
+        internal int JumpJetMaxCount => Mathf.FloorToInt(WalkMaxMovementPoint);
 
         internal bool Mountable
         {
@@ -30,51 +34,26 @@ namespace MechEngineer.Features.Engines.Helper
 
                 var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
 
-                if (RunSpeed < constants.MinSprintFactor)
+                if (RunMaxSpeed < constants.MinSprintFactor)
                 {
                     return false;
                 }
 
-                if (RunSpeed > constants.MaxSprintFactor)
                 {
-                    return false;
+                    var lowerTier = new EngineMovement(Mathf.FloorToInt(WalkMaxMovementPoint) - 1);
+                    if (lowerTier.RunMaxSpeed >= constants.MaxSprintFactor)
+                    {
+                        return false;
+                    }
                 }
 
                 return true;
             }
         }
 
-        private int CalcJumpJets()
-        {
-            return EngineFeature.settings.JJRoundUp ? Mathf.CeilToInt(MovementPoint) : Mathf.FloorToInt(MovementPoint);
-        }
-
-        private float CalcWalkDistance()
-        {
-            // numbers the result of the best fit line for the game movement
-            var WalkSpeedFixed = 26.05f;
-            var WalkSpeedMult = 23.14f;
-
-            if (EngineFeature.settings.UseGameWalkValues)
-            {
-                return RoundBy5(WalkSpeedFixed + MovementPoint * WalkSpeedMult);
-            }
-
-            return RoundBy5(MovementPoint * EngineFeature.settings.TTWalkMultiplier);
-        }
-
-        private float CalcSprintDistance()
-        {
-            // numbers the result of the best fit line for the game movement
-            var RunSpeedFixed = 52.43f;
-            var RunSpeedMult = 37.29f;
-
-            if (EngineFeature.settings.UseGameWalkValues)
-            {
-                return RoundBy5(RunSpeedFixed + MovementPoint * RunSpeedMult);
-            }
-
-            return RoundBy5(MovementPoint * EngineFeature.settings.TTSprintMultiplier);
+        internal static float ConvertMPToGameDistance(float movementPoints) {
+            var multiplier = EngineFeature.settings.MovementPointDistanceMultiplier;
+            return RoundBy5(movementPoints * multiplier);
         }
 
         private static float RoundBy5(float value)

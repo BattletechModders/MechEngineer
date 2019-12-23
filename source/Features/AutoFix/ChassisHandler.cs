@@ -73,7 +73,7 @@ namespace MechEngineer.Features.AutoFix
                 var coreDef = new EngineCoreDef {Rating = AutoFixerFeature.settings.ChassisDefMaxJumpjetsRating };
                 var maxCount = Mathf.Min(
                     AutoFixerFeature.settings.ChassisDefMaxJumpjetsCount,
-                    coreDef.GetMovement(chassisDef.Tonnage).JumpJetCount
+                    coreDef.GetMovement(chassisDef.Tonnage).JumpJetMaxCount
                 );
                 var info = typeof(ChassisDef).GetProperty("MaxJumpjets");
                 var value = Convert.ChangeType(maxCount, info.PropertyType);

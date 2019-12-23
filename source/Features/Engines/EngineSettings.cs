@@ -23,33 +23,14 @@ namespace MechEngineer.Features.Engines
         public int EngineMissingFallbackHeatSinkCapacity = 30;
         public string EngineMissingFallbackHeatSinkCapacityDescription = "Heat sink capacity if no engine is detected.";
 
-        /* 
-            using the default game values, slow mechs move a bit faster, and fast mechs move a bit slower
-            Examples if set to true:
-                Walk 2  70 / 125
-                Walk 3  95 / 165
-                Walk 4 120 / 200
-                Walk 5 140 / 240
-                Walk 6 165 / 275
-                Walk 7 190 / 315
-                Walk 8 210 / 350
-        */
-        public bool UseGameWalkValues = true;
-        public string UseGameWalkValuesDescription = "Set to false to use more TT like walk values.";
+        public float MovementPointDistanceMultiplier = 30f;
+        public string MovementPointDistanceMultiplierDescription => "The distance of a TT movement point, 24 is vanilla CombatGameConstants.ExperimentalGridDistance .";
 
-        // example: if false, TT walk speed of 2.1 allows 2 jump jets, if true, it allows 3 jump jets
-        public bool JJRoundUp = false;
-        public string JJRoundUpDescription = "The allowed number of jump jets is rounded up or down.";
+        public float RunMultiplier = 1.5f;
+        public string RunMultiplierDescription => "How much faster running is than walking.";
 
-        /*
-            not sure why you would want to change these, but they are set here
-            they are the multiples that translate TT movement values to game movement values
-            Example:
-                A griffin that walks 5 would walk 5 * 30 = 150 and sprint 5 * 50 = 250
-            NOTE: if you have the UseGameWalkValues set, the exact values are then changed based on a linear equasion
-        */
-        public float TTWalkMultiplier = 30f;
-        public float TTSprintMultiplier = 50f;
+        public bool AutoConvertJumpCapacityInDefToStat = true;
+        public string AutoConvertJumpCapacityInDefToStatDescription => "All jump jets that have a JumpCapacity definied in the Def will have it auto-converted to the JumpCapacity stat.";
 
         public bool LimitEngineCoresToTonnage = true;
         public string IgnoreLimitEngineChassisTag = "";
