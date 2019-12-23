@@ -99,7 +99,6 @@ namespace MechEngineer.Features.MechLabSlots
         internal static bool IsMechConfiguration(MechComponentDef def)
         {
             return MechLabSlotsFeature.settings.MechLabGeneralWidgetEnabled && def.Is<MechConfiguration>();
-            //return def.Is<Flags>(out var f) && f.IsSet("mech_configuration");
         }
 
         internal static bool OnDrop(MechLabLocationWidget widget, PointerEventData eventData)

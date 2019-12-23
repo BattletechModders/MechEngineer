@@ -6,6 +6,7 @@ using CustomComponents;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
+using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
@@ -115,7 +116,7 @@ namespace MechEngineer.Features.AutoFix
             Engine maxEngine = null;
             {
                 //var heatSinks = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.HeatSink && x.Def.Is<EngineHeatSinkDef>()).ToList();
-                var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
+                var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet && !x.Def.IsImprovedJumpJet()).ToList();
                 var engines = new LinkedList<Engine>();
                 
                 foreach (var coreDef in engineCoreDefs)

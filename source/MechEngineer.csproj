@@ -218,7 +218,6 @@
     <Compile Include="Features\Engines\Helper\EngineMovement.cs" />
     <Compile Include="Features\Engines\Helper\EngineSearcher.cs" />
     <Compile Include="Features\Engines\Patches\Contract_GenerateSalvage_Patch.cs" />
-    <Compile Include="Features\Engines\Patches\MechLabInventoryWidget_RefreshJumpJetOptions_Patch.cs" />
     <Compile Include="Features\Engines\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
     <Compile Include="Features\Engines\Patches\MechStatisticsRules_CalculateHeatEfficiencyStat_Patch.cs" />
     <Compile Include="Features\Engines\Patches\MechStatisticsRules_CalculateMovementStat_Patch.cs" />
@@ -269,6 +268,7 @@
     <Compile Include="Features\TurretMechComponents\TurretMechComponentsSettings.cs" />
     <Compile Include="Features\TurretMechComponents\Patches\Turret_InitStats_Patch.cs" />
     <Compile Include="Features\TurretMechComponents\TurretMechComponentsFeature.cs" />
+    <Compile Include="Helper\MechComponentDefExtensions.cs" />
     <Compile Include="Helper\EnumHelper.cs" />
     <Compile Include="Helper\ColorExtensions.cs" />
     <Compile Include="Helper\MechExtensions.cs" />
