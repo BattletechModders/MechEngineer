@@ -25,7 +25,7 @@ namespace MechEngineer.Features.Engines.Handler
             }
 
             {
-                var count = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet && !c.Def.IsImprovedJumpJet());
+                var count = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
                 var max = engine.CoreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
 
                 if (count > max)
