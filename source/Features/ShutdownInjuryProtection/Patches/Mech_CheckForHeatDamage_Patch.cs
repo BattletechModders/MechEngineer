@@ -21,7 +21,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
                 {
                     return;
                 }
-                if (mech.StatCollection.ReceiveHeatDamageInjury())
+                if (mech.StatCollection.ReceiveHeatDamageInjury().Get())
                 {
                     mech.pilot?.SetNeedsInjury(Pilot_InjuryReasonDescription_Patch.InjuryReasonOverheated);
                 }

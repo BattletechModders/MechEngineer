@@ -23,8 +23,11 @@ namespace MechEngineer.Features.Engines
         public int EngineMissingFallbackHeatSinkCapacity = 30;
         public string EngineMissingFallbackHeatSinkCapacityDescription = "Heat sink capacity if no engine is detected.";
 
-        public float MovementPointDistanceMultiplier = 30f;
+        public float MovementPointDistanceMultiplier = 24f;
         public string MovementPointDistanceMultiplierDescription => "The distance of a TT movement point, 24 is vanilla CombatGameConstants.ExperimentalGridDistance .";
+
+        public float MinimumJumpDistanceForHeat = 3 * 24f;
+        public string MinimumJumpDistanceForHeatDescription => "The minimum distance to use for calculating jump heat, any jumps shorter will still produce the equivalent heat. CBT Rule: 3 MP.";
 
         public float RunMultiplier = 1.5f;
         public string RunMultiplierDescription => "How much faster running is than walking.";

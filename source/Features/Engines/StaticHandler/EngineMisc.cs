@@ -20,8 +20,8 @@ namespace MechEngineer.Features.Engines.StaticHandler
 
             var movement = engine.CoreDef.GetMovement(tonnage);
 
-            mech.StatCollection.GetStatistic("WalkSpeed").SetValue(movement.WalkMaxSpeed);
-            mech.StatCollection.GetStatistic("RunSpeed").SetValue(movement.RunMaxSpeed);
+            mech.StatCollection.WalkSpeed().Set(movement.WalkMaxSpeed);
+            mech.StatCollection.RunSpeed().Set(movement.RunMaxSpeed);
         }
 
         internal static EngineMovement GetEngineMovement(this MechDef mechDef)

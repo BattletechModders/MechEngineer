@@ -1,6 +1,7 @@
 ﻿using BattleTech;
 using MechEngineer.Features.Engines.Helper;
 using System.Linq;
+using UnityEngine;
 
 namespace MechEngineer.Features.Engines.StaticHandler
 {
@@ -29,6 +30,33 @@ namespace MechEngineer.Features.Engines.StaticHandler
                 return;
             }
 
+            {
+                var statisticData = new StatisticEffectData()
+                {
+                    statName = mech.StatCollection.JumpCapacity().Key,
+                    operation = StatCollection.StatOperation.Float_Add,
+                    modValue = jumpJetDef.JumpCapacity.ToString(),
+                    modType = "System.Single"
+                };
+
+                CreatePassiveEffect(mech, mechComponent, statisticData);
+            }
+
+            {
+                var statisticData = new StatisticEffectData()
+                {
+                    statName = mech.StatCollection.JumpMaxHeat().Key,
+                    operation = StatCollection.StatOperation.Float_Add,
+                    modValue = 1.ToString(),
+                    modType = "System.Single"
+                };
+
+                CreatePassiveEffect(mech, mechComponent, statisticData);
+            }
+        }
+
+        internal static void CreatePassiveEffect(Mech mech, MechComponent mechComponent, StatisticEffectData statisticData)
+        {
             var effectData = new EffectData
             {
                 effectType = EffectType.StatisticEffect,
@@ -40,43 +68,50 @@ namespace MechEngineer.Features.Engines.StaticHandler
                 duration = -1,
                 stackLimit = -1
             };
-
+             
             effectData.targetingData = new EffectTargetingData
             {
                 effectTriggerType = EffectTriggerType.Passive,
                 effectTargetType = EffectTargetType.Creator
             };
             
-            effectData.Description = new BaseDescriptionDef("JumpCapacity", "JumpCapacity", "", null);
+            effectData.Description = new BaseDescriptionDef(statisticData.statName, statisticData.statName, "", null);
 
-            effectData.statisticData = new StatisticEffectData()
-            {
-                statName = JumpCapacityStatisticKey,
-                operation = StatCollection.StatOperation.Float_Add,
-                modValue = jumpJetDef.JumpCapacity.ToString(),
-                modType = "System.Single"
-            };
+            effectData.statisticData = statisticData;
 
 			var effectID = string.Format("PassiveEffect_{0}_{1}_JumpCapacity", mech.GUID, mechComponent.uid);
             mech.Combat.EffectManager.CreateEffect(effectData, effectID, -1, mech, mech, default, 0, false);
 			mechComponent.createdEffectIDs.Add(effectID);
         }
 
-        internal static float CalcJumpDistance(Mech mech)
+        internal static int CalcJumpHeat(Mech mech, float jumpDistance)
+        {
+            var jumpCapacity = mech.StatCollection.JumpCapacity().Get();
+            var maxJumpDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
+
+            jumpDistance = Mathf.Max(jumpDistance, EngineFeature.settings.MinimumJumpDistanceForHeat);
+            var jumpRatio = jumpDistance / maxJumpDistance;
+            
+            var jumpMaxHeat = mech.StatCollection.JumpMaxHeat().Get();
+            var jumpHeat = jumpRatio * jumpMaxHeat;
+            return Mathf.CeilToInt(jumpHeat);
+        }
+
+        internal static float CalcMaxJumpDistance(Mech mech)
         {
             if (!mech.IsOperational || mech.IsProne)
 			{
                 return 0f;
 			}
 
-            var jumpCapacity = GetJumpCapacity(mech);
+            var jumpCapacity = mech.StatCollection.JumpCapacity().Get();
             if (jumpCapacity < 0.1)
             {
                 return 0f;
             }
             var jumpjetDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
 
-            var mechJumpDistanceMultiplier = mech.StatCollection.GetValue<float>("JumpDistanceMultiplier");
+            var mechJumpDistanceMultiplier = mech.StatCollection.JumpDistanceMultiplier().Get();
             return jumpjetDistance * mechJumpDistanceMultiplier;
         }
 
@@ -87,16 +122,10 @@ namespace MechEngineer.Features.Engines.StaticHandler
                 .Sum(x => x?.JumpCapacity ?? 0);
         }
 
-        internal static void CreateJumpCapacity(Mech mech)
+        internal static void InitEffectStats(Mech mech)
         {
-            mech.StatCollection.AddStatistic<float>(JumpCapacityStatisticKey, 0);
+            mech.StatCollection.JumpCapacity().Create(0);
+            mech.StatCollection.JumpMaxHeat().Create(0);
         }
-
-        private static float GetJumpCapacity(Mech mech)
-        {
-            return mech.StatCollection.GetValue<float>(JumpCapacityStatisticKey);
-        }
-
-        private const string JumpCapacityStatisticKey = "JumpCapacity";
     }
 }

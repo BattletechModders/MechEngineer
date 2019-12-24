@@ -53,12 +53,12 @@ namespace MechEngineer.Features.Engines.Helper
 
         internal static float ConvertMPToGameDistance(float movementPoints) {
             var multiplier = EngineFeature.settings.MovementPointDistanceMultiplier;
-            return RoundBy5(movementPoints * multiplier);
+            return RoundBy1(movementPoints * multiplier);
         }
 
-        private static float RoundBy5(float value)
+        private static float RoundBy1(float value)
         {
-            return PrecisionUtils.RoundDown(value, 5);
+            return PrecisionUtils.RoundDown(value, 1);
         }
     }
 }

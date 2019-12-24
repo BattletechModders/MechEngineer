@@ -102,6 +102,8 @@
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesSettings.cs" />
     <Compile Include="Features\ArmorStructureChanges\Patches\Mech_GetMaxArmor_Patch.cs" />
     <Compile Include="Features\ArmorStructureChanges\Patches\Mech_GetMaxStructure_Patch.cs" />
+    <Compile Include="Features\ArmorStructureChanges\Patches\Mech_InitEffectStats_Patch.cs" />
+    <Compile Include="Features\ArmorStructureChanges\StatCollectionExtension.cs" />
     <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioSettings.cs" />
     <Compile Include="Features\AutoFix\AutoFixerFeature.cs" />
     <Compile Include="Features\AutoFix\AutoFixerSettings.cs" />
@@ -118,8 +120,11 @@
     <Compile Include="Features\DebugScreenshotMechs\Patches\SkirmishMechBayPanel_OnMechLabCancel_Patch.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotsExtensions.cs" />
     <Compile Include="Features\Engines\Patches\MechComponent_InitPassiveSelfEffects_Patch.cs" />
+    <Compile Include="Features\Engines\Patches\Mech_CalcJumpHeat_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_JumpDistance_Patch.cs" />
     <Compile Include="Features\Engines\StaticHandler\EngineJumpJet.cs" />
+    <Compile Include="Helper\StatisticHelper.cs" />
+    <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMoveMechRoleInfo.cs" />
     <Compile Include="Features\MechLabSlots\MechLabFixWidgetLayouts.cs" />
     <Compile Include="Features\MechLabSlots\MechPropertiesWidget.cs" />

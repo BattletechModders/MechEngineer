@@ -12,7 +12,7 @@ namespace MechEngineer.Features.Engines.Patches
         {
             try
             {
-                EngineJumpJet.CreateJumpCapacity(__instance);
+                EngineJumpJet.InitEffectStats(__instance);
             }
             catch (Exception e)
             {

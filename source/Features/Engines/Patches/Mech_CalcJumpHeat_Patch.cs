@@ -5,14 +5,14 @@ using MechEngineer.Features.Engines.StaticHandler;
 
 namespace MechEngineer.Features.Engines.Patches
 {
-    [HarmonyPatch(typeof(Mech), nameof(Mech.JumpDistance), MethodType.Getter)]
-    public static class Mech_JumpDistance_Patch
+    [HarmonyPatch(typeof(Mech), nameof(Mech.CalcJumpHeat))]
+    public static class Mech_CalcJumpHeat_Patch
     {
-        public static bool Prefix(Mech __instance, ref float __result)
+        public static bool Prefix(Mech __instance, float distJumped, ref int  __result)
         {
             try
             {
-                __result = EngineJumpJet.CalcMaxJumpDistance(__instance);
+                __result = EngineJumpJet.CalcJumpHeat(__instance, distJumped);
                 return false;
             }
             catch (Exception e)

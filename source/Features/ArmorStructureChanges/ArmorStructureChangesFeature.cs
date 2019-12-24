@@ -10,20 +10,20 @@ namespace MechEngineer.Features.ArmorStructureChanges
 
         internal override ArmorStructureChangesSettings Settings => Control.settings.ArmorStructureChanges;
 
+        internal void InitEffectStats(Mech mech)
+        {
+            mech.StatCollection.ArmorMultiplier().Create(GetArmorFactorForMechDef(mech.MechDef));
+            mech.StatCollection.StructureMultiplier().Create(GetStructureFactorForMechDef(mech.MechDef));
+        }
+
         internal static float GetArmorFactorForMech(Mech mech)
         {
-            const string key = "ArmorMultiplier";
-            var statistic = mech.StatCollection.GetStatistic(key)
-                            ?? mech.StatCollection.AddStatistic<float>(key, GetArmorFactorForMechDef(mech.MechDef));
-            return statistic.Value<float>();
+            return mech.StatCollection.ArmorMultiplier().Get();
         }
 
         internal static float GetStructureFactorForMech(Mech mech)
         {
-            const string key = "StructureMultiplier";
-            var statistic = mech.StatCollection.GetStatistic(key)
-                            ?? mech.StatCollection.AddStatistic(key, GetStructureFactorForMechDef(mech.MechDef));
-            return statistic.Value<float>();
+            return mech.StatCollection.StructureMultiplier().Get();
         }
 
         private static float GetArmorFactorForMechDef(MechDef mechDef)

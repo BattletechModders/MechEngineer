@@ -44,7 +44,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
                 }
 
                 var mech = traverse.Property("OwningMech").GetValue<Mech>();
-                receiveShutdownInjury = mech.StatCollection.ReceiveShutdownInjury();
+                receiveShutdownInjury = mech.StatCollection.ReceiveShutdownInjury().Get();
             }
             catch (Exception e)
             {
