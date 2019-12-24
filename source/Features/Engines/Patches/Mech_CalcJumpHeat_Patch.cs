@@ -12,7 +12,7 @@ namespace MechEngineer.Features.Engines.Patches
         {
             try
             {
-                __result = EngineJumpJet.CalcJumpHeat(__instance, distJumped);
+                __result = Jumping.CalcJumpHeat(__instance, distJumped);
                 return false;
             }
             catch (Exception e)

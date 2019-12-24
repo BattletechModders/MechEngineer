@@ -122,7 +122,7 @@
     <Compile Include="Features\Engines\Patches\MechComponent_InitPassiveSelfEffects_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_CalcJumpHeat_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_JumpDistance_Patch.cs" />
-    <Compile Include="Features\Engines\StaticHandler\EngineJumpJet.cs" />
+    <Compile Include="Features\Engines\StaticHandler\Jumping.cs" />
     <Compile Include="Helper\StatisticHelper.cs" />
     <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMoveMechRoleInfo.cs" />

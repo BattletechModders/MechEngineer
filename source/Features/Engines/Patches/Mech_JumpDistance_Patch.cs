@@ -12,7 +12,7 @@ namespace MechEngineer.Features.Engines.Patches
         {
             try
             {
-                __result = EngineJumpJet.CalcMaxJumpDistance(__instance);
+                __result = Jumping.CalcMaxJumpDistance(__instance);
                 return false;
             }
             catch (Exception e)

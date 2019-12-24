@@ -5,8 +5,14 @@ using UnityEngine;
 
 namespace MechEngineer.Features.Engines.StaticHandler
 {
-    internal class EngineJumpJet
+    internal class Jumping
     {
+        internal static void InitEffectStats(Mech mech)
+        {
+            mech.StatCollection.JumpCapacity().Create(0);
+            mech.StatCollection.JumpHeat().Create(0);
+        }
+
         internal static void InitPassiveSelfEffects(MechComponent mechComponent)
         {
             if (!EngineFeature.settings.AutoConvertJumpCapacityInDefToStat)
@@ -42,12 +48,13 @@ namespace MechEngineer.Features.Engines.StaticHandler
                 CreatePassiveEffect(mech, mechComponent, statisticData);
             }
 
+            if (EngineFeature.settings.JumpJetDefaultJumpHeat.HasValue)
             {
                 var statisticData = new StatisticEffectData()
                 {
-                    statName = mech.StatCollection.JumpMaxHeat().Key,
+                    statName = mech.StatCollection.JumpHeat().Key,
                     operation = StatCollection.StatOperation.Float_Add,
-                    modValue = 1.ToString(),
+                    modValue = EngineFeature.settings.JumpJetDefaultJumpHeat.ToString(),
                     modType = "System.Single"
                 };
 
@@ -92,7 +99,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
             jumpDistance = Mathf.Max(jumpDistance, EngineFeature.settings.MinimumJumpDistanceForHeat);
             var jumpRatio = jumpDistance / maxJumpDistance;
             
-            var jumpMaxHeat = mech.StatCollection.JumpMaxHeat().Get();
+            var jumpMaxHeat = mech.StatCollection.JumpHeat().Get();
             var jumpHeat = jumpRatio * jumpMaxHeat;
             return Mathf.CeilToInt(jumpHeat);
         }
@@ -120,12 +127,6 @@ namespace MechEngineer.Features.Engines.StaticHandler
             return mechDef.Inventory
                 .Select(x => x.Def as JumpJetDef)
                 .Sum(x => x?.JumpCapacity ?? 0);
-        }
-
-        internal static void InitEffectStats(Mech mech)
-        {
-            mech.StatCollection.JumpCapacity().Create(0);
-            mech.StatCollection.JumpMaxHeat().Create(0);
         }
     }
 }

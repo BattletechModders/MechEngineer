@@ -8,11 +8,11 @@ namespace MechEngineer.Features.Engines.Patches
     [HarmonyPatch(typeof(MechComponent), nameof(MechComponent.InitPassiveSelfEffects))]
     public static class MechComponent_InitPassiveSelfEffects_Patch
     {
-        public static void Postfix(MechComponent __instance)
+        public static void Prefix(MechComponent __instance)
         {
             try
             {
-                EngineJumpJet.InitPassiveSelfEffects(__instance);
+                Jumping.InitPassiveSelfEffects(__instance);
             }
             catch (Exception e)
             {

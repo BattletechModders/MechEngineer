@@ -9,9 +9,9 @@ namespace MechEngineer.Features.Engines.Helper
             return new StatisticHelper<float>("JumpCapacity", statCollection);
         }
 
-        internal static StatisticHelper<float> JumpMaxHeat(this StatCollection statCollection)
+        internal static StatisticHelper<float> JumpHeat(this StatCollection statCollection)
         {
-            return new StatisticHelper<float>("JumpMaxHeat", statCollection);
+            return new StatisticHelper<float>("JumpHeat", statCollection);
         }
 
         internal static StatisticHelper<float> JumpDistanceMultiplier(this StatCollection statCollection)

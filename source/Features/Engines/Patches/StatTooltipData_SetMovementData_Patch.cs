@@ -36,7 +36,7 @@ namespace MechEngineer.Features.Engines.Patches
 
                 ReplaceDistance("Max Move", movement.WalkMaxSpeed);
                 ReplaceDistance("Max Sprint", movement.RunMaxSpeed);
-                var jumpCapacity = EngineJumpJet.GetJumpCapacity(def);
+                var jumpCapacity = Jumping.GetJumpCapacity(def);
                 var jumpDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
                 ReplaceDistance("Max Jump", jumpDistance);
                 tooltipData.dataList.Add(Strings.T("TT Walk MP"), $"{movement.WalkMaxMovementPoint}");

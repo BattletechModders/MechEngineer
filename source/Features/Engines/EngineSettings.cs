@@ -1,3 +1,6 @@
+using BattleTech;
+using MechEngineer.Features.Engines.Helper;
+
 namespace MechEngineer.Features.Engines
 {
     internal class EngineSettings : ISettings
@@ -29,11 +32,14 @@ namespace MechEngineer.Features.Engines
         public float MinimumJumpDistanceForHeat = 3 * 24f;
         public string MinimumJumpDistanceForHeatDescription => "The minimum distance to use for calculating jump heat, any jumps shorter will still produce the equivalent heat. CBT Rule: 3 MP.";
 
+        public bool AutoConvertJumpCapacityInDefToStat = true;
+        public string AutoConvertJumpCapacityInDefToStatDescription => $"All {nameof(JumpJetDef.JumpCapacity)} values in JumpJetDefs will be auto-converted to the {nameof(StatCollectionExtension.JumpCapacity)} statistic.";
+
+        public float? JumpJetDefaultJumpHeat = 3;
+        public string JumpJetDefaultJumpHeatDescription => $"The heat the jump jet produces when fully* used (* jumping below max distance reduces produced heat). Can be adjusted using the {nameof(StatCollectionExtension.JumpHeat)} statistic.";
+
         public float RunMultiplier = 1.5f;
         public string RunMultiplierDescription => "How much faster running is than walking.";
-
-        public bool AutoConvertJumpCapacityInDefToStat = true;
-        public string AutoConvertJumpCapacityInDefToStatDescription => "All jump jets that have a JumpCapacity definied in the Def will have it auto-converted to the JumpCapacity stat.";
 
         public bool LimitEngineCoresToTonnage = true;
         public string IgnoreLimitEngineChassisTag = "";
