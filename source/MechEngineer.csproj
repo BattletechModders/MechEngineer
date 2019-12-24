@@ -102,7 +102,7 @@
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChangesSettings.cs" />
     <Compile Include="Features\ArmorStructureChanges\Patches\Mech_GetMaxArmor_Patch.cs" />
     <Compile Include="Features\ArmorStructureChanges\Patches\Mech_GetMaxStructure_Patch.cs" />
-    <Compile Include="Features\ArmorStructureChanges\Patches\Mech_InitEffectStats_Patch.cs" />
+    <Compile Include="Features\ArmorStructureChanges\Patches\Mech_InitStats_Patch.cs" />
     <Compile Include="Features\ArmorStructureChanges\StatCollectionExtension.cs" />
     <Compile Include="Features\ArmorStructureRatio\ArmorStructureRatioSettings.cs" />
     <Compile Include="Features\AutoFix\AutoFixerFeature.cs" />

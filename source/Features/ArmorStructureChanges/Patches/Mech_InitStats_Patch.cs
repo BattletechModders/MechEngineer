@@ -4,14 +4,17 @@ using Harmony;
 
 namespace MechEngineer.Features.ArmorStructureChanges.Patches
 {
-    [HarmonyPatch(typeof(Mech), "InitEffectStats")]
-    public static class Mech_InitEffectStats_Patch
+    [HarmonyPatch(typeof(Mech), "InitStats")]
+    public static class Mech_InitStats_Patch
     {
         public static void Prefix(Mech __instance)
         {
             try
             {
-                ArmorStructureChangesFeature.Shared.InitEffectStats(__instance);
+                if (!__instance.Combat.IsLoadingFromSave)
+                {
+                    ArmorStructureChangesFeature.Shared.InitStats(__instance);
+                }
             }
             catch (Exception e)
             {

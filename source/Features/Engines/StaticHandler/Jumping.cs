@@ -31,7 +31,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
             {
                 return;
             }
-            if (mechComponent.DamageLevel < ComponentDamageLevel.NonFunctional)
+            if (!mechComponent.IsFunctional)
             {
                 return;
             }

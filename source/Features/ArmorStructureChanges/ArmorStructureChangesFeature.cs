@@ -10,7 +10,7 @@ namespace MechEngineer.Features.ArmorStructureChanges
 
         internal override ArmorStructureChangesSettings Settings => Control.settings.ArmorStructureChanges;
 
-        internal void InitEffectStats(Mech mech)
+        internal void InitStats(Mech mech)
         {
             mech.StatCollection.ArmorMultiplier().Create(GetArmorFactorForMechDef(mech.MechDef));
             mech.StatCollection.StructureMultiplier().Create(GetStructureFactorForMechDef(mech.MechDef));
