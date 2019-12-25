@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Patches
 {
-
     [HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateMovementStat))]
     public static class MechStatisticsRules_CalculateMovementStat_Patch
     {
@@ -30,6 +29,7 @@ namespace MechEngineer.Features.Engines.Patches
             var minValue = 1f;
             maxValue = 10f;
             currentValue = fraction * (maxValue - minValue) + minValue;
+            currentValue = Mathf.FloorToInt(currentValue);
             currentValue = Mathf.Max(currentValue, minValue);
             currentValue = Mathf.Min(currentValue, maxValue);
         }

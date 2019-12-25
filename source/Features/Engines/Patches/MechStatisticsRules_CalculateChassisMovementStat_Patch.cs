@@ -13,7 +13,8 @@ namespace MechEngineer.Features.Engines.Patches
             try
             {
                 var movement = new EngineMovement(EngineFeature.settings.EngineRatingForChassisMovementStat, chassisDef.Tonnage);
-                MechStatisticsRules_CalculateMovementStat_Patch.SetMovementStatValues(movement.RunSpeed, ref currentValue, ref maxValue);
+                var fraction = MechDefMovementStatistics.GetStatisticRating(movement.RunSpeed);
+                MechStatisticsRules_CalculateMovementStat_Patch.SetStatValues(fraction, ref currentValue, ref maxValue);
                 return false;
             }
             catch (Exception e)

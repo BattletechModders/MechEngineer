@@ -1,6 +1,5 @@
 ﻿using BattleTech;
 using MechEngineer.Features.Engines.Helper;
-using System.Linq;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines.StaticHandler

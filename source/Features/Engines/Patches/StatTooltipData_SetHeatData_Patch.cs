@@ -1,8 +1,8 @@
 ﻿using System;
 using BattleTech;
-using CustomComponents;
 using Harmony;
-using MechEngineer.Features.Engines.StaticHandler;
+using Localize;
+using MechEngineer.Features.Engines.Helper;
 
 namespace MechEngineer.Features.Engines.Patches
 {
@@ -14,31 +14,19 @@ namespace MechEngineer.Features.Engines.Patches
             try
             {
                 var mechDef = def;
-                
-                //if (mechDef != null && @this.Is<EngineCoreDef>())
-                //{
-                //    return EngineHeat.GetEngineHeatDissipation(mechDef);
-                //}
-                //var stats = new MechDefMovementStatistics(mechDef);
+                var stats = new MechDefHeatEfficiencyStatistics(mechDef);
 
-                //var tooltipData = __instance;
-                //void ReplaceDistance(string text, float meter)
-                //{
-                //    var meters = Mathf.FloorToInt(meter);
-                //    var hexWidth = MechStatisticsRules.Combat.MoveConstants.ExperimentalGridDistance;
-                //    var hexes = Mathf.FloorToInt(meters / hexWidth);
-                //    var translatedText = Strings.T(text);
-                //    var translatedValue = Strings.T("{0}m / {1} hex", meters, hexes);
-                //    tooltipData.dataList.Remove(translatedText);
-                //    tooltipData.dataList.Add(translatedText, translatedValue);
-                //}
+                var tooltipData = __instance;
+                void Replace(string text, string value, string newText = null)
+                {
+                    tooltipData.dataList.Remove(text);
+                    tooltipData.dataList.Add(newText ?? text, value);
+                }
 
-                //ReplaceDistance("Max Move", stats.WalkSpeed);
-                //ReplaceDistance("Max Sprint", stats.RunSpeed);
-                //var jumpCapacity = Jumping.GetJumpCapacity(mechDef);
-                //var jumpDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
-                //ReplaceDistance("Max Jump", jumpDistance);
-                //tooltipData.dataList.Add(Strings.T("TT Walk MP"), $"{stats.WalkMovementPoint}");
+                Replace(Strings.T("Heat Sinking"), Strings.T("{0} Heat", stats.HeatSinking), "<u>" + Strings.T("Heat Sinking") + "</u>");
+                Replace(Strings.T("Alpha Strike"), Strings.T("{0} Heat", stats.AlphaStrike), "<u>" + Strings.T("Alpha Strike") + "</u>");
+                Replace(Strings.T("Avg. Jump Heat"), Strings.T("{0} Heat", stats.JumpHeat), Strings.T("Jump Heat"));
+                Replace(Strings.T("Shutdown"), Strings.T("{0} / {1} Heat", stats.Overheat, stats.MaxHeat), Strings.T("Heat Levels"));
             }
             catch (Exception e)
             {

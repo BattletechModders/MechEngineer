@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.Engines.Helper;
 
 namespace MechEngineer.Features.Engines.Patches
 {
@@ -12,11 +13,9 @@ namespace MechEngineer.Features.Engines.Patches
         {
             try
             {
-                //if (def != null && @this.Is<EngineCoreDef>())
-                //{
-                //    return EngineHeat.GetEngineHeatDissipation(def);
-                //}
-                //return false;
+                var stats = new MechDefHeatEfficiencyStatistics(mechDef);
+                MechStatisticsRules_CalculateMovementStat_Patch.SetStatValues(stats.GetStatisticRating(), ref currentValue, ref maxValue);
+                return false;
             }
             catch (Exception e)
             {

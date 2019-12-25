@@ -119,6 +119,7 @@
     <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsSettings.cs" />
     <Compile Include="Features\DebugScreenshotMechs\Patches\SkirmishMechBayPanel_OnMechLabCancel_Patch.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotsExtensions.cs" />
+    <Compile Include="Features\Engines\Helper\MechDefHeatEfficiencyStatistics.cs" />
     <Compile Include="Features\Engines\Helper\MechDefStatisticModifier.cs" />
     <Compile Include="Features\Engines\Patches\MechStatisticsRules_CalculateChassisMovementStat_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_CalcJumpHeat_Patch.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Features\Engines\Helper\MechDefMovementStatistics.cs" />
     <Compile Include="Features\Engines\StaticHandler\Jumping.cs" />
     <Compile Include="Features\MoveMultiplierStat\StatCollectionExtension.cs" />
+    <Compile Include="Helper\MechComponentRefExtensions.cs" />
     <Compile Include="Helper\StatisticAdapter.cs" />
     <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMoveMechRoleInfo.cs" />

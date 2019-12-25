@@ -18,20 +18,19 @@ namespace MechEngineer.Features.Engines.Patches
                 var stats = new MechDefMovementStatistics(mechDef);
 
                 var tooltipData = __instance;
-                void ReplaceDistance(string text, float meter)
+                void ReplaceDistance(string text, float meter, string newText = null)
                 {
                     var meters = Mathf.FloorToInt(meter);
                     var hexWidth = MechStatisticsRules.Combat.MoveConstants.ExperimentalGridDistance;
                     var hexes = Mathf.FloorToInt(meters / hexWidth);
-                    var translatedText = Strings.T(text);
                     var translatedValue = Strings.T("{0}m / {1} hex", meters, hexes);
-                    tooltipData.dataList.Remove(translatedText);
-                    tooltipData.dataList.Add(translatedText, translatedValue);
+                    tooltipData.dataList.Remove(text);
+                    tooltipData.dataList.Add(newText ?? text, translatedValue);
                 }
 
-                ReplaceDistance("Max Move", stats.WalkSpeed);
-                ReplaceDistance("Max Sprint", stats.RunSpeed);
-                ReplaceDistance("Max Jump", stats.JumpDistance);
+                ReplaceDistance(Strings.T("Max Move"), stats.WalkSpeed);
+                ReplaceDistance(Strings.T("Max Sprint"), stats.RunSpeed, "<u>" + Strings.T("Max Sprint") + "</u>");
+                ReplaceDistance(Strings.T("Max Jump"), stats.JumpDistance);
                 tooltipData.dataList.Add(Strings.T("TT Walk MP"), $"{stats.WalkMovementPoint}");
             }
             catch (Exception e)

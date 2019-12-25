@@ -47,9 +47,13 @@ namespace MechEngineer.Features.Engines.Helper
         internal float GetStatisticRating()
         {
             // only sprint, no walk and no jump
+            return GetStatisticRating(RunSpeed);
+        }
+
+        internal static float GetStatisticRating(float runSpeed)
+        {
             var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
-            var relativeSpeed = (RunSpeed - constants.MinSprintFactor) / constants.MaxSprintFactor;
-            return relativeSpeed;
+            return (runSpeed - constants.MinSprintFactor) / constants.MaxSprintFactor;
         }
 
         private float GetMoveMultiplier()

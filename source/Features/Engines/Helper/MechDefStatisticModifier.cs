@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using BattleTech;
 
 namespace MechEngineer.Features.Engines.Helper
@@ -8,12 +7,7 @@ namespace MechEngineer.Features.Engines.Helper
     {
         internal static T ModifyStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef)
         {
-            return ModifyStatistic(stat, mechDef.Inventory.Select(x => x.Def));
-        }
-
-        private static T ModifyStatistic<T>(StatisticAdapter<T> stat, IEnumerable<MechComponentDef> componentDefs)
-        {
-            foreach (var componentDef in componentDefs)
+            foreach (var componentDef in mechDef.Inventory.Where(x => x.IsFunctionalORInstalling()).Select(x => x.Def))
             {
                 if (componentDef.statusEffects == null)
                 {
