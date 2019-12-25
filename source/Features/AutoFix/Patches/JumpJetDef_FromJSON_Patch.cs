@@ -33,7 +33,7 @@ namespace MechEngineer.Features.AutoFix.Patches
                     modType = "System.Single"
                 };
 
-                def.AddPassiveStatisticEffect(statisticData);
+                def.AddPassiveStatisticEffectIfMissing(statisticData);
             }
 
             if (EngineFeature.settings.JumpJetDefaultJumpHeat.HasValue)
@@ -46,7 +46,7 @@ namespace MechEngineer.Features.AutoFix.Patches
                     modType = "System.Single"
                 };
 
-                def.AddPassiveStatisticEffect(statisticData);
+                def.AddPassiveStatisticEffectIfMissing(statisticData);
             }
         }
     }

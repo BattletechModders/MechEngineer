@@ -16,8 +16,14 @@ namespace MechEngineer
             return def.ComponentTags.Contains(tag);
         }
 
-        internal static void AddPassiveStatisticEffect(this MechComponentDef def, StatisticEffectData statisticData)
+        internal static void AddPassiveStatisticEffectIfMissing(this MechComponentDef def, StatisticEffectData statisticData)
         {
+            if (def.statusEffects != null && def.statusEffects.Any(x => statisticData.statName == x.statisticData.statName))
+            {
+                // passive effect already exists
+                return;
+            }
+
             var effectData = new EffectData
             {
                 effectType = EffectType.StatisticEffect,
