@@ -7,7 +7,7 @@ using UnityEngine;
 namespace MechEngineer.Features.ArmorStructureChanges.Patches
 {
     // fixing factor not being considerd for campaign stuff, this removes the factor again before switching back to campaign
-    [HarmonyPatch(typeof(Mech), "ToMechDef")]
+    [HarmonyPatch(typeof(Mech), nameof(Mech.ToMechDef))]
     public static class Mech_ToMechDef_Patch
     {
         public static void Postfix(Mech __instance, MechDef __result)

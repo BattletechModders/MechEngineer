@@ -3,7 +3,6 @@ using BattleTech;
 using Harmony;
 using Localize;
 using MechEngineer.Features.Engines.Helper;
-using MechEngineer.Features.Engines.StaticHandler;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Patches
@@ -11,16 +10,12 @@ namespace MechEngineer.Features.Engines.Patches
     [HarmonyPatch(typeof(StatTooltipData), "SetMovementData")]
     public static class StatTooltipData_SetMovementData_Patch
     {
-
         public static void Postfix(StatTooltipData __instance, MechDef def)
         {
             try
             {
-                var movement = def.GetEngineMovement();
-                if (movement == null)
-                {
-                    return;
-                }
+                var mechDef = def;
+                var stats = new MechDefMovementStatistics(mechDef);
 
                 var tooltipData = __instance;
                 void ReplaceDistance(string text, float meter)
@@ -34,12 +29,10 @@ namespace MechEngineer.Features.Engines.Patches
                     tooltipData.dataList.Add(translatedText, translatedValue);
                 }
 
-                ReplaceDistance("Max Move", movement.WalkMaxSpeed);
-                ReplaceDistance("Max Sprint", movement.RunMaxSpeed);
-                var jumpCapacity = Jumping.GetJumpCapacity(def);
-                var jumpDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
-                ReplaceDistance("Max Jump", jumpDistance);
-                tooltipData.dataList.Add(Strings.T("TT Walk MP"), $"{movement.WalkMaxMovementPoint}");
+                ReplaceDistance("Max Move", stats.WalkSpeed);
+                ReplaceDistance("Max Sprint", stats.RunSpeed);
+                ReplaceDistance("Max Jump", stats.JumpDistance);
+                tooltipData.dataList.Add(Strings.T("TT Walk MP"), $"{stats.WalkMovementPoint}");
             }
             catch (Exception e)
             {

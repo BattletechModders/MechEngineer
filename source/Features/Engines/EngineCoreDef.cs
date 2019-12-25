@@ -2,12 +2,9 @@
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
-using fastJSON;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
-using MechEngineer.Features.OverrideTonnage;
-using UnityEngine;
 
 namespace MechEngineer.Features.Engines
 {
@@ -71,8 +68,8 @@ namespace MechEngineer.Features.Engines
             tooltip.detailText.text = "";
 
             tooltip.detailText.text += "<i>Speeds</i>" +
-                                       "   Cruise <b>" + movement.WalkMaxSpeed + "</b>" +
-                                       " / Top <b>" + movement.RunMaxSpeed + "</b>";
+                                       "   Cruise <b>" + movement.WalkSpeed + "</b>" +
+                                       " / Top <b>" + movement.RunSpeed + "</b>";
 
             tooltip.detailText.text += "\r\n" +
                                        "<i>Weights [Ton]</i>" +

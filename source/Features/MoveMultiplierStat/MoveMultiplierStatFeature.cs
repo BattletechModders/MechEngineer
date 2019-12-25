@@ -11,26 +11,14 @@ namespace MechEngineer.Features.MoveMultiplierStat
 
         internal void InitEffectStats(Mech mech)
         {
-            MoveMultiplierStat(mech.StatCollection);
+            mech.StatCollection.MoveMultiplier().Create();
         }
 
         internal void MoveMultiplier(Mech mech, ref float multiplier)
         {
-            var multiplierStat = MoveMultiplierStat(mech.StatCollection);
+            var multiplierStat = mech.StatCollection.MoveMultiplier().Get();
             var rounded = Mathf.Max(mech.Combat.Constants.MoveConstants.MinMoveSpeed, multiplierStat);
             multiplier *= rounded;
-        }
-
-        private float MoveMultiplierStat(StatCollection statCollection) 
-        {
-            const string key = "MoveMultiplier";
-            var statistic = statCollection.GetStatistic(key);
-            if (statistic == null)
-            {
-                const float defaultValue = 1.0f;
-                statistic = statCollection.AddStatistic(key, defaultValue);
-            }
-            return statistic.Value<float>();
         }
     }
 }

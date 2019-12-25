@@ -4,14 +4,14 @@ namespace MechEngineer.Features.ArmorStructureChanges
 {
     internal static class StatCollectionExtension
     {
-        internal static StatisticHelper<float> ArmorMultiplier(this StatCollection statCollection)
+        internal static StatisticAdapter<float> ArmorMultiplier(this StatCollection statCollection)
         {
-            return new StatisticHelper<float>("ArmorMultiplier", statCollection);
+            return new StatisticAdapter<float>("ArmorMultiplier", statCollection, 1);
         }
 
-        internal static StatisticHelper<float> StructureMultiplier(this StatCollection statCollection)
+        internal static StatisticAdapter<float> StructureMultiplier(this StatCollection statCollection)
         {
-            return new StatisticHelper<float>("StructureMultiplier", statCollection);
+            return new StatisticAdapter<float>("StructureMultiplier", statCollection, 1);
         }
     }
 }

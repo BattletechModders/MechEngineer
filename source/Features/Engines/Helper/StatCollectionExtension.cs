@@ -4,29 +4,29 @@ namespace MechEngineer.Features.Engines.Helper
 {
     internal static class StatCollectionExtension
     {
-        internal static StatisticHelper<float> JumpCapacity(this StatCollection statCollection)
+        internal static StatisticAdapter<float> JumpCapacity(this StatCollection statCollection)
         {
-            return new StatisticHelper<float>("JumpCapacity", statCollection);
+            return new StatisticAdapter<float>("JumpCapacity", statCollection, 0);
         }
 
-        internal static StatisticHelper<float> JumpHeat(this StatCollection statCollection)
+        internal static StatisticAdapter<float> JumpHeat(this StatCollection statCollection)
         {
-            return new StatisticHelper<float>("JumpHeat", statCollection);
+            return new StatisticAdapter<float>("JumpHeat", statCollection, 0);
         }
 
-        internal static StatisticHelper<float> JumpDistanceMultiplier(this StatCollection statCollection)
+        internal static StatisticAdapter<float> JumpDistanceMultiplier(this StatCollection statCollection)
         {
-            return new StatisticHelper<float>("JumpDistanceMultiplier", statCollection);
+            return new StatisticAdapter<float>("JumpDistanceMultiplier", statCollection, 1);
         }
 
-        internal static StatisticHelper<float> WalkSpeed(this StatCollection statCollection)
+        internal static StatisticAdapter<float> WalkSpeed(this StatCollection statCollection)
         {
-            return new StatisticHelper<float>("WalkSpeed", statCollection);
+            return new StatisticAdapter<float>("WalkSpeed", statCollection, 0);
         }
 
-        internal static StatisticHelper<float> RunSpeed(this StatCollection statCollection)
+        internal static StatisticAdapter<float> RunSpeed(this StatCollection statCollection)
         {
-            return new StatisticHelper<float>("RunSpeed", statCollection);
+            return new StatisticAdapter<float>("RunSpeed", statCollection, 0);
         }
     }
 }

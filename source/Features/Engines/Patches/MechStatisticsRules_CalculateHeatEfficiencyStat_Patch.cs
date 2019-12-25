@@ -1,64 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleTech;
-using CustomComponents;
 using Harmony;
-using MechEngineer.Features.Engines.StaticHandler;
 
 namespace MechEngineer.Features.Engines.Patches
 {
-    [HarmonyPatch(typeof(MechStatisticsRules), "CalculateHeatEfficiencyStat")]
+    [HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateHeatEfficiencyStat))]
     public static class MechStatisticsRules_CalculateHeatEfficiencyStat_Patch
     {
-        private static MechDef def;
 
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return instructions.MethodReplacer(
-                AccessTools.Method(typeof(HeatSinkDef), "get_DissipationCapacity"),
-                AccessTools.Method(typeof(MechStatisticsRules_CalculateHeatEfficiencyStat_Patch), "OverrideDissipationCapacity")
-            );
-        }
-
-        public static void Prefix(MechDef mechDef)
+        public static bool Prefix(MechDef mechDef, ref float currentValue, ref float maxValue)
         {
             try
             {
-                def = mechDef;
+                //if (def != null && @this.Is<EngineCoreDef>())
+                //{
+                //    return EngineHeat.GetEngineHeatDissipation(def);
+                //}
+                //return false;
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
-        }
-
-        public static void Postfix()
-        {
-            try
-            {
-                def = null;
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-        }
-
-        public static float OverrideDissipationCapacity(this HeatSinkDef @this)
-        {
-            try
-            {
-                if (def != null && @this.Is<EngineCoreDef>())
-                {
-                    return EngineHeat.GetEngineHeatDissipation(def);
-                }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-
-            return @this.DissipationCapacity;
+            return true;
         }
     }
 }

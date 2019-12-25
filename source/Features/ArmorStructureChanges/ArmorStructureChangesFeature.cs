@@ -12,8 +12,9 @@ namespace MechEngineer.Features.ArmorStructureChanges
 
         internal void InitStats(Mech mech)
         {
-            mech.StatCollection.ArmorMultiplier().Create(GetArmorFactorForMechDef(mech.MechDef));
-            mech.StatCollection.StructureMultiplier().Create(GetStructureFactorForMechDef(mech.MechDef));
+            // statcollection is only used to undo the multiplier, no interaction with any statusEffects
+            mech.StatCollection.ArmorMultiplier().CreateWithDefault(GetArmorFactorForMechDef(mech.MechDef));
+            mech.StatCollection.StructureMultiplier().CreateWithDefault(GetStructureFactorForMechDef(mech.MechDef));
         }
 
         internal static float GetArmorFactorForMech(Mech mech)

@@ -20,14 +20,8 @@ namespace MechEngineer.Features.Engines.StaticHandler
 
             var movement = engine.CoreDef.GetMovement(tonnage);
 
-            mech.StatCollection.WalkSpeed().Set(movement.WalkMaxSpeed);
-            mech.StatCollection.RunSpeed().Set(movement.RunMaxSpeed);
-        }
-
-        internal static EngineMovement GetEngineMovement(this MechDef mechDef)
-        {
-            var engine = mechDef.GetEngine();
-            return engine?.CoreDef.GetMovement(mechDef.Chassis.Tonnage);
+            mech.StatCollection.WalkSpeed().Set(movement.WalkSpeed);
+            mech.StatCollection.RunSpeed().Set(movement.RunSpeed);
         }
 
         internal static void SetJumpJetHardpointCount(MechLabMechInfoWidget widget, MechLabPanel mechLab, MechLabHardpointElement[] hardpoints)
@@ -59,7 +53,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
             }
             else
             {
-                widget.totalJumpjets = engine.CoreDef.GetMovement(mechLab.activeMechDef.Chassis.Tonnage).JumpJetMaxCount;
+                widget.totalJumpjets = engine.CoreDef.GetMovement(mechLab.activeMechDef.Chassis.Tonnage).JumpJetCount;
             }
             widget.totalJumpjets = Mathf.Min(widget.totalJumpjets, mechLab.activeMechDef.Chassis.MaxJumpjets);
 

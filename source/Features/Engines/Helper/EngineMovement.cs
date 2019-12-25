@@ -8,20 +8,20 @@ namespace MechEngineer.Features.Engines.Helper
     {
         internal EngineMovement(int rating, float tonnage)
         {
-            WalkMaxMovementPoint = rating / tonnage;
+            WalkMovementPoint = rating / tonnage;
         }
 
         internal EngineMovement(float walkMovementPoint)
         {
-            WalkMaxMovementPoint = walkMovementPoint;
+            WalkMovementPoint = walkMovementPoint;
         }
 
-        internal float WalkMaxMovementPoint { get; }
+        internal float WalkMovementPoint { get; }
 
-        internal float WalkMaxSpeed => ConvertMPToGameDistance(WalkMaxMovementPoint);
-        internal float RunMaxMovementPoint => WalkMaxMovementPoint * EngineFeature.settings.RunMultiplier;
-        internal float RunMaxSpeed => ConvertMPToGameDistance(RunMaxMovementPoint);
-        internal int JumpJetMaxCount => Mathf.FloorToInt(WalkMaxMovementPoint);
+        internal float WalkSpeed => ConvertMPToGameDistance(WalkMovementPoint);
+        internal float RunMovementPoint => WalkMovementPoint * EngineFeature.settings.RunMultiplier;
+        internal float RunSpeed => ConvertMPToGameDistance(RunMovementPoint);
+        internal int JumpJetCount => Mathf.FloorToInt(WalkMovementPoint);
 
         internal bool Mountable
         {
@@ -34,14 +34,14 @@ namespace MechEngineer.Features.Engines.Helper
 
                 var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
 
-                if (RunMaxSpeed < constants.MinSprintFactor)
+                if (RunSpeed < constants.MinSprintFactor)
                 {
                     return false;
                 }
 
                 {
-                    var lowerTier = new EngineMovement(Mathf.FloorToInt(WalkMaxMovementPoint) - 1);
-                    if (lowerTier.RunMaxSpeed >= constants.MaxSprintFactor)
+                    var lowerTier = new EngineMovement(Mathf.FloorToInt(WalkMovementPoint) - 1);
+                    if (lowerTier.RunSpeed >= constants.MaxSprintFactor)
                     {
                         return false;
                     }

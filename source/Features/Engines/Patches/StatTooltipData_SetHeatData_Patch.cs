@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
 using Harmony;
@@ -10,55 +9,41 @@ namespace MechEngineer.Features.Engines.Patches
     [HarmonyPatch(typeof(StatTooltipData), "SetHeatData")]
     public static class StatTooltipData_SetHeatData_Patch
     {
-        private static MechDef mechDef;
-
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return instructions.MethodReplacer(
-                AccessTools.Method(typeof(HeatSinkDef), "get_DissipationCapacity"),
-                AccessTools.Method(typeof(StatTooltipData_SetHeatData_Patch), "DissipationCapacity")
-            );
-        }
-
-        public static void Prefix(MechDef def)
+        public static void Postfix(StatTooltipData __instance, MechDef def)
         {
             try
             {
-                mechDef = def;
+                var mechDef = def;
+                
+                //if (mechDef != null && @this.Is<EngineCoreDef>())
+                //{
+                //    return EngineHeat.GetEngineHeatDissipation(mechDef);
+                //}
+                //var stats = new MechDefMovementStatistics(mechDef);
+
+                //var tooltipData = __instance;
+                //void ReplaceDistance(string text, float meter)
+                //{
+                //    var meters = Mathf.FloorToInt(meter);
+                //    var hexWidth = MechStatisticsRules.Combat.MoveConstants.ExperimentalGridDistance;
+                //    var hexes = Mathf.FloorToInt(meters / hexWidth);
+                //    var translatedText = Strings.T(text);
+                //    var translatedValue = Strings.T("{0}m / {1} hex", meters, hexes);
+                //    tooltipData.dataList.Remove(translatedText);
+                //    tooltipData.dataList.Add(translatedText, translatedValue);
+                //}
+
+                //ReplaceDistance("Max Move", stats.WalkSpeed);
+                //ReplaceDistance("Max Sprint", stats.RunSpeed);
+                //var jumpCapacity = Jumping.GetJumpCapacity(mechDef);
+                //var jumpDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
+                //ReplaceDistance("Max Jump", jumpDistance);
+                //tooltipData.dataList.Add(Strings.T("TT Walk MP"), $"{stats.WalkMovementPoint}");
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
-        }
-
-        public static void Postfix()
-        {
-            try
-            {
-                mechDef = null;
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-        }
-
-        public static float DissipationCapacity(this HeatSinkDef @this)
-        {
-            try
-            {
-                if (mechDef != null && @this.Is<EngineCoreDef>())
-                {
-                    return EngineHeat.GetEngineHeatDissipation(mechDef);
-                }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-
-            return @this.DissipationCapacity;
         }
     }
 }

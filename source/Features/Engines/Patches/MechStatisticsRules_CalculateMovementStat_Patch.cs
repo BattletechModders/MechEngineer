@@ -1,76 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleTech;
 using Harmony;
-using MechEngineer.Features.Engines.StaticHandler;
+using MechEngineer.Features.Engines.Helper;
+using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Patches
 {
-    [HarmonyPatch(typeof(MechStatisticsRules), "CalculateMovementStat")]
+
+    [HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateMovementStat))]
     public static class MechStatisticsRules_CalculateMovementStat_Patch
     {
-        private static MechDef def;
-
-        // disable jump jet calculations
-        private static readonly MechComponentRef[] Empty = { };
-
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return instructions
-                .MethodReplacer(
-                    AccessTools.Method(typeof(MovementCapabilitiesDef), "get_MaxSprintDistance"),
-                    AccessTools.Method(typeof(MechStatisticsRules_CalculateMovementStat_Patch), "OverrideMaxSprintDistance")
-                )
-                .MethodReplacer(
-                    AccessTools.Method(typeof(MechDef), "get_Inventory"),
-                    AccessTools.Method(typeof(MechStatisticsRules_CalculateMovementStat_Patch), "OverrideInventory")
-                );
-        }
-
-        public static void Prefix(MechDef mechDef)
+        public static bool Prefix(MechDef mechDef, ref float currentValue, ref float maxValue)
         {
             try
             {
-                def = mechDef;
+                var stats = new MechDefMovementStatistics(mechDef);
+                SetStatValues(stats.GetStatisticRating(), ref currentValue, ref maxValue);
+                return false;
             }
             catch (Exception e)
             {
                 Control.mod.Logger.LogError(e);
             }
+            return true;
         }
-
-        public static void Postfix()
+        
+        internal static void SetStatValues(float fraction, ref float currentValue, ref float maxValue)
         {
-            try
-            {
-                def = null;
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-        }
-
-        public static float OverrideMaxSprintDistance(this MovementCapabilitiesDef @this)
-        {
-            try
-            {
-                var movement = def?.GetEngineMovement();
-                if (movement != null)
-                {
-                    return movement.RunMaxSpeed;
-                }
-            }
-            catch (Exception e)
-            {
-                Control.mod.Logger.LogError(e);
-            }
-            return @this.MaxSprintDistance;
-        }
-
-        public static MechComponentRef[] OverrideInventory(this MechDef @this)
-        {
-            return Empty;
+            var minValue = 1f;
+            maxValue = 10f;
+            currentValue = fraction * (maxValue - minValue) + minValue;
+            currentValue = Mathf.Max(currentValue, minValue);
+            currentValue = Mathf.Min(currentValue, maxValue);
         }
     }
 }

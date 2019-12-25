@@ -41,6 +41,9 @@ namespace MechEngineer.Features.Engines
         public float RunMultiplier = 1.5f;
         public string RunMultiplierDescription => "How much faster running is than walking.";
 
+        public int EngineRatingForChassisMovementStat = 250;
+        public string EngineRatingForChassisMovementStatDescription => "The engine rating to use when evaluating the movement stat of a mech.";
+
         public bool LimitEngineCoresToTonnage = true;
         public string IgnoreLimitEngineChassisTag = "";
     }

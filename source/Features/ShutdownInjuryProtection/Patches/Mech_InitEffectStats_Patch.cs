@@ -13,11 +13,11 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
             {
                 if (ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled)
                 {
-                    __instance.StatCollection.ReceiveShutdownInjury().Create(false);
+                    __instance.StatCollection.ReceiveShutdownInjury().Create();
                 }
                 if (ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled)
                 {
-                    __instance.StatCollection.ReceiveHeatDamageInjury().Create(false);
+                    __instance.StatCollection.ReceiveHeatDamageInjury().Create();
                 }
             }
             catch (Exception e)
@@ -29,14 +29,14 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
 
     internal static class StatCollectionExtension
     {
-        internal static StatisticHelper<bool> ReceiveShutdownInjury(this StatCollection statCollection)
+        internal static StatisticAdapter<bool> ReceiveShutdownInjury(this StatCollection statCollection)
         {
-            return new StatisticHelper<bool>("ReceiveShutdownInjury", statCollection);
+            return new StatisticAdapter<bool>("ReceiveShutdownInjury", statCollection, false);
         }
 
-        internal static StatisticHelper<bool> ReceiveHeatDamageInjury(this StatCollection statCollection)
+        internal static StatisticAdapter<bool> ReceiveHeatDamageInjury(this StatCollection statCollection)
         {
-            return new StatisticHelper<bool>("ReceiveHeatDamageInjury", statCollection);
+            return new StatisticAdapter<bool>("ReceiveHeatDamageInjury", statCollection, false);
         }
     }
 }

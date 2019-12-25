@@ -128,7 +128,7 @@ namespace MechEngineer.Features.AutoFix
                     
                     {
                         // remove superfluous jump jets
-                        var maxJetCount = coreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetMaxCount;
+                        var maxJetCount = coreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
                         //Control.mod.Logger.LogDebug($"before Inventory.Count={builder.Inventory.Count} jumpJetList.Count={jumpJetList.Count} maxJetCount={maxJetCount}");
                         while (jumpJetList.Count > maxJetCount)
                         {
