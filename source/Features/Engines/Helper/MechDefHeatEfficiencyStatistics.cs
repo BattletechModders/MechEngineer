@@ -1,4 +1,5 @@
 ﻿using BattleTech;
+using MechEngineer.Features.Engines.StaticHandler;
 using System.Linq;
 using UnityEngine;
 
@@ -74,14 +75,16 @@ namespace MechEngineer.Features.Engines.Helper
 
             var stat = statCollection.HeatGenerated();
             stat.CreateWithDefault(defaultValue);
-            return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
+            var value = MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
+            return Mathf.CeilToInt(value - 32 * Mathf.Epsilon);
         }
 
         private int GetJumpHeat()
         {
             var stat = statCollection.JumpHeat();
             stat.Create();
-            return Mathf.CeilToInt(MechDefStatisticModifier.ModifyStatistic(stat, mechDef));
+            MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
+            return statCollection.GetJumpHeat(1);
         }
 
         private int GetMaxHeat()

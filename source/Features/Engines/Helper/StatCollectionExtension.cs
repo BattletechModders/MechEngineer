@@ -4,6 +4,11 @@ namespace MechEngineer.Features.Engines.Helper
 {
     internal static class StatCollectionExtension
     {
+        internal static StatisticAdapter<float> JumpJetCountMultiplier(this StatCollection statCollection)
+        {
+            return new StatisticAdapter<float>("JumpJetCountMultiplier", statCollection, 1);
+        }
+
         internal static StatisticAdapter<float> JumpCapacity(this StatCollection statCollection)
         {
             return new StatisticAdapter<float>("JumpCapacity", statCollection, 0);
@@ -29,9 +34,9 @@ namespace MechEngineer.Features.Engines.Helper
             return new StatisticAdapter<int>("HeatSinkCapacity", statCollection, 0);
         }
 
-        internal static StatisticAdapter<int> HeatGenerated(this StatCollection statCollection)
+        internal static StatisticAdapter<float> HeatGenerated(this StatCollection statCollection)
         {
-            return new StatisticAdapter<int>("HeatGenerated", statCollection, 0);
+            return new StatisticAdapter<float>("HeatGenerated", statCollection, 0);
         }
 
         internal static StatisticAdapter<float> JumpHeat(this StatCollection statCollection)

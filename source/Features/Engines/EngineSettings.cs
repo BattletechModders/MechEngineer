@@ -29,8 +29,8 @@ namespace MechEngineer.Features.Engines
         public float MovementPointDistanceMultiplier = 24f;
         public string MovementPointDistanceMultiplierDescription => "The distance of a TT movement point, 24 is vanilla CombatGameConstants.ExperimentalGridDistance .";
 
-        public float MinimumJumpDistanceForHeat = 3 * 24f;
-        public string MinimumJumpDistanceForHeatDescription => "The minimum distance to use for calculating jump heat, any jumps shorter will still produce the equivalent heat. CBT Rule: 3 MP.";
+        public float MinimJumpHeat = 3f * 3f;
+        public string MinimJumpHeatDescription => "Minimum heat when doing a jump, even if only one jump jet exists and only when jumping one hex.";
 
         public bool AutoConvertJumpCapacityInDefToStat = true;
         public string AutoConvertJumpCapacityInDefToStatDescription => $"All {nameof(JumpJetDef.JumpCapacity)} values in JumpJetDefs will be auto-converted to the {nameof(StatCollectionExtension.JumpCapacity)} statistic.";

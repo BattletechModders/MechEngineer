@@ -1,20 +1,25 @@
 ﻿using BattleTech;
 using MechEngineer.Features.MoveMultiplierStat;
+using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Helper
 {
     internal class MechDefMovementStatistics
     {
+        internal Engine Engine { get; }
+
         internal float WalkMovementPoint { get; }
         internal float WalkSpeed { get; }
         internal float RunSpeed { get; }
         internal float JumpDistance { get; }
+        internal int JumpJetCount { get; }
 
         internal MechDefMovementStatistics(MechDef mechDef)
         {
             this.mechDef = mechDef;
             
-            movement = mechDef.GetEngine()?.CoreDef.GetMovement(mechDef.Chassis.Tonnage);
+            Engine = mechDef.GetEngine();
+            movement = Engine?.CoreDef.GetMovement(mechDef.Chassis.Tonnage);
             if (movement == null)
             {
                 return;
@@ -31,6 +36,8 @@ namespace MechEngineer.Features.Engines.Helper
             BaseJumpDistance = EngineMovement.ConvertMPToGameDistance(JumpCapacity);
             JumpDistanceMultiplier = GetJumpDistanceMultiplier();
             JumpDistance = BaseJumpDistance * JumpDistanceMultiplier;
+
+            JumpJetCount = GetJumpJetCount();
         }
         
         private float MoveMultiplier { get; }
@@ -87,6 +94,20 @@ namespace MechEngineer.Features.Engines.Helper
         private float GetJumpCapacity()
         {
             var stat = statCollection.JumpCapacity();
+            stat.Create();
+            return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
+        }
+
+        private int GetJumpJetCount()
+        {
+            var multiplier = GetJumpJetCountMultiplier();
+            var max = Mathf.FloorToInt(movement.JumpJetCount * multiplier + 32 * Mathf.Epsilon);
+            return Mathf.Min(max, mechDef.Chassis.MaxJumpjets);
+        }
+
+        private float GetJumpJetCountMultiplier()
+        {
+            var stat = statCollection.JumpJetCountMultiplier();
             stat.Create();
             return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
         }

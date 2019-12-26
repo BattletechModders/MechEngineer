@@ -47,15 +47,8 @@ namespace MechEngineer.Features.Engines.StaticHandler
                           + mechLab.leftLegWidget.currentJumpjetCount
                           + mechLab.rightLegWidget.currentJumpjetCount;
 
-            if (engine == null)
-            {
-                widget.totalJumpjets = 0;
-            }
-            else
-            {
-                widget.totalJumpjets = engine.CoreDef.GetMovement(mechLab.activeMechDef.Chassis.Tonnage).JumpJetCount;
-            }
-            widget.totalJumpjets = Mathf.Min(widget.totalJumpjets, mechLab.activeMechDef.Chassis.MaxJumpjets);
+            var stats = new MechDefMovementStatistics(mechLab.activeMechDef);
+            widget.totalJumpjets = stats.JumpJetCount;
 
             if (hardpoints == null || hardpoints[4] == null)
             {

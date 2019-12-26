@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.Engines.StaticHandler
 {
-    internal class Jumping
+    internal static class Jumping
     {
         internal static void InitEffectStats(Mech mech)
         {
@@ -16,13 +16,17 @@ namespace MechEngineer.Features.Engines.StaticHandler
         {
             var jumpCapacity = mech.StatCollection.JumpCapacity().Get();
             var maxJumpDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
-
-            jumpDistance = Mathf.Max(jumpDistance, EngineFeature.settings.MinimumJumpDistanceForHeat);
             var jumpRatio = jumpDistance / maxJumpDistance;
             
-            var jumpMaxHeat = mech.StatCollection.JumpHeat().Get();
-            var jumpHeat = jumpRatio * jumpMaxHeat;
-            return Mathf.CeilToInt(jumpHeat);
+            return GetJumpHeat(mech.StatCollection, jumpRatio);
+        }
+
+        internal static int GetJumpHeat(this StatCollection statCollection, float ratio)
+        {
+            var jumpMaxHeat = statCollection.JumpHeat().Get();
+            var jumpHeat = ratio * jumpMaxHeat;
+            jumpHeat = Mathf.Max(jumpHeat, EngineFeature.settings.MinimJumpHeat);
+            return Mathf.CeilToInt(jumpHeat - Mathf.Epsilon);
         }
 
         internal static float CalcMaxJumpDistance(Mech mech)
