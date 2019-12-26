@@ -19,6 +19,7 @@ using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
+using MechEngineer.Features.OrderedStatusEffects;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideTonnage;
@@ -55,6 +56,7 @@ namespace MechEngineer
         public LocationalEffectsSettings LocationalEffects = new LocationalEffectsSettings();
         public MechLabSlotsSettings MechLabSlots = new MechLabSlotsSettings();
         public MoveMultiplierStatSettings MoveMultiplierStat = new MoveMultiplierStatSettings();
+        public OrderedStatusEffectsSettings OrderedStatusEffects = new OrderedStatusEffectsSettings();
         public OverrideDescriptionsSettings OverrideDescriptions = new OverrideDescriptionsSettings();
         public OverrideGhostVFXSettings OverrideGhostVFX = new OverrideGhostVFXSettings();
         public OverrideTonnageSettings OverrideTonnage = new OverrideTonnageSettings();

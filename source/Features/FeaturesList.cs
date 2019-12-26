@@ -19,6 +19,7 @@ using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OmniSlots;
+using MechEngineer.Features.OrderedStatusEffects;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideTonnage;
@@ -33,6 +34,7 @@ namespace MechEngineer.Features
     {
         // order matters, dependencies between "Features" are encoded into the order
         internal static IFeature[] Features = {
+            OrderedStatusEffectsFeature.Shared,
             OverrideTonnageFeature.Shared,
             EngineFeature.Shared,
             MoveMultiplierStatFeature.Shared,

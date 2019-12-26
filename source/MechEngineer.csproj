@@ -128,6 +128,9 @@
     <Compile Include="Features\Engines\Helper\MechDefMovementStatistics.cs" />
     <Compile Include="Features\Engines\StaticHandler\Jumping.cs" />
     <Compile Include="Features\MoveMultiplierStat\StatCollectionExtension.cs" />
+    <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsFeature.cs" />
+    <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsSettings.cs" />
+    <Compile Include="Features\OrderedStatusEffects\Patches\StatCollection_ModifyStatistic_Patch.cs" />
     <Compile Include="Helper\MechComponentRefExtensions.cs" />
     <Compile Include="Helper\StatisticAdapter.cs" />
     <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
