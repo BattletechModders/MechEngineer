@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using MechEngineer.Features.MoveMultiplierStat;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Helper
@@ -101,7 +102,7 @@ namespace MechEngineer.Features.Engines.Helper
         private int GetJumpJetCount()
         {
             var multiplier = GetJumpJetCountMultiplier();
-            var max = Mathf.FloorToInt(movement.JumpJetCount * multiplier + 32 * Mathf.Epsilon);
+            var max = PrecisionUtils.RoundDownToInt(movement.JumpJetCount * multiplier);
             return Mathf.Min(max, mechDef.Chassis.MaxJumpjets);
         }
 

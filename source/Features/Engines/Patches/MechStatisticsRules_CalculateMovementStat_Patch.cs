@@ -2,6 +2,7 @@
 using BattleTech;
 using Harmony;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Patches
@@ -29,7 +30,7 @@ namespace MechEngineer.Features.Engines.Patches
             var minValue = 1f;
             maxValue = 10f;
             currentValue = fraction * (maxValue - minValue) + minValue;
-            currentValue = Mathf.FloorToInt(currentValue);
+            currentValue = PrecisionUtils.RoundDownToInt(currentValue);
             currentValue = Mathf.Max(currentValue, minValue);
             currentValue = Mathf.Min(currentValue, maxValue);
         }

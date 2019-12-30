@@ -21,7 +21,7 @@ namespace MechEngineer.Features.Engines.Helper
         internal float WalkSpeed => ConvertMPToGameDistance(WalkMovementPoint);
         internal float RunMovementPoint => WalkMovementPoint * EngineFeature.settings.RunMultiplier;
         internal float RunSpeed => ConvertMPToGameDistance(RunMovementPoint);
-        internal int JumpJetCount => Mathf.FloorToInt(WalkMovementPoint);
+        internal int JumpJetCount => PrecisionUtils.RoundDownToInt(WalkMovementPoint);
 
         internal bool Mountable
         {
@@ -40,7 +40,7 @@ namespace MechEngineer.Features.Engines.Helper
                 }
 
                 {
-                    var lowerTier = new EngineMovement(Mathf.FloorToInt(WalkMovementPoint) - 1);
+                    var lowerTier = new EngineMovement(PrecisionUtils.RoundDownToInt(WalkMovementPoint) - 1);
                     if (lowerTier.RunSpeed >= constants.MaxSprintFactor)
                     {
                         return false;

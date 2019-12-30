@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines.StaticHandler
@@ -26,7 +27,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
             var jumpMaxHeat = statCollection.JumpHeat().Get();
             var jumpHeat = ratio * jumpMaxHeat;
             jumpHeat = Mathf.Max(jumpHeat, EngineFeature.settings.MinimJumpHeat);
-            return Mathf.CeilToInt(jumpHeat - Mathf.Epsilon);
+            return PrecisionUtils.RoundUpToInt(jumpHeat);
         }
 
         internal static float CalcMaxJumpDistance(Mech mech)

@@ -24,9 +24,19 @@ namespace MechEngineer.Features.OverrideTonnage
             return Round(value - OverrideTonnageFeature.settings.PrecisionEpsilon, Mathf.Ceil, precision);
         }
 
+        internal static int RoundUpToInt(float value)
+        {
+            return Mathf.CeilToInt(value - OverrideTonnageFeature.settings.PrecisionEpsilon);
+        }
+
         internal static float RoundDown(float value, float precision)
         {
             return Round(value + OverrideTonnageFeature.settings.PrecisionEpsilon, Mathf.Floor, precision);
+        }
+
+        internal static int RoundDownToInt(float value)
+        {
+            return Mathf.FloorToInt(value + OverrideTonnageFeature.settings.PrecisionEpsilon);
         }
         
         private static float Round(float value, Func<float, float> rounder, float precision)

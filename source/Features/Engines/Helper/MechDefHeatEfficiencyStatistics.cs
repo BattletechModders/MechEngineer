@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using MechEngineer.Features.Engines.StaticHandler;
+using MechEngineer.Features.OverrideTonnage;
 using System.Linq;
 using UnityEngine;
 
@@ -76,7 +77,7 @@ namespace MechEngineer.Features.Engines.Helper
             var stat = statCollection.HeatGenerated();
             stat.CreateWithDefault(defaultValue);
             var value = MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
-            return Mathf.CeilToInt(value - 32 * Mathf.Epsilon);
+            return PrecisionUtils.RoundUpToInt(value);
         }
 
         private int GetJumpHeat()

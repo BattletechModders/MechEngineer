@@ -3,6 +3,7 @@ using BattleTech;
 using Harmony;
 using Localize;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Patches
@@ -20,9 +21,9 @@ namespace MechEngineer.Features.Engines.Patches
                 var tooltipData = __instance;
                 void ReplaceDistance(string text, float meter, string newText = null)
                 {
-                    var meters = Mathf.FloorToInt(meter);
+                    var meters = PrecisionUtils.RoundDownToInt(meter);
                     var hexWidth = MechStatisticsRules.Combat.MoveConstants.ExperimentalGridDistance;
-                    var hexes = Mathf.FloorToInt(meters / hexWidth);
+                    var hexes = PrecisionUtils.RoundDownToInt(meters / hexWidth);
                     var translatedValue = Strings.T("{0}m / {1} hex", meters, hexes);
                     tooltipData.dataList.Remove(text);
                     tooltipData.dataList.Add(newText ?? text, translatedValue);
