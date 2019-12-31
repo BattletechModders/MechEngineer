@@ -99,9 +99,17 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
                 {
                     if (mechComponentRef.ComponentDefType == ComponentType.Weapon)
                     {
-                        if (HardpointFixFeature.Shared.Settings.CreateVanillaFallbackPrefabs && string.IsNullOrEmpty(__result))
+                        if (string.IsNullOrEmpty(__result))
                         {
-                            Control.mod.Logger.LogWarning($"no prefabName found for weapon defId={mechComponentRef.ComponentDefID} even with vanilla fallback code");
+                            var log = $"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}";
+                            if (HardpointFixFeature.Shared.Settings.CreateVanillaFallbackPrefabs)
+                            {
+                                Control.mod.Logger.LogWarning(log);
+                            }
+                            else
+                            {
+                                Control.mod.Logger.Log(log);
+                            }
                         }
                     }
                 }

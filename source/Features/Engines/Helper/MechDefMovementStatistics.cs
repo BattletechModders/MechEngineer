@@ -101,9 +101,13 @@ namespace MechEngineer.Features.Engines.Helper
 
         private int GetJumpJetCount()
         {
+            var raw = movement.JumpJetCount;
             var multiplier = GetJumpJetCountMultiplier();
-            var max = PrecisionUtils.RoundDownToInt(movement.JumpJetCount * multiplier);
-            return Mathf.Min(max, mechDef.Chassis.MaxJumpjets);
+            var mutiplied = raw * multiplier;
+            var rounded = PrecisionUtils.RoundDownToInt(mutiplied);
+            var cropped = Mathf.Min(rounded, mechDef.Chassis.MaxJumpjets);
+            //Control.mod.Logger.Log($"raw={raw} multiplier={multiplier} mutiplied={mutiplied} rounded={rounded} cropped={cropped}");
+            return cropped;
         }
 
         private float GetJumpJetCountMultiplier()
