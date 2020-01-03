@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using Harmony;
@@ -39,6 +40,18 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
                 return prefab.Substring(prefab.Length - 1, 1);
             }
 
+            string SelectSingle(IEnumerable<string> enumerable)
+            {
+                var list = enumerable.ToList();
+                var chosen = list[0];
+                if (list.Count > 1)
+                {
+                    var duplicates = string.Join(",", list.OrderBy(x => x).Distinct());
+                    Control.mod.Logger.LogWarning($"Removing duplicate hardpoint entries [{duplicates}], kept a single {chosen}");
+                }
+                return chosen;
+            }
+
             // normalize data, remove all duplicates in each location
             for (var i = 0; i < def.HardpointData.Length; i++)
             {
@@ -46,7 +59,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
                     .SelectMany(x => x)
                     .OrderBy(x => x)
                     .GroupBy(x => Unique(x))
-                    .Select(x => x.First())
+                    .Select(x => SelectSingle(x))
                     .GroupBy(x => GroupNumber(x))
                     .Select(x => x.ToArray())
                     .ToArray();
