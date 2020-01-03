@@ -19,6 +19,9 @@ namespace MechEngineer.Features.HardpointFix
         public bool CreateVanillaFallbackPrefabs = true;
         public string CreateVanillaFallbackPrefabsDescription = "If no mapping can be found, use the vanilla mapping code (which unfortunatly maps SRM to UAC), fixes mortar issues";
 
+        public bool AutoFixHardpointDataDefs = true;
+        public string AutoFixHardpointDataDefsDescription = "HardpointDataDef should not contain duplicates and be grouped by slot (mh1 < mh2, eh1 = mh1).";
+
         // from: /data/weapon$ grep -R "PrefabIdentifier" . | cut -d\" -f 4 | sort | uniq
         // to: /data/hardpoints$ grep -R "chrPrfWeap" . | cut -d_ -f 5 | sort | uniq
         // default mapping = prefabid -> lower case prefab id (e.g. Flamer -> flamer, PPC -> ppc)
