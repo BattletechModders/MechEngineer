@@ -42,6 +42,22 @@ namespace MechEngineer.Features.HardpointFix.utils
             }
         }
 
+        // chrPrfWeap_battlemaster_leftarm_ac20_bh1 -> 1
+        internal static string GroupNumber(string prefab)
+        {
+            return prefab.Substring(prefab.Length - 1, 1);
+        }
+        
+        // TODO cache?
+        internal List<string> GetRequiredBlankPrefabNamesInLocation(ChassisLocations location)
+        {
+            var availableBlanks = GetAvailableBlankPrefabsForLocation(location);
+            var usedSlots = cacheMappings.Where(x => x.Key.MountedLocation == location).Select(x => x.Value).Select(GroupNumber).Distinct().ToList();
+            var requiredBlanks = availableBlanks.Where(x => !usedSlots.Contains(GroupNumber(x))).ToList();
+            Control.mod.Logger.LogDebug($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
+            return requiredBlanks;
+        }
+
         internal int MappedComponentRefCount => cacheMappings.Count;
 
         internal string GetPrefabName(MechComponentRef componentRef)
@@ -104,15 +120,13 @@ namespace MechEngineer.Features.HardpointFix.utils
                 }
             }
 
-            if (bestSelection.Mappings.Count < 1)
+            if (bestSelection.Mappings.Count > 0)
             {
-                return;
-            }
-
-            Control.mod.Logger.LogDebug($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
-            foreach (var mapping in bestSelection.Mappings)
-            {
-                cacheMappings[mapping.MechComponentRef] = mapping.PrefabName;
+                Control.mod.Logger.LogDebug($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
+                foreach (var mapping in bestSelection.Mappings)
+                {
+                    cacheMappings[mapping.MechComponentRef] = mapping.PrefabName;
+                }
             }
         }
 
@@ -363,6 +377,13 @@ namespace MechEngineer.Features.HardpointFix.utils
                 }
             }
             return sets;
+        }
+
+        private string[] GetAvailableBlankPrefabsForLocation(ChassisLocations location)
+        {
+            var locationString = VHLUtils.GetStringFromLocation(location);
+            var weaponsData = chassisDef.HardpointDataDef.HardpointData.FirstOrDefault(x => x.location == locationString);
+            return weaponsData.blanks;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using BattleTech;
 using Harmony;
@@ -8,10 +7,10 @@ using MechEngineer.Features.HardpointFix.utils;
 
 namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
-    [HarmonyPatch(typeof(MechHardpointRules), "GetComponentPrefabName")]
+    [HarmonyPatch(typeof(MechHardpointRules), nameof(MechHardpointRules.GetComponentPrefabName))]
     public static class MechHardpointRules_GetComponentPrefabName_Patch
     {
-        private static WeaponComponentPrefabCalculator calculator;
+        internal static WeaponComponentPrefabCalculator calculator;
 
         internal static void SetupCalculator(ChassisDef chassisDef, List<MechComponentRef> componentRefs)
         {

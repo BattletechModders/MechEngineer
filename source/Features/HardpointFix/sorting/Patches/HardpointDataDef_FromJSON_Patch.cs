@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.HardpointFix.utils;
 
 namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
@@ -31,13 +32,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             // chrPrfWeap_battlemaster_leftarm_ac20_bh1 -> chrPrfWeap_battlemaster_leftarm_ac20_1
             string Unique(string prefab)
             {
-                return prefab.Substring(0, prefab.Length - 3) + GroupNumber(prefab);
-            }
-
-            // chrPrfWeap_battlemaster_leftarm_ac20_bh1 -> 1
-            string GroupNumber(string prefab)
-            {
-                return prefab.Substring(prefab.Length - 1, 1);
+                return prefab.Substring(0, prefab.Length - 3) + WeaponComponentPrefabCalculator.GroupNumber(prefab);
             }
 
             string SelectSingle(IEnumerable<string> enumerable)
@@ -60,7 +55,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
                     .OrderBy(x => x)
                     .GroupBy(x => Unique(x))
                     .Select(x => SelectSingle(x))
-                    .GroupBy(x => GroupNumber(x))
+                    .GroupBy(x => WeaponComponentPrefabCalculator.GroupNumber(x))
                     .Select(x => x.ToArray())
                     .ToArray();
             }
