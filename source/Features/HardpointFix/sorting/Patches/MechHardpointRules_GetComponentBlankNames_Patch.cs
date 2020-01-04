@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleTech;
+﻿using BattleTech;
 using Harmony;
 using MechEngineer.Features.HardpointFix.utils;
+using System;
+using System.Collections.Generic;
 
 namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
@@ -15,11 +15,6 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
         {
             try
             {
-                if (calculator == null)
-                {
-                    return true;
-                }
-
                 __result = calculator.GetRequiredBlankPrefabNamesInLocation(location);
                 return false;
             }

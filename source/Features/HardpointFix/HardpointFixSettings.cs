@@ -16,8 +16,8 @@ namespace MechEngineer.Features.HardpointFix
         public bool AllowDefaultLoadoutWeapons = false;
         public string AllowDefaultLoadoutWeaponsDescription = "Ignore limits that would prevent mounting default loadouts.";
 
-        public bool CreateVanillaFallbackPrefabs = true;
-        public string CreateVanillaFallbackPrefabsDescription = "If no mapping can be found, use the vanilla mapping code (which unfortunatly maps SRM to UAC), fixes mortar issues";
+        public string[] FallbackPrefabsForComponentDefIds = { "Weapon_Mortar_MechMortar" };
+        public string FallbackPrefabsForComponentDefIdsDescription = "A list of components that always should be assigned a weapon prefab to.";
 
         public bool AutoFixHardpointDataDefs = true;
         public string AutoFixHardpointDataDefsDescription = "HardpointDataDef should not contain duplicates and be grouped by slot (mh1 < mh2, eh1 = mh1).";

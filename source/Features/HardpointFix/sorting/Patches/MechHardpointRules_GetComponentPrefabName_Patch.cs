@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BattleTech;
+﻿using BattleTech;
 using Harmony;
 using MechEngineer.Features.HardpointFix.utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
@@ -50,38 +50,12 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             calculator = null;
         }
 
-        public static bool Prefix(BaseComponentRef componentRef, ref List<string> usedPrefabNames, ref string __result)
+        public static bool Prefix(BaseComponentRef componentRef, ref string __result)
         {
             try
             {
-                if (calculator == null)
-                {
-                    return true;
-                }
-
-                if (componentRef is MechComponentRef mechComponentRef)
-                {
-                    if (usedPrefabNames.Count == 0)
-                    {
-                        // make sure no other iteration can take away already reserved prefabs
-                        usedPrefabNames.AddRange(calculator.GetUsedPrefabNamesInLocation(mechComponentRef.MountedLocation));
-                    }
-
-                    if (mechComponentRef.ComponentDefType == ComponentType.Weapon)
-                    {
-                        __result = calculator.GetPrefabName(mechComponentRef);
-
-                        if (__result != null)
-                        {
-                            return false;
-                        }
-
-                        if (!HardpointFixFeature.Shared.Settings.CreateVanillaFallbackPrefabs)
-                        {
-                            return false;
-                        }
-                    }
-                }
+                __result = calculator?.GetPrefabName(componentRef);
+                return false;
             }
             catch (Exception e)
             {
@@ -94,23 +68,11 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
         {
             try
             {
-                if (componentRef is MechComponentRef mechComponentRef)
+                if (componentRef is MechComponentRef mechComponentRef
+                    && mechComponentRef.ComponentDefType == ComponentType.Weapon
+                    && string.IsNullOrEmpty(__result))
                 {
-                    if (mechComponentRef.ComponentDefType == ComponentType.Weapon)
-                    {
-                        if (string.IsNullOrEmpty(__result))
-                        {
-                            var log = $"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}";
-                            if (HardpointFixFeature.Shared.Settings.CreateVanillaFallbackPrefabs)
-                            {
-                                Control.mod.Logger.LogWarning(log);
-                            }
-                            else
-                            {
-                                Control.mod.Logger.Log(log);
-                            }
-                        }
-                    }
+                    Control.mod.Logger.LogDebug($"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}");
                 }
             }
             catch (Exception e)

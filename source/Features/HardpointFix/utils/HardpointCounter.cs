@@ -84,32 +84,6 @@ namespace MechEngineer.Features.HardpointFix.utils
             }
         }
 
-        //internal string[] RemoveUnwantedHardpoints(string[] hardpointSet)
-        //{
-        //    IEnumerable<string> hardpoints = hardpointSet;
-        //    if (numBallistic == 0)
-        //    {
-        //        hardpoints = hardpoints.Where(hp => !hp.Contains("_bh"));
-        //    }
-
-        //    if (numEnergy == 0 && numSmall == 0)
-        //    {
-        //        hardpoints = hardpoints.Where(hp => !hp.Contains("_eh"));
-        //    }
-
-        //    if (numMissile == 0)
-        //    {
-        //        hardpoints = hardpoints.Where(hp => !hp.Contains("_mh"));
-        //    }
-
-        //    if (numSmall == 0)
-        //    {
-        //        hardpoints = hardpoints.Where(hp => !hp.Contains("_ah"));
-        //    }
-
-        //    return hardpoints.ToArray();
-        //}
-
         internal HardpointDef[] HardpointsDefs
         {
             get
