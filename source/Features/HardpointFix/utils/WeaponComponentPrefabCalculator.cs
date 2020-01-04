@@ -383,7 +383,7 @@ namespace MechEngineer.Features.HardpointFix.utils
         {
             var locationString = VHLUtils.GetStringFromLocation(location);
             var weaponsData = chassisDef.HardpointDataDef.HardpointData.FirstOrDefault(x => x.location == locationString);
-            return weaponsData.blanks;
+            return weaponsData.blanks ?? new string[0];
         }
     }
 }
