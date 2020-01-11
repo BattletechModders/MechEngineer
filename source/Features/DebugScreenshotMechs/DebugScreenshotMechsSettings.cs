@@ -7,5 +7,8 @@
 
         public string ScreenshotDirectoryPath { get; set; } = "screenshots";
         public string ScreenshotDirectoryPathDescription = "Create the directory manually first, otherwise it won't save any of the images.";
+
+        public bool OnlyInvalidMechs { get; set; } = false;
+        public string OnlyInvalidMechsDescription = "Only make screenshots of mechs with invalid configurations.";
     }
 }

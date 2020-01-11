@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace MechEngineer.Features.DebugScreenshotMechs
@@ -39,6 +40,11 @@ namespace MechEngineer.Features.DebugScreenshotMechs
                     var mechDef = mechDefsIterator.Current;
                     var screenshotPath = DebugScreenshotMechsFeature.Shared.ScreenshotPath(mechDef);
                     if (File.Exists(screenshotPath))
+                    {
+                        continue;
+                    }
+                    if (DebugScreenshotMechsFeature.Shared.Settings.OnlyInvalidMechs
+                        && MechValidationRules.ValidateMechDef(MechValidationLevel.Full, panel.dataManager, mechDef, null).All(x => !x.Value.Any()))
                     {
                         continue;
                     }
