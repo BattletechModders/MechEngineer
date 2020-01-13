@@ -312,7 +312,6 @@
     <Compile Include="Features\HardpointFix\limits\Patches\MechLabLocationWidget_OnMechLabDrop_Patch.cs" />
     <Compile Include="Features\HardpointFix\limits\MechLabLocationWidgetPatchHelper.cs" />
     <Compile Include="Features\HardpointFix\sorting\MechDefAdapter.cs" />
-    <Compile Include="Features\HardpointFix\sorting\Patches\MechDef_RefreshInventory_Patch.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\MechHardpointRules_GetComponentPrefabName_Patch.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\Mech_InitGameRep_Patch.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\MechRepresentationSimGame_LoadWeapons_Patch.cs" />
