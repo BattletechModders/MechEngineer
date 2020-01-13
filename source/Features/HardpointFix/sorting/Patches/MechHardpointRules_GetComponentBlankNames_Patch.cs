@@ -15,8 +15,11 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
         {
             try
             {
-                __result = calculator.GetRequiredBlankPrefabNamesInLocation(location);
-                return false;
+                if (calculator != null)
+                {
+                    __result = calculator.GetRequiredBlankPrefabNamesInLocation(location);
+                    return false;
+                }
             }
             catch (Exception e)
             {

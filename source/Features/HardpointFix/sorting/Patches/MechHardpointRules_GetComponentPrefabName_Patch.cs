@@ -54,8 +54,11 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
         {
             try
             {
-                __result = calculator?.GetPrefabName(componentRef);
-                return false;
+                if (calculator != null)
+                {
+                    __result = calculator.GetPrefabName(componentRef);
+                    return false;
+                }
             }
             catch (Exception e)
             {
