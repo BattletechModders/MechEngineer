@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using Harmony;
+using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.HardpointFix.utils;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,21 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
                 Control.mod.Logger.LogError(e);
             }
             return true;
+        }
+
+        public static void Postfix(ChassisLocations location, ref List<string> __result)
+        {
+            try
+            {
+                if (HardpointFixFeature.Shared.Settings.TraceLogDebugMappings || (__result != null && __result.Count > 0))
+                {
+                    Control.mod.Logger.LogDebug($"GetComponentBlankNames blanks=[{__result?.JoinAsString()}] location={location}");
+                }
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
         }
     }
 }

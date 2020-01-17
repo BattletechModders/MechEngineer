@@ -71,11 +71,9 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
         {
             try
             {
-                if (componentRef is MechComponentRef mechComponentRef
-                    && mechComponentRef.ComponentDefType == ComponentType.Weapon
-                    && string.IsNullOrEmpty(__result))
+                if (HardpointFixFeature.Shared.Settings.TraceLogDebugMappings || (componentRef.ComponentDefType == ComponentType.Weapon && string.IsNullOrEmpty(__result)))
                 {
-                    Control.mod.Logger.LogDebug($"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}");
+                    Control.mod.Logger.LogDebug($"GetComponentPrefabName prefabName={__result} ComponentDefID={componentRef.ComponentDefID} PrefabIdentifier={componentRef.Def.PrefabIdentifier}");
                 }
             }
             catch (Exception e)

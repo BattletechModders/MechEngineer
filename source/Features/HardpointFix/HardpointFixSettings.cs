@@ -5,6 +5,9 @@ namespace MechEngineer.Features.HardpointFix
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Optimizes the way installed weapons are shown on a mech model.";
 
+        public bool TraceLogDebugMappings { get; set; } = false;
+        public string TraceLogDebugMappingsDescription => "Trace all GetComponentBlankNames and GetComponentPrefabName calls. Otherwise only some of them are logged.";
+
         // TODO add set to 4 slots per chassis location autofix variant
         // TODO make enum so we have: set to 4, set to encountered prefabs, disabled
         public bool AutoFixChassisDefWeaponHardpointCounts = false;
