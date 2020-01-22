@@ -29,8 +29,11 @@ namespace MechEngineer.Features.CriticalEffects
         {
             return null;
         }
-        
-        public void OnLoaded(Dictionary<string, object> values)
+    public virtual UnitType GetActorType() {
+      return UnitType.UNDEFINED;
+    }
+
+    public void OnLoaded(Dictionary<string, object> values)
         {
             var descriptions = new List<string>();
 
@@ -92,7 +95,7 @@ namespace MechEngineer.Features.CriticalEffects
                 Def.Description,
                 descriptions,
                 CriticalEffectsFeature.settings.ElementTemplate,
-                descriptionTemplate
+                descriptionTemplate, BonusDescriptionType.CriticalEffects, GetActorType()
             );
         }
 

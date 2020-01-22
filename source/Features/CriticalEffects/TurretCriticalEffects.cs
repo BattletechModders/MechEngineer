@@ -1,4 +1,5 @@
-﻿using CustomComponents;
+﻿using BattleTech;
+using CustomComponents;
 
 namespace MechEngineer.Features.CriticalEffects
 {
@@ -9,5 +10,8 @@ namespace MechEngineer.Features.CriticalEffects
         {
             return "Turret";
         }
+    public override UnitType GetActorType() {
+      return UnitType.Turret;
     }
+  }
 }
