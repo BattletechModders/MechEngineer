@@ -80,23 +80,35 @@ namespace MechEngineer.Features.OverrideDescriptions
                 }
             }
             
-            AddBonusDescriptions(
-                Def.Description,
+            AddTemplatedExtendedDetail(
+                Def,
                 descriptions.Select(x => x.Full),
                 OverrideDescriptionsFeature.settings.BonusDescriptionsElementTemplate,
-                OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate
+                OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate,
+                OverrideDescriptionsFeature.settings.DescriptionIdentifier
             );
         }
 
-        internal static void AddBonusDescriptions(
-            DescriptionDef descriptionDef,
+        internal static void AddTemplatedExtendedDetail(
+            MechComponentDef componentDef,
             IEnumerable<string> elements,
             string elementTemplate,
-            string descriptionTemplate)
+            string descriptionTemplate,
+            string identifier,
+            UnitType unityType = UnitType.UNDEFINED)
         {
-            var adapter = new DescriptionDefAdapter(descriptionDef);
-            var bonuses = string.Join("", elements.Where(x => x != null).Select(x => elementTemplate.Replace("{{element}}", x)).ToArray());
-            adapter.Details = descriptionTemplate.Replace("{{elements}}", bonuses).Replace("{{originalDescription}}", adapter.Details);
+            var elementsText = string.Join("", elements.Where(x => x != null).Select(x => elementTemplate.Replace("{{element}}", x)).ToArray());
+            var text = descriptionTemplate.Replace("{{elements}}", elementsText);
+            
+            var extended = componentDef.GetComponent<ExtendedDetails>() ?? componentDef.AddComponent(new ExtendedDetails(componentDef));
+            var detail = new ExtendedDetail
+            {
+                UnitType = unityType,
+                Index = -1,
+                Text = text,
+                Identifier = identifier
+            };
+            extended.AddDetail(detail);
         }
 
         [JsonIgnore]

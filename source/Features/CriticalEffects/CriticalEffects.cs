@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
 using Localize;
@@ -25,9 +24,9 @@ namespace MechEngineer.Features.CriticalEffects
         public string CritFloatieMessage = null;
         public string DestroyedFloatieMessage = null;
 
-        public virtual string GetActorTypeDescription()
+        public virtual UnitType GetUnitType()
         {
-            return null;
+            return UnitType.UNDEFINED;
         }
         
         public void OnLoaded(Dictionary<string, object> values)
@@ -81,18 +80,21 @@ namespace MechEngineer.Features.CriticalEffects
             
             var descriptionTemplate = CriticalEffectsFeature.settings.DescriptionTemplate;
             {
-                var actorDescription = GetActorTypeDescription();
-                if (actorDescription != null)
+                var actorType = GetUnitType();
+                if (actorType != UnitType.UNDEFINED)
                 {
+                    var actorDescription = actorType.ToString();
                     descriptionTemplate = $"{actorDescription} {descriptionTemplate}";
                 }
             }
             
-            BonusDescriptions.AddBonusDescriptions(
-                Def.Description,
+            BonusDescriptions.AddTemplatedExtendedDetail(
+                Def,
                 descriptions,
                 CriticalEffectsFeature.settings.ElementTemplate,
-                descriptionTemplate
+                descriptionTemplate,
+                CriticalEffectsFeature.settings.DescriptionIdentifier,
+                GetUnitType()
             );
         }
 

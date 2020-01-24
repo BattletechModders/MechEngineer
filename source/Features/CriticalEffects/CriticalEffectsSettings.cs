@@ -5,7 +5,8 @@
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Allows custom multiple critical hit states for individual components.";
 
-        public string DescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n{{originalDescription}}";
+        public string DescriptionIdentifier = "Criticals";
+        public string DescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n";
         public string ElementTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{element}}</line-height></line-indent></indent>\r\n";
         public bool DescriptionUseName = false;
 

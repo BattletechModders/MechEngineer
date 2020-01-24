@@ -1,13 +1,14 @@
-﻿using CustomComponents;
+﻿using BattleTech;
+using CustomComponents;
 
 namespace MechEngineer.Features.CriticalEffects
 {
     [CustomComponent("VehicleCriticalEffects")]
     public class VehicleCriticalEffects : CriticalEffects
     {
-        public override string GetActorTypeDescription()
+        public override UnitType GetUnitType()
         {
-            return "Vehicle";
+            return UnitType.Vehicle;
         }
     }
 }

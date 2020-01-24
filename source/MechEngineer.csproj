@@ -133,6 +133,7 @@
     <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsFeature.cs" />
     <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsSettings.cs" />
     <Compile Include="Features\OrderedStatusEffects\Patches\StatCollection_ModifyStatistic_Patch.cs" />
+    <Compile Include="Features\OverrideDescriptions\ExtendedDetails.cs" />
     <Compile Include="Helper\MechComponentRefExtensions.cs" />
     <Compile Include="Helper\StatisticAdapter.cs" />
     <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
@@ -222,7 +223,6 @@
     <Compile Include="Features\MechLabSlots\MechLabSlotsFeature.cs" />
     <Compile Include="Features\OverrideDescriptions\BonusDescriptions.cs" />
     <Compile Include="Features\OverrideDescriptions\BonusDescriptionSettings.cs" />
-    <Compile Include="Features\OverrideDescriptions\DescriptionDefAdapter.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustInventoryElement.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustSlotElement.cs" />
     <Compile Include="Features\OverrideDescriptions\MechComponentDefAdapter.cs" />
