@@ -5,6 +5,7 @@ using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
+using CustomComponents.ExtendedDetails;
 using fastJSON;
 using Localize;
 
