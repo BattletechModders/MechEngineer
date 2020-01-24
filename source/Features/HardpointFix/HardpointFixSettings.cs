@@ -65,6 +65,11 @@ namespace MechEngineer.Features.HardpointFix
                 HardpointCandidates = new[] {"artillery", "ac20", "uac20", "lbx20", "ac", "lbx"}
             },
             new WeaponPrefabMapping
+            { /* requested by bloodydoves */
+                PrefabIdentifier= "mortar",
+                HardpointCandidates = new[] {"mortar", "ac20", "uac20", "lbx20", "ac", "lbx"}
+            },
+            new WeaponPrefabMapping
             {
                 PrefabIdentifier= "lrm5",
                 HardpointCandidates = new[] {"lrm5", "lrm10", "lrm15", "lrm20", "srm20"}
