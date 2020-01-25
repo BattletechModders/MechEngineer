@@ -229,7 +229,7 @@ namespace MechEngineer.Features.DynamicSlots
             {
                 gameObject = DataManager.PooledInstantiate(
                     MechLabPanel.MECHCOMPONENT_ITEM_PREFAB,
-                    BattleTechResourceType.UIModulePrefabs,
+                    BTLoadUtils.GetResourceType(nameof(BattleTechResourceType.UIModulePrefabs)),
                     null, null);
 
 
