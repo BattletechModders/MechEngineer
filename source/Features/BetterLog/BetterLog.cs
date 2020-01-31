@@ -44,5 +44,10 @@ namespace MechEngineer.Features.BetterLog
 
             return log;
         }
+
+        public void Flush()
+        {
+            streamWriter.Flush();
+        }
     }
 }
