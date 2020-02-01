@@ -3,7 +3,7 @@ using System.Linq;
 using BattleTech;
 using MechEngineer.Features.OrderedStatusEffects;
 
-namespace MechEngineer.Features.Engines.Helper
+namespace MechEngineer.Features.OverrideStatTooltips.Helper
 {
     internal static class MechDefStatisticModifier
     {

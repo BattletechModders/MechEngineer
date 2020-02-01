@@ -22,6 +22,7 @@ using MechEngineer.Features.OmniSlots;
 using MechEngineer.Features.OrderedStatusEffects;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
+using MechEngineer.Features.OverrideStatTooltips;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
 using MechEngineer.Features.TagManager;
@@ -60,6 +61,7 @@ namespace MechEngineer.Features
             OverrideGhostVFXFeature.Shared,
             OmniSlotsFeature.Shared,
             TagManagerFeature.Shared,
+            OverrideStatTooltipsFeature.Shared,
 
             DebugSaveMechToFileFeature.Shared,
             DebugCycleCombatSoundsFeature.Shared,

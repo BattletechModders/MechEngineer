@@ -95,6 +95,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\OverrideStatTooltips\Helper\MechStatUtils.cs" />
+    <Compile Include="Features\OverrideStatTooltips\IStatHandler.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateChassisMeleeStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Stats\LongRangeStat.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Stats\MediumRangeStat.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Stats\CloseRangeStat.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Stats\DurabilityStat.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Stats\HeatEfficiencyStat.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Stats\MovementStat.cs" />
+    <Compile Include="Features\OverrideStatTooltips\OverrideStatTooltipsFeature.cs" />
+    <Compile Include="Features\OverrideStatTooltips\OverrideStatTooltipsSettings.cs" />
     <Compile Include="Features\AccuracyEffects\AccuracyEffectsSettings.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\ToHit_GetSelfArmMountedModifier_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuatorCC.cs" />
@@ -119,13 +130,16 @@
     <Compile Include="Features\DebugScreenshotMechs\DebugScreenshotMechsSettings.cs" />
     <Compile Include="Features\DebugScreenshotMechs\Patches\SkirmishMechBayPanel_OnMechLabCancel_Patch.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotsExtensions.cs" />
-    <Compile Include="Features\Engines\Helper\MechDefHeatEfficiencyStatistics.cs" />
-    <Compile Include="Features\Engines\Helper\MechDefStatisticModifier.cs" />
-    <Compile Include="Features\Engines\Patches\MechStatisticsRules_CalculateChassisMovementStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Helper\MechDefHeatEfficiencyStatistics.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Helper\MechDefStatisticModifier.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechDetails_SetStats_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\SG_Shop_FullMechDetailPanel_FillInFullMech_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechLabStatBlockWidget_SetData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateChassisMovementStat_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_CalcJumpHeat_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_JumpDistance_Patch.cs" />
     <Compile Include="Features\AutoFix\Patches\JumpJetDef_FromJSON_Patch.cs" />
-    <Compile Include="Features\Engines\Helper\MechDefMovementStatistics.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Helper\MechDefMovementStatistics.cs" />
     <Compile Include="Features\Engines\StaticHandler\Jumping.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\HardpointDataDef_FromJSON_Patch.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\MechHardpointRules_GetComponentBlankNames_Patch.cs" />
@@ -133,6 +147,17 @@
     <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsFeature.cs" />
     <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsSettings.cs" />
     <Compile Include="Features\OrderedStatusEffects\Patches\StatCollection_ModifyStatistic_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateFirepowerStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateMeleeStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateRangeStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateDurabilityStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechBayMechInfoWidget_SetData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\TooltipPrefab_Mech_SetData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\TooltipPrefab_Stats_SetData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetFirepowerData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetMeleeData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetRangeData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetDurabilityData_Patch.cs" />
     <Compile Include="Helper\MechComponentRefExtensions.cs" />
     <Compile Include="Helper\StatisticAdapter.cs" />
     <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
@@ -237,12 +262,12 @@
     <Compile Include="Features\Engines\Helper\EngineSearcher.cs" />
     <Compile Include="Features\Engines\Patches\Contract_GenerateSalvage_Patch.cs" />
     <Compile Include="Features\Engines\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
-    <Compile Include="Features\Engines\Patches\MechStatisticsRules_CalculateHeatEfficiencyStat_Patch.cs" />
-    <Compile Include="Features\Engines\Patches\MechStatisticsRules_CalculateMovementStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateHeatEfficiencyStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateMovementStat_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_GetHeatSinkDissipation_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_InitEffectStats_Patch.cs" />
-    <Compile Include="Features\Engines\Patches\StatTooltipData_SetHeatData_Patch.cs" />
-    <Compile Include="Features\Engines\Patches\StatTooltipData_SetMovementData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetHeatData_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetMovementData_Patch.cs" />
     <Compile Include="Features\Engines\StaticHandler\EngineHeat.cs" />
     <Compile Include="Features\Engines\StaticHandler\EngineMisc.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\ListElementController_BASE_NotListView_SetComponentTooltipData_Patch.cs" />

@@ -2,7 +2,7 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
-using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.OverrideStatTooltips.Helper;
 
 namespace MechEngineer.Features.Engines.Handler
 {

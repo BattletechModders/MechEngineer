@@ -1,10 +1,11 @@
 ﻿using BattleTech;
+using MechEngineer.Features.Engines;
+using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Engines.StaticHandler;
 using MechEngineer.Features.OverrideTonnage;
 using System.Linq;
-using UnityEngine;
 
-namespace MechEngineer.Features.Engines.Helper
+namespace MechEngineer.Features.OverrideStatTooltips.Helper
 {
     internal class MechDefHeatEfficiencyStatistics
     {

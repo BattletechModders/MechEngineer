@@ -1,0 +1,22 @@
+﻿using BattleTech.UI;
+using Harmony;
+using System;
+
+namespace MechEngineer.Features.OverrideStatTooltips.Patches
+{
+    [HarmonyPatch(typeof(MechLabStatBlockWidget), "Awake")]
+    public static class MechLabStatBlockWidget_Awake_Patch
+    {
+        public static void Postfix(LanceStat[] ___mechStats)
+        {
+            try
+            {
+                MechBayMechInfoWidget_Awake_Patch.SetMechStats(___mechStats);
+            }
+            catch (Exception e)
+            {
+                Control.mod.Logger.LogError(e);
+            }
+        }
+    }
+}

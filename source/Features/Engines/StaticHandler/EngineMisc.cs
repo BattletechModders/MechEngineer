@@ -1,7 +1,7 @@
 ﻿using BattleTech;
 using BattleTech.UI;
 using MechEngineer.Features.Engines.Helper;
-using UnityEngine;
+using MechEngineer.Features.OverrideStatTooltips.Helper;
 
 namespace MechEngineer.Features.Engines.StaticHandler
 {
@@ -36,8 +36,6 @@ namespace MechEngineer.Features.Engines.StaticHandler
                 return;
             }
 
-            var engine = mechLab.GetEngine();
-
             var current = mechLab.headWidget.currentJumpjetCount
                           + mechLab.centerTorsoWidget.currentJumpjetCount
                           + mechLab.leftTorsoWidget.currentJumpjetCount
@@ -57,44 +55,5 @@ namespace MechEngineer.Features.Engines.StaticHandler
 
             hardpoints[4].SetData(WeaponCategoryEnumeration.GetAMS(), $"{current} / {widget.totalJumpjets}");
         }
-
-        //internal static void RefreshAvailability(MechLabInventoryWidget widget, float tonnage)
-        //{
-        //    if (tonnage <= 0)
-        //    {
-        //        return;
-        //    }
-
-        //    foreach (var element in widget.localInventory)
-        //    {
-        //        MechComponentDef componentDef;
-        //        if (element.controller != null)
-        //        {
-        //            componentDef = element.controller.componentDef;
-        //        }
-        //        else if (element.ComponentRef != null)
-        //        {
-        //            componentDef = element.ComponentRef.Def;
-        //        }
-        //        else
-        //        {
-        //            continue;
-        //        }
-
-        //        var engine = componentDef.GetComponent<EngineCoreDef>();
-        //        if (engine == null)
-        //        {
-        //            continue;
-        //        }
-
-        //        var movement = engine.GetMovement(tonnage);
-        //        if (movement.Mountable)
-        //        {
-        //            continue;
-        //        }
-
-        //        element.gameObject.SetActive(false);
-        //    }
-        //}
     }
 }

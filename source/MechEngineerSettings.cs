@@ -22,6 +22,7 @@ using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OrderedStatusEffects;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
+using MechEngineer.Features.OverrideStatTooltips;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.ShutdownInjuryProtection;
 using MechEngineer.Features.TagManager;
@@ -59,6 +60,7 @@ namespace MechEngineer
         public OrderedStatusEffectsSettings OrderedStatusEffects = new OrderedStatusEffectsSettings();
         public OverrideDescriptionsSettings OverrideDescriptions = new OverrideDescriptionsSettings();
         public OverrideGhostVFXSettings OverrideGhostVFX = new OverrideGhostVFXSettings();
+        public OverrideStatTooltipsSettings OverrideStatTooltips = new OverrideStatTooltipsSettings();
         public OverrideTonnageSettings OverrideTonnage = new OverrideTonnageSettings();
         public ShutdownInjuryProtectionSettings ShutdownInjuryProtection = new ShutdownInjuryProtectionSettings();
         public TurretLimitedAmmoSettings TurretLimitedAmmo = new TurretLimitedAmmoSettings();

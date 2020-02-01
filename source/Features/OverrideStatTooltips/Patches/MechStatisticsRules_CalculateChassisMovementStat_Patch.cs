@@ -1,9 +1,9 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
-using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.OverrideStatTooltips.Helper;
 
-namespace MechEngineer.Features.Engines.Patches
+namespace MechEngineer.Features.OverrideStatTooltips.Patches
 {
     [HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateChassisMovementStat))]
     public static class MechStatisticsRules_CalculateChassisMovementStat_Patch
@@ -12,9 +12,7 @@ namespace MechEngineer.Features.Engines.Patches
         {
             try
             {
-                var movement = new EngineMovement(EngineFeature.settings.EngineRatingForChassisMovementStat, chassisDef.Tonnage);
-                var fraction = MechDefMovementStatistics.GetStatisticRating(movement.RunSpeed);
-                MechStatisticsRules_CalculateMovementStat_Patch.SetStatValues(fraction, ref currentValue, ref maxValue);
+                MechStatUtils.SetStatValues(0, ref currentValue, ref maxValue);
                 return false;
             }
             catch (Exception e)
