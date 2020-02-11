@@ -38,10 +38,9 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
 
         internal float GetStatisticRating()
         {
-            // only weapons and heatsinking
-            var min = (float)AlphaStrike / 3;
-            var max = AlphaStrike - min;
-            return MechStatUtils.NormalizeToFraction(AlphaStrike, min, max);
+            return AlphaStrike < 1
+                ? 0
+                : MechStatUtils.NormalizeToFraction(HeatSinking, (float)AlphaStrike / 3, AlphaStrike);
         }
 
         private float GetDissipationCapacity()

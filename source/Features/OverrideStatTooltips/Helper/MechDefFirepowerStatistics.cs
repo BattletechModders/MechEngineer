@@ -43,8 +43,8 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         internal float BarValue(float totalDamage, bool useMeleeConstants = false)
         {
 			var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
-			var min = useMeleeConstants ? constants.MinStockMeleeDamage : constants.MinStockFirepower;
-			var max = useMeleeConstants ? constants.MaxStockMeleeDamage : constants.MaxStockFirepower;
+			var min = useMeleeConstants ? constants.MinStockMeleeDamage + constants.MinStockFirepower : constants.MinStockFirepower;
+			var max = useMeleeConstants ? constants.MaxStockMeleeDamage + constants.MaxStockFirepower : constants.MaxStockFirepower;
             return MechStatUtils.NormalizeToFraction(totalDamage, min, max);
         }
 
