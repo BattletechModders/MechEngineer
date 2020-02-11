@@ -20,9 +20,9 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             this.mechDef = mechDef;
             Engine = mechDef.GetEngine();
 
-            DissipationCapacity = GetDissipationCapacity();
+            DissipationCapacity = (int)GetDissipationCapacity();
             HeatSinkCapacity = GetHeatSinkCapacity();
-            HeatSinking = (int)(DissipationCapacity + HeatSinkCapacity * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier);
+            HeatSinking = (int)(DissipationCapacity + HeatSinkCapacity) * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier;
             AlphaStrike = (int)(GetHeatGenerated() * GetWeaponHeatMultiplier());
             JumpHeat = GetJumpHeat();
             MaxHeat = GetMaxHeat();
@@ -30,8 +30,8 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         }
         
         private Engine Engine { get; }
-        private float DissipationCapacity { get; }
-        private float HeatSinkCapacity { get; }
+        private int DissipationCapacity { get; }
+        private int HeatSinkCapacity { get; }
 
         private readonly MechDef mechDef;
         private readonly StatCollection statCollection = new StatCollection();
