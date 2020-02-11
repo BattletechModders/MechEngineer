@@ -20,8 +20,6 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
 
 		internal MechDefFirepowerStatistics(MechDef mechDef, Func<WeaponDef, bool> customFilter = null)
 		{
-            this.mechDef = mechDef;
-
 			var weaponStats = mechDef.Inventory
 				.Where(x => x.IsFunctionalORInstalling())
 				.Select(x => x.Def as WeaponDef)
@@ -36,17 +34,18 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
 			TotalInstability = weaponStats.Select(x => x.Instability).DefaultIfEmpty(0f).Sum();
 			AverageAccuracy = weaponStats.Select(x => x.Accuracy).DefaultIfEmpty(0f).Average();
 		}
-		private readonly MechDef mechDef;
 
 		internal static bool RangeOverlap(int range1Min, int range1Max, int range2Min, int range2Max)
 		{
 			return range1Min <= range2Max && range2Min <= range1Max;
 		}
 
-        internal float BarValue(float totalDamage)
+        internal float BarValue(float totalDamage, bool useMeleeConstants = false)
         {
 			var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
-            return MechStatUtils.NormalizeToFraction(totalDamage, constants.MinStockFirepower, constants.MaxStockFirepower);
+			var min = useMeleeConstants ? constants.MinStockMeleeDamage : constants.MinStockFirepower;
+			var max = useMeleeConstants ? constants.MaxStockMeleeDamage : constants.MaxStockFirepower;
+            return MechStatUtils.NormalizeToFraction(totalDamage, min, max);
         }
 
 		internal static WeaponDefFirepowerStatistics GetMelee(MechDef mechDef)

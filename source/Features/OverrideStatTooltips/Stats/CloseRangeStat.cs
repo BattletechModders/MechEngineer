@@ -42,7 +42,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 			var melee = MechDefFirepowerStatistics.GetMelee(mechDef);
 			// TODO: make Mathf.Max between non-melee damage and melee+support damage, dont just add
             var totalDamage = firepower.TotalDamage + melee.Damage; // + firepower.GetDFA().Damage;
-			return firepower.BarValue(totalDamage);
+			return firepower.BarValue(totalDamage, true);
 		}
 
 		private MechDefFirepowerStatistics GetFirepower(MechDef mechDef, bool? canUseInMelee = null)
