@@ -22,7 +22,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
 
             DissipationCapacity = (int)GetDissipationCapacity();
             HeatSinkCapacity = GetHeatSinkCapacity();
-            HeatSinking = (int)(DissipationCapacity + HeatSinkCapacity) * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier;
+            HeatSinking = (int)((DissipationCapacity + HeatSinkCapacity) * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier);
             AlphaStrike = (int)(GetHeatGenerated() * GetWeaponHeatMultiplier());
             JumpHeat = GetJumpHeat();
             MaxHeat = GetMaxHeat();
