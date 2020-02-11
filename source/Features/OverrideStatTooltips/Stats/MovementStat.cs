@@ -35,6 +35,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
             return stats.GetStatisticRating();
         }
 
+        // TODO unused as chassis based stats are disabled for now
         internal static float BarValue(ChassisDef chassisDef)
         {
             var movement = new EngineMovement(EngineFeature.settings.EngineRatingForChassisMovementStat, chassisDef.Tonnage);

@@ -98,6 +98,7 @@
     <Compile Include="Features\OverrideStatTooltips\Helper\MechStatUtils.cs" />
     <Compile Include="Features\OverrideStatTooltips\IStatHandler.cs" />
     <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateChassisMeleeStat_Patch.cs" />
+    <Compile Include="Features\OverrideStatTooltips\Helper\MechDefFirepowerStatistics.cs" />
     <Compile Include="Features\OverrideStatTooltips\Stats\LongRangeStat.cs" />
     <Compile Include="Features\OverrideStatTooltips\Stats\MediumRangeStat.cs" />
     <Compile Include="Features\OverrideStatTooltips\Stats\CloseRangeStat.cs" />

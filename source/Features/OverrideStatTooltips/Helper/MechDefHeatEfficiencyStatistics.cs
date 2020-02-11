@@ -23,7 +23,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             DissipationCapacity = GetDissipationCapacity();
             HeatSinkCapacity = GetHeatSinkCapacity();
             HeatSinking = (int)(DissipationCapacity + HeatSinkCapacity * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier);
-            AlphaStrike = GetHeatGenerated();
+            AlphaStrike = (int)(GetHeatGenerated() * GetWeaponHeatMultiplier());
             JumpHeat = GetJumpHeat();
             MaxHeat = GetMaxHeat();
             Overheat = GetOverheat();
@@ -41,7 +41,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             // only weapons and heatsinking
             var min = (float)AlphaStrike / 3;
             var max = AlphaStrike - min;
-            return AlphaStrike < 1 ? 0 : (HeatSinking - min) / max;
+            return MechStatUtils.NormalizeToFraction(AlphaStrike, min, max);
         }
 
         private float GetDissipationCapacity()
@@ -75,10 +75,19 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
                 .Where(x => x != null)
                 .Sum(x => x.HeatGenerated);
 
+            // TODO HeatDivisor support or not? nah we just don't support COIL, who needs that anyway...
+
             var stat = statCollection.HeatGenerated();
             stat.CreateWithDefault(defaultValue);
             var value = MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
             return PrecisionUtils.RoundUpToInt(value);
+        }
+
+        private float GetWeaponHeatMultiplier()
+        {
+            var stat = statCollection.WeaponHeatMultiplier();
+            stat.Create();
+            return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
         }
 
         private int GetJumpHeat()

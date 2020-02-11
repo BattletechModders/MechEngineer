@@ -11,5 +11,9 @@
         public string AvgRangeTitleText = "Movement";
         public string MeleeTitleText = "Durability";
         public string FirepowerTitleText = "Close Range";
+        
+        public int CloseRangeMax = 90;
+        public int MediumRangeMax = 360;
+        public int LongRangeMax = 570;
     }
 }

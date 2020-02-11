@@ -63,7 +63,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         internal static float GetStatisticRating(float runSpeed)
         {
             var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
-            return (runSpeed - constants.MinSprintFactor) / constants.MaxSprintFactor;
+            return MechStatUtils.NormalizeToFraction(runSpeed, constants.MinSprintFactor, constants.MaxSprintFactor);
         }
 
         private float GetMoveMultiplier()
