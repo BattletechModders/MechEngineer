@@ -65,7 +65,7 @@ namespace MechEngineer.Features.CriticalEffects
             int critsAdded;
             {
                 critsPrev = criticalEffects.HasLinked ? mechComponent.CriticalSlotsHitLinked() : mechComponent.CriticalSlotsHit();
-                var critsMax = criticalEffects.PenalizedEffectIDs.Length + 1; // max = how many crits can be absorbed, last one destroys component
+                var critsMax = criticalEffects.MaxHits;
 
                 var slots = mechComponent.CriticalSlots(); // critical slots left
 

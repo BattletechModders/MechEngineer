@@ -24,6 +24,9 @@ namespace MechEngineer.Features.CriticalEffects
         public string CritFloatieMessage = null;
         public string DestroyedFloatieMessage = null;
 
+        // how many crits can be absorbed incl. destruction of component itself
+        public int MaxHits => PenalizedEffectIDs.Length + 1;
+
         public virtual UnitType GetUnitType()
         {
             return UnitType.UNDEFINED;
