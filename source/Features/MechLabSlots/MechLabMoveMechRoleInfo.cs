@@ -33,6 +33,16 @@ namespace MechEngineer.Features.MechLabSlots
                 rect.pivot = new Vector2(0, 0);
                 rect.localPosition = new Vector3(0, 0);
             }
+
+            if (MechLabSlotsFeature.Shared.Settings.HideHelpButton)
+            {
+                Representation.GetChild("OBJ_helpBttn").gameObject.SetActive(false);
+            }
+
+            if (MechLabSlotsFeature.Shared.Settings.HideECMButton)
+            {
+                Representation.GetChild("OBJ_ECMBttn").gameObject.SetActive(false);
+            }
         }
     }
 }

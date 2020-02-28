@@ -12,5 +12,8 @@ namespace MechEngineer.Features.MechLabSlots
         public int MechLabArmTopPadding = 120;
         public int MechLabGeneralSlots = 3;
         public string MechLabGeneralWidgetLabel = "General";
+
+        public bool HideHelpButton = false;
+        public bool HideECMButton = false;
     }
 }
