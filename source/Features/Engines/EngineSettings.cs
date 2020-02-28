@@ -29,6 +29,9 @@ namespace MechEngineer.Features.Engines
         public float MovementPointDistanceMultiplier = 24f;
         public string MovementPointDistanceMultiplierDescription => "The distance of a TT movement point, 24 is vanilla CombatGameConstants.ExperimentalGridDistance .";
 
+        public float? JumpJetMovementPointDistanceMultiplier = null;
+        public string JumpJetMovementPointDistanceMultiplierDescription => $"The distance of a TT movement point when calculating jump distances, if undefined falls back to {nameof(MovementPointDistanceMultiplier)}.";
+
         public float MinimJumpHeat = 3f * 3f;
         public string MinimJumpHeatDescription => "Minimum heat when doing a jump, even if only one jump jet exists and only when jumping one hex.";
 

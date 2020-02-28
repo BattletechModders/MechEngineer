@@ -16,7 +16,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
         internal static int CalcJumpHeat(Mech mech, float jumpDistance)
         {
             var jumpCapacity = mech.StatCollection.JumpCapacity().Get();
-            var maxJumpDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
+            var maxJumpDistance = EngineMovement.ConvertJJMPToGameDistance(jumpCapacity);
             var jumpRatio = jumpDistance / maxJumpDistance;
             
             return GetJumpHeat(mech.StatCollection, jumpRatio);
@@ -42,7 +42,7 @@ namespace MechEngineer.Features.Engines.StaticHandler
             {
                 return 0f;
             }
-            var jumpjetDistance = EngineMovement.ConvertMPToGameDistance(jumpCapacity);
+            var jumpjetDistance = EngineMovement.ConvertJJMPToGameDistance(jumpCapacity);
 
             var mechJumpDistanceMultiplier = mech.StatCollection.JumpDistanceMultiplier().Get();
             return jumpjetDistance * mechJumpDistanceMultiplier;

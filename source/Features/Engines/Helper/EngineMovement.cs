@@ -56,6 +56,15 @@ namespace MechEngineer.Features.Engines.Helper
             return RoundBy1(movementPoints * multiplier);
         }
 
+        internal static float ConvertJJMPToGameDistance(float movementPoints) {
+            var multiplier = EngineFeature.settings.JumpJetMovementPointDistanceMultiplier;
+            if (multiplier.HasValue)
+            {
+                return RoundBy1(movementPoints * multiplier.Value);
+            }
+            return ConvertMPToGameDistance(movementPoints);
+        }
+
         private static float RoundBy1(float value)
         {
             return PrecisionUtils.RoundDown(value, 1);

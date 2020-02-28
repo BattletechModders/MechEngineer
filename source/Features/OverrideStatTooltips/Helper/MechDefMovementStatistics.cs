@@ -36,7 +36,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             RunSpeed = BaseRunSpeed * MoveMultiplier;
 
             JumpCapacity = GetJumpCapacity();
-            BaseJumpDistance = EngineMovement.ConvertMPToGameDistance(JumpCapacity);
+            BaseJumpDistance = EngineMovement.ConvertJJMPToGameDistance(JumpCapacity);
             JumpDistanceMultiplier = GetJumpDistanceMultiplier();
             JumpDistance = BaseJumpDistance * JumpDistanceMultiplier;
 
