@@ -26,8 +26,8 @@ namespace MechEngineer.Features.Engines.Handler
             }
 
             {
-                var count = mechDef.Inventory.Count(c => c.ComponentDefType == ComponentType.JumpJet);
-                var max = stats.JumpJetCount;
+                var count = stats.JumpJetCount;
+                var max = stats.JumpJetMaxCount;
 
                 if (count > max)
                 {

@@ -3,6 +3,7 @@ using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OverrideTonnage;
+using System.Linq;
 using UnityEngine;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Helper
@@ -16,6 +17,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         internal float RunSpeed { get; }
         internal float JumpDistance { get; }
         internal int JumpJetCount { get; }
+        internal int JumpJetMaxCount { get; }
 
         internal MechDefMovementStatistics(MechDef mechDef)
         {
@@ -40,7 +42,8 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             JumpDistanceMultiplier = GetJumpDistanceMultiplier();
             JumpDistance = BaseJumpDistance * JumpDistanceMultiplier;
 
-            JumpJetCount = GetJumpJetCount();
+            JumpJetCount = mechDef.Inventory.Count(x => x.ComponentDefType == ComponentType.JumpJet);
+            JumpJetMaxCount = GetJumpJetMaxCount();
         }
         
         private float MoveMultiplier { get; }
@@ -101,10 +104,10 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
         }
 
-        private int GetJumpJetCount()
+        private int GetJumpJetMaxCount()
         {
             var raw = movement.JumpJetCount;
-            var multiplier = GetJumpJetCountMultiplier();
+            var multiplier = GetJumpJetMaxCountMultiplier();
             var mutiplied = raw * multiplier;
             var rounded = PrecisionUtils.RoundDownToInt(mutiplied);
             var cropped = Mathf.Min(rounded, mechDef.Chassis.MaxJumpjets);
@@ -112,7 +115,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             return cropped;
         }
 
-        private float GetJumpJetCountMultiplier()
+        private float GetJumpJetMaxCountMultiplier()
         {
             var stat = statCollection.JumpJetCountMultiplier();
             stat.Create();

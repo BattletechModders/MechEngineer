@@ -2,6 +2,7 @@
 using BattleTech.UI;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
+using System.Linq;
 
 namespace MechEngineer.Features.Engines.StaticHandler
 {
@@ -36,24 +37,15 @@ namespace MechEngineer.Features.Engines.StaticHandler
                 return;
             }
 
-            var current = mechLab.headWidget.currentJumpjetCount
-                          + mechLab.centerTorsoWidget.currentJumpjetCount
-                          + mechLab.leftTorsoWidget.currentJumpjetCount
-                          + mechLab.rightTorsoWidget.currentJumpjetCount
-                          + mechLab.leftArmWidget.currentJumpjetCount
-                          + mechLab.rightArmWidget.currentJumpjetCount
-                          + mechLab.leftLegWidget.currentJumpjetCount
-                          + mechLab.rightLegWidget.currentJumpjetCount;
-
-            var stats = new MechDefMovementStatistics(mechLab.activeMechDef);
-            widget.totalJumpjets = stats.JumpJetCount;
-
             if (hardpoints == null || hardpoints[4] == null)
             {
                 return;
             }
 
-            hardpoints[4].SetData(WeaponCategoryEnumeration.GetAMS(), $"{current} / {widget.totalJumpjets}");
+            var stats = new MechDefMovementStatistics(mechLab.activeMechDef);
+            widget.totalJumpjets = stats.JumpJetMaxCount;
+
+            hardpoints[4].SetData(WeaponCategoryEnumeration.GetAMS(), $"{stats.JumpJetCount} / {stats.JumpJetMaxCount}");
         }
     }
 }
