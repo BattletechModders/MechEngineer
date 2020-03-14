@@ -12,9 +12,14 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches
             try
             {
                 var mechDef = __instance;
-                Traverse.Create(mechDef)
-                    .Property<string>(nameof(DescriptionDef.Details))
-                    .Value = mechDef.Chassis.Description.Details;
+                var details = mechDef.Chassis.Description.Details;
+
+                //Control.mod.Logger.Log($"id={mechDef.Description.Id} details={details}");
+
+                var description = mechDef.Description;
+                Traverse.Create(description)
+                    .Property<string>(nameof(description.Details))
+                    .Value = details;
             }
             catch (Exception e)
             {

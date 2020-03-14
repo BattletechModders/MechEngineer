@@ -15,5 +15,8 @@
         public string DefaultCBTDefHand = "emod_arm_part_hand";
         public bool InterruptHandDropIfNoLower = false;
         public bool ExtendHandLimit = true;
+
+        public string DescriptionIdentifier = "ArmActuatorSupport";
+        public string DescriptionTemplate = "<color=#F79B26FF><b>Arm Actuator Limit</b>: <b>{0}</b> on left and <b>{1}</b> on right</color>\r\n";
     }
 }
