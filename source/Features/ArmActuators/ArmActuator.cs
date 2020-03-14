@@ -10,7 +10,7 @@ using HBS.Extensions;
 namespace MechEngineer.Features.ArmActuators
 {
     [CustomComponent("ArmActuator")]
-    public class ArmActuator : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed, IOnInstalled, ISorter //, IAdjustDescription
+    public class ArmActuator : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed, IOnInstalled, ISorter
     {
         public ArmActuatorSlot Type { get; set; }
 
@@ -172,18 +172,6 @@ namespace MechEngineer.Features.ArmActuators
             return string.Empty;
 
         }
-
-        // TODO disabled as category should be used for DisplayName
-        //public string AdjustDescription(string Description)
-        //{
-        //    Description += "\n<color=#28b463><b>[" + Type + "]</b></color>";
-        //    if (MaxSlot < ArmActuatorSlot.PartHand)
-        //    {
-        //        Description += "\n<color=#c0392b><b>Forbid Actuators up to:" + MaxSlot + "</b></color>";
-        //    }
-
-        //    return Description;
-        //}
 
         public void OnItemGrabbed(IMechLabDraggableItem item, MechLabPanel mechLab, MechLabLocationWidget widget)
         {

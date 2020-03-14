@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
+using CustomComponents.ExtendedDetails;
+using MechEngineer.Features.OverrideDescriptions;
 
 namespace MechEngineer.Features.ArmActuators
 {
@@ -20,7 +23,7 @@ namespace MechEngineer.Features.ArmActuators
     }
 
     [CustomComponent("ArmActuatorSupport")]
-    public class ArmActuatorSupport : SimpleCustomChassis
+    public class ArmActuatorSupport : SimpleCustomChassis, IAfterLoad
     {
         public ArmActuatorSlot LeftLimit = ArmActuatorSlot.Hand;
         public ArmActuatorSlot RightLimit = ArmActuatorSlot.Hand;
@@ -35,6 +38,23 @@ namespace MechEngineer.Features.ArmActuators
         public string RightDefaultHand = null;
 
         public bool IgnoreFullActuators = false;
+
+        public void OnLoaded(Dictionary<string, object> values)
+        {
+            var descriptions = new string[]
+            {
+                $"Left arm actuator support: {LeftLimit}",
+                $"Right arm actuator support: {RightLimit}",
+            };
+            Control.mod.Logger.Log($"yep loading actuator support descriptions for {Def.Description.Id}");
+            BonusDescriptions.AddTemplatedExtendedDetail(
+                Def.GetOrCreate(() => new ExtendedDetails(Def.Description)),
+                descriptions,
+                OverrideDescriptionsFeature.settings.BonusDescriptionsElementTemplate,
+                OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate,
+                OverrideDescriptionsFeature.settings.DescriptionIdentifier
+            );
+        }
 
         public ArmActuatorSlot GetLimit(ChassisLocations location)
         {

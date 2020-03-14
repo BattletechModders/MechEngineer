@@ -82,7 +82,7 @@ namespace MechEngineer.Features.OverrideDescriptions
             }
             
             AddTemplatedExtendedDetail(
-                Def,
+                Def.GetOrCreate(() => new ExtendedDetails(Def.Description)),
                 descriptions.Select(x => x.Full),
                 OverrideDescriptionsFeature.settings.BonusDescriptionsElementTemplate,
                 OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate,
@@ -91,7 +91,7 @@ namespace MechEngineer.Features.OverrideDescriptions
         }
 
         internal static void AddTemplatedExtendedDetail(
-            MechComponentDef componentDef,
+            ExtendedDetails extended,
             IEnumerable<string> elements,
             string elementTemplate,
             string descriptionTemplate,
@@ -100,8 +100,6 @@ namespace MechEngineer.Features.OverrideDescriptions
         {
             var elementsText = string.Join("", elements.Where(x => x != null).Select(x => elementTemplate.Replace("{{element}}", x)).ToArray());
             var text = descriptionTemplate.Replace("{{elements}}", elementsText);
-            
-            var extended = componentDef.GetComponent<ExtendedDetails>() ?? componentDef.AddComponent(new ExtendedDetails(componentDef));
             var detail = new ExtendedDetail
             {
                 UnitType = unityType,

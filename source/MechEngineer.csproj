@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\OverrideDescriptions\Patches\MechDef_RefreshChassis_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Helper\MechStatUtils.cs" />
     <Compile Include="Features\OverrideStatTooltips\IStatHandler.cs" />
     <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateChassisMeleeStat_Patch.cs" />

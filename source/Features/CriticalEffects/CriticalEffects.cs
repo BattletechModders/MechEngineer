@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
+using CustomComponents.ExtendedDetails;
 using Localize;
 using MechEngineer.Features.OverrideDescriptions;
 
@@ -92,7 +93,7 @@ namespace MechEngineer.Features.CriticalEffects
             }
             
             BonusDescriptions.AddTemplatedExtendedDetail(
-                Def,
+                Def.GetOrCreate(() => new ExtendedDetails(Def.Description)),
                 descriptions,
                 CriticalEffectsFeature.settings.ElementTemplate,
                 descriptionTemplate,
