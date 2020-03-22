@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
@@ -33,14 +34,7 @@ namespace MechEngineer.Features.OverrideTonnage
             
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
 
-            if (!Mathf.Approximately(tonnageChanges, 0))
-            {
-                tooltip.tonnageText.text = $"{mechComponentDef.Tonnage} {FloatToText(tonnageChanges, true)}";
-            }
-            else
-            {
-                tooltip.tonnageText.text = mechComponentDef.Tonnage.ToString();
-            }
+            tooltip.tonnageText.text = FormatChanges(mechComponentDef.Tonnage, tonnageChanges);
 
             // TODO move to own feature... SlotsHandler or SizeHandler
             var reservedSlots = weights.ReservedSlots;
@@ -55,6 +49,22 @@ namespace MechEngineer.Features.OverrideTonnage
             }
 
             tooltip.bonusesText.SetAllDirty();
+        }
+
+        private string FormatChanges(float tonnage, float tonnageChanges)
+        {
+            if (Mathf.Approximately(tonnage, 0))
+            {
+                return FloatToText(tonnageChanges);
+            }
+            else if (Mathf.Approximately(tonnageChanges, 0))
+            {
+                return tonnage.ToString();
+            }
+            else
+            {
+                return $"{tonnage} {FloatToText(tonnageChanges, true)}";
+            }
         }
 
         public float TonnageChanges(MechDef mechDef)
@@ -91,15 +101,11 @@ namespace MechEngineer.Features.OverrideTonnage
 
         private static string FloatToText(float number, bool positiveSign = false)
         {
-            var sign = "";
+            var sign = positiveSign ? "+ " : "";
             if (number < 0)
             {
                 sign = "- ";
                 number = -number;
-            }
-            else if (positiveSign)
-            {
-                sign = "+ ";
             }
             return $"{sign}{number:0.##}";
         }
