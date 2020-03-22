@@ -32,7 +32,15 @@ namespace MechEngineer.Features.OverrideTonnage
             var tonnageChanges = CalculateWeightChanges(mechDef, weights);
             
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
-            tooltip.tonnageText.text = FloatToText(tonnageChanges);
+
+            if (!Mathf.Approximately(tonnageChanges, 0))
+            {
+                tooltip.tonnageText.text = $"{mechComponentDef.Tonnage} {FloatToText(tonnageChanges, true)}";
+            }
+            else
+            {
+                tooltip.tonnageText.text = mechComponentDef.Tonnage.ToString();
+            }
 
             // TODO move to own feature... SlotsHandler or SizeHandler
             var reservedSlots = weights.ReservedSlots;
@@ -81,13 +89,17 @@ namespace MechEngineer.Features.OverrideTonnage
             }
         }
 
-        private static string FloatToText(float number)
+        private static string FloatToText(float number, bool positiveSign = false)
         {
             var sign = "";
             if (number < 0)
             {
                 sign = "- ";
                 number = -number;
+            }
+            else if (positiveSign)
+            {
+                sign = "+ ";
             }
             return $"{sign}{number:0.##}";
         }
