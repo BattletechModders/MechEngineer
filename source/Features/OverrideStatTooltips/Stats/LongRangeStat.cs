@@ -27,7 +27,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
                 var firepower = GetFirepower(mechDef);
 			    tooltipData.dataList.Add(Strings.T("Stability Dmg"), $"{firepower.TotalInstability}");
 			    tooltipData.dataList.Add(Strings.T("Heat / Struct.Dmg"), $"{firepower.TotalHeatDamage} / {firepower.TotalStructureDamage}");
-			    tooltipData.dataList.Add(Strings.T("Average Accuracy"), $"{firepower.AverageAccuracy}");
+			    tooltipData.dataList.Add(Strings.T("Average Accuracy"), $"{-firepower.AverageAccuracy}");
             }
         }
 

@@ -15,7 +15,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 			tooltipData.dataList.Add(Strings.T("Instability Damage"), $"{firepower.TotalInstability}");
 			tooltipData.dataList.Add(Strings.T("Heat Damage"), $"{firepower.TotalHeatDamage}");
 			tooltipData.dataList.Add(Strings.T("Structure Damage"), $"{firepower.TotalStructureDamage}");
-			tooltipData.dataList.Add(Strings.T("Average Accuracy"), $"{firepower.AverageAccuracy}");
+			tooltipData.dataList.Add(Strings.T("Average Accuracy"), $"{-firepower.AverageAccuracy}");
         }
 
 		public float BarValue(MechDef mechDef)
