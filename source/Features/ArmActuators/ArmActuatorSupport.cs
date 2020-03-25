@@ -28,7 +28,7 @@ namespace MechEngineer.Features.ArmActuators
         public ArmActuatorSlot LeftLimit = ArmActuatorSlot.Hand;
         public ArmActuatorSlot RightLimit = ArmActuatorSlot.Hand;
 
-        public string ChassisDescription = null;
+        public string CustomDescription = null;
 
         public string LeftDefaultShoulder = null;
         public string RightDefaultShoulder = null;
@@ -45,9 +45,9 @@ namespace MechEngineer.Features.ArmActuators
         {
             get
             {
-                if (ChassisDescription != null)
+                if (CustomDescription != null)
                 {
-                    return ChassisDescription;
+                    return string.Format(ArmActuatorFeature.Shared.Settings.CustomDescriptionTemplate, CustomDescription);
                 }
                 else if (LeftLimit < ArmActuatorSlot.Hand || RightLimit < ArmActuatorSlot.Hand)
                 {
