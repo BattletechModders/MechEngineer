@@ -56,6 +56,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
                     .GroupBy(x => Unique(x))
                     .Select(x => SelectSingle(x))
                     .GroupBy(x => WeaponComponentPrefabCalculator.GroupNumber(x))
+                    .OrderBy(x => x.Key)
                     .Select(x => x.ToArray())
                     .ToArray();
             }
