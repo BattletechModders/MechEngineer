@@ -8,6 +8,14 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    - name: Setup BT dependencies
+      shell: bash
+      env:
+        MANAGED_ARCHIVE_PW: ${{ secrets.MANAGED_ARCHIVE_PW }}
+        MANAGED_ARCHIVE_URL: ${{ secrets.MANAGED_ARCHIVE_URL }}
+      run: |
+        curl -o "$GITHUB_WORKSPACE/Managed.7z" "$MANAGED_ARCHIVE_URL"
+        7z e -p"$MANAGED_ARCHIVE_PW" -o"$GITHUB_WORKSPACE/deps" "$GITHUB_WORKSPACE/Managed.7z"
     - name: Checkout MechEngineer
       uses: actions/checkout@master
       with:
@@ -18,14 +26,6 @@ jobs:
         repository: BattletechModders/CustomComponents
         ref: Experimental
         path: CustomComponents/
-    - name: Setup BT dependencies
-      shell: bash
-      env:
-        MANAGED_ARCHIVE_PW: ${{ secrets.MANAGED_ARCHIVE_PW }}
-        MANAGED_ARCHIVE_URL: ${{ secrets.MANAGED_ARCHIVE_URL }}
-      run: |
-        curl -o "$GITHUB_WORKSPACE/Managed.zip" "$MANAGED_ARCHIVE_URL"
-        unzip -P "$MANAGED_ARCHIVE_PW" -q -d "$GITHUB_WORKSPACE/deps" "$GITHUB_WORKSPACE/Managed.zip"
     - name: Setup dotnet
       uses: actions/setup-dotnet@master
       with:
