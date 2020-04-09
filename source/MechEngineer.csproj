@@ -393,6 +393,7 @@
     <None Include="..\mod.json" />
     <None Include="..\README.md" />
     <None Include="..\Settings.json" />
+    <None Include="..\.github\workflows\ci-release-build.yml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="GitVersionTask">

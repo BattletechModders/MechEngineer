@@ -19,6 +19,7 @@ jobs:
         ref: Experimental
         path: CustomComponents/
     - name: Setup BT dependencies
+      shell: bash
       env:
         MANAGED_ARCHIVE_PW: ${{ secrets.MANAGED_ARCHIVE_PW }}
         MANAGED_ARCHIVE_URL: ${{ secrets.MANAGED_ARCHIVE_URL }}
