@@ -39,8 +39,8 @@ jobs:
         dotnet-version: '3.1.200'
     - name: Build Release
       shell: bash
-      #env:
-      #  MSBUILDSINGLELOADCONTEXT: 1
+      env:
+        MSBUILDSINGLELOADCONTEXT: 1 # workaround for GitVersionTask
       run: |
         set -e
         cd "$GITHUB_WORKSPACE/MechEngineer/"
