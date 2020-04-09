@@ -95,6 +95,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\HardpointFix\utils\CompatibleUtils.cs" />
+    <Compile Include="Helper\LinqExtensions.cs" />
+    <Compile Include="Features\HardpointFix\prefab\Prefab.cs" />
+    <Compile Include="Features\HardpointFix\prefab\PrefabMapping.cs" />
+    <Compile Include="Features\HardpointFix\prefab\PrefabSet.cs" />
+    <Compile Include="Features\HardpointFix\prefab\PrefabSelectionCandidate.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\MechDef_RefreshChassis_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Helper\MechStatUtils.cs" />
     <Compile Include="Features\OverrideStatTooltips\IStatHandler.cs" />
@@ -143,7 +149,6 @@
     <Compile Include="Features\AutoFix\Patches\JumpJetDef_FromJSON_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Helper\MechDefMovementStatistics.cs" />
     <Compile Include="Features\Engines\StaticHandler\Jumping.cs" />
-    <Compile Include="Features\HardpointFix\sorting\Patches\HardpointDataDef_FromJSON_Patch.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\MechHardpointRules_GetComponentBlankNames_Patch.cs" />
     <Compile Include="Features\MoveMultiplierStat\StatCollectionExtension.cs" />
     <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsFeature.cs" />
@@ -396,5 +401,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
