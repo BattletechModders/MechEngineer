@@ -33,6 +33,8 @@ jobs:
         dotnet-version: '3.1.200'
     - name: Build release
       shell: bash
+      env:
+        MSBUILDSINGLELOADCONTEXT: 1
       run: |
         set -e
         cd "$GITHUB_WORKSPACE/MechEngineer"
