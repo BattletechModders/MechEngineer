@@ -16,6 +16,7 @@ jobs:
       uses: actions/checkout@master
       with:
         repository: BattletechModders/CustomComponents
+        ref: Experimental
         path: CustomComponents/
     - name: Setup BT dependencies
       env:
