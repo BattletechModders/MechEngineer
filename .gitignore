@@ -4,7 +4,7 @@
 # mod specific ignores
 log.txt
 /*.dll
-/*.zip
+/dist/*.zip
 Settings.defaults.json
 Settings.last.json
 

@@ -1,14 +1,13 @@
 #!/bin/bash
 
-PATH="/c/Program Files/7-Zip/:/c/Program Files (x86)/Microsoft Visual Studio/2019/Community/MSBuild/Current/Bin/:$PATH"
+PATH="/c/Program Files/7-Zip/:$PATH"
 
-SEVENZIP="7z.exe"
-MSBUILD="MSBuild.exe"
+SEVENZIP="7z"
 
 set -ex
 
-MEZIP="MechEngineer/MechEngineer.zip"
-MEALLZIP="MechEngineer/MechEngineerWorkspace.zip"
+MEZIP="MechEngineer/dist/MechEngineer.zip"
+MEALLZIP="MechEngineer/dist/MechEngineerWorkspace.zip"
 rm -f "$MEZIP" "$MEALLZIP"
 
 cd ..
@@ -16,13 +15,13 @@ cd ..
 (
 cd CustomComponents/source
 #git describe --exact-match
-"$MSBUILD" /property:Configuration=Release /target:rebuild
+dotnet build --configuration Release --no-incremental -p:OutputPath=../ "$@"
 )
 
 (
 cd MechEngineer/source
-git describe --exact-match
-"$MSBUILD" /property:Configuration=Release /target:rebuild
+#git describe --exact-match
+dotnet build --configuration Release --no-incremental -p:OutputPath=../ "$@"
 )
 
 (
