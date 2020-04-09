@@ -14,6 +14,7 @@ jobs:
         MANAGED_ARCHIVE_PW: ${{ secrets.MANAGED_ARCHIVE_PW }}
         MANAGED_ARCHIVE_URL: ${{ secrets.MANAGED_ARCHIVE_URL }}
       run: |
+        set -e
         curl -L -o "$GITHUB_WORKSPACE/Managed.7z" "$MANAGED_ARCHIVE_URL"
         7z e -p"$MANAGED_ARCHIVE_PW" -o"$GITHUB_WORKSPACE/deps" "$GITHUB_WORKSPACE/Managed.7z"
     - name: Checkout MechEngineer
@@ -31,8 +32,11 @@ jobs:
       with:
         dotnet-version: '3.1.200'
     - name: Build release
+      shell: bash
       run: |
-        cd MechEngineer && ./release.sh "-p:ReferencePath=$GITHUB_WORKSPACE/deps"
+        set -e
+        cd "$GITHUB_WORKSPACE/MechEngineer"
+        ./release.sh "-p:ReferencePath=$GITHUB_WORKSPACE/deps"
     - name: Create Release
       id: create_release
       uses: actions/create-release@master
@@ -53,6 +57,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: MechEngineer/dist/MechEngineer.zip
-        asset_name: MechEngineer.zip
+        asset_path: "$GITHUB_WORKSPACE/MechEngineer/dist/MechEngineer.zip"
+        asset_name: "$GITHUB_WORKSPACE/MechEngineer.zip"
         asset_content_type: application/zip
