@@ -24,8 +24,8 @@ jobs:
         MANAGED_ARCHIVE_PW: ${{ secrets.MANAGED_ARCHIVE_PW }}
         MANAGED_ARCHIVE_URL: ${{ secrets.MANAGED_ARCHIVE_URL }}
       run: |
-        curl -o Managed.zip "$MANAGED_ARCHIVE_URL"
-        unzip -P "$MANAGED_ARCHIVE_PW" -q -d "$GITHUB_WORKSPACE/deps" Managed.zip
+        curl -o "$GITHUB_WORKSPACE/Managed.zip" "$MANAGED_ARCHIVE_URL"
+        unzip -P "$MANAGED_ARCHIVE_PW" -q -d "$GITHUB_WORKSPACE/deps" "$GITHUB_WORKSPACE/Managed.zip"
     - name: Setup dotnet
       uses: actions/setup-dotnet@master
       with:
