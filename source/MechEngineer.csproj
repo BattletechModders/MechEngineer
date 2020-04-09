@@ -393,11 +393,11 @@
     <None Include="..\mod.json" />
     <None Include="..\README.md" />
     <None Include="..\Settings.json" />
+    <None Include="..\.github\workflows\ci-release-build.yml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="GitVersionTask">
-      <Version>5.0.1</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <Version>5.2.4</Version>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>

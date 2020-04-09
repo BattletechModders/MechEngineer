@@ -1,0 +1,82 @@
+on: push
+name: Release Build
+jobs:
+  build:
+    runs-on: windows-latest
+    #runs-on: ubuntu-latest # missing .NET 4.6 Framework
+    steps:
+    - name: Download Build Dependencies
+      shell: bash
+      env:
+        MANAGED_ARCHIVE_PW: ${{ secrets.MANAGED_ARCHIVE_PW }}
+        MANAGED_ARCHIVE_URL: ${{ secrets.MANAGED_ARCHIVE_URL }}
+      run: |
+        set -e
+        curl -L -o "$GITHUB_WORKSPACE/Managed.7z" "$MANAGED_ARCHIVE_URL"
+        7z e -p"$MANAGED_ARCHIVE_PW" -o"$GITHUB_WORKSPACE/deps" "$GITHUB_WORKSPACE/Managed.7z"
+    - name: Checkout MechEngineer
+      uses: actions/checkout@master
+      with:
+        path: MechEngineer/
+    - name: Fetch MechEngineer Branches and Tags
+      shell: bash
+      run: |
+        cd MechEngineer/
+        git fetch --prune --unshallow 
+    - name: Checkout CustomComponents
+      uses: actions/checkout@master
+      with:
+        repository: BattletechModders/CustomComponents
+        ref: Experimental
+        path: CustomComponents/
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: '3.1.200'
+    - name: Build Release
+      shell: bash
+      env:
+        MSBUILDSINGLELOADCONTEXT: 1 # workaround for GitVersionTask
+      run: |
+        set -e
+        cd "$GITHUB_WORKSPACE/MechEngineer/"
+        ./release.sh "-p:ReferencePath=$GITHUB_WORKSPACE/deps"
+    - name: Upload Build
+      uses: actions/upload-artifact@master
+      with:
+        name: dist
+        path: "./MechEngineer/dist/MechEngineer.zip"
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'ref/tags')
+    steps:
+    - name: Download Build
+      uses: actions/download-artifact@master
+      with:
+        name:  dist
+        path: .
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: false
+        body: |
+          Works with ModLoader and ModTek
+          - MechEngineer.zip contains only the bare bones mod + CustomComponents
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: MechEngineer.zip
+        asset_name: MechEngineer.zip
+        asset_content_type: application/zip
