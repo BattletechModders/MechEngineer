@@ -6,8 +6,8 @@ on: push
 name: Release Build
 jobs:
   build:
-    #runs-on: windows-latest
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    #runs-on: ubuntu-latest # missing .NET 4.6 Framework
     steps:
     - name: Download Build Dependencies
       shell: bash
@@ -39,8 +39,8 @@ jobs:
         dotnet-version: '3.1.200'
     - name: Build Release
       shell: bash
-      env:
-        MSBUILDSINGLELOADCONTEXT: 1
+      #env:
+      #  MSBUILDSINGLELOADCONTEXT: 1
       run: |
         set -e
         cd "$GITHUB_WORKSPACE/MechEngineer/"
