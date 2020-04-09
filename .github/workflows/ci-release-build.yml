@@ -44,7 +44,7 @@ jobs:
     - name: Upload Build
       uses: actions/upload-artifact@master
       with:
-        name: mechengineer-zip
+        name: MechEngineer
         path: "./MechEngineer/dist/MechEngineer.zip"
 
   release:
@@ -55,8 +55,8 @@ jobs:
     - name: Download Build
       uses: actions/download-artifact@master
       with:
-        name: mechengineer-zip
-        path: MechEngineer.zip
+        name: MechEngineer
+        path: .
     - name: Create Release
       id: create_release
       uses: actions/create-release@master
