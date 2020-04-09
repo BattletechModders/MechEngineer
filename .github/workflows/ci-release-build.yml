@@ -15,7 +15,7 @@ jobs:
         MANAGED_ARCHIVE_URL: ${{ secrets.MANAGED_ARCHIVE_URL }}
       run: |
         curl -o "$GITHUB_WORKSPACE/Managed.7z" "$MANAGED_ARCHIVE_URL"
-        ls -al "$GITHUB_WORKSPACE/Managed.7z"
+        cat "$GITHUB_WORKSPACE/Managed.7z"
         7z e -p"$MANAGED_ARCHIVE_PW" -o"$GITHUB_WORKSPACE/deps" "$GITHUB_WORKSPACE/Managed.7z"
     - name: Checkout MechEngineer
       uses: actions/checkout@master
