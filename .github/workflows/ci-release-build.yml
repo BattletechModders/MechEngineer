@@ -21,6 +21,9 @@ jobs:
       uses: actions/checkout@master
       with:
         path: MechEngineer/
+      run: |
+        cd MechEngineer/
+        git fetch --prune --unshallow 
     - name: Checkout CustomComponents
       uses: actions/checkout@master
       with:
@@ -37,7 +40,7 @@ jobs:
         MSBUILDSINGLELOADCONTEXT: 1
       run: |
         set -e
-        cd "$GITHUB_WORKSPACE/MechEngineer"
+        cd "$GITHUB_WORKSPACE/MechEngineer/"
         ./release.sh "-p:ReferencePath=$GITHUB_WORKSPACE/deps"
     - name: Create Release
       id: create_release
