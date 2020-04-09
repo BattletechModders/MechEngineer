@@ -50,7 +50,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    #if: contains(github.ref, "ref/head/tags")
+    if: contains(github.ref, "ref/head/tags")
     steps:
     - name: Download Build
       uses: actions/download-artifact@master
