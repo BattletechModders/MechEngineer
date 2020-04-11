@@ -23,7 +23,7 @@ namespace MechEngineer.Features.ArmorStructureRatio
                 return;
             }
 
-            if (settings.SkipMechDefs.Contains(mechDef.Description.Id))
+            if (mechDef.Chassis.ChassisTags.Contains(settings.IgnoreChassisTag))
             {
                 return;
             }
@@ -38,7 +38,7 @@ namespace MechEngineer.Features.ArmorStructureRatio
             MechDef mechDef,
             Dictionary<MechValidationType, List<Text>> errorMessages = null)
         {
-            if (settings.SkipMechDefs.Contains(mechDef.Description.Id))
+            if (mechDef.Chassis.ChassisTags.Contains(settings.IgnoreChassisTag))
             {
                 return true;
             }
