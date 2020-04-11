@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
+using CustomComponents;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix.limits;
 using UnityEngine;
@@ -14,17 +15,7 @@ namespace MechEngineer.Features.AutoFix
 
         internal static void OverrideChassisSettings(ChassisDef chassisDef)
         {
-            if (AutoFixerFeature.settings.ChassisDefSkip == null)
-            {
-                return;
-            }
-
-            if (AutoFixerFeature.settings.ChassisDefSkip.Contains(chassisDef.Description.Id))
-            {
-                return;
-            }
-
-            if (AutoFixUtils.IsIgnoredByTags(chassisDef.ChassisTags, AutoFixerFeature.settings.ChassisDefTagsSkip))
+            if (chassisDef.ChassisTags.IgnoreAutofix())
             {
                 return;
             }

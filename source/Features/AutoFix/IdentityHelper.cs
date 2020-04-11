@@ -50,8 +50,6 @@ namespace MechEngineer.Features.AutoFix
 
         public void PreProcess(object target, Dictionary<string, object> values)
         {
-
-
             if (!AutoAddCategoryIdIfMissing)
             {
                 return;
@@ -67,11 +65,10 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            if (AutoFixerFeature.settings.UpgradeDefSkip.Contains(def.Description.Id))
+            if (def.ComponentTags.IgnoreAutofix())
             {
                 return;
             }
-
 
             // TODO: copy structure from standard object
 

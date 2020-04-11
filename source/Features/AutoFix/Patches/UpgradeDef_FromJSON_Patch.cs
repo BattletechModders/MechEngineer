@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BattleTech;
+using CustomComponents;
 using Harmony;
 
 namespace MechEngineer.Features.AutoFix.Patches
@@ -13,24 +14,16 @@ namespace MechEngineer.Features.AutoFix.Patches
         {
             try
             {
-                if (AutoFixerFeature.settings.UpgradeDefSkip == null)
+                var def = __instance;
+
+                if (def.ComponentTags.IgnoreAutofix())
                 {
                     return;
                 }
 
-                if (AutoFixerFeature.settings.UpgradeDefSkip.Contains(__instance.Description.Id))
-                {
-                    return;
-                }
-
-                if (AutoFixUtils.IsIgnoredByTags(__instance.ComponentTags, AutoFixerFeature.settings.UpgradeDefTagsSkip))
-                {
-                    return;
-                }
-
-                GyroHandler.Shared.AdjustUpgradeDef(__instance);
-                LegActuatorHandler.Shared.AdjustUpgradeDef(__instance);
-                CockpitHandler.Shared.AdjustUpgradeDef(__instance);
+                GyroHandler.Shared.AdjustUpgradeDef(def);
+                LegActuatorHandler.Shared.AdjustUpgradeDef(def);
+                CockpitHandler.Shared.AdjustUpgradeDef(def);
             }
             catch (Exception e)
             {

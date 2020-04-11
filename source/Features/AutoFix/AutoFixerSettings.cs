@@ -7,9 +7,6 @@ namespace MechEngineer.Features.AutoFix
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Fixes up mechs, chassis and components to adhere to CBT rules and defaults. Done programmatically to be compatible to new mechs in the future.";
 
-        public string[] MechDefSkip = { }; // mech defs to skip for AutoFixMechDef*
-        public string[] MechDefTagsSkip = {"noautofix"};
-
         // mech defs that should use full free tonnage when autofixing (workaround that weight reduction items are not considered)
         public string[] MechDefAutoFixAgainstMaxFreeTonnage = {"mechdef_atlas_AS7-D-HT", "mechdef_blackknight_BL-6b-KNT", "mechdef_highlander_HGN-732b"};
         // how much more tonnage is allowed to be used for adding engines etc.. then what was given by reducing initial tonnage (can never exceed max tonnage anyway)
@@ -19,9 +16,6 @@ namespace MechEngineer.Features.AutoFix
         public string MechDefCoolingDef = "emod_kit_shs";
         public string MechDefHeatBlockDef = "emod_engine_cooling";
         public string MechDefCoreDummy = "emod_engine_dummy";
-            
-        public string[] UpgradeDefSkip = { }; // upgrades to not autofix
-        public string[] UpgradeDefTagsSkip = {"noautofix"};
 
         public IdentityHelper GyroCategorizer = new IdentityHelper
         {
@@ -53,9 +47,6 @@ namespace MechEngineer.Features.AutoFix
             AutoAddCategoryIdIfMissing = true
         };
         public SlotChange LegUpgradesSlotChange = new SlotChange { From = 3, By = -1, FromIsMin = true, NewMin = 1 };
-
-        public string[] ChassisDefSkip = { };
-        public string[] ChassisDefTagsSkip = {"noautofix"};
 
         public ChassisSlotsChange[] ChassisDefSlotsChanges = {
             // vanilla mechs
@@ -133,7 +124,6 @@ namespace MechEngineer.Features.AutoFix
         public int ChassisDefMaxJumpjetsCount = 8;
         public int ChassisDefMaxJumpjetsRating = 400;
         
-        public string[] WeaponDefTagsSkip = {"noautofix"};
         public WeaponDefChange[] AutoFixWeaponDefSlotsChanges = {
             new WeaponDefChange
             {
