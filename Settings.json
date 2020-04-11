@@ -4,7 +4,7 @@
         "SkirmishWhitelistTags": [
             "component_type_stock",
             "disabled_component_type_variant",
-            "component_type_lostech"
+            "disabled_component_type_lostech"
         ]
     },
     "HardpointFix": {
