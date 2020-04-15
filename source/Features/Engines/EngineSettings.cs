@@ -26,6 +26,9 @@ namespace MechEngineer.Features.Engines
         public int EngineMissingFallbackHeatSinkCapacity = 30;
         public string EngineMissingFallbackHeatSinkCapacityDescription = "Heat sink capacity if no engine is detected.";
 
+        public bool CBTWalkAndRunMPRounding = false;
+        public string CBTWalkAndRunMPRoundingDescription => "If true, walking MPs are rounded down and running MPs are rounded up.";
+
         public float MovementPointDistanceMultiplier = 24f;
         public string MovementPointDistanceMultiplierDescription => "The distance of a TT movement point, 24 is vanilla CombatGameConstants.ExperimentalGridDistance .";
 

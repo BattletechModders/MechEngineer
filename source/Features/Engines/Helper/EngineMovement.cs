@@ -8,18 +8,18 @@ namespace MechEngineer.Features.Engines.Helper
     {
         internal EngineMovement(int rating, float tonnage)
         {
-            WalkMovementPoint = rating / tonnage;
+            WalkMovementPoint = RoundWalkMovementPoints(rating / tonnage);
         }
 
-        internal EngineMovement(float walkMovementPoint)
+        private EngineMovement(float walkMovementPoint)
         {
-            WalkMovementPoint = walkMovementPoint;
+            WalkMovementPoint = RoundWalkMovementPoints(walkMovementPoint);
         }
 
         internal float WalkMovementPoint { get; }
 
         internal float WalkSpeed => ConvertMPToGameDistance(WalkMovementPoint);
-        internal float RunMovementPoint => WalkMovementPoint * EngineFeature.settings.RunMultiplier;
+        internal float RunMovementPoint => RoundRunMovementPoints(WalkMovementPoint * EngineFeature.settings.RunMultiplier);
         internal float RunSpeed => ConvertMPToGameDistance(RunMovementPoint);
         internal int JumpJetCount => PrecisionUtils.RoundDownToInt(WalkMovementPoint);
 
@@ -63,6 +63,24 @@ namespace MechEngineer.Features.Engines.Helper
                 return RoundBy1(movementPoints * multiplier.Value);
             }
             return ConvertMPToGameDistance(movementPoints);
+        }
+
+        private static float RoundWalkMovementPoints(float value)
+        {
+            if (EngineFeature.settings.CBTWalkAndRunMPRounding)
+            {
+                return PrecisionUtils.RoundDownToInt(value);
+            }
+            return value;
+        }
+
+        private static float RoundRunMovementPoints(float value)
+        {
+            if (EngineFeature.settings.CBTWalkAndRunMPRounding)
+            {
+                return PrecisionUtils.RoundUpToInt(value);
+            }
+            return value;
         }
 
         private static float RoundBy1(float value)
