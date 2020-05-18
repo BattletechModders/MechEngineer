@@ -8,10 +8,10 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
 {
     internal static class MechDefStatisticModifier
     {
-        internal static T ModifyStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef)
+        internal static T ModifyStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, bool acceptAllDamageLevels = false)
         {
             var effects = new List<EffectData>();
-            foreach (var componentDef in mechDef.Inventory.Where(x => x.IsFunctionalORInstalling()).Select(x => x.Def))
+            foreach (var componentDef in mechDef.Inventory.Where(x => acceptAllDamageLevels || x.IsFunctionalORInstalling()).Select(x => x.Def))
             {
                 if (componentDef.statusEffects == null)
                 {

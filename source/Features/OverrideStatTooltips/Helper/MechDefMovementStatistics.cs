@@ -119,7 +119,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         {
             var stat = statCollection.JumpJetCountMultiplier();
             stat.Create();
-            return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
+            return MechDefStatisticModifier.ModifyStatistic(stat, mechDef, true);
         }
     }
 }
