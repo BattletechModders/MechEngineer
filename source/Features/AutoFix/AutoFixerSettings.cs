@@ -123,7 +123,10 @@ namespace MechEngineer.Features.AutoFix
         public bool ChassisDefMaxJumpjets = true;
         public int ChassisDefMaxJumpjetsCount = 8;
         public int ChassisDefMaxJumpjetsRating = 400;
-        
+
+        public bool AutoFixWeaponDefSplitting = true;
+        public int AutoFixWeaponDefSplittingLargerThan = 7;
+
         public WeaponDefChange[] AutoFixWeaponDefSlotsChanges = {
             new WeaponDefChange
             {

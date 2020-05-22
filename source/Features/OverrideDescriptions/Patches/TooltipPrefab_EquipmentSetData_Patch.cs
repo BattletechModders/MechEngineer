@@ -17,7 +17,7 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches
 
                 if (data is MechComponentDef def)
                 {
-                    OverrideDescriptionsFeature.Shared.AdjustTooltip(__instance, def);
+                    OverrideDescriptionsFeature.Shared.AdjustTooltipEquipment(__instance, def);
                 }
             }
             catch (Exception e)

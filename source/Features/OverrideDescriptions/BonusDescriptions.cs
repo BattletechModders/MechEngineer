@@ -12,11 +12,11 @@ using Localize;
 namespace MechEngineer.Features.OverrideDescriptions
 {
     [CustomComponent("BonusDescriptions")]
-    public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltip, IAdjustInventoryElement, IAfterLoad
+    public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment, IAdjustInventoryElement, IAfterLoad
     {
         public string[] Bonuses { get; set; }
 
-        public void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
             var adapter = new TooltipPrefab_EquipmentAdapter(tooltip);
             //GUILogUtils.LogHierarchy(tooltip.transform);

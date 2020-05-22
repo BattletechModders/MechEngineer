@@ -9,7 +9,7 @@ using MechEngineer.Features.OverrideDescriptions;
 namespace MechEngineer.Features.Engines
 {
     [CustomComponent("EngineCore")]
-    public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltip, IAdjustSlotElement, IMechLabFilter
+    public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment, IAdjustSlotElement, IMechLabFilter
     {
         public int Rating { get; set; }
 
@@ -39,7 +39,7 @@ namespace MechEngineer.Features.Engines
             return true;
         }
 
-        public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
         {
             var coreDef = mechComponentDef.GetComponent<EngineCoreDef>();
             if (coreDef == null)

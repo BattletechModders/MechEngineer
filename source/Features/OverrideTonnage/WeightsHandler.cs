@@ -12,32 +12,27 @@ using UnityEngine;
 
 namespace MechEngineer.Features.OverrideTonnage
 {
-    internal class WeightsHandler : ITonnageChanges, IAdjustTooltip, IAdjustSlotElement
+    internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjustTooltipWeapon, IAdjustSlotElement
     {
         internal static readonly WeightsHandler Shared = new WeightsHandler();
 
-        public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
+        // shared between Weights and DynamicSlots
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
         {
-            var weights = mechComponentDef.GetComponent<Weights>();
-            if (weights == null)
-            {
-                return;
-            }
-
-            var mechDef = Global.ActiveMechDef;
-            if (mechDef == null)
-            {
-                return;
-            }
-
-            var tonnageChanges = CalculateWeightChanges(mechDef, weights);
-            
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
+            var reservedSlots = 0;
 
-            tooltip.tonnageText.text = FormatChanges(mechComponentDef.Tonnage, tonnageChanges);
+            if (mechComponentDef.Is<Weights>(out var weights))
+            {
+                reservedSlots += weights.ReservedSlots;
+                var mechDef = Global.ActiveMechDef;
+                if (mechDef != null)
+                {
+                    var tonnageChanges = CalculateWeightChanges(mechDef, weights);
+                    tooltip.tonnageText.text = FormatChanges(mechComponentDef.Tonnage, tonnageChanges);
+                }
+            }
 
-            // TODO move to own feature... SlotsHandler or SizeHandler
-            var reservedSlots = weights.ReservedSlots;
             if (mechComponentDef.Is<DynamicSlots.DynamicSlots>(out var dynamicSlots))
             {
                 reservedSlots += dynamicSlots.ReservedSlots;
@@ -47,8 +42,33 @@ namespace MechEngineer.Features.OverrideTonnage
             {
                 tooltip.slotsText.text = $"{mechComponentDef.InventorySize} + {reservedSlots}";
             }
+        }
 
-            tooltip.bonusesText.SetAllDirty();
+        public void AdjustTooltipWeapon(TooltipPrefab_Weapon tooltipInstance, MechComponentDef mechComponentDef)
+        {
+            var tooltip = new TooltipPrefab_WeaponAdapter(tooltipInstance);
+            var reservedSlots = 0;
+
+            if (mechComponentDef.Is<Weights>(out var weights))
+            {
+                reservedSlots += weights.ReservedSlots;
+                var mechDef = Global.ActiveMechDef;
+                if (mechDef != null)
+                {
+                    var tonnageChanges = CalculateWeightChanges(mechDef, weights);
+                    tooltip.tonnage.text = FormatChanges(mechComponentDef.Tonnage, tonnageChanges);
+                }
+            }
+
+            if (mechComponentDef.Is<DynamicSlots.DynamicSlots>(out var dynamicSlots))
+            {
+                reservedSlots += dynamicSlots.ReservedSlots;
+            }
+
+            if (reservedSlots > 0)
+            {
+                tooltip.slots.text = $"{mechComponentDef.InventorySize} + {reservedSlots}";
+            }
         }
 
         private string FormatChanges(float tonnage, float tonnageChanges)

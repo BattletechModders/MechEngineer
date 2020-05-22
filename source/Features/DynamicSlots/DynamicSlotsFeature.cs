@@ -38,10 +38,10 @@ namespace MechEngineer.Features.DynamicSlots
         {
             private readonly MechDefBuilder builder;
             private readonly ChassisLocations location;
-            private readonly int finalTotalFree;
             private readonly int maxSlots;
             internal readonly MechLabLocationWidgetAdapter adapter;
             internal int currentFreeSlots;
+            internal int fixedSlots;
 
             internal DynamicSlotBuilder(
                 MechDefBuilder builder,
@@ -52,9 +52,9 @@ namespace MechEngineer.Features.DynamicSlots
                 this.location = location;
                 this.adapter = adapter;
 
-                currentFreeSlots = builder.GetFreeSlots(location);
+                currentFreeSlots = builder.GetMaxSlots(location) - builder.GetInventoryUsedSlots(location);
+                fixedSlots = builder.GetMiumumFixedSlots(location);
 
-                finalTotalFree = this.builder.TotalFree;
                 maxSlots = adapter.maxSlots;
             }
 
@@ -70,7 +70,7 @@ namespace MechEngineer.Features.DynamicSlots
                 return -index.CompareTo(otherIndex);
             }
             
-            internal bool currentFreeSlotFixed => currentFreeSlots > finalTotalFree;
+            internal bool currentFreeSlotFixed => maxSlots - currentFreeSlots < fixedSlots;
 
             internal int currentFreeSlotIndex
             {
@@ -89,28 +89,73 @@ namespace MechEngineer.Features.DynamicSlots
         internal void RefreshData(MechLabPanel mechLab)
         {
             var builder = new MechDefBuilder(mechLab.activeMechDef);
-
             var fslList = new List<DynamicSlotBuilder>();
+            var fslDict = new Dictionary<ChassisLocations, DynamicSlotBuilder>();
             foreach (var location in MechDefBuilder.Locations)
             {
                  // armorlocation = chassislocation for main locations
                 var widget = mechLab.GetLocationWidget((ArmorLocation)location);
                 ClearFillers(widget);
                 var adapter = new MechLabLocationWidgetAdapter(widget);
-                fslList.Add(new DynamicSlotBuilder(builder, location, adapter));
+                var dsbuilder = new DynamicSlotBuilder(builder, location, adapter);
+                fslList.Add(dsbuilder);
+                fslDict.Add(location, dsbuilder);
             }
 
-            //for (var reservedSlots = builder.Reserved; reservedSlots > 0; reservedSlots--)
-            foreach (var reservedSlot in builder.GetReservedSlots())
+            // first pass for items with location restrictions
+            foreach (var componentRef in builder.Inventory)
             {
-                var fsl = fslList.Max();
-                if (fsl.currentFreeSlots <= 0)
+                var slot = componentRef.Def.GetComponent<DynamicSlots>();
+                if (slot == null || !slot.InnerAdjacentOnly)
                 {
-                    // no more free slots to use up!
-                    break;
+                    continue;
                 }
-                ShowFiller(fsl.adapter.instance, reservedSlot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
-                fsl.currentFreeSlots--;
+                var reservedSlots = slot.ReservedSlots;
+                var location = componentRef.MountedLocation;
+                {
+                    var fsl = fslDict[location];
+                    while (fsl.currentFreeSlots > 0 && reservedSlots > 0)
+                    {
+                        ShowFiller(fsl.adapter.instance, slot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
+                        fsl.currentFreeSlots--;
+                        reservedSlots--;
+                    }
+                }
+                if (reservedSlots <= 0)
+                {
+                    continue;
+                }
+                location = MechDefBuilder.GetNearestAdjacentLocation(location);
+                if (location == ChassisLocations.None)
+                {
+                    continue;
+                }
+                {
+                    var fsl = fslDict[location];
+                    while (fsl.currentFreeSlots > 0 && reservedSlots > 0)
+                    {
+                        ShowFiller(fsl.adapter.instance, slot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
+                        fsl.currentFreeSlots--;
+                        reservedSlots--;
+                    }
+                }
+            }
+
+            // second pass dynamic slots without location restrictions
+            foreach (var slot in builder.Inventory.Select(c => c.GetComponent<DynamicSlots>()).Where(c => c != null && !c.InnerAdjacentOnly))
+            {
+                var reservedSlots = slot.ReservedSlots;
+                while (reservedSlots > 0)
+                {
+                    var fsl = fslList.Max();
+                    if (fsl.currentFreeSlots <= 0)
+                    {
+                        return; // no free slots left to use if thats the max
+                    }
+                    ShowFiller(fsl.adapter.instance, slot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
+                    fsl.currentFreeSlots--;
+                    reservedSlots--;
+                }
             }
         }
 

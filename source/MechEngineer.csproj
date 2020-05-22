@@ -96,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Features\HardpointFix\utils\CompatibleUtils.cs" />
+    <Compile Include="Features\OverrideDescriptions\IAdjustTooltipWeapon.cs" />
+    <Compile Include="Features\OverrideDescriptions\Patches\TooltipPrefab_WeaponSetData_Patch.cs" />
     <Compile Include="Helper\LinqExtensions.cs" />
     <Compile Include="Features\HardpointFix\prefab\Prefab.cs" />
     <Compile Include="Features\HardpointFix\prefab\PrefabMapping.cs" />
@@ -330,7 +332,8 @@
     <Compile Include="Features\ArmorStructureChanges\ArmorStructureChanges.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_CheckForHeatDamage_Patch.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_InitEffectStats_Patch.cs" />
-    <Compile Include="Features\OverrideDescriptions\IAdjustTooltip.cs" />
+    <Compile Include="Features\OverrideDescriptions\IAdjustTooltipEquipment.cs" />
+    <Compile Include="Helper\TooltipPrefab_WeaponAdapter.cs" />
     <Compile Include="Misc\CCValidationAdapter.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />

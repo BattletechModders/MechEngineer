@@ -7,7 +7,7 @@ using MechEngineer.Features.OverrideDescriptions;
 namespace MechEngineer.Features.OverrideTonnage
 {
     [CustomComponent("Weights")]
-    public class Weights : SimpleCustomComponent, IAdjustSlotElement, IAdjustTooltip
+    public class Weights : SimpleCustomComponent, IAdjustSlotElement, IAdjustTooltipEquipment, IAdjustTooltipWeapon
     {
         public int ReservedSlots { get; set; } = 0; // TODO move to own feature... SlotsHandler or SizeHandler
         public float ArmorFactor { get; set; } = 1;
@@ -33,9 +33,14 @@ namespace MechEngineer.Features.OverrideTonnage
             WeightsHandler.Shared.AdjustSlotElement(element, panel);
         }
 
-        public void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
-            WeightsHandler.Shared.AdjustTooltip(tooltip, componentDef);
+            WeightsHandler.Shared.AdjustTooltipEquipment(tooltip, componentDef);
+        }
+
+        public void AdjustTooltipWeapon(TooltipPrefab_Weapon tooltip, MechComponentDef componentDef)
+        {
+            WeightsHandler.Shared.AdjustTooltipWeapon(tooltip, componentDef);
         }
     }
 }

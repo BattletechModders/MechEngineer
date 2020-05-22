@@ -9,11 +9,11 @@ using MechEngineer.Features.OverrideDescriptions;
 namespace MechEngineer.Features.Engines
 {
     [CustomComponent("EngineHeatBlock")]
-    public class EngineHeatBlockDef : SimpleCustom<HeatSinkDef>, IAdjustTooltip, IAdjustSlotElement
+    public class EngineHeatBlockDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment, IAdjustSlotElement
     {
         public int HeatSinkCount { get; set; }
         
-        public void AdjustTooltip(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
         {
             var def = mechComponentDef.GetComponent<EngineHeatBlockDef>();
             if (def == null)

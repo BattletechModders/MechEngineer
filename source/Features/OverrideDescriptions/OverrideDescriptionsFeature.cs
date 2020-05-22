@@ -8,7 +8,7 @@ using MechEngineer.Features.DynamicSlots;
 
 namespace MechEngineer.Features.OverrideDescriptions
 {
-    internal class OverrideDescriptionsFeature: Feature<OverrideDescriptionsSettings>, IAdjustSlotElement, IAdjustTooltip, IAdjustInventoryElement
+    internal class OverrideDescriptionsFeature: Feature<OverrideDescriptionsSettings>, IAdjustSlotElement, IAdjustTooltipEquipment, IAdjustTooltipWeapon, IAdjustInventoryElement
     {
         internal static OverrideDescriptionsFeature Shared = new OverrideDescriptionsFeature();
 
@@ -45,11 +45,19 @@ namespace MechEngineer.Features.OverrideDescriptions
             }
         }
 
-        public void AdjustTooltip(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
-            foreach (var cc in componentDef.GetComponents<IAdjustTooltip>())
+            foreach (var cc in componentDef.GetComponents<IAdjustTooltipEquipment>())
             {
-                cc.AdjustTooltip(tooltip, componentDef);
+                cc.AdjustTooltipEquipment(tooltip, componentDef);
+            }
+        }
+
+        public void AdjustTooltipWeapon(TooltipPrefab_Weapon tooltip, MechComponentDef componentDef)
+        {
+            foreach (var cc in componentDef.GetComponents<IAdjustTooltipWeapon>())
+            {
+                cc.AdjustTooltipWeapon(tooltip, componentDef);
             }
         }
 
