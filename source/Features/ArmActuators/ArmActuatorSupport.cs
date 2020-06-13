@@ -67,7 +67,7 @@ namespace MechEngineer.Features.ArmActuators
                 return;
             }
 
-            var extended = Def.GetOrCreate(() => new ExtendedDetails(Def.Description));
+            var extended = ExtendedDetails.GetOrCreate(Def);
             var detail = new ExtendedDetail
             {
                 Index = -1,

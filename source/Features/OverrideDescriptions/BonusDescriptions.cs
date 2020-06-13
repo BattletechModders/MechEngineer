@@ -82,7 +82,7 @@ namespace MechEngineer.Features.OverrideDescriptions
             }
             
             AddTemplatedExtendedDetail(
-                Def.GetOrCreate(() => new ExtendedDetails(Def.Description)),
+                ExtendedDetails.GetOrCreate(Def),
                 descriptions.Select(x => x.Full),
                 OverrideDescriptionsFeature.settings.BonusDescriptionsElementTemplate,
                 OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate,

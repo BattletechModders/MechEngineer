@@ -93,7 +93,7 @@ namespace MechEngineer.Features.CriticalEffects
             }
             
             BonusDescriptions.AddTemplatedExtendedDetail(
-                Def.GetOrCreate(() => new ExtendedDetails(Def.Description)),
+                ExtendedDetails.GetOrCreate(Def),
                 descriptions,
                 CriticalEffectsFeature.settings.ElementTemplate,
                 descriptionTemplate,
