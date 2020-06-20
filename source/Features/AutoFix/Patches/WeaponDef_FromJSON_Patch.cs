@@ -35,7 +35,7 @@ namespace MechEngineer.Features.AutoFix.Patches
                         {
                             return;
                         }
-                        Traverse.Create(def).Property("InventorySize").SetValue(newValue);
+                        Traverse.Create(def).Property("InventorySize").SetValue(newValue.Value);
                     }
 
                     if (change.TonnageChange != null)
@@ -45,14 +45,14 @@ namespace MechEngineer.Features.AutoFix.Patches
                         {
                             return;
                         }
-                        Traverse.Create(def).Property("Tonnage").SetValue(newValue);
+                        Traverse.Create(def).Property("Tonnage").SetValue(newValue.Value);
                     }
                 }
 
                 if (AutoFixerFeature.settings.AutoFixWeaponDefSplitting && !def.Is<DynamicSlots.DynamicSlots>())
                 {
                     var threshold = AutoFixerFeature.settings.AutoFixWeaponDefSplittingLargerThan;
-                    if (def.InventorySize >= threshold)
+                    if (def.InventorySize > threshold)
                     {
                         var slot = new DynamicSlots.DynamicSlots
                         {
