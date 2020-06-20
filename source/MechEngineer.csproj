@@ -95,6 +95,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\CriticalEffects\Criticals.cs" />
     <Compile Include="Features\HardpointFix\utils\CompatibleUtils.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustTooltipWeapon.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\TooltipPrefab_WeaponSetData_Patch.cs" />

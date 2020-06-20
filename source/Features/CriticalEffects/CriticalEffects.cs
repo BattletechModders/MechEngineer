@@ -19,8 +19,6 @@ namespace MechEngineer.Features.CriticalEffects
         public string OnDestroyedAudioEventName { get; set; } = null;
 
         public string LinkedStatisticName = null;
-
-        public bool HasLinked => !string.IsNullOrEmpty(LinkedStatisticName);
         
         public string CritFloatieMessage = null;
         public string DestroyedFloatieMessage = null;
@@ -77,7 +75,7 @@ namespace MechEngineer.Features.CriticalEffects
                 descriptions.Add(new Text(CriticalEffectsFeature.settings.CritDestroyedDeathText, DeathMethod).ToString());
             }
 
-            if (HasLinked)
+            if (LinkedStatisticName != null)
             {
                 descriptions.Add(new Text(CriticalEffectsFeature.settings.CritLinkedText, LinkedStatisticName).ToString());
             }

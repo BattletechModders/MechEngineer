@@ -31,7 +31,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches
             try
             {
                 var mechComponent = __instance;
-                CriticalEffectsFeature.Shared.ProcessWeaponHit(mechComponent, hitInfo, ref damageLevel);
+                mechComponent.Criticals().Hit(hitInfo, ref damageLevel);
             }
             catch (Exception e)
             {

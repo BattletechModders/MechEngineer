@@ -14,7 +14,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches
         {
             try
             {
-                __result = __instance.CriticalSlots();
+                __result = __instance.Criticals().ComponentHittableCount();
             }
             catch (Exception e)
             {
