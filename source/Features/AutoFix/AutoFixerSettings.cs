@@ -126,6 +126,7 @@ namespace MechEngineer.Features.AutoFix
 
         public bool AutoFixWeaponDefSplitting = true;
         public int AutoFixWeaponDefSplittingLargerThan = 7;
+        public int AutoFixWeaponDefSplittingFixedSize = 7; // use 1 for CBT default
 
         public WeaponDefChange[] AutoFixWeaponDefSlotsChanges = {
             new WeaponDefChange

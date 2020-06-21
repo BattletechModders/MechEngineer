@@ -54,13 +54,14 @@ namespace MechEngineer.Features.AutoFix.Patches
                     var threshold = AutoFixerFeature.settings.AutoFixWeaponDefSplittingLargerThan;
                     if (def.InventorySize > threshold)
                     {
+                        var fixedSize = AutoFixerFeature.settings.AutoFixWeaponDefSplittingFixedSize;
                         var slot = new DynamicSlots.DynamicSlots
                         {
                             InnerAdjacentOnly = true,
-                            ReservedSlots = def.InventorySize - 1
+                            ReservedSlots = def.InventorySize - fixedSize
                         };
                         def.AddComponent(slot);
-                        Traverse.Create(def).Property("InventorySize").SetValue(1);
+                        Traverse.Create(def).Property("InventorySize").SetValue(fixedSize);
                     }
                 }
             }

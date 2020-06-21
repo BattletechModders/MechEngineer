@@ -134,7 +134,7 @@ namespace MechEngineer.Features.DynamicSlots
                     var fsl = fslDict[location];
                     while (fsl.currentFreeSlots > 0 && reservedSlots > 0)
                     {
-                        ShowFiller(fsl.adapter.instance, slot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
+                        ShowFiller(fsl.adapter.instance, slot, fsl.currentFreeSlotIndex, true);
                         fsl.currentFreeSlots--;
                         reservedSlots--;
                     }
@@ -227,6 +227,10 @@ namespace MechEngineer.Features.DynamicSlots
                 element.SetData(@ref, ChassisLocations.None, dataManager, null);
 
                 slots.ApplyTo(element, isReservedSlot);
+
+                // support template elements larger 1
+                element.ClearSpacers();
+                element.thisRectTransform.sizeDelta = new Vector2(element.thisRectTransform.sizeDelta.x, 32f);
 
                 if (isReservedSlot)
                 {
