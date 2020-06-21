@@ -36,6 +36,14 @@ namespace MechEngineer
             StatCollection.GetStatistic(Key).SetValue(value);
         }
 
+        internal void CreateIfMissing()
+        {
+            if (!StatCollection.ContainsStatistic(Key))
+            {
+                Create();
+            }
+        }
+
         internal void Modify(EffectData effectData)
         {
             var modType = Type.GetType(effectData.statisticData.modType);

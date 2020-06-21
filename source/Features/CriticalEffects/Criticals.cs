@@ -138,22 +138,13 @@ namespace MechEngineer.Features.CriticalEffects
 
         private int ComponentHitCount(int? setHits = null)
         {
-            var statisticName = "MECriticalSlotsHit";
-            var collection = component.StatCollection;
-            var critStat = collection.GetStatistic(statisticName);
+            var stat = component.StatCollection.MECriticalSlotsHit();
+            stat.CreateIfMissing(); // move to Mech.init and remove "CreateIfMissing" from StatAdapter
             if (setHits.HasValue)
             {
-                if (critStat == null)
-                {
-                    critStat = collection.AddStatistic(statisticName, setHits.Value);
-                }
-                else
-                {
-                    critStat.SetValue(setHits.Value);
-                }
+                stat.Set(setHits.Value);
             }
-
-            return critStat?.Value<int>() ?? 0;
+            return stat.Get();
         }
 
         private int GroupHitCount(int? setHits = null)
@@ -389,6 +380,14 @@ namespace MechEngineer.Features.CriticalEffects
                 actor.CancelEffect(statusEffect);
             }
             mechComponent.createdEffectIDs.Remove(resolvedEffectId);
+        }
+    }
+
+    internal static class StatCollectionExtension
+    {
+        internal static StatisticAdapter<int> MECriticalSlotsHit(this StatCollection statCollection)
+        {
+            return new StatisticAdapter<int>("MECriticalSlotsHit", statCollection, 0);
         }
     }
 }
