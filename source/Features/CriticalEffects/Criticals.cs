@@ -11,37 +11,77 @@ namespace MechEngineer.Features.CriticalEffects
 {
     internal class Criticals
     {
-        private readonly MechComponent component;
-
-        private readonly Lazy<CriticalEffects> ce;
-        internal CriticalEffects Effects => ce.Value;
-
         internal Criticals(MechComponent component)
         {
             this.component = component;
             ce = new Lazy<CriticalEffects>(FetchCriticalEffects);
         }
 
+        private readonly MechComponent component;
+        private AbstractActor actor => component.parent;
+        
+        internal CriticalEffects Effects => ce.Value;
+        private readonly Lazy<CriticalEffects> ce;
+        private bool HasLinked => Effects?.LinkedStatisticName != null;
+        private CriticalEffects FetchCriticalEffects()
+        { 
+            var customs = component.componentDef.GetComponents<CriticalEffects>().ToList();
+
+            if (actor is Mech)
+            {
+                var custom = customs.FirstOrDefault(x => x is MechCriticalEffects);
+                if (custom != null)
+                {
+                    return custom;
+                }
+            }
+
+            if (actor is Turret)
+            {
+                var custom = customs.FirstOrDefault(x => x is TurretCriticalEffects);
+                if (custom != null)
+                {
+                    return custom;
+                }
+            }
+
+            if (actor is Vehicle)
+            {
+                var custom = customs.FirstOrDefault(x => x is VehicleCriticalEffects);
+                if (custom != null)
+                {
+                    return custom;
+                }
+            }
+
+            {
+                var custom = customs.FirstOrDefault(x => !(x is MechCriticalEffects) && !(x is TurretCriticalEffects) && !(x is VehicleCriticalEffects));
+                return custom;
+            }
+        }
+
         internal void Hit(WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
         {
-            if (component.parent == null)
+            if (actor == null)
             {
                 return;
             }
 
-            if (component.DamageLevel == ComponentDamageLevel.Destroyed) // already destroyed
+            SetHits(hitInfo, out damageLevel);
+            
+            if (damageLevel == ComponentDamageLevel.Destroyed)
             {
-                return;
+                PostDestructionEvents(hitInfo);
             }
+        }
 
-            if (Effects == null)
-            {
-                return;
-            }
+        private void SetHits(WeaponHitInfo hitInfo, out ComponentDamageLevel damageLevel)
+        {
+            // if max is reached, component is destroyed and no new effects can be applied
+            // Destroyed components can still soak up crits, requires properly configured AIM from CAC
+            var effectsMax = Effects?.PenalizedEffectIDs.Length + 1 ?? (component is Weapon ? 2 : 1);
 
-            var actor = component.parent;
-
-            int critsMax, critsPrev, critsNext;
+            int effectsPrev, effectsNext;
             {
                 var compCritsMax = ComponentHitMax();
                 var compCritsPrev = ComponentHitCount();
@@ -51,98 +91,146 @@ namespace MechEngineer.Features.CriticalEffects
                 var compCritsNext = Mathf.Min(compCritsMax, compCritsPrev + possibleAddedHits);
                 var compCritsAdded = Mathf.Max(compCritsNext - compCritsPrev, 0);
 
+                ComponentHitCount(compCritsNext);
+
                 // move to group/component abstraction, make sure that critsAdded is clear
                 if (HasLinked)
                 {
                     var prev = GroupHitCount();
-                    var max = GroupHitMax();
-                    var next = Mathf.Min(max, prev + compCritsAdded);
+                    var next = Mathf.Min(effectsMax, prev + compCritsAdded);
                     GroupHitCount(next);
 
-                    critsMax = max;
-                    critsPrev = prev;
-                    critsNext = next;
+                    effectsPrev = prev;
+                    effectsNext = next;
                 }
                 else
                 {
-                    critsMax = compCritsMax;
-                    critsPrev = compCritsPrev;
-                    critsNext = compCritsNext;
-                }
-                ComponentHitCount(compCritsNext);
-            }
-
-
-            { // move to group/component abstraction
-                damageLevel = critsNext >= critsMax ? ComponentDamageLevel.Destroyed : ComponentDamageLevel.Penalized;
-
-                SetDamageLevel(component, hitInfo, damageLevel);
-            
-                if (HasLinked)
-                {
-                    var scopedId = LinkedScopedId();
-                
-                    //Control.mod.Logger.LogDebug($"HasLinked scopeId={scopedId}");
-                    foreach (var otherMechComponent in actor.allComponents)
-                    {
-                        if (otherMechComponent.DamageLevel == ComponentDamageLevel.Destroyed)
-                        {
-                            continue;
-                        }
-
-                        var otherCriticals = otherMechComponent.Criticals();
-                        if (!otherCriticals.HasLinked)
-                        {
-                            continue;
-                        }
-                    
-                        var otherScopedId = otherCriticals.LinkedScopedId();
-                        if (scopedId == otherScopedId)
-                        {
-                            SetDamageLevel(otherMechComponent, hitInfo, damageLevel);
-                        }
-                    }
+                    effectsPrev = compCritsPrev;
+                    effectsNext = compCritsNext;
                 }
             }
             
-            CancelEffects(critsPrev, damageLevel);
-            CreateEffects(critsNext, damageLevel, actor);
-
-            if (damageLevel == ComponentDamageLevel.Destroyed)
+            damageLevel = effectsNext >= effectsMax ? ComponentDamageLevel.Destroyed : ComponentDamageLevel.Penalized;
+            SetDamageLevel(hitInfo, damageLevel);
+            
+            if (Effects != null)
             {
-                if (Effects.DeathMethod != DeathMethod.NOT_SET)
-                {
-                    actor.FlagForDeath(
-                        $"{component.UIName} DESTROYED",
-                        Effects.DeathMethod,
-                        DamageType.Combat,
-                        component.Location,
-                        hitInfo.stackItemUID,
-                        hitInfo.attackerId,
-                        false);
-                    actor.HandleDeath(hitInfo.attackerId);
-                }
-
-                if (!string.IsNullOrEmpty(Effects.OnDestroyedVFXName))
-                {
-                    actor.GameRep.PlayVFX(component.Location, Effects.OnDestroyedVFXName, true, Vector3.zero, true, -1f);
-                }
-
-                if (!string.IsNullOrEmpty(Effects.OnDestroyedAudioEventName))
-                {
-                    WwiseManager.PostEvent(Effects.OnDestroyedAudioEventName, actor.GameRep.audioObject);
-                }
+                CancelEffects(effectsPrev, damageLevel);
+                CreateEffects(effectsNext, damageLevel);
             }
 
             Control.mod.Logger.LogDebug(
                 $"Component hit (uid={component.uid} Id={component.Description.Id} Location={component.Location}) " +
-                $"critsMax={critsMax} critsPrev={critsPrev} critsNext={critsNext} " +
-                $"damageLevel={damageLevel} " +
-                $"HasLinked={HasLinked}"
+                $"effectsMax={effectsMax} effectsPrev={effectsPrev} effectsNext={effectsNext} " +
+                $"damageLevel={damageLevel} HasEffects={Effects != null} LinkedStatisticName={Effects?.LinkedStatisticName}"
             );
         }
 
-        private bool HasLinked => Effects?.LinkedStatisticName != null;
+        public int ComponentHittableCount()
+        {
+            return ComponentHitMax() - ComponentHitCount();
+        }
+
+        private int ComponentHitMax()
+        {
+            return component.componentDef.InventorySize;
+        }
+
+        private int ComponentHitCount(int? setHits = null)
+        {
+            var statisticName = "MECriticalSlotsHit";
+            var collection = component.StatCollection;
+            var critStat = collection.GetStatistic(statisticName);
+            if (setHits.HasValue)
+            {
+                if (critStat == null)
+                {
+                    critStat = collection.AddStatistic(statisticName, setHits.Value);
+                }
+                else
+                {
+                    critStat.SetValue(setHits.Value);
+                }
+            }
+
+            return critStat?.Value<int>() ?? 0;
+        }
+
+        private int GroupHitCount(int? setHits = null)
+        {
+            var statisticName = LinkedScopedId();
+            var collection = actor.StatCollection;
+
+            var critStat = collection.GetStatistic(statisticName) ?? collection.AddStatistic(statisticName, 0);
+            if (setHits.HasValue)
+            {
+                critStat.SetValue(setHits.Value);
+            }
+            return critStat?.Value<int>() ?? 0;
+        }
+
+        private string LinkedScopedId()
+        {
+            return ScopedId(Effects.LinkedStatisticName);
+        }
+
+        private string ScopedId(string id)
+        {
+            if (LocationNaming.Localize(id, component, out var localizedId))
+            {
+                return localizedId;
+            }
+
+            if (!HasLinked)
+            {
+                var uid = component.uid;
+                return $"{id}_{uid}";
+            }
+
+            return id;
+        }
+
+        private void SetDamageLevel(WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
+        {
+            SetDamageLevel(component, hitInfo, damageLevel);
+
+            if (HasLinked)
+            {
+                var id = LinkedScopedId();
+
+                //Control.mod.Logger.LogDebug($"HasLinked scopeId={scopedId}");
+                foreach (var otherMechComponent in actor.allComponents)
+                {
+                    if (otherMechComponent.DamageLevel == ComponentDamageLevel.Destroyed)
+                    {
+                        continue;
+                    }
+
+                    var otherCriticals = otherMechComponent.Criticals();
+                    if (!otherCriticals.HasLinked)
+                    {
+                        continue;
+                    }
+
+                    var otherId = otherCriticals.LinkedScopedId();
+                    if (id == otherId)
+                    {
+                        SetDamageLevel(otherMechComponent, hitInfo, damageLevel);
+                    }
+                }
+            }
+
+            static void SetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
+            {
+                //Control.mod.Logger.LogDebug($"damageLevel={damageLevel} uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location})");
+                mechComponent.StatCollection.ModifyStat(
+                    hitInfo.attackerId,
+                    hitInfo.stackItemUID,
+                    "DamageLevel",
+                    StatCollection.StatOperation.Set,
+                    damageLevel);
+            }
+        }
 
         private void CancelEffects(int critsPrev, ComponentDamageLevel damageLevel)
         {
@@ -167,7 +255,7 @@ namespace MechEngineer.Features.CriticalEffects
             }
         }
 
-        private void CreateEffects(int critsNext, ComponentDamageLevel damageLevel, AbstractActor actor)
+        private void CreateEffects(int critsNext, ComponentDamageLevel damageLevel)
         {
             var effectIdsIndex = critsNext - 1;
 
@@ -200,149 +288,48 @@ namespace MechEngineer.Features.CriticalEffects
                 var util = new EffectIdUtil(effectId, resolvedEffectId, component);
                 util.CreateCriticalEffect(damageLevel < ComponentDamageLevel.Destroyed);
             }
-        }
-
-        private static HashSet<string> DisabledSimpleScopedEffectIdsOnActor(AbstractActor actor)
-        {
-            var iter = from mc in actor.allComponents
-                where !mc.IsFunctional
-                let ce = mc.Criticals().Effects
-                where ce != null
-                from effectId in ce.OnDestroyedDisableEffectIds
-                select mc.Criticals().ScopedId(effectId);
-
-            return new HashSet<string>(iter);
-        }
-
-        private static void SetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
-        {
-            //Control.mod.Logger.LogDebug($"damageLevel={damageLevel} uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location})");
-            mechComponent.StatCollection.ModifyStat(
-                hitInfo.attackerId,
-                hitInfo.stackItemUID,
-                "DamageLevel",
-                StatCollection.StatOperation.Set,
-                damageLevel);
-        }
-
-        private const string HitsStatisticName = "MECriticalSlotsHit";
-
-        public int ComponentHittableCount()
-        {
-            return ComponentHitMax() - ComponentHitCount();
-        }
-
-        private int ComponentHitMax()
-        {
-            return component.componentDef.InventorySize;
-        }
-
-        private int ComponentHitCount(int? setHits = null)
-        {
-            var ce = Effects;
-            if (ce == null)
+            
+            static HashSet<string> DisabledSimpleScopedEffectIdsOnActor(AbstractActor actor)
             {
-                switch (component.DamageLevel)
-                {
-                    case ComponentDamageLevel.Destroyed:
-                        return ComponentHitMax();
-                    case ComponentDamageLevel.Penalized:
-                        return 1;
-                    default:
-                        return 0;
-                }
+                var iter = from mc in actor.allComponents
+                    where !mc.IsFunctional
+                    let ce = mc.Criticals().Effects
+                    where ce != null
+                    from effectId in ce.OnDestroyedDisableEffectIds
+                    select mc.Criticals().ScopedId(effectId);
+
+                return new HashSet<string>(iter);
+            }
+        }
+
+        private void PostDestructionEvents(WeaponHitInfo hitInfo)
+        {
+            if (Effects == null)
+            {
+                return;
             }
 
-            var statisticName = HitsStatisticName;
-            var collection = component.StatCollection;
-            var critStat = collection.GetStatistic(HitsStatisticName);
-            if (setHits.HasValue)
+            if (Effects.DeathMethod != DeathMethod.NOT_SET)
             {
-                if (critStat == null)
-                {
-                    critStat = collection.AddStatistic(statisticName, setHits.Value);
-                }
-                else
-                {
-                    critStat.SetValue(setHits.Value);
-                }
+                actor.FlagForDeath(
+                    $"{component.UIName} DESTROYED",
+                    Effects.DeathMethod,
+                    DamageType.Combat,
+                    component.Location,
+                    hitInfo.stackItemUID,
+                    hitInfo.attackerId,
+                    false);
+                actor.HandleDeath(hitInfo.attackerId);
             }
 
-            return critStat?.Value<int>() ?? 0;
-        }
-
-        private int GroupHitMax()
-        {
-            return Effects.PenalizedEffectIDs.Length;
-        }
-
-        private int GroupHitCount(int? setHits = null)
-        {
-            var statisticName = LinkedScopedId();
-            var collection = component.parent.StatCollection;
-
-            var critStat = collection.GetStatistic(statisticName) ?? collection.AddStatistic(statisticName, 0);
-            if (setHits.HasValue)
+            if (!string.IsNullOrEmpty(Effects.OnDestroyedVFXName))
             {
-                critStat.SetValue(setHits.Value);
-            }
-            return critStat?.Value<int>() ?? 0;
-        }
-
-        private string LinkedScopedId()
-        {
-            return ScopedId(Effects.LinkedStatisticName);
-        }
-
-        private string ScopedId(string id)
-        {
-            if (LocationNaming.Localize(id, component, out var localizedId))
-            {
-                return localizedId;
+                actor.GameRep.PlayVFX(component.Location, Effects.OnDestroyedVFXName, true, Vector3.zero, true, -1f);
             }
 
-            if (!HasLinked)
+            if (!string.IsNullOrEmpty(Effects.OnDestroyedAudioEventName))
             {
-                var uid = component.uid;
-                return $"{id}_{uid}";
-            }
-
-            return id;
-        }
-
-        private CriticalEffects FetchCriticalEffects() { 
-            var customs = component.componentDef.GetComponents<CriticalEffects>().ToList();
-
-            if (component.parent is Mech)
-            {
-                var custom = customs.FirstOrDefault(x => x is MechCriticalEffects);
-                if (custom != null)
-                {
-                    return custom;
-                }
-            }
-
-            if (component.parent is Turret)
-            {
-                var custom = customs.FirstOrDefault(x => x is TurretCriticalEffects);
-                if (custom != null)
-                {
-                    return custom;
-                }
-            }
-
-            if (component.parent is Vehicle)
-            {
-                var custom = customs.FirstOrDefault(x => x is VehicleCriticalEffects);
-                if (custom != null)
-                {
-                    return custom;
-                }
-            }
-
-            {
-                var custom = customs.FirstOrDefault(x => !(x is MechCriticalEffects) && !(x is TurretCriticalEffects) && !(x is VehicleCriticalEffects));
-                return custom;
+                WwiseManager.PostEvent(Effects.OnDestroyedAudioEventName, actor.GameRep.audioObject);
             }
         }
     }
