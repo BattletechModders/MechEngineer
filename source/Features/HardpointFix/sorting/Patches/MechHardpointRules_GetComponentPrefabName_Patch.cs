@@ -27,6 +27,14 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             componentRefs = componentRefs
                 .Where(c => c != null)
                 .Where(c => c.ComponentDefType == ComponentType.Weapon)
+                .Select(c => {
+                    if (c.DataManager == null)
+                    {
+                        c.DataManager = UnityGameInstance.BattleTechGame.DataManager;
+                        c.RefreshComponentDef();
+                    }
+                    return c;
+                })
                 .Where(c => c.Def is WeaponDef)
                 .ToList();
 
