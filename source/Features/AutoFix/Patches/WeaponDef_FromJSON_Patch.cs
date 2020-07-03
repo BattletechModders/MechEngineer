@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
+using ErosionBrushPlugin;
 using Harmony;
 
 namespace MechEngineer.Features.AutoFix.Patches
@@ -55,11 +56,9 @@ namespace MechEngineer.Features.AutoFix.Patches
                     if (def.InventorySize > threshold)
                     {
                         var fixedSize = AutoFixerFeature.settings.AutoFixWeaponDefSplittingFixedSize;
-                        var slot = new DynamicSlots.DynamicSlots
-                        {
-                            InnerAdjacentOnly = true,
-                            ReservedSlots = def.InventorySize - fixedSize
-                        };
+                        var dynamicSlotTemplate = AutoFixerFeature.settings.AutoFixWeaponDefSplittingDynamicSlotTemplate;
+                        var slot = dynamicSlotTemplate.ReflectionCopy();
+                        slot.ReservedSlots = def.InventorySize - fixedSize;
                         def.AddComponent(slot);
                         Traverse.Create(def).Property("InventorySize").SetValue(fixedSize);
                     }

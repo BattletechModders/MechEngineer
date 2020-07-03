@@ -128,6 +128,9 @@ namespace MechEngineer.Features.AutoFix
         public int AutoFixWeaponDefSplittingLargerThan = 7;
         public int AutoFixWeaponDefSplittingFixedSize = 7; // use 1 for CBT default
 
+        public DynamicSlots.DynamicSlots AutoFixWeaponDefSplittingDynamicSlotTemplate =
+            new DynamicSlots.DynamicSlots {InnerAdjacentOnly = true};
+
         public WeaponDefChange[] AutoFixWeaponDefSlotsChanges = {
             new WeaponDefChange
             {
