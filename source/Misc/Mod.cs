@@ -43,6 +43,10 @@ namespace MechEngineer
 
         public void SaveSettings(object settings, string path)
         {
+            if (File.Exists(path))
+            {
+                File.SetAttributes(path, File.GetAttributes(path) & ~FileAttributes.ReadOnly);
+            }
             using (var writer = new StreamWriter(path))
             {
                 var p = new JSONParameters
@@ -57,6 +61,7 @@ namespace MechEngineer
                 var json = JSON.ToNiceJSON(settings, p);
                 writer.Write(json);
             }
+            File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.ReadOnly);
         }
 
         public override string ToString()
