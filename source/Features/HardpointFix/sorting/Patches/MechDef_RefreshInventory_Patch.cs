@@ -5,7 +5,8 @@ using Harmony;
 
 namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
-    [HarmonyPatch(typeof(MechDef), "RefreshInventory")]
+    // too slow :(
+    //[HarmonyPatch(typeof(MechDef), "RefreshInventory")]
     public static class MechDef_RefreshInventory_Patch
     {
         public static void Prefix(MechDef __instance)
