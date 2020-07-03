@@ -28,6 +28,10 @@ namespace MechEngineer.Features.CriticalEffects
             return UnitType.UNDEFINED;
         }
         
+        // how many crits can be absorbed incl. destruction of component itself
+        // used by FieldRepairs
+        public int MaxHits => PenalizedEffectIDs.Length + 1;
+
         public void OnLoaded(Dictionary<string, object> values)
         {
             var descriptions = new List<string>();
