@@ -1,7 +1,19 @@
 {
 	"FixedEquipment": [
 		{
-			"ComponentDefID": "emod_armorslots_ferrosfibrous",
+			"ComponentDefID": "emod_engineslots_xl_center",
+			"ComponentDefType": "HeatSink",
+			"DamageLevel": "Functional",
+			"GUID": null,
+			"HardpointSlot": -1,
+			"IsFixed": true,
+			"MountedLocation": "CenterTorso",
+			"SimGameUID": "",
+			"hasPrefabName": false,
+			"prefabName": null
+		},
+		{
+			"ComponentDefID": "emod_structureslots_endosteel",
 			"ComponentDefType": "Upgrade",
 			"DamageLevel": "Functional",
 			"GUID": null,

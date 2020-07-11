@@ -1,7 +1,7 @@
 {
 	"FixedEquipment": [
 		{
-			"ComponentDefID": "emod_armorslots_ferrosfibrous",
+			"ComponentDefID": "emod_structureslots_endosteel",
 			"ComponentDefType": "Upgrade",
 			"DamageLevel": "Functional",
 			"GUID": null,

@@ -1,0 +1,14 @@
+{
+	"TargetID": "mechdef_warhammer_WHM-7A",
+	"Instructions": [
+		{
+			"JSONPath": "MechTags.items",
+			"Action": "ArrayConcat",
+			"Value": ["unit_release", "unit_lostech"]
+		},
+		{
+			"JSONPath": "inventory[?(@.ComponentDefID == 'Gear_TargetingTrackingSystem_Hartford_F1800')]",
+			"Action": "Remove"
+		}
+	]
+}

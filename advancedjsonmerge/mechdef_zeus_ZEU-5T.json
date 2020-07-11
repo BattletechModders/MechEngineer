@@ -1,0 +1,42 @@
+{
+	"TargetID": "mechdef_zeus_ZEU-5T",
+	"Instructions": [
+		{
+			"JSONPath": "MechTags.items",
+			"Action": "ArrayConcat",
+			"Value": ["unit_release", "unit_lostech"]
+		},
+		{
+			"JSONPath": "inventory[?(@.ComponentDefID == 'Gear_TargetingTrackingSystem_Hartford_F1800')]",
+			"Action": "Remove"
+		},
+		{
+			"JSONPath": "inventory",
+			"Action": "ArrayConcat",
+			"Value": [
+				{
+					"MountedLocation" : "CenterTorso",
+					"ComponentDefID" : "emod_engine_320",
+					"SimGameUID" : "",
+					"ComponentDefType" : "HeatSink",
+					"HardpointSlot" : -1,
+					"GUID" : null,
+					"DamageLevel" : "Functional",
+					"prefabName" : null,
+					"hasPrefabName" : false
+				},
+				{
+					"ComponentDefID": "Gear_Cockpit_SLDF_Custom",
+					"ComponentDefType": "Upgrade",
+					"DamageLevel": "Functional",
+					"GUID": null,
+					"HardpointSlot": -1,
+					"MountedLocation": "Head",
+					"SimGameUID": "",
+					"hasPrefabName": false,
+					"prefabName": null
+				}
+			]
+		}
+	]
+}
