@@ -1,0 +1,9 @@
+{
+	"TargetID": "hardpointdatadef_battlemaster",
+	"Instructions": [
+		{
+			"JSONPath": "HardpointData[?(@.location == 'leftarm')].weapons[*].[?(@ == 'chrPrfWeap_battlemaster_leftarm_mg_bh1')]",
+			"Action": "Remove"
+		}
+	]
+}
