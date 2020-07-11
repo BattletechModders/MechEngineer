@@ -150,7 +150,7 @@ namespace MechEngineer.Features.AutoFix
             new WeaponDefChange
             {
                 Type = WeaponSubType.Gauss,
-                SlotChange = new SlotChange {From = 5, By = 2}
+                SlotChange = new SlotChange {From = 4, By = 2}
             },
             new WeaponDefChange
             {
