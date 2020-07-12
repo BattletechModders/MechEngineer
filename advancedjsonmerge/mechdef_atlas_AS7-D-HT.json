@@ -81,131 +81,14 @@
 			"Action": "Remove"
 		},
 		{
-			"JSONPath": "inventory[?(@.ComponentDefID == 'Gear_HeatSink_Generic_Double')]",
-			"Action": "Remove"
-		},
-		{
-			"JSONPath": "inventory[?(@.ComponentDefID == 'Weapon_Autocannon_AC20_0-STOCK')]",
-			"Action": "Remove"
-		},
-		{
-			"JSONPath": "inventory[?(@.ComponentDefID == 'Ammo_AmmunitionBox_Generic_AC20')]",
-			"Action": "Remove"
-		},
-		{
 			"JSONPath": "inventory",
 			"Action": "ArrayConcat",
 			"Value": [
 				{
-					"MountedLocation": "RightTorso",
-					"ComponentDefID": "Weapon_Autocannon_LB10X_0-STOCK",
-					"SimGameUID": "",
-					"ComponentDefType": "Weapon",
-					"HardpointSlot": 0,
-					"GUID": null,
-					"DamageLevel": "Functional",
-					"prefabName": null,
-					"hasPrefabName": false
-				},
-				{
-					"MountedLocation": "RightTorso",
-					"ComponentDefID": "Ammo_AmmunitionBox_Generic_LB10X",
-					"SimGameUID": "",
-					"ComponentDefType": "AmmunitionBox",
-					"HardpointSlot": -1,
-					"GUID": null,
-					"DamageLevel": "Functional",
-					"prefabName": null,
-					"hasPrefabName": false
-				},
-				{
-					"MountedLocation": "RightTorso",
-					"ComponentDefID": "Ammo_AmmunitionBox_Generic_LB10X",
-					"SimGameUID": "",
-					"ComponentDefType": "AmmunitionBox",
-					"HardpointSlot": -1,
-					"GUID": null,
-					"DamageLevel": "Functional",
-					"prefabName": null,
-					"hasPrefabName": false
-				},
-				{
-					"MountedLocation": "RightTorso",
-					"ComponentDefID": "emod_case",
-					"ComponentDefType": "Upgrade",
-					"DamageLevel": "Functional",
-					"GUID": null,
-					"HardpointSlot": -1,
-					"SimGameUID": "",
-					"hasPrefabName": false,
-					"prefabName": null
-				},
-				{
-					"MountedLocation": "LeftTorso",
-					"ComponentDefID": "emod_case",
-					"ComponentDefType": "Upgrade",
-					"DamageLevel": "Functional",
-					"GUID": null,
-					"HardpointSlot": -1,
-					"SimGameUID": "",
-					"hasPrefabName": false,
-					"prefabName": null
-				},
-				{
-					"MountedLocation" : "LeftArm",
-					"ComponentDefID" : "Gear_HeatSink_Generic_Double",
-					"SimGameUID" : "",
-					"ComponentDefType" : "HeatSink",
-					"HardpointSlot" : -1,
-					"GUID" : null,
-					"DamageLevel" : "Functional",
-					"prefabName" : null,
-					"hasPrefabName" : false
-				},
-				{
-					"MountedLocation" : "RightArm",
-					"ComponentDefID" : "Gear_HeatSink_Generic_Double",
-					"SimGameUID" : "",
-					"ComponentDefType" : "HeatSink",
-					"HardpointSlot" : -1,
-					"GUID" : null,
-					"DamageLevel" : "Functional",
-					"prefabName" : null,
-					"hasPrefabName" : false
-				},
-				{
-					"ComponentDefID": "Gear_Cockpit_SLDF_Custom",
-					"ComponentDefType": "Upgrade",
-					"DamageLevel": "Functional",
-					"GUID": null,
-					"HardpointSlot": -1,
-					"MountedLocation": "Head",
-					"SimGameUID": "",
-					"hasPrefabName": false,
-					"prefabName": null
-				},
-				{
+					"MountedLocation": "CenterTorso",
 					"ComponentDefID": "emod_engine_300",
 					"ComponentDefType": "HeatSink",
-					"DamageLevel": "Functional",
-					"GUID": null,
-					"HardpointSlot": -1,
-					"MountedLocation": "CenterTorso",
-					"SimGameUID": "",
-					"hasPrefabName": false,
-					"prefabName": null
-				},
-				{
-					"ComponentDefID": "emod_engine_cooling_2",
-					"ComponentDefType": "HeatSink",
-					"DamageLevel": "Functional",
-					"GUID": null,
-					"HardpointSlot": -1,
-					"IsFixed": true,
-					"MountedLocation": "CenterTorso",
-					"SimGameUID": "",
-					"hasPrefabName": false,
-					"prefabName": null
+					"DamageLevel": "Functional"
 				}
 			]
 		}

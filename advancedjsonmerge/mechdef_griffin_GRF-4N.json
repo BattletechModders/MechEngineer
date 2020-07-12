@@ -1,0 +1,10 @@
+{
+	"TargetID": "mechdef_griffin_GRF-4N",
+	"Instructions": [
+		{
+			"JSONPath": "MechTags.items",
+			"Action": "ArrayConcat",
+			"Value": ["unit_release", "unit_lostech"]
+		}
+	]
+}

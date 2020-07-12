@@ -7,8 +7,8 @@ namespace MechEngineer.Features.AutoFix
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Fixes up mechs, chassis and components to adhere to CBT rules and defaults. Done programmatically to be compatible to new mechs in the future.";
 
-        public bool MechDefEngine = true; // adds missing engine and removes too many jump jets
-        public string MechDefCoolingDef = "emod_kit_shs";
+        public bool MechDefEngine = true;
+        public string[] MechTagsAutoFixEnabled = {"unit_release"};
         public string MechDefHeatBlockDef = "emod_engine_cooling";
         public string MechDefCoreDummy = "emod_engine_dummy";
 

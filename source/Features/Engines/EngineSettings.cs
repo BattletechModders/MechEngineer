@@ -20,9 +20,6 @@ namespace MechEngineer.Features.Engines
         public bool AllowMixingHeatSinkTypes = false;
         public string AllowMixingHeatSinkTypesDescription = "Allow heat sinks patchwork.";
 
-        public string DefaultEngineHeatSinkId = "Gear_HeatSink_Generic_Standard";
-        public string DefaultEngineHeatSinkIdDescription = "Default heat sink type for engines without a kit.";
-
         public int EngineMissingFallbackHeatSinkCapacity = 30;
         public string EngineMissingFallbackHeatSinkCapacityDescription = "Heat sink capacity if no engine is detected.";
 
@@ -37,9 +34,6 @@ namespace MechEngineer.Features.Engines
 
         public float MinimJumpHeat = 3f * 3f;
         public string MinimJumpHeatDescription => "Minimum heat when doing a jump, even if only one jump jet exists and only when jumping one hex.";
-
-        public bool AutoConvertJumpCapacityInDefToStat = true;
-        public string AutoConvertJumpCapacityInDefToStatDescription => $"All {nameof(JumpJetDef.JumpCapacity)} values in JumpJetDefs will be auto-converted to the {nameof(StatCollectionExtension.JumpCapacity)} statistic.";
 
         public float? JumpJetDefaultJumpHeat = 3;
         public string JumpJetDefaultJumpHeatDescription => $"The heat the jump jet produces when fully* used (* jumping below max distance reduces produced heat). Can be adjusted using the {nameof(StatCollectionExtension.JumpHeat)} statistic.";

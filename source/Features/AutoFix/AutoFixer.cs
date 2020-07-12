@@ -7,8 +7,6 @@ using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
-using MechEngineer.Features.OverrideTonnage;
-using UnityEngine;
 
 namespace MechEngineer.Features.AutoFix
 {
@@ -44,29 +42,29 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            // if un-blacklisted, we assume it can be autofixed or it is already fixed
-            if (mechDef.MechTags.Contains("BLACKLISTED"))
+            if (!AutoFixerFeature.settings.MechTagsAutoFixEnabled.Any(mechDef.MechTags.Contains))
             {
                 return;
             }
 
             Control.mod.Logger.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
 
-            var builder = new MechDefBuilder(mechDef.Chassis, mechDef.Inventory.ToList());
+            MechDefBuilder builder;
+            {
+                var inventory = mechDef.Inventory.ToList();
+                foreach (var componentRef in inventory)
+                {
+                    Control.mod.Logger.LogDebug($" {componentRef.ComponentDefID}{(componentRef.IsFixed?" (fixed)":"")} at {componentRef.MountedLocation}");
+                }
+
+                builder = new MechDefBuilder(mechDef.Chassis, inventory);
+            }
 
             ArmorStructureRatioFeature.Shared.AutoFixMechDef(mechDef);
 
             var res = EngineSearcher.SearchInventory(builder.Inventory);
 
-            res.HeatBlockDef ??= mechDef.DataManager.HeatSinkDefs.Get(AutoFixerFeature.settings.MechDefHeatBlockDef).GetComponent<EngineHeatBlockDef>();
-            res.CoolingDef ??= mechDef.DataManager.HeatSinkDefs.Get(AutoFixerFeature.settings.MechDefCoolingDef).GetComponent<CoolingDef>();
             var engineHeatSinkDef = mechDef.DataManager.HeatSinkDefs.Get(res.CoolingDef.HeatSinkDefId).GetComponent<EngineHeatSinkDef>();
-
-            Engine maxEngine = null;
-            if (res.CoreDef != null)
-            {
-                maxEngine = new Engine(res.CoolingDef, res.HeatBlockDef, res.CoreDef, res.Weights, new List<MechComponentRef>());
-            }
 
             float CalcFreeTonnage()
             {
@@ -76,11 +74,16 @@ namespace MechEngineer.Features.AutoFix
                 return freeTonnage;
             }
 
-            if (maxEngine == null)
+            Engine engine = null;
+            if (res.CoreDef != null)
+            {
+                engine = new Engine(res.CoolingDef, res.HeatBlockDef, res.CoreDef, res.Weights, new List<MechComponentRef>());
+            }
+            else
             {
                 var freeTonnage = CalcFreeTonnage();
                 var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
-                var engines = new LinkedList<Engine>();
+                var engineCandidates = new LinkedList<Engine>();
 
                 var engineCoreDefs = mechDef.DataManager.HeatSinkDefs
                     .Select(hs => hs.Value)
@@ -91,8 +94,8 @@ namespace MechEngineer.Features.AutoFix
                 foreach (var coreDef in engineCoreDefs)
                 {
                     {
-                        var engine = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.Weights, new List<MechComponentRef>());
-                        engines.AddFirst(engine);
+                        var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.Weights, new List<MechComponentRef>());
+                        engineCandidates.AddFirst(candidate);
                     }
                     
                     {
@@ -108,26 +111,27 @@ namespace MechEngineer.Features.AutoFix
                         }
                     }
 
-                    foreach (var engine in engines)
+                    // go through all candidates, use the larger count anyway
+                    foreach (var candidate in engineCandidates)
                     {
-                        if (engine.TotalTonnage <= freeTonnage)
+                        if (candidate.TotalTonnage <= freeTonnage)
                         {
-                            maxEngine = engine;
+                            engine = candidate;
                         }
                         else
                         {
                             break;
                         }
                     }
-                    if (maxEngine != null)
+                    if (engine != null)
                     {
                         break;
                     }
                 }
 
-                if (maxEngine != null)
+                if (engine != null)
                 {
-                    Control.mod.Logger.LogDebug($" maxEngine={maxEngine.CoreDef} freeTonnage={freeTonnage}");
+                    Control.mod.Logger.LogDebug($" maxEngine={engine.CoreDef} freeTonnage={freeTonnage}");
                     {
                         var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == AutoFixerFeature.settings.MechDefCoreDummy);
                         if (dummyCore != null)
@@ -137,8 +141,13 @@ namespace MechEngineer.Features.AutoFix
                     }
 
                     // add engine
-                    builder.Add(maxEngine.CoreDef.Def, ChassisLocations.CenterTorso, true);
+                    builder.Add(engine.CoreDef.Def, ChassisLocations.CenterTorso, true);
                 }
+            }
+
+            if (engine == null)
+            {
+                return;
             }
 
             if (!EngineFeature.settings.AllowMixingHeatSinkTypes)
@@ -157,14 +166,12 @@ namespace MechEngineer.Features.AutoFix
                 {
                     builder.Add(engineHeatSinkDef.Def);
                 }
-
             }
 
-            // add free heatsinks
-            if (maxEngine != null) {
-                var maxFree = maxEngine.HeatSinkExternalFreeMaxCount;
-                var current = 0; //we assume exiting heatsinks on the mech are additional and not free
-                for (var i = current; i < maxFree; i++)
+            // add free heat sinks
+            {
+                var max = engine.HeatSinkExternalFreeMaxCount;
+                for (var i = 0; i < max; i++)
                 {
                     if (!builder.Add(engineHeatSinkDef.Def))
                     {
@@ -172,28 +179,47 @@ namespace MechEngineer.Features.AutoFix
                     }
                 }
             }
+
+            // convert external heat sinks into internal ones
+            {
+                var max = engine.HeatSinkInternalAdditionalMaxCount;
+                var current = engine.EngineHeatBlockDef.HeatSinkCount;
+
+                var heatSinks = builder.Inventory
+                    .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory == engineHeatSinkDef.HSCategory)
+                    .ToList();
+
+                for (; current < max && heatSinks.Count > 0; current++)
+                {
+                    var component = heatSinks[0];
+                    heatSinks.RemoveAt(0);
+                    builder.Remove(component);
+                }
+
+                if (current > 0)
+                {
+                    var heatBlock = builder.Inventory.FirstOrDefault(r => r.Def.Is<EngineHeatBlockDef>());
+                    if (heatBlock != null)
+                    {
+                        builder.Remove(heatBlock);
+                    }
+
+                    var heatBlockDefId = $"{AutoFixerFeature.settings.MechDefHeatBlockDef}_{current}";
+                    var def = mechDef.DataManager.HeatSinkDefs.Get(heatBlockDefId);
+                    builder.Add(def, ChassisLocations.CenterTorso, true);
+                }
+            }
             
             // find any overused location
             // TODO find out why locational dynamic slots are ignored
             if (builder.HasOveruseAtAnyLocation())
             {
+                Control.mod.Logger.LogError($" Overuse found");
                 // heatsinks, upgrades
                 var itemsToBeReordered = builder.Inventory
-                    .Where(IsReorderable)
+                    .Where(IsMovable)
                     .OrderBy(c => MechDefBuilder.LocationCount(c.Def.AllowedLocations))
                     .ThenByDescending(c => c.Def.InventorySize)
-                    .ThenByDescending(c =>
-                    {
-                        switch (c.ComponentDefType)
-                        {
-                            case ComponentType.Upgrade:
-                                return 2;
-                            case ComponentType.AmmunitionBox:
-                                return 1;
-                            default:
-                                return 0;
-                        }
-                    })
                     .ToList();
 
                 // remove all items that can be reordered: heatsinks, upgrades
@@ -205,24 +231,52 @@ namespace MechEngineer.Features.AutoFix
                 // then add most restricting, and then largest items first (probably double head sinks)
                 foreach (var item in itemsToBeReordered)
                 {
-                    // couldn't add everything
                     if (!builder.Add(item.Def))
                     {
-                        Control.mod.Logger.LogError($"Couldn't re-add items through reordering for mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
-                        return;
+                        Control.mod.Logger.LogError($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
+                    }
+                }
+            }
+            
+            mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
+
+            {
+                var freeTonnage = CalcFreeTonnage();
+                if (freeTonnage > 0)
+                {
+                    // TODO add armor for each location with free tonnage left
+                }
+                else if (freeTonnage < 0)
+                {
+                    var removableItems = builder.Inventory
+                        .Where(IsRemovable)
+                        .OrderBy(c => c.Def.Tonnage)
+                        .ThenByDescending(c => c.Def.InventorySize)
+                        .ThenByDescending(c =>
+                        {
+                            switch (c.ComponentDefType)
+                            {
+                                case ComponentType.HeatSink:
+                                    return 2;
+                                case ComponentType.JumpJet:
+                                    return 1;
+                                default:
+                                    return 0;
+                            }
+                        })
+                        .ToList();
+
+                    while (removableItems.Count > 0 && freeTonnage < 0)
+                    {
+                        var item = removableItems[0];
+                        removableItems.RemoveAt(0);
+                        freeTonnage += item.Def.Tonnage;
+                        builder.Remove(item);
                     }
                 }
             }
 
             mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
-
-            //{
-            //    var freeTonnage = CalcFreeTonnage();
-            //    if (freeTonnage > 0)
-            //    {
-            //        // TODO add armor for each location with free tonnage left
-            //    }
-            //}
         }
 
         private class OrderComparer : IComparer<MechComponentRef>
@@ -234,24 +288,14 @@ namespace MechEngineer.Features.AutoFix
             }
         }
 
-        private static bool IsReorderable(MechComponentRef c)
+        private static bool IsMovable(MechComponentRef c)
         {
-            var def = c?.Def;
-            
-            if (def == null)
+            if (!IsRemovable(c))
             {
                 return false;
             }
 
-            if (c.IsFixed)
-            {
-                return false;
-            }
-            
-            if (!(def.ComponentType >= ComponentType.AmmunitionBox && def.ComponentType <= ComponentType.Upgrade))
-            {
-                return false;
-            }
+            var def = c.Def;
 
             // items in arms and legs are usually bound to a certain side, so lets ignore them from relocation
             if (MechDefBuilder.LocationCount(def.AllowedLocations) <= 2)
@@ -265,6 +309,23 @@ namespace MechEngineer.Features.AutoFix
             }
 
             return true;
+        }
+
+        private static bool IsRemovable(MechComponentRef c)
+        {
+            if (c.IsFixed)
+            {
+                return false;
+            }
+
+            var def = c.Def;
+            
+            if (def == null)
+            {
+                return false;
+            }
+
+            return def.ComponentType == ComponentType.HeatSink || def.ComponentType == ComponentType.JumpJet;
         }
     }
 }

@@ -1,28 +1,18 @@
 {
 	"FixedEquipment": [
 		{
+			"MountedLocation": "CenterTorso",
 			"ComponentDefID": "emod_armorslots_ferrosfibrous",
 			"ComponentDefType": "Upgrade",
 			"DamageLevel": "Functional",
-			"GUID": null,
-			"HardpointSlot": -1,
-			"IsFixed": true,
-			"MountedLocation": "CenterTorso",
-			"SimGameUID": "",
-			"hasPrefabName": false,
-			"prefabName": null
+			"IsFixed": true
 		},
 		{
+			"MountedLocation": "CenterTorso",
 			"ComponentDefID": "emod_kit_dhs",
 			"ComponentDefType": "HeatSink",
 			"DamageLevel": "Functional",
-			"GUID": null,
-			"HardpointSlot": -1,
-			"IsFixed": true,
-			"MountedLocation": "CenterTorso",
-			"SimGameUID": "",
-			"hasPrefabName": false,
-			"prefabName": null
+			"IsFixed": true
 		}
 	]
 }
