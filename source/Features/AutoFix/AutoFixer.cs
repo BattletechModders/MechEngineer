@@ -74,16 +74,73 @@ namespace MechEngineer.Features.AutoFix
                 return freeTonnage;
             }
 
+            if (!EngineFeature.settings.AllowMixingHeatSinkTypes)
+            {
+                // remove incompatible heat sinks
+                var incompatibleHeatSinks = builder.Inventory
+                    .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory != engineHeatSinkDef.HSCategory)
+                    .ToList();
+
+                foreach (var incompatibleHeatSink in incompatibleHeatSinks)
+                {
+                    builder.Remove(incompatibleHeatSink);
+                    builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);
+                }
+            }
+
             Engine engine = null;
             if (res.CoreDef != null)
             {
                 engine = new Engine(res.CoolingDef, res.HeatBlockDef, res.CoreDef, res.Weights, new List<MechComponentRef>());
+
+                // convert external heat sinks into internal ones
+                // TODO only to make space if needed, drop the rest of the heat sinks
+
+                {
+                    var max = engine.HeatSinkInternalAdditionalMaxCount;
+                    var current = engine.EngineHeatBlockDef.HeatSinkCount;
+
+                    var heatSinks = builder.Inventory
+                        .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory == engineHeatSinkDef.HSCategory)
+                        .ToList();
+
+                    while (current < max && heatSinks.Count > 0)
+                    {
+                        var component = heatSinks[0];
+                        heatSinks.RemoveAt(0);
+                        builder.Remove(component);
+                        current++;
+                    }
+
+                    if (current > 0)
+                    {
+                        var heatBlock = builder.Inventory.FirstOrDefault(r => r.Def.Is<EngineHeatBlockDef>());
+                        if (heatBlock != null)
+                        {
+                            builder.Remove(heatBlock);
+                        }
+
+                        var heatBlockDefId = $"{AutoFixerFeature.settings.MechDefHeatBlockDef}_{current}";
+                        var def = mechDef.DataManager.HeatSinkDefs.Get(heatBlockDefId);
+                        builder.Add(def, ChassisLocations.CenterTorso, true);
+                    }
+                }
             }
             else
             {
                 var freeTonnage = CalcFreeTonnage();
-                var jumpJetList = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
-                var engineCandidates = new LinkedList<Engine>();
+
+                Control.mod.Logger.LogDebug($" find engine for freeTonnage={freeTonnage}");
+
+                var jumpJets = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
+                var jumpJetTonnage = jumpJets.Select(x => x.Def.Tonnage).FirstOrDefault(); //0 if no jjs
+
+                var externalHeatSinks = builder.Inventory
+                    .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory == engineHeatSinkDef.HSCategory)
+                    .ToList();
+                var internalHeatSinksCount = res.HeatBlockDef.HeatSinkCount;
+
+                var engineCandidates = new List<Engine>();
 
                 var engineCoreDefs = mechDef.DataManager.HeatSinkDefs
                     .Select(hs => hs.Value)
@@ -94,35 +151,59 @@ namespace MechEngineer.Features.AutoFix
                 foreach (var coreDef in engineCoreDefs)
                 {
                     {
-                        var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.Weights, new List<MechComponentRef>());
-                        engineCandidates.AddFirst(candidate);
-                    }
-                    
-                    {
                         // remove superfluous jump jets
                         var maxJetCount = coreDef.GetMovement(mechDef.Chassis.Tonnage).JumpJetCount;
-                        while (jumpJetList.Count > maxJetCount)
+                        while (jumpJets.Count > maxJetCount)
                         {
-                            var lastIndex = jumpJetList.Count - 1;
-                            var jumpJet = jumpJetList[lastIndex];
+                            var lastIndex = jumpJets.Count - 1;
+                            var jumpJet = jumpJets[lastIndex];
                             freeTonnage += jumpJet.Def.Tonnage;
                             builder.Remove(jumpJet);
-                            jumpJetList.Remove(jumpJet);
+                            jumpJets.Remove(jumpJet);
                         }
                     }
 
-                    // go through all candidates, use the larger count anyway
-                    foreach (var candidate in engineCandidates)
                     {
-                        if (candidate.TotalTonnage <= freeTonnage)
+                        var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.Weights, new List<MechComponentRef>());
+
+                        Control.mod.Logger.LogDebug($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
+
+                        engineCandidates.Add(candidate);
+
+                        var internalHeatSinksMax = candidate.HeatSinkInternalAdditionalMaxCount;
+
+                        // convert external ones to internal ones
+                        while (internalHeatSinksCount < internalHeatSinksMax && externalHeatSinks.Count > 0)
                         {
-                            engine = candidate;
+                            var component = externalHeatSinks[0];
+                            externalHeatSinks.RemoveAt(0);
+                            builder.Remove(component);
+                            internalHeatSinksCount++;
                         }
-                        else
+
+                        // TODO remove heat sinks that wouldn't fit even if they are all added as internal heat sinks
+                        // this is important so freeTonnage can be enlarged to something realistic (see HGN-732b)
+                        // here one could start removing external heat sinks that wouldn't fit anyway and add freeTonnage
+                        // but how do we know if it fits? based on JJ arrangement etc.. etc.. so kinda complicated but only for DHS?
+
+                        // convert internal ones to external ones
+                        while (internalHeatSinksCount > internalHeatSinksMax)
                         {
-                            break;
+                            if (!builder.Add(engineHeatSinkDef.Def))
+                            {
+                                freeTonnage++;
+                            }
+                            internalHeatSinksCount--;
                         }
+
+                        // remove candidates that make no sense anymore
+                        // TODO not perfect and maybe too large for small mechs
+                        engineCandidates = engineCandidates.Where(x => x.TotalTonnage <= freeTonnage + 6*engineHeatSinkDef.Def.Tonnage + jumpJetTonnage).ToList();
                     }
+
+                    // go through all candidates, larger first
+                    engine = engineCandidates.FirstOrDefault(candidate => candidate.TotalTonnage <= freeTonnage);
+
                     if (engine != null)
                     {
                         break;
@@ -131,17 +212,27 @@ namespace MechEngineer.Features.AutoFix
 
                 if (engine != null)
                 {
-                    Control.mod.Logger.LogDebug($" maxEngine={engine.CoreDef} freeTonnage={freeTonnage}");
-                    {
-                        var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == AutoFixerFeature.settings.MechDefCoreDummy);
-                        if (dummyCore != null)
-                        {
-                            builder.Remove(dummyCore);
-                        }
-                    }
-
-                    // add engine
+                    Control.mod.Logger.LogDebug($" engine={engine.CoreDef} freeTonnage={freeTonnage}");
+                    var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == AutoFixerFeature.settings.MechDefCoreDummy);
+                    builder.Remove(dummyCore);
                     builder.Add(engine.CoreDef.Def, ChassisLocations.CenterTorso, true);
+
+                    // see preinstalled engine comment for same thing
+                    // TODO convert internal heat sinks back as external ones if the mech can fit it
+                    // avoids that too many mechs have the more valuable internal heat sinks that are not usable on low engine ratings
+
+                    if (internalHeatSinksCount > 0)
+                    {
+                        var heatBlock = builder.Inventory.FirstOrDefault(r => r.Def.Is<EngineHeatBlockDef>());
+                        if (heatBlock != null)
+                        {
+                            builder.Remove(heatBlock);
+                        }
+
+                        var heatBlockDefId = $"{AutoFixerFeature.settings.MechDefHeatBlockDef}_{internalHeatSinksCount}";
+                        var def = mechDef.DataManager.HeatSinkDefs.Get(heatBlockDefId);
+                        builder.Add(def, ChassisLocations.CenterTorso, true);
+                    }
                 }
             }
 
@@ -150,63 +241,12 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            if (!EngineFeature.settings.AllowMixingHeatSinkTypes)
-            {
-                // remove incompatible heat sinks
-                var incompatibleHeatSinks = builder.Inventory
-                    .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory != engineHeatSinkDef.HSCategory)
-                    .ToList();
-                foreach (var incompatibleHeatSink in incompatibleHeatSinks)
-                {
-                    builder.Remove(incompatibleHeatSink);
-                }
-
-                // add same amount of compatible heat sinks
-                foreach (var unused in incompatibleHeatSinks)
-                {
-                    builder.Add(engineHeatSinkDef.Def);
-                }
-            }
-
             // add free heat sinks
             {
                 var max = engine.HeatSinkExternalFreeMaxCount;
                 for (var i = 0; i < max; i++)
                 {
-                    if (!builder.Add(engineHeatSinkDef.Def))
-                    {
-                        break;
-                    }
-                }
-            }
-
-            // convert external heat sinks into internal ones
-            {
-                var max = engine.HeatSinkInternalAdditionalMaxCount;
-                var current = engine.EngineHeatBlockDef.HeatSinkCount;
-
-                var heatSinks = builder.Inventory
-                    .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory == engineHeatSinkDef.HSCategory)
-                    .ToList();
-
-                for (; current < max && heatSinks.Count > 0; current++)
-                {
-                    var component = heatSinks[0];
-                    heatSinks.RemoveAt(0);
-                    builder.Remove(component);
-                }
-
-                if (current > 0)
-                {
-                    var heatBlock = builder.Inventory.FirstOrDefault(r => r.Def.Is<EngineHeatBlockDef>());
-                    if (heatBlock != null)
-                    {
-                        builder.Remove(heatBlock);
-                    }
-
-                    var heatBlockDefId = $"{AutoFixerFeature.settings.MechDefHeatBlockDef}_{current}";
-                    var def = mechDef.DataManager.HeatSinkDefs.Get(heatBlockDefId);
-                    builder.Add(def, ChassisLocations.CenterTorso, true);
+                    builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);
                 }
             }
             
