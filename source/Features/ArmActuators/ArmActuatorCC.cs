@@ -401,7 +401,7 @@ namespace MechEngineer.Features.ArmActuators
                         {
                             return;
                         }
-                        if (!builder.Add(def, location))
+                        if (builder.Add(def, location) == null)
                         {
                             return;
                         }

@@ -186,10 +186,11 @@ namespace MechEngineer.Features.DynamicSlots
             return GetMaxSlots(location) - GetPreferredUsedSlots(location);
         }
 
-        // does not support locational dynamic slots
+        // TODO does not support locational dynamic slots, PreferredUsedSlots is 0 if no space initially
         internal bool HasOveruseAtAnyLocation()
         {
-            return (from location in Locations
+            return TotalMissing > 0 ||
+                   (from location in Locations
                     let max = GetMaxSlots(location)
                     let used = GetPreferredUsedSlots(location)
                     where used > max
@@ -260,7 +261,11 @@ namespace MechEngineer.Features.DynamicSlots
 
         #region functions for manipulation
 
-        internal bool Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None, bool force = false)
+        // TODO whats missing for proper locational dynamic slots support
+        // track and allow moving of dynamic slots, with a bias towards locational slots near original item.
+        // work by tracking and converting "movable", "reserved" and "missing" locational slots per location
+        // where each location has to find its reserved slots from the locations nearby (CT more than LT)
+        internal MechComponentRef Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None, bool force = false)
         {
             if (def.Is<DynamicSlots>())
             {
@@ -271,40 +276,54 @@ namespace MechEngineer.Features.DynamicSlots
             // find location
             if (location == ChassisLocations.None || LocationCount(location) > 1)
             {
+                // TODO probably doesn't properly either with locational dynamic slots
                 location = FindSpaceAtLocations(def.InventorySize, def.AllowedLocations);
                 if (location == ChassisLocations.None)
                 {
-                    return false;
+                    return null;
                 }
             }
             
-            var newLocationUsage = GetPreferredUsedSlots(location) + def.InventorySize;
-            if (!force && newLocationUsage > GetMaxSlots(location))
+            // TODO doesn't properly work yet with locational dynamic slots
+            var newPreferredUsage = GetPreferredUsedSlots(location) + def.InventorySize;
+            var overUseAtLocation = newPreferredUsage > GetMaxSlots(location); // considers locational dynamic slots
+            var overUseOverall = def.InventorySize > TotalFree; // considers global dynamic slots
+            if (!force && (overUseAtLocation || overUseOverall))
             {
-                return false;
+                return null;
             }
-            
+
             TotalInventoryUsage += def.InventorySize;
-            SetInventoryUsedSlots(location, newLocationUsage);
+            var newInventoryUsage = GetInventoryUsedSlots(location) + def.InventorySize;
+            SetInventoryUsedSlots(location, newInventoryUsage);
             
+            Control.mod.Logger.LogDebug($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} newInventoryUsage={newInventoryUsage} newPreferredUsage={newPreferredUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+
             var componentRef = new MechComponentRef(def.Description.Id, null, def.ComponentType, location);
             componentRef.DataManager = DataManager;
             componentRef.RefreshComponentDef();
             Inventory.Add(componentRef);
-            return true;
+            return componentRef;
         }
 
-        internal void Remove(MechComponentRef item)
+        internal void Remove(MechComponentRef componentRef)
         {
-            if (item.Is<DynamicSlots>())
+            if (componentRef.Is<DynamicSlots>())
             {
                 // TODO add support, doesn't work with arm actuators either
                 throw new Exception("removing dynamic slots is not supported");
             }
 
-            Inventory.Remove(item);
-            SetInventoryUsedSlots(item.MountedLocation, GetPreferredUsedSlots(item.MountedLocation) - item.Def.InventorySize);
-            TotalInventoryUsage -= item.Def.InventorySize;
+            Inventory.Remove(componentRef);
+
+            // TODO doesn't properly work yet with locational dynamic slots
+            var def = componentRef.Def;
+            TotalInventoryUsage -= def.InventorySize;
+            var newInventoryUsage = GetInventoryUsedSlots(componentRef.MountedLocation) - def.InventorySize;
+            SetInventoryUsedSlots(componentRef.MountedLocation, newInventoryUsage);
+
+            var newPreferredUsage = GetPreferredUsedSlots(componentRef.MountedLocation) + def.InventorySize;
+            Control.mod.Logger.LogDebug($"  removed id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} newInventoryUsage={newInventoryUsage} newPreferredUsage={newPreferredUsage} TotalInventoryUsage={TotalInventoryUsage}");
         }
 
         private ChassisLocations FindSpaceAtLocations(int slotCount, ChassisLocations allowedLocations)

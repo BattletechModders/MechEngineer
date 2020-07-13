@@ -148,6 +148,8 @@ namespace MechEngineer.Features.AutoFix
                     .Where(c => c != null)
                     .OrderByDescending(x => x.Rating);
 
+                var removedExternalHeatSinksOverUse = false;
+
                 foreach (var coreDef in engineCoreDefs)
                 {
                     {
@@ -160,6 +162,8 @@ namespace MechEngineer.Features.AutoFix
                             freeTonnage += jumpJet.Def.Tonnage;
                             builder.Remove(jumpJet);
                             jumpJets.Remove(jumpJet);
+
+                            Control.mod.Logger.LogDebug("  Removed JumpJet");
                         }
                     }
 
@@ -179,19 +183,42 @@ namespace MechEngineer.Features.AutoFix
                             externalHeatSinks.RemoveAt(0);
                             builder.Remove(component);
                             internalHeatSinksCount++;
+
+                            Control.mod.Logger.LogDebug("  ~Converted external to internal");
                         }
 
-                        // TODO remove heat sinks that wouldn't fit even if they are all added as internal heat sinks
-                        // this is important so freeTonnage can be enlarged to something realistic (see HGN-732b)
-                        // here one could start removing external heat sinks that wouldn't fit anyway and add freeTonnage
-                        // but how do we know if it fits? based on JJ arrangement etc.. etc.. so kinda complicated but only for DHS?
+                        // this only runs on the engine that takes the most heat sinks (since this is in a for loop with rating descending order)
+                        // that way we only remove external heat sinks that couldn't be moved internally
+                        while (!removedExternalHeatSinksOverUse && externalHeatSinks.Count > 0)
+                        {
+                            var component = externalHeatSinks[0];
+                            externalHeatSinks.RemoveAt(0);
+                            builder.Remove(component);
+                            var newComponent = builder.Add(component.Def);
+                            if (newComponent == null)
+                            {
+                                Control.mod.Logger.LogDebug("  Removed external heat sink that doesn't fit");
+                                // might still need to remove some
+                                continue;
+                            }
+                            // addition worked
+                            externalHeatSinks.Add(newComponent);
+                            break;
+                        }
+                        removedExternalHeatSinksOverUse = true;
 
                         // convert internal ones to external ones
                         while (internalHeatSinksCount > internalHeatSinksMax)
                         {
-                            if (!builder.Add(engineHeatSinkDef.Def))
+                            if (builder.Add(engineHeatSinkDef.Def) == null)
                             {
+                                Control.mod.Logger.LogDebug("  ~Dropped external when converting from internal");
                                 freeTonnage++;
+                            }
+                            else
+                            {
+                                
+                                Control.mod.Logger.LogDebug("  ~Converted internal to external");
                             }
                             internalHeatSinksCount--;
                         }
@@ -217,9 +244,11 @@ namespace MechEngineer.Features.AutoFix
                     builder.Remove(dummyCore);
                     builder.Add(engine.CoreDef.Def, ChassisLocations.CenterTorso, true);
 
-                    // see preinstalled engine comment for same thing
-                    // TODO convert internal heat sinks back as external ones if the mech can fit it
-                    // avoids that too many mechs have the more valuable internal heat sinks that are not usable on low engine ratings
+                    // convert internal heat sinks back as external ones if the mech can fit it
+                    while (internalHeatSinksCount > 0 && builder.Add(engineHeatSinkDef.Def) != null)
+                    {
+                        internalHeatSinksCount--;
+                    }
 
                     if (internalHeatSinksCount > 0)
                     {
@@ -251,7 +280,6 @@ namespace MechEngineer.Features.AutoFix
             }
             
             // find any overused location
-            // TODO find out why locational dynamic slots are ignored
             if (builder.HasOveruseAtAnyLocation())
             {
                 Control.mod.Logger.LogError($" Overuse found");
@@ -271,9 +299,13 @@ namespace MechEngineer.Features.AutoFix
                 // then add most restricting, and then largest items first (probably double head sinks)
                 foreach (var item in itemsToBeReordered)
                 {
-                    if (!builder.Add(item.Def))
+                    if (builder.Add(item.Def) == null)
                     {
                         Control.mod.Logger.LogError($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
+                    }
+                    else
+                    {
+                        Control.mod.Logger.LogDebug($"  Component {item.ComponentDefID} re-added");
                     }
                 }
             }
