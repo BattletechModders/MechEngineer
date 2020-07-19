@@ -52,8 +52,9 @@ namespace MechEngineer.Features.DynamicSlots
                 this.location = location;
                 this.adapter = adapter;
 
-                currentFreeSlots = builder.GetMaxSlots(location) - builder.GetInventoryUsedSlots(location);
-                fixedSlots = builder.GetMiumumFixedSlots(location);
+                var locationInfo = builder.GetLocationInfo(location);
+                currentFreeSlots = locationInfo.InventoryFree;
+                fixedSlots = locationInfo.CalcMinimumFixedSlotsLocalAndGlobal;
 
                 maxSlots = adapter.maxSlots;
             }
@@ -125,7 +126,7 @@ namespace MechEngineer.Features.DynamicSlots
                 {
                     continue;
                 }
-                location = MechDefBuilder.GetNearestAdjacentLocation(location);
+                location = MechDefBuilder.GetInnerAdjacentLocation(location);
                 if (location == ChassisLocations.None)
                 {
                     continue;

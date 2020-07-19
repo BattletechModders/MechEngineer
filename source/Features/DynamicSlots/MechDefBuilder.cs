@@ -27,58 +27,7 @@ namespace MechEngineer.Features.DynamicSlots
             DataManager = UnityGameInstance.BattleTechGame.DataManager;
             TotalMax = Locations.Select(chassisDef.GetLocationDef).Sum(d => d.InventorySlots);
 
-            foreach (var group in Inventory.GroupBy(r => r.MountedLocation))
-            {
-                var location = group.Key;
-
-                var max = GetMaxSlots(location);
-                var sum = group.Sum(r => r.Def.InventorySize);
-
-                SetInventoryUsedSlots(location, sum);
-                TotalInventoryUsage += sum;
-            }
-
-            TotalDynamicGlobalUsage = Inventory
-                .Select(r => r.Def.GetComponent<DynamicSlots>())
-                .Where(s => s != null && !s.InnerAdjacentOnly)
-                .Sum(s => s.ReservedSlots);
-
-            // "quick" version for validation only
-            foreach (var componentRef in Inventory
-                .Where(r => r.Def.Is<DynamicSlots>(out var ds) && ds.InnerAdjacentOnly)
-                .OrderBy(r => Array.IndexOf(RestrictedDynamicSlotsOrder, r.MountedLocation))
-                .ThenBy(r => r.ComponentDefID))
-            {
-                var slot = componentRef.Def.GetComponent<DynamicSlots>();
-                int useSpace(int required, ChassisLocations location)
-                {
-                    if (location != ChassisLocations.None)
-                    {
-                        var max = GetMaxSlots(location);
-                        var usage = GetPreferredUsedSlots(location);
-
-                        var free = max - usage;
-                        if (free > 0)
-                        {
-                            var take = Mathf.Min(free, required);
-                            required -= take;
-                            TotalDynamicLocationalUsage += take;
-                            SetDynamicLocationalPreferredMaxUsedSlots(location, GetDynamicLocationalPreferredMaxUsedSlots(location) + take);
-                        }
-                    }
-                    return required;
-                }
-                var requiredOnLocation = useSpace(slot.ReservedSlots, componentRef.MountedLocation);
-                if (requiredOnLocation > 0)
-                {
-                    var location = GetNearestAdjacentLocation(componentRef.MountedLocation);
-                    requiredOnLocation = useSpace(requiredOnLocation, location);
-                }
-                if (requiredOnLocation > 0)
-                {
-                    TotalDynamicLocationalMissing += requiredOnLocation;
-                }
-            }
+            CalculateStats();
 
             Control.mod.Logger.LogDebug(this);
         }
@@ -87,114 +36,191 @@ namespace MechEngineer.Features.DynamicSlots
 
         // precedence order: 1. inventory size, 2. locational restricted dynamic slots, 3. fully movable dynamic slots
 
-        private int TotalMax;
+        private readonly int TotalMax;
+
         private int TotalInventoryUsage;
         private int TotalDynamicGlobalUsage;
         private int TotalDynamicLocationalUsage;
-        private int TotalDynamicLocationalMissing;
-        private int TotalUsage => TotalInventoryUsage + TotalDynamicGlobalUsage + TotalDynamicLocationalUsage;
-        internal int TotalMissing => Mathf.Max(TotalUsage - TotalMax, 0) + TotalDynamicLocationalMissing;
-        private int TotalFree => Mathf.Max(TotalMax - TotalUsage, 0);
+        private int TotalDynamicLocationalNoSpace; // missing are added as usage (tracked separately to have quick validation)
+        private int TotalUsage => TotalInventoryUsage + TotalDynamicGlobalUsage + TotalDynamicLocationalUsage + TotalDynamicLocationalNoSpace;
+        private int TotalFree => TotalMax - TotalUsage;
+
+        internal int TotalMissing => Mathf.Max(TotalUsage - TotalMax, 0) + TotalDynamicLocationalNoSpace;
 
         public override string ToString()
         {
             return $"ChassisId={Chassis.Description.Id} TotalInventoryUsage={TotalInventoryUsage} TotalDynamicGlobalUsage={TotalDynamicGlobalUsage}" +
-                $" TotalDynamicLocationRestrictedUsage={TotalDynamicLocationalUsage} TotalDynamicLocationRestrictedMissing={TotalDynamicLocationalMissing}";
+                $" TotalDynamicLocationRestrictedUsage={TotalDynamicLocationalUsage} TotalDynamicLocationRestrictedMissing={TotalDynamicLocationalNoSpace}";
         }
 
-        // always without dynamic global but does include possible removal of locational dynamic slots
-        private Dictionary<ChassisLocations, int> LocationalPreferredMaxMovable;
-        internal int GetLocationalPreferredMaxMovable(ChassisLocations location)
+        void CalculateStats()
         {
-            if (LocationalPreferredMaxMovable == null) // lazy computation
+            TotalInventoryUsage = 0;
+            foreach (var group in Inventory.GroupBy(r => r.MountedLocation))
             {
-                LocationalPreferredMaxMovable = new Dictionary<ChassisLocations, int>();
-                CalcLocationalMaxMovableSlots();
+                var location = group.Key;
+
+                var locationInfo = GetLocationInfo(location);
+                locationInfo.InventoryUsage = group.Sum(r => r.Def.InventorySize);
+                TotalInventoryUsage += locationInfo.InventoryUsage;
             }
-            return LocationalPreferredMaxMovable.TryGetValue(location, out var count) ? count : 0;
-        }
-        private void SetLocationalPreferredMaxMovable(ChassisLocations location, int count)
-        {
-            LocationalPreferredMaxMovable[location] = count;
-        }
-        private void CalcLocationalMaxMovableSlots()
-        {
-            foreach (var location in RestrictedDynamicSlotsOrder.Reverse())
+            
+            TotalDynamicGlobalUsage = Inventory
+                .Select(r => r.Def.GetComponent<DynamicSlots>())
+                .Where(s => s != null && !s.InnerAdjacentOnly)
+                .Sum(s => s.ReservedSlots);
+
+            TotalDynamicLocationalUsage = 0;
+            TotalDynamicLocationalNoSpace = 0;
+            foreach (var locationInfo in LocationInfos.Values)
             {
-                var adjacentLocation = GetNearestAdjacentLocation(location);
-                if (adjacentLocation == ChassisLocations.None)
+                locationInfo.DLPreferredUsageLocal = 0;
+                locationInfo.DLPreferredUsageReservedInOverflow = 0;
+                locationInfo.DLNoSpace = 0;
+            }
+
+            // "quick" version for validation only
+            foreach (var componentRef in Inventory
+                .Where(r => r.Def.Is<DynamicSlots>(out var ds) && ds.InnerAdjacentOnly)
+                .OrderBy(r => Array.IndexOf(RestrictedDynamicSlotsOrder, r.MountedLocation))
+                .ThenBy(r => r.ComponentDefID))
+            {
+                var slot = componentRef.Def.GetComponent<DynamicSlots>();
+                var locationInfo = GetLocationInfo(componentRef.MountedLocation);
+                int findSpaceForDL(int required, ChassisLocations location)
                 {
-                    continue;
+                    if (location != ChassisLocations.None)
+                    {
+                        var localInfo = GetLocationInfo(location);
+                        var free = localInfo.CalcMaxFree;
+                        if (free > 0)
+                        {
+                            var take = Mathf.Min(free, required);
+                            required -= take;
+                            TotalDynamicLocationalUsage += take;
+                            if (componentRef.MountedLocation == location)
+                            {
+                                localInfo.DLPreferredUsageLocal += take;
+                            }
+                            else
+                            {
+                                localInfo.DLPreferredUsageReservedInOverflow += take;
+                            }
+                        }
+                    }
+                    return required;
                 }
-                var maxUsedSlots = GetDynamicLocationalPreferredMaxUsedSlots(location);
-                var adjacentFree = GetPreferredFreeSlots(adjacentLocation);
-                var adjacentMaxMovable = GetLocationalPreferredMaxMovable(adjacentLocation);
-                var maxFree = Mathf.Min(adjacentFree + adjacentMaxMovable, maxUsedSlots);
-                SetLocationalPreferredMaxMovable(location, maxFree);
+                var requiredOnLocation = findSpaceForDL(slot.ReservedSlots, componentRef.MountedLocation);
+                if (requiredOnLocation > 0)
+                {
+                    var location = GetInnerAdjacentLocation(componentRef.MountedLocation);
+                    requiredOnLocation = findSpaceForDL(requiredOnLocation, location);
+                }
+                if (requiredOnLocation > 0)
+                {
+                    locationInfo.DLNoSpace += requiredOnLocation;
+                    TotalDynamicLocationalNoSpace += requiredOnLocation;
+                }
             }
         }
 
-        // used to get if a slot is movable or not
-        // fixed = inventory and minimum location and minimum global slots
-        internal int GetMiumumFixedSlots(ChassisLocations location)
+        internal class LocationInfo
         {
-            var inventory = GetInventoryUsedSlots(location);
-            var minimumLocational = GetDynamicLocationalPreferredMaxUsedSlots(location) - GetLocationalPreferredMaxMovable(location);
-            var max = GetMaxSlots(location);
-            var globalFree = TotalMax - TotalUsage;
-            var invLocFree = max - inventory - minimumLocational;
-            var free = Mathf.Min(globalFree, invLocFree);
-            return max - free;
-        } 
+            internal LocationInfo(MechDefBuilder builder, ChassisLocations location)
+            {
+                this.builder = builder;
+                this.location = location;
+                InventoryMax = builder.Chassis.GetLocationDef(location).InventorySlots;
+            }
+            internal readonly MechDefBuilder builder;
+            internal readonly ChassisLocations location;
+            
+            internal readonly int InventoryMax;
+            internal int InventoryUsage;
+            internal int InventoryFree => InventoryMax - InventoryUsage;
 
-        private readonly Dictionary<ChassisLocations, int> LocationInventoryUsage = new Dictionary<ChassisLocations, int>();
-        internal int GetInventoryUsedSlots(ChassisLocations location)
-        {
-            return LocationInventoryUsage.TryGetValue(location, out var count) ? count : 0;
+            #region dynamic locational stats
+
+            // the maximum amout that is requested, might immediatly overflow to other location (tack not in other location but here as UsageInOverflow)
+            //internal int DLUsageRequested;
+            // uses up slots in original location
+            internal int DLPreferredUsageLocal;
+            // uses up slots in the overflow location however its tracked in the location that is overflowing (otherwise its not easy to undo any overflows)
+            // when removing components in this location, make sure to reduce overflow location too
+            internal int DLPreferredUsageReservedInOverflow;
+            // no space left in this and the other location, when removing components have to check if can be reduced!
+            internal int DLNoSpace; // missing are added as usage (tracked separately to have quick validation)
+
+            // when removing, 1. reduce no space 2. reduce overflow 3. reduce dl usage local
+
+            #endregion
+
+            #region more intensive calculations
+
+            // avoid in tight loops
+            // could be made to cache, but then requires cache invalidation -> invalidate on remove/add right?
+
+            // find all locations that have to overflow to us (and were able to)
+            private int CalcOverflowUsage => GetOuterAdjacentLocation(location)
+                .Select(builder.GetLocationInfo)
+                .Select(x => x.DLPreferredUsageReservedInOverflow)
+                .DefaultIfEmpty(0)
+                .Sum();
+
+            // preferred: maximize locational dynamic (and omits global dynamic)dwa
+            private int CalcMinUsage => InventoryUsage + CalcDLNonMovableUsage;
+            internal int CalcMaxFree => InventoryMax - CalcMinUsage;
+
+            internal bool CalcOverUsage => CalcMaxFree < 0;
+            internal int CalcMinimumFixedSlotsLocalAndGlobal => Mathf.Max(InventoryUsage + CalcDLNonMovableUsage, InventoryMax - builder.TotalFree);
+
+            private int CalcDLNonMovableUsage => DLPreferredUsageLocal - CalcDLMovableUsage + CalcOverflowUsage + DLNoSpace;
+
+            // movable with current possibilities
+            // CT 0 space -> LT, RT, HEAD can't move anything, moveables = 0 there
+            // CT 2 space and LT has 2 movable to CT, and LA has 2 DLUsageLocal, then the 2DLUsageLocal should be able to move to LT and LT to CT
+            // soo.. use CT's DLUsageLocal as that can never move -> other semantics maybe?
+            // LA and LT can use DLusageLocal can move based on VirtualFree on CT
+            //
+            // recursively go through each location and then go back tracking available space on each location (done via CalcMaxFree)
+            // the amount of the preferredUsage that can be moved
+            private int CalcDLMovableUsage
+            {
+                get
+                {
+                    if (DLPreferredUsageLocal == 0)
+                    {
+                        return 0;
+                    }
+                    var innerLocation = GetInnerAdjacentLocation(location);
+                    if (innerLocation == ChassisLocations.None)
+                    {
+                        return 0;
+                    }
+
+                    var maxFree = builder.GetLocationInfo(innerLocation).CalcMaxFree;
+                    return Mathf.Min(maxFree, DLPreferredUsageLocal);
+                }
+            }
+            //DLUsageLocal + CalcOverflowUsage + DLMissingLocal;
+
+            #endregion
         }
 
-        private void SetInventoryUsedSlots(ChassisLocations location, int count)
+        private readonly Dictionary<ChassisLocations, LocationInfo> LocationInfos = new Dictionary<ChassisLocations, LocationInfo>();
+        internal LocationInfo GetLocationInfo(ChassisLocations location)
         {
-            LocationInventoryUsage[location] = count;
+            if (!LocationInfos.TryGetValue(location, out var usage))
+            {
+                usage = new LocationInfo(this, location);
+                LocationInfos[location] = usage;
+            }
+            return usage;
         }
 
-        // location restricted usage
-        private readonly Dictionary<ChassisLocations, int> DynamicLocationalPreferredMaxUsage = new Dictionary<ChassisLocations, int>();
-        private int GetDynamicLocationalPreferredMaxUsedSlots(ChassisLocations location)
-        {
-            return DynamicLocationalPreferredMaxUsage.TryGetValue(location, out var count) ? count : 0;
-        }
-
-        private void SetDynamicLocationalPreferredMaxUsedSlots(ChassisLocations location, int count)
-        {
-            DynamicLocationalPreferredMaxUsage[location] = count;
-        }
-
-        internal int GetMaxSlots(ChassisLocations location)
-        {
-            return Chassis.GetLocationDef(location).InventorySlots;
-        }
-
-        // preferred: maximize locational dynamic (and omits global dynamic)
-        private int GetPreferredUsedSlots(ChassisLocations location)
-        {
-            return GetInventoryUsedSlots(location) + GetDynamicLocationalPreferredMaxUsedSlots(location);
-        }
-
-        private int GetPreferredFreeSlots(ChassisLocations location)
-        {
-            return GetMaxSlots(location) - GetPreferredUsedSlots(location);
-        }
-
-        // TODO does not support locational dynamic slots, PreferredUsedSlots is 0 if no space initially
         internal bool HasOveruseAtAnyLocation()
         {
-            return TotalMissing > 0 ||
-                   (from location in Locations
-                    let max = GetMaxSlots(location)
-                    let used = GetPreferredUsedSlots(location)
-                    where used > max
-                    select max).Any();
+            return TotalMissing > 0 || Locations.Any(x => GetLocationInfo(x).CalcOverUsage);
         }
 
         #endregion
@@ -225,7 +251,7 @@ namespace MechEngineer.Features.DynamicSlots
             ChassisLocations.CenterTorso,
         };
 
-        internal static ChassisLocations GetNearestAdjacentLocation(ChassisLocations location)
+        internal static ChassisLocations GetInnerAdjacentLocation(ChassisLocations location)
         {
             switch (location)
             {
@@ -239,9 +265,29 @@ namespace MechEngineer.Features.DynamicSlots
                 case ChassisLocations.RightArm:
                 case ChassisLocations.RightLeg:
                     return ChassisLocations.RightTorso;
-                case ChassisLocations.CenterTorso:
                 default:
                     return ChassisLocations.None;
+            }
+        }
+
+        internal static ChassisLocations[] GetOuterAdjacentLocation(ChassisLocations location)
+        {
+            switch (location)
+            {
+                case ChassisLocations.Head:
+                case ChassisLocations.LeftArm:
+                case ChassisLocations.RightArm:
+                case ChassisLocations.LeftLeg:
+                case ChassisLocations.RightLeg:
+                    return new ChassisLocations[0];
+                case ChassisLocations.LeftTorso:
+                    return new[] {ChassisLocations.LeftArm, ChassisLocations.LeftLeg};
+                case ChassisLocations.RightTorso:
+                    return new[] {ChassisLocations.RightArm, ChassisLocations.RightLeg};
+                case ChassisLocations.CenterTorso:
+                    return new[] {ChassisLocations.Head, ChassisLocations.LeftTorso, ChassisLocations.RightTorso};
+                default:
+                    throw new ArgumentException();
             }
         }
 
@@ -276,33 +322,35 @@ namespace MechEngineer.Features.DynamicSlots
             // find location
             if (location == ChassisLocations.None || LocationCount(location) > 1)
             {
-                // TODO probably doesn't properly either with locational dynamic slots
-                location = FindSpaceAtLocations(def.InventorySize, def.AllowedLocations);
+                location = GetLocations()
+                    .Where(l => (l & def.AllowedLocations) != 0)
+                    .FirstOrDefault(l => GetLocationInfo(l).CalcMaxFree >= def.InventorySize);
+
                 if (location == ChassisLocations.None)
                 {
                     return null;
                 }
             }
             
-            // TODO doesn't properly work yet with locational dynamic slots
-            var newPreferredUsage = GetPreferredUsedSlots(location) + def.InventorySize;
-            var overUseAtLocation = newPreferredUsage > GetMaxSlots(location); // considers locational dynamic slots
-            var overUseOverall = def.InventorySize > TotalFree; // considers global dynamic slots
+            var locationInfo = GetLocationInfo(location);
+            var overUseAtLocation = locationInfo.CalcMaxFree < def.InventorySize; // considers locational dynamic slots
+            var overUseOverall = TotalFree < def.InventorySize; // considers global dynamic slots
             if (!force && (overUseAtLocation || overUseOverall))
             {
                 return null;
             }
 
-            TotalInventoryUsage += def.InventorySize;
-            var newInventoryUsage = GetInventoryUsedSlots(location) + def.InventorySize;
-            SetInventoryUsedSlots(location, newInventoryUsage);
-            
-            Control.mod.Logger.LogDebug($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} newInventoryUsage={newInventoryUsage} newPreferredUsage={newPreferredUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+            Control.mod.Logger.LogDebug($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
 
             var componentRef = new MechComponentRef(def.Description.Id, null, def.ComponentType, location);
             componentRef.DataManager = DataManager;
             componentRef.RefreshComponentDef();
             Inventory.Add(componentRef);
+
+            Control.mod.Logger.LogDebug($"  adding id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+            CalculateStats();
+            Control.mod.Logger.LogDebug($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+
             return componentRef;
         }
 
@@ -313,42 +361,21 @@ namespace MechEngineer.Features.DynamicSlots
                 // TODO add support, doesn't work with arm actuators either
                 throw new Exception("removing dynamic slots is not supported");
             }
-
+            
+            var def = componentRef.Def;
+            var locationInfo = GetLocationInfo(componentRef.MountedLocation);
             Inventory.Remove(componentRef);
 
-            // TODO doesn't properly work yet with locational dynamic slots
-            var def = componentRef.Def;
-            TotalInventoryUsage -= def.InventorySize;
-            var newInventoryUsage = GetInventoryUsedSlots(componentRef.MountedLocation) - def.InventorySize;
-            SetInventoryUsedSlots(componentRef.MountedLocation, newInventoryUsage);
-
-            var newPreferredUsage = GetPreferredUsedSlots(componentRef.MountedLocation) + def.InventorySize;
-            Control.mod.Logger.LogDebug($"  removed id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} newInventoryUsage={newInventoryUsage} newPreferredUsage={newPreferredUsage} TotalInventoryUsage={TotalInventoryUsage}");
-        }
-
-        private ChassisLocations FindSpaceAtLocations(int slotCount, ChassisLocations allowedLocations)
-        {
-            return GetLocations()
-                .Where(location => (location & allowedLocations) != 0)
-                .FirstOrDefault(location => HasSpaceInLocation(slotCount, location));
-        }
-
-        private bool HasSpaceInLocation(int slotCount, ChassisLocations location)
-        {
-            var used = GetPreferredUsedSlots(location);
-            var max = GetMaxSlots(location);
-            if (max - used >= slotCount)
-            {
-                return true;
-            }
-            return false;
+            Control.mod.Logger.LogDebug($"  removing id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
+            CalculateStats();
+            Control.mod.Logger.LogDebug($"  removed id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
         }
 
         private IEnumerable<ChassisLocations> GetLocations()
         {
             yield return ChassisLocations.CenterTorso;
 
-            if (GetPreferredFreeSlots(ChassisLocations.LeftTorso) >= GetPreferredFreeSlots(ChassisLocations.RightTorso))
+            if (GetLocationInfo(ChassisLocations.LeftTorso).CalcMaxFree >= GetLocationInfo(ChassisLocations.RightTorso).CalcMaxFree)
             {
                 yield return ChassisLocations.LeftTorso;
                 yield return ChassisLocations.RightTorso;
@@ -359,7 +386,7 @@ namespace MechEngineer.Features.DynamicSlots
                 yield return ChassisLocations.LeftTorso;
             }
 
-            if (GetPreferredFreeSlots(ChassisLocations.LeftLeg) >= GetPreferredFreeSlots(ChassisLocations.RightLeg))
+            if (GetLocationInfo(ChassisLocations.LeftLeg).CalcMaxFree >= GetLocationInfo(ChassisLocations.RightLeg).CalcMaxFree)
             {
                 yield return ChassisLocations.LeftLeg;
                 yield return ChassisLocations.RightLeg;
@@ -372,7 +399,7 @@ namespace MechEngineer.Features.DynamicSlots
 
             yield return ChassisLocations.Head;
 
-            if (GetPreferredFreeSlots(ChassisLocations.LeftArm) >= GetPreferredFreeSlots(ChassisLocations.RightArm))
+            if (GetLocationInfo(ChassisLocations.LeftArm).CalcMaxFree >= GetLocationInfo(ChassisLocations.RightArm).CalcMaxFree)
             {
                 yield return ChassisLocations.LeftArm;
                 yield return ChassisLocations.RightArm;
