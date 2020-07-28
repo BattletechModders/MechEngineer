@@ -12,7 +12,7 @@ namespace MechEngineer.Features.MechLabSlots
         internal static void AdjustLocationNaming(MechLabLocationWidget widget, ChassisLocations location)
         {
             // just hide armor = 0 stuff
-            widget.gameObject.SetActive(!Mathf.Approximately(widget.maxArmor, 0));
+            widget.gameObject.SetActive(!widget.ShouldHide());
 
             var mechLab = (MechLabPanel)widget.parentDropTarget;
             var text = GetLocationName(mechLab.activeMechDef.Chassis, location);
@@ -36,6 +36,15 @@ namespace MechEngineer.Features.MechLabSlots
                 }
             }
             return Mech.GetLongChassisLocation(location);
+        }
+    }
+
+    internal static class MechLabLocationWidgetExtensions
+    {
+        // locations not used by vehicles in mechlab use maxarmor = 0
+        internal static bool ShouldHide(this MechLabLocationWidget widget)
+        {
+            return Mathf.Approximately(widget.maxArmor, 0);
         }
     }
 }
