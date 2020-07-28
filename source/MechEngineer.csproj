@@ -98,6 +98,8 @@
     <Compile Include="Features\CriticalEffects\Criticals.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\MechDef_RefreshInventory_Patch.cs" />
     <Compile Include="Features\HardpointFix\utils\CompatibleUtils.cs" />
+    <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabLocationNaming.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustTooltipWeapon.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\TooltipPrefab_WeaponSetData_Patch.cs" />
     <Compile Include="Helper\LinqExtensions.cs" />

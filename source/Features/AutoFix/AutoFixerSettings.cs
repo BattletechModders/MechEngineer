@@ -1,4 +1,5 @@
 ﻿using BattleTech;
+using MechEngineer.Features.MechLabSlots;
 
 namespace MechEngineer.Features.AutoFix
 {
@@ -11,6 +12,40 @@ namespace MechEngineer.Features.AutoFix
         public string[] MechTagsAutoFixEnabled = {"unit_release"};
         public string MechDefHeatBlockDef = "emod_engine_cooling";
         public string MechDefCoreDummy = "emod_engine_dummy";
+
+        public string[] MechLocationNamingTemplateTags = {"fake_vehicle_chassis"};
+        public string MechLocationNamingTemplateTagsDescription => $"If any of the listed tags are found, and the chassis has no {nameof(ChassisLocationNaming)} component, add the {nameof(MechLocationNamingTemplate)} component";
+        public ChassisLocationNaming MechLocationNamingTemplate = new ChassisLocationNaming()
+        {
+            Names = new []
+            {
+                new ChassisLocationNaming.LocationName()
+                {
+                    location = ChassisLocations.LeftArm,
+                    text = "FRONT"
+                },
+                new ChassisLocationNaming.LocationName()
+                {
+                    location = ChassisLocations.RightArm,
+                    text = "REAR"
+                },
+                new ChassisLocationNaming.LocationName()
+                {
+                    location = ChassisLocations.LeftLeg,
+                    text = "LEFT SIDE"
+                },
+                new ChassisLocationNaming.LocationName()
+                {
+                    location = ChassisLocations.RightLeg,
+                    text = "RIGHT SIDE"
+                },
+                new ChassisLocationNaming.LocationName()
+                {
+                    location = ChassisLocations.Head,
+                    text = "TURRET"
+                }
+            }
+        };
 
         public IdentityHelper GyroCategorizer = new IdentityHelper
         {

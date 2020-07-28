@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using CustomComponents;
+using ErosionBrushPlugin;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.HardpointFix.limits;
+using MechEngineer.Features.MechLabSlots;
 using UnityEngine;
 
 namespace MechEngineer.Features.AutoFix
@@ -24,6 +26,7 @@ namespace MechEngineer.Features.AutoFix
 
             AutoFixChassisDef(chassisDef);
             AutoFixSlots(chassisDef);
+            AutoFixLocationNaming(chassisDef);
         }
 
         public static float? GetOriginalInitialTonnage(ChassisDef chassisDef)
@@ -95,6 +98,18 @@ namespace MechEngineer.Features.AutoFix
             }
             
             adapter.refreshLocationReferences();
+        }
+
+        private static void AutoFixLocationNaming(ChassisDef chassisDef)
+        {
+            if (AutoFixerFeature.settings.MechLocationNamingTemplateTags.Any(chassisDef.ChassisTags.Contains))
+            {
+                if (!chassisDef.Is<ChassisLocationNaming>())
+                {
+                    var copy = AutoFixerFeature.settings.MechLocationNamingTemplate.ReflectionCopy();
+                    chassisDef.AddComponent(copy);
+                }
+            }
         }
 
         private static void ModifyInventorySlots(ref LocationDef locationDef, ChassisLocations location, ValueChange<int> change)

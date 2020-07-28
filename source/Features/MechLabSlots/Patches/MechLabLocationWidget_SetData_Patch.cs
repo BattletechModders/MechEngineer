@@ -3,6 +3,7 @@ using Harmony;
 using MechEngineer.Features.DynamicSlots;
 using System;
 using System.Collections.Generic;
+using BattleTech;
 using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots.Patches
@@ -18,13 +19,16 @@ namespace MechEngineer.Features.MechLabSlots.Patches
             );
         }
 
-        public static void Postfix(MechLabLocationWidget __instance, int ___maxSlots)
+        public static void Postfix(MechLabLocationWidget __instance, int ___maxSlots, ref LocationLoadoutDef loadout)
         {
             try
             {
-                var widgetLayout = new WidgetLayout(__instance);
+                var widget = __instance;
+
+                var widgetLayout = new WidgetLayout(widget);
                 MechLabSlotsFixer.FixSlots(widgetLayout, ___maxSlots);
                 DynamicSlotsFeature.PrepareWidget(widgetLayout);
+                MechLabLocationNaming.AdjustLocationNaming(widget, loadout.Location);
             }
             catch (Exception e)
             {
