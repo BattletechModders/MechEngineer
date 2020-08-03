@@ -13,7 +13,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
             {
                 MechLabFixWidgetLayouts.FixWidgetLayouts(__instance);
                 MechPropertiesWidget.Setup(__instance);
-                MechLabMoveMechRoleInfo.MoveMechRoleInfo(__instance);
+                MechLabMoveUIElements.MoveMechUIElements(__instance);
             }
             catch (Exception e)
             {

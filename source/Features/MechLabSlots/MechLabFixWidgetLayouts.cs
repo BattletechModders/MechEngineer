@@ -19,6 +19,7 @@ namespace MechEngineer.Features.MechLabSlots
                     var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
                     component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
                     component.enabled = true;
+                    go.GetComponent<VerticalLayoutGroup>().spacing = 56;
                 }
 
                 foreach (Transform widget in container)
@@ -30,6 +31,15 @@ namespace MechEngineer.Features.MechLabSlots
 
                     EnableLayout(widget.gameObject);
                     EnableLayout(widget.GetChild("layout_slots").gameObject);
+
+                    // fix different distances for lower bracket
+                    var rect = widget
+                        .GetChild("layout_bg")
+                        .GetChild("bracket_btm")
+                        .GetComponent<RectTransform>();
+                    rect.anchoredPosition = new Vector2(0, 0);
+                    rect.offsetMin = new Vector2(0, -2);
+                    rect.offsetMax = new Vector2(0, 2);
                 }
             }
 
@@ -70,6 +80,8 @@ namespace MechEngineer.Features.MechLabSlots
                 if (component != null)
                 {
                     component.enabled = true;
+                    component.childForceExpandHeight = false;
+                    component.childForceExpandWidth = false;
                 }
             }
 

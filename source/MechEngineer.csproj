@@ -174,7 +174,7 @@
     <Compile Include="Helper\MechComponentRefExtensions.cs" />
     <Compile Include="Helper\StatisticAdapter.cs" />
     <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
-    <Compile Include="Features\MechLabSlots\MechLabMoveMechRoleInfo.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabMoveUIElements.cs" />
     <Compile Include="Features\MechLabSlots\MechLabFixWidgetLayouts.cs" />
     <Compile Include="Features\MechLabSlots\MechPropertiesWidget.cs" />
     <Compile Include="Features\MechLabSlots\MechLabAutoZoom.cs" />

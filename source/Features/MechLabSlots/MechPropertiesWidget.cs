@@ -27,13 +27,10 @@ namespace MechEngineer.Features.MechLabSlots
                 var template = mechLabPanel.centerTorsoWidget;
                 var container = mechLabPanel.rightArmWidget.transform.parent.gameObject;
                 var clg = container.GetComponent<VerticalLayoutGroup>();
-                //clg.spacing = 20;
                 clg.padding = new RectOffset(0, 0, MechLabSlotsFeature.settings.MechLabArmTopPadding, 0);
                 var go = UnityEngine.Object.Instantiate(template.gameObject, null);
-                //go.transform.SetAsFirstSibling();
 
                 {
-                    //go.EnableLayout();
                     go.transform.SetParent(mechLabPanel.rightArmWidget.transform, false);
                     go.GetComponent<LayoutElement>().ignoreLayout = true;
                     go.transform.GetChild("layout_armor").gameObject.SetActive(false);
@@ -42,6 +39,9 @@ namespace MechEngineer.Features.MechLabSlots
                     var rect = go.GetComponent<RectTransform>();
                     rect.pivot = new Vector2(0, 0);
                     rect.localPosition = new Vector3(0, 20);
+                    var vlg = go.GetComponent<VerticalLayoutGroup>();
+                    vlg.padding = new RectOffset(0, 0, 0, 3);
+                    vlg.spacing = 4;
                 }
 
                 go.name = "MechPropertiesWidget";
@@ -50,19 +50,6 @@ namespace MechEngineer.Features.MechLabSlots
                 PropertiesWidget = go.GetComponent<MechLabLocationWidget>();
                 PropertiesWidget.Init(mechLabPanel);
                 var layout = new WidgetLayout(PropertiesWidget);
-
-                // doesnt work with highlight frame
-                //layout.layout_slots_glg.padding.top = 8;
-                //layout.layout_slottedComponents_vlg.padding.top = 8;
-
-                // doesnt work at all
-                //var emptySpace = new GameObject("Cool GameObject made from Code");
-                //var emptySpaceRect = emptySpace.AddComponent<RectTransform>();
-                //emptySpaceRect.sizeDelta = new Vector2(1, 8);
-                //emptySpace.AddComponent<LayoutElement>();
-                //emptySpace.transform.SetParent(layout.layout_slots, false);
-                //emptySpace.transform.SetAsFirstSibling();
-                //emptySpace.SetActive(true);
 
                 MechLabSlotsFixer.ModifyLayoutSlotCount(layout, MechLabSlotsFeature.settings.MechLabGeneralSlots);
             }
