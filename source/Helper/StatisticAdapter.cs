@@ -52,5 +52,16 @@ namespace MechEngineer
 			modVariant.SetValue(effectData.statisticData.modValue);
             StatCollection.ModifyStatistic(null, -1, effectData.statisticData.statName, effectData.statisticData.operation, modVariant, -1, true);
         }
+
+        internal StatisticEffectData CreateStatisticData(StatCollection.StatOperation op, T value)
+        {
+            return new StatisticEffectData
+            {
+                statName = Key,
+                operation = op,
+                modValue = value.ToString(),
+                modType = value.GetType().ToString()
+            };
+        }
     }
 }

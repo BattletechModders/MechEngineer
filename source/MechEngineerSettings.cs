@@ -15,6 +15,7 @@ using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.HardpointFix;
+using MechEngineer.Features.HeatSinkCapacityStat;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MechLabSlots;
@@ -53,6 +54,7 @@ namespace MechEngineer
         public EngineSettings Engine = new EngineSettings();
         public GlobalsSettings Globals = new GlobalsSettings();
         public HardpointFixSettings HardpointFix = new HardpointFixSettings();
+        public HeatSinkCapacityStatSettings HeatSinkCapacityStat = new HeatSinkCapacityStatSettings();
         public InvalidInventorySettings InvalidInventory = new InvalidInventorySettings();
         public LocationalEffectsSettings LocationalEffects = new LocationalEffectsSettings();
         public MechLabSlotsSettings MechLabSlots = new MechLabSlotsSettings();

@@ -24,30 +24,31 @@ namespace MechEngineer
                 return;
             }
 
-            var effectData = new EffectData
-            {
-                effectType = EffectType.StatisticEffect,
-                nature = EffectNature.Buff
-            };
-
-            effectData.durationData = new EffectDurationData
-            {
-                duration = -1,
-                stackLimit = -1
-            };
-             
-            effectData.targetingData = new EffectTargetingData
-            {
-                effectTriggerType = EffectTriggerType.Passive,
-                effectTargetType = EffectTargetType.Creator
-            };
-            
-            var id = def.Description.Id + "_" + statisticData.statName;
-            effectData.Description = new BaseDescriptionDef(id, statisticData.statName, "", null);
-            effectData.statisticData = statisticData;
+            var effectData = CreatePassiveEffectData(def.Description.Id, statisticData);
 
             var statusEffects = def.statusEffects == null ? new[] { effectData } : def.statusEffects.Append(effectData).ToArray();
             def.SetEffectData(statusEffects);
+        }
+
+        internal static EffectData CreatePassiveEffectData(string idPrefix, StatisticEffectData statisticData)
+        {
+            var effectData = new EffectData
+            {
+                effectType = EffectType.StatisticEffect,
+                nature = EffectNature.Buff,
+                durationData = new EffectDurationData {duration = -1, stackLimit = -1},
+                targetingData = new EffectTargetingData {
+                    effectTriggerType = EffectTriggerType.Passive,
+                    effectTargetType = EffectTargetType.Creator
+                },
+                Description = new BaseDescriptionDef(
+                    idPrefix + "_" + statisticData.statName,
+                    statisticData.statName,
+                    "",
+                    null),
+                statisticData = statisticData
+            };
+            return effectData;
         }
     }
 }

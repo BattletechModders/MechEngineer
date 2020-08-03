@@ -223,6 +223,11 @@ namespace MechEngineer.Features.CriticalEffects
                     "DamageLevel",
                     StatCollection.StatOperation.Set,
                     damageLevel);
+
+                if (damageLevel == ComponentDamageLevel.Destroyed)
+                {
+                    mechComponent.CancelCreatedEffects();
+                }
             }
         }
 
@@ -340,6 +345,21 @@ namespace MechEngineer.Features.CriticalEffects
             this.resolvedEffectId = $"MECriticalHitEffect_{resolvedEffectId}_{mechComponent.parent.GUID}";
             this.mechComponent = mechComponent;
         }
+
+        internal static void CreateEffect(MechComponent component, EffectData effectData, string effectId, bool tracked = true)
+        {
+            var actor = component.parent;
+            
+            Control.mod.Logger.LogDebug($"Creating id={effectId} statName={effectData.statisticData.statName}");
+            actor.Combat.EffectManager.CreateEffect(effectData, effectId, -1, actor, actor, default, 0);
+
+            if (tracked)
+            {
+                // make sure created effects are removed once component got destroyed
+                // don't track if you want an effect to persist even after destruction (e.g. critical hit effects)
+                component.createdEffectIDs.Add(effectId);
+            }
+        }
         
         internal void CreateCriticalEffect(bool tracked = true)
         {
@@ -352,21 +372,10 @@ namespace MechEngineer.Features.CriticalEffects
             {
                 return;
             }
-            
-            var actor = mechComponent.parent;
 
             LocationalEffectsFeature.ProcessLocationalEffectData(ref effectData, mechComponent);
-            
-            Control.mod.Logger.LogDebug($"Creating id={resolvedEffectId} statName={effectData.statisticData.statName}");
-            actor.Combat.EffectManager.CreateEffect(effectData, resolvedEffectId, -1, actor, actor, default, 0);
 
-            //DebugUtils.LogActor("CreateCriticalEffect", actor);
-
-            if (tracked)
-            {
-                // make sure created effects are removed once component got destroyed
-                mechComponent.createdEffectIDs.Add(resolvedEffectId);
-            }
+            CreateEffect(mechComponent, effectData, resolvedEffectId, tracked);
         }
 
         internal void CancelCriticalEffect()

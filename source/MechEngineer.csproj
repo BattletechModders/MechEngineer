@@ -95,9 +95,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\AutoFix\Patches\HeatSinkDef_FromJSON_Patch.cs" />
     <Compile Include="Features\CriticalEffects\Criticals.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\MechDef_RefreshInventory_Patch.cs" />
     <Compile Include="Features\HardpointFix\utils\CompatibleUtils.cs" />
+    <Compile Include="Features\HeatSinkCapacityStat\HeatSinkCapacityStatSettings.cs" />
+    <Compile Include="Features\HeatSinkCapacityStat\HeatSinkCapacityStatFeature.cs" />
+    <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitStats_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
     <Compile Include="Features\MechLabSlots\MechLabLocationNaming.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustTooltipWeapon.cs" />
@@ -277,7 +281,7 @@
     <Compile Include="Features\Engines\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateHeatEfficiencyStat_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Patches\MechStatisticsRules_CalculateMovementStat_Patch.cs" />
-    <Compile Include="Features\Engines\Patches\Mech_GetHeatSinkDissipation_Patch.cs" />
+    <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_GetHeatSinkDissipation_Patch.cs" />
     <Compile Include="Features\Engines\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetHeatData_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetMovementData_Patch.cs" />

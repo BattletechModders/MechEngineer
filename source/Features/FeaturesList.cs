@@ -14,6 +14,7 @@ using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.HardpointFix;
+using MechEngineer.Features.HeatSinkCapacityStat;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MechLabSlots;
@@ -37,6 +38,7 @@ namespace MechEngineer.Features
         internal static IFeature[] Features = {
             OrderedStatusEffectsFeature.Shared,
             OverrideTonnageFeature.Shared,
+            HeatSinkCapacityStatFeature.Shared,
             EngineFeature.Shared,
             MoveMultiplierStatFeature.Shared,
             CompressFloatieMessagesFeature.Shared,

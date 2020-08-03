@@ -18,11 +18,12 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         internal MechDefHeatEfficiencyStatistics(MechDef mechDef)
         {
             this.mechDef = mechDef;
-            Engine = mechDef.GetEngine();
 
-            DissipationCapacity = (int)GetDissipationCapacity();
+            Engine = mechDef.GetEngine();
+            EngineHeatSinking = (int) (Engine?.EngineHeatDissipation ?? 0);
+
             HeatSinkCapacity = GetHeatSinkCapacity();
-            HeatSinking = (int)((DissipationCapacity + HeatSinkCapacity) * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier);
+            HeatSinking = (int)((EngineHeatSinking + HeatSinkCapacity) * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier);
             AlphaStrike = (int)(GetHeatGenerated() * GetWeaponHeatMultiplier());
             JumpHeat = GetJumpHeat();
             MaxHeat = GetMaxHeat();
@@ -30,7 +31,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         }
         
         private Engine Engine { get; }
-        private int DissipationCapacity { get; }
+        private int EngineHeatSinking { get; }
         private int HeatSinkCapacity { get; }
 
         private readonly MechDef mechDef;
@@ -41,22 +42,6 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             return AlphaStrike < 1
                 ? 0
                 : MechStatUtils.NormalizeToFraction(HeatSinking, (float)AlphaStrike / 3, AlphaStrike);
-        }
-
-        private float GetDissipationCapacity()
-        {
-            var dissipation = mechDef.Inventory
-                .Where(x => x.IsFunctionalORInstalling())
-                .Select(x => x.Def as HeatSinkDef)
-                .Where(x => x != null)
-                .Sum(x => x.DissipationCapacity);
-            
-            if (Engine != null)
-            {
-                dissipation += Engine.EngineHeatDissipation;
-            }
-            
-            return dissipation;
         }
 
         private int GetHeatSinkCapacity()

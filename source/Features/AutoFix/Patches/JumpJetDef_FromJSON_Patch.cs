@@ -25,26 +25,24 @@ namespace MechEngineer.Features.AutoFix.Patches
         internal static void JumpJetDef_FromJSON(JumpJetDef def)
         {
             {
-                var statisticData = new StatisticEffectData()
-                {
-                    statName = StatCollectionExtension.JumpCapacity(null).Key,
-                    operation = StatCollection.StatOperation.Float_Add,
-                    modValue = def.JumpCapacity.ToString(),
-                    modType = "System.Single"
-                };
+                var statisticData = StatCollectionExtension
+                    .JumpCapacity(null)
+                    .CreateStatisticData(
+                        StatCollection.StatOperation.Float_Add,
+                        def.JumpCapacity
+                    );
 
                 def.AddPassiveStatisticEffectIfMissing(statisticData);
             }
 
             if (EngineFeature.settings.JumpJetDefaultJumpHeat.HasValue)
             {
-                var statisticData = new StatisticEffectData()
-                {
-                    statName = StatCollectionExtension.JumpHeat(null).Key,
-                    operation = StatCollection.StatOperation.Float_Add,
-                    modValue = EngineFeature.settings.JumpJetDefaultJumpHeat.ToString(),
-                    modType = "System.Single"
-                };
+                var statisticData = StatCollectionExtension
+                    .JumpHeat(null)
+                    .CreateStatisticData(
+                        StatCollection.StatOperation.Float_Add,
+                        EngineFeature.settings.JumpJetDefaultJumpHeat.Value
+                    );
 
                 def.AddPassiveStatisticEffectIfMissing(statisticData);
             }

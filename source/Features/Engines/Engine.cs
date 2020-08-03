@@ -13,7 +13,6 @@ namespace MechEngineer.Features.Engines
         internal static Engine GetEngine(ChassisDef chassisDef, IEnumerable<MechComponentRef> componentRefs)
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
-
             if (result.CoolingDef == null || result.CoreDef == null || result.HeatBlockDef == null)
             {
                 return null;
