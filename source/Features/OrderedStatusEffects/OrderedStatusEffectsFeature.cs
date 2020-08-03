@@ -2,6 +2,7 @@ using BattleTech;
 using Harmony;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static BattleTech.StatCollection;
 
 namespace MechEngineer.Features.OrderedStatusEffects
@@ -75,6 +76,10 @@ namespace MechEngineer.Features.OrderedStatusEffects
 
         internal void ModifyStatisticPostfix(StatCollection statCollection, string statName)
         {
+            if (Settings.FilterStatistics != null && !Settings.FilterStatistics.Contains(statName))
+            {
+                return;
+            }
             var stat = statCollection.GetStatistic(statName);
             var historyList = Traverse.Create(statCollection.History).Field<List<StatHistory.Event>>("historyList").Value;
             if (SortLatestHistory(historyList, stat.uid))

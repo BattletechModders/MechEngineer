@@ -7,6 +7,9 @@ namespace MechEngineer.Features.OrderedStatusEffects
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Orders status effects, so e.g. install order of mechComponents does not matter for additive and multiplicative effects. Affects all statistic data.";
 
+        public string[] FilterStatistics = null;
+        public string FilterStatisticsDescription => "If set, only statistics listed by name will be reordered.";
+
         public StatOperation[] Order = {
             StatOperation.Int_Add,
             StatOperation.Float_Add,
@@ -29,6 +32,6 @@ namespace MechEngineer.Features.OrderedStatusEffects
             StatOperation.Float_Divide_Denom,
             StatOperation.Float_Divide_Denom_Int
         };
-        public string OrderDescription => "The order in which operations are sorted. Operations not part of the list are deemded unsortable and only sortable operations after such a unsortable operations are sorted. For Example: '* + SET / * +' =sort=> '* + SET + * /'.";
+        public string OrderDescription => "The order in which operations are sorted. Operations not part of the list are deemed unsortable and only sortable operations after such a unsortable operations are sorted. For Example: '* + SET / * +' =sort=> '* + SET + * /'.";
     }
 }
