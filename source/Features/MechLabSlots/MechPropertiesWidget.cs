@@ -46,7 +46,7 @@ namespace MechEngineer.Features.MechLabSlots
 
                 go.name = "MechPropertiesWidget";
                 go.transform.GetChild("layout_locationText").GetChild("txt_location").GetComponent<TextMeshProUGUI>().text = MechLabSlotsFeature.settings.MechLabGeneralWidgetLabel;
-                go.SetActive(MechLabSlotsFeature.settings.MechLabGeneralWidgetEnabled && !template.ShouldHide());
+                go.SetActive(MechLabSlotsFeature.settings.MechLabGeneralWidgetEnabled);
                 PropertiesWidget = go.GetComponent<MechLabLocationWidget>();
                 PropertiesWidget.Init(mechLabPanel);
                 var layout = new WidgetLayout(PropertiesWidget);
