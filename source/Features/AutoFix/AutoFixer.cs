@@ -52,10 +52,10 @@ namespace MechEngineer.Features.AutoFix
             MechDefBuilder builder;
             {
                 var inventory = mechDef.Inventory.ToList();
-                foreach (var componentRef in inventory)
-                {
-                    Control.mod.Logger.LogDebug($" {componentRef.ComponentDefID}{(componentRef.IsFixed?" (fixed)":"")} at {componentRef.MountedLocation}");
-                }
+                //foreach (var componentRef in inventory)
+                //{
+                //    Control.mod.Logger.LogDebug($" {componentRef.ComponentDefID}{(componentRef.IsFixed?" (fixed)":"")} at {componentRef.MountedLocation}");
+                //}
 
                 builder = new MechDefBuilder(mechDef.Chassis, inventory);
             }
@@ -130,7 +130,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 var freeTonnage = CalcFreeTonnage();
 
-                Control.mod.Logger.LogDebug($" find engine for freeTonnage={freeTonnage}");
+                //Control.mod.Logger.LogDebug($" find engine for freeTonnage={freeTonnage}");
 
                 var jumpJets = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
                 var jumpJetTonnage = jumpJets.Select(x => x.Def.Tonnage).FirstOrDefault(); //0 if no jjs
@@ -163,14 +163,14 @@ namespace MechEngineer.Features.AutoFix
                             builder.Remove(jumpJet);
                             jumpJets.Remove(jumpJet);
 
-                            Control.mod.Logger.LogDebug("  Removed JumpJet");
+                            //Control.mod.Logger.LogDebug("  Removed JumpJet");
                         }
                     }
 
                     {
                         var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.Weights, new List<MechComponentRef>());
 
-                        Control.mod.Logger.LogDebug($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
+                        //Control.mod.Logger.LogDebug($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
 
                         engineCandidates.Add(candidate);
 
@@ -184,7 +184,7 @@ namespace MechEngineer.Features.AutoFix
                             builder.Remove(component);
                             internalHeatSinksCount++;
 
-                            Control.mod.Logger.LogDebug("  ~Converted external to internal");
+                            //Control.mod.Logger.LogDebug("  ~Converted external to internal");
                         }
 
                         // this only runs on the engine that takes the most heat sinks (since this is in a for loop with rating descending order)
@@ -197,7 +197,7 @@ namespace MechEngineer.Features.AutoFix
                             var newComponent = builder.Add(component.Def);
                             if (newComponent == null)
                             {
-                                Control.mod.Logger.LogDebug("  Removed external heat sink that doesn't fit");
+                                //Control.mod.Logger.LogDebug("  Removed external heat sink that doesn't fit");
                                 // might still need to remove some
                                 continue;
                             }
@@ -212,13 +212,13 @@ namespace MechEngineer.Features.AutoFix
                         {
                             if (builder.Add(engineHeatSinkDef.Def) == null)
                             {
-                                Control.mod.Logger.LogDebug("  ~Dropped external when converting from internal");
+                                //Control.mod.Logger.LogDebug("  ~Dropped external when converting from internal");
                                 freeTonnage++;
                             }
                             else
                             {
                                 
-                                Control.mod.Logger.LogDebug("  ~Converted internal to external");
+                                //Control.mod.Logger.LogDebug("  ~Converted internal to external");
                             }
                             internalHeatSinksCount--;
                         }
@@ -239,7 +239,7 @@ namespace MechEngineer.Features.AutoFix
 
                 if (engine != null)
                 {
-                    Control.mod.Logger.LogDebug($" engine={engine.CoreDef} freeTonnage={freeTonnage}");
+                    //Control.mod.Logger.LogDebug($" engine={engine.CoreDef} freeTonnage={freeTonnage}");
                     var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == AutoFixerFeature.settings.MechDefCoreDummy);
                     builder.Remove(dummyCore);
                     builder.Add(engine.CoreDef.Def, ChassisLocations.CenterTorso, true);
@@ -305,7 +305,7 @@ namespace MechEngineer.Features.AutoFix
                     }
                     else
                     {
-                        Control.mod.Logger.LogDebug($"  Component {item.ComponentDefID} re-added");
+                        //Control.mod.Logger.LogDebug($"  Component {item.ComponentDefID} re-added");
                     }
                 }
             }
