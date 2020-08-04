@@ -80,6 +80,10 @@ namespace MechEngineer.Features.OrderedStatusEffects
             {
                 return;
             }
+            if (Settings.OtherStatisticsRequired != null && !Settings.OtherStatisticsRequired.Any(statCollection.ContainsStatistic))
+            {
+                return;
+            }
             var stat = statCollection.GetStatistic(statName);
             var historyList = Traverse.Create(statCollection.History).Field<List<StatHistory.Event>>("historyList").Value;
             if (SortLatestHistory(historyList, stat.uid))

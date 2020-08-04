@@ -7,6 +7,12 @@ namespace MechEngineer.Features.OrderedStatusEffects
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Orders status effects, so e.g. install order of mechComponents does not matter for additive and multiplicative effects. Affects all statistic data.";
 
+        public string[] OtherStatisticsRequired = {
+            "BaseInitiative", // actor (mech, turret, vehicle)
+            "DamageLevel" // mechComponent, building
+        };
+        public string OtherStatisticsRequiredDescription => "One of the listed statistics is required to be in the same statCollection, otherwise no reordering occurs.";
+
         public string[] FilterStatistics = null;
         public string FilterStatisticsDescription => "If set, only statistics listed by name will be reordered.";
 
