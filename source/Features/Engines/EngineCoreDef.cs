@@ -48,12 +48,8 @@ namespace MechEngineer.Features.Engines
             }
 
             var panel = Global.ActiveMechLabPanel;
-            if (panel == null)
-            {
-                return;
-            }
-
-            var engine = panel.GetEngine();
+            var mechDef = panel?.CreateMechDef();
+            var engine = mechDef?.GetEngine();
             if (engine == null)
             {
                 return;
@@ -61,7 +57,7 @@ namespace MechEngineer.Features.Engines
 
             engine.CoreDef = coreDef;
 
-            var movement = coreDef.GetMovement(panel.activeMechDef.Chassis.Tonnage);
+            var movement = coreDef.GetMovement(mechDef.Chassis.Tonnage);
 
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             var originalText = tooltip.detailText.text;
@@ -93,13 +89,11 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            var mechDef = panel.activeMechDef;
-            if (mechDef == null)
+            var engine = panel.CreateMechDef()?.GetEngine();
+            if (engine == null)
             {
                 return;
             }
-
-            var engine = mechDef.GetEngine();
 
             var adapter = new MechLabItemSlotElementAdapter(instance);
             adapter.bonusTextB.text = BonusValueEngineHeatSinkCounts(engine);

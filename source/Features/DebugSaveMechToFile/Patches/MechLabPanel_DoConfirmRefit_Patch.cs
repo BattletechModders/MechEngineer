@@ -13,7 +13,7 @@ namespace MechEngineer.Features.DebugSaveMechToFile.Patches
         {
             try
             {
-                var mechDef = __instance.activeMechDef;
+                var mechDef = __instance.CreateMechDef();
 
                 var id = $"{mechDef.Description.Name}_{mechDef.Description.Id}";
                 var path = Path.Combine(Path.Combine(Control.mod.Directory, "Saves"), $"{id}.json");

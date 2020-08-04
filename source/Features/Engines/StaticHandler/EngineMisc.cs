@@ -27,22 +27,18 @@ namespace MechEngineer.Features.Engines.StaticHandler
 
         internal static void SetJumpJetHardpointCount(MechLabMechInfoWidget widget, MechLabPanel mechLab, MechLabHardpointElement[] hardpoints)
         {
-            if (mechLab == null || mechLab.activeMechDef == null || mechLab.activeMechInventory == null)
-            {
-                return;
-            }
-
-            if (mechLab.activeMechDef.Chassis == null)
-            {
-                return;
-            }
-
             if (hardpoints == null || hardpoints[4] == null)
             {
                 return;
             }
 
-            var stats = new MechDefMovementStatistics(mechLab.activeMechDef);
+            var mechDef = mechLab?.CreateMechDef();
+            if (mechDef == null)
+            {
+                return;
+            }
+
+            var stats = new MechDefMovementStatistics(mechDef);
             widget.totalJumpjets = stats.JumpJetMaxCount;
 
             hardpoints[4].SetData(WeaponCategoryEnumeration.GetAMS(), $"{stats.JumpJetCount} / {stats.JumpJetMaxCount}");

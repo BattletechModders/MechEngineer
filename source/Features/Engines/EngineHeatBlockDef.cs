@@ -21,13 +21,10 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
+            
             var panel = Global.ActiveMechLabPanel;
-            if (panel == null)
-            {
-                return;
-            }
 
-            var engine = panel.GetEngine();
+            var engine = panel?.CreateMechDef()?.GetEngine();
             if (engine == null)
             {
                 return;
@@ -65,12 +62,8 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            if (panel.activeMechDef == null || panel.activeMechDef.Chassis == null)
-            {
-                return;
-            }
-
-            var engine = panel.GetEngine();
+            var mechDef = panel?.CreateMechDef();
+            var engine = mechDef?.GetEngine();
             if (engine == null)
             {
                 return;

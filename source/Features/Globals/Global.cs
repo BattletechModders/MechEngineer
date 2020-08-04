@@ -11,7 +11,7 @@ namespace MechEngineer.Features.Globals
 
         #region MechLabPanel
 
-        internal static MechDef ActiveMechDefFromLab => ActiveMechLabPanel?.activeMechDef;
+        internal static MechDef ActiveMechDefFromLab => ActiveMechLabPanel?.CreateMechDef();
         internal static readonly WeakReference MechLabPanelReference = new WeakReference(null);
         internal static MechLabPanel ActiveMechLabPanel
         {

@@ -17,7 +17,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
         {
             try
             {
-                var mechDef = ___mechLab.activeMechDef;
+                var mechDef = ___mechLab.CreateMechDef();
                 if (mechDef == null)
                 {
                     return;

@@ -25,17 +25,18 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
                 var totalTonnageColor = ___totalTonnageColor;
                 var remainingTonnage = ___remainingTonnage;
                 var remainingTonnageColor = ___remainingTonnageColor;
-                
-                if (mechLab.activeMechDef == null)
+
+                var mechDef = mechLab.CreateMechDef();
+                if (mechDef == null)
                 {
                     return;
                 }
 
-                currentTonnage += WeightsHandler.Shared.TonnageChanges(mechLab.activeMechDef);
+                currentTonnage += WeightsHandler.Shared.TonnageChanges(mechDef);
 
                 var precisionHelper = InfoTonnageHelper.KilogramStandard;
 
-                var maxTonnage = mechLab.activeMechDef.Chassis.Tonnage;
+                var maxTonnage = mechDef.Chassis.Tonnage;
 
                 if (precisionHelper.IsSmaller(maxTonnage, currentTonnage))
                 {

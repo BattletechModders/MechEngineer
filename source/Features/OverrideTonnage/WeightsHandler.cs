@@ -100,7 +100,7 @@ namespace MechEngineer.Features.OverrideTonnage
                 return;
             }
 
-            var mechDef = panel.activeMechDef;
+            var mechDef = panel.CreateMechDef();
             if (mechDef == null)
             {
                 return;

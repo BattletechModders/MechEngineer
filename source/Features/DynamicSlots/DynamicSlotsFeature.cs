@@ -89,7 +89,7 @@ namespace MechEngineer.Features.DynamicSlots
 
         internal void RefreshData(MechLabPanel mechLab)
         {
-            var builder = new MechDefBuilder(mechLab.activeMechDef);
+            var builder = new MechDefBuilder(mechLab.CreateMechDef());
             var fslList = new List<DynamicSlotBuilder>();
             var fslDict = new Dictionary<ChassisLocations, DynamicSlotBuilder>();
             foreach (var location in MechDefBuilder.Locations)
