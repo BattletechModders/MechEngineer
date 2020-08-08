@@ -13,39 +13,87 @@ namespace MechEngineer.Features.AutoFix
         public string MechDefHeatBlockDef = "emod_engine_cooling";
         public string MechDefCoreDummy = "emod_engine_dummy";
 
-        public string[] MechLocationNamingTemplateTags = {"fake_vehicle_chassis"};
-        public string MechLocationNamingTemplateTagsDescription => $"If any of the listed tags are found, and the chassis has no {nameof(ChassisLocationNaming)} component, add the {nameof(MechLocationNamingTemplate)} component";
-        public ChassisLocationNaming MechLocationNamingTemplate = new ChassisLocationNaming()
+        public MechLocationNamingTemplateByTags[] MechLocationNamingTemplates =
         {
-            Names = new []
+            new MechLocationNamingTemplateByTags
             {
-                new ChassisLocationNaming.LocationName()
+                Tags = new [] { "unit_vtol" },
+                Template = new ChassisLocationNaming
                 {
-                    location = ChassisLocations.LeftArm,
-                    text = "FRONT"
-                },
-                new ChassisLocationNaming.LocationName()
+                    Names = new []
+                    {
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.LeftArm,
+                            text = "FRONT"
+                        },
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.RightArm,
+                            text = "REAR"
+                        },
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.LeftLeg,
+                            text = "LEFT SIDE"
+                        },
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.RightLeg,
+                            text = "RIGHT SIDE"
+                        },
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.Head,
+                            text = "ROTOR"
+                        }
+                    }
+                }
+            },
+            new MechLocationNamingTemplateByTags
+            {
+                Tags = new [] { "fake_vehicle_chassis" },
+                Template = new ChassisLocationNaming
                 {
-                    location = ChassisLocations.RightArm,
-                    text = "REAR"
-                },
-                new ChassisLocationNaming.LocationName()
-                {
-                    location = ChassisLocations.LeftLeg,
-                    text = "LEFT SIDE"
-                },
-                new ChassisLocationNaming.LocationName()
-                {
-                    location = ChassisLocations.RightLeg,
-                    text = "RIGHT SIDE"
-                },
-                new ChassisLocationNaming.LocationName()
-                {
-                    location = ChassisLocations.Head,
-                    text = "TURRET"
+                    Names = new []
+                    {
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.LeftArm,
+                            text = "FRONT"
+                        },
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.RightArm,
+                            text = "REAR"
+                        },
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.LeftLeg,
+                            text = "LEFT SIDE"
+                        },
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.RightLeg,
+                            text = "RIGHT SIDE"
+                        },
+                        new ChassisLocationNaming.LocationName
+                        {
+                            location = ChassisLocations.Head,
+                            text = "TURRET"
+                        }
+                    }
                 }
             }
         };
+        public string MechLocationNamingTemplatesDescription => $"If any of the listed tags are found, and the chassis has no {nameof(ChassisLocationNaming)} component, add the associated {nameof(ChassisLocationNaming)} component";
+
+
+        public class MechLocationNamingTemplateByTags
+        {
+            public string[] Tags = {};
+            public ChassisLocationNaming Template = new ChassisLocationNaming();
+        }
 
         public IdentityHelper GyroCategorizer = new IdentityHelper
         {

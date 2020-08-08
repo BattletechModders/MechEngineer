@@ -102,13 +102,20 @@ namespace MechEngineer.Features.AutoFix
 
         private static void AutoFixLocationNaming(ChassisDef chassisDef)
         {
-            if (AutoFixerFeature.settings.MechLocationNamingTemplateTags.Any(chassisDef.ChassisTags.Contains))
+            if (chassisDef.Is<ChassisLocationNaming>())
             {
-                if (!chassisDef.Is<ChassisLocationNaming>())
-                {
-                    var copy = AutoFixerFeature.settings.MechLocationNamingTemplate.ReflectionCopy();
-                    chassisDef.AddComponent(copy);
-                }
+                return;
+            }
+
+            var template = AutoFixerFeature.settings.MechLocationNamingTemplates
+                .Where(x => x.Tags.Any(chassisDef.ChassisTags.Contains))
+                .Select(x => x.Template)
+                .FirstOrDefault();
+
+            if (template != null)
+            {
+                var copy = template.ReflectionCopy();
+                chassisDef.AddComponent(copy);
             }
         }
 
