@@ -22,45 +22,49 @@ namespace MechEngineer.Features.AutoFix.Patches
                 }
 
                 var changes = AutoFixerFeature.settings.AutoFixWeaponDefSlotsChanges;
-                if (changes == null)
+                if (changes != null)
                 {
-                    return;
-                }
-                
-                foreach (var change in changes.Where(x => x.Type == def.WeaponSubType))
-                {
-                    if (change.SlotChange != null)
+                    foreach (var change in changes.Where(x => x.Type == def.WeaponSubType))
                     {
-                        var newValue = change.SlotChange.Change(def.InventorySize);
-                        if (!newValue.HasValue)
+                        if (change.SlotChange != null)
                         {
-                            return;
+                            var newValue = change.SlotChange.Change(def.InventorySize);
+                            if (!newValue.HasValue)
+                            {
+                                return;
+                            }
+                            Traverse.Create(def).Property("InventorySize").SetValue(newValue.Value);
                         }
-                        Traverse.Create(def).Property("InventorySize").SetValue(newValue.Value);
-                    }
 
-                    if (change.TonnageChange != null)
-                    {
-                        var newValue = change.TonnageChange.Change(def.Tonnage);
-                        if (!newValue.HasValue)
+                        if (change.TonnageChange != null)
                         {
-                            return;
+                            var newValue = change.TonnageChange.Change(def.Tonnage);
+                            if (!newValue.HasValue)
+                            {
+                                return;
+                            }
+                            Traverse.Create(def).Property("Tonnage").SetValue(newValue.Value);
                         }
-                        Traverse.Create(def).Property("Tonnage").SetValue(newValue.Value);
                     }
                 }
 
-                if (AutoFixerFeature.settings.AutoFixWeaponDefSplitting && !def.Is<DynamicSlots.DynamicSlots>())
+                if (AutoFixerFeature.settings.AutoFixWeaponDefSplitting)
                 {
                     var threshold = AutoFixerFeature.settings.AutoFixWeaponDefSplittingLargerThan;
-                    if (def.InventorySize > threshold)
+                    var fullSize = def.InventorySize;
+                    if (fullSize > threshold)
                     {
                         var fixedSize = AutoFixerFeature.settings.AutoFixWeaponDefSplittingFixedSize;
-                        var dynamicSlotTemplate = AutoFixerFeature.settings.AutoFixWeaponDefSplittingDynamicSlotTemplate;
-                        var slot = dynamicSlotTemplate.ReflectionCopy();
-                        slot.ReservedSlots = def.InventorySize - fixedSize;
-                        def.AddComponent(slot);
                         Traverse.Create(def).Property("InventorySize").SetValue(fixedSize);
+
+                        if (!def.Is<DynamicSlots.DynamicSlots>(out var slots))
+                        {
+                            var dynamicSlotTemplate = AutoFixerFeature.settings.AutoFixWeaponDefSplittingDynamicSlotTemplate;
+                            slots = dynamicSlotTemplate.ReflectionCopy();
+                            def.AddComponent(slots);
+                        }
+                        
+                        slots.ReservedSlots = fullSize - fixedSize;
                     }
                 }
             }
