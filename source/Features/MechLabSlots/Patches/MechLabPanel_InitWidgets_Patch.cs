@@ -11,7 +11,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             try
             {
-                MechLabFixWidgetLayouts.FixWidgetLayouts(__instance);
+                MechLabFixWidgetLayouts.FixMechLabLayouts(__instance);
                 MechPropertiesWidget.Setup(__instance);
                 MechLabMoveUIElements.MoveMechUIElements(__instance);
             }
