@@ -86,40 +86,43 @@ namespace MechEngineer.Features.DynamicSlots
                 .ThenBy(r => r.ComponentDefID))
             {
                 var slot = componentRef.Def.GetComponent<DynamicSlots>();
-                var locationInfo = GetLocationInfo(componentRef.MountedLocation);
-                int findSpaceForDL(int required, ChassisLocations location)
+                var requiredSlots = slot.ReservedSlots;
+                int FindSpaceForDynamicLocation(LocationInfo localLocationInfo)
                 {
+                    var free = localLocationInfo.CalcMaxFree;
+                    var take = Mathf.Min(free, requiredSlots);
+                    // apply generic changes to stats
+                    requiredSlots -= take;
+                    TotalDynamicLocationalUsage += take;
+                    return take;
+                }
+                
+                var locationInfo = GetLocationInfo(componentRef.MountedLocation);
+                {
+                    // find space on location
+                    var take = FindSpaceForDynamicLocation(locationInfo);
+                    // apply location specific changes to stats
+                    locationInfo.DLPreferredUsageLocal += take;
+                }
+                
+                if (requiredSlots > 0)
+                {
+                    // find space in inner adjacent location (if there is such a location)
+                    var location = GetInnerAdjacentLocation(componentRef.MountedLocation);
                     if (location != ChassisLocations.None)
                     {
-                        var localInfo = GetLocationInfo(location);
-                        var free = localInfo.CalcMaxFree;
-                        if (free > 0)
-                        {
-                            var take = Mathf.Min(free, required);
-                            required -= take;
-                            TotalDynamicLocationalUsage += take;
-                            if (componentRef.MountedLocation == location)
-                            {
-                                localInfo.DLPreferredUsageLocal += take;
-                            }
-                            else
-                            {
-                                localInfo.DLPreferredUsageReservedInOverflow += take;
-                            }
-                        }
+                        var adjacentLocationInfo = GetLocationInfo(location);
+                        var take = FindSpaceForDynamicLocation(adjacentLocationInfo);
+                        // apply location specific changes to stats
+                        locationInfo.DLPreferredUsageReservedInOverflow += take;
                     }
-                    return required;
                 }
-                var requiredOnLocation = findSpaceForDL(slot.ReservedSlots, componentRef.MountedLocation);
-                if (requiredOnLocation > 0)
+                
+                if (requiredSlots > 0) // if not necessary, since adding 0 would be find too, but this makes it clear
                 {
-                    var location = GetInnerAdjacentLocation(componentRef.MountedLocation);
-                    requiredOnLocation = findSpaceForDL(requiredOnLocation, location);
-                }
-                if (requiredOnLocation > 0)
-                {
-                    locationInfo.DLNoSpace += requiredOnLocation;
-                    TotalDynamicLocationalNoSpace += requiredOnLocation;
+                    // note overuse
+                    locationInfo.DLNoSpace += requiredSlots;
+                    TotalDynamicLocationalNoSpace += requiredSlots;
                 }
             }
         }
