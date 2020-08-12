@@ -77,11 +77,7 @@ namespace MechEngineer.Features.CriticalEffects
 
         private void SetHits(WeaponHitInfo hitInfo, out ComponentDamageLevel damageLevel)
         {
-            // if max is reached, component is destroyed and no new effects can be applied
-            // Destroyed components can still soak up crits, requires properly configured AIM from CAC
-            var effectsMax = Effects?.PenalizedEffectIDs.Length + 1 ?? (component is Weapon ? 2 : 1);
-
-            int effectsPrev, effectsNext;
+            int effectsMax, effectsPrev, effectsNext;
             {
                 var compCritsMax = ComponentHitMax();
                 var compCritsPrev = ComponentHitCount();
@@ -92,6 +88,10 @@ namespace MechEngineer.Features.CriticalEffects
                 var compCritsAdded = Mathf.Max(compCritsNext - compCritsPrev, 0);
 
                 ComponentHitCount(compCritsNext);
+                
+                // if max is reached, component is destroyed and no new effects can be applied
+                // Destroyed components can still soak up crits, requires properly configured AIM from CAC
+                effectsMax = Effects?.PenalizedEffectIDs.Length + 1 ?? 1;
 
                 // move to group/component abstraction, make sure that critsAdded is clear
                 if (HasLinked)
