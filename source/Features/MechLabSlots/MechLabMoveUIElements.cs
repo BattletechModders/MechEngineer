@@ -57,29 +57,17 @@ namespace MechEngineer.Features.MechLabSlots
                 rect.anchoredPosition = new Vector2(0, 0);
             }
         }
-
+        
         internal static void MoveViewMechButton(MechLabPanel panel)
         {
             var adapter = new MechLabPanelAdapter(panel);
             var vb = adapter.btn_mechViewerButton;
-
-            var law = panel.leftArmWidget;
-            //var la = law.gameObject.transform.parent;
-            //la.GetComponent<VerticalLayoutGroup>().spacing = 20;
-            vb.transform.SetParent(law.transform);
-
-            {
-                var go = vb.gameObject;
-
-                MechLabFixWidgetLayouts.EnableLayout(go);
-
-                go.GetComponent<LayoutElement>().ignoreLayout = true;
-
-                var rect = go.GetComponent<RectTransform>();
-                //rect.localPosition = new Vector3(0, 0);
-                rect.pivot = new Vector2(0.5f, 1);
-                rect.anchoredPosition = new Vector2(0, MechLabSlotsFeature.settings.MechLabViewMechAnchorY);
-            }
+            var rect = vb.GetComponent<RectTransform>();
+            // below works similar to OBJ_value
+            rect.anchorMin = new Vector2(1, 1);
+            rect.anchorMax = new Vector2(1, 1);
+            rect.pivot = new Vector2(1, 1);
+            rect.anchoredPosition = new Vector2(-32, -780);
         }
     }
 }
