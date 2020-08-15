@@ -5,6 +5,7 @@ using System.Reflection;
 using BattleTech;
 using MechEngineer.Features;
 using MechEngineer.Features.BetterLog;
+using MechEngineer.Misc;
 
 namespace MechEngineer
 {
@@ -21,9 +22,18 @@ namespace MechEngineer
             {
                 BetterLog.SetupModLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), new BetterLogSettings { Enabled = true });
 
+                FileUtils.SetReadonly(mod.SettingsDefaultsPath, false);
+                FileUtils.SetReadonly(mod.SettingsLastPath, false);
+
                 mod.SaveSettings(settings, mod.SettingsDefaultsPath);
                 mod.LoadSettings(settings);
                 mod.SaveSettings(settings, mod.SettingsLastPath);
+
+                if (settings.GeneratedSettingsFilesReadonly)
+                {
+                    FileUtils.SetReadonly(mod.SettingsDefaultsPath, true);
+                    FileUtils.SetReadonly(mod.SettingsLastPath, true);
+                }
 
                 mod.Logger.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
                 mod.Logger.Log("settings loaded");

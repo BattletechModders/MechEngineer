@@ -27,7 +27,7 @@ namespace MechEngineer
         public string ModsPath => Path.GetDirectoryName(Directory);
         public string InfoPath => Path.Combine(Directory, "mod.json");
 
-        public void LoadSettings(object settings)
+        internal void LoadSettings(object settings)
         {
             if (!File.Exists(SettingsPath))
             {
@@ -41,12 +41,8 @@ namespace MechEngineer
             }
         }
 
-        public void SaveSettings(object settings, string path)
+        internal void SaveSettings(object settings, string path)
         {
-            if (File.Exists(path))
-            {
-                File.SetAttributes(path, File.GetAttributes(path) & ~FileAttributes.ReadOnly);
-            }
             using (var writer = new StreamWriter(path))
             {
                 var p = new JSONParameters
@@ -61,7 +57,6 @@ namespace MechEngineer
                 var json = JSON.ToNiceJSON(settings, p);
                 writer.Write(json);
             }
-            File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.ReadOnly);
         }
 
         public override string ToString()

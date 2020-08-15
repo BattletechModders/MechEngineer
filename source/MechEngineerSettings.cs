@@ -41,6 +41,9 @@ namespace MechEngineer
 
     internal class MechEngineerSettings
     {
+        public bool GeneratedSettingsFilesReadonly = true;
+        public string GeneratedSettingsFilesReadonlyDescription => "If true, generated last and default settings files are set to readonly, to indicate that those are not intended to be edited.";
+
         public AccuracyEffectsSettings AccuracyEffects = new AccuracyEffectsSettings();
         public ArmActuatorSettings ArmActuator = new ArmActuatorSettings();
         public ArmorStructureChangesSettings ArmorStructureChanges = new ArmorStructureChangesSettings();
