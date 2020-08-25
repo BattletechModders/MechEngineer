@@ -56,6 +56,12 @@ namespace MechEngineer.Features.HardpointFix.utils
             return prefab.Substring(prefab.Length - 1, 1);
         }
 
+        internal static string PrefabHardpoint(string prefab)
+        {
+            var lastIndex = prefab.LastIndexOf("_");
+            return prefab.Substring(lastIndex + 1);
+        }
+
         internal static int GroupNumberAsInt(string prefab)
         {
             var gn = GroupNumber(prefab);
@@ -70,8 +76,8 @@ namespace MechEngineer.Features.HardpointFix.utils
         internal List<string> GetRequiredBlankPrefabNamesInLocation(ChassisLocations location)
         {
             var availableBlanks = GetAvailableBlankPrefabsForLocation(location);
-            var usedSlots = weaponMappings.Where(x => x.Key.MountedLocation == location).Select(x => x.Value).Select(GroupNumber).Distinct().ToList();
-            var requiredBlanks = availableBlanks.Where(x => !usedSlots.Contains(GroupNumber(x))).ToList();
+            var usedSlots = weaponMappings.Where(x => x.Key.MountedLocation == location).Select(x => x.Value).Select(PrefabHardpoint).Distinct().ToList();
+            var requiredBlanks = availableBlanks.Where(x => !usedSlots.Contains(PrefabHardpoint(x))).ToList();
             Control.mod.Logger.LogDebug($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
             return requiredBlanks;
         }
