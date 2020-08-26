@@ -119,7 +119,7 @@ namespace MechEngineer.Features.CriticalEffects
                 CreateEffects(effectsNext, damageLevel);
             }
 
-            Control.mod.Logger.LogDebug(
+            Control.Logger.Debug?.Log(
                 $"Component hit (uid={component.uid} Id={component.Description.Id} Location={component.Location}) " +
                 $"effectsMax={effectsMax} effectsPrev={effectsPrev} effectsNext={effectsNext} " +
                 $"damageLevel={damageLevel} HasEffects={Effects != null} LinkedStatisticName={Effects?.LinkedStatisticName}"
@@ -192,7 +192,7 @@ namespace MechEngineer.Features.CriticalEffects
             {
                 var id = LinkedScopedId();
 
-                //Control.mod.Logger.LogDebug($"HasLinked scopeId={scopedId}");
+                Control.Logger.Debug?.Log($"HasLinked id={id}");
                 foreach (var otherMechComponent in actor.allComponents)
                 {
                     if (otherMechComponent.DamageLevel == ComponentDamageLevel.Destroyed)
@@ -216,7 +216,7 @@ namespace MechEngineer.Features.CriticalEffects
 
             static void SetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
             {
-                //Control.mod.Logger.LogDebug($"damageLevel={damageLevel} uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location})");
+                Control.Logger.Debug?.Log($"damageLevel={damageLevel} uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location})");
                 mechComponent.StatCollection.ModifyStat(
                     hitInfo.attackerId,
                     hitInfo.stackItemUID,
@@ -274,7 +274,7 @@ namespace MechEngineer.Features.CriticalEffects
 
             // collect disabled effects, probably easier to cache these in a mech statistic
             var disabledScopedEffectIds = DisabledSimpleScopedEffectIdsOnActor(actor);
-            //Control.mod.Logger.LogDebug($"disabledEffectIds={string.Join(",", disabledEffectIds.ToArray())}");
+            Control.Logger.Debug?.Log($"disabledEffectIds={string.Join(",", disabledScopedEffectIds.ToArray())}");
             foreach (var effectId in effectIds)
             {
                 var simpleScopedEffectId = ScopedId(effectId);
@@ -350,7 +350,7 @@ namespace MechEngineer.Features.CriticalEffects
         {
             var actor = component.parent;
             
-            Control.mod.Logger.LogDebug($"Creating id={effectId} statName={effectData.statisticData.statName}");
+            Control.Logger.Debug?.Log($"Creating id={effectId} statName={effectData.statisticData.statName}");
             actor.Combat.EffectManager.CreateEffect(effectData, effectId, -1, actor, actor, default, 0);
 
             if (tracked)
@@ -385,10 +385,10 @@ namespace MechEngineer.Features.CriticalEffects
                 .GetAllEffectsWithID(resolvedEffectId)
                 .Where(e => e.Target == actor);
 
-            Control.mod.Logger.LogDebug($"Canceling id={resolvedEffectId}");
+            Control.Logger.Debug?.Log($"Canceling id={resolvedEffectId}");
             foreach (var statusEffect in statusEffects)
             {
-                Control.mod.Logger.LogDebug($"Canceling statName={statusEffect.EffectData.statisticData.statName}");
+                Control.Logger.Debug?.Log($"Canceling statName={statusEffect.EffectData.statisticData.statName}");
                 actor.CancelEffect(statusEffect);
             }
             mechComponent.createdEffectIDs.Remove(resolvedEffectId);

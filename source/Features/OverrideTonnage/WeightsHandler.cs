@@ -150,7 +150,7 @@ namespace MechEngineer.Features.OverrideTonnage
                 // didn't add free heat sink tonnages to the actual cores, since RT doesn't either we fix it here
                 var beforeTonnageChanges = tonnageChanges;
                 tonnageChanges -= state.Engine.HeatSinkExternalFreeTonnage;
-                //Control.mod.Logger.LogDebug($"state.Engine.HeatSinkExternalFreeTonnage={state.Engine.HeatSinkExternalFreeTonnage} tonnageChanges={tonnageChanges} beforeTonnageChanges={beforeTonnageChanges}");
+                Control.Logger.Debug?.Log($"state.Engine.HeatSinkExternalFreeTonnage={state.Engine.HeatSinkExternalFreeTonnage} tonnageChanges={tonnageChanges} beforeTonnageChanges={beforeTonnageChanges}");
             }
 
             return tonnageChanges;
@@ -208,8 +208,6 @@ namespace MechEngineer.Features.OverrideTonnage
             engine.Weights = weights;
 
             var newTonnage = engine.TotalTonnage;
-
-            //Control.mod.Logger.LogDebug($"originalTonnage={originalTonnage} defaultTonnage={defaultTonnage} newTonnage={newTonnage}");
 
             return newTonnage - defaultTonnage;
         }

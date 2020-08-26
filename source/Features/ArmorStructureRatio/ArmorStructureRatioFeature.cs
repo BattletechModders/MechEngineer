@@ -91,8 +91,8 @@ namespace MechEngineer.Features.ArmorStructureRatio
 
             if (applyChanges)
             {
-//                Control.mod.Logger.LogDebug($"structure={structure} location={location} totalMax={totalMax}");
-//                Control.mod.Logger.LogDebug($"before AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor}");
+                Control.Logger.Debug?.Log($"structure={structure} location={location} totalMax={totalMax}");
+                Control.Logger.Debug?.Log($"before AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor}");
 
                 if ((location & ChassisLocations.Torso) != 0)
                 {
@@ -107,10 +107,10 @@ namespace MechEngineer.Features.ArmorStructureRatio
                     mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
                 }
                 
-                Control.mod.Logger.LogDebug($"set AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor} on location={location}");
+                Control.Logger.Debug?.Log($"set AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor} on location={location}");
             }
-            
-            //Control.mod.Logger.LogDebug($"{Mech.GetAbbreviatedChassisLocation(location)} armor={armor} armorRear={armorRear} structure={structure}");
+
+            Control.Logger.Debug?.Log($"{Mech.GetAbbreviatedChassisLocation(location)} armor={armor} armorRear={armorRear} structure={structure}");
 
             if (errorMessages != null)
             {

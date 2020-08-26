@@ -49,7 +49,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
 
@@ -70,7 +70,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
             return true;
         }
@@ -81,12 +81,12 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             {
                 if (HardpointFixFeature.Shared.Settings.TraceLogDebugMappings || (componentRef.ComponentDefType == ComponentType.Weapon && string.IsNullOrEmpty(__result)))
                 {
-                    Control.mod.Logger.LogDebug($"GetComponentPrefabName prefabName={__result} ComponentDefID={componentRef.ComponentDefID} PrefabIdentifier={componentRef.Def.PrefabIdentifier}");
+                    Control.Logger.Debug?.Log($"GetComponentPrefabName prefabName={__result} ComponentDefID={componentRef.ComponentDefID} PrefabIdentifier={componentRef.Def.PrefabIdentifier}");
                 }
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

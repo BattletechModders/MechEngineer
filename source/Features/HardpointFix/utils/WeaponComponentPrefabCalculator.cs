@@ -78,7 +78,7 @@ namespace MechEngineer.Features.HardpointFix.utils
             var availableBlanks = GetAvailableBlankPrefabsForLocation(location);
             var usedSlots = weaponMappings.Where(x => x.Key.MountedLocation == location).Select(x => x.Value).Select(PrefabHardpoint).Distinct().ToList();
             var requiredBlanks = availableBlanks.Where(x => !usedSlots.Contains(PrefabHardpoint(x))).ToList();
-            Control.mod.Logger.LogDebug($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
+            Control.Logger.Debug?.Log($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
             return requiredBlanks;
         }
 
@@ -118,7 +118,7 @@ namespace MechEngineer.Features.HardpointFix.utils
                 }
                 if (name == null)
                 {
-                    Control.mod.Logger.LogError($"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}");
+                    Control.Logger.Error.Log($"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}");
                 }
                 return name;
             }
@@ -140,28 +140,27 @@ namespace MechEngineer.Features.HardpointFix.utils
             var availablePrefabSets = GetAvailablePrefabSetsForLocation(location);
             var bestSelection = new PrefabSelectionCandidate(availablePrefabSets);
 
-            //Control.mod.Logger.LogDebug($"CalculateMappingForLocation chassisDef={chassisDef.Description.Id} location={location} availablePrefabSets={availablePrefabSets.JoinAsString()} sortedComponentRefs=[{sortedComponentRefs.Select(x => x.ComponentDefID).JoinAsString()}]");
+            Control.Logger.Debug?.Log($"CalculateMappingForLocation chassisDef={chassisDef.Description.Id} location={location} availablePrefabSets={availablePrefabSets.JoinAsString()} sortedComponentRefs=[{sortedComponentRefs.Select(x => x.ComponentDefID).JoinAsString()}]");
 
             foreach (var componentRef in sortedComponentRefs)
             {
                 var prefabIdentifier = Prefab.NormIdentifier(componentRef.Def.PrefabIdentifier);
                 var compatibleTerms = CompatibleUtils.GetCompatiblePrefabTerms(prefabIdentifier);
 
-                //Control.mod.Logger.LogDebug($" componentRef={componentRef.ComponentDefID} prefabIdentifier={prefabIdentifier} compatibleTerms={compatibleTerms.JoinAsString()}");
+                Control.Logger.Debug?.Log($" componentRef={componentRef.ComponentDefID} prefabIdentifier={prefabIdentifier} compatibleTerms={compatibleTerms.JoinAsString()}");
 
                 foreach (var compatibleTerm in compatibleTerms)
                 {
                     var prefab = bestSelection.FreeSets
                         .Select(x => x.GetPrefabByIdentifier(compatibleTerm))
-                        .Where(x => x != null)
-                        .FirstOrDefault();
+                        .FirstOrDefault(x => x != null);
 
                     if (prefab == null)
                     {
                         continue;
                     }
 
-                    //Control.mod.Logger.LogDebug($"  prefab={prefab}");
+                    Control.Logger.Debug?.Log($"  prefab={prefab}");
 
                     var newMapping = new PrefabMapping(prefab, componentRef);
                     bestSelection = bestSelection.CreateWithoutPrefab(prefab, newMapping);
@@ -171,7 +170,7 @@ namespace MechEngineer.Features.HardpointFix.utils
 
             }
             fallbackPrefabs[location] = bestSelection.FreeSets;
-            Control.mod.Logger.LogDebug($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
+            Control.Logger.Debug?.Log($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
             foreach (var mapping in bestSelection.Mappings)
             {
                 weaponMappings[mapping.MechComponentRef] = mapping.Prefab.Name;
@@ -184,7 +183,7 @@ namespace MechEngineer.Features.HardpointFix.utils
             var sets = new List<PrefabSet>();
             if (weaponsData.weapons == null)
             {
-                Control.mod.Logger.LogDebug($"no hardpoint data found for {chassisDef.Description.Id} at {location}");
+                Control.Logger.Debug?.Log($"no hardpoint data found for {chassisDef.Description.Id} at {location}");
             }
             else
             {
@@ -198,7 +197,7 @@ namespace MechEngineer.Features.HardpointFix.utils
                     }
                     catch (Exception e)
                     {
-                        Control.mod.Logger.LogWarning($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
+                        Control.Logger.Warning.Log($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
                         //throw;
                     }
                 }

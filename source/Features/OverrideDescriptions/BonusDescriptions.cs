@@ -54,7 +54,7 @@ namespace MechEngineer.Features.OverrideDescriptions
 
                 if (!OverrideDescriptionsFeature.Resources.TryGetValue(bonusKey, out var settings))
                 {
-                    Control.mod.Logger.LogError($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
+                    Control.Logger.Error.Log($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
                     continue;
                 }
 
@@ -135,7 +135,7 @@ namespace MechEngineer.Features.OverrideDescriptions
                 catch (Exception e)
                 {
                     var message = $"Can't process '{format}'";
-                    Control.mod.Logger.LogError(message, e);
+                    Control.Logger.Error.Log(message, e);
                     return message;
                 }
             }

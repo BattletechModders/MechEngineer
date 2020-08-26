@@ -40,7 +40,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
 
                 var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
                 var backDamage = damage - directDamage;
-                //Control.mod.Logger.LogDebug($"reducing structure damage from {damage} to {directDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
+                Control.Logger.Debug?.Log($"reducing structure damage from {damage} to {directDamage} in {location}");
                 damage = directDamage;
 
                 if (backDamage <= 0)
@@ -58,13 +58,13 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                 }
 
                 var armorDamage = Mathf.Min(backDamage, armor);
-                //Control.mod.Logger.LogDebug($"added blowout armor damage {armorDamage} to {Mech.GetLongArmorLocation(armorLocation)}");
+                Control.Logger.Debug?.Log($"added blowout armor damage {armorDamage} to {armorLocation}");
 
                 vehicle.applyArmorStatDamage(armorLocation, armorDamage, hitInfo);
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
             finally
             {

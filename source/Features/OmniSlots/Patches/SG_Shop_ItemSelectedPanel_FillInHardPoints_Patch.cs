@@ -29,7 +29,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
 
                 var calc = new HardpointOmniUsageCalculator(inventory, hardpoints);
 
-                //Control.mod.Logger.Log(calc);
+                Control.Logger.Debug?.Log(calc);
 
                 ___BallisticHardPointElement.SetData(WeaponCategoryEnumeration.GetBallistic(), calc.Ballistic.HardpointString);
                 ___EnergyHardPointElement.SetData(WeaponCategoryEnumeration.GetEnergy(), calc.Energy.HardpointString);
@@ -38,7 +38,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

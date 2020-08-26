@@ -15,13 +15,13 @@ namespace MechEngineer.Features.OverrideGhostVFX.Patches
             {
                 if (Control.settings.OverrideGhostVFX.Blacklisted.Contains(vfxName))
                 {
-                    Control.mod.Logger.LogDebug($"skipped {vfxName}");
+                    Control.Logger.Debug?.Log($"skipped {vfxName}");
                     return false;
                 }
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
 
             return true;

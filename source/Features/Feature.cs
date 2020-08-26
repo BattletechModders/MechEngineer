@@ -67,7 +67,7 @@ namespace MechEngineer.Features
                 var type = feature.GetType();
                 var topic = type.Name;
                 var enabled = feature.Enabled;
-                Control.mod.Logger.LogDebug($"{topic} setting up (Enabled={enabled} Namespace={type.Namespace})");
+                Control.Logger.Debug?.Log($"{topic} setting up (Enabled={enabled} Namespace={type.Namespace})");
                 if (enabled)
                 {
                     var typesInNamespace = FindTypesInNamespace(type).ToList();
@@ -77,7 +77,7 @@ namespace MechEngineer.Features
                     }
                     catch (Exception e)
                     {
-                        Control.mod.Logger.LogWarning($"{topic} failed patching", e);
+                        Control.Logger.Warning.Log($"{topic} failed patching", e);
                         return false;
                     }
 
@@ -87,15 +87,15 @@ namespace MechEngineer.Features
                     }
                     catch (Exception e)
                     {
-                        Control.mod.Logger.LogWarning($"{topic} failed registering customs", e);
+                        Control.Logger.Warning.Log($"{topic} failed registering customs", e);
                         return false;
                     }
 
-                    Control.mod.Logger.Log($"{topic} enabled");
+                    Control.Logger.Info.Log($"{topic} enabled");
                 }
                 else
                 {
-                    Control.mod.Logger.Log($"{topic} disabled");
+                    Control.Logger.Info.Log($"{topic} disabled");
                 }
 
                 return enabled;
@@ -125,7 +125,7 @@ namespace MechEngineer.Features
 
                 foreach (var type in types)
                 {
-                    Control.mod.Logger.LogDebug($" Custom {type.Name}");
+                    Control.Logger.Debug?.Log($" Custom {type.Name}");
                     Registry.RegisterSimpleCustomComponents(type);
                 }
             }
@@ -149,7 +149,7 @@ namespace MechEngineer.Features
                         continue;
                     }
 
-                    //Control.mod.Logger.LogDebug($"found {type.Namespace}.{type.Name}");
+                    Control.Logger.Debug?.Log($"found {type.Namespace}.{type.Name}");
 
                     yield return type;
                 }
@@ -162,7 +162,7 @@ namespace MechEngineer.Features
                 {
                     try
                     {
-                        Control.mod.Logger.LogDebug($" Patch {type.Name}");
+                        Control.Logger.Debug?.Log($" Patch {type.Name}");
                         var hook = Patch(harmony, type);
                         hooks.Add(hook);
                     }

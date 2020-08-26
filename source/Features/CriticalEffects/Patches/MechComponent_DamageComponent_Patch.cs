@@ -35,7 +35,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
 
@@ -47,7 +47,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

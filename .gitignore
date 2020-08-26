@@ -4,6 +4,7 @@
 # mod specific ignores
 log.txt
 /*.dll
+/publicized_assemblies/
 /dist/
 Settings.defaults.json
 Settings.last.json

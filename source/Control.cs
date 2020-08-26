@@ -13,6 +13,8 @@ namespace MechEngineer
     {
         internal static Mod mod;
 
+        internal static BetterLogger Logger;
+
         internal static MechEngineerSettings settings = new MechEngineerSettings();
 
         public static void Start(string modDirectory, string json)
@@ -20,8 +22,6 @@ namespace MechEngineer
             mod = new Mod(modDirectory);
             try
             {
-                BetterLog.SetupModLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), new BetterLogSettings { Enabled = true });
-
                 FileUtils.SetReadonly(mod.SettingsDefaultsPath, false);
                 FileUtils.SetReadonly(mod.SettingsLastPath, false);
 
@@ -35,22 +35,23 @@ namespace MechEngineer
                     FileUtils.SetReadonly(mod.SettingsLastPath, true);
                 }
 
-                mod.Logger.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
-                mod.Logger.Log("settings loaded");
-                mod.Logger.LogDebug("debugging enabled");
+                Logger = BetterLog.SetupModLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), settings.BetterLog);
+                Logger.Info.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
+                Logger.Info.Log("settings loaded");
+                Logger.Debug?.Log("debugging enabled");
 
-                mod.Logger.LogDebug("setting up features");
+                Logger.Debug?.Log("setting up features");
                 
                 foreach (var feature in FeaturesList.Features)
                 {
                     feature.SetupFeature();
                 }
 
-                mod.Logger.Log("started");
+                Logger.Info.Log("started");
             }
             catch (Exception e)
             {
-                mod.Logger.LogError("error starting", e);
+                Logger.Error.Log("error starting", e);
                 throw;
             }
         }
@@ -64,11 +65,11 @@ namespace MechEngineer
                     feature.SetupFeatureResources(customResources);
                 }
 
-                mod.Logger.Log("loaded");
+                Logger.Info.Log("loaded");
             }
             catch (Exception e)
             {
-                mod.Logger.LogError("error loading", e);
+                Logger.Error.Log("error loading", e);
             }
         }
 

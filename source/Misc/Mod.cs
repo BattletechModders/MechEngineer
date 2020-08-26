@@ -1,8 +1,5 @@
-using System;
-using System.Diagnostics;
 using System.IO;
 using fastJSON;
-using HBS.Logging;
 using HBS.Util;
 
 namespace MechEngineer
@@ -13,12 +10,10 @@ namespace MechEngineer
         {
             Directory = directory;
             Name = Path.GetFileName(directory);
-            Logger = HBS.Logging.Logger.GetLogger(Name);
         }
 
         public string Name { get; }
         public string Directory { get; }
-        public ILog Logger { get; }
 
         public string SourcePath => Path.Combine(Directory, "source");
         public string SettingsPath => Path.Combine(Directory, "Settings.json");

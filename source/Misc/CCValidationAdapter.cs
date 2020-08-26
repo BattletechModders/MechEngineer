@@ -62,7 +62,7 @@ namespace MechEngineer
 
         internal bool Add(MechValidationType type, string message)
         {
-            //Control.mod.Logger.LogDebug($"Add type={type} message={message}");
+            Control.Logger.Debug?.Log($"Add type={type} message={message}");
             Messages.Add(new Error(type, message));
             return FailOnFirstError;
         }

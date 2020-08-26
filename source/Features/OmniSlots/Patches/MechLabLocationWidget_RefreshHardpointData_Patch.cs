@@ -34,13 +34,13 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 if (hardpoints == null)
                 {
                     // how can this happen? is this from the properties widget?
-                    //Control.mod.Logger.LogDebug($"hardpoints is null in location={__instance.loadout?.Location}");
+                    Control.Logger.Debug?.Log($"hardpoints is null in location={__instance.loadout?.Location}");
                     return;
                 }
                 
                 var calc = new HardpointOmniUsageCalculator(inventory, hardpoints);
                 
-                //Control.mod.Logger.Log(calc);
+                Control.Logger.Debug?.Log(calc);
 
                 ___currentBallisticCount = calc.Ballistic.VanillaUsage;
                 ___currentEnergyCount = calc.Energy.VanillaUsage;
@@ -59,7 +59,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
             return true;
         }
@@ -35,12 +35,12 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             {
                 if (HardpointFixFeature.Shared.Settings.TraceLogDebugMappings || (__result != null && __result.Count > 0))
                 {
-                    Control.mod.Logger.LogDebug($"GetComponentBlankNames blanks=[{__result?.JoinAsString()}] location={location}");
+                    Control.Logger.Debug?.Log($"GetComponentBlankNames blanks=[{__result?.JoinAsString()}] location={location}");
                 }
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

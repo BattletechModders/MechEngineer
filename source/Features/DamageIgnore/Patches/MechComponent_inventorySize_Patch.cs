@@ -19,7 +19,7 @@ namespace MechEngineer.Features.DamageIgnore.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

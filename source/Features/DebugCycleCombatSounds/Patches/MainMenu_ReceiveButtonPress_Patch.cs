@@ -25,7 +25,7 @@ namespace MechEngineer.Features.DebugCycleCombatSounds.Patches
             ____version.text = eventId;
             SceneSingletonBehavior<WwiseManager>.Instance.StopAllAudio();
             WwiseManager.PostEvent(Iterator.Current, WwiseManager.GlobalAudioObject);
-            Control.mod.Logger.Log($"WwiseManager.PostEvent eventName={eventId}");
+            Control.Logger.Info.Log($"WwiseManager.PostEvent eventName={eventId}");
 
             // AudioEventList_aircraft.aircraft_leopard_destruction
             return false;

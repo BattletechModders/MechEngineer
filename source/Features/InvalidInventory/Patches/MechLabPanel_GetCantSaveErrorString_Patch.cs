@@ -36,7 +36,7 @@ namespace MechEngineer.Features.InvalidInventory.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
 
             return MechValidationRules.GetValidationErrors(errorMessages, validationTypes);

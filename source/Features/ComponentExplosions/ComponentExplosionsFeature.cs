@@ -44,7 +44,7 @@ namespace MechEngineer.Features.ComponentExplosions
             var attackSequence = actor.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
 
             var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
-            //Control.mod.Logger.LogDebug($"heatDamage={heatDamage}");
+            Control.Logger.Debug?.Log($"heatDamage={heatDamage}");
             if (!Mathf.Approximately(heatDamage, 0))
             {
                 actor.AddExternalHeat("AMMO EXPLOSION HEAT", (int)heatDamage);
@@ -55,7 +55,7 @@ namespace MechEngineer.Features.ComponentExplosions
                 if (actor is Mech mech)
                 {
                     var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
-                    //Control.mod.Logger.LogDebug($"stabilityDamage={stabilityDamage}");
+                    Control.Logger.Debug?.Log($"stabilityDamage={stabilityDamage}");
                     if (!Mathf.Approximately(stabilityDamage, 0))
                     {
                         mech.AddAbsoluteInstability(stabilityDamage, StabilityChangeSource.Effect, hitInfo.targetId);
@@ -64,7 +64,7 @@ namespace MechEngineer.Features.ComponentExplosions
             }
 
             var explosionDamage = exp.ExplosionDamage + ammoCount * exp.ExplosionDamagePerAmmo;
-            //Control.mod.Logger.LogDebug($"explosionDamage={explosionDamage}");
+            Control.Logger.Debug?.Log($"explosionDamage={explosionDamage}");
 
             if (Mathf.Approximately(explosionDamage, 0))
             {

@@ -21,7 +21,7 @@ namespace MechEngineer.Features.DebugScreenshotMechs
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
         
@@ -55,7 +55,7 @@ namespace MechEngineer.Features.DebugScreenshotMechs
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

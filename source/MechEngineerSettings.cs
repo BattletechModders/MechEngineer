@@ -4,6 +4,7 @@ using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
+using MechEngineer.Features.BetterLog;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
@@ -43,6 +44,8 @@ namespace MechEngineer
     {
         public bool GeneratedSettingsFilesReadonly = true;
         public string GeneratedSettingsFilesReadonlyDescription => "If true, generated last and default settings files are set to readonly, to indicate that those are not intended to be edited.";
+
+        public BetterLogSettings BetterLog = new BetterLogSettings();
 
         public AccuracyEffectsSettings AccuracyEffects = new AccuracyEffectsSettings();
         public ArmActuatorSettings ArmActuator = new ArmActuatorSettings();

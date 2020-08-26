@@ -30,7 +30,7 @@ namespace MechEngineer.Features.AutoFix
                 }
                 catch (Exception e)
                 {
-                    Control.mod.Logger.LogError(e);
+                    Control.Logger.Error.Log(e);
                 }
             }
         }
@@ -47,15 +47,18 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            Control.mod.Logger.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
+            Control.Logger.Info.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
 
             MechDefBuilder builder;
             {
                 var inventory = mechDef.Inventory.ToList();
-                //foreach (var componentRef in inventory)
-                //{
-                //    Control.mod.Logger.LogDebug($" {componentRef.ComponentDefID}{(componentRef.IsFixed?" (fixed)":"")} at {componentRef.MountedLocation}");
-                //}
+                if (Control.Logger.Debug != null)
+                {
+                    foreach (var componentRef in inventory)
+                    {
+                        Control.Logger.Debug.Log($" {componentRef.ComponentDefID}{(componentRef.IsFixed ? " (fixed)" : "")} at {componentRef.MountedLocation}");
+                    }
+                }
 
                 builder = new MechDefBuilder(mechDef.Chassis, inventory);
             }
@@ -130,7 +133,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 var freeTonnage = CalcFreeTonnage();
 
-                //Control.mod.Logger.LogDebug($" find engine for freeTonnage={freeTonnage}");
+                Control.Logger.Debug?.Log($" find engine for freeTonnage={freeTonnage}");
 
                 var jumpJets = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
                 var jumpJetTonnage = jumpJets.Select(x => x.Def.Tonnage).FirstOrDefault(); //0 if no jjs
@@ -163,14 +166,14 @@ namespace MechEngineer.Features.AutoFix
                             builder.Remove(jumpJet);
                             jumpJets.Remove(jumpJet);
 
-                            //Control.mod.Logger.LogDebug("  Removed JumpJet");
+                            Control.Logger.Debug?.Log("  Removed JumpJet");
                         }
                     }
 
                     {
                         var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.Weights, new List<MechComponentRef>());
 
-                        //Control.mod.Logger.LogDebug($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
+                        Control.Logger.Debug?.Log($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
 
                         engineCandidates.Add(candidate);
 
@@ -184,7 +187,7 @@ namespace MechEngineer.Features.AutoFix
                             builder.Remove(component);
                             internalHeatSinksCount++;
 
-                            //Control.mod.Logger.LogDebug("  ~Converted external to internal");
+                            Control.Logger.Debug?.Log("  ~Converted external to internal");
                         }
 
                         // this only runs on the engine that takes the most heat sinks (since this is in a for loop with rating descending order)
@@ -197,7 +200,7 @@ namespace MechEngineer.Features.AutoFix
                             var newComponent = builder.Add(component.Def);
                             if (newComponent == null)
                             {
-                                //Control.mod.Logger.LogDebug("  Removed external heat sink that doesn't fit");
+                                Control.Logger.Debug?.Log("  Removed external heat sink that doesn't fit");
                                 // might still need to remove some
                                 continue;
                             }
@@ -212,13 +215,13 @@ namespace MechEngineer.Features.AutoFix
                         {
                             if (builder.Add(engineHeatSinkDef.Def) == null)
                             {
-                                //Control.mod.Logger.LogDebug("  ~Dropped external when converting from internal");
+                                Control.Logger.Debug?.Log("  ~Dropped external when converting from internal");
                                 freeTonnage++;
                             }
                             else
                             {
                                 
-                                //Control.mod.Logger.LogDebug("  ~Converted internal to external");
+                                Control.Logger.Debug?.Log("  ~Converted internal to external");
                             }
                             internalHeatSinksCount--;
                         }
@@ -239,7 +242,7 @@ namespace MechEngineer.Features.AutoFix
 
                 if (engine != null)
                 {
-                    //Control.mod.Logger.LogDebug($" engine={engine.CoreDef} freeTonnage={freeTonnage}");
+                    Control.Logger.Debug?.Log($" engine={engine.CoreDef} freeTonnage={freeTonnage}");
                     var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == AutoFixerFeature.settings.MechDefCoreDummy);
                     builder.Remove(dummyCore);
                     builder.Add(engine.CoreDef.Def, ChassisLocations.CenterTorso, true);
@@ -282,7 +285,7 @@ namespace MechEngineer.Features.AutoFix
             // find any overused location
             if (builder.HasOveruseAtAnyLocation())
             {
-                Control.mod.Logger.LogError($" Overuse found");
+                Control.Logger.Error.Log($" Overuse found");
                 // heatsinks, upgrades
                 var itemsToBeReordered = builder.Inventory
                     .Where(IsMovable)
@@ -301,11 +304,11 @@ namespace MechEngineer.Features.AutoFix
                 {
                     if (builder.Add(item.Def) == null)
                     {
-                        Control.mod.Logger.LogError($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
+                        Control.Logger.Error.Log($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
                     }
                     else
                     {
-                        //Control.mod.Logger.LogDebug($"  Component {item.ComponentDefID} re-added");
+                        Control.Logger.Debug?.Log($"  Component {item.ComponentDefID} re-added");
                     }
                 }
             }

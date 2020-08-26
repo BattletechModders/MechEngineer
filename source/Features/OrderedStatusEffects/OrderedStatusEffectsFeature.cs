@@ -52,7 +52,7 @@ namespace MechEngineer.Features.OrderedStatusEffects
                 {
                     if (currentOrder > lastOrder)
                     {
-                        Control.mod.Logger.LogDebug($"sorting statName={currentEvent.statName} coperation={currentEvent.operation} loperation={lastEvent.operation}");
+                        Control.Logger.Debug?.Log($"sorting statName={currentEvent.statName} coperation={currentEvent.operation} loperation={lastEvent.operation}");
                         historyList[currentIndex] = lastEvent;
                         historyList[lastIndex] = currentEvent;
 

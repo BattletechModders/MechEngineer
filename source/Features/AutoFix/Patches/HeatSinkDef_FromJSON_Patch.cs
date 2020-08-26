@@ -2,6 +2,7 @@
 using BattleTech;
 using Harmony;
 using MechEngineer.Features.Engines.Helper;
+using UnityEngine;
 
 namespace MechEngineer.Features.AutoFix.Patches
 {
@@ -17,12 +18,17 @@ namespace MechEngineer.Features.AutoFix.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
 
         internal static void HeatSinkDef_FromJSON(HeatSinkDef def)
         {
+            if (Mathf.Approximately(def.DissipationCapacity, 0))
+            {
+                return;
+            }
+
             var statisticData = StatCollectionExtension
                 .HeatSinkCapacity(null)
                 .CreateStatisticData(

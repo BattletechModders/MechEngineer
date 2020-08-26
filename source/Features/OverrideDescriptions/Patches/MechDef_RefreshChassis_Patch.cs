@@ -14,7 +14,7 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches
                 var mechDef = __instance;
                 var details = mechDef.Chassis.Description.Details;
 
-                //Control.mod.Logger.Log($"id={mechDef.Description.Id} details={details}");
+                Control.Logger.Debug?.Log($"id={mechDef.Description.Id} details={details}");
 
                 var description = mechDef.Description;
                 Traverse.Create(description)
@@ -23,7 +23,7 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

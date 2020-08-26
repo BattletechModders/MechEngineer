@@ -111,7 +111,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             var mutiplied = raw * multiplier;
             var rounded = PrecisionUtils.RoundDownToInt(mutiplied);
             var cropped = Mathf.Min(rounded, mechDef.Chassis.MaxJumpjets);
-            //Control.mod.Logger.Log($"raw={raw} multiplier={multiplier} mutiplied={mutiplied} rounded={rounded} cropped={cropped}");
+            Control.Logger.Debug?.Log($"raw={raw} multiplier={multiplier} mutiplied={mutiplied} rounded={rounded} cropped={cropped}");
             return cropped;
         }
 

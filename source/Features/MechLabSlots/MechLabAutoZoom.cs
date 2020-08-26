@@ -37,7 +37,7 @@ namespace MechEngineer.Features.MechLabSlots
                 var scale = Mathf.Min(1, targetSize / mechSize);
                 mechRectTransform.localScale = new Vector3(scale, scale, 1);
                 
-                Control.mod.Logger.LogDebug($"AutoZoom scale={scale} mechSize={mechSize} targetSize={targetSize}");
+                Control.Logger.Debug?.Log($"AutoZoom scale={scale} mechSize={mechSize} targetSize={targetSize}");
             }
         }
     }

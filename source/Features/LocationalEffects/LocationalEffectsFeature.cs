@@ -23,7 +23,7 @@ namespace MechEngineer.Features.LocationalEffects
                 effect = new EffectData();
                 effect.FromJSON(data);
 
-                Control.mod.Logger.LogDebug($"Replacing location in {effect.Description.Id} with {naming.LocationId}");
+                Control.Logger.Debug?.Log($"Replacing location in {effect.Description.Id} with {naming.LocationId}");
 
                 effect.statisticData.statName = naming.InterpolateStatisticName(effect.statisticData.statName);
                 

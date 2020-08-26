@@ -67,8 +67,7 @@ namespace MechEngineer.Features.Engines
         internal void CalculateStats()
         {
             HeatSinkExternalCount = MatchingCount(HeatSinksExternal, MechHeatSinkDef.Def);
-            //Control.mod.Logger.LogDebug($"HeatSinkExternalFreeCount={HeatSinkExternalFreeCount} " +
-            //                            $"MechHeatSinkDef.Def.Tonnage={MechHeatSinkDef.Def.Tonnage}");
+            Control.Logger.Debug?.Log($"HeatSinkExternalFreeCount={HeatSinkExternalFreeCount} MechHeatSinkDef.Def.Tonnage={MechHeatSinkDef.Def.Tonnage}");
         }
 
         private List<MechComponentRef> HeatSinksExternal { get; }
@@ -86,9 +85,6 @@ namespace MechEngineer.Features.Engines
                 var dissipation = MechHeatSinkDef.Def.DissipationCapacity * ( HeatSinkInternalFreeMaxCount + EngineHeatBlockDef.HeatSinkCount );
                 dissipation += CoreDef.Def.DissipationCapacity;
                 dissipation += CoolingDef.Def.DissipationCapacity;
-
-                //Control.mod.Logger.LogDebug("GetHeatDissipation rating=" + engineDef.Rating + " minHeatSinks=" + minHeatSinks + " additionalHeatSinks=" + engineProps.AdditionalHeatSinkCount + " dissipation=" + dissipation);
-
                 return dissipation;
             }
         }

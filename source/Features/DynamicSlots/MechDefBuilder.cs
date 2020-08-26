@@ -29,7 +29,7 @@ namespace MechEngineer.Features.DynamicSlots
 
             CalculateStats();
 
-            Control.mod.Logger.LogDebug(this);
+            Control.Logger.Debug?.Log(this);
         }
 
         #region counting stats and functions
@@ -343,16 +343,16 @@ namespace MechEngineer.Features.DynamicSlots
                 return null;
             }
 
-            Control.mod.Logger.LogDebug($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+            Control.Logger.Debug?.Log($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
 
             var componentRef = new MechComponentRef(def.Description.Id, null, def.ComponentType, location);
             componentRef.DataManager = DataManager;
             componentRef.RefreshComponentDef();
             Inventory.Add(componentRef);
 
-            Control.mod.Logger.LogDebug($"  adding id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+            Control.Logger.Debug?.Log($"  adding id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
             CalculateStats();
-            Control.mod.Logger.LogDebug($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+            Control.Logger.Debug?.Log($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
 
             return componentRef;
         }
@@ -369,9 +369,9 @@ namespace MechEngineer.Features.DynamicSlots
             var locationInfo = GetLocationInfo(componentRef.MountedLocation);
             Inventory.Remove(componentRef);
 
-            Control.mod.Logger.LogDebug($"  removing id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
+            Control.Logger.Debug?.Log($"  removing id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
             CalculateStats();
-            Control.mod.Logger.LogDebug($"  removed id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
+            Control.Logger.Debug?.Log($"  removed id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
         }
 
         private IEnumerable<ChassisLocations> GetLocations()

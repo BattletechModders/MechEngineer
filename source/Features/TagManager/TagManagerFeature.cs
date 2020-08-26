@@ -23,7 +23,7 @@ namespace MechEngineer.Features.TagManager
                 && !def.Description.Id.EndsWith("-STOCK")
                 && tags.Contains(MechValidationRules.ComponentTag_LosTech))
             {
-                //Control.mod.Logger.LogDebug($"LostechStockWeaponVariantFix {def.Description.Id}");
+                Control.Logger.Debug?.Log($"LostechStockWeaponVariantFix {def.Description.Id}");
 
                 tags.Remove(MechValidationRules.ComponentTag_Stock);
                 tags.Add(MechValidationRules.ComponentTag_Variant);
@@ -31,13 +31,13 @@ namespace MechEngineer.Features.TagManager
 
             if (Check(tags, Settings.WhitelistComponentTagSet))
             {
-                //Control.mod.Logger.LogDebug($"WhitelistComponentTags {def.Description.Id}");
+                Control.Logger.Debug?.Log($"WhitelistComponentTags {def.Description.Id}");
                 tags.Remove(MechValidationRules.Tag_Blacklisted);
             }
 
             if (Check(tags, Settings.BlacklistComponentTagSet))
             {
-                //Control.mod.Logger.LogDebug($"BlacklistComponentTags {def.Description.Id}");
+                Control.Logger.Debug?.Log($"BlacklistComponentTags {def.Description.Id}");
                 tags.Add(MechValidationRules.Tag_Blacklisted);
             }
         }
@@ -48,13 +48,13 @@ namespace MechEngineer.Features.TagManager
 
             if (Check(tags, Settings.WhitelistMechTagSet))
             {
-                //Control.mod.Logger.LogDebug($"WhitelistMechTags {def.Description.Id}");
+                Control.Logger.Debug?.Log($"WhitelistMechTags {def.Description.Id}");
                 tags.Remove(MechValidationRules.Tag_Blacklisted);
             }
 
             if (Check(tags, Settings.BlacklistMechTagSet))
             {
-                //Control.mod.Logger.LogDebug($"BlacklistMechTags {def.Description.Id}");
+                Control.Logger.Debug?.Log($"BlacklistMechTags {def.Description.Id}");
                 tags.Add(MechValidationRules.Tag_Blacklisted);
             }
         }

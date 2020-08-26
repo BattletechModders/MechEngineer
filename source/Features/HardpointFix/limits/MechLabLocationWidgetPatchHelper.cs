@@ -66,10 +66,7 @@ namespace MechEngineer.Features.HardpointFix.limits
                 var location = _adapter.Loadout.Location;
                 if (mechDef.Inventory.Any(c => c.MountedLocation == location && c.Def.PrefabIdentifier == componentRef.Def.PrefabIdentifier))
                 {
-                    //Control.mod.Logger.LogDebug(
-                    //    "found component " + componentRef.Def.Description.Id
-                    //             + " to be in use on mech " + mechDef.Description.Id
-                    //             + " for location " + location);
+                    Control.Logger.Debug?.Log($"found component {componentRef.Def.Description.Id} to be in use on mech {mechDef.Description.Id} for location {location}");
                     return true;
                 }
             }

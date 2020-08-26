@@ -70,7 +70,7 @@ namespace MechEngineer.Features.OmniSlots
             if (hardpoints == null)
             {
                 // how can this happen? is this from the properties widget?
-                //Control.mod.Logger.LogDebug($"hardpoints is null");
+                Control.Logger.Debug?.Log($"hardpoints is null");
                 return true;
             }
                 

@@ -34,7 +34,7 @@ namespace MechEngineer.Features.HardpointFix.limits.Patches
                 var hardpointCounts = new Dictionary<ChassisLocations, HardpointCounter>();
                 foreach (var hardpointData in hardpointDataDef.HardpointData)
                 {
-                    //Control.mod.Logger.LogDebug($"id={__instance.Description.Id} location={hardpointData.location}");
+                    Control.Logger.Debug?.Log($"id={__instance.Description.Id} location={hardpointData.location}");
                     var location = VHLUtils.GetLocationByString(hardpointData.location);
                     if (location.HasValue)
                     {
@@ -76,7 +76,7 @@ namespace MechEngineer.Features.HardpointFix.limits.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
         }
     }

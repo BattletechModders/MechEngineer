@@ -29,20 +29,19 @@ namespace MechEngineer.Features.BetterLog
             streamWriter?.Dispose();
         }
 
-        internal static ILog SetupModLog(string path, string name, BetterLogSettings settings)
+        internal static BetterLogger SetupModLog(string path, string name, BetterLogSettings settings)
         {
             if (!settings.Enabled)
             {
-                return null;
+                return new BetterLogger(null, LogLevel.Error);
             }
 
             var log = Logger.GetLogger(name);
             var appender = new BetterLog(path, settings);
             Logger.AddAppender(name, appender);
             Logger.SetLoggerLevel(name, settings.Level);
-            //Logger.IsLogging = true; // workaround for logging being disabled in debug build?!?
-
-            return log;
+            var logger = new BetterLogger(log, settings.Level);
+            return logger;
         }
 
         public void Flush()

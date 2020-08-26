@@ -44,7 +44,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
 
                 var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
                 var backDamage = damage - directDamage;
-                //Control.mod.Logger.LogDebug($"reducing structure damage from {damage} to {directDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
+                Control.Logger.Debug?.Log($"reducing structure damage from {damage} to {directDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
                 damage = directDamage;
 
                 if (backDamage <= 0)
@@ -80,13 +80,13 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                 }
 
                 var armorDamage = Mathf.Min(backDamage, armor);
-                //Control.mod.Logger.LogDebug($"added blowout armor damage {armorDamage} to {Mech.GetLongArmorLocation(armorLocation)}");
+                Control.Logger.Debug?.Log($"added blowout armor damage {armorDamage} to {Mech.GetLongArmorLocation(armorLocation)}");
 
                 mech.ApplyArmorStatDamage(armorLocation, armorDamage, hitInfo);
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
             finally
             {
@@ -109,7 +109,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                     {
                         currentMech.PublishFloatieMessage("EXPLOSION CONTAINED");
 
-                        //Control.mod.Logger.LogDebug($"prevented explosion pass through from {Mech.GetAbbreviatedChassisLocation(chassisLocation)}");
+                        Control.Logger.Debug?.Log($"prevented explosion pass through from {Mech.GetAbbreviatedChassisLocation(chassisLocation)}");
 
                         return ArmorLocation.None; // CASE redirects damage, so lets redirect it to none
                     }
@@ -117,7 +117,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
             }
             catch (Exception e)
             {
-                Control.mod.Logger.LogError(e);
+                Control.Logger.Error.Log(e);
             }
 
             return MechStructureRules.GetPassthroughLocation(location, attackDirection);

@@ -22,7 +22,7 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            Control.mod.Logger.Log($"Auto fixing chassisDef={chassisDef.Description.Id}");
+            Control.Logger.Info.Log($"Auto fixing chassisDef={chassisDef.Description.Id}");
 
             AutoFixChassisDef(chassisDef);
             AutoFixSlots(chassisDef);
@@ -59,7 +59,7 @@ namespace MechEngineer.Features.AutoFix
                 var value = Convert.ChangeType(tonnage, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
                 
-                Control.mod.Logger.LogDebug($"set InitialTonnage={tonnage}");
+                Control.Logger.Debug?.Log($"set InitialTonnage={tonnage}");
             }
 
             if (AutoFixerFeature.settings.ChassisDefMaxJumpjets)
@@ -73,7 +73,7 @@ namespace MechEngineer.Features.AutoFix
                 var value = Convert.ChangeType(maxCount, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
                 
-                Control.mod.Logger.LogDebug($"set MaxJumpjets={maxCount}");
+                Control.Logger.Debug?.Log($"set MaxJumpjets={maxCount}");
             }
         }
 
@@ -138,7 +138,7 @@ namespace MechEngineer.Features.AutoFix
             info.SetValue(box, value);
             locationDef = (LocationDef) box;
 
-            Control.mod.Logger.LogDebug($"set InventorySlots={locationDef.InventorySlots} on location={location}");
+            Control.Logger.Debug?.Log($"set InventorySlots={locationDef.InventorySlots} on location={location}");
         }
     }
 }
