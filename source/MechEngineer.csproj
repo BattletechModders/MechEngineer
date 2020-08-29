@@ -105,7 +105,9 @@
     <Compile Include="Features\MechLabSlots\MechLabLocationNaming.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMechInfoWidgetAdapter.cs" />
     <Compile Include="Features\MechLabSlots\MechLabPanelAdapter.cs" />
+    <Compile Include="Features\Performance\Patches\AbstractActor_OnPositionUpdate_Patch - Copy.cs" />
     <Compile Include="Features\Performance\Patches\CombatHUDEvasiveBarPips_TrySetButton_Patch.cs" />
+    <Compile Include="Features\Performance\Patches\AbstractActor_OnPositionUpdate_Patch.cs" />
     <Compile Include="Features\Performance\PerformanceFeature.cs" />
     <Compile Include="Features\Performance\PerformanceSettings.cs" />
     <Compile Include="Features\Performance\Patches\TweenManager_FilteredOperation_Patch.cs" />
