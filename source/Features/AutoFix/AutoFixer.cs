@@ -285,7 +285,7 @@ namespace MechEngineer.Features.AutoFix
             // find any overused location
             if (builder.HasOveruseAtAnyLocation())
             {
-                Control.Logger.Error.Log($" Overuse found");
+                Control.Logger.Info.Log($" Overuse found");
                 // heatsinks, upgrades
                 var itemsToBeReordered = builder.Inventory
                     .Where(IsMovable)
@@ -304,7 +304,7 @@ namespace MechEngineer.Features.AutoFix
                 {
                     if (builder.Add(item.Def) == null)
                     {
-                        Control.Logger.Error.Log($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
+                        Control.Logger.Warning.Log($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
                     }
                     else
                     {
