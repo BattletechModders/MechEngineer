@@ -26,6 +26,7 @@ using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideStatTooltips;
 using MechEngineer.Features.OverrideTonnage;
+using MechEngineer.Features.Performance;
 using MechEngineer.Features.ShutdownInjuryProtection;
 using MechEngineer.Features.TagManager;
 using MechEngineer.Features.TurretLimitedAmmo;
@@ -74,6 +75,8 @@ namespace MechEngineer
         public TurretLimitedAmmoSettings TurretLimitedAmmo = new TurretLimitedAmmoSettings();
         public TurretMechComponentSettings TurretMechComponents = new TurretMechComponentSettings();
         public TagManagerSettings TagManager = new TagManagerSettings();
+
+        public PerformanceSettings Performance = new PerformanceSettings();
         
         public DebugCycleCombatSoundsSettings DebugCycleCombatSounds = new DebugCycleCombatSoundsSettings();
         public DebugSaveMechToFileSettings DebugSaveMechToFile = new DebugSaveMechToFileSettings();

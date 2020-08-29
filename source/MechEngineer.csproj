@@ -53,6 +53,12 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <Private>False</Private>
     </Reference>
+    <Reference Include="DOTween">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DOTweenPro">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="0Harmony">
       <Private>False</Private>
     </Reference>
@@ -99,6 +105,10 @@
     <Compile Include="Features\MechLabSlots\MechLabLocationNaming.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMechInfoWidgetAdapter.cs" />
     <Compile Include="Features\MechLabSlots\MechLabPanelAdapter.cs" />
+    <Compile Include="Features\Performance\Patches\CombatHUDEvasiveBarPips_TrySetButton_Patch.cs" />
+    <Compile Include="Features\Performance\PerformanceFeature.cs" />
+    <Compile Include="Features\Performance\PerformanceSettings.cs" />
+    <Compile Include="Features\Performance\Patches\TweenManager_FilteredOperation_Patch.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustTooltipWeapon.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\TooltipPrefab_WeaponSetData_Patch.cs" />
     <Compile Include="Helper\LinqExtensions.cs" />

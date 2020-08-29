@@ -25,6 +25,7 @@ using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideStatTooltips;
 using MechEngineer.Features.OverrideTonnage;
+using MechEngineer.Features.Performance;
 using MechEngineer.Features.ShutdownInjuryProtection;
 using MechEngineer.Features.TagManager;
 using MechEngineer.Features.TurretLimitedAmmo;
@@ -64,6 +65,7 @@ namespace MechEngineer.Features
             OmniSlotsFeature.Shared,
             TagManagerFeature.Shared,
             OverrideStatTooltipsFeature.Shared,
+            PerformanceFeature.Shared,
 
             DebugSaveMechToFileFeature.Shared,
             DebugCycleCombatSoundsFeature.Shared,
