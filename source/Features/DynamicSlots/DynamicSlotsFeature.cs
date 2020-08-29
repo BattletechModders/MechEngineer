@@ -174,12 +174,12 @@ namespace MechEngineer.Features.DynamicSlots
         {
             AddFillersToSlots(widgetLayout);
         }
-
+        
         internal static void ClearFillers(MechLabLocationWidget widget)
         {
             foreach (var filler in Fillers[widget.loadout.Location])
             {
-                filler.Hide();
+                filler.Reset();
             }
         }
 
@@ -199,6 +199,15 @@ namespace MechEngineer.Features.DynamicSlots
             {
                 fillers = new List<Filler>();
                 Fillers[location] = fillers;
+            }
+
+            // remove already destroyed fillers
+            for (var index = fillers.Count - 1; index >= 0; index--)
+            {
+                if (fillers[index].IsValid())
+                {
+                    fillers.RemoveAt(index);
+                }
             }
 
             var existingLastIndex = fillers.Count - 1;
@@ -230,7 +239,7 @@ namespace MechEngineer.Features.DynamicSlots
 
         private class Filler : IDisposable
         {
-            private readonly GameObject gameObject;
+            private GameObject gameObject;
             private readonly MechLabItemSlotElement element;
             private readonly RectTransform backgroundsRect;
 
@@ -262,7 +271,7 @@ namespace MechEngineer.Features.DynamicSlots
                 element.SetDraggable(false);
             }
 
-            internal void Hide()
+            internal void Reset()
             {
                 ResetSolidBorder();
                 gameObject.SetActive(false);
@@ -279,21 +288,28 @@ namespace MechEngineer.Features.DynamicSlots
                 backgroundsRect.offsetMax = new Vector2(0, 0);
             }
 
+            public bool IsValid()
+            {
+                return gameObject == null;
+            }
+
             public void Dispose()
             {
-                // could be null if the pool was cleared and the GameObjects were already destroyed
-                // can happen if DataManager.Clear was called
-                if (gameObject == null || backgroundsRect == null)
+                // could be null if the pool was cleared
+                if (IsValid())
                 {
                     return;
                 }
-                ResetSolidBorder();
+
+                Reset();
                 DataManager.PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, gameObject);
+                gameObject = null;
             }
 
             public void Update(Transform parent)
             {
                 element.transform.SetParent(parent, false);
+                Reset();
             }
 
             internal Filler()
@@ -322,7 +338,6 @@ namespace MechEngineer.Features.DynamicSlots
                     var backgrounds = layout_components.GetChild("BACKGROUNDS");
                     backgroundsRect = backgrounds.GetComponent<RectTransform>();
                 }
-                Hide();
             }
 
             private static DataManager DataManager => UnityGameInstance.BattleTechGame.DataManager;
