@@ -194,22 +194,38 @@ namespace MechEngineer.Features.DynamicSlots
         private static void AddFillersToSlots(WidgetLayout layout)
         {
             var location = layout.widget.loadout.Location;
-            // dispose of all fillers
-            if (Fillers.TryGetValue(location, out var existing))
+
+            if (!Fillers.TryGetValue(location, out var fillers))
             {
-                foreach (var old in existing)
+                fillers = new List<Filler>();
+                Fillers[location] = fillers;
+            }
+
+            var existingLastIndex = fillers.Count - 1;
+            var newLastIndex = layout.slots.Count - 1;
+            
+            // only dispose/new fillers when needed, saves 600ms on my machine on pressing refit
+            if (existingLastIndex > newLastIndex)
+            {
+                var superfluousCount = existingLastIndex - newLastIndex;
+                foreach (var superfluous in fillers.GetRange(newLastIndex, superfluousCount))
                 {
-                    old.Dispose();
+                    superfluous.Dispose();
+                }
+                fillers.RemoveRange(newLastIndex, superfluousCount);
+            }
+            else
+            {
+                for (var newIndex = existingLastIndex + 1; newIndex <= newLastIndex; newIndex++)
+                {
+                    fillers.Add(new Filler());
                 }
             }
 
-            var fillers = new List<Filler>();
-            foreach (var slot in layout.slots)
+            for (var index = 0; index <= newLastIndex; index++)
             {
-                fillers.Add(new Filler(slot));
+                fillers[index].Update(layout.slots[index]);
             }
-
-            Fillers[location] = fillers;
         }
 
         private class Filler : IDisposable
@@ -275,7 +291,12 @@ namespace MechEngineer.Features.DynamicSlots
                 DataManager.PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, gameObject);
             }
 
-            internal Filler(Transform parent)
+            public void Update(Transform parent)
+            {
+                element.transform.SetParent(parent, false);
+            }
+
+            internal Filler()
             {
                 gameObject = DataManager.PooledInstantiate(
                     MechLabPanel.MECHCOMPONENT_ITEM_PREFAB,
@@ -293,7 +314,6 @@ namespace MechEngineer.Features.DynamicSlots
                         rect.anchorMax = new Vector2(1, 1);
                         rect.anchoredPosition = Vector2.zero;
                     }
-                    element.transform.SetParent(parent, false);
                 }
 
                 {
