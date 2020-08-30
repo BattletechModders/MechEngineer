@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Reflection;
 using BattleTech;
 using Harmony;
 using UnityEngine;
 
 namespace MechEngineer.Features.Performance.Patches
 {
+    // dont recalculate stealth aura on movement
     [HarmonyPatch(typeof(AbstractActor), nameof(AbstractActor.OnPositionUpdate))]
     public static class AbstractActor_OnPositionUpdate_Patch
     {

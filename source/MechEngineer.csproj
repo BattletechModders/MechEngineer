@@ -106,6 +106,9 @@
     <Compile Include="Features\MechLabSlots\MechLabMechInfoWidgetAdapter.cs" />
     <Compile Include="Features\MechLabSlots\MechLabPanelAdapter.cs" />
     <Compile Include="Features\Performance\Patches\ActorMovementSequence_CompleteMove_Patch.cs" />
+    <Compile Include="Features\Performance\Patches\BTLightController_Patches.cs" />
+    <Compile Include="Features\Performance\Patches\AbstractActor_StealthPipsPreviewFromActorMovement_Patch.cs" />
+    <Compile Include="Features\Performance\Patches\BTLight_CompareTo_Patch.cs" />
     <Compile Include="Features\Performance\Patches\CombatHUDEvasiveBarPips_TrySetButton_Patch.cs" />
     <Compile Include="Features\Performance\Patches\AbstractActor_OnPositionUpdate_Patch.cs" />
     <Compile Include="Features\Performance\PerformanceFeature.cs" />

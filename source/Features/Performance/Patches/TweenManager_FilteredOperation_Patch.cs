@@ -4,6 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.Performance.Patches
 {
+    // we don't do DOKill anymore, but I kept this patch anyway. This wasn't enough and DOKill had to be disabled anyway
     [HarmonyPatch]
     public static class TweenManager_FilteredOperation_Patch
     {

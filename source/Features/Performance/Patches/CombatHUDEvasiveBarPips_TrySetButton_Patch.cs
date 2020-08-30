@@ -5,6 +5,7 @@ using Harmony;
 
 namespace MechEngineer.Features.Performance.Patches
 {
+    // dont really understand why DOKill is necessary, maybe just to kill fade in of an icon?
     [HarmonyPatch(typeof(CombatHUDEvasiveBarPips), "TrySetButton")]
     public static class CombatHUDEvasiveBarPips_TrySetButton_Patch
     {
