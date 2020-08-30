@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using BattleTech;
 using CustomComponents;
 using Harmony;
@@ -24,6 +23,7 @@ namespace MechEngineer.Features.AutoFix.Patches
                 GyroHandler.Shared.AdjustUpgradeDef(def);
                 LegActuatorHandler.Shared.AdjustUpgradeDef(def);
                 CockpitHandler.Shared.AdjustUpgradeDef(def);
+                SensorsBHandler.Shared.AdjustUpgradeDef(def);
             }
             catch (Exception e)
             {

@@ -109,12 +109,31 @@ namespace MechEngineer.Features.AutoFix
         {
             AllowedLocations = ChassisLocations.Head,
             ComponentType = ComponentType.Upgrade,
-            Prefix = "Gear_Cockpit_",
+            Prefix = "Gear_Cockpit_Ceres_",
             CategoryId = "Cockpit",
             AutoAddCategoryIdIfMissing = true
         };
         public TonnageChange CockpitTonnageChange = new TonnageChange { From = 0, By = 3 };
         public SlotChange CockpitSlotChange = new SlotChange { From = 1, By = 0 };
+
+        public IdentityHelper SensorsACategorizer = new IdentityHelper
+        {
+            AllowedLocations = ChassisLocations.Head,
+            ComponentType = ComponentType.Upgrade,
+            Prefix = "Gear_Cockpit_",
+            CategoryId = "SensorsA",
+            AutoAddCategoryIdIfMissing = true
+        };
+
+        public IdentityHelper SensorsBCategorizer = new IdentityHelper
+        {
+            AllowedLocations = ChassisLocations.All,
+            ComponentType = ComponentType.Upgrade,
+            Prefix = "Gear_TargetingTrackingSystem_",
+            CategoryId = "SensorsB",
+            AutoAddCategoryIdIfMissing = true
+        };
+        public SlotChange SensorsBSlotChange = new SlotChange { From = 2, By = -1 };
 
         public IdentityHelper LegUpgradesCategorizer = new IdentityHelper
         {

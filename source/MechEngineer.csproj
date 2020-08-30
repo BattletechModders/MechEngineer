@@ -91,6 +91,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Features\AutoFix\SensorsBHandler.cs" />
+    <Compile Include="Features\AutoFix\SensorsAHandler.cs" />
     <Compile Include="Features\AutoFix\Patches\HeatSinkDef_FromJSON_Patch.cs" />
     <Compile Include="Features\BetterLog\BetterLogger.cs" />
     <Compile Include="Features\BetterLog\BetterLevelLogger.cs" />
