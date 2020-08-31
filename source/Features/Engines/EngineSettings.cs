@@ -26,6 +26,12 @@ namespace MechEngineer.Features.Engines
         public bool CBTWalkAndRunMPRounding = false;
         public string CBTWalkAndRunMPRoundingDescription => "If true, walking MPs are rounded down and running MPs are rounded up.";
 
+        public float AdditionalWalkSpeed = 24f * 1f;
+        public string AdditionalWalkSpeedDescription => "Additional max walk distance regardless of any installed engine.";
+
+        public float AdditionalRunSpeed = 24f * 2.5f;
+        public string AdditionalRunSpeedDescription => "Additional max run distance regardless of any installed engine.";
+
         public float MovementPointDistanceMultiplier = 24f;
         public string MovementPointDistanceMultiplierDescription => "The distance of a TT movement point, 24 is vanilla CombatGameConstants.ExperimentalGridDistance .";
 

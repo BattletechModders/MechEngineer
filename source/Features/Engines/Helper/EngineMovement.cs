@@ -1,6 +1,5 @@
 ﻿using BattleTech;
 using MechEngineer.Features.OverrideTonnage;
-using UnityEngine;
 
 namespace MechEngineer.Features.Engines.Helper
 {
@@ -18,9 +17,9 @@ namespace MechEngineer.Features.Engines.Helper
 
         internal float WalkMovementPoint { get; }
 
-        internal float WalkSpeed => ConvertMPToGameDistance(WalkMovementPoint);
+        internal float WalkSpeed => EngineFeature.settings.AdditionalWalkSpeed + ConvertMPToGameDistance(WalkMovementPoint);
         internal float RunMovementPoint => RoundRunMovementPoints(WalkMovementPoint * EngineFeature.settings.RunMultiplier);
-        internal float RunSpeed => ConvertMPToGameDistance(RunMovementPoint);
+        internal float RunSpeed => EngineFeature.settings.AdditionalRunSpeed + ConvertMPToGameDistance(RunMovementPoint);
         internal int JumpJetCount => PrecisionUtils.RoundDownToInt(WalkMovementPoint);
 
         internal bool Mountable
