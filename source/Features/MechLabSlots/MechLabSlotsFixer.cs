@@ -21,30 +21,30 @@ namespace MechEngineer.Features.MechLabSlots
             var slots = layout.slots;
             var changedSlotCount = maxSlots - slots.Count;
 
-            if (changedSlotCount == 0)
+            if (changedSlotCount < 0)
             {
-                return;
+                // remove abundant
+                while (slots.Count > maxSlots)
+                {
+                    var slot = slots.Last();
+                    slots.RemoveAt(slots.Count - 1);
+                    UnityEngine.Object.Destroy(slot.gameObject);
+                }
             }
-
-            var templateSlot = slots[0];
-
-            // add missing
-            int index = slots[0].GetSiblingIndex();
-            for (var i = slots.Count; i < maxSlots; i++)
+            else if (changedSlotCount > 0)
             {
-                var newSlot = UnityEngine.Object.Instantiate(templateSlot, layout.layout_slots);
-                //newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
-                newSlot.SetSiblingIndex(index + i);
-                newSlot.name = "slot (" + i + ")";
-                slots.Add(newSlot);
-            }
+                var templateSlot = slots[0];
 
-            // remove abundant
-            while (slots.Count > maxSlots)
-            {
-                var slot = slots.Last();
-                slots.RemoveAt(slots.Count - 1);
-                UnityEngine.Object.Destroy(slot.gameObject);
+                // add missing
+                var index = slots[0].GetSiblingIndex();
+                for (var i = slots.Count; i < maxSlots; i++)
+                {
+                    var newSlot = UnityEngine.Object.Instantiate(templateSlot, layout.layout_slots);
+                    //newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
+                    newSlot.SetSiblingIndex(index + i);
+                    newSlot.name = "slot (" + i + ")";
+                    slots.Add(newSlot);
+                }
             }
         }
       

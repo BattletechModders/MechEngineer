@@ -204,7 +204,7 @@ namespace MechEngineer.Features.DynamicSlots
             // remove already destroyed fillers
             for (var index = fillers.Count - 1; index >= 0; index--)
             {
-                if (fillers[index].IsValid())
+                if (fillers[index].IsInvalid())
                 {
                     fillers.RemoveAt(index);
                 }
@@ -273,6 +273,11 @@ namespace MechEngineer.Features.DynamicSlots
 
             internal void Reset()
             {
+                if (IsInvalid())
+                {
+                    return;
+                }
+
                 ResetSolidBorder();
                 gameObject.SetActive(false);
             }
@@ -288,7 +293,7 @@ namespace MechEngineer.Features.DynamicSlots
                 backgroundsRect.offsetMax = new Vector2(0, 0);
             }
 
-            public bool IsValid()
+            public bool IsInvalid()
             {
                 return gameObject == null;
             }
@@ -296,7 +301,7 @@ namespace MechEngineer.Features.DynamicSlots
             public void Dispose()
             {
                 // could be null if the pool was cleared
-                if (IsValid())
+                if (IsInvalid())
                 {
                     return;
                 }
