@@ -1,9 +1,19 @@
-﻿namespace MechEngineer.Features.CriticalEffects
+﻿using BattleTech;
+
+namespace MechEngineer.Features.CriticalEffects
 {
     public class CriticalEffectsSettings : ISettings
     {
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Allows custom multiple critical hit states for individual components.";
+
+        public float DefaultMaxCritsPerSlots { get; set; } = 0.5f;
+        public string DefaultMaxCritsPerSlotsDescription => "How many critical hits a component by default can take for each occupied slot. " +
+                                                             "For CBT use 0, for Expanded Critical Damage behavior use 0.5. " +
+                                                             "Custom CriticalEffects overwrite this behavior.";
+
+        public ComponentType[] DefaultMaxCritsComponentTypes { get; set; } = {ComponentType.Weapon, ComponentType.AmmunitionBox, ComponentType.JumpJet, ComponentType.Upgrade};
+        public string DefaultMaxCritsComponentTypesDescription => "For which types the default max crits are applied.";
 
         public string DescriptionIdentifier = "Criticals";
         public string DescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n";

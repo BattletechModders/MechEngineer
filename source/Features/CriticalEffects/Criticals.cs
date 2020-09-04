@@ -91,7 +91,7 @@ namespace MechEngineer.Features.CriticalEffects
                 
                 // if max is reached, component is destroyed and no new effects can be applied
                 // Destroyed components can still soak up crits, requires properly configured AIM from CAC
-                effectsMax = Effects?.PenalizedEffectIDs.Length + 1 ?? 1;
+                effectsMax = Effects?.PenalizedEffectIDs.Length + 1 ?? DefaultEffectsMax();
 
                 // move to group/component abstraction, make sure that critsAdded is clear
                 if (HasLinked)
@@ -124,6 +124,16 @@ namespace MechEngineer.Features.CriticalEffects
                 $"effectsMax={effectsMax} effectsPrev={effectsPrev} effectsNext={effectsNext} " +
                 $"damageLevel={damageLevel} HasEffects={Effects != null} LinkedStatisticName={Effects?.LinkedStatisticName}"
             );
+        }
+
+        private int DefaultEffectsMax()
+        {
+            if (CriticalEffectsFeature.settings.DefaultMaxCritsComponentTypes.Contains(component.componentType))
+            {
+                var slots = CriticalEffectsFeature.settings.DefaultMaxCritsPerSlots * component.inventorySize;
+                return Mathf.FloorToInt(slots) + 1; // last effect = Destroyed
+            }
+            return 1;
         }
 
         public int ComponentHittableCount()
