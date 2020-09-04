@@ -1,5 +1,6 @@
 ﻿using BattleTech.UI;
 using System.Linq;
+using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots
 {
@@ -10,7 +11,7 @@ namespace MechEngineer.Features.MechLabSlots
             // MechPropertiesWidget feature
             if (widgetLayout.widget == (widgetLayout.widget.parentDropTarget as MechLabPanel).centerTorsoWidget)
             {
-                ___maxSlots -= MechLabSlotsFeature.settings.MechLabGeneralSlots;
+                ___maxSlots = Mathf.Max(0, ___maxSlots - MechLabSlotsFeature.settings.MechLabGeneralSlots);
             }
 
             ModifyLayoutSlotCount(widgetLayout, ___maxSlots);

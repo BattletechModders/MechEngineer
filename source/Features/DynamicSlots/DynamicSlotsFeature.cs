@@ -177,9 +177,12 @@ namespace MechEngineer.Features.DynamicSlots
         
         internal static void ClearFillers(MechLabLocationWidget widget)
         {
-            foreach (var filler in Fillers[widget.loadout.Location])
+            if (Fillers.TryGetValue(widget.loadout.Location, out var fillers))
             {
-                filler.Reset();
+                foreach (var filler in fillers)
+                {
+                    filler.Reset();
+                }
             }
         }
 
