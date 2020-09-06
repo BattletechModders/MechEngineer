@@ -101,6 +101,8 @@
     <Compile Include="Features\HardpointFix\utils\CompatibleUtils.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\HeatSinkCapacityStatSettings.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\HeatSinkCapacityStatFeature.cs" />
+    <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_RestartCreatedEffects_Patch.cs" />
+    <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_CancelCreatedEffects_Patch.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitStats_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
     <Compile Include="Features\MechLabSlots\MechLabHardpointElementAdapter.cs" />
