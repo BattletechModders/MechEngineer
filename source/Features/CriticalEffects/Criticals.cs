@@ -295,7 +295,7 @@ namespace MechEngineer.Features.CriticalEffects
 
                 var resolvedEffectId = ScopedId(effectId);
                 var util = new EffectIdUtil(effectId, resolvedEffectId, component);
-                util.CreateCriticalEffect(damageLevel < ComponentDamageLevel.Destroyed);
+                util.CreateCriticalEffect();
             }
             
             static HashSet<string> DisabledSimpleScopedEffectIdsOnActor(AbstractActor actor)
@@ -356,22 +356,15 @@ namespace MechEngineer.Features.CriticalEffects
             this.mechComponent = mechComponent;
         }
 
-        internal static void CreateEffect(MechComponent component, EffectData effectData, string effectId, bool tracked = true)
+        internal static void CreateEffect(MechComponent component, EffectData effectData, string effectId)
         {
             var actor = component.parent;
             
             Control.Logger.Debug?.Log($"Creating id={effectId} statName={effectData.statisticData.statName}");
             actor.Combat.EffectManager.CreateEffect(effectData, effectId, -1, actor, actor, default, 0);
-
-            if (tracked)
-            {
-                // make sure created effects are removed once component got destroyed
-                // don't track if you want an effect to persist even after destruction (e.g. critical hit effects)
-                component.createdEffectIDs.Add(effectId);
-            }
         }
         
-        internal void CreateCriticalEffect(bool tracked = true)
+        internal void CreateCriticalEffect()
         {
             var effectData = CriticalEffectsFeature.GetEffectData(templateEffectId);
             if (effectData == null)
@@ -385,7 +378,7 @@ namespace MechEngineer.Features.CriticalEffects
 
             LocationalEffectsFeature.ProcessLocationalEffectData(ref effectData, mechComponent);
 
-            CreateEffect(mechComponent, effectData, resolvedEffectId, tracked);
+            CreateEffect(mechComponent, effectData, resolvedEffectId);
         }
 
         internal void CancelCriticalEffect()
@@ -401,7 +394,6 @@ namespace MechEngineer.Features.CriticalEffects
                 Control.Logger.Debug?.Log($"Canceling statName={statusEffect.EffectData.statisticData.statName}");
                 actor.CancelEffect(statusEffect);
             }
-            mechComponent.createdEffectIDs.Remove(resolvedEffectId);
         }
     }
 
