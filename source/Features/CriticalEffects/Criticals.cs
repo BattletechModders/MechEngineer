@@ -4,7 +4,7 @@ using System.Linq;
 using BattleTech;
 using CustomComponents;
 using FluffyUnderware.DevTools.Extensions;
-using MechEngineer.Features.LocationalEffects;
+using MechEngineer.Features.PlaceholderEffects;
 using UnityEngine;
 
 namespace MechEngineer.Features.CriticalEffects
@@ -180,9 +180,9 @@ namespace MechEngineer.Features.CriticalEffects
 
         private string ScopedId(string id)
         {
-            if (LocationNaming.Localize(id, component, out var localizedId))
+            if (PlaceholderInterpolation.Create(id, component, out var interpolation))
             {
-                return localizedId;
+                return interpolation.InterpolateEffectId(id);
             }
 
             if (!HasLinked)
@@ -376,7 +376,7 @@ namespace MechEngineer.Features.CriticalEffects
                 return;
             }
 
-            LocationalEffectsFeature.ProcessLocationalEffectData(ref effectData, mechComponent);
+            PlaceholderEffectsFeature.ProcessLocationalEffectData(ref effectData, mechComponent);
 
             CreateEffect(mechComponent, effectData, resolvedEffectId);
         }

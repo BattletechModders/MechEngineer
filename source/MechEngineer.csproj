@@ -104,6 +104,7 @@
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_RestartCreatedEffects_Patch.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_CancelCreatedEffects_Patch.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitStats_Patch.cs" />
+    <Compile Include="Features\PlaceholderEffects\Patches\StatisticEffect_initStatisiticEffect_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
     <Compile Include="Features\MechLabSlots\MechLabHardpointElementAdapter.cs" />
     <Compile Include="Features\MechLabSlots\MechLabLocationNaming.cs" />
@@ -223,7 +224,7 @@
     <Compile Include="Features\HardpointFix\HardpointFixSettings.cs" />
     <Compile Include="Features\InvalidInventory\InvalidInventorySettings.cs" />
     <Compile Include="Features\InvalidInventory\Patches\MechValidationRules_ValidateMechDef_Patch.cs" />
-    <Compile Include="Features\LocationalEffects\LocationalEffectsSettings.cs" />
+    <Compile Include="Features\PlaceholderEffects\PlaceholderEffectsSettings.cs" />
     <Compile Include="Features\MechLabSlots\MechLabSlotsSettings.cs" />
     <Compile Include="Features\MoveMultiplierStat\MoveMultiplierStatSettings.cs" />
     <Compile Include="Features\OmniSlots\OmniSlotsFeature.cs" />
@@ -251,11 +252,11 @@
     <Compile Include="Features\HardpointFix\limits\ChassisDefAdapter.cs" />
     <Compile Include="Features\HardpointFix\limits\Patches\ChassisDef_refreshLocationReferences_Patch.cs" />
     <Compile Include="Features\InvalidInventory\InvalidInventoryFeature.cs" />
-    <Compile Include="Features\LocationalEffects\LocationalEffectsFeature.cs" />
-    <Compile Include="Features\LocationalEffects\LocationNaming.cs" />
-    <Compile Include="Features\LocationalEffects\VehicleLocationNaming.cs" />
-    <Compile Include="Features\LocationalEffects\MechLocationNaming.cs" />
-    <Compile Include="Features\LocationalEffects\Patches\MechComponent_ApplyPassiveEffectToTarget_Patch.cs" />
+    <Compile Include="Features\PlaceholderEffects\PlaceholderEffectsFeature.cs" />
+    <Compile Include="Features\PlaceholderEffects\PlaceholderInterpolation.cs" />
+    <Compile Include="Features\PlaceholderEffects\VehiclePlaceholderInterpolation.cs" />
+    <Compile Include="Features\PlaceholderEffects\MechPlaceholderInterpolation.cs" />
+    <Compile Include="Features\PlaceholderEffects\Patches\MechComponent_ApplyPassiveEffectToTarget_Patch.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\AccuracyEffects\Patches\CombatHUDWeaponSlot_AddToolTipDetail_Patch.cs" />
     <Compile Include="Features\ArmActuators\ArmActuator.cs" />

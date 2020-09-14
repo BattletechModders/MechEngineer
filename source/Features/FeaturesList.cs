@@ -16,7 +16,6 @@ using MechEngineer.Features.Globals;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.HeatSinkCapacityStat;
 using MechEngineer.Features.InvalidInventory;
-using MechEngineer.Features.LocationalEffects;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OmniSlots;
@@ -26,6 +25,7 @@ using MechEngineer.Features.OverrideGhostVFX;
 using MechEngineer.Features.OverrideStatTooltips;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.Performance;
+using MechEngineer.Features.PlaceholderEffects;
 using MechEngineer.Features.ShutdownInjuryProtection;
 using MechEngineer.Features.TagManager;
 using MechEngineer.Features.TurretLimitedAmmo;
@@ -44,7 +44,7 @@ namespace MechEngineer.Features
             MoveMultiplierStatFeature.Shared,
             CompressFloatieMessagesFeature.Shared,
             DamageIgnoreFeature.Shared,
-            LocationalEffectsFeature.Shared,
+            PlaceholderEffectsFeature.Shared,
             CriticalEffectsFeature.Shared,
             AccuracyEffectsFeature.Shared,
             OverrideDescriptionsFeature.Shared,

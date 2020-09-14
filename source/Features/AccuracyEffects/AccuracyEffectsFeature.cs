@@ -1,6 +1,6 @@
 using BattleTech;
 using MechEngineer.Features.DynamicSlots;
-using MechEngineer.Features.LocationalEffects;
+using MechEngineer.Features.PlaceholderEffects;
 
 namespace MechEngineer.Features.AccuracyEffects
 {
@@ -10,7 +10,7 @@ namespace MechEngineer.Features.AccuracyEffects
 
         internal override AccuracyEffectsSettings Settings => Control.settings.AccuracyEffects;
 
-        internal override bool Enabled => base.Enabled && LocationalEffectsFeature.Shared.Loaded;
+        internal override bool Enabled => base.Enabled && PlaceholderEffectsFeature.Shared.Loaded;
 
         internal static void SetupAccuracyStatistics(StatCollection statCollection)
         {
@@ -22,7 +22,7 @@ namespace MechEngineer.Features.AccuracyEffects
         
         internal static float AccuracyForLocation(StatCollection statCollection, ChassisLocations location)
         {
-            var naming = new MechLocationNaming(location);
+            var naming = new MechPlaceholderInterpolation(location);
             var key = naming.LocationalStatisticName("Accuracy");
             return AccuracyForKey(statCollection, key);
         }

@@ -2,7 +2,7 @@
 using System.Linq;
 using BattleTech;
 using CustomComponents;
-using MechEngineer.Features.LocationalEffects;
+using MechEngineer.Features.PlaceholderEffects;
 
 namespace MechEngineer.Features.CriticalEffects
 {
@@ -10,7 +10,7 @@ namespace MechEngineer.Features.CriticalEffects
     {
         internal static readonly CriticalEffectsFeature Shared = new CriticalEffectsFeature();
 
-        internal override bool Enabled => base.Enabled && LocationalEffectsFeature.Shared.Loaded;
+        internal override bool Enabled => base.Enabled && PlaceholderEffectsFeature.Shared.Loaded;
 
         internal override CriticalEffectsSettings Settings => Control.settings.CriticalEffects;
 

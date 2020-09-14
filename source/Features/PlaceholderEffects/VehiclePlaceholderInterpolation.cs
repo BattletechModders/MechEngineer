@@ -1,19 +1,19 @@
 using BattleTech;
 
-namespace MechEngineer.Features.LocationalEffects
+namespace MechEngineer.Features.PlaceholderEffects
 {
-    internal class VehicleLocationNaming : LocationNaming
+    internal class VehiclePlaceholderInterpolation : PlaceholderInterpolation
     {
-        private readonly VehicleChassisLocations location;
+        private readonly VehicleChassisLocations Location;
 
-        internal VehicleLocationNaming(VehicleChassisLocations location)
+        internal VehiclePlaceholderInterpolation(MechComponent mechComponent) : base(mechComponent)
         {
-            this.location = location;
+            Location = mechComponent.vehicleComponentRef.MountedLocation;
         }
 
         internal override string InterpolateEffectId(string id)
         {
-            return id.Replace(LocationPlaceholder, LocationId);
+            return base.InterpolateEffectId(id).Replace(LocationPlaceholder, LocationId);
         }
 
         internal override string InterpolateStatisticName(string id)
@@ -30,18 +30,18 @@ namespace MechEngineer.Features.LocationalEffects
         {
             get
             {
-                switch (location)
+                switch (Location)
                 {
                     case VehicleChassisLocations.Left:
                         return "LeftSide";
                     case VehicleChassisLocations.Right:
                         return "RightSide";
                     default:
-                        return location.ToString();
+                        return Location.ToString();
                 }
             }
         }
 
-        internal override string LocationName => location.ToString().ToLowerInvariant();
+        private string LocationName => Location.ToString().ToLowerInvariant();
     }
 }

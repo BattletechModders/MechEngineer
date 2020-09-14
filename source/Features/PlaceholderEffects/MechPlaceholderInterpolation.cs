@@ -1,15 +1,21 @@
 using BattleTech;
 
-namespace MechEngineer.Features.LocationalEffects
+namespace MechEngineer.Features.PlaceholderEffects
 {
-    internal class MechLocationNaming : LocationNaming
+    internal class MechPlaceholderInterpolation : PlaceholderInterpolation
     {
-        internal const string SidePlaceholder = "{side}";
-        private readonly ChassisLocations location;
+        private const string SidePlaceholder = "{side}";
 
-        internal MechLocationNaming(ChassisLocations location)
+        private readonly ChassisLocations Location;
+
+        internal MechPlaceholderInterpolation(MechComponent mechComponent) : base(mechComponent)
         {
-            this.location = location;
+            Location = mechComponent.mechComponentRef.MountedLocation;
+        }
+
+        internal MechPlaceholderInterpolation(ChassisLocations location) : base(null)
+        {
+            Location = location;
         }
 
         internal string LocationalStatisticName(string statisticName)
@@ -20,7 +26,7 @@ namespace MechEngineer.Features.LocationalEffects
 
         internal override string InterpolateEffectId(string id)
         {
-            return id.Replace(LocationPlaceholder, LocationId);
+            return base.InterpolateEffectId(id).Replace(LocationPlaceholder, LocationId);
         }
 
         internal override string InterpolateStatisticName(string id)
@@ -35,13 +41,13 @@ namespace MechEngineer.Features.LocationalEffects
                 .Replace(SidePlaceholder, SideName);
         }
 
-        internal override string LocationId => location.ToString();
+        internal override string LocationId => Location.ToString();
 
-        internal override string LocationName
+        private string LocationName
         {
             get
             {
-                switch (location)
+                switch (Location)
                 {
                     case ChassisLocations.LeftArm:
                         return "left arm";
@@ -69,7 +75,7 @@ namespace MechEngineer.Features.LocationalEffects
         {
             get
             {
-                switch (location)
+                switch (Location)
                 {
                     case ChassisLocations.LeftArm:
                     case ChassisLocations.LeftLeg:

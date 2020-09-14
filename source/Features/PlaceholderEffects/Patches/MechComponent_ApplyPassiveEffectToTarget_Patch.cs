@@ -2,7 +2,7 @@ using System;
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.LocationalEffects.Patches
+namespace MechEngineer.Features.PlaceholderEffects.Patches
 {
     [HarmonyPatch(typeof(MechComponent), "ApplyPassiveEffectToTarget")]
     public static class MechComponent_ApplyPassiveEffectToTarget_Patch
@@ -11,7 +11,7 @@ namespace MechEngineer.Features.LocationalEffects.Patches
         {
             try
             {
-                LocationalEffectsFeature.ProcessLocationalEffectData(ref effect, __instance);
+                PlaceholderEffectsFeature.ProcessLocationalEffectData(ref effect, __instance);
             }
             catch (Exception e)
             {
