@@ -88,12 +88,14 @@ namespace MechEngineer.Features.AutoFix
                 {
                     builder.Remove(incompatibleHeatSink);
                     builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);
+                    Control.Logger.Debug?.Log($" Converted incompatible heat sinks to compatible ones");
                 }
             }
 
             Engine engine = null;
             if (res.CoreDef != null)
             {
+                Control.Logger.Debug?.Log($" Found an existing engine");
                 engine = new Engine(res.CoolingDef, res.HeatBlockDef, res.CoreDef, res.Weights, new List<MechComponentRef>());
 
                 // convert external heat sinks into internal ones
@@ -114,7 +116,7 @@ namespace MechEngineer.Features.AutoFix
                         builder.Remove(component);
                         current++;
                     }
-
+                    
                     if (current > 0)
                     {
                         var heatBlock = builder.Inventory.FirstOrDefault(r => r.Def.Is<EngineHeatBlockDef>());
@@ -126,6 +128,8 @@ namespace MechEngineer.Features.AutoFix
                         var heatBlockDefId = $"{AutoFixerFeature.settings.MechDefHeatBlockDef}_{current}";
                         var def = mechDef.DataManager.HeatSinkDefs.Get(heatBlockDefId);
                         builder.Add(def, ChassisLocations.CenterTorso, true);
+
+                        Control.Logger.Debug?.Log($" Converted external heat sinks ({current}) to internal ones (to make space)");
                     }
                 }
             }
@@ -133,7 +137,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 var freeTonnage = CalcFreeTonnage();
 
-                Control.Logger.Debug?.Log($" find engine for freeTonnage={freeTonnage}");
+                Control.Logger.Debug?.Log($" Finding engine for freeTonnage={freeTonnage}");
 
                 var jumpJets = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
                 var jumpJetTonnage = jumpJets.Select(x => x.Def.Tonnage).FirstOrDefault(); //0 if no jjs
@@ -187,7 +191,7 @@ namespace MechEngineer.Features.AutoFix
                             builder.Remove(component);
                             internalHeatSinksCount++;
 
-                            Control.Logger.Debug?.Log("  ~Converted external to internal");
+                            Control.Logger.Debug?.Log("  ~Converted external heat sinks to internal ones");
                         }
 
                         // this only runs on the engine that takes the most heat sinks (since this is in a for loop with rating descending order)
@@ -221,7 +225,7 @@ namespace MechEngineer.Features.AutoFix
                             else
                             {
                                 
-                                Control.Logger.Debug?.Log("  ~Converted internal to external");
+                                Control.Logger.Debug?.Log("  ~Converted internal heat sink to external one");
                             }
                             internalHeatSinksCount--;
                         }
