@@ -11,7 +11,8 @@ namespace MechEngineer.Features.PlaceholderEffects
         internal MechComponent MechComponent { get; }
 
         protected const string LocationPlaceholder = "{location}";
-        public const string ComponentUIDPlaceholder = "{uid}";
+
+        private static string ComponentUIDPlaceholder => PlaceholderEffectsFeature.Shared.Settings.ComponentEffectStatisticPlaceholder;
 
         internal abstract string LocationId { get; }
 

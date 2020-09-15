@@ -6,6 +6,8 @@
         public string EnabledDescription => "Allows other features to support placeholder statistic effects.";
 
         public string ComponentEffectStatisticPrefix => "ComponentEffects";
-        public string ComponentEffectStatisticPrefixDescription => $"Components starting with {ComponentEffectStatisticPrefix}-{PlaceholderInterpolation.ComponentUIDPlaceholder} will apply statistic effects to the components StatCollection instead of the mech. Really useful only for weapons.";
+        public char ComponentEffectStatisticSeparator => '-';
+        public string ComponentEffectStatisticPlaceholder => "{uid}";
+        public string ComponentEffectStatisticDescription => $"Components starting with {ComponentEffectStatisticPrefix}{ComponentEffectStatisticSeparator}{ComponentEffectStatisticPlaceholder}{ComponentEffectStatisticSeparator} will apply statistic effects to the components StatCollection instead of the mech. Really useful only for weapons.";
     }
 }

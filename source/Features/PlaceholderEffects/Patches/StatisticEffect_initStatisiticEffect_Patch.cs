@@ -17,7 +17,7 @@ namespace MechEngineer.Features.PlaceholderEffects.Patches
                     return;
                 }
                 var effectID = __instance.id;
-                var parts = effectID.Split('_');
+                var parts = effectID.Split(PlaceholderEffectsFeature.Shared.Settings.ComponentEffectStatisticSeparator);
                 if (parts.Length < 2 || parts[0] != PlaceholderEffectsFeature.Shared.Settings.ComponentEffectStatisticPrefix)
                 {
                     return;
