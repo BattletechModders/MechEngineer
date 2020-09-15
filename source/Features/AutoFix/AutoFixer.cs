@@ -74,7 +74,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 float currentTotalTonnage = 0, maxValue = 0;
                 MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
-                var freeTonnage = PrecisionUtils.RoundDown(mechDef.Chassis.Tonnage - currentTotalTonnage);
+                var freeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
                 return freeTonnage;
             }
 

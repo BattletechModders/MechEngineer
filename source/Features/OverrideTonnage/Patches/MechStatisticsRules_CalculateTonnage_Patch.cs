@@ -12,6 +12,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
             try
             {
                 currentValue += WeightsHandler.Shared.TonnageChanges(mechDef);
+                currentValue = PrecisionUtils.RoundUp(currentValue, OverrideTonnageFeature.settings.TonnageStandardPrecision);
                 maxValue = mechDef.Chassis.Tonnage;
             }
             catch (Exception e)
