@@ -220,7 +220,9 @@ namespace MechEngineer.Features.OverrideTonnage
         private static float CalcChanges(float unmodified, float factor, float? precision = null)
         {
             var modified = unmodified * factor;
-            var modifiedRounded = precision == null ? PrecisionUtils.RoundUp(modified) : PrecisionUtils.RoundUp(modified, (float)precision);
+            var modifiedRounded = precision == null
+                ? PrecisionUtils.RoundUp(modified, OverrideTonnageFeature.settings.TonnageStandardPrecision)
+                : PrecisionUtils.RoundUp(modified, (float)precision);
             var changes = modifiedRounded - unmodified;
             return changes;
         }
