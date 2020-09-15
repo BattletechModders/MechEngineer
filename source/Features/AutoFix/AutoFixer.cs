@@ -7,6 +7,7 @@ using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Features.OverrideTonnage;
 
 namespace MechEngineer.Features.AutoFix
 {
@@ -73,7 +74,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 float currentTotalTonnage = 0, maxValue = 0;
                 MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
-                var freeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
+                var freeTonnage = PrecisionUtils.RoundDown(mechDef.Chassis.Tonnage - currentTotalTonnage);
                 return freeTonnage;
             }
 
@@ -103,7 +104,8 @@ namespace MechEngineer.Features.AutoFix
 
                 {
                     var max = engine.HeatSinkInternalAdditionalMaxCount;
-                    var current = engine.EngineHeatBlockDef.HeatSinkCount;
+                    var oldCurrent = engine.EngineHeatBlockDef.HeatSinkCount;
+                    var current = oldCurrent;
 
                     var heatSinks = builder.Inventory
                         .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory == engineHeatSinkDef.HSCategory)
@@ -129,7 +131,7 @@ namespace MechEngineer.Features.AutoFix
                         var def = mechDef.DataManager.HeatSinkDefs.Get(heatBlockDefId);
                         builder.Add(def, ChassisLocations.CenterTorso, true);
 
-                        Control.Logger.Debug?.Log($" Converted external heat sinks ({current}) to internal ones (to make space)");
+                        Control.Logger.Debug?.Log($" Converted external heat sinks ({current - oldCurrent}) to internal ones (to make space)");
                     }
                 }
             }
@@ -232,11 +234,11 @@ namespace MechEngineer.Features.AutoFix
 
                         // remove candidates that make no sense anymore
                         // TODO not perfect and maybe too large for small mechs
-                        engineCandidates = engineCandidates.Where(x => x.TotalTonnage <= freeTonnage + 6*engineHeatSinkDef.Def.Tonnage + jumpJetTonnage).ToList();
+                        engineCandidates = engineCandidates.Where(x => PrecisionUtils.SmallerOrEqualsTo(x.TotalTonnage, freeTonnage + 6*engineHeatSinkDef.Def.Tonnage + jumpJetTonnage)).ToList();
                     }
 
                     // go through all candidates, larger first
-                    engine = engineCandidates.FirstOrDefault(candidate => candidate.TotalTonnage <= freeTonnage);
+                    engine = engineCandidates.FirstOrDefault(candidate => PrecisionUtils.SmallerOrEqualsTo(candidate.TotalTonnage, freeTonnage));
 
                     if (engine != null)
                     {
@@ -280,7 +282,10 @@ namespace MechEngineer.Features.AutoFix
             // add free heat sinks
             {
                 var max = engine.HeatSinkExternalFreeMaxCount;
-                for (var i = 0; i < max; i++)
+                var current = builder.Inventory
+                    .Count(r => r.Def.Is<EngineHeatSinkDef>(out var hs)
+                                && hs.HSCategory == engineHeatSinkDef.HSCategory);
+                for (var i = current; i < max; i++)
                 {
                     builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);
                 }
@@ -321,12 +326,17 @@ namespace MechEngineer.Features.AutoFix
 
             {
                 var freeTonnage = CalcFreeTonnage();
-                if (freeTonnage > 0)
+                if (PrecisionUtils.Equals(freeTonnage, 0))
+                {
+                    // do nothing
+                }
+                else if (freeTonnage > 0)
                 {
                     // TODO add armor for each location with free tonnage left
                 }
                 else if (freeTonnage < 0)
                 {
+                    Control.Logger.Debug?.Log($" Found over tonnage {-freeTonnage}");
                     var removableItems = builder.Inventory
                         .Where(IsRemovable)
                         .OrderBy(c => c.Def.Tonnage)
@@ -345,12 +355,13 @@ namespace MechEngineer.Features.AutoFix
                         })
                         .ToList();
 
-                    while (removableItems.Count > 0 && freeTonnage < 0)
+                    while (removableItems.Count > 0 && PrecisionUtils.SmallerThan(freeTonnage, 0))
                     {
                         var item = removableItems[0];
                         removableItems.RemoveAt(0);
                         freeTonnage += item.Def.Tonnage;
                         builder.Remove(item);
+                        Control.Logger.Debug?.Log($"  Removed item, freeTonnage={freeTonnage}");
                     }
                 }
             }
@@ -392,14 +403,14 @@ namespace MechEngineer.Features.AutoFix
 
         private static bool IsRemovable(MechComponentRef c)
         {
-            if (c.IsFixed)
+            var def = c.Def;
+            
+            if (def == null)
             {
                 return false;
             }
 
-            var def = c.Def;
-            
-            if (def == null)
+            if (c.IsFixed || c.Def.Is<Category>(out var category) && category.CategoryDescriptor.Required)
             {
                 return false;
             }

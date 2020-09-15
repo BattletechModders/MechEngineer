@@ -14,9 +14,27 @@ namespace MechEngineer.Features.OverrideTonnage
             return Mathf.Abs(a - b) < epsilon;
         }
 
+        // helper functions that combines
+        internal static bool SmallerThan(float a, float b)
+        {
+            if (Equals(a, b))
+            {
+                return false;
+            }
+            return a < b;
+        }
+        internal static bool SmallerOrEqualsTo(float a, float b)
+        {
+            if (Equals(a, b))
+            {
+                return true;
+            }
+            return a < b;
+        }
+
         internal static float RoundUp(float value)
         {
-            return Round(value, Mathf.Ceil, OverrideTonnageFeature.settings.TonnageStandardPrecision);
+            return RoundUp(value, OverrideTonnageFeature.settings.TonnageStandardPrecision);
         }
 
         internal static float RoundUp(float value, float precision)
@@ -27,6 +45,11 @@ namespace MechEngineer.Features.OverrideTonnage
         internal static int RoundUpToInt(float value)
         {
             return Mathf.CeilToInt(value - OverrideTonnageFeature.settings.PrecisionEpsilon);
+        }
+
+        internal static float RoundDown(float value)
+        {
+            return RoundDown(value, OverrideTonnageFeature.settings.TonnageStandardPrecision);
         }
 
         internal static float RoundDown(float value, float precision)
