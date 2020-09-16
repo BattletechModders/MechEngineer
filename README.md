@@ -15,9 +15,10 @@ install [BattleTech Advanced](https://www.nexusmods.com/battletech/mods/452) for
 
 or
 
-* install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
+* HBS BattleTech ModLoader is supported
+  * (optional) install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek) if you don't like the ModLoader from BattleTech.
 * install [CustomComponents](https://github.com/BattletechModders/CustomComponents/releases) using [instructions here](https://github.com/BattletechModders/CustomComponents)
-* install MechEngineer for ModTek or ModLoader
+* install MechEngineer by copying the MechEngineer folder to the mods/ directory of ModTek or the ModLoader.
 
 ## Suggested Mods
 
