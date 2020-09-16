@@ -7,24 +7,21 @@ Downloads of the latest release can be found on [github](https://github.com/Batt
 
 ## Requirements and Installation
 
-either install [RogueTech](https://www.nexusmods.com/battletech/mods/79) for the full MechEngineer experience
+install [RogueTech](https://www.nexusmods.com/battletech/mods/79) for an in-depth MechEngineer experience
+
+or
+
+install [BattleTech Advanced](https://www.nexusmods.com/battletech/mods/452) for another in-depth MechEngineer experience
 
 or
 
 * install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
 * install [CustomComponents](https://github.com/BattletechModders/CustomComponents/releases) using [instructions here](https://github.com/BattletechModders/CustomComponents)
-* install MechEngineer by putting it into the \BATTLETECH\Mods\ folder
+* install MechEngineer for ModTek or ModLoader
 
 ## Suggested Mods
 
-Use these mods to maximize enjoyment
-* [CBT Heat](https://github.com/McFistyBuns/CBTHeat) - replaces overheat damage to be crit rolls
-* [CBT Movement](https://github.com/McFistyBuns/CBTMovement) - movement reduces accuracy
-* [CBT Piloting](https://github.com/McFistyBuns/CBTPiloting) - mech can stumble by chance
 * [Pansar](https://github.com/hokvel/pansar) - applies armor ratio enforcement according to CBT rules
-
-Compatibility Patches
-* [JK-ME](https://github.com/17783/JK-ME_Fix) - fixes JK mech variants to work with MechEngineer
 
 ## TODOs and Bug Reporting
 
