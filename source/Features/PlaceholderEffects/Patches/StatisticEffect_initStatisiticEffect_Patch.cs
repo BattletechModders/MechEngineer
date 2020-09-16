@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using BattleTech;
 using Harmony;
 
@@ -8,7 +9,7 @@ namespace MechEngineer.Features.PlaceholderEffects.Patches
     [HarmonyPatch(typeof(StatisticEffect), "initStatisiticEffect")]
     public static class StatisticEffect_initStatisiticEffect_Patch
     {
-        public static void Postfix(StatisticEffect __instance, ICombatant target, EffectData effectData)
+        public static void Postfix(StatisticEffect __instance, ICombatant target)
         {
             try
             {
@@ -17,13 +18,19 @@ namespace MechEngineer.Features.PlaceholderEffects.Patches
                     return;
                 }
                 var effectID = __instance.id;
-                var parts = effectID.Split(PlaceholderEffectsFeature.Shared.Settings.ComponentEffectStatisticSeparator);
-                if (parts.Length < 2 || parts[0] != PlaceholderEffectsFeature.Shared.Settings.ComponentEffectStatisticPrefix)
+
+                var sep = PlaceholderEffectsFeature.Shared.Settings.ComponentEffectStatisticSeparator;
+                var prefix = PlaceholderEffectsFeature.Shared.Settings.ComponentEffectStatisticPrefix;
+
+                // effectID={EffectSource}_{effectData.Description.Id}_{guid}
+                // descID={Prefix}-{uid}-label
+                var match = Regex.Match(effectID, $"{prefix}{sep}([^{sep}]+){sep}", RegexOptions.Compiled);
+                if (!match.Success)
                 {
                     return;
                 }
 
-                var uid = parts[1];
+                var uid = match.Groups[1].Value;
                 var component = mech.allComponents.FirstOrDefault(x => x.uid == uid);
                 if (component == null)
                 {
