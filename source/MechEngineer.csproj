@@ -103,7 +103,7 @@
     <Compile Include="Features\HeatSinkCapacityStat\HeatSinkCapacityStatFeature.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_RestartCreatedEffects_Patch.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_CancelCreatedEffects_Patch.cs" />
-    <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitStats_Patch.cs" />
+    <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\PlaceholderEffects\Patches\StatisticEffect_initStatisiticEffect_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
     <Compile Include="Features\MechLabSlots\MechLabHardpointElementAdapter.cs" />
@@ -300,7 +300,6 @@
     <Compile Include="Features\Engines\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetHeatData_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Patches\StatTooltipData_SetMovementData_Patch.cs" />
-    <Compile Include="Features\Engines\StaticHandler\EngineHeat.cs" />
     <Compile Include="Features\Engines\StaticHandler\EngineMisc.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\ListElementController_BASE_NotListView_SetComponentTooltipData_Patch.cs" />
     <Compile Include="Features\DynamicSlots\Patches\MechLabItemSlotElement_OnPointerEnter_Patch.cs" />

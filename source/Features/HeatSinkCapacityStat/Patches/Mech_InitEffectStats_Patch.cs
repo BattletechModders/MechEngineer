@@ -4,17 +4,14 @@ using Harmony;
 
 namespace MechEngineer.Features.HeatSinkCapacityStat.Patches
 {
-    [HarmonyPatch(typeof(Mech), "InitStats")]
-    public static class Mech_InitStats_Patch
+    [HarmonyPatch(typeof(Mech), "InitEffectStats")]
+    public static class Mech_InitEffectStats_Patch
     {
         public static void Postfix(Mech __instance)
         {
             try
             {
-                if (!__instance.Combat.IsLoadingFromSave)
-                {
-                    HeatSinkCapacityStatFeature.Shared.InitStats(__instance);
-                }
+                HeatSinkCapacityStatFeature.Shared.InitEffectStats(__instance);
             }
             catch (Exception e)
             {
