@@ -4,6 +4,7 @@ using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Engines.StaticHandler;
 using MechEngineer.Features.OverrideTonnage;
 using System.Linq;
+using MechEngineer.Features.HeatSinkCapacityStat;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Helper
 {
@@ -19,19 +20,14 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         {
             this.mechDef = mechDef;
 
-            Engine = mechDef.GetEngine();
-            EngineHeatSinking = (int) (Engine?.EngineHeatDissipation ?? 0);
-
             HeatSinkCapacity = GetHeatSinkCapacity();
-            HeatSinking = (int)((EngineHeatSinking + HeatSinkCapacity) * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier);
+            HeatSinking = (int)(HeatSinkCapacity * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier);
             AlphaStrike = (int)(GetHeatGenerated() * GetWeaponHeatMultiplier());
             JumpHeat = GetJumpHeat();
             MaxHeat = GetMaxHeat();
             Overheat = GetOverheat();
         }
-        
-        private Engine Engine { get; }
-        private int EngineHeatSinking { get; }
+
         private int HeatSinkCapacity { get; }
 
         private readonly MechDef mechDef;
@@ -48,6 +44,10 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         {
             var stat = statCollection.HeatSinkCapacity();
             stat.Create();
+
+            var engineEffect = HeatSinkCapacityStatFeature.EngineEffectForMechDef(mechDef);
+            stat.Modify(engineEffect);
+
             return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
         }
 

@@ -24,20 +24,25 @@ namespace MechEngineer.Features.HeatSinkCapacityStat
                     return;
                 }
 
-                var engineDissipation = mech.MechDef.GetEngine()?.EngineHeatDissipation
-                                        ?? EngineFeature.settings.EngineMissingFallbackHeatSinkCapacity;
-
-                var statisticData = StatCollectionExtension
-                    .HeatSinkCapacity(null)
-                    .CreateStatisticData(
-                        StatCollection.StatOperation.Int_Add,
-                        (int)engineDissipation
-                    );
-
-                var effectData = MechComponentDefExtensions.CreatePassiveEffectData("EngineCoreEffect", statisticData);
+                var effectData = EngineEffectForMechDef(mech.MechDef);
 
                 EffectIdUtil.CreateEffect(core, effectData, $"{effectData.Description.Id}_{mech.GUID}");
             }
+        }
+
+        internal static EffectData EngineEffectForMechDef(MechDef mechDef)
+        {
+            var engineDissipation = mechDef.GetEngine()?.EngineHeatDissipation
+                                    ?? EngineFeature.settings.EngineMissingFallbackHeatSinkCapacity;
+
+            var statisticData = StatCollectionExtension
+                .HeatSinkCapacity(null)
+                .CreateStatisticData(
+                    StatCollection.StatOperation.Int_Add,
+                    (int)engineDissipation
+                );
+
+            return MechComponentDefExtensions.CreatePassiveEffectData("EngineCoreEffect", statisticData);
         }
     }
 }
