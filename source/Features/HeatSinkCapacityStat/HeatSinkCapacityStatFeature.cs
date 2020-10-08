@@ -14,6 +14,17 @@ namespace MechEngineer.Features.HeatSinkCapacityStat
 
         internal override HeatSinkCapacityStatSettings Settings => Control.settings.HeatSinkCapacityStat;
 
+        internal bool IgnoreShutdown(MechComponent mechComponent)
+        {
+            if (Settings.ShutdownStatuseffectsExcludedComponenTypes.Contains(mechComponent.componentType))
+            {
+                return true;
+            }
+
+            var componentTags = mechComponent.componentDef.ComponentTags;
+            return Settings.ShutdownStatusEffectsExcludedComponentTags.Any(componentTags.Contains);
+        }
+
         internal void InitEffectStats(Mech mech)
         {
             var core = mech.miscComponents.FirstOrDefault(x => x.componentDef.Is<EngineCoreDef>());

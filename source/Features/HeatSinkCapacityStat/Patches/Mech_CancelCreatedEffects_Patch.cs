@@ -18,7 +18,7 @@ namespace MechEngineer.Features.HeatSinkCapacityStat.Patches
 
         public static void CancelCreatedEffects(this MechComponent @this, bool performAuraRefresh)
         {
-            if (@this.componentType == ComponentType.HeatSink)
+            if (HeatSinkCapacityStatFeature.Shared.IgnoreShutdown(@this))
             {
                 return;
             }
