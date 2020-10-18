@@ -52,10 +52,16 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 ___totalMissileHardpoints = calc.Missile.DynamicMax;
                 ___totalSmallHardpoints = calc.Small.DynamicMax;
 
-                ___hardpoints[0].SetData(calc.Ballistic.CategoryForLocationWidget, calc.Ballistic.HardpointString);
-                ___hardpoints[1].SetData(calc.Energy.CategoryForLocationWidget, calc.Energy.HardpointString);
-                ___hardpoints[2].SetData(calc.Missile.CategoryForLocationWidget, calc.Missile.HardpointString);
-                ___hardpoints[3].SetData(calc.Small.CategoryForLocationWidget, calc.Small.HardpointString);
+                static void SetData(MechLabHardpointElement element, HardpointStat stat)
+                {
+                    //element.transform.parent.gameObject.SetActive(stat.VanillaMax > 0);
+                    element.SetData(stat.CategoryForLocationWidget, stat.HardpointString);
+                }
+
+                SetData(___hardpoints[0], calc.Ballistic);
+                SetData(___hardpoints[1], calc.Energy);
+                SetData(___hardpoints[2], calc.Missile);
+                SetData(___hardpoints[3], calc.Small);
             }
             catch (Exception e)
             {
