@@ -2,12 +2,14 @@
 using System.Linq;
 using BattleTech;
 using Harmony;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
     [HarmonyPatch(typeof(MechRepresentationSimGame), "LoadWeapons")]
     public static class MechRepresentationSimGame_LoadWeapons_Patch
     {
+        [HarmonyAfter(KFix.CU)]
         public static void Prefix(MechRepresentationSimGame __instance)
         {
             try

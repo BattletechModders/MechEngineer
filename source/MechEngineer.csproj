@@ -380,6 +380,7 @@
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
     <Compile Include="Misc\Adapter.cs" />
     <Compile Include="Misc\FileUtils.cs" />
+    <Compile Include="Misc\KFix.cs" />
     <Compile Include="Misc\MELazy.cs" />
     <Compile Include="Misc\Mod.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffects.cs" />

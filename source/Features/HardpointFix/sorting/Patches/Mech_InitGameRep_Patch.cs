@@ -2,14 +2,15 @@
 using System.Linq;
 using BattleTech;
 using Harmony;
-using UnityEngine;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.HardpointFix.sorting.Patches
 {
     [HarmonyPatch(typeof(Mech), "InitGameRep")]
     public static class Mech_InitGameRep_Patch
     {
-        public static void Prefix(Mech __instance, Transform parentTransform)
+        [HarmonyAfter(KFix.AC, KFix.CU)]
+        public static void Prefix(Mech __instance)
         {
             try
             {
@@ -26,7 +27,7 @@ namespace MechEngineer.Features.HardpointFix.sorting.Patches
             }
         }
 
-        public static void Postfix(Mech __instance, Transform parentTransform)
+        public static void Postfix(Mech __instance)
         {
             MechHardpointRules_GetComponentPrefabName_Patch.ResetCalculator();
         }
