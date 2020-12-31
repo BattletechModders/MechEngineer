@@ -15,13 +15,21 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                 .MethodReplacer(
                     AccessTools.Method(typeof(Mech), nameof(Mech.ApplyStructureStatDamage)),
                     AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(ApplyStructureStatDamage))
-                )
-                .MethodReplacer(
-                    AccessTools.Method(typeof(MechStructureRules), nameof(MechStructureRules.GetPassthroughLocation)),
-                    AccessTools.Method(typeof(Mech_DamageLocation_Patch), nameof(GetPassthroughLocation))
                 );
         }
 
+        public static bool Prefix(ref bool __result)
+        {
+            if (!ComponentExplosionsFeature.IsInternalExplosionContained)
+            {
+                return true;
+            }
+            
+            __result = false;
+            Control.Logger.Debug?.Log("prevented explosion pass through");
+            return false;
+        }
+        
         internal static void ApplyStructureStatDamage(
             this Mech mech,
             ChassisLocations location,
@@ -31,30 +39,44 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
         {
             try
             {
+                if (damage <= 0)
+                {
+                    return; // ignore 0 damage calls
+                }
+                
                 if (!ComponentExplosionsFeature.IsInternalExplosion)
                 {
                     return;
                 }
 
                 var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(mech, (int) location);
-                if (properties?.MaximumDamage == null)
+                if (properties == null)
                 {
                     return;
                 }
 
+                ComponentExplosionsFeature.IsInternalExplosionContained = true;
+                Control.Logger.Debug?.Log($"prevent explosion pass through from {Mech.GetAbbreviatedChassisLocation(location)}");
+                
+                if (properties.MaximumDamage == null)
+                {
+                    mech.PublishFloatieMessage("EXPLOSION CONTAINED");
+                    return;
+                }
+                mech.PublishFloatieMessage("EXPLOSION REDIRECTED");
+                
                 var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
+                damage = directDamage; // update damage applied in finally
+                
+                if ((location & ChassisLocations.Torso) == 0)
+                {
+                    return;
+                }
+                
                 var backDamage = damage - directDamage;
                 Control.Logger.Debug?.Log($"reducing structure damage from {damage} to {directDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
-                damage = directDamage;
-
+                
                 if (backDamage <= 0)
-                {
-                    return;
-                }
-
-                mech.PublishFloatieMessage("EXPLOSION REDIRECTED");
-
-                if ((location & ChassisLocations.Torso) == 0)
                 {
                     return;
                 }
@@ -92,47 +114,6 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
             {
                 mech.ApplyStructureStatDamage(location, damage, hitInfo);
             }
-        }
-
-        internal static ArmorLocation GetPassthroughLocation(
-            ArmorLocation location,
-            AttackDirection attackDirection
-            )
-        {
-            try
-            {
-                if (ComponentExplosionsFeature.IsInternalExplosion && currentMech != null)
-                {
-                    var chassisLocation = MechStructureRules.GetChassisLocationFromArmorLocation(location);
-                    var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(currentMech, (int) chassisLocation);
-                    if (properties != null)
-                    {
-                        currentMech.PublishFloatieMessage("EXPLOSION CONTAINED");
-
-                        Control.Logger.Debug?.Log($"prevented explosion pass through from {Mech.GetAbbreviatedChassisLocation(chassisLocation)}");
-
-                        return ArmorLocation.None; // CASE redirects damage, so lets redirect it to none
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
-
-            return MechStructureRules.GetPassthroughLocation(location, attackDirection);
-        }
-
-        private static Mech currentMech;
-
-        internal static void Prefix(Mech __instance)
-        {
-            currentMech = __instance;
-        }
-
-        internal static void Postfix(Mech __instance)
-        {
-            currentMech = null;
         }
     }
 }

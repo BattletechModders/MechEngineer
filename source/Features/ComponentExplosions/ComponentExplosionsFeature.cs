@@ -108,10 +108,12 @@ namespace MechEngineer.Features.ComponentExplosions
             finally
             {
                 IsInternalExplosion = false;
+                IsInternalExplosionContained = false;
             }
         }
 
         internal static bool IsInternalExplosion;
+        internal static bool IsInternalExplosionContained;
 
         internal CASEComponent GetCASEProperties(AbstractActor actor, int location)
         {
