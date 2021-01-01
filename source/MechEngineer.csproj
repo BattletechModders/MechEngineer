@@ -96,6 +96,7 @@
     <Compile Include="Features\AutoFix\Patches\HeatSinkDef_FromJSON_Patch.cs" />
     <Compile Include="Features\BetterLog\BetterLogger.cs" />
     <Compile Include="Features\BetterLog\BetterLevelLogger.cs" />
+    <Compile Include="Features\ComponentExplosions\Patches\Mech_ApplyHeadStructureEffects_Patch.cs" />
     <Compile Include="Features\CriticalEffects\Criticals.cs" />
     <Compile Include="Features\HardpointFix\sorting\Patches\MechDef_RefreshInventory_Patch.cs" />
     <Compile Include="Features\HardpointFix\utils\CompatibleUtils.cs" />
