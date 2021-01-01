@@ -65,16 +65,16 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                 }
                 mech.PublishFloatieMessage("EXPLOSION REDIRECTED");
                 
-                var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
-                damage = directDamage; // update damage applied in finally
+                var newInternalDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
+                var backDamage = damage - newInternalDamage;
+
+                damage = newInternalDamage; // update damage applied in finally
+                Control.Logger.Debug?.Log($"reducing structure damage from {damage} to {newInternalDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
                 
                 if ((location & ChassisLocations.Torso) == 0)
                 {
                     return;
                 }
-                
-                var backDamage = damage - directDamage;
-                Control.Logger.Debug?.Log($"reducing structure damage from {damage} to {directDamage} in {Mech.GetAbbreviatedChassisLocation(location)}");
                 
                 if (backDamage <= 0)
                 {
