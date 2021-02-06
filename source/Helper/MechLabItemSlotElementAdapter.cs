@@ -4,7 +4,7 @@ using SVGImporter;
 using TMPro;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     public class MechLabItemSlotElementAdapter : Adapter<MechLabItemSlotElement>
     {

@@ -5,6 +5,7 @@ using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
 using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.OverrideDescriptions
 {

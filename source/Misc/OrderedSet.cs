@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace MechEngineer
+namespace MechEngineer.Misc
 {
     // https://www.codeproject.com/Articles/627085/HashSet-that-Preserves-Insertion-Order-or-NET
     public class OrderedSet<T> : ICollection<T>

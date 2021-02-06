@@ -2,7 +2,7 @@ using BattleTech;
 using Localize;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 
-namespace MechEngineer.Features.OverrideStatTooltips
+namespace MechEngineer.Features.OverrideStatTooltips.Stats
 {
     internal class MediumRangeStat : IStatHandler
     {

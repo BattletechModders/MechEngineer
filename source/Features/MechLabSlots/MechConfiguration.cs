@@ -1,10 +1,4 @@
-﻿using System;
-using BattleTech;
-using BattleTech.UI;
-using CustomComponents;
-using Harmony;
-using MechEngineer.Features.MechLabSlots.Patches;
-using UnityEngine;
+﻿using CustomComponents;
 
 namespace MechEngineer.Features.MechLabSlots
 {

@@ -5,6 +5,7 @@ using CustomComponents;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.Engines
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     internal static class EnumHelper
     {

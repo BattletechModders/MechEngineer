@@ -2,7 +2,6 @@
 using BattleTech.UI;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
-using System.Linq;
 
 namespace MechEngineer.Features.Engines.StaticHandler
 {

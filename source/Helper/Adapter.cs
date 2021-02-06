@@ -1,6 +1,6 @@
 using Harmony;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     public class Adapter<T>
     {

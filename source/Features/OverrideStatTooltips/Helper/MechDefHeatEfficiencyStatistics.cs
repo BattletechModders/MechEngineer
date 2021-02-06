@@ -1,10 +1,10 @@
 ﻿using BattleTech;
-using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Engines.StaticHandler;
 using MechEngineer.Features.OverrideTonnage;
 using System.Linq;
 using MechEngineer.Features.HeatSinkCapacityStat;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Helper
 {

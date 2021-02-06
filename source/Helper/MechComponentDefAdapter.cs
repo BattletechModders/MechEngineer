@@ -1,6 +1,6 @@
 ﻿using BattleTech;
 
-namespace MechEngineer.Features.OverrideDescriptions
+namespace MechEngineer.Helper
 {
     public class MechComponentDefAdapter : Adapter<MechComponentDef>
     {

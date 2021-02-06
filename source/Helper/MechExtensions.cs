@@ -1,6 +1,6 @@
 ﻿using BattleTech;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     internal static class MechExtensions
     {

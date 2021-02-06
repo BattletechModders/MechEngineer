@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using BattleTech;
-using BattleTech.UI;
+﻿using BattleTech;
+using MechEngineer.Helper;
 
-namespace MechEngineer
+namespace MechEngineer.Misc
 {
     internal interface IIdentifier
     {

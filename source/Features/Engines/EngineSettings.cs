@@ -1,4 +1,3 @@
-using BattleTech;
 using MechEngineer.Features.Engines.Helper;
 
 namespace MechEngineer.Features.Engines

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
@@ -8,6 +7,8 @@ using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
+using MechEngineer.Helper;
+using MechEngineer.Misc;
 using UnityEngine;
 
 namespace MechEngineer.Features.OverrideTonnage

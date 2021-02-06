@@ -1,3 +1,5 @@
+using MechEngineer.Features.OverrideStatTooltips.Stats;
+
 namespace MechEngineer.Features.OverrideStatTooltips
 {
     internal class OverrideStatTooltipsFeature : Feature<OverrideStatTooltipsSettings>

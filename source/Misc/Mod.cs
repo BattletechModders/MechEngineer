@@ -2,7 +2,7 @@ using System.IO;
 using fastJSON;
 using HBS.Util;
 
-namespace MechEngineer
+namespace MechEngineer.Misc
 {
     public class Mod
     {

@@ -8,6 +8,7 @@ using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.OverrideTonnage;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.AutoFix
 {

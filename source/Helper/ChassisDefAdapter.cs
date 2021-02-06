@@ -1,6 +1,6 @@
 ﻿using BattleTech;
 
-namespace MechEngineer.Features.HardpointFix
+namespace MechEngineer.Helper
 {
     internal class ChassisDefAdapter : Adapter<ChassisDef>
     {

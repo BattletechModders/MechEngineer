@@ -1,6 +1,7 @@
 ﻿using BattleTech;
 using System;
 using System.Linq;
+using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Helper

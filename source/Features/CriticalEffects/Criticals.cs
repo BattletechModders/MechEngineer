@@ -5,6 +5,7 @@ using BattleTech;
 using CustomComponents;
 using FluffyUnderware.DevTools.Extensions;
 using MechEngineer.Features.PlaceholderEffects;
+using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.CriticalEffects

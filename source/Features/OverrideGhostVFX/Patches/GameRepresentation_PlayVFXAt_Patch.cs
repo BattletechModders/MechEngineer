@@ -2,7 +2,6 @@
 using System.Linq;
 using BattleTech;
 using Harmony;
-using UnityEngine;
 
 namespace MechEngineer.Features.OverrideGhostVFX.Patches
 {

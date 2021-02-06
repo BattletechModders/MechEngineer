@@ -2,7 +2,7 @@
 using CustomComponents;
 using UnityEngine;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     internal static class ColorExtensions
     {

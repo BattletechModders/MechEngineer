@@ -2,8 +2,9 @@ using BattleTech;
 using Localize;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
+using MechEngineer.Helper;
 
-namespace MechEngineer.Features.OverrideStatTooltips
+namespace MechEngineer.Features.OverrideStatTooltips.Stats
 {
     internal class DurabilityStat : IStatHandler
     {

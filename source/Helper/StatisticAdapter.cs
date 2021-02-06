@@ -1,7 +1,7 @@
-﻿using BattleTech;
-using System;
+﻿using System;
+using BattleTech;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     internal class StatisticAdapter<T>
     {

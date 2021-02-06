@@ -1,5 +1,4 @@
 ﻿using System;
-using BattleTech;
 using BattleTech.UI;
 using Harmony;
 

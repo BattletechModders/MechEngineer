@@ -48,9 +48,6 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <Private>False</Private>
     </Reference>
-    <Reference Include="DOTween">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="DOTweenPro">
       <Private>False</Private>
     </Reference>
@@ -58,9 +55,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Data">
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
@@ -73,9 +67,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.ImageConversionModule">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.ScreenCaptureModule">
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
@@ -102,10 +93,10 @@
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\PlaceholderEffects\Patches\StatisticEffect_initStatisiticEffect_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
-    <Compile Include="Features\MechLabSlots\MechLabHardpointElementAdapter.cs" />
+    <Compile Include="Helper\MechLabHardpointElementAdapter.cs" />
     <Compile Include="Features\MechLabSlots\MechLabLocationNaming.cs" />
-    <Compile Include="Features\MechLabSlots\MechLabMechInfoWidgetAdapter.cs" />
-    <Compile Include="Features\MechLabSlots\MechLabPanelAdapter.cs" />
+    <Compile Include="Helper\MechLabMechInfoWidgetAdapter.cs" />
+    <Compile Include="Helper\MechLabPanelAdapter.cs" />
     <Compile Include="Features\Performance\Patches\ActorMovementSequence_CompleteMove_Patch.cs" />
     <Compile Include="Features\Performance\Patches\BTLightController_Patches.cs" />
     <Compile Include="Features\Performance\Patches\AbstractActor_StealthPipsPreviewFromActorMovement_Patch.cs" />
@@ -245,7 +236,7 @@
     <Compile Include="Features\Globals\Patches\MechLabPanel_ExitMechLab_Patch.cs" />
     <Compile Include="Features\Globals\Patches\MechLabPanel_LoadMech_Patch.cs" />
     <Compile Include="Features\HardpointFix\HardpointFixFeature.cs" />
-    <Compile Include="Features\HardpointFix\ChassisDefAdapter.cs" />
+    <Compile Include="Helper\ChassisDefAdapter.cs" />
     <Compile Include="Features\HardpointFix\Patches\ChassisDef_refreshLocationReferences_Patch.cs" />
     <Compile Include="Features\InvalidInventory\InvalidInventoryFeature.cs" />
     <Compile Include="Features\PlaceholderEffects\PlaceholderEffectsFeature.cs" />
@@ -277,7 +268,7 @@
     <Compile Include="Features\OverrideDescriptions\BonusDescriptionSettings.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustInventoryElement.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustSlotElement.cs" />
-    <Compile Include="Features\OverrideDescriptions\MechComponentDefAdapter.cs" />
+    <Compile Include="Helper\MechComponentDefAdapter.cs" />
     <Compile Include="Features\Engines\CoolingDef.cs" />
     <Compile Include="Features\Engines\Engine.cs" />
     <Compile Include="Features\Engines\EngineCoreDef.cs" />
@@ -352,7 +343,7 @@
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustTooltipEquipment.cs" />
     <Compile Include="Helper\TooltipPrefab_WeaponAdapter.cs" />
-    <Compile Include="Misc\CCValidationAdapter.cs" />
+    <Compile Include="Helper\CCValidationAdapter.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
     <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch.cs" />
@@ -363,7 +354,7 @@
     <Compile Include="Helper\MechLabLocationWidgetAdapter.cs" />
     <Compile Include="Features\HardpointFix\Patches\MechLabLocationWidget_OnMechLabDrop_Patch.cs" />
     <Compile Include="Features\HardpointFix\MechLabLocationWidgetPatchHelper.cs" />
-    <Compile Include="Features\HardpointFix\MechDefAdapter.cs" />
+    <Compile Include="Helper\MechDefAdapter.cs" />
     <Compile Include="Features\HardpointFix\Patches\MechHardpointRules_GetComponentPrefabName_Patch.cs" />
     <Compile Include="Features\HardpointFix\Patches\Mech_InitGameRep_Patch.cs" />
     <Compile Include="Features\HardpointFix\Patches\MechRepresentationSimGame_LoadWeapons_Patch.cs" />
@@ -374,7 +365,7 @@
     <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotsFeature.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
-    <Compile Include="Misc\Adapter.cs" />
+    <Compile Include="Helper\Adapter.cs" />
     <Compile Include="Misc\FileUtils.cs" />
     <Compile Include="Misc\KFix.cs" />
     <Compile Include="Misc\MELazy.cs" />

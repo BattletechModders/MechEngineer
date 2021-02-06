@@ -6,6 +6,8 @@ using CustomComponents;
 using Harmony;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.TurretLimitedAmmo;
+using MechEngineer.Helper;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.OmniSlots
 {

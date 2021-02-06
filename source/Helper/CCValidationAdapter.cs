@@ -7,8 +7,9 @@ using BattleTech.UI;
 using CustomComponents;
 using Harmony;
 using Localize;
+using MechEngineer.Misc;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     internal class CCValidationAdapter
     {

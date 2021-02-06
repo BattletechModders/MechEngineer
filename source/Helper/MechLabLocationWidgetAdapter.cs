@@ -2,10 +2,9 @@
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
-using Harmony;
 using TMPro;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     internal class MechLabLocationWidgetAdapter : Adapter<MechLabLocationWidget>
     {

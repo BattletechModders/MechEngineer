@@ -4,6 +4,7 @@ using CustomComponents;
 using MechEngineer.Features.CriticalEffects;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
+using MechComponentDefExtensions = MechEngineer.Helper.MechComponentDefExtensions;
 using StatCollectionExtension = MechEngineer.Features.Engines.Helper.StatCollectionExtension;
 
 namespace MechEngineer.Features.HeatSinkCapacityStat

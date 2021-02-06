@@ -1,7 +1,7 @@
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
 using FluffyUnderware.DevTools.Extensions;
-using SVGImporter;
+using MechEngineer.Helper;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

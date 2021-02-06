@@ -6,6 +6,8 @@ using MechEngineer.Features.MechLabSlots;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MechEngineer.Helper;
+using MechEngineer.Misc;
 using UnityEngine;
 
 namespace MechEngineer.Features.DynamicSlots

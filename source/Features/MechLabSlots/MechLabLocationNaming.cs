@@ -3,6 +3,7 @@ using System.Linq;
 using BattleTech;
 using CustomComponents;
 using Localize;
+using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots

@@ -8,6 +8,7 @@ using CustomComponents;
 using CustomComponents.ExtendedDetails;
 using fastJSON;
 using Localize;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.OverrideDescriptions
 {

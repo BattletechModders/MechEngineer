@@ -2,7 +2,7 @@ using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
 using SVGImporter;
 
-namespace MechEngineer.Features.MechLabSlots
+namespace MechEngineer.Helper
 {
     internal class MechLabHardpointElementAdapter : Adapter<MechLabHardpointElement>
     {

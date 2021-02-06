@@ -1,14 +1,14 @@
-﻿using BattleTech;
-using BattleTech.UI;
-using Harmony;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BattleTech;
+using BattleTech.UI;
+using Harmony;
 using UnityEngine;
 
-namespace MechEngineer.Features.DebugScreenshotMechs
+namespace MechEngineer.Features.DebugScreenshotMechs.Patches
 {
     [HarmonyPatch(typeof(SkirmishMechBayPanel), nameof(SkirmishMechBayPanel.OnMechLabCancel))]
     public static class SkirmishMechBayPanel_OnMechLabCancel_Patch

@@ -5,8 +5,8 @@ using BattleTech;
 using CustomComponents;
 using ErosionBrushPlugin;
 using MechEngineer.Features.Engines;
-using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.MechLabSlots;
+using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.AutoFix

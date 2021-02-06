@@ -1,8 +1,8 @@
-﻿using BattleTech;
+﻿using System.Linq;
+using BattleTech;
 using CustomComponents;
-using System.Linq;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     internal static class MechComponentDefExtensions
     {

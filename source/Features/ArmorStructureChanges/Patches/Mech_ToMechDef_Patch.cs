@@ -1,7 +1,7 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
-using MechEngineer.Features.HardpointFix;
+using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.ArmorStructureChanges.Patches

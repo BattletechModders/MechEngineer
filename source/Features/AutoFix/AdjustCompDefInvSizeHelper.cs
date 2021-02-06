@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleTech;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.AutoFix
 {

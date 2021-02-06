@@ -1,7 +1,7 @@
 ﻿using BattleTech.UI.Tooltips;
 using TMPro;
 
-namespace MechEngineer
+namespace MechEngineer.Helper
 {
     public class TooltipPrefab_EquipmentAdapter : Adapter<TooltipPrefab_Equipment>
     {

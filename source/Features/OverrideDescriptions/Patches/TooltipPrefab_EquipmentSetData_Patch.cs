@@ -2,6 +2,7 @@
 using BattleTech;
 using BattleTech.UI.Tooltips;
 using Harmony;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches
 {

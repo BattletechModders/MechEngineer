@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace MechEngineer
+namespace MechEngineer.Misc
 {
     internal static class DictionarySerializer
     {

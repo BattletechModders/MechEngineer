@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using MechEngineer.Features.OrderedStatusEffects;
+using MechEngineer.Helper;
 using static BattleTech.StatisticEffectData;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Helper

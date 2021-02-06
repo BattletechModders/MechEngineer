@@ -2,6 +2,7 @@
 using BattleTech;
 using Harmony;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.AutoFix.Patches

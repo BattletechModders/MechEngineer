@@ -5,7 +5,7 @@ using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 using MechEngineer.Features.OverrideTonnage;
 
-namespace MechEngineer.Features.OverrideStatTooltips
+namespace MechEngineer.Features.OverrideStatTooltips.Stats
 {
     internal class MovementStat : IStatHandler
     {

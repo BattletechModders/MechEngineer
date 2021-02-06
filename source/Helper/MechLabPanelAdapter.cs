@@ -1,6 +1,6 @@
 using BattleTech.UI;
 
-namespace MechEngineer.Features.MechLabSlots
+namespace MechEngineer.Helper
 {
     internal class MechLabPanelAdapter : Adapter<MechLabPanel>
     {

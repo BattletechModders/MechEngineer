@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
+using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.ComponentExplosions.Patches

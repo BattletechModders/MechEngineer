@@ -5,7 +5,6 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
-using HBS.Extensions;
 
 namespace MechEngineer.Features.ArmActuators
 {

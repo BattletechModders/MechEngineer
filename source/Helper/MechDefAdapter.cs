@@ -2,7 +2,7 @@
 using BattleTech.Data;
 using Harmony;
 
-namespace MechEngineer.Features.HardpointFix
+namespace MechEngineer.Helper
 {
     internal class MechDefAdapter
     {

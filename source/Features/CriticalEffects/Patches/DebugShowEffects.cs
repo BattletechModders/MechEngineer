@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
-using Harmony;
 
 namespace MechEngineer.Features.CriticalEffects.Patches
 {

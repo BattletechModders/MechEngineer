@@ -5,6 +5,7 @@ using CustomComponents;
 using Localize;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideTonnage;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.DynamicSlots
 {

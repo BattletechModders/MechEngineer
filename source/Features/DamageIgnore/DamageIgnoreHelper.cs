@@ -1,5 +1,5 @@
 ﻿using BattleTech;
-using CustomComponents;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.DamageIgnore
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MechEngineer
+namespace MechEngineer.Misc
 {
     public class MELazy<T> where T : new()
     {

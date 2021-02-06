@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using BattleTech;
 using CustomComponents;
+using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.ComponentExplosions
@@ -128,7 +129,7 @@ namespace MechEngineer.Features.ComponentExplosions
         }
     }
 
-    public class MechComponentAdapter : Adapter<MechComponent>
+    public class MechComponentAdapter : Helper.Adapter<MechComponent>
     {
         public MechComponentAdapter(MechComponent instance) : base(instance)
         {
