@@ -111,7 +111,7 @@ namespace MechEngineer.Features.OverrideDescriptions
         }
 
         [JsonIgnore]
-        private readonly List<BonusDescription> descriptions = new List<BonusDescription>();
+        private readonly List<BonusDescription> descriptions = new();
 
         private class BonusDescription
         {

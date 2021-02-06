@@ -7,7 +7,7 @@ namespace MechEngineer.Features.ComponentExplosions
 {
     internal class ComponentExplosionsFeature: Feature<ComponentExplosionsSettings>
     {
-        internal static ComponentExplosionsFeature Shared = new ComponentExplosionsFeature();
+        internal static ComponentExplosionsFeature Shared = new();
 
         internal override ComponentExplosionsSettings Settings => Control.settings.ComponentExplosions;
 

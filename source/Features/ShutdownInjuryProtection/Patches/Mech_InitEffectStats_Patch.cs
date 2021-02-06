@@ -31,12 +31,12 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
     {
         internal static StatisticAdapter<bool> ReceiveShutdownInjury(this StatCollection statCollection)
         {
-            return new StatisticAdapter<bool>("ReceiveShutdownInjury", statCollection, false);
+            return new("ReceiveShutdownInjury", statCollection, false);
         }
 
         internal static StatisticAdapter<bool> ReceiveHeatDamageInjury(this StatCollection statCollection)
         {
-            return new StatisticAdapter<bool>("ReceiveHeatDamageInjury", statCollection, false);
+            return new("ReceiveHeatDamageInjury", statCollection, false);
         }
     }
 }

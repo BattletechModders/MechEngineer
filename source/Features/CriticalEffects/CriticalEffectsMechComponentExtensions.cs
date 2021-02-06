@@ -6,7 +6,7 @@ namespace MechEngineer.Features.CriticalEffects
     {
         internal static Criticals Criticals(this MechComponent mechComponent)
         {
-            return new Criticals(mechComponent);
+            return new(mechComponent);
         }
     }
 }

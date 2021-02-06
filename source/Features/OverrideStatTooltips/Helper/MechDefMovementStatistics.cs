@@ -55,7 +55,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
 
         private readonly MechDef mechDef;
         private readonly EngineMovement movement;
-        private readonly StatCollection statCollection = new StatCollection();
+        private readonly StatCollection statCollection = new();
 
         internal float GetStatisticRating()
         {

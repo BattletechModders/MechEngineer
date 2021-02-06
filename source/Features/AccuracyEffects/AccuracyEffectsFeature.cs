@@ -6,7 +6,7 @@ namespace MechEngineer.Features.AccuracyEffects
 {
     internal class AccuracyEffectsFeature : Feature<AccuracyEffectsSettings>
     {
-        internal static AccuracyEffectsFeature Shared = new AccuracyEffectsFeature();
+        internal static AccuracyEffectsFeature Shared = new();
 
         internal override AccuracyEffectsSettings Settings => Control.settings.AccuracyEffects;
 

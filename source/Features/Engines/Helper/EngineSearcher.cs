@@ -48,8 +48,8 @@ namespace MechEngineer.Features.Engines.Helper
             internal CoolingDef CoolingDef;
             internal EngineHeatBlockDef HeatBlockDef;
             internal EngineCoreDef CoreDef;
-            internal Weights Weights = new Weights();
-            internal List<MechComponentRef> HeatSinks = new List<MechComponentRef>();
+            internal Weights Weights = new();
+            internal List<MechComponentRef> HeatSinks = new();
         }
     }
 }

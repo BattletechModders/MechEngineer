@@ -14,7 +14,7 @@ namespace MechEngineer.Features.OverrideTonnage
 {
     internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjustTooltipWeapon, IAdjustSlotElement
     {
-        internal static readonly WeightsHandler Shared = new WeightsHandler();
+        internal static readonly WeightsHandler Shared = new();
 
         // shared between Weights and DynamicSlots
         public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)

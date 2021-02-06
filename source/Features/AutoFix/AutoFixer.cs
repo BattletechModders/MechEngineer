@@ -13,7 +13,7 @@ namespace MechEngineer.Features.AutoFix
 {
     internal class AutoFixer : IAutoFixMechDef
     {
-        internal static AutoFixer Shared = new AutoFixer();
+        internal static AutoFixer Shared = new();
 
         public void AutoFix(List<MechDef> mechDefs, SimGameState simgame)
         {
@@ -371,7 +371,7 @@ namespace MechEngineer.Features.AutoFix
 
         private class OrderComparer : IComparer<MechComponentRef>
         {
-            private readonly SorterComparer comparer = new SorterComparer();
+            private readonly SorterComparer comparer = new();
             public int Compare(MechComponentRef x, MechComponentRef y)
             {
                 return comparer.Compare(x?.Def, y?.Def);

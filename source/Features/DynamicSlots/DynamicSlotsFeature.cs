@@ -12,7 +12,7 @@ namespace MechEngineer.Features.DynamicSlots
 {
     internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMech
     {
-        internal static DynamicSlotsFeature Shared = new DynamicSlotsFeature();
+        internal static DynamicSlotsFeature Shared = new();
 
         internal override DynamicSlotsSettings Settings => Control.settings.DynamicSlots;
 
@@ -192,7 +192,7 @@ namespace MechEngineer.Features.DynamicSlots
             Fillers[location][slotIndex].Show(slots, isReservedSlot);
         }
 
-        private static Dictionary<ChassisLocations, List<Filler>> Fillers = new Dictionary<ChassisLocations, List<Filler>>();
+        private static Dictionary<ChassisLocations, List<Filler>> Fillers = new();
 
         private static void AddFillersToSlots(WidgetLayout layout)
         {

@@ -26,92 +26,92 @@ namespace MechEngineer.Features.HardpointFix
         // to: /data/hardpoints$ grep -R "chrPrfWeap" . | cut -d_ -f 5 | sort | uniq
         // default mapping = prefabid -> lower case prefab id (e.g. Flamer -> flamer, PPC -> ppc)
         public WeaponPrefabMapping[] WeaponPrefabMappings = {
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "AC2",
                 HardpointCandidates = new[] {"ac2", "uac2", "rac2", "lbx2", "ac", "lbx"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "AC5",
                 HardpointCandidates = new[] {"ac5", "uac5", "rac5", "lbx5", "ac", "lbx"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "AC10",
                 HardpointCandidates = new[] {"ac10", "uac10", "lbx10", "ac", "lbx"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "AC20",
                 HardpointCandidates = new[] {"ac20", "uac20", "ac", "lbx"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "lbx10", // used by LBX 2-20
                 HardpointCandidates = new[] {"lbx10", "lbx20", "lbx5", "lbx2", "ac10", "ac", "lbx"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "uac5", // used by UAC 2-20
                 HardpointCandidates = new[] {"uac5", "uac20", "uac10", "uac2", "ac5", "ac20", "ac10", "ac2", "rac5", "lbx5", "ac", "lbx"}
             },
-            new WeaponPrefabMapping
+            new()
             { /* requested by LtShade */
                 PrefabIdentifier= "artillery",
                 HardpointCandidates = new[] {"artillery", "ac20", "uac20", "lbx20", "ac", "lbx"}
             },
-            new WeaponPrefabMapping
+            new()
             { /* requested by bloodydoves */
                 PrefabIdentifier= "mortar",
                 HardpointCandidates = new[] {"mortar", "ac20", "uac20", "lbx20", "ac", "lbx"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "lrm5",
                 HardpointCandidates = new[] {"lrm5", "lrm10", "lrm15", "lrm20", "srm20"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "lrm10",
                 HardpointCandidates = new[] {"lrm10", "lrm15", "lrm20", "srm20", "lrm5", "rl10"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "lrm15",
                 HardpointCandidates = new[] {"lrm15", "lrm20", "srm20", "lrm10", "lrm5", "rl20", "rl15"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "lrm20",
                 HardpointCandidates = new[] {"lrm20", "srm20", "lrm15", "lrm10", "lrm5", "rl20", "rl15", "rl10"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "MachineGun",
                 HardpointCandidates = new[] {"machinegun", "mg", "lmg", "hmg"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "srm2",
                 HardpointCandidates = new[] {"srm2", "srm4", "srm6"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "srm4",
                 HardpointCandidates = new[] {"srm4", "srm6", "srm2"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "srm6",
                 HardpointCandidates = new[] {"srm6", "srm4", "srm2"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "PPC",
                 HardpointCandidates = new[] {"PPC", "ppc", "hppc", "lppc", "snppc"}
             },
-            new WeaponPrefabMapping
+            new()
             {
                 PrefabIdentifier= "Gauss",
                 HardpointCandidates = new[] {"gauss", "hgauss", "lgauss"}

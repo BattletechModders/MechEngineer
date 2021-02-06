@@ -6,7 +6,7 @@ namespace MechEngineer.Features.PlaceholderEffects
 {
     internal class PlaceholderEffectsFeature : Feature<PlaceholderEffectsSettings>
     {
-        internal static PlaceholderEffectsFeature Shared = new PlaceholderEffectsFeature();
+        internal static PlaceholderEffectsFeature Shared = new();
 
         // TODO introduce nice dependency resolver
         internal override bool Enabled => Settings.Enabled && (AccuracyEffectsFeature.Shared.Settings?.Enabled ?? false) || (CriticalEffectsFeature.Shared.Settings?.Enabled ?? false);

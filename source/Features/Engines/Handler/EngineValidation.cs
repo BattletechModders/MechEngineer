@@ -8,7 +8,7 @@ namespace MechEngineer.Features.Engines.Handler
 {
     internal class EngineValidation : IValidateMech
     {
-        internal static EngineValidation Shared = new EngineValidation();
+        internal static EngineValidation Shared = new();
         internal CCValidationAdapter CCValidation;
 
         internal EngineValidation()

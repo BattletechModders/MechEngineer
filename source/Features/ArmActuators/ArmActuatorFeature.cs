@@ -5,7 +5,7 @@ namespace MechEngineer.Features.ArmActuators
 {
     internal class ArmActuatorFeature: Feature<ArmActuatorSettings>
     {
-        internal static ArmActuatorFeature Shared = new ArmActuatorFeature();
+        internal static ArmActuatorFeature Shared = new();
 
         internal override ArmActuatorSettings Settings => Control.settings.ArmActuator;
 

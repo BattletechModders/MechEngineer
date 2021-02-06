@@ -26,7 +26,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
 		private MechDefFirepowerStatistics GetFirepower(MechDef mechDef)
 		{
-            return new MechDefFirepowerStatistics(
+            return new(
                 mechDef,
                 OverrideStatTooltipsFeature.Shared.Settings.CloseRangeMax+1,
                 OverrideStatTooltipsFeature.Shared.Settings.MediumRangeMax

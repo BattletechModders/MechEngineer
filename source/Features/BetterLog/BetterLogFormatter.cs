@@ -39,7 +39,7 @@ namespace MechEngineer.Features.BetterLog
             return line;
         }
         
-        private static readonly Regex NEWLINE_REGEX = new Regex(@"\r\n|\n\r|\n|\r", RegexOptions.Compiled);
+        private static readonly Regex NEWLINE_REGEX = new(@"\r\n|\n\r|\n|\r", RegexOptions.Compiled);
 
         private string GetFormattedTime()
         {

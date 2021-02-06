@@ -8,7 +8,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
     [HarmonyPatch(typeof(ChassisDef), "RefreshHardpointData")]
     public static class ChassisDef_RefreshHardpointData_Patch
     {
-        internal static readonly Dictionary<string, LocationDef[]> ChassisDefLocationsLocationsCache = new Dictionary<string, LocationDef[]>();
+        internal static readonly Dictionary<string, LocationDef[]> ChassisDefLocationsLocationsCache = new();
 
         public static void Postfix(ChassisDef __instance)
         {

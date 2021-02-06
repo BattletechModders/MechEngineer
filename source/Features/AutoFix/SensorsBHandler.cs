@@ -7,7 +7,7 @@ namespace MechEngineer.Features.AutoFix
 {
     internal class SensorsBHandler : IAdjustUpgradeDef, IPreProcessor
     {
-        internal static MELazy<SensorsBHandler> Lazy = new MELazy<SensorsBHandler>();
+        internal static MELazy<SensorsBHandler> Lazy = new();
         internal static SensorsBHandler Shared => Lazy.Value;
         
         private readonly IdentityHelper identity;

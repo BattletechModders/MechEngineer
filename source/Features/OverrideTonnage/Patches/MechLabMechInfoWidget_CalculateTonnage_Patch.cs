@@ -81,8 +81,8 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
         {
             internal float Precision { get; }
 
-            internal static InfoTonnageHelper KilogramStandard => new InfoTonnageHelper(OverrideTonnageFeature.settings.KilogramStandardPrecision);
-            internal static InfoTonnageHelper TonnageStandard => new InfoTonnageHelper(OverrideTonnageFeature.settings.TonnageStandardPrecision);
+            internal static InfoTonnageHelper KilogramStandard => new(OverrideTonnageFeature.settings.KilogramStandardPrecision);
+            internal static InfoTonnageHelper TonnageStandard => new(OverrideTonnageFeature.settings.TonnageStandardPrecision);
 
             private InfoTonnageHelper(float precision)
             {

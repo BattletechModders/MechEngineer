@@ -5,7 +5,7 @@ namespace MechEngineer.Features.Engines
 {
     internal class EngineFeature : Feature<EngineSettings>
     {
-        internal static EngineFeature Shared = new EngineFeature();
+        internal static EngineFeature Shared = new();
 
         internal override EngineSettings Settings => Control.settings.Engine;
 

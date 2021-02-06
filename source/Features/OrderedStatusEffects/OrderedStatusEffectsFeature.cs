@@ -9,7 +9,7 @@ namespace MechEngineer.Features.OrderedStatusEffects
 {
     internal class OrderedStatusEffectsFeature : Feature<OrderedStatusEffectsSettings>
     {
-        internal static OrderedStatusEffectsFeature Shared = new OrderedStatusEffectsFeature();
+        internal static OrderedStatusEffectsFeature Shared = new();
 
         internal override OrderedStatusEffectsSettings Settings => Control.settings.OrderedStatusEffects;
 

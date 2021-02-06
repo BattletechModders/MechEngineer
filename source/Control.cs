@@ -15,7 +15,7 @@ namespace MechEngineer
 
         internal static BetterLogger Logger;
 
-        internal static MechEngineerSettings settings = new MechEngineerSettings();
+        internal static MechEngineerSettings settings = new();
 
         public static void Start(string modDirectory, string json)
         {

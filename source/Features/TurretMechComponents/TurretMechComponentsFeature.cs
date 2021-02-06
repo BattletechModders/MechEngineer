@@ -2,7 +2,7 @@
 {
     internal class TurretMechComponentsFeature : Feature<TurretMechComponentSettings>
     {
-        internal static TurretMechComponentsFeature Shared = new TurretMechComponentsFeature();
+        internal static TurretMechComponentsFeature Shared = new();
 
         internal override TurretMechComponentSettings Settings => Control.settings.TurretMechComponents;
     }

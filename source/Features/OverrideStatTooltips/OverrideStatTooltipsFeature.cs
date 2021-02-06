@@ -2,7 +2,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 {
     internal class OverrideStatTooltipsFeature : Feature<OverrideStatTooltipsSettings>
     {
-        internal static OverrideStatTooltipsFeature Shared = new OverrideStatTooltipsFeature();
+        internal static OverrideStatTooltipsFeature Shared = new();
 
         internal override OverrideStatTooltipsSettings Settings => Control.settings.OverrideStatTooltips;
 

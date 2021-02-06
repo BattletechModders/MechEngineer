@@ -6,7 +6,7 @@ namespace MechEngineer.Features.AutoFix
 {
     internal class CockpitHandler : IAdjustUpgradeDef, IPreProcessor
     {
-        internal static MELazy<CockpitHandler> Lazy = new MELazy<CockpitHandler>();
+        internal static MELazy<CockpitHandler> Lazy = new();
         internal static CockpitHandler Shared => Lazy.Value;
         
         private readonly IdentityHelper identity;

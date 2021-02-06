@@ -13,7 +13,7 @@ namespace MechEngineer.Features.AutoFix
 {
     internal class ChassisHandler
     {
-        private static readonly Dictionary<string, float> OriginalInitialTonnages = new Dictionary<string, float>();
+        private static readonly Dictionary<string, float> OriginalInitialTonnages = new();
 
         internal static void OverrideChassisSettings(ChassisDef chassisDef)
         {

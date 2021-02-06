@@ -7,7 +7,7 @@ namespace MechEngineer.Features.CompressFloatieMessages
 {
     internal class CompressFloatieMessagesFeature : Feature<CompressFloatieMessagesSettings>
     {
-        internal static CompressFloatieMessagesFeature Shared = new CompressFloatieMessagesFeature();
+        internal static CompressFloatieMessagesFeature Shared = new();
 
         internal override CompressFloatieMessagesSettings Settings => Control.settings.CompressFloatieMessages;
 
@@ -55,6 +55,6 @@ namespace MechEngineer.Features.CompressFloatieMessages
             return false;
         }
 
-        private static readonly Regex MultiplierRegex = new Regex("^ x (\\d+)$", RegexOptions.Compiled);
+        private static readonly Regex MultiplierRegex = new("^ x (\\d+)$", RegexOptions.Compiled);
     }
 }

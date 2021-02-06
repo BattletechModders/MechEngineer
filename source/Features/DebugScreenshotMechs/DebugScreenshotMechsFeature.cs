@@ -5,7 +5,7 @@ namespace MechEngineer.Features.DebugScreenshotMechs
 {
     internal class DebugScreenshotMechsFeature : Feature<DebugScreenshotMechsSettings>
     {
-        internal static DebugScreenshotMechsFeature Shared = new DebugScreenshotMechsFeature();
+        internal static DebugScreenshotMechsFeature Shared = new();
 
         internal override DebugScreenshotMechsSettings Settings => Control.settings.DebugScreenshotMechs;
         

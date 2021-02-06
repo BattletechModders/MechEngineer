@@ -35,7 +35,7 @@ namespace MechEngineer.Features.OmniSlots
             }
         }
 
-        private readonly Dictionary<WeaponCategoryValue, HardpointStat> stats = new Dictionary<WeaponCategoryValue, HardpointStat>();
+        private readonly Dictionary<WeaponCategoryValue, HardpointStat> stats = new();
 
         public override string ToString()
         {

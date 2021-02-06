@@ -210,7 +210,7 @@ namespace MechEngineer.Features.DynamicSlots
             #endregion
         }
 
-        private readonly Dictionary<ChassisLocations, LocationInfo> LocationInfos = new Dictionary<ChassisLocations, LocationInfo>();
+        private readonly Dictionary<ChassisLocations, LocationInfo> LocationInfos = new();
         internal LocationInfo GetLocationInfo(ChassisLocations location)
         {
             if (!LocationInfos.TryGetValue(location, out var usage))

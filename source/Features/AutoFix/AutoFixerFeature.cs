@@ -4,7 +4,7 @@ namespace MechEngineer.Features.AutoFix
 {
     internal class AutoFixerFeature : Feature<AutoFixerSettings>
     {
-        internal static AutoFixerFeature Shared = new AutoFixerFeature();
+        internal static AutoFixerFeature Shared = new();
 
         internal override AutoFixerSettings Settings => Control.settings.AutoFixer;
 

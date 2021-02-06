@@ -102,7 +102,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
         private static StatisticAdapter<float> DamageReductionMultiplierAll(StatCollection statCollection)
         {
-            return new StatisticAdapter<float>("DamageReductionMultiplierAll", statCollection, 1);
+            return new("DamageReductionMultiplierAll", statCollection, 1);
         }
 
         private float MaxStability(MechDef mechDef)
@@ -115,7 +115,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
         private static StatisticAdapter<float> MaxStability(StatCollection statCollection, float defaultValue)
         {
-            return new StatisticAdapter<float>("MaxStability", statCollection, defaultValue);
+            return new("MaxStability", statCollection, defaultValue);
         }
 
         private float UnsteadyThreshold(MechDef mechDef)
@@ -128,7 +128,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
         private static StatisticAdapter<float> UnsteadyThreshold(StatCollection statCollection)
         {
-            return new StatisticAdapter<float>("UnsteadyThreshold", statCollection, MechStatisticsRules.Combat.ResolutionConstants.DefaultUnsteadyThreshold);
+            return new("UnsteadyThreshold", statCollection, MechStatisticsRules.Combat.ResolutionConstants.DefaultUnsteadyThreshold);
         }
 
         private float MaxEvasivePips(MechDef mechDef)
@@ -141,7 +141,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
         private static StatisticAdapter<int> MaxEvasivePips(StatCollection statCollection)
         {
-            return new StatisticAdapter<int>("MaxEvasivePips", statCollection, 6); // probably is overwritten by many mods
+            return new("MaxEvasivePips", statCollection, 6); // probably is overwritten by many mods
         }
 
         private float ToHitThisActor(MechDef mechDef)
@@ -154,7 +154,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
         private static StatisticAdapter<float> ToHitThisActor(StatCollection statCollection)
         {
-            return new StatisticAdapter<float>("ToHitThisActor", statCollection, 0);
+            return new("ToHitThisActor", statCollection, 0);
         }
 
         private static float GetTargetSizeModifier(WeightClass weightClass)

@@ -15,7 +15,7 @@ namespace MechEngineer.Features.AutoFix
 
         public MechLocationNamingTemplateByTags[] MechLocationNamingTemplates =
         {
-            new MechLocationNamingTemplateByTags
+            new()
             {
                 Tags = new [] { "unit_vtol" },
                 Template = new ChassisLocationNaming
@@ -50,7 +50,7 @@ namespace MechEngineer.Features.AutoFix
                     }
                 }
             },
-            new MechLocationNamingTemplateByTags
+            new()
             {
                 Tags = new [] { "fake_vehicle_chassis" },
                 Template = new ChassisLocationNaming
@@ -92,10 +92,10 @@ namespace MechEngineer.Features.AutoFix
         public class MechLocationNamingTemplateByTags
         {
             public string[] Tags = {};
-            public ChassisLocationNaming Template = new ChassisLocationNaming();
+            public ChassisLocationNaming Template = new();
         }
 
-        public IdentityHelper GyroCategorizer = new IdentityHelper
+        public IdentityHelper GyroCategorizer = new()
         {
             AllowedLocations = ChassisLocations.CenterTorso, // optional if category is properly setup
             ComponentType = ComponentType.Upgrade, // optional if category is properly setup
@@ -103,9 +103,9 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "Gyro", // required
             AutoAddCategoryIdIfMissing = true // adds category id to items matched by optional filters
         };
-        public SlotChange GyroSlotChange = new SlotChange { From = 3, By = 1 };
+        public SlotChange GyroSlotChange = new() { From = 3, By = 1 };
 
-        public IdentityHelper CockpitCategorizer = new IdentityHelper
+        public IdentityHelper CockpitCategorizer = new()
         {
             AllowedLocations = ChassisLocations.Head,
             ComponentType = ComponentType.Upgrade,
@@ -113,10 +113,10 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "Cockpit",
             AutoAddCategoryIdIfMissing = true
         };
-        public TonnageChange CockpitTonnageChange = new TonnageChange { From = 0, By = 3 };
-        public SlotChange CockpitSlotChange = new SlotChange { From = 1, By = 0 };
+        public TonnageChange CockpitTonnageChange = new() { From = 0, By = 3 };
+        public SlotChange CockpitSlotChange = new() { From = 1, By = 0 };
 
-        public IdentityHelper SensorsACategorizer = new IdentityHelper
+        public IdentityHelper SensorsACategorizer = new()
         {
             AllowedLocations = ChassisLocations.Head,
             ComponentType = ComponentType.Upgrade,
@@ -125,7 +125,7 @@ namespace MechEngineer.Features.AutoFix
             AutoAddCategoryIdIfMissing = true
         };
 
-        public IdentityHelper SensorsBCategorizer = new IdentityHelper
+        public IdentityHelper SensorsBCategorizer = new()
         {
             AllowedLocations = ChassisLocations.All,
             ComponentType = ComponentType.Upgrade,
@@ -133,9 +133,9 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "SensorsB",
             AutoAddCategoryIdIfMissing = true
         };
-        public SlotChange SensorsBSlotChange = new SlotChange { From = 2, By = -1 };
+        public SlotChange SensorsBSlotChange = new() { From = 2, By = -1 };
 
-        public IdentityHelper LegUpgradesCategorizer = new IdentityHelper
+        public IdentityHelper LegUpgradesCategorizer = new()
         {
             AllowedLocations = ChassisLocations.Legs,
             ComponentType = ComponentType.Upgrade,
@@ -143,72 +143,72 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "LegFootActuator",
             AutoAddCategoryIdIfMissing = true
         };
-        public SlotChange LegUpgradesSlotChange = new SlotChange { From = 3, By = -1, FromIsMin = true, NewMin = 1 };
+        public SlotChange LegUpgradesSlotChange = new() { From = 3, By = -1, FromIsMin = true, NewMin = 1 };
 
         public ChassisSlotsChange[] ChassisDefSlotsChanges = {
             // vanilla mechs
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.LeftTorso,
                 Change = new SlotChange {From = 10, By = 2}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.RightTorso,
                 Change = new SlotChange {From = 10, By = 2}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.LeftLeg,
                 Change = new SlotChange {From = 4, By = 2}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.RightLeg,
                 Change = new SlotChange {From = 4, By = 2}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.Head,
                 Change = new SlotChange {From = 1, By = 5}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.CenterTorso,
                 Change = new SlotChange {From = 4, By = 11}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.LeftArm,
                 Change = new SlotChange {From = 8, By = 4}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.RightArm,
                 Change = new SlotChange {From = 8, By = 4}
             },
             // old ME values
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.LeftLeg,
                 Change = new SlotChange {From = 2, By = 4}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.RightLeg,
                 Change = new SlotChange {From = 2, By = 4}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.Head,
                 Change = new SlotChange {From = 3, By = 3}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.LeftArm,
                 Change = new SlotChange {From = 11, By = 1}
             },
-            new ChassisSlotsChange
+            new()
             {
                 Location = ChassisLocations.RightArm,
                 Change = new SlotChange {From = 11, By = 1}
@@ -226,76 +226,76 @@ namespace MechEngineer.Features.AutoFix
         public int AutoFixWeaponDefSplittingFixedSize = 7; // use 1 for CBT default
 
         public DynamicSlots.DynamicSlots AutoFixWeaponDefSplittingDynamicSlotTemplate =
-            new DynamicSlots.DynamicSlots {InnerAdjacentOnly = true};
+            new() {InnerAdjacentOnly = true};
 
         public WeaponDefChange[] AutoFixWeaponDefSlotsChanges = {
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.AC5,
                 SlotChange = new SlotChange {From = 2, By = 2}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.AC10,
                 SlotChange = new SlotChange {From = 3, By = 4}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.AC20,
                 SlotChange = new SlotChange {From = 4, By = 6}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.Gauss,
                 SlotChange = new SlotChange {From = 4, By = 2, FromIsMin = true}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.LRM20,
                 SlotChange = new SlotChange {From = 4, By = 1}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.TAG,
                 SlotChange = new SlotChange {From = 3, By = -2}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.LB2X,
                 SlotChange = new SlotChange {From = 1, By = 3},
                 TonnageChange = new TonnageChange {From = 5, By = 1}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.LB5X,
                 SlotChange = new SlotChange {From = 2, By = 3}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.LB10X,
                 SlotChange = new SlotChange {From = 4, By = 2}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.LB20X,
                 SlotChange = new SlotChange {From = 6, By = 5}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.UAC2,
                 SlotChange = new SlotChange {From = 1, By = 2}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.UAC5,
                 SlotChange = new SlotChange {From = 2, By = 3}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.UAC10,
                 SlotChange = new SlotChange {From = 3, By = 4}
             },
-            new WeaponDefChange
+            new()
             {
                 Type = WeaponSubType.UAC20,
                 SlotChange = new SlotChange {From = 4, By = 6}

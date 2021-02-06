@@ -401,7 +401,7 @@ namespace MechEngineer.Features.CriticalEffects
     {
         internal static StatisticAdapter<int> MECriticalSlotsHit(this StatCollection statCollection)
         {
-            return new StatisticAdapter<int>("MECriticalSlotsHit", statCollection, 0);
+            return new("MECriticalSlotsHit", statCollection, 0);
         }
     }
 }

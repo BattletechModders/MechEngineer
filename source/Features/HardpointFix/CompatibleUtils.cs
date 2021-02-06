@@ -6,7 +6,7 @@ namespace MechEngineer.Features.HardpointFix
 {
     internal class CompatibleUtils
     {
-        private static readonly Dictionary<string, string[]> cachedCompatibleTerms = new Dictionary<string, string[]>();
+        private static readonly Dictionary<string, string[]> cachedCompatibleTerms = new();
 
         internal static string[] GetCompatiblePrefabTerms(string prefabIdentifier)
         {

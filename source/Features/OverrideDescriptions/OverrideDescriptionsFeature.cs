@@ -10,7 +10,7 @@ namespace MechEngineer.Features.OverrideDescriptions
 {
     internal class OverrideDescriptionsFeature: Feature<OverrideDescriptionsSettings>, IAdjustSlotElement, IAdjustTooltipEquipment, IAdjustTooltipWeapon, IAdjustInventoryElement
     {
-        internal static OverrideDescriptionsFeature Shared = new OverrideDescriptionsFeature();
+        internal static OverrideDescriptionsFeature Shared = new();
 
         internal override OverrideDescriptionsSettings Settings => Control.settings.OverrideDescriptions;
 
@@ -21,7 +21,7 @@ namespace MechEngineer.Features.OverrideDescriptions
             Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
         }
 
-        internal static Dictionary<string, BonusDescriptionSettings> Resources { get; set; } = new Dictionary<string, BonusDescriptionSettings>();
+        internal static Dictionary<string, BonusDescriptionSettings> Resources { get; set; } = new();
 
         internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {

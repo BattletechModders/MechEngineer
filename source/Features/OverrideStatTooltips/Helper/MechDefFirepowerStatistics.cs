@@ -91,7 +91,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
 
 			private readonly WeaponDef weaponDef;
 			private readonly MechDef mechDef;
-			private readonly StatCollection statCollection = new StatCollection();
+			private readonly StatCollection statCollection = new();
 
 			private float GetDamagePerShot(float baseValue)
 			{
@@ -141,37 +141,37 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
     {
         internal static StatisticAdapter<float> DamagePerShot(this StatCollection statCollection, float baseValue)
         {
-            return new StatisticAdapter<float>("DamagePerShot", statCollection, baseValue);
+            return new("DamagePerShot", statCollection, baseValue);
         }
 
         internal static StatisticAdapter<int> ShotsWhenFired(this StatCollection statCollection, int baseValue)
         {
-            return new StatisticAdapter<int>("ShotsWhenFired", statCollection, baseValue);
+            return new("ShotsWhenFired", statCollection, baseValue);
         }
 
         internal static StatisticAdapter<float> Instability(this StatCollection statCollection, float baseValue)
         {
-            return new StatisticAdapter<float>("Instability", statCollection, baseValue);
+            return new("Instability", statCollection, baseValue);
         }
 
         internal static StatisticAdapter<float> AccuracyModifier(this StatCollection statCollection, float baseValue)
         {
-            return new StatisticAdapter<float>("AccuracyModifier", statCollection, baseValue);
+            return new("AccuracyModifier", statCollection, baseValue);
         }
 
         internal static StatisticAdapter<float> StructureDamagePerShot(this StatCollection statCollection, float baseValue)
         {
-            return new StatisticAdapter<float>("StructureDamagePerShot", statCollection, baseValue);
+            return new("StructureDamagePerShot", statCollection, baseValue);
         }
 
         internal static StatisticAdapter<float> HeatDamageModifier(this StatCollection statCollection, float baseValue)
         {
-            return new StatisticAdapter<float>("HeatDamageModifier", statCollection, baseValue);
+            return new("HeatDamageModifier", statCollection, baseValue);
         }
 
         internal static StatisticAdapter<float> HeatDamagePerShot(this StatCollection statCollection, float baseValue)
         {
-            return new StatisticAdapter<float>("HeatDamagePerShot", statCollection, baseValue);
+            return new("HeatDamagePerShot", statCollection, baseValue);
         }
     }
 }

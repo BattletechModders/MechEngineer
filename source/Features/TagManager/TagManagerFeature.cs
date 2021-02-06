@@ -5,7 +5,7 @@ namespace MechEngineer.Features.TagManager
 {
     internal class TagManagerFeature : Feature<TagManagerSettings>
     {
-        internal static TagManagerFeature Shared = new TagManagerFeature();
+        internal static TagManagerFeature Shared = new();
 
         internal override TagManagerSettings Settings => Control.settings.TagManager;
 

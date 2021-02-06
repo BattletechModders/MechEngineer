@@ -5,7 +5,7 @@ namespace MechEngineer.Features.Globals
 {
     internal class GlobalsFeature : Feature<GlobalsSettings>
     {
-        internal static readonly GlobalsFeature Shared = new GlobalsFeature();
+        internal static readonly GlobalsFeature Shared = new();
 
         internal override bool Enabled => Settings.Enabled && (OverrideTonnageFeature.Shared.Enabled || EngineFeature.Shared.Enabled);
 

@@ -55,7 +55,7 @@ namespace MechEngineer
 
         internal StatisticEffectData CreateStatisticData(StatCollection.StatOperation op, T value)
         {
-            return new StatisticEffectData
+            return new()
             {
                 statName = Key,
                 operation = op,

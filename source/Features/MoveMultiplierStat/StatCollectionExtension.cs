@@ -6,7 +6,7 @@ namespace MechEngineer.Features.MoveMultiplierStat
     {
         internal static StatisticAdapter<float> MoveMultiplier(this StatCollection statCollection)
         {
-            return new StatisticAdapter<float>("MoveMultiplier", statCollection, 1f);
+            return new("MoveMultiplier", statCollection, 1f);
         }
     }
 }

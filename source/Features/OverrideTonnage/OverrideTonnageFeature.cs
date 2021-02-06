@@ -2,7 +2,7 @@
 {
     internal class OverrideTonnageFeature : Feature<OverrideTonnageSettings>
     {
-        internal static readonly OverrideTonnageFeature Shared = new OverrideTonnageFeature();
+        internal static readonly OverrideTonnageFeature Shared = new();
 
         internal override OverrideTonnageSettings Settings => Control.settings.OverrideTonnage;
 

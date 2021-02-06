@@ -6,7 +6,7 @@ namespace MechEngineer.Features.AutoFix
 {
     internal class GyroHandler : IAdjustUpgradeDef, IPreProcessor
     {
-        internal static MELazy<GyroHandler> Lazy = new MELazy<GyroHandler>();
+        internal static MELazy<GyroHandler> Lazy = new();
         internal static GyroHandler Shared => Lazy.Value;
 
         private readonly IdentityHelper identity;

@@ -5,7 +5,7 @@ namespace MechEngineer.Features.MoveMultiplierStat
 {
     internal class MoveMultiplierStatFeature : Feature<MoveMultiplierStatSettings>
     {
-        internal static MoveMultiplierStatFeature Shared = new MoveMultiplierStatFeature();
+        internal static MoveMultiplierStatFeature Shared = new();
 
         internal override MoveMultiplierStatSettings Settings => Control.settings.MoveMultiplierStat;
 

@@ -11,9 +11,9 @@ namespace MechEngineer.Features.OmniSlots
 {
     internal class OmniSlotsFeature: Feature<TurretLimitedAmmoSettings>, IValidateMech
     {
-        internal static OmniSlotsFeature Shared = new OmniSlotsFeature();
+        internal static OmniSlotsFeature Shared = new();
 
-        internal override TurretLimitedAmmoSettings Settings => new TurretLimitedAmmoSettings();
+        internal override TurretLimitedAmmoSettings Settings => new();
 
         internal override void SetupFeatureLoaded()
         {

@@ -9,7 +9,7 @@ namespace MechEngineer.Features.ArmorStructureRatio
 {
     internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
     {
-        internal static ArmorStructureRatioFeature Shared = new ArmorStructureRatioFeature();
+        internal static ArmorStructureRatioFeature Shared = new();
 
         internal override ArmorStructureRatioSettings Settings => Control.settings.ArmorStructureRatio;
 

@@ -39,12 +39,12 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
 		private MechDefFirepowerStatistics GetIndirectFirepower(MechDef mechDef)
 		{
-            return new MechDefFirepowerStatistics(mechDef, (x) => x.IndirectFireCapable);
+            return new(mechDef, (x) => x.IndirectFireCapable);
 		}
 
 		private MechDefFirepowerStatistics GetExtremeLongRangeFirepower(MechDef mechDef)
 		{
-            return new MechDefFirepowerStatistics(
+            return new(
                 mechDef,
                 OverrideStatTooltipsFeature.Shared.Settings.LongRangeMax+1,
                 int.MaxValue
@@ -53,7 +53,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
 		private MechDefFirepowerStatistics GetLongRangeFirepower(MechDef mechDef)
 		{
-            return new MechDefFirepowerStatistics(
+            return new(
                 mechDef,
                 OverrideStatTooltipsFeature.Shared.Settings.MediumRangeMax+1,
                 OverrideStatTooltipsFeature.Shared.Settings.LongRangeMax
@@ -62,7 +62,7 @@ namespace MechEngineer.Features.OverrideStatTooltips
 
 		private MechDefFirepowerStatistics GetFirepower(MechDef mechDef)
 		{
-            return new MechDefFirepowerStatistics(
+            return new(
                 mechDef,
                 OverrideStatTooltipsFeature.Shared.Settings.MediumRangeMax+1,
                 int.MaxValue

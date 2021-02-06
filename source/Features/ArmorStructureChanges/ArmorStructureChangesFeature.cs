@@ -6,7 +6,7 @@ namespace MechEngineer.Features.ArmorStructureChanges
 {
     internal class ArmorStructureChangesFeature : Feature<ArmorStructureChangesSettings>
     {
-        internal static ArmorStructureChangesFeature Shared = new ArmorStructureChangesFeature();
+        internal static ArmorStructureChangesFeature Shared = new();
 
         internal override ArmorStructureChangesSettings Settings => Control.settings.ArmorStructureChanges;
 

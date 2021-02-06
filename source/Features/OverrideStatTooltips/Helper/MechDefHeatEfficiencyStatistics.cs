@@ -31,7 +31,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         private int HeatSinkCapacity { get; }
 
         private readonly MechDef mechDef;
-        private readonly StatCollection statCollection = new StatCollection();
+        private readonly StatCollection statCollection = new();
 
         internal float GetStatisticRating()
         {

@@ -8,7 +8,7 @@ namespace MechEngineer.Features.CriticalEffects
 {
     internal class CriticalEffectsFeature : Feature<CriticalEffectsSettings>
     {
-        internal static readonly CriticalEffectsFeature Shared = new CriticalEffectsFeature();
+        internal static readonly CriticalEffectsFeature Shared = new();
 
         internal override bool Enabled => base.Enabled && PlaceholderEffectsFeature.Shared.Loaded;
 
@@ -22,7 +22,7 @@ namespace MechEngineer.Features.CriticalEffects
                 .ToDictionary(entry => entry.Description.Id);
         }
 
-        private static Dictionary<string, EffectData> Resources { get; set; } = new Dictionary<string, EffectData>();
+        private static Dictionary<string, EffectData> Resources { get; set; } = new();
 
         internal static EffectData GetEffectData(string effectId)
         {

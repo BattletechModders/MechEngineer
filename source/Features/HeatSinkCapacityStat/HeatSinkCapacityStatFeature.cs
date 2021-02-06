@@ -10,7 +10,7 @@ namespace MechEngineer.Features.HeatSinkCapacityStat
 {
     internal class HeatSinkCapacityStatFeature : Feature<HeatSinkCapacityStatSettings>
     {
-        internal static HeatSinkCapacityStatFeature Shared = new HeatSinkCapacityStatFeature();
+        internal static HeatSinkCapacityStatFeature Shared = new();
 
         internal override HeatSinkCapacityStatSettings Settings => Control.settings.HeatSinkCapacityStat;
 

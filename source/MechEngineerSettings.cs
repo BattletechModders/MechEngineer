@@ -46,40 +46,40 @@ namespace MechEngineer
         public bool GeneratedSettingsFilesReadonly = true;
         public string GeneratedSettingsFilesReadonlyDescription => "If true, generated last and default settings files are set to readonly, to indicate that those are not intended to be edited.";
 
-        public BetterLogSettings BetterLog = new BetterLogSettings();
+        public BetterLogSettings BetterLog = new();
 
-        public AccuracyEffectsSettings AccuracyEffects = new AccuracyEffectsSettings();
-        public ArmActuatorSettings ArmActuator = new ArmActuatorSettings();
-        public ArmorStructureChangesSettings ArmorStructureChanges = new ArmorStructureChangesSettings();
-        public ArmorStructureRatioSettings ArmorStructureRatio = new ArmorStructureRatioSettings();
-        public AutoFixerSettings AutoFixer = new AutoFixerSettings();
-        public ComponentExplosionsSettings ComponentExplosions = new ComponentExplosionsSettings();
-        public CompressFloatieMessagesSettings CompressFloatieMessages = new CompressFloatieMessagesSettings();
-        public CriticalEffectsSettings CriticalEffects = new CriticalEffectsSettings();
-        public DamageIgnoreSettings DamageIgnore = new DamageIgnoreSettings();
-        public DynamicSlotsSettings DynamicSlots = new DynamicSlotsSettings();
-        public EngineSettings Engine = new EngineSettings();
-        public GlobalsSettings Globals = new GlobalsSettings();
-        public HardpointFixSettings HardpointFix = new HardpointFixSettings();
-        public HeatSinkCapacityStatSettings HeatSinkCapacityStat = new HeatSinkCapacityStatSettings();
-        public InvalidInventorySettings InvalidInventory = new InvalidInventorySettings();
-        public MechLabSlotsSettings MechLabSlots = new MechLabSlotsSettings();
-        public MoveMultiplierStatSettings MoveMultiplierStat = new MoveMultiplierStatSettings();
-        public OrderedStatusEffectsSettings OrderedStatusEffects = new OrderedStatusEffectsSettings();
-        public OverrideDescriptionsSettings OverrideDescriptions = new OverrideDescriptionsSettings();
-        public OverrideGhostVFXSettings OverrideGhostVFX = new OverrideGhostVFXSettings();
-        public OverrideStatTooltipsSettings OverrideStatTooltips = new OverrideStatTooltipsSettings();
-        public OverrideTonnageSettings OverrideTonnage = new OverrideTonnageSettings();
-        public PlaceholderEffectsSettings PlaceholderEffects = new PlaceholderEffectsSettings();
-        public ShutdownInjuryProtectionSettings ShutdownInjuryProtection = new ShutdownInjuryProtectionSettings();
-        public TurretLimitedAmmoSettings TurretLimitedAmmo = new TurretLimitedAmmoSettings();
-        public TurretMechComponentSettings TurretMechComponents = new TurretMechComponentSettings();
-        public TagManagerSettings TagManager = new TagManagerSettings();
+        public AccuracyEffectsSettings AccuracyEffects = new();
+        public ArmActuatorSettings ArmActuator = new();
+        public ArmorStructureChangesSettings ArmorStructureChanges = new();
+        public ArmorStructureRatioSettings ArmorStructureRatio = new();
+        public AutoFixerSettings AutoFixer = new();
+        public ComponentExplosionsSettings ComponentExplosions = new();
+        public CompressFloatieMessagesSettings CompressFloatieMessages = new();
+        public CriticalEffectsSettings CriticalEffects = new();
+        public DamageIgnoreSettings DamageIgnore = new();
+        public DynamicSlotsSettings DynamicSlots = new();
+        public EngineSettings Engine = new();
+        public GlobalsSettings Globals = new();
+        public HardpointFixSettings HardpointFix = new();
+        public HeatSinkCapacityStatSettings HeatSinkCapacityStat = new();
+        public InvalidInventorySettings InvalidInventory = new();
+        public MechLabSlotsSettings MechLabSlots = new();
+        public MoveMultiplierStatSettings MoveMultiplierStat = new();
+        public OrderedStatusEffectsSettings OrderedStatusEffects = new();
+        public OverrideDescriptionsSettings OverrideDescriptions = new();
+        public OverrideGhostVFXSettings OverrideGhostVFX = new();
+        public OverrideStatTooltipsSettings OverrideStatTooltips = new();
+        public OverrideTonnageSettings OverrideTonnage = new();
+        public PlaceholderEffectsSettings PlaceholderEffects = new();
+        public ShutdownInjuryProtectionSettings ShutdownInjuryProtection = new();
+        public TurretLimitedAmmoSettings TurretLimitedAmmo = new();
+        public TurretMechComponentSettings TurretMechComponents = new();
+        public TagManagerSettings TagManager = new();
 
-        public PerformanceSettings Performance = new PerformanceSettings();
+        public PerformanceSettings Performance = new();
         
-        public DebugCycleCombatSoundsSettings DebugCycleCombatSounds = new DebugCycleCombatSoundsSettings();
-        public DebugSaveMechToFileSettings DebugSaveMechToFile = new DebugSaveMechToFileSettings();
-        public DebugScreenshotMechsSettings DebugScreenshotMechs = new DebugScreenshotMechsSettings();
+        public DebugCycleCombatSoundsSettings DebugCycleCombatSounds = new();
+        public DebugSaveMechToFileSettings DebugSaveMechToFile = new();
+        public DebugScreenshotMechsSettings DebugScreenshotMechs = new();
     }
 }

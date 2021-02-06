@@ -15,7 +15,7 @@ namespace MechEngineer.Features.Engines
 
         internal EngineMovement GetMovement(float tonnage)
         {
-            return new EngineMovement(Rating, tonnage);
+            return new(Rating, tonnage);
         }
 
         public override string ToString()

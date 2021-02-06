@@ -3,9 +3,12 @@
         "Enabled": true,
         "SkirmishWhitelistTags": [
             "component_type_stock",
-            "disabled_component_type_variant",
-            "disabled_component_type_lostech"
+            "component_type_variant",
+            "component_type_lostech"
         ]
+    },
+    "BetterLog": {
+		"Level":  "Debug"
     },
     "HardpointFix": {
         "AutoFixChassisDefWeaponHardpointCounts": false,
