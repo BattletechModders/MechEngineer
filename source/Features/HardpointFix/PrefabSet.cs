@@ -1,9 +1,9 @@
-﻿using MechEngineer.Features.CriticalEffects.Patches;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MechEngineer.Features.CriticalEffects.Patches;
 
-namespace MechEngineer.Features.HardpointFix.prefab
+namespace MechEngineer.Features.HardpointFix
 {
     internal class PrefabSet : IEnumerable<Prefab>
     {

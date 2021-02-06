@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
 
-namespace MechEngineer.Features.HardpointFix.utils
+namespace MechEngineer.Features.HardpointFix
 {
     internal class HardpointCounter
     {

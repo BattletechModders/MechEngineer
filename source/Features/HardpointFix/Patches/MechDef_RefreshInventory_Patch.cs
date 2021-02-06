@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq;
 using BattleTech;
-using Harmony;
 
-namespace MechEngineer.Features.HardpointFix.sorting.Patches
+namespace MechEngineer.Features.HardpointFix.Patches
 {
     // too slow :(
     //[HarmonyPatch(typeof(MechDef), "RefreshInventory")]

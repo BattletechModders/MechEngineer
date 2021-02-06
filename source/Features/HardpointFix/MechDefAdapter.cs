@@ -2,7 +2,7 @@
 using BattleTech.Data;
 using Harmony;
 
-namespace MechEngineer.Features.HardpointFix.sorting
+namespace MechEngineer.Features.HardpointFix
 {
     internal class MechDefAdapter
     {

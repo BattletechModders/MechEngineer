@@ -1,6 +1,6 @@
 ﻿using BattleTech;
 
-namespace MechEngineer.Features.HardpointFix.prefab
+namespace MechEngineer.Features.HardpointFix
 {
     internal class PrefabMapping
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MechEngineer.Features.HardpointFix.utils
+namespace MechEngineer.Features.HardpointFix
 {
     internal class CompatibleUtils
     {

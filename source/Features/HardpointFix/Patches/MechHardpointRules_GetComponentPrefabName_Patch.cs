@@ -1,11 +1,10 @@
-﻿using BattleTech;
-using Harmony;
-using MechEngineer.Features.HardpointFix.utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleTech;
+using Harmony;
 
-namespace MechEngineer.Features.HardpointFix.sorting.Patches
+namespace MechEngineer.Features.HardpointFix.Patches
 {
     [HarmonyPatch(typeof(MechHardpointRules), nameof(MechHardpointRules.GetComponentPrefabName))]
     public static class MechHardpointRules_GetComponentPrefabName_Patch

@@ -4,7 +4,7 @@ using BattleTech;
 using Harmony;
 using MechEngineer.Misc;
 
-namespace MechEngineer.Features.HardpointFix.sorting.Patches
+namespace MechEngineer.Features.HardpointFix.Patches
 {
     [HarmonyPatch(typeof(Mech), "InitGameRep")]
     public static class Mech_InitGameRep_Patch

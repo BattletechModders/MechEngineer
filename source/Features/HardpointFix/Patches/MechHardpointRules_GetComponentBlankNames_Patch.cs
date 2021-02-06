@@ -1,11 +1,10 @@
-﻿using BattleTech;
+﻿using System;
+using System.Collections.Generic;
+using BattleTech;
 using Harmony;
 using MechEngineer.Features.CriticalEffects.Patches;
-using MechEngineer.Features.HardpointFix.utils;
-using System;
-using System.Collections.Generic;
 
-namespace MechEngineer.Features.HardpointFix.sorting.Patches
+namespace MechEngineer.Features.HardpointFix.Patches
 {
     [HarmonyPatch(typeof(MechHardpointRules), nameof(MechHardpointRules.GetComponentBlankNames))]
     public static class MechHardpointRules_GetComponentBlankNames_Patch

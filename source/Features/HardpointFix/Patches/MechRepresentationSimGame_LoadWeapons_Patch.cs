@@ -4,7 +4,7 @@ using BattleTech;
 using Harmony;
 using MechEngineer.Misc;
 
-namespace MechEngineer.Features.HardpointFix.sorting.Patches
+namespace MechEngineer.Features.HardpointFix.Patches
 {
     [HarmonyPatch(typeof(MechRepresentationSimGame), "LoadWeapons")]
     public static class MechRepresentationSimGame_LoadWeapons_Patch

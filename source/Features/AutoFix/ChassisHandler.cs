@@ -5,7 +5,7 @@ using BattleTech;
 using CustomComponents;
 using ErosionBrushPlugin;
 using MechEngineer.Features.Engines;
-using MechEngineer.Features.HardpointFix.limits;
+using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.MechLabSlots;
 using UnityEngine;
 

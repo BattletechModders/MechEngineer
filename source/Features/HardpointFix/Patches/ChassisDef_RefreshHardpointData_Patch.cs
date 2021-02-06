@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using BattleTech;
 using Harmony;
-using MechEngineer.Features.HardpointFix.utils;
 
-namespace MechEngineer.Features.HardpointFix.limits.Patches
+namespace MechEngineer.Features.HardpointFix.Patches
 {
     [HarmonyPatch(typeof(ChassisDef), "RefreshHardpointData")]
     public static class ChassisDef_RefreshHardpointData_Patch

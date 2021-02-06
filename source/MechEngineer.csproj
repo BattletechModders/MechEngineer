@@ -93,8 +93,8 @@
     <Compile Include="Features\BetterLog\BetterLevelLogger.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_ApplyHeadStructureEffects_Patch.cs" />
     <Compile Include="Features\CriticalEffects\Criticals.cs" />
-    <Compile Include="Features\HardpointFix\sorting\Patches\MechDef_RefreshInventory_Patch.cs" />
-    <Compile Include="Features\HardpointFix\utils\CompatibleUtils.cs" />
+    <Compile Include="Features\HardpointFix\Patches\MechDef_RefreshInventory_Patch.cs" />
+    <Compile Include="Features\HardpointFix\CompatibleUtils.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\HeatSinkCapacityStatSettings.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\HeatSinkCapacityStatFeature.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_RestartCreatedEffects_Patch.cs" />
@@ -118,10 +118,10 @@
     <Compile Include="Features\OverrideDescriptions\IAdjustTooltipWeapon.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\TooltipPrefab_WeaponSetData_Patch.cs" />
     <Compile Include="Helper\LinqExtensions.cs" />
-    <Compile Include="Features\HardpointFix\prefab\Prefab.cs" />
-    <Compile Include="Features\HardpointFix\prefab\PrefabMapping.cs" />
-    <Compile Include="Features\HardpointFix\prefab\PrefabSet.cs" />
-    <Compile Include="Features\HardpointFix\prefab\PrefabSelectionCandidate.cs" />
+    <Compile Include="Features\HardpointFix\Prefab.cs" />
+    <Compile Include="Features\HardpointFix\PrefabMapping.cs" />
+    <Compile Include="Features\HardpointFix\PrefabSet.cs" />
+    <Compile Include="Features\HardpointFix\PrefabSelectionCandidate.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\MechDef_RefreshChassis_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Helper\MechStatUtils.cs" />
     <Compile Include="Features\OverrideStatTooltips\IStatHandler.cs" />
@@ -170,7 +170,7 @@
     <Compile Include="Features\AutoFix\Patches\JumpJetDef_FromJSON_Patch.cs" />
     <Compile Include="Features\OverrideStatTooltips\Helper\MechDefMovementStatistics.cs" />
     <Compile Include="Features\Engines\StaticHandler\Jumping.cs" />
-    <Compile Include="Features\HardpointFix\sorting\Patches\MechHardpointRules_GetComponentBlankNames_Patch.cs" />
+    <Compile Include="Features\HardpointFix\Patches\MechHardpointRules_GetComponentBlankNames_Patch.cs" />
     <Compile Include="Features\MoveMultiplierStat\StatCollectionExtension.cs" />
     <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsFeature.cs" />
     <Compile Include="Features\OrderedStatusEffects\OrderedStatusEffectsSettings.cs" />
@@ -245,8 +245,8 @@
     <Compile Include="Features\Globals\Patches\MechLabPanel_ExitMechLab_Patch.cs" />
     <Compile Include="Features\Globals\Patches\MechLabPanel_LoadMech_Patch.cs" />
     <Compile Include="Features\HardpointFix\HardpointFixFeature.cs" />
-    <Compile Include="Features\HardpointFix\limits\ChassisDefAdapter.cs" />
-    <Compile Include="Features\HardpointFix\limits\Patches\ChassisDef_refreshLocationReferences_Patch.cs" />
+    <Compile Include="Features\HardpointFix\ChassisDefAdapter.cs" />
+    <Compile Include="Features\HardpointFix\Patches\ChassisDef_refreshLocationReferences_Patch.cs" />
     <Compile Include="Features\InvalidInventory\InvalidInventoryFeature.cs" />
     <Compile Include="Features\PlaceholderEffects\PlaceholderEffectsFeature.cs" />
     <Compile Include="Features\PlaceholderEffects\PlaceholderInterpolation.cs" />
@@ -356,20 +356,20 @@
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />
     <Compile Include="Features\DynamicSlots\MechDefBuilder.cs" />
     <Compile Include="Features\DynamicSlots\Patches\MechLabPanel_ValidateLoadout_Patch.cs" />
-    <Compile Include="Features\HardpointFix\limits\Patches\ChassisDef_RefreshHardpointData_Patch.cs" />
+    <Compile Include="Features\HardpointFix\Patches\ChassisDef_RefreshHardpointData_Patch.cs" />
     <Compile Include="Features\OverrideDescriptions\OverrideDescriptionsFeature.cs" />
     <Compile Include="Features\OverrideDescriptions\Patches\MechLabPanel_ValidateLoadout_Patch.cs" />
     <Compile Include="Features\DebugSaveMechToFile\Patches\MechLabPanel_DoConfirmRefit_Patch.cs" />
     <Compile Include="Helper\MechLabLocationWidgetAdapter.cs" />
-    <Compile Include="Features\HardpointFix\limits\Patches\MechLabLocationWidget_OnMechLabDrop_Patch.cs" />
-    <Compile Include="Features\HardpointFix\limits\MechLabLocationWidgetPatchHelper.cs" />
-    <Compile Include="Features\HardpointFix\sorting\MechDefAdapter.cs" />
-    <Compile Include="Features\HardpointFix\sorting\Patches\MechHardpointRules_GetComponentPrefabName_Patch.cs" />
-    <Compile Include="Features\HardpointFix\sorting\Patches\Mech_InitGameRep_Patch.cs" />
-    <Compile Include="Features\HardpointFix\sorting\Patches\MechRepresentationSimGame_LoadWeapons_Patch.cs" />
-    <Compile Include="Features\HardpointFix\utils\HardpointCounter.cs" />
-    <Compile Include="Features\HardpointFix\utils\VHLUtils.cs" />
-    <Compile Include="Features\HardpointFix\utils\WeaponComponentPrefabCalculator.cs" />
+    <Compile Include="Features\HardpointFix\Patches\MechLabLocationWidget_OnMechLabDrop_Patch.cs" />
+    <Compile Include="Features\HardpointFix\MechLabLocationWidgetPatchHelper.cs" />
+    <Compile Include="Features\HardpointFix\MechDefAdapter.cs" />
+    <Compile Include="Features\HardpointFix\Patches\MechHardpointRules_GetComponentPrefabName_Patch.cs" />
+    <Compile Include="Features\HardpointFix\Patches\Mech_InitGameRep_Patch.cs" />
+    <Compile Include="Features\HardpointFix\Patches\MechRepresentationSimGame_LoadWeapons_Patch.cs" />
+    <Compile Include="Features\HardpointFix\HardpointCounter.cs" />
+    <Compile Include="Features\HardpointFix\VHLUtils.cs" />
+    <Compile Include="Features\HardpointFix\WeaponComponentPrefabCalculator.cs" />
     <Compile Include="Helper\MechDefExtensions.cs" />
     <Compile Include="Helper\MechLabItemSlotElementAdapter.cs" />
     <Compile Include="Features\DynamicSlots\DynamicSlotsFeature.cs" />
@@ -424,5 +424,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

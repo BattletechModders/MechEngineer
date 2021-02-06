@@ -1,13 +1,12 @@
-﻿using BattleTech;
-using MechEngineer.Features.CriticalEffects.Patches;
-using MechEngineer.Features.DynamicSlots;
-using MechEngineer.Features.HardpointFix.prefab;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using BattleTech;
+using MechEngineer.Features.CriticalEffects.Patches;
+using MechEngineer.Features.DynamicSlots;
 
-namespace MechEngineer.Features.HardpointFix.utils
+namespace MechEngineer.Features.HardpointFix
 {
     internal class WeaponComponentPrefabCalculator
     {

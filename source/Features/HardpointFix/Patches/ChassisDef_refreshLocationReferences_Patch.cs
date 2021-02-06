@@ -2,7 +2,7 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.HardpointFix.limits.Patches
+namespace MechEngineer.Features.HardpointFix.Patches
 {
     [HarmonyPatch(typeof(ChassisDef), "refreshLocationReferences")]
     public static class ChassisDef_refreshLocationReferences_Patch
