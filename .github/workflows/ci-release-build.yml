@@ -32,7 +32,7 @@ jobs:
     - name: Setup dotnet
       uses: actions/setup-dotnet@master
       with:
-        dotnet-version: '3.1.200'
+        dotnet-version: '3.1.x'
     - name: Build Release
       shell: bash
       env:
