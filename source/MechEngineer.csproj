@@ -11,31 +11,23 @@
     <AssemblyName>MechEngineer</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <OutputPath>..\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>preview</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>embedded</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>default</LangVersion>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <LangVersion>default</LangVersion>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CustomComponents">
