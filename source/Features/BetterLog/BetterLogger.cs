@@ -1,3 +1,4 @@
+#nullable enable
 using HBS.Logging;
 
 namespace MechEngineer.Features.BetterLog
@@ -7,11 +8,10 @@ namespace MechEngineer.Features.BetterLog
         public readonly BetterLevelLogger Error;
         public readonly BetterLevelLogger Warning;
         public readonly BetterLevelLogger Info;
-        public readonly BetterLevelLogger Debug; // C# 8.0: "BetterLevelLogger?"
+        public readonly BetterLevelLogger? Debug;
 
         public BetterLogger(ILog log, LogLevel level)
         {
-            // error, warning and info are always active and should never be unset
             Error = new BetterLevelLogger(log, LogLevel.Error);
             Warning = new BetterLevelLogger(log, LogLevel.Warning);
             Info = new BetterLevelLogger(log, LogLevel.Log);
