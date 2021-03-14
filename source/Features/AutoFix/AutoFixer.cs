@@ -103,7 +103,7 @@ namespace MechEngineer.Features.AutoFix
                 // convert external heat sinks into internal ones
                 // TODO only to make space if needed, drop the rest of the heat sinks
 
-                {
+                if (AutoFixerFeature.settings.InternalizeHeatSinksOnValidEngines) {
                     var max = engine.HeatSinkInternalAdditionalMaxCount;
                     var oldCurrent = engine.EngineHeatBlockDef.HeatSinkCount;
                     var current = oldCurrent;

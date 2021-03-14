@@ -13,6 +13,9 @@ namespace MechEngineer.Features.AutoFix
         public string MechDefHeatBlockDef = "emod_engine_cooling";
         public string MechDefCoreDummy = "emod_engine_dummy";
 
+        public bool InternalizeHeatSinksOnValidEngines = true;
+        public string InternalizeHeatSinksOnValidEnginesDescription => "Converts external heat sinks to internal heat sinks (critical slots -> engine) even for valid mech layouts. Useful when autofixing vanilla mechs, conflicts with modded loadouts.";
+
         public MechLocationNamingTemplateByTags[] MechLocationNamingTemplates =
         {
             new()
