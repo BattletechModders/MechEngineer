@@ -13,7 +13,7 @@ namespace MechEngineer.Features.OrderedStatusEffects
         };
         public string OtherStatisticsRequiredDescription => "One of the listed statistics is required to be in the same statCollection, otherwise no reordering occurs.";
 
-        public string[] FilterStatistics = null;
+        public string[] FilterStatistics = {"HeatSinkCapacity"}; // some sane default to avoid reordering everything in bigger modpacks that don't set anything
         public string FilterStatisticsDescription => "If set, only statistics listed by name will be reordered.";
 
         public StatOperation[] Order = {
