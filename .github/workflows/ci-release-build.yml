@@ -29,6 +29,11 @@ jobs:
         repository: BattletechModders/CustomComponents
         ref: Experimental
         path: CustomComponents/
+    - name: Fetch CustomComponents Branches and Tags
+      shell: bash
+      run: |
+        cd CustomComponents/
+        git fetch --prune --unshallow 
     - name: Setup dotnet
       uses: actions/setup-dotnet@master
       with:
