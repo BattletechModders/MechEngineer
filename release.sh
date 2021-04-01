@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH="/c/Program Files/7-Zip/:$PATH"
+export PATH="/c/Program Files/7-Zip/:$PATH"
 
 SEVENZIP="7z"
 
