@@ -7,13 +7,13 @@ namespace MechEngineer.Features.DamageIgnore.Patches
     [HarmonyPatch(typeof(MechComponent), nameof(MechComponent.DamageComponent))]
     public static class MechComponent_DamageComponent_Patch
     {
-        public static bool Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
+        public static bool Prefix(MechComponent __instance, ref ComponentDamageLevel damageLevel)
         {
             try
             {
-                var mechComponent = __instance;
-                if (mechComponent.componentDef.IsIgnoreDamage())
+                if (__instance.componentDef.IsIgnoreDamage())
                 {
+                    damageLevel = ComponentDamageLevel.Functional;
                     return false;
                 }
             }

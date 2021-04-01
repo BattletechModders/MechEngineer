@@ -9,17 +9,19 @@ namespace MechEngineer.Features.CriticalEffects.Patches
     [HarmonyPatch(nameof(MechComponent.inventorySize), MethodType.Getter)]
     internal static class MechComponent_inventorySize_Patch
     {
-        [HarmonyBefore(DamageIgnoreFeature.Namespace)]
-        public static void Postfix(MechComponent __instance, ref int __result)
+        [HarmonyAfter(DamageIgnoreFeature.Namespace)]
+        public static bool Prefix(MechComponent __instance, ref int __result)
         {
             try
             {
                 __result = __instance.Criticals().ComponentHittableCount();
+                return false;
             }
             catch (Exception e)
             {
                 Control.Logger.Error.Log(e);
             }
+            return true;
         }
     }
 }

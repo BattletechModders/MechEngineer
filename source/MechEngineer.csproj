@@ -373,7 +373,6 @@
     <Compile Include="Features\AutoFix\LegActuatorHandler.cs" />
     <Compile Include="Features\AutoFix\Patches\WeaponDef_FromJSON_Patch.cs" />
     <Compile Include="Features\Globals\Global.cs" />
-    <Compile Include="Features\DamageIgnore\Patches\Mech_GetComponentInSlot_Patch.cs" />
     <Compile Include="Features\AutoFix\CockpitHandler.cs" />
     <Compile Include="Misc\Interfaces.cs" />
     <Compile Include="Control.cs" />
@@ -403,7 +402,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="GitVersionTask">
-      <Version>5.2.4</Version>
+      <Version>5.5.1</Version>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
