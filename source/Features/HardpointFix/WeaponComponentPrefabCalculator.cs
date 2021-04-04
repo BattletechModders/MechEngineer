@@ -12,6 +12,7 @@ namespace MechEngineer.Features.HardpointFix
     {
         private readonly ChassisDef chassisDef;
         private readonly IDictionary<MechComponentRef, string> weaponMappings = new Dictionary<MechComponentRef, string>();
+        private readonly IDictionary<ChassisLocations, List<string>> blanks = new Dictionary<ChassisLocations, List<string>>();
         private readonly IDictionary<ChassisLocations, List<PrefabSet>> fallbackPrefabs = new Dictionary<ChassisLocations, List<PrefabSet>>();
         private readonly HashSet<string> preMappedPrefabNames;
 
@@ -49,36 +50,15 @@ namespace MechEngineer.Features.HardpointFix
             }
         }
 
-        // chrPrfWeap_battlemaster_leftarm_ac20_bh1 -> 1
-        internal static string GroupNumber(string prefab)
-        {
-            return prefab.Substring(prefab.Length - 1, 1);
-        }
-
         internal static string PrefabHardpoint(string prefab)
         {
-            var lastIndex = prefab.LastIndexOf("_");
+            var lastIndex = prefab.LastIndexOf("_", StringComparison.Ordinal);
             return prefab.Substring(lastIndex + 1);
         }
 
-        internal static int GroupNumberAsInt(string prefab)
-        {
-            var gn = GroupNumber(prefab);
-            if (int.TryParse(gn, out var n))
-            {
-                return n;
-            }
-            return 0;
-        }
-
-        // TODO cache?
         internal List<string> GetRequiredBlankPrefabNamesInLocation(ChassisLocations location)
         {
-            var availableBlanks = GetAvailableBlankPrefabsForLocation(location);
-            var usedSlots = weaponMappings.Where(x => x.Key.MountedLocation == location).Select(x => x.Value).Select(PrefabHardpoint).Distinct().ToList();
-            var requiredBlanks = availableBlanks.Where(x => !usedSlots.Contains(PrefabHardpoint(x))).ToList();
-            Control.Logger.Debug?.Log($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
-            return requiredBlanks;
+            return blanks.TryGetValue(location, out var list) ? list : new List<string>();
         }
 
         internal int MappedComponentRefCount => weaponMappings.Count;
@@ -174,6 +154,38 @@ namespace MechEngineer.Features.HardpointFix
             {
                 weaponMappings[mapping.MechComponentRef] = mapping.Prefab.Name;
             }
+
+            CalculateBlanksForLocation(location);
+        }
+
+        private void CalculateBlanksForLocation(ChassisLocations location)
+        {
+            var weaponData = GetWeaponData(location);
+            if (weaponData.weapons == null || weaponData.blanks == null)
+            {
+                return;
+            }
+
+            var usedMappings = weaponMappings
+                .Where(x => x.Key.MountedLocation == location)
+                .Select(x => x.Value)
+                .Distinct()
+                .ToList();
+
+            var usedSlots = weaponData.weapons
+                .Where(x => x.Any(y => usedMappings.Contains(y))) // find all mappings in the same groups
+                .SelectMany(x => x)
+                .Select(PrefabHardpoint) // we only care about the last part of the id
+                .Distinct()
+                .ToList();
+
+            var requiredBlanks = weaponData.blanks
+                .Where(x => !usedSlots.Contains(PrefabHardpoint(x)))
+                .ToList();
+
+            Control.Logger.Debug?.Log($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
+
+            blanks[location] = requiredBlanks;
         }
 
         internal List<PrefabSet> GetAvailablePrefabSetsForLocation(ChassisLocations location)
@@ -202,13 +214,6 @@ namespace MechEngineer.Features.HardpointFix
                 }
             }
             return sets;
-        }
-
-        // TODO merge with other GetAvailable
-        internal string[] GetAvailableBlankPrefabsForLocation(ChassisLocations location)
-        {
-            var weaponsData = GetWeaponData(location);
-            return weaponsData.blanks ?? new string[0];
         }
 
         internal HardpointDataDef._WeaponHardpointData GetWeaponData(ChassisLocations location)
