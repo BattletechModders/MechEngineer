@@ -9,7 +9,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
     [HarmonyPatch(typeof(MechRepresentationSimGame), "LoadWeapons")]
     public static class MechRepresentationSimGame_LoadWeapons_Patch
     {
-        [HarmonyAfter(KFix.CU)]
+        [HarmonyBefore(KFix.CU)]
         public static void Prefix(MechRepresentationSimGame __instance)
         {
             try
@@ -24,7 +24,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
             }
         }
 
-        public static void Postfix(MechRepresentationSimGame __instance)
+        public static void Postfix()
         {
             MechHardpointRules_GetComponentPrefabName_Patch.ResetCalculator();
         }

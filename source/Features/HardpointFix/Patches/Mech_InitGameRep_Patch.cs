@@ -9,7 +9,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
     [HarmonyPatch(typeof(Mech), "InitGameRep")]
     public static class Mech_InitGameRep_Patch
     {
-        [HarmonyAfter(KFix.AC, KFix.CU)]
+        [HarmonyBefore(KFix.AC, KFix.CU)]
         public static void Prefix(Mech __instance)
         {
             try
@@ -27,7 +27,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
             }
         }
 
-        public static void Postfix(Mech __instance)
+        public static void Postfix()
         {
             MechHardpointRules_GetComponentPrefabName_Patch.ResetCalculator();
         }

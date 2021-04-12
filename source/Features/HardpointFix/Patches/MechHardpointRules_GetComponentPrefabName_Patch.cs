@@ -22,7 +22,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
             {
                 return;
             }
-
+            
             componentRefs = componentRefs
                 .Where(c => c != null)
                 .Where(c => c.ComponentDefType == ComponentType.Weapon)
@@ -41,7 +41,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
             {
                 return;
             }
-
+            
             try
             {
                 calculator = new WeaponComponentPrefabCalculator(chassisDef, componentRefs);
