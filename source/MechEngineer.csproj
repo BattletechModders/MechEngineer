@@ -75,6 +75,7 @@
     <Compile Include="Features\BetterLog\BetterLogger.cs" />
     <Compile Include="Features\BetterLog\BetterLevelLogger.cs" />
     <Compile Include="Features\ComponentExplosions\Patches\Mech_ApplyHeadStructureEffects_Patch.cs" />
+    <Compile Include="Features\CriticalEffects\CriticalChance.cs" />
     <Compile Include="Features\CriticalEffects\Criticals.cs" />
     <Compile Include="Features\HardpointFix\CompatibleUtils.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\HeatSinkCapacityStatSettings.cs" />
