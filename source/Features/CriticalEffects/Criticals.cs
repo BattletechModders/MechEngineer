@@ -144,10 +144,11 @@ namespace MechEngineer.Features.CriticalEffects
 
         private int ComponentHitMax()
         {
+            var inventorySize = Effects?.CriticalSize ?? component.componentDef.InventorySize;
             // TODO fix size correctly for location:
             // introduce fake items for overflow location that is crit linked and overwrite component hit max for original + crit linked
             var additionalSize = component.componentDef.Is<DynamicSlots.DynamicSlots>(out var slot) && slot.InnerAdjacentOnly ? slot.ReservedSlots : 0;
-            return component.componentDef.InventorySize + additionalSize;
+            return inventorySize + additionalSize;
         }
 
         private int ComponentHitCount(int? setHits = null)

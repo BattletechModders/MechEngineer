@@ -32,6 +32,8 @@ namespace MechEngineer.Features.CriticalEffects
         // used by FieldRepairs
         public int MaxHits => PenalizedEffectIDs.Length + 1;
 
+        public int? CriticalSize { get; set; } // allows the override the inventory size for critical table purposes
+
         public void OnLoaded(Dictionary<string, object> values)
         {
             var descriptions = new List<string>();
