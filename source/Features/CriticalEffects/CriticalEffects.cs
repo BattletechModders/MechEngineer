@@ -34,6 +34,11 @@ namespace MechEngineer.Features.CriticalEffects
 
         public void OnLoaded(Dictionary<string, object> values)
         {
+            Control.DelayLoading(LoadEffect);
+        }
+
+        private void LoadEffect()
+        {
             var descriptions = new List<string>();
 
             string GetEffectDescription(string effectId)
@@ -60,7 +65,7 @@ namespace MechEngineer.Features.CriticalEffects
                     descriptions.Add(new Text(CriticalEffectsFeature.settings.CritHitText, i, effectDesc).ToString());
                 }
             }
-            
+
             foreach (var id in OnDestroyedEffectIDs)
             {
                 var effectDesc = GetEffectDescription(id);
@@ -80,7 +85,7 @@ namespace MechEngineer.Features.CriticalEffects
             {
                 descriptions.Add(new Text(CriticalEffectsFeature.settings.CritLinkedText, LinkedStatisticName).ToString());
             }
-            
+
             var descriptionTemplate = CriticalEffectsFeature.settings.DescriptionTemplate;
             {
                 var actorType = GetUnitType();
@@ -90,7 +95,7 @@ namespace MechEngineer.Features.CriticalEffects
                     descriptionTemplate = $"{actorDescription} {descriptionTemplate}";
                 }
             }
-            
+
             BonusDescriptions.AddTemplatedExtendedDetail(
                 ExtendedDetails.GetOrCreate(Def),
                 descriptions,

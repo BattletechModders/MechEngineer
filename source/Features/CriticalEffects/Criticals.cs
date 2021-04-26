@@ -223,6 +223,7 @@ namespace MechEngineer.Features.CriticalEffects
                     {
                         SetDamageLevel(otherMechComponent, hitInfo, damageLevel);
                     }
+
                 }
             }
 

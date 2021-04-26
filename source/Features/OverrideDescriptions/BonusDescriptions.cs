@@ -41,16 +41,16 @@ namespace MechEngineer.Features.OverrideDescriptions
             }
         }
 
-        public void OnLoaded(Dictionary<string, object> values)
+        private void ChangeDescription()
         {
             if (Bonuses.Length < 1)
             {
                 return;
             }
-            
+
             foreach (var bonus in Bonuses)
             {
-                var split = bonus.Split(new[]{':'}, 2);
+                var split = bonus.Split(new[] { ':' }, 2);
                 var bonusKey = split[0].Trim();
 
                 if (!OverrideDescriptionsFeature.Resources.TryGetValue(bonusKey, out var settings))
@@ -81,7 +81,7 @@ namespace MechEngineer.Features.OverrideDescriptions
                     }
                 }
             }
-            
+
             AddTemplatedExtendedDetail(
                 ExtendedDetails.GetOrCreate(Def),
                 descriptions.Select(x => x.Full),
@@ -89,6 +89,11 @@ namespace MechEngineer.Features.OverrideDescriptions
                 OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate,
                 OverrideDescriptionsFeature.settings.DescriptionIdentifier
             );
+        }
+
+        public void OnLoaded(Dictionary<string, object> values)
+        {
+            Control.DelayLoading(ChangeDescription);
         }
 
         internal static void AddTemplatedExtendedDetail(
