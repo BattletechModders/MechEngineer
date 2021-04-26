@@ -56,20 +56,6 @@ namespace MechEngineer
             }
         }
 
-        private static bool Loaded = false;
-        private static List<Action> delay_actions = new List<Action>();
-
-        public static void DelayLoading(Action delay_delegate)
-        {
-            if (delay_delegate == null)
-                return;
-
-            if (Loaded)
-                delay_delegate();
-            else
-                delay_actions.Add(delay_delegate);
-        }
-
         public static void FinishedLoading(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
         {
             try
@@ -84,12 +70,6 @@ namespace MechEngineer
             catch (Exception e)
             {
                 Logger.Error.Log("error loading", e);
-            }
-
-            Loaded = true;
-            foreach (var delayAction in delay_actions)
-            {
-                delayAction();
             }
         }
 

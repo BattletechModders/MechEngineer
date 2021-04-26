@@ -41,7 +41,7 @@ namespace MechEngineer.Features.OverrideDescriptions
             }
         }
 
-        private void ChangeDescription()
+        public void OnLoaded(Dictionary<string, object> values)
         {
             if (Bonuses.Length < 1)
             {
@@ -89,11 +89,6 @@ namespace MechEngineer.Features.OverrideDescriptions
                 OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate,
                 OverrideDescriptionsFeature.settings.DescriptionIdentifier
             );
-        }
-
-        public void OnLoaded(Dictionary<string, object> values)
-        {
-            Control.DelayLoading(ChangeDescription);
         }
 
         internal static void AddTemplatedExtendedDetail(

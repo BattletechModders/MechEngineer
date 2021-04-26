@@ -34,11 +34,6 @@ namespace MechEngineer.Features.CriticalEffects
 
         public void OnLoaded(Dictionary<string, object> values)
         {
-            Control.DelayLoading(LoadEffect);
-        }
-
-        private void LoadEffect()
-        {
             var descriptions = new List<string>();
 
             string GetEffectDescription(string effectId)
