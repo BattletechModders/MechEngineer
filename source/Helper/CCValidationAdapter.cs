@@ -34,14 +34,12 @@ namespace MechEngineer.Helper
             return !errors.Any();
         }
 
-        public string ValidateDrop(MechLabItemSlotElement drop_item, List<InvItem> new_inventory)
+        public string ValidateDrop(MechLabItemSlotElement drop_item, MechDef mechDef, List<InvItem> new_inventory)
         {
             var errors1 = new Errors();
-            // !TODO PONE FIX IT
-            // drop_item.MechDef is that set correctly?
-            validator.ValidateMech(drop_item.MechDef, errors1);
+            validator.ValidateMech(mechDef, errors1);
 
-            var mechDef2 = new MechDef(drop_item.MechDef);
+            var mechDef2 = new MechDef(mechDef);
             var inventory2 = new_inventory.Select(x =>
             {
                 var r = new MechComponentRef(x.Item);
