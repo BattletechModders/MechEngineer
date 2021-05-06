@@ -5,6 +5,7 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
+using CustomComponents.Changes;
 using Harmony;
 using Localize;
 using MechEngineer.Misc;
@@ -33,16 +34,16 @@ namespace MechEngineer.Helper
             return !errors.Any();
         }
 
-        public string ValidateDrop(MechLabItemSlotElement drop_item, MechDef mechDef1, List<InvItem> iteminventory2, List<IChange> changes)
+        public string ValidateDrop(MechLabItemSlotElement drop_item, List<InvItem> new_inventory)
         {
             var errors1 = new Errors();
-            validator.ValidateMech(mechDef1, errors1);
+            validator.ValidateMech(drop_item.MechDef, errors1);
 
-            var mechDef2 = new MechDef(mechDef1);
-            var inventory2 = iteminventory2.Select(x =>
+            var mechDef2 = new MechDef(drop_item.MechDef);
+            var inventory2 = new_inventory.Select(x =>
             {
-                var r = new MechComponentRef(x.item);
-                Traverse.Create(r).Property(nameof(MechComponentRef.MountedLocation)).SetValue(x.location);
+                var r = new MechComponentRef(x.Item);
+                Traverse.Create(r).Property(nameof(MechComponentRef.MountedLocation)).SetValue(x.Location);
                 return r;
             }).ToList();
 

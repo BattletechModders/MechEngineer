@@ -5,11 +5,12 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
+using CustomComponents.Changes;
 
 namespace MechEngineer.Features.ArmActuators
 {
     [CustomComponent("ArmActuator")]
-    public class ArmActuator : SimpleCustomComponent, IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed, IOnInstalled, ISorter
+    public class ArmActuator : SimpleCustomComponent // , IPreValidateDrop, IReplaceValidateDrop, IOnItemGrabbed, IOnInstalled, ISorter // !TODO PONE FIX IT
     {
         public ArmActuatorSlot Type { get; set; }
 
@@ -85,6 +86,7 @@ namespace MechEngineer.Features.ArmActuators
                     if (string.IsNullOrEmpty(id))
                         return false;
 
+                    /* !TODO PONE FIX IT
                     var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, mechlab.dataManager, mechlab.Sim);
 
                     if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
@@ -94,6 +96,7 @@ namespace MechEngineer.Features.ArmActuators
                         total_slot = total_slot | actuator.Type;
                         return true;
                     }
+                    */
 
                     CustomComponents.Control.LogDebug(DType.ComponentInstall, $"----- actuator not fit, ski[[");
                     return false;
@@ -129,7 +132,8 @@ namespace MechEngineer.Features.ArmActuators
 
                     CustomComponents.Control.LogDebug(DType.ComponentInstall,
                         $"--- removing {item.ComponentRef.ComponentDefID}");
-                    changes.Add(new RemoveChange(location.widget.loadout.Location, item));
+                    //!TODO PONE FIX IT
+                    //changes.Add(new RemoveChange(location.widget.loadout.Location, item));
                 }
                 else
                     total_slot = total_slot | actuator.Type;
@@ -144,14 +148,15 @@ namespace MechEngineer.Features.ArmActuators
                 if (!total_slot.HasFlag(ArmActuatorSlot.PartLower) && total_slot.HasFlag(ArmActuatorSlot.PartHand))
                 {
                     CustomComponents.Control.LogDebug(DType.ComponentInstall, $"--- adding Lower to {total_slot}");
-                    var change = AddFromInventoryChange.FoundInInventory(mount_loc, new MechLabHelper(mechlab),
-                        item => item.Is<ArmActuator>(out var actuator) && actuator.Type == ArmActuatorSlot.PartLower,
-                        item => item.Description.Id == ArmActuatorFeature.settings.DefaultCBTLower
-                    );
-                    if (change != null)
-                        changes.Add(change);
-                    else if (ArmActuatorFeature.settings.InterruptHandDropIfNoLower)
-                        return $"Cannot found LowerArm";
+                    //!TODO PONE FIX IT
+                    //var change = AddFromInventoryChange.FoundInInventory(mount_loc, new MechLabHelper(mechlab),
+                    //    item => item.Is<ArmActuator>(out var actuator) && actuator.Type == ArmActuatorSlot.PartLower,
+                    //    item => item.Description.Id == ArmActuatorFeature.settings.DefaultCBTLower
+                    //);
+                    //if (change != null)
+                    //    changes.Add(change);
+                    //else if (ArmActuatorFeature.settings.InterruptHandDropIfNoLower)
+                    //    return $"Cannot found LowerArm";
                 }
                 else
                 {
@@ -193,14 +198,15 @@ namespace MechEngineer.Features.ArmActuators
                     if (string.IsNullOrEmpty(id))
                         return false;
 
-                    var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, mechLab.dataManager, mechLab.Sim);
+                    //!TODO PONE FIX IT
+                    //var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, mechLab.dataManager, mechLab.Sim);
 
-                    if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
-                    {
-                        DefaultHelper.AddMechLab(id, ComponentType.Upgrade, ml_helper, mount_loc);
-                        total_slot = total_slot | actuator.Type;
-                        return true;
-                    }
+                    //if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
+                    //{
+                    //    DefaultHelper.AddMechLab(id, ComponentType.Upgrade, ml_helper, mount_loc);
+                    //    total_slot = total_slot | actuator.Type;
+                    //    return true;
+                    //}
 
                     return false;
                 }
@@ -233,8 +239,9 @@ namespace MechEngineer.Features.ArmActuators
                     CustomComponents.Control.LogDebug(DType.ComponentInstall,
                         $"-- removing {slotitem.ComponentRef.ComponentDefID} {actuator.Type}");
 
-                    DefaultHelper.RemoveMechLab(slotitem.ComponentRef.ComponentDefID,
-                        slotitem.ComponentRef.ComponentDefType, ml_helper, mount_loc);
+                    //!TODO PONE FIX IT
+                    //DefaultHelper.RemoveMechLab(slotitem.ComponentRef.ComponentDefID,
+                    //    slotitem.ComponentRef.ComponentDefType, ml_helper, mount_loc);
                 }
                 else
                 {

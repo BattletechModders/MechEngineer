@@ -73,15 +73,16 @@ namespace MechEngineer.Features.ArmActuators
                         return false;
                     }
 
-                    var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, state.DataManager, state);
+                    //!TODO PONE FIX IT
+                    //var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, state.DataManager, state);
 
-                    if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
-                    {
-                        r.SetData(location, -1, ComponentDamageLevel.Functional, true);
-                        result.Add(r);
-                        total_slot = total_slot | actuator.Type;
-                        return true;
-                    }
+                    //if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
+                    //{
+                    //    r.SetData(location, -1, ComponentDamageLevel.Functional, true);
+                    //    result.Add(r);
+                    //    total_slot = total_slot | actuator.Type;
+                    //    return true;
+                    //}
 
                     return false;
                 }
@@ -323,14 +324,15 @@ namespace MechEngineer.Features.ArmActuators
                 if (string.IsNullOrEmpty(id))
                     return false;
 
-                var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, UnityGameInstance.BattleTechGame.DataManager, simgame);
+                //!TODO PONE FIX IT
+                //var r = DefaultHelper.CreateRef(id, ComponentType.Upgrade, UnityGameInstance.BattleTechGame.DataManager, simgame);
 
-                if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
-                {
-                    DefaultHelper.AddInventory(id, mechdef, location, ComponentType.Upgrade, simgame);
-                    total_slot = total_slot | actuator.Type;
-                    return true;
-                }
+                //if (r.Is<ArmActuator>(out var actuator) && (actuator.Type & total_slot) == 0)
+                //{
+                //    DefaultHelper.AddInventory(id, mechdef, location, ComponentType.Upgrade, simgame);
+                //    total_slot = total_slot | actuator.Type;
+                //    return true;
+                //}
 
                 return false;
             }

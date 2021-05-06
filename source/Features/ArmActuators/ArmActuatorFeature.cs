@@ -13,7 +13,8 @@ namespace MechEngineer.Features.ArmActuators
 
         internal override void SetupFeatureLoaded()
         {
-            Validator.RegisterClearInventory(ArmActuatorCC.ClearInventory);
+            //!TODO PONE FIX IT
+            //Validator.RegisterClearInventory(ArmActuatorCC.ClearInventory);
 
             if (settings.ForceFullDefaultActuators)
             {

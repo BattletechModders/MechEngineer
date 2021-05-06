@@ -3,6 +3,7 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
+using CustomComponents.Changes;
 using Harmony;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.TurretLimitedAmmo;
@@ -21,7 +22,7 @@ namespace MechEngineer.Features.OmniSlots
         {
             base.SetupFeatureLoaded();
 
-            Validator.HardpointValidator = HardpointValidator;
+            //Validator.HardpointValidator = HardpointValidator;
 
             var ccValidator = new CCValidationAdapter(this);
             Validator.RegisterMechValidator(ccValidator.ValidateMech, ccValidator.ValidateMechCanBeFielded);

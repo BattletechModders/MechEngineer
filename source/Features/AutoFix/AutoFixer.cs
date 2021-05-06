@@ -394,10 +394,11 @@ namespace MechEngineer.Features.AutoFix
                 return false;
             }
 
-            if (def.Is<Category>(out var category) && category.CategoryDescriptor.UniqueForLocation)
-            {
-                return false;
-            }
+            //!TODO PONE FIX IT
+            //if (def.Is<Category>(out var category) && category.CategoryDescriptor.UniqueForLocation)
+            //{
+            //    return false;
+            //}
 
             return true;
         }
@@ -411,10 +412,16 @@ namespace MechEngineer.Features.AutoFix
                 return false;
             }
 
-            if (c.IsFixed || c.Def.Is<Category>(out var category) && category.CategoryDescriptor.Required)
+            if (c.IsFixed)
             {
                 return false;
             }
+
+            //!TODO PONE FIX IT
+            //if (c.Def.Is<Category>(out var category) && category.CategoryDescriptor.Required)
+            //{
+            //    return false;
+            //}
 
             return def.ComponentType == ComponentType.HeatSink || def.ComponentType == ComponentType.JumpJet;
         }

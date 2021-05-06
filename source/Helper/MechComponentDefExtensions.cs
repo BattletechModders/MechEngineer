@@ -8,7 +8,9 @@ namespace MechEngineer.Helper
     {
         internal static bool HasCustomFlag(this MechComponentDef def, string flag)
         {
-            return def.Is<Flags>(out var f) && f.IsSet(flag);
+            //!TODO PONE FIX IT
+            //return def.Is<Flags>(out var f) && f.IsSet(flag);
+            return false;
         }
 
         internal static bool HasComponentTag(this MechComponentDef def, string tag)
