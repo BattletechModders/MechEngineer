@@ -2,7 +2,7 @@
 {
     public class ArmActuatorSettings : ISettings
     {
-        public bool Enabled { get; set; } = true;
+        public bool Enabled { get; set; } = false; // please re-enable once fixed !TODO PONE FIX IT
         public string EnabledDescription => "Enables CBT arm actuators with CC like handling.";
 
         public bool ForceFullDefaultActuators = false;
