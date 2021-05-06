@@ -1,4 +1,6 @@
-﻿using CustomComponents;
+﻿using System;
+using CustomComponents;
+using HBS.Collections;
 
 namespace MechEngineer.Features.AutoFix
 {
@@ -20,5 +22,12 @@ namespace MechEngineer.Features.AutoFix
 
             CustomComponents.AutoFixer.Shared.RegisterMechFixer(AutoFixer.Shared.AutoFix);
         }
+
+        public AutoFixerFeature()
+        {
+            IgnoreAutofixTagsLazy = new Lazy<TagSet>(() => new TagSet(Settings.IgnoreAutofixTags));
+        }
+        internal Lazy<TagSet> IgnoreAutofixTagsLazy;
+        internal TagSet IgnoreAutofixTags => IgnoreAutofixTagsLazy.Value;
     }
 }

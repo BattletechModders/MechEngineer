@@ -4,6 +4,11 @@ namespace MechEngineer.Helper
 {
     public static class MechDefExtensions
     {
+        public static bool IgnoreAutofix(this MechDef def)
+        {
+            return def.MechTags.IgnoreAutofix();
+        }
+
         public static float ArmorTonnage(this MechDef mechDef)
         {
             return mechDef.MechDefAssignedArmor / ArmorPerTon;

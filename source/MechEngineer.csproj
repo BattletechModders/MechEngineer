@@ -85,6 +85,7 @@
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\PlaceholderEffects\Patches\StatisticEffect_initStatisiticEffect_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
+    <Compile Include="Helper\ChassisDefExtensions.cs" />
     <Compile Include="Helper\MechLabHardpointElementAdapter.cs" />
     <Compile Include="Features\MechLabSlots\MechLabLocationNaming.cs" />
     <Compile Include="Helper\MechLabMechInfoWidgetAdapter.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_CheckForHeatDamage_Patch.cs" />
     <Compile Include="Features\ShutdownInjuryProtection\Patches\Mech_InitEffectStats_Patch.cs" />
     <Compile Include="Features\OverrideDescriptions\IAdjustTooltipEquipment.cs" />
+    <Compile Include="Helper\TagsExtensions.cs" />
     <Compile Include="Helper\TooltipPrefab_WeaponAdapter.cs" />
     <Compile Include="Helper\CCValidationAdapter.cs" />
     <Compile Include="Features\AutoFix\ChassisHandler.cs" />

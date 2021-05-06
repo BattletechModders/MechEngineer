@@ -2,6 +2,7 @@
 using BattleTech;
 using CustomComponents;
 using Harmony;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.AutoFix.Patches
 {
