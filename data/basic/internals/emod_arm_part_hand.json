@@ -9,7 +9,7 @@
             ]
         },
         "Category" : { "CategoryID" : "ArmHandActuator" },
-        "Flags" : { "flags" : [ "autorepair", "not_broken" ] }
+        "Flags" : [ "autorepair", "not_broken" ]
 	},
     "Description" : {
         "Cost" : 30000,

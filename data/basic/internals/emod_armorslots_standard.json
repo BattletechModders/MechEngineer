@@ -6,7 +6,7 @@
 		"Color": {
 			"UIColor": "DarkGray"
 		},
-		"Flags" : { "flags" : [ "ignore_damage", "default" ] }
+		"Flags" : [ "ignore_damage", "default" ]
 	},
     "Description" : {
         "Cost" : 0,

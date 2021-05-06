@@ -37,6 +37,8 @@ namespace MechEngineer.Helper
         public string ValidateDrop(MechLabItemSlotElement drop_item, List<InvItem> new_inventory)
         {
             var errors1 = new Errors();
+            // !TODO PONE FIX IT
+            // drop_item.MechDef is that set correctly?
             validator.ValidateMech(drop_item.MechDef, errors1);
 
             var mechDef2 = new MechDef(drop_item.MechDef);

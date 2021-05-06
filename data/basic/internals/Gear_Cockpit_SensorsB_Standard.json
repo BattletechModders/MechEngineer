@@ -3,12 +3,7 @@
 		"Category" : { 
 			"CategoryID" : "SensorsB" 
 		},
-		"Flags": {
-			"Flags": [
-				"not_broken",
-				"default"
-			]
-		}
+		"Flags": [ "not_broken", "default" ]
 	},
     "Description" : {
         "Cost" : 0,
