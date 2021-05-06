@@ -65,7 +65,7 @@
 			"Defaults": [
 				{
 					"Type": "Upgrade",
-					"DefID": "emod_armorslots_standard",
+					"DefID": "emod_structureslots_standard",
 					"Location": "CenterTorso"
 				}
 			]
@@ -140,12 +140,12 @@
 			"Defaults": [
 				{
 					"Type": "Upgrade",
-					"DefID": "LegUpperActuator",
+					"DefID": "emod_leg_upper",
 					"Location": "LeftLeg"
 				},
 				{
 					"Type": "Upgrade",
-					"DefID": "LegUpperActuator",
+					"DefID": "emod_leg_upper",
 					"Location": "RightLeg"
 				}
 			]
@@ -155,12 +155,12 @@
 			"Defaults": [
 				{
 					"Type": "Upgrade",
-					"DefID": "LegLowerActuator",
+					"DefID": "emod_leg_lower",
 					"Location": "LeftLeg"
 				},
 				{
 					"Type": "Upgrade",
-					"DefID": "LegLowerActuator",
+					"DefID": "emod_leg_lower",
 					"Location": "RightLeg"
 				}
 			]
@@ -170,12 +170,12 @@
 			"Defaults": [
 				{
 					"Type": "Upgrade",
-					"DefID": "LegFootActuator",
+					"DefID": "emod_leg_foot",
 					"Location": "LeftLeg"
 				},
 				{
 					"Type": "Upgrade",
-					"DefID": "LegFootActuator",
+					"DefID": "emod_leg_foot",
 					"Location": "RightLeg"
 				}
 			]
