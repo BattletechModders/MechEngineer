@@ -34,10 +34,11 @@ namespace MechEngineer.Helper
             return !errors.Any();
         }
 
-        public string ValidateDrop(MechLabItemSlotElement drop_item, MechDef mechDef, List<InvItem> new_inventory)
+        public string ValidateDrop(MechLabItemSlotElement drop_item, List<InvItem> new_inventory)
         {
-            var errors1 = new Errors();
-            validator.ValidateMech(mechDef, errors1);
+            var mechDef = MechLabHelper.CurrentMechLab.ActiveMech;
+
+            //validator.ValidateMech(mechDef, errors1);
 
             var mechDef2 = new MechDef(mechDef);
             var inventory2 = new_inventory.Select(x =>
@@ -49,11 +50,11 @@ namespace MechEngineer.Helper
 
             mechDef2.SetInventory(inventory2.ToArray());
 
-            var errors2 = new Errors();
-            validator.ValidateMech(mechDef2, errors2);
+            var errors = new Errors();
+            validator.ValidateMech(mechDef2, errors);
 
-            var newErrors = errors2.Except(errors1);
-            return newErrors.FirstOrDefault()?.Message ?? string.Empty;
+            //var newErrors = errors2.Except(errors1);
+            return errors.FirstOrDefault()?.Message ?? string.Empty;
         }
     }
 
