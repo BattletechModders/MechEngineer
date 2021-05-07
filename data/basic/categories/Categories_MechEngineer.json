@@ -263,7 +263,6 @@
 				{ "Location" : "LeftLeg", "Min": 1, "Max": 1 }
 			],
 			"DefaultCustoms": {
-			"DefaultCustoms": {
 				"InventorySorter": "ActuatorLeg1",
 				"Sorter": 1,
 				"CriticalEffects": {
@@ -279,7 +278,6 @@
 				{ "Location" : "RightLeg", "Min": 1, "Max": 1 },
 				{ "Location" : "LeftLeg", "Min": 1, "Max": 1 }
 			],
-			"DefaultCustoms": {
 			"DefaultCustoms": {
 				"InventorySorter": "ActuatorLeg2",
 				"Sorter": 2,
@@ -297,7 +295,6 @@
 				{ "Location" : "LeftLeg", "Min": 1, "Max": 1 }
 			],
 			"DefaultCustoms": {
-			"DefaultCustoms": {
 				"InventorySorter": "ActuatorLeg3",
 				"Sorter": 3,
 				"CriticalEffects": {
@@ -311,7 +308,7 @@
 			"DisplayName": "CASE",
 			"BaseLimits": [
 				{
-					"Min": 1,
+					"Min": 0,
 					"Max": 1
 				}
 			],

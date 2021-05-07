@@ -74,7 +74,7 @@
 			"CategoryID": "Cooling",
 			"Defaults": [
 				{
-					"Type": "Upgrade",
+					"Type": "HeatSink",
 					"DefID": "emod_kit_shs",
 					"Location": "CenterTorso"
 				}
@@ -94,7 +94,7 @@
 			"CategoryID": "EngineShield",
 			"Defaults": [
 				{
-					"Type": "Upgrade",
+					"Type": "HeatSink",
 					"DefID": "emod_engineslots_std_center",
 					"Location": "CenterTorso"
 				}
@@ -104,7 +104,7 @@
 			"CategoryID": "EngineHeatBlock",
 			"Defaults": [
 				{
-					"Type": "Upgrade",
+					"Type": "HeatSink",
 					"DefID": "emod_engine_cooling",
 					"Location": "CenterTorso"
 				}
@@ -114,7 +114,7 @@
 			"CategoryID": "EngineCore",
 			"Defaults": [
 				{
-					"Type": "Upgrade",
+					"Type": "HeatSink",
 					"DefID": "emod_engine_dummy",
 					"Location": "CenterTorso"
 				}
