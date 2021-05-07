@@ -14,8 +14,6 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches
                 var mechDef = __instance;
                 var details = mechDef.Chassis.Description.Details;
 
-                Control.Logger.Debug?.Log($"id={mechDef.Description.Id} details={details}");
-
                 var description = mechDef.Description;
                 Traverse.Create(description)
                     .Property<string>(nameof(description.Details))

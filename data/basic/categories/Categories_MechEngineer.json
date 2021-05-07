@@ -238,10 +238,8 @@
 			"Name": "LegHip",
 			"DisplayName": "Hip",
 			"BaseLimits": [
-				{
-					"Min": 1,
-					"Max": 1
-				}
+				{ "Location" : "RightLeg", "Min": 1, "Max": 1 },
+				{ "Location" : "LeftLeg", "Min": 1, "Max": 1 }
 			],
 			"DefaultCustoms": {
 				"InventorySorter": "ActuatorLeg0",
@@ -261,11 +259,10 @@
 			"Name": "LegUpperActuator",
 			"DisplayName": "Upper Leg Actuator",
 			"BaseLimits": [
-				{
-					"Min": 1,
-					"Max": 1
-				}
+				{ "Location" : "RightLeg", "Min": 1, "Max": 1 },
+				{ "Location" : "LeftLeg", "Min": 1, "Max": 1 }
 			],
+			"DefaultCustoms": {
 			"DefaultCustoms": {
 				"InventorySorter": "ActuatorLeg1",
 				"Sorter": 1,
@@ -279,11 +276,10 @@
 			"Name": "LegLowerActuator",
 			"DisplayName": "Lower Leg Actuator",
 			"BaseLimits": [
-				{
-					"Min": 1,
-					"Max": 1
-				}
+				{ "Location" : "RightLeg", "Min": 1, "Max": 1 },
+				{ "Location" : "LeftLeg", "Min": 1, "Max": 1 }
 			],
+			"DefaultCustoms": {
 			"DefaultCustoms": {
 				"InventorySorter": "ActuatorLeg2",
 				"Sorter": 2,
@@ -297,11 +293,10 @@
 			"Name": "LegFootActuator",
 			"DisplayName": "Foot Actuator",
 			"BaseLimits": [
-				{
-					"Min": 1,
-					"Max": 1
-				}
+				{ "Location" : "RightLeg", "Min": 1, "Max": 1 },
+				{ "Location" : "LeftLeg", "Min": 1, "Max": 1 }
 			],
+			"DefaultCustoms": {
 			"DefaultCustoms": {
 				"InventorySorter": "ActuatorLeg3",
 				"Sorter": 3,
