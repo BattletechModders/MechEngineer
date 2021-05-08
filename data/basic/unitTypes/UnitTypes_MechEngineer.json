@@ -1,0 +1,20 @@
+{
+	"Settings": [
+		{
+			"Name": "LeftArmLowerDisallowed",
+			"RequiredTags": [ "LeftArmLowerDisallowed" ]
+		},
+		{
+			"Name": "RightArmLowerDisallowed",
+			"RequiredTags": [ "RightArmLowerDisallowed" ]
+		},
+		{
+			"Name": "LeftArmHandDisallowed",
+			"RequiredTags": [ "LeftArmHandDisallowed" ]
+		},
+		{
+			"Name": "RightArmHandDisallowed",
+			"RequiredTags": [ "RightArmHandDisallowed" ]
+		}
+	]
+}

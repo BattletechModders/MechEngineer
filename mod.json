@@ -13,7 +13,7 @@
 	},
 	
 	"CustomResourceTypes": ["MEBonusDescriptions", "MECriticalEffects"],
-	
+
 	"Manifest": [
 		{
 			"Type": "AdvancedJSONMerge",
@@ -40,9 +40,14 @@
 			"Path": "data/basic/tagRestrictions/",
 			"ShouldMergeJSON": false
 		},
+		{
+			"Type": "CCDefaults",
+			"Path": "data/basic/defaults/",
+			"ShouldMergeJSON": false
+		},
         {
-            "Type": "CCDefaults",
-            "Path": "data/basic/defaults/",
+            "Type": "CCUnitTypes",
+            "Path": "data/basic/unitTypes/",
             "ShouldMergeJSON": false
         },
 		{
@@ -74,7 +79,7 @@
 			"Type": "ChassisDef",
 			"Path": "data/basic/chassis/",
 			"ShouldMergeJSON": false
-		},		
+		},
 		{
 			"Type": "ItemCollectionDef",
 			"Path": "data/basic/itemCollections/",
