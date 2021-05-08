@@ -179,6 +179,66 @@
 					"Location": "RightLeg"
 				}
 			]
+		},
+		{
+			"CategoryID": "ArmShoulder",
+			"Defaults": [
+				{
+					"Type": "Upgrade",
+					"DefID": "emod_arm_part_shoulder",
+					"Location": "LeftArm"
+				},
+				{
+					"Type": "Upgrade",
+					"DefID": "emod_arm_part_shoulder",
+					"Location": "RightArm"
+				}
+			]
+		},
+		{
+			"CategoryID": "ArmUpperActuator",
+			"Defaults": [
+				{
+					"Type": "Upgrade",
+					"DefID": "emod_arm_part_upper",
+					"Location": "LeftArm"
+				},
+				{
+					"Type": "Upgrade",
+					"DefID": "emod_arm_part_upper",
+					"Location": "RightArm"
+				}
+			]
+		},
+		{
+			"CategoryID": "ArmLowerActuator",
+			"Defaults": [
+				{
+					"Type": "Upgrade",
+					"DefID": "emod_arm_part_lower",
+					"Location": "LeftArm"
+				},
+				{
+					"Type": "Upgrade",
+					"DefID": "emod_arm_part_lower",
+					"Location": "RightArm"
+				}
+			]
+		},
+		{
+			"CategoryID": "ArmHandActuator",
+			"Defaults": [
+				{
+					"Type": "Upgrade",
+					"DefID": "emod_arm_part_hand",
+					"Location": "LeftArm"
+				},
+				{
+					"Type": "Upgrade",
+					"DefID": "emod_arm_part_hand",
+					"Location": "RightArm"
+				}
+			]
 		}
 	]
 }
