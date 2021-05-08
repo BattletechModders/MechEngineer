@@ -423,7 +423,7 @@
             ],
             "UnitLimits": [
                 {
-                    "UnitType": "LeftArmLowerDisallowed",
+                    "UnitType": "LeftArmUpperLimit",
                     "PartialOverride": true,
                     "Limits": [
                         {
@@ -434,7 +434,7 @@
                     ]
                 },
                 {
-                    "UnitType": "RightArmLowerDisallowed",
+                    "UnitType": "RightArmUpperLimit",
                     "PartialOverride": true,
                     "Limits": [
                         {
@@ -471,7 +471,7 @@
             ],
             "UnitLimits": [
                 {
-                    "UnitType": "LeftArmHandDisallowed",
+                    "UnitType": "LeftArmLowerLimit",
                     "PartialOverride": true,
                     "Limits": [
                         {
@@ -482,7 +482,29 @@
                     ]
                 },
                 {
-                    "UnitType": "RightArmHandDisallowed",
+                    "UnitType": "RightArmLowerLimit",
+                    "PartialOverride": true,
+                    "Limits": [
+                        {
+                            "Location": "RightArm",
+                            "Min": 0,
+                            "Max": 0
+                        }
+                    ]
+                },
+                {
+                    "UnitType": "LeftArmUpperLimit",
+                    "PartialOverride": true,
+                    "Limits": [
+                        {
+                            "Location": "LeftArm",
+                            "Min": 0,
+                            "Max": 0
+                        }
+                    ]
+                },
+                {
+                    "UnitType": "RightArmUpperLimit",
                     "PartialOverride": true,
                     "Limits": [
                         {

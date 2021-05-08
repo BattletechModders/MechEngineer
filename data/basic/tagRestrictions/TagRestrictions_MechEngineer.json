@@ -1,9 +1,15 @@
 {
     "Settings" : [
         {
-            "Tag" : "emod_case",
-            "IncompatibleTags" : [
+            "Tag": "emod_case",
+            "IncompatibleTags": [
                 "emod_case2"
+            ]
+        },
+        {
+            "Tag": "ArmHandActuator",
+            "RequiredTags": [
+                "ArmLowerActuator"
             ]
         }
     ]

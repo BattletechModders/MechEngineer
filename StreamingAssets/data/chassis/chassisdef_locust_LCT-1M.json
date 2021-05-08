@@ -1,8 +1,5 @@
 {
-	"Custom" : {
-		"ArmActuatorSupport" : {
-			"LeftLimit" : "Upper",
-			"RightLimit" : "Upper"
-		}
-	}
+    "ChassisTags": {
+        "items": [ "LeftArmUpperLimit", "RightArmUpperLimit" ]
+    }
 }

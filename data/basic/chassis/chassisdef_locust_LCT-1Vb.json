@@ -1,10 +1,4 @@
 {
-	"Custom" : {
-		"ArmActuatorSupport" : {
-			"LeftLimit" : "Upper",
-			"RightLimit" : "Upper"
-		}
-	},
     "Description": {
         "Cost": 8000000,
         "Rarity": 0,
@@ -377,8 +371,7 @@
     ],
     "VariantName": "LCT-1Vb",
     "ChassisTags": {
-        "items": [],
-        "tagSetSourceFile": ""
+        "items": [ "LeftArmUpperLimit", "RightArmUpperLimit" ]
     },
     "StockRole": "Light Fire Support",
     "YangsThoughts": "This locust is super crazy, Ferro armour Endo chassis topped with a XL engine and DHS. It's firepower is equally insane for something so small."

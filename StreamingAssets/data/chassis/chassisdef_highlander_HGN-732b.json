@@ -1,9 +1,7 @@
 {
-	"Custom" : {
-		"ArmActuatorSupport" : {
-			"RightLimit" : "Lower"
-		}
-	},
+    "ChassisTags": {
+        "items": [ "RightArmLowerLimit" ]
+    },
 	"FixedEquipment": [
 		{
 			"MountedLocation": "CenterTorso",
