@@ -38,7 +38,8 @@ namespace MechEngineer.Helper
         {
             var mechDef = MechLabHelper.CurrentMechLab.ActiveMech;
 
-            //validator.ValidateMech(mechDef, errors1);
+            var errors1 = new Errors();
+            validator.ValidateMech(mechDef, errors1);
 
             var mechDef2 = new MechDef(mechDef);
             var inventory2 = new_inventory.Select(x =>
@@ -50,11 +51,11 @@ namespace MechEngineer.Helper
 
             mechDef2.SetInventory(inventory2.ToArray());
 
-            var errors = new Errors();
-            validator.ValidateMech(mechDef2, errors);
+            var errors2 = new Errors();
+            validator.ValidateMech(mechDef2, errors2);
 
-            //var newErrors = errors2.Except(errors1);
-            return errors.FirstOrDefault()?.Message ?? string.Empty;
+            var newErrors = errors2.Except(errors1);
+            return newErrors.FirstOrDefault()?.Message ?? string.Empty;
         }
     }
 
