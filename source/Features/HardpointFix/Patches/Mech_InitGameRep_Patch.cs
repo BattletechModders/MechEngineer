@@ -9,7 +9,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
     [HarmonyPatch(typeof(Mech), "InitGameRep")]
     public static class Mech_InitGameRep_Patch
     {
-        [HarmonyBefore(KFix.AC, KFix.CU)]
+        [HarmonyBefore(Mods.AC, Mods.CU)]
         public static void Prefix(Mech __instance)
         {
             try

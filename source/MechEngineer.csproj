@@ -83,6 +83,7 @@
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_RestartCreatedEffects_Patch.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_CancelCreatedEffects_Patch.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitEffectStats_Patch.cs" />
+    <Compile Include="Features\OmniSlots\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
     <Compile Include="Features\PlaceholderEffects\Patches\StatisticEffect_initStatisiticEffect_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
     <Compile Include="Helper\ChassisDefExtensions.cs" />
@@ -175,7 +176,7 @@
     <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMoveUIElements.cs" />
     <Compile Include="Features\MechLabSlots\MechLabFixWidgetLayouts.cs" />
-    <Compile Include="Features\MechLabSlots\MechPropertiesWidget.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabWidgets.cs" />
     <Compile Include="Features\MechLabSlots\MechLabAutoZoom.cs" />
     <Compile Include="Features\MechLabSlots\MechLabSlotsFixer.cs" />
     <Compile Include="Features\MechLabSlots\WidgetLayout.cs" />
@@ -210,7 +211,6 @@
     <Compile Include="Features\OmniSlots\OmniSlotsFeature.cs" />
     <Compile Include="Features\OmniSlots\HardpointOmniUsageCalculator.cs" />
     <Compile Include="Features\OmniSlots\HardpointStat.cs" />
-    <Compile Include="Features\OmniSlots\Patches\MechBayMechInfoWidget_GetTotalHardpoints_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechLabLocationWidget_ValidateAdd_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\SG_Shop_ItemSelectedPanel_FillInHardPoints_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechBayMechInfoWidget_SetHardpoints_Patch.cs" />
@@ -298,7 +298,7 @@
     <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_ShowHighlightFrame_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_InitWidgets_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_LoadMech_Patch.cs" />
-    <Compile Include="Features\MechLabSlots\MechConfiguration.cs" />
+    <Compile Include="Features\MechLabSlots\MechLabWidget.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_RefreshDropHighlights_Patch.cs" />
     <Compile Include="Features\Feature.cs" />
     <Compile Include="Features\MoveMultiplierStat\MoveMultiplierStatFeature.cs" />
@@ -361,7 +361,7 @@
     <Compile Include="Features\DynamicSlots\DynamicSlots.cs" />
     <Compile Include="Helper\Adapter.cs" />
     <Compile Include="Misc\FileUtils.cs" />
-    <Compile Include="Misc\KFix.cs" />
+    <Compile Include="Misc\Mods.cs" />
     <Compile Include="Misc\MELazy.cs" />
     <Compile Include="Misc\Mod.cs" />
     <Compile Include="Features\CriticalEffects\CriticalEffects.cs" />

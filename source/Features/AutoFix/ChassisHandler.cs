@@ -132,6 +132,12 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
+            if (location == ChassisLocations.CenterTorso)
+            {
+                newValue += MechLabSlotsFeature.settings.TopLeftWidget.Slots +
+                            MechLabSlotsFeature.settings.TopRightWidget.Slots;
+            }
+
             var info = typeof(LocationDef).GetField("InventorySlots");
             var value = Convert.ChangeType(newValue, info.FieldType);
             var box = (object) locationDef;

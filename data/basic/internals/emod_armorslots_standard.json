@@ -1,13 +1,11 @@
 {
-	"Custom": {
-		"Category" : { 
-			"CategoryID" : "Armor" 
-		},
-		"Color": {
-			"UIColor": "DarkGray"
-		},
-		"Flags" : [ "ignore_damage", "default" ]
-	},
+    "Custom": {
+        "Category": {
+            "CategoryID": "Armor"
+        },
+        "Color": "DarkGray",
+        "Flags": [ "ignore_damage", "default" ]
+    },
     "Description" : {
         "Cost" : 0,
         "Rarity" : 0,

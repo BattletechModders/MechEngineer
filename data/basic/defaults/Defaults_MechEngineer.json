@@ -80,6 +80,16 @@
 				}
 			]
 		},
+        {
+            "CategoryID": "Quirk",
+            "Defaults": [
+                {
+                    "Type": "Upgrade",
+                    "DefID": "Gear_Quirk_placeholder",
+                    "Location": "CenterTorso"
+                }
+            ]
+        },
 		{
 			"CategoryID": "Gyro",
 			"Defaults": [

@@ -12,7 +12,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             try
             {
-                if (MechPropertiesWidget.OnDrop(__instance, eventData))
+                if (MechLabWidgets.OnDrop(__instance, eventData))
                 {
                     return false;
                 }

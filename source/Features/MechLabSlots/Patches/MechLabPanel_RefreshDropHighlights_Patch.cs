@@ -11,7 +11,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             try
             {
-                MechPropertiesWidget.RefreshDropHighlights(__instance, item);
+                MechLabWidgets.RefreshDropHighlights(__instance, item);
             }
             catch (Exception e)
             {

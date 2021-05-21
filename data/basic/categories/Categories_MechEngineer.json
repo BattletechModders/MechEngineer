@@ -105,8 +105,7 @@
                 }
             ],
             "DefaultCustoms": {
-                "MechConfiguration": {
-                },
+                "MechLabWidget": "TopLeft",
                 "InventorySorter": "CzOrder0",
                 "Color": "ArmorDamaged",
                 "Sorter": 0,
@@ -123,8 +122,7 @@
                 }
             ],
             "DefaultCustoms": {
-                "MechConfiguration": {
-                },
+                "MechLabWidget": "TopLeft",
                 "Color": "OrangeHalf",
                 "InventorySorter": "CzOrder1",
                 "Sorter": 1,
@@ -141,10 +139,25 @@
                 }
             ],
             "DefaultCustoms": {
-                "MechConfiguration": {
-                },
+                "MechLabWidget": "TopLeft",
                 "InventorySorter": "CzOrder2",
                 "Sorter": 2,
+                "Flags": [ "ignore_damage", "no_salvage" ]
+            }
+        },
+        {
+            "Name": "Quirk",
+            "DisplayName": "Quirk",
+            "BaseLimits": [
+                {
+                    "Min": 1,
+                    "Max": 1
+                }
+            ],
+            "DefaultCustoms": {
+                "MechLabWidget": "TopRight",
+                "InventorySorter": "CzOrder10",
+                "Sorter": 10,
                 "Flags": [ "ignore_damage", "no_salvage" ]
             }
         },
@@ -158,8 +171,8 @@
                 }
             ],
             "DefaultCustoms": {
-                "InventorySorter": "CzOrder3",
-                "Sorter": 3,
+                "InventorySorter": "CzOrder20",
+                "Sorter": 20,
                 "CriticalEffects": {
                     "PenalizedEffectIDs": [
                         [ "CriticalEffect-GyroCrit" ]
@@ -194,8 +207,8 @@
                 }
             ],
             "DefaultCustoms": {
-                "InventorySorter": "CzOrder4",
-                "Sorter": 4
+                "InventorySorter": "CzOrder21",
+                "Sorter": 21
             }
         },
         {
@@ -208,8 +221,8 @@
                 }
             ],
             "DefaultCustoms": {
-                "InventorySorter": "CzOrder5",
-                "Sorter": 5
+                "InventorySorter": "CzOrder22",
+                "Sorter": 22
             }
         },
         {
@@ -222,8 +235,8 @@
                 }
             ],
             "DefaultCustoms": {
-                "InventorySorter": "CzOrder6",
-                "Sorter": 6
+                "InventorySorter": "CzOrder23",
+                "Sorter": 23
             }
         },
         {

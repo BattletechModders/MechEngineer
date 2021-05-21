@@ -2,6 +2,7 @@
 using BattleTech;
 using BattleTech.UI;
 using Harmony;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.MechLabSlots.Patches
 {
@@ -15,16 +16,19 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         )]
     public static class MechLabLocationWidget_ShowHighlightFrame_Patch
     {
-        public static void Prefix(MechLabLocationWidget __instance, ref MechComponentRef cRef)
+        [HarmonyBefore(Mods.CC)]
+        [HarmonyPriority(Priority.HigherThanNormal)]
+        public static bool Prefix(MechLabLocationWidget __instance, ref MechComponentRef cRef)
         {
             try
             {
-                MechPropertiesWidget.ShowHighlightFrame(__instance, ref cRef);
+                return MechLabWidgets.ShowHighlightFrame(__instance, ref cRef);
             }
             catch (Exception e)
             {
                 Control.Logger.Error.Log(e);
             }
+            return false;
         }
     }
 }

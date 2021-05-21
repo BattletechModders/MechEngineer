@@ -5,10 +5,6 @@ namespace MechEngineer.Features.OmniSlots
 {
     internal class HardpointStat
     {
-        internal enum WCTypes
-        {
-            NotSet, Ballistic,
-        }
         internal readonly WeaponCategoryValue Category;
         internal HardpointStat(WeaponCategoryValue category)
         {
@@ -17,12 +13,10 @@ namespace MechEngineer.Features.OmniSlots
 
         internal int VanillaUsage;
         internal int VanillaMax;
-        private bool VanillaHas => VanillaMax > 0;
             
         internal int VanillaMaxOver => Math.Max(VanillaUsage - VanillaMax, 0);
 
         internal int DynamicMax => VanillaMax + VanillaMaxOver + OmniFree;
-        internal int DynamicFree => DynamicMax - VanillaUsage;
 
         internal int TheoreticalMax => VanillaMax + OmniMax;
 
@@ -32,8 +26,8 @@ namespace MechEngineer.Features.OmniSlots
 
         private string MaxString => OmniHas ? $"<color=#F79B26FF>{(DynamicMax > 0 ? DynamicMax : 0)}</color>" : $"{VanillaMax}";
 
-        internal string HardpointString => $"{VanillaUsage}/{MaxString}";
-        internal string HardpointTotalString => OmniHas ? (VanillaHas ? $"<color=#F79B26FF>{VanillaMax}+{OmniMax}</color>" : $"<color=#F79B26FF>{OmniMax}</color>") : $"{VanillaMax}";
+        internal string HardpointString => VanillaUsage == 0 ? MaxString : $"{VanillaUsage}/{MaxString}";
+        internal string HardpointStringWithSpace => VanillaUsage == 0 ? MaxString : $"{VanillaUsage} / {MaxString}";
 
         internal WeaponCategoryValue CategoryForLocationWidget => OmniHas || VanillaMax > 0 ? Category : WeaponCategoryEnumeration.GetNotSetValue();
     }

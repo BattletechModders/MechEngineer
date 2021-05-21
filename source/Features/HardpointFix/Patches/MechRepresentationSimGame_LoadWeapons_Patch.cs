@@ -9,7 +9,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
     [HarmonyPatch(typeof(MechRepresentationSimGame), "LoadWeapons")]
     public static class MechRepresentationSimGame_LoadWeapons_Patch
     {
-        [HarmonyBefore(KFix.CU)]
+        [HarmonyBefore(Mods.CU)]
         public static void Prefix(MechRepresentationSimGame __instance)
         {
             try

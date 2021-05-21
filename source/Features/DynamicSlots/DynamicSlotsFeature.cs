@@ -82,7 +82,8 @@ namespace MechEngineer.Features.DynamicSlots
                     var index = maxSlots - currentFreeSlots;
                     if (location == ChassisLocations.CenterTorso)
                     {
-                        index -= MechLabSlotsFeature.settings.MechLabGeneralSlots;
+                        index -= MechLabSlotsFeature.settings.TopLeftWidget.Slots;
+                        index -= MechLabSlotsFeature.settings.TopRightWidget.Slots;
                     }
                     return index;
                 }

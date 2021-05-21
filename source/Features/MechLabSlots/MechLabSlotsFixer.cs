@@ -11,7 +11,7 @@ namespace MechEngineer.Features.MechLabSlots
             // MechPropertiesWidget feature
             if (widgetLayout.widget == (widgetLayout.widget.parentDropTarget as MechLabPanel).centerTorsoWidget)
             {
-                ___maxSlots = Mathf.Max(0, ___maxSlots - MechLabSlotsFeature.settings.MechLabGeneralSlots);
+                ___maxSlots = Mathf.Max(0, ___maxSlots - MechLabSlotsFeature.settings.TopLeftWidget.Slots - MechLabSlotsFeature.settings.TopRightWidget.Slots);
             }
 
             ModifyLayoutSlotCount(widgetLayout, ___maxSlots);
@@ -29,7 +29,7 @@ namespace MechEngineer.Features.MechLabSlots
                 {
                     var slot = slots.Last();
                     slots.RemoveAt(slots.Count - 1);
-                    UnityEngine.Object.Destroy(slot.gameObject);
+                    Object.Destroy(slot.gameObject);
                 }
             }
             else if (changedSlotCount > 0)
@@ -40,7 +40,7 @@ namespace MechEngineer.Features.MechLabSlots
                 var index = slots[0].GetSiblingIndex();
                 for (var i = slots.Count; i < maxSlots; i++)
                 {
-                    var newSlot = UnityEngine.Object.Instantiate(templateSlot, layout.layout_slots);
+                    var newSlot = Object.Instantiate(templateSlot, layout.layout_slots);
                     //newSlot.localPosition = new Vector3(0, -(1 + i * SlotHeight), 0);
                     newSlot.SetSiblingIndex(index + i);
                     newSlot.name = "slot (" + i + ")";

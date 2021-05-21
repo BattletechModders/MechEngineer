@@ -1,9 +1,8 @@
 {
     "Custom": {
         "Category": {
-            "CategoryID": "Structure"
+            "CategoryID": "Quirk"
         },
-        "Color": "DarkGray",
         "Flags": [ "ignore_damage", "default" ]
     },
     "Description" : {
@@ -12,11 +11,11 @@
         "Purchasable" : false,
         "Manufacturer" : "Generic",
         "Model" : "Standard",
-        "UIName" : "Structure",
-        "Id" : "emod_structureslots_standard",
-        "Name" : "Standard Structure",
-        "Details" : "The Internal Structure of a BattleMech forms the skeletal structure of the 'Mech to which all components are mounted. The Standard Internal Structure of a 'Mech weighs 10% of its max tonnage.",
-        "Icon" : "uixSvgIcon_quantity"
+        "UIName" : "Quirk",
+        "Id" : "Gear_Quirk_placeholder",
+        "Name" : "Quirk",
+        "Details" : "Some mechs provide additional capabilities to the pilot.",
+        "Icon" : "uixSvgIcon_ability_angelofdeath"
     },
     "BonusValueA" : "",
     "BonusValueB" : "",

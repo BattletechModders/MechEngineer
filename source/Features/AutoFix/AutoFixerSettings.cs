@@ -181,7 +181,7 @@ namespace MechEngineer.Features.AutoFix
             new()
             {
                 Location = ChassisLocations.CenterTorso,
-                Change = new SlotChange {From = 4, By = 11}
+                Change = new SlotChange {From = 4, By = 8}
             },
             new()
             {
