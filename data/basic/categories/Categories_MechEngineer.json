@@ -155,7 +155,7 @@
                 }
             ],
             "DefaultCustoms": {
-                "MechLabWidget": "TopRight",
+                "CustomWidget": "TopRight",
                 "InventorySorter": "CzOrder10",
                 "Sorter": 10,
                 "Flags": [ "ignore_damage", "no_salvage" ]
