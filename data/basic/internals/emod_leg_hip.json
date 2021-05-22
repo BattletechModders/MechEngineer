@@ -3,7 +3,7 @@
 		"Category" : { 
 			"CategoryID" : "LegHip" 
 		},
-		"Flags" : [ "default", "not_broken" ]
+		"Flags" : [ "default", "not_broken", "hide_equip" ]
 	},
     "Description" : {
         "Cost" : 30000,

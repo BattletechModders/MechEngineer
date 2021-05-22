@@ -17,7 +17,7 @@
             {"CategoryID": "EngineHeatBlock"},
             {"CategoryID": "EnginePart"}
         ],
-		"Flags" : [ "default", "not_broken"  ]
+		"Flags" : [ "default", "not_broken", "hide_equip"  ]
 	},
     "DissipationCapacity" : 0,
     "Description" : {

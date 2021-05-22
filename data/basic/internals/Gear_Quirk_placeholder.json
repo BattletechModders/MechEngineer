@@ -3,7 +3,7 @@
         "Category": {
             "CategoryID": "Quirk"
         },
-        "Flags": [ "ignore_damage", "default" ]
+        "Flags": [ "ignore_damage", "default", "hide_equip" ]
     },
     "Description" : {
         "Cost" : 0,

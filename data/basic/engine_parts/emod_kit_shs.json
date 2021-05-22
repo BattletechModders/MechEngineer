@@ -13,7 +13,7 @@
           {"CategoryID": "Cooling"}
         ],
 		"Color": "DarkGray",
-		"Flags" : [ "ignore_damage", "default" ]
+		"Flags" : [ "ignore_damage", "default", "hide_equip" ]
 	},
     "DissipationCapacity" : 0,
     "Description" : {

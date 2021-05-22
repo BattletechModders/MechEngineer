@@ -3,7 +3,7 @@
 		"ArmActuator" : {
 			"Type" : "PartShoulder"
 		},
-		"Flags" : [ "default" ],
+		"Flags" : [ "default", "hide_equip" ],
 		"Category" : { "CategoryID" : "ArmShoulder" }
 	},
     "Description" : {
