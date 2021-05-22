@@ -24,6 +24,8 @@ namespace MechEngineer.Features.OmniSlots
         internal int OmniMax;
         private bool OmniHas => OmniMax > 0;
 
+        internal bool ShowStat => OmniMax > 0 || VanillaUsage > 0 || VanillaMax > 0;
+
         private string MaxString => OmniHas ? $"<color=#F79B26FF>{(DynamicMax > 0 ? DynamicMax : 0)}</color>" : $"{VanillaMax}";
 
         internal string HardpointString => VanillaUsage == 0 ? MaxString : $"{VanillaUsage}/{MaxString}";

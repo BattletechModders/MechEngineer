@@ -39,7 +39,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
 
                 static void SetData(MechLabHardpointElement element, HardpointStat stat)
                 {
-                    //element.transform.parent.gameObject.SetActive(stat.VanillaMax > 0);
+                    element.gameObject.SetActive(stat.ShowStat);
                     element.SetData(stat.CategoryForLocationWidget, stat.HardpointStringWithSpace);
                 }
 

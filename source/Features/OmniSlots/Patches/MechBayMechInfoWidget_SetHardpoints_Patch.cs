@@ -34,7 +34,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
 
                 static void SetData(TextMeshProUGUI text, HardpointStat stat)
                 {
-                    //text.transform.parent.gameObject.SetActive(stat.VanillaMax > 0);
+                    text.gameObject.SetActive(stat.ShowStat);
                     text.SetText(stat.HardpointString);
                 }
 
