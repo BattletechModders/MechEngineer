@@ -40,7 +40,12 @@ namespace MechEngineer.Features.Engines.StaticHandler
             var stats = new MechDefMovementStatistics(mechDef);
             widget.totalJumpjets = stats.JumpJetMaxCount;
 
-            hardpoints[4].SetData(WeaponCategoryEnumeration.GetAMS(), $"{stats.JumpJetCount} / {stats.JumpJetMaxCount}");
+            hardpoints[4].SetData(
+                WeaponCategoryEnumeration.GetAMS(),
+                stats.JumpJetCount == 0 ?
+                    $"{stats.JumpJetMaxCount}"
+                    : $"{stats.JumpJetCount} / {stats.JumpJetMaxCount}"
+                );
         }
     }
 }
