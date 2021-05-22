@@ -1,4 +1,5 @@
 ﻿using System;
+using BattleTech;
 using BattleTech.UI;
 using Harmony;
 using MechEngineer.Features.Engines.StaticHandler;
@@ -8,12 +9,19 @@ namespace MechEngineer.Features.Engines.Patches
     [HarmonyPatch(typeof(MechLabMechInfoWidget), "GetTotalHardpoints")]
     public static class MechLabMechInfoWidget_GetTotalHardpoints_Patch
     {
-        // only allow one engine part per specific location
-        public static void Postfix(MechLabMechInfoWidget __instance, MechLabPanel ___mechLab, MechLabHardpointElement[] ___hardpoints)
+        public static void Postfix(MechLabPanel ___mechLab, MechLabHardpointElement[] ___hardpoints)
         {
             try
             {
-                EngineMisc.SetJumpJetHardpointCount(__instance, ___mechLab, ___hardpoints);
+                if (___hardpoints == null || ___hardpoints.Length < 5 || ___mechLab?.activeMechDef == null)
+                {
+                    return;
+                }
+                
+                ___hardpoints[4].SetData(
+                    WeaponCategoryEnumeration.GetAMS(),
+                    EngineMisc.GetJumpJetCountText(___mechLab.activeMechDef)
+                );
             }
             catch (Exception e)
             {

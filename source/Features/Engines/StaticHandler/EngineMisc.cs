@@ -1,5 +1,4 @@
 ﻿using BattleTech;
-using BattleTech.UI;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 
@@ -24,28 +23,10 @@ namespace MechEngineer.Features.Engines.StaticHandler
             mech.StatCollection.RunSpeed().Set(movement.RunSpeed);
         }
 
-        internal static void SetJumpJetHardpointCount(MechLabMechInfoWidget widget, MechLabPanel mechLab, MechLabHardpointElement[] hardpoints)
+        internal static string GetJumpJetCountText(MechDef mechDef)
         {
-            if (hardpoints == null || hardpoints[4] == null)
-            {
-                return;
-            }
-
-            var mechDef = mechLab?.CreateMechDef();
-            if (mechDef == null)
-            {
-                return;
-            }
-
             var stats = new MechDefMovementStatistics(mechDef);
-            widget.totalJumpjets = stats.JumpJetMaxCount;
-
-            hardpoints[4].SetData(
-                WeaponCategoryEnumeration.GetAMS(),
-                stats.JumpJetCount == 0 ?
-                    $"{stats.JumpJetMaxCount}"
-                    : $"{stats.JumpJetCount} / {stats.JumpJetMaxCount}"
-                );
+            return stats.JumpJetCount == 0 ? $"{stats.JumpJetMaxCount}" : $"{stats.JumpJetCount} / {stats.JumpJetMaxCount}";
         }
     }
 }
