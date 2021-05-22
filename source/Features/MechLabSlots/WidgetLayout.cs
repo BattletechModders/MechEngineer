@@ -1,6 +1,6 @@
-﻿using BattleTech.UI;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using BattleTech.UI;
 using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots

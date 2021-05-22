@@ -24,17 +24,17 @@ namespace MechEngineer.Features.MechLabSlots
                 Representation.GetChild("OBJ_ECMBttn").gameObject.SetActive(false);
             }
         }
-        
+
         internal static void MoveMechRoleInfo(MechLabPanel panel)
         {
             var armWidget = panel.rightArmWidget;
 
             var layout_details = panel.transform
-                .GetChild("Representation")
-                .GetChild("OBJ_mech")
-                .GetChild("Centerline")
-                .GetChild("layout_details")
-                ?? armWidget.transform.GetChild("layout_details");
+                                     .GetChild("Representation")
+                                     .GetChild("OBJ_mech")
+                                     .GetChild("Centerline")
+                                     .GetChild("layout_details")
+                                 ?? armWidget.transform.GetChild("layout_details");
             if (layout_details == null)
             {
                 return;
@@ -117,7 +117,7 @@ namespace MechEngineer.Features.MechLabSlots
                 }
             }
         }
-        
+
         internal static void MoveViewMechButton(MechLabPanel panel)
         {
             var adapter = new MechLabPanelAdapter(panel);

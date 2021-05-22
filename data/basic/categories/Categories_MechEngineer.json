@@ -105,7 +105,7 @@
                 }
             ],
             "DefaultCustoms": {
-                "MechLabWidget": "TopLeft",
+                "CustomWidget": "TopLeft",
                 "InventorySorter": "CzOrder0",
                 "Color": "ArmorDamaged",
                 "Sorter": 0,
@@ -122,7 +122,7 @@
                 }
             ],
             "DefaultCustoms": {
-                "MechLabWidget": "TopLeft",
+                "CustomWidget": "TopLeft",
                 "Color": "OrangeHalf",
                 "InventorySorter": "CzOrder1",
                 "Sorter": 1,
@@ -139,7 +139,7 @@
                 }
             ],
             "DefaultCustoms": {
-                "MechLabWidget": "TopLeft",
+                "CustomWidget": "TopLeft",
                 "InventorySorter": "CzOrder2",
                 "Sorter": 2,
                 "Flags": [ "ignore_damage", "no_salvage" ]

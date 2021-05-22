@@ -1,6 +1,6 @@
-﻿using BattleTech.UI;
+﻿using System;
+using BattleTech.UI;
 using Harmony;
-using System;
 
 namespace MechEngineer.Features.MechLabSlots.Patches
 {
@@ -12,7 +12,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
             try
             {
                 MechLabFixWidgetLayouts.FixMechLabLayouts(__instance);
-                MechLabWidgets.Setup(__instance);
+                CustomWidgetsFixMechLab.Setup(__instance);
                 MechLabMoveUIElements.MoveMechUIElements(__instance);
             }
             catch (Exception e)

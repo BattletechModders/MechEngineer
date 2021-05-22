@@ -16,7 +16,7 @@ namespace MechEngineer.Features.MechLabSlots
             FixMechLabLocationWidgetLayouts(panel);
         }
 
-        static void FixMechLabMechInfoWidgetLayout(MechLabPanel panel)
+        private static void FixMechLabMechInfoWidgetLayout(MechLabPanel panel)
         {
             var panelAdapter = new MechLabPanelAdapter(panel);
             var widgetAdapter = new MechLabMechInfoWidgetAdapter(panelAdapter.mechInfoWidget);
@@ -61,7 +61,7 @@ namespace MechEngineer.Features.MechLabSlots
                     var cgo = new GameObject("TextContainer");
                     cgo.transform.parent = go.transform.parent;
                     go.transform.parent = cgo.transform;
-                    
+
                     var height = 20f;
                     var width = go.name.Contains("jump") ? 40f : 20f;
                     FixRect(go, height);
@@ -71,7 +71,6 @@ namespace MechEngineer.Features.MechLabSlots
                         var component = go.GetComponent<LocalizableText>();
                         component.autoSizeTextContainer = true;
                         component.alignment = TextAlignmentOptions.MidlineRight;
-
                     }
 
                     {
@@ -131,6 +130,7 @@ namespace MechEngineer.Features.MechLabSlots
                     rect.offsetMin = new Vector2(0, -size.Value);
                     rect.offsetMax = new Vector2(size.Value, 0);
                 }
+
                 rect.localPosition = new Vector3(0, 0, 0);
                 return rect;
             }
@@ -141,7 +141,7 @@ namespace MechEngineer.Features.MechLabSlots
             }
         }
 
-        static void FixMechLabLocationWidgetLayouts(MechLabPanel mechLabPanel)
+        private static void FixMechLabLocationWidgetLayouts(MechLabPanel mechLabPanel)
         {
             var Representation = mechLabPanel.transform.GetChild("Representation");
             var OBJ_mech = Representation.GetChild("OBJ_mech");

@@ -83,6 +83,10 @@
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_RestartCreatedEffects_Patch.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_CancelCreatedEffects_Patch.cs" />
     <Compile Include="Features\HeatSinkCapacityStat\Patches\Mech_InitEffectStats_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\CustomWidgetsFixLanceMechEquipment.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\CCLanceMechEquipmentList_MountedLocation_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\LanceMechEquipmentList_Awake_Patch.cs" />
+    <Compile Include="Features\MechLabSlots\Patches\LanceMechEquipmentList_SetLoadout_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
     <Compile Include="Features\PlaceholderEffects\Patches\StatisticEffect_initStatisiticEffect_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
@@ -176,7 +180,7 @@
     <Compile Include="Features\Engines\Helper\StatCollectionExtension.cs" />
     <Compile Include="Features\MechLabSlots\MechLabMoveUIElements.cs" />
     <Compile Include="Features\MechLabSlots\MechLabFixWidgetLayouts.cs" />
-    <Compile Include="Features\MechLabSlots\MechLabWidgets.cs" />
+    <Compile Include="Features\MechLabSlots\CustomWidgetsFixMechLab.cs" />
     <Compile Include="Features\MechLabSlots\MechLabAutoZoom.cs" />
     <Compile Include="Features\MechLabSlots\MechLabSlotsFixer.cs" />
     <Compile Include="Features\MechLabSlots\WidgetLayout.cs" />
@@ -298,7 +302,7 @@
     <Compile Include="Features\MechLabSlots\Patches\MechLabLocationWidget_ShowHighlightFrame_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_InitWidgets_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_LoadMech_Patch.cs" />
-    <Compile Include="Features\MechLabSlots\MechLabWidget.cs" />
+    <Compile Include="Features\MechLabSlots\CustomWidget.cs" />
     <Compile Include="Features\MechLabSlots\Patches\MechLabPanel_RefreshDropHighlights_Patch.cs" />
     <Compile Include="Features\Feature.cs" />
     <Compile Include="Features\MoveMultiplierStat\MoveMultiplierStatFeature.cs" />

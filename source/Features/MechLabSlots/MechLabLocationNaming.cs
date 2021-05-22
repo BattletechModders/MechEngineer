@@ -1,6 +1,6 @@
-﻿using BattleTech.UI;
-using System.Linq;
+﻿using System.Linq;
 using BattleTech;
+using BattleTech.UI;
 using CustomComponents;
 using Localize;
 using MechEngineer.Helper;
@@ -15,14 +15,14 @@ namespace MechEngineer.Features.MechLabSlots
             // just hide armor = 0 stuff
             widget.gameObject.SetActive(!widget.ShouldHide());
 
-            var mechLab = (MechLabPanel)widget.parentDropTarget;
+            var mechLab = (MechLabPanel) widget.parentDropTarget;
             var text = GetLocationName(mechLab.activeMechDef.Chassis, location);
 
             var adapter = new MechLabLocationWidgetAdapter(widget);
             adapter.locationName.SetText(text);
         }
 
-        static Text GetLocationName(ChassisDef chassisDef, ChassisLocations location)
+        private static Text GetLocationName(ChassisDef chassisDef, ChassisLocations location)
         {
             if (chassisDef.Is<ChassisLocationNaming>(out var naming))
             {
@@ -36,6 +36,7 @@ namespace MechEngineer.Features.MechLabSlots
                     return new Text(text);
                 }
             }
+
             return Mech.GetLongChassisLocation(location);
         }
     }

@@ -11,8 +11,10 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
-                AccessTools.Method(typeof(Transform), nameof(Transform.SetParent), new []{typeof(Transform), typeof(bool)}),
-                AccessTools.Method(typeof(MechLabWidgets), nameof(MechLabWidgets.OnAdditem_SetParent))
+                AccessTools.Method(typeof(Transform), nameof(Transform.SetParent),
+                    new[] {typeof(Transform), typeof(bool)}),
+                AccessTools.Method(typeof(CustomWidgetsFixMechLab),
+                    nameof(CustomWidgetsFixMechLab.OnAdditem_SetParent))
             );
         }
     }

@@ -1,5 +1,5 @@
-﻿using BattleTech.UI;
-using System.Linq;
+﻿using System.Linq;
+using BattleTech.UI;
 using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots
@@ -11,7 +11,9 @@ namespace MechEngineer.Features.MechLabSlots
             // MechPropertiesWidget feature
             if (widgetLayout.widget == (widgetLayout.widget.parentDropTarget as MechLabPanel).centerTorsoWidget)
             {
-                ___maxSlots = Mathf.Max(0, ___maxSlots - MechLabSlotsFeature.settings.TopLeftWidget.Slots - MechLabSlotsFeature.settings.TopRightWidget.Slots);
+                ___maxSlots = Mathf.Max(0,
+                    ___maxSlots - MechLabSlotsFeature.settings.TopLeftWidget.Slots -
+                    MechLabSlotsFeature.settings.TopRightWidget.Slots);
             }
 
             ModifyLayoutSlotCount(widgetLayout, ___maxSlots);
@@ -48,6 +50,5 @@ namespace MechEngineer.Features.MechLabSlots
                 }
             }
         }
-      
     }
 }

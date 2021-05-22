@@ -7,10 +7,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace MechEngineer.Features.MechLabSlots
 {
-    public class MechLabWidgets
+    public class CustomWidgetsFixMechLab
     {
         private static MechLabLocationWidget TopLeftWidget;
         private static MechLabLocationWidget TopRightWidget;
@@ -19,22 +20,28 @@ namespace MechEngineer.Features.MechLabSlots
         {
             SetupWidget(
                 "TopLeftWidget",
-                ref TopLeftWidget, 
-                mechLabPanel, 
-                mechLabPanel.rightArmWidget, 
+                ref TopLeftWidget,
+                mechLabPanel,
+                mechLabPanel.rightArmWidget,
                 MechLabSlotsFeature.settings.TopLeftWidget
             );
 
             SetupWidget(
-                "TopRightWidget", 
-                ref TopRightWidget, 
-                mechLabPanel, 
-                mechLabPanel.leftArmWidget, 
+                "TopRightWidget",
+                ref TopRightWidget,
+                mechLabPanel,
+                mechLabPanel.leftArmWidget,
                 MechLabSlotsFeature.settings.TopRightWidget
             );
         }
 
-        internal static void SetupWidget(string id, ref MechLabLocationWidget topWidget, MechLabPanel mechLabPanel, MechLabLocationWidget armWidget, MechLabSlotsSettings.WidgetSettings settings)
+        internal static void SetupWidget(
+            string id,
+            ref MechLabLocationWidget topWidget,
+            MechLabPanel mechLabPanel,
+            MechLabLocationWidget armWidget,
+            MechLabSlotsSettings.WidgetSettings settings
+        )
         {
             if (topWidget != null)
             {
@@ -47,7 +54,7 @@ namespace MechEngineer.Features.MechLabSlots
             var container = armWidget.transform.parent.gameObject;
             var clg = container.GetComponent<VerticalLayoutGroup>();
             clg.padding = new RectOffset(0, 0, MechLabSlotsFeature.settings.MechLabArmTopPadding, 0);
-            var go = UnityEngine.Object.Instantiate(template.gameObject, null);
+            var go = Object.Instantiate(template.gameObject, null);
 
             {
                 go.transform.SetParent(armWidget.transform, false);
@@ -64,7 +71,8 @@ namespace MechEngineer.Features.MechLabSlots
             }
 
             go.name = id;
-            go.transform.GetChild("layout_locationText").GetChild("txt_location").GetComponent<TextMeshProUGUI>().text = settings.Label;
+            go.transform.GetChild("layout_locationText").GetChild("txt_location").GetComponent<TextMeshProUGUI>().text =
+                settings.Label;
             go.SetActive(settings.Enabled);
             topWidget = go.GetComponent<MechLabLocationWidget>();
             topWidget.Init(mechLabPanel);
@@ -104,20 +112,21 @@ namespace MechEngineer.Features.MechLabSlots
 
         internal static MechLabLocationWidget MechWidgetLocation(MechComponentDef def)
         {
-            if (def != null && def.Is<MechLabWidget>(out var config))
+            if (def != null && def.Is<CustomWidget>(out var config))
             {
-                if (config.Location == MechLabWidget.MechLabWidgetLocation.TopLeft
+                if (config.Location == CustomWidget.MechLabWidgetLocation.TopLeft
                     && MechLabSlotsFeature.settings.TopLeftWidget.Enabled)
                 {
                     return TopLeftWidget;
                 }
 
-                if (config.Location == MechLabWidget.MechLabWidgetLocation.TopRight
+                if (config.Location == CustomWidget.MechLabWidgetLocation.TopRight
                     && MechLabSlotsFeature.settings.TopRightWidget.Enabled)
                 {
                     return TopRightWidget;
                 }
             }
+
             return null;
         }
 
@@ -129,6 +138,7 @@ namespace MechEngineer.Features.MechLabSlots
                 mechLab.centerTorsoWidget.OnDrop(eventData);
                 return true;
             }
+
             return false;
         }
 
@@ -141,7 +151,11 @@ namespace MechEngineer.Features.MechLabSlots
             }
         }
 
-        internal static bool ShowHighlightFrame(MechLabLocationWidget widget, ref MechComponentRef cRef)
+        internal static bool ShowHighlightFrame(
+            MechLabLocationWidget widget,
+            bool isOriginalLocation,
+            ref MechComponentRef cRef
+        )
         {
             if (cRef == null)
             {
@@ -154,14 +168,19 @@ namespace MechEngineer.Features.MechLabSlots
                 return true;
             }
 
+            if (cRef.Flags<CCFlags>().NoRemove)
+            {
+                return true;
+            }
+
             // get the correct widget to highlight
             var nwidget = MechWidgetLocation(cRef.Def);
             if (nwidget == null)
             {
                 return true;
             }
-            
-            nwidget.ShowHighlightFrame(true);
+
+            nwidget.ShowHighlightFrame(true, isOriginalLocation ? UIColor.Blue : UIColor.Gold);
             cRef = null;
             return false;
         }

@@ -12,7 +12,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             try
             {
-                if (MechLabWidgets.OnDrop(__instance, eventData))
+                if (CustomWidgetsFixMechLab.OnDrop(__instance, eventData))
                 {
                     return false;
                 }
@@ -21,6 +21,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
             {
                 Control.Logger.Error.Log(e);
             }
+
             return true;
         }
     }

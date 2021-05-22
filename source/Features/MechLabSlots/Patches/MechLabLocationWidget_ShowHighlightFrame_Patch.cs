@@ -13,21 +13,22 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         typeof(WeaponDef),
         typeof(bool),
         typeof(bool)
-        )]
+    )]
     public static class MechLabLocationWidget_ShowHighlightFrame_Patch
     {
         [HarmonyBefore(Mods.CC)]
         [HarmonyPriority(Priority.HigherThanNormal)]
-        public static bool Prefix(MechLabLocationWidget __instance, ref MechComponentRef cRef)
+        public static bool Prefix(MechLabLocationWidget __instance, bool isOriginalLocation, ref MechComponentRef cRef)
         {
             try
             {
-                return MechLabWidgets.ShowHighlightFrame(__instance, ref cRef);
+                return CustomWidgetsFixMechLab.ShowHighlightFrame(__instance, isOriginalLocation, ref cRef);
             }
             catch (Exception e)
             {
                 Control.Logger.Error.Log(e);
             }
+
             return false;
         }
     }
