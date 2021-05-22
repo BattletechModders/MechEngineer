@@ -4,7 +4,7 @@ using CustomComponents;
 namespace MechEngineer.Features.MechLabSlots
 {
     [CustomComponent("MechLabWidget")]
-    public class MechLabWidget : SimpleCustomComponent, IValueComponent
+    public class MechLabWidget : SimpleCustomComponent, IValueComponent<MechLabWidget.MechLabWidgetLocation>
     {
         public MechLabWidgetLocation Location { get; set; } = MechLabWidgetLocation.TopLeft;
 
@@ -13,12 +13,9 @@ namespace MechEngineer.Features.MechLabSlots
             TopLeft, TopRight
         }
 
-        public void LoadValue(object value)
+        public void LoadValue(MechLabWidgetLocation location)
         {
-            if (value is string str && Enum.TryParse(str, true, out MechLabWidgetLocation location))
-            {
-                Location = location;
-            }
+            Location = location;
         }
     }
 }

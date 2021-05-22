@@ -32,10 +32,16 @@ namespace MechEngineer.Features.OmniSlots.Patches
 
                 Control.Logger.Debug?.Log(calc);
 
-                ___ballisticHardpointText.SetText(calc.Ballistic.HardpointString);
-                ___energyHardpointText.SetText(calc.Energy.HardpointString);
-                ___missileHardpointText.SetText(calc.Missile.HardpointString);
-                ___smallHardpointText.SetText(calc.Small.HardpointString);
+                static void SetData(TextMeshProUGUI text, HardpointStat stat)
+                {
+                    //text.transform.parent.gameObject.SetActive(stat.VanillaMax > 0);
+                    text.SetText(stat.HardpointString);
+                }
+
+                SetData(___ballisticHardpointText, calc.Ballistic);
+                SetData(___energyHardpointText, calc.Energy);
+                SetData(___missileHardpointText, calc.Missile);
+                SetData(___smallHardpointText, calc.Small);
             }
             catch (Exception e)
             {
