@@ -46,6 +46,10 @@
     <Reference Include="0Harmony">
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
@@ -53,6 +57,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
@@ -88,6 +96,9 @@
     <Compile Include="Features\MechLabSlots\Patches\CCLanceMechEquipmentList_MountedLocation_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\LanceMechEquipmentList_Awake_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\LanceMechEquipmentList_SetLoadout_Patch.cs" />
+    <Compile Include="Features\ModTekLoader\ModTekLoaderFeature.cs" />
+    <Compile Include="Features\ModTekLoader\ModTekLoaderSettings.cs" />
+    <Compile Include="Features\ModTekLoader\Patches\AssetBundle_LoadAsset_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
     <Compile Include="Features\PlaceholderEffects\Patches\StatisticEffect_initStatisiticEffect_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />

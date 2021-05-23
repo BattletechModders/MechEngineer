@@ -17,6 +17,7 @@ using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.HeatSinkCapacityStat;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.MechLabSlots;
+using MechEngineer.Features.ModTekLoader;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OmniSlots;
 using MechEngineer.Features.OrderedStatusEffects;
@@ -66,7 +67,7 @@ namespace MechEngineer.Features
             TagManagerFeature.Shared,
             OverrideStatTooltipsFeature.Shared,
             PerformanceFeature.Shared,
-
+            ModTekLoaderFeature.Shared,
             DebugSaveMechToFileFeature.Shared,
             DebugCycleCombatSoundsFeature.Shared,
             DebugScreenshotMechsFeature.Shared
