@@ -26,8 +26,8 @@ namespace MechEngineer.Features.MechLabSlots
                 go.transform.SetAsFirstSibling();
             }
 
-            Setup(MechLabSlotsFeature.settings.TopRightWidget, ref TopRight);
             Setup(MechLabSlotsFeature.settings.TopLeftWidget, ref TopLeft);
+            Setup(MechLabSlotsFeature.settings.TopRightWidget, ref TopRight);
         }
 
         public static void SetLoadout(MechDef mechDef, DataManager dataManager, List<GameObject> allComponents)

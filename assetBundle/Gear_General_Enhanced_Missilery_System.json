@@ -1,0 +1,6 @@
+{
+	"Custom" : {
+		"Category" : { "CategoryID" : "Quirk" }
+	},
+    "AllowedLocations" : "CenterTorso"
+}

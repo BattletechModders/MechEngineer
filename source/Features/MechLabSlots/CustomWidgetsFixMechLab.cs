@@ -168,7 +168,7 @@ namespace MechEngineer.Features.MechLabSlots
                 return true;
             }
 
-            if (cRef.Flags<CCFlags>().NoRemove)
+            if (cRef.Flags<CCFlags>().NoRemove || cRef.IsFixed)
             {
                 return true;
             }
