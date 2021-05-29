@@ -19,7 +19,6 @@ using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.HeatSinkCapacityStat;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.MechLabSlots;
-using MechEngineer.Features.ModTekLoader;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OrderedStatusEffects;
 using MechEngineer.Features.OverrideDescriptions;
@@ -64,7 +63,6 @@ namespace MechEngineer
         public HardpointFixSettings HardpointFix = new();
         public HeatSinkCapacityStatSettings HeatSinkCapacityStat = new();
         public InvalidInventorySettings InvalidInventory = new();
-        public ModTekLoaderSettings ModTekLoader = new();
         public MechLabSlotsSettings MechLabSlots = new();
         public MoveMultiplierStatSettings MoveMultiplierStat = new();
         public OrderedStatusEffectsSettings OrderedStatusEffects = new();
@@ -79,7 +77,7 @@ namespace MechEngineer
         public TagManagerSettings TagManager = new();
 
         public PerformanceSettings Performance = new();
-        
+
         public DebugCycleCombatSoundsSettings DebugCycleCombatSounds = new();
         public DebugSaveMechToFileSettings DebugSaveMechToFile = new();
         public DebugScreenshotMechsSettings DebugScreenshotMechs = new();

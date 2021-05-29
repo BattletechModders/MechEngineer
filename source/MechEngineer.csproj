@@ -96,9 +96,6 @@
     <Compile Include="Features\MechLabSlots\Patches\CCLanceMechEquipmentList_MountedLocation_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\LanceMechEquipmentList_Awake_Patch.cs" />
     <Compile Include="Features\MechLabSlots\Patches\LanceMechEquipmentList_SetLoadout_Patch.cs" />
-    <Compile Include="Features\ModTekLoader\ModTekLoaderFeature.cs" />
-    <Compile Include="Features\ModTekLoader\ModTekLoaderSettings.cs" />
-    <Compile Include="Features\ModTekLoader\Patches\AssetBundle_LoadAsset_Patch.cs" />
     <Compile Include="Features\OmniSlots\Patches\MechLabMechInfoWidget_GetTotalHardpoints_Patch.cs" />
     <Compile Include="Features\PlaceholderEffects\Patches\StatisticEffect_initStatisiticEffect_Patch.cs" />
     <Compile Include="Features\MechLabSlots\ChassisLocationNaming.cs" />
@@ -424,6 +421,5 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
