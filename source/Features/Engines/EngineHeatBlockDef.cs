@@ -13,7 +13,7 @@ namespace MechEngineer.Features.Engines
     public class EngineHeatBlockDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment, IAdjustSlotElement
     {
         public int HeatSinkCount { get; set; }
-        
+
         public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
         {
             var def = mechComponentDef.GetComponent<EngineHeatBlockDef>();
@@ -22,7 +22,7 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            
+
             var panel = Global.ActiveMechLabPanel;
 
             var engine = panel?.CreateMechDef()?.GetEngine();
@@ -36,7 +36,7 @@ namespace MechEngineer.Features.Engines
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
-            
+
             tooltip.detailText.text += $"<i>{engine.HeatSinkDef.FullName}</i>" +
                                        $"\r\n   Internal" +
                                        $"   Free: <b>{engine.HeatSinkInternalFreeMaxCount}</b> " +
