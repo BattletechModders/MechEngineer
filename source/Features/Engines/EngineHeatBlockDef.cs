@@ -31,16 +31,16 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            engine.EngineHeatBlockDef = def;
+            engine.HeatBlockDef = def;
 
             var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
             
-            tooltip.detailText.text += $"<i>{engine.MechHeatSinkDef.FullName}</i>" +
+            tooltip.detailText.text += $"<i>{engine.HeatSinkDef.FullName}</i>" +
                                        $"\r\n   Internal" +
                                        $"   Free: <b>{engine.HeatSinkInternalFreeMaxCount}</b> " +
-                                       $"   Additional: <b>{engine.EngineHeatBlockDef.HeatSinkCount} / {engine.HeatSinkInternalAdditionalMaxCount}</b>" +
+                                       $"   Additional: <b>{engine.HeatBlockDef.HeatSinkCount} / {engine.HeatSinkInternalAdditionalMaxCount}</b>" +
                                        $"\r\n   External" +
                                        $"   Free: <b>{engine.HeatSinkExternalFreeCount} / {engine.HeatSinkExternalFreeMaxCount}</b> " +
                                        $"   Additional: <b>{engine.HeatSinkExternalAdditionalCount}</b>" +
@@ -82,7 +82,7 @@ namespace MechEngineer.Features.Engines
 
         private static string BonusValueEngineHeatSinkCounts(Engine engine)
         {
-            return $"{engine.MechHeatSinkDef.Abbreviation} {engine.HeatSinkInternalCount}";
+            return $"{engine.HeatSinkDef.Abbreviation} {engine.HeatSinkInternalCount}";
         }
     }
 }

@@ -55,7 +55,7 @@ namespace MechEngineer.Features.Engines.Handler
                 var types = new HashSet<string>();
 
                 var inventoryHeatSinkTypes = mechDef.Inventory.Select(r => r.GetComponent<EngineHeatSinkDef>()).Where(hs => hs != null).ToList();
-                inventoryHeatSinkTypes.Add(engine.MechHeatSinkDef);
+                inventoryHeatSinkTypes.Add(engine.HeatSinkDef);
                 foreach (var hs in inventoryHeatSinkTypes)
                 {
                     types.Add(hs.HSCategory);
@@ -73,7 +73,7 @@ namespace MechEngineer.Features.Engines.Handler
 
             if (EngineFeature.settings.EnforceRulesForAdditionalInternalHeatSinks)
             {
-                var count = engine.EngineHeatBlockDef.HeatSinkCount;
+                var count = engine.HeatBlockDef.HeatSinkCount;
                 var max = engine.HeatSinkInternalAdditionalMaxCount;
                 if (count > max)
                 {

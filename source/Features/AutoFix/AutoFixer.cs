@@ -155,7 +155,7 @@ namespace MechEngineer.Features.AutoFix
 
                 if (AutoFixerFeature.settings.InternalizeHeatSinksOnValidEngines) {
                     var max = engine.HeatSinkInternalAdditionalMaxCount;
-                    var oldCurrent = engine.EngineHeatBlockDef.HeatSinkCount;
+                    var oldCurrent = engine.HeatBlockDef.HeatSinkCount;
                     var current = oldCurrent;
 
                     var heatSinks = builder.Inventory

@@ -33,14 +33,14 @@ namespace MechEngineer.Features.Engines
         // should be private but used during autofixer, rename EngineSearcher.Result to .Builder and apply new semantics
         internal Engine(
             CoolingDef coolingDef,
-            EngineHeatBlockDef engineEngineHeatBlockDef,
+            EngineHeatBlockDef heatBlockDef,
             EngineCoreDef coreDef,
             Weights weights,
             List<MechComponentRef> heatSinksExternal,
             bool calculate = true)
         {
             HeatSinksExternal = heatSinksExternal;
-            EngineHeatBlockDef = engineEngineHeatBlockDef;
+            HeatBlockDef = heatBlockDef;
             CoreDef = coreDef;
             Weights = weights;
             CoolingDef = coolingDef;
@@ -64,29 +64,28 @@ namespace MechEngineer.Features.Engines
                 _coolingDef = value;
                 var id = _coolingDef.HeatSinkDefId;
                 var def = UnityGameInstance.BattleTechGame.DataManager.HeatSinkDefs.Get(id);
-                MechHeatSinkDef = def.GetComponent<EngineHeatSinkDef>();
+                HeatSinkDef = def.GetComponent<EngineHeatSinkDef>();
             }
         }
 
         internal void CalculateStats()
         {
-            HeatSinkExternalCount = MatchingCount(HeatSinksExternal, MechHeatSinkDef.Def);
-            Control.Logger.Debug?.Log($"HeatSinkExternalFreeCount={HeatSinkExternalFreeCount} MechHeatSinkDef.Def.Tonnage={MechHeatSinkDef.Def.Tonnage}");
+            HeatSinkExternalCount = MatchingCount(HeatSinksExternal, HeatSinkDef.Def);
         }
 
         internal List<MechComponentRef> HeatSinksExternal { get; set; }
         private int HeatSinkExternalCount { get; set; }
-        
+
         internal EngineCoreDef CoreDef { get; set; }
         internal Weights Weights { get; set; }
-        internal EngineHeatBlockDef EngineHeatBlockDef { get; set; } // amount of internal heat sinks
-        internal EngineHeatSinkDef MechHeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
+        internal EngineHeatBlockDef HeatBlockDef { get; set; } // amount of internal heat sinks
+        internal EngineHeatSinkDef HeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
 
         internal float EngineHeatDissipation
         {
             get
             {
-                var dissipation = MechHeatSinkDef.Def.DissipationCapacity * ( HeatSinkInternalFreeMaxCount + EngineHeatBlockDef.HeatSinkCount );
+                var dissipation = HeatSinkDef.Def.DissipationCapacity * ( HeatSinkInternalFreeMaxCount + HeatBlockDef.HeatSinkCount );
                 dissipation += CoreDef.Def.DissipationCapacity;
                 dissipation += CoolingDef.Def.DissipationCapacity;
                 return dissipation;
@@ -99,7 +98,7 @@ namespace MechEngineer.Features.Engines
         internal int HeatSinkExternalAdditionalCount => HeatSinkExternalCount - HeatSinkExternalFreeCount;
 
         private int HeatSinkTotalCount => HeatSinkInternalCount + HeatSinkExternalCount;
-        internal int HeatSinkInternalCount => HeatSinkInternalFreeMaxCount + EngineHeatBlockDef.HeatSinkCount;
+        internal int HeatSinkInternalCount => HeatSinkInternalFreeMaxCount + HeatBlockDef.HeatSinkCount;
 
         private int HeatSinksFreeMaxCount => EngineFeature.settings.MinimumHeatSinksOnMech;
         private int HeatSinksInternalMaxCount => CoreDef.Rating / 25;
@@ -121,7 +120,7 @@ namespace MechEngineer.Features.Engines
 
         #region weights
 
-        internal float HeatSinkExternalFreeTonnage => HeatSinkExternalFreeCount * MechHeatSinkDef.Def.Tonnage;
+        internal float HeatSinkExternalFreeTonnage => HeatSinkExternalFreeCount * HeatSinkDef.Def.Tonnage;
         internal float GyroTonnage => PrecisionUtils.RoundUp(StandardGyroTonnage * Weights.GyroFactor, WeightPrecision);
         internal float EngineTonnage => PrecisionUtils.RoundUp(StandardEngineTonnage * Weights.EngineFactor, WeightPrecision);
         internal float HeatSinkTonnage => - HeatSinkExternalFreeTonnage;
