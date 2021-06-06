@@ -1,4 +1,7 @@
 {
+    "ChassisTags": {
+        "items": [ "LeftArmUpperLimit", "RightArmUpperLimit" ]
+    },
     "FixedEquipment" : [
         {
             "MountedLocation" : "CenterTorso",
