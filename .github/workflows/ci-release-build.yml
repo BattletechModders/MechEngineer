@@ -63,13 +63,12 @@ jobs:
         with:
           name:  dist
           path: .
-      - name: Release Latest
+      - name: Latest Release
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "CCUnitTypes-latest"
           prerelease: true
-          title: "Development Build"
           files: MechEngineer.zip
 
   release:
