@@ -27,7 +27,7 @@ jobs:
       uses: actions/checkout@master
       with:
         repository: BattletechModders/CustomComponents
-        ref: Experimental
+        ref: UnitTypes
         path: CustomComponents/
     - name: Fetch CustomComponents Branches and Tags
       shell: bash
