@@ -2,8 +2,8 @@
 {
     public class ArmActuatorSettings : ISettings
     {
-        public bool Enabled { get; set; } = false; // please re-enable once fixed !TODO PONE FIX IT
-        public string EnabledDescription => "Obsolete! CC provides unit types to implement arm limitations. Enables CBT arm actuators with CC like handling.";
+        public bool Enabled => false;
+        public string EnabledDescription => "Obsolete! CC provides unit types to implement arm limitations.";
 
         public bool ForceFullDefaultActuators = false;
         public string IgnoreFullActuatorsTag = null;
