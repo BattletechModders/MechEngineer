@@ -22,7 +22,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 {
                     return;
                 }
-                
+
                 var inventory = mechDef.Inventory.Select(x => x.Def);
                 var hardpoints = MechDefBuilder.Locations.SelectMany(x => mechDef.Chassis.GetLocationDef(x).Hardpoints).ToArray();
 
@@ -35,10 +35,10 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 __instance.totalMissileHardpoints = calc.Missile.TheoreticalMax;
                 __instance.totalSmallHardpoints = calc.Small.TheoreticalMax;
 
-                ___hardpoints[0].SetData(WeaponCategoryEnumeration.GetBallistic(), calc.Ballistic.HardpointTotalString);
-                ___hardpoints[1].SetData(WeaponCategoryEnumeration.GetEnergy(), calc.Energy.HardpointTotalString);
-                ___hardpoints[2].SetData(WeaponCategoryEnumeration.GetMissile(), calc.Missile.HardpointTotalString);
-                ___hardpoints[3].SetData(WeaponCategoryEnumeration.GetSupport(), calc.Small.HardpointTotalString);
+                ___hardpoints[0].SetData(WeaponCategoryEnumeration.GetBallistic(), calc.Ballistic.HardpointStringWithSpace);
+                ___hardpoints[1].SetData(WeaponCategoryEnumeration.GetEnergy(), calc.Energy.HardpointStringWithSpace);
+                ___hardpoints[2].SetData(WeaponCategoryEnumeration.GetMissile(), calc.Missile.HardpointStringWithSpace);
+                ___hardpoints[3].SetData(WeaponCategoryEnumeration.GetSupport(), calc.Small.HardpointStringWithSpace);
             }
             catch (Exception e)
             {

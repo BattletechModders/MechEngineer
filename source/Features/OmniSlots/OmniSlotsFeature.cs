@@ -12,11 +12,11 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features.OmniSlots
 {
-    internal class OmniSlotsFeature: Feature<TurretLimitedAmmoSettings>, IValidateMech
+    internal class OmniSlotsFeature: Feature<OmniSlotsSettings>, IValidateMech
     {
         internal static OmniSlotsFeature Shared = new();
 
-        internal override TurretLimitedAmmoSettings Settings => new();
+        internal override OmniSlotsSettings Settings => new();
 
         internal override void SetupFeatureLoaded()
         {
@@ -76,7 +76,7 @@ namespace MechEngineer.Features.OmniSlots
                 Control.Logger.Debug?.Log($"hardpoints is null");
                 return true;
             }
-                
+
             var calc = new HardpointOmniUsageCalculator(null, hardpoints);
             return calc.CanAdd(newComponentDef);
         }
