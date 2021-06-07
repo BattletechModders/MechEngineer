@@ -1,5 +1,6 @@
 on: push
 name: Release Build
+
 jobs:
   build:
     runs-on: windows-latest
@@ -22,7 +23,7 @@ jobs:
       shell: bash
       run: |
         cd MechEngineer/
-        git fetch --prune --unshallow 
+        git fetch --prune --unshallow
     - name: Checkout CustomComponents
       uses: actions/checkout@master
       with:
@@ -33,7 +34,7 @@ jobs:
       shell: bash
       run: |
         cd CustomComponents/
-        git fetch --prune --unshallow 
+        git fetch --prune --unshallow
     - name: Setup dotnet
       uses: actions/setup-dotnet@master
       with:
@@ -51,6 +52,25 @@ jobs:
       with:
         name: dist
         path: "./MechEngineer/dist/MechEngineer.zip"
+
+  latest:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/CCUnitTypes'
+    steps:
+      - name: Download Build
+        uses: actions/download-artifact@master
+        with:
+          name:  dist
+          path: .
+      - name: Release Latest
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: MechEngineer.zip
 
   release:
     needs: build
@@ -76,7 +96,7 @@ jobs:
           Works with ModLoader and ModTek
           - MechEngineer.zip contains only the bare bones mod + CustomComponents
     - name: Upload Release Asset
-      id: upload-release-asset 
+      id: upload-release-asset
       uses: actions/upload-release-asset@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
