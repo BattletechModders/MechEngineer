@@ -1,5 +1,5 @@
 {
     "ChassisTags": {
-        "items": [ "LeftArmLowerLimit", "RightArmLowerLimit" ]
+        "items": [ "ArmLimitLowerLeft", "ArmLimitLowerRight" ]
     }
 }

@@ -436,7 +436,7 @@
             ],
             "UnitLimits": [
                 {
-                    "UnitType": "LeftArmUpperLimit",
+                    "UnitType": "ArmLimitUpperLeft",
                     "PartialOverride": true,
                     "Limits": [
                         {
@@ -447,7 +447,7 @@
                     ]
                 },
                 {
-                    "UnitType": "RightArmUpperLimit",
+                    "UnitType": "ArmLimitUpperRight",
                     "PartialOverride": true,
                     "Limits": [
                         {
@@ -484,7 +484,7 @@
             ],
             "UnitLimits": [
                 {
-                    "UnitType": "LeftArmLowerLimit",
+                    "UnitType": "ArmLimitLowerLeft",
                     "PartialOverride": true,
                     "Limits": [
                         {
@@ -495,7 +495,7 @@
                     ]
                 },
                 {
-                    "UnitType": "RightArmLowerLimit",
+                    "UnitType": "ArmLimitLowerRight",
                     "PartialOverride": true,
                     "Limits": [
                         {
@@ -506,7 +506,7 @@
                     ]
                 },
                 {
-                    "UnitType": "LeftArmUpperLimit",
+                    "UnitType": "ArmLimitUpperLeft",
                     "PartialOverride": true,
                     "Limits": [
                         {
@@ -517,7 +517,7 @@
                     ]
                 },
                 {
-                    "UnitType": "RightArmUpperLimit",
+                    "UnitType": "ArmLimitUpperRight",
                     "PartialOverride": true,
                     "Limits": [
                         {

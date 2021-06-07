@@ -1,20 +1,20 @@
 {
 	"Settings": [
 		{
-			"Name": "LeftArmUpperLimit",
-			"RequiredTags": [ "LeftArmUpperLimit" ]
+			"Name": "ArmLimitUpperLeft",
+			"RequiredTags": [ "ArmLimitUpperLeft" ]
 		},
 		{
-			"Name": "RightArmUpperLimit",
-			"RequiredTags": [ "RightArmUpperLimit" ]
+			"Name": "ArmLimitUpperRight",
+			"RequiredTags": [ "ArmLimitUpperRight" ]
 		},
 		{
-			"Name": "LeftArmLowerLimit",
-			"RequiredTags": [ "LeftArmLowerLimit" ]
+			"Name": "ArmLimitLowerLeft",
+			"RequiredTags": [ "ArmLimitLowerLeft" ]
 		},
 		{
-			"Name": "RightArmLowerLimit",
-			"RequiredTags": [ "RightArmLowerLimit" ]
+			"Name": "ArmLimitLowerRight",
+			"RequiredTags": [ "ArmLimitLowerRight" ]
 		}
 	]
 }

@@ -92,21 +92,21 @@ namespace MechEngineer.Features.AutoFix
                     // TODO I need
                     //   mechDef.GetLimit("ArmLowerActuator", LeftArm).Max > 0;
                     // instead of
-                    var go = !mechDef.Chassis.ChassisTags.Contains("LeftArmUpperLimit");
+                    var go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitUpperLeft");
                     if (go)
                         go = Add(lowerDef, ChassisLocations.LeftArm);
                     if (go)
-                        go = !mechDef.Chassis.ChassisTags.Contains("LeftArmLowerLimit");
+                        go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitLowerLeft");
                     if (go)
                         Add(handDef, ChassisLocations.LeftArm);
                 }
                 
                 {
-                    var go = !mechDef.Chassis.ChassisTags.Contains("RightArmUpperLimit");
+                    var go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitUpperRight");
                     if (go)
                         go = Add(lowerDef, ChassisLocations.RightArm);
                     if (go)
-                        go = !mechDef.Chassis.ChassisTags.Contains("RightArmLowerLimit");
+                        go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitLowerRight");
                     if (go)
                         Add(handDef, ChassisLocations.RightArm);
                 }

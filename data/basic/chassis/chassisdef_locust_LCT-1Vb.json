@@ -35,7 +35,7 @@
       "SimGameUID": "",
       "hasPrefabName": false,
       "prefabName": null
-    },	
+    },
     {
       "ComponentDefID": "emod_armorslots_ferrosfibrous",
       "ComponentDefType": "Upgrade",
@@ -95,7 +95,7 @@
       "SimGameUID": "",
       "hasPrefabName": false,
       "prefabName": null
-    },	
+    },
     {
       "ComponentDefID": "Gear_HeatSink_Generic_Double",
       "ComponentDefType": "HeatSink",
@@ -131,7 +131,7 @@
       "SimGameUID": "",
       "hasPrefabName": false,
       "prefabName": null
-    },	
+    },
     {
       "ComponentDefID": "Weapon_Laser_MediumLaserPulse_2-Magna400P",
       "ComponentDefType": "Weapon",
@@ -143,7 +143,7 @@
       "SimGameUID": "",
       "hasPrefabName": false,
       "prefabName": null
-    },	
+    },
     {
       "ComponentDefID": "Weapon_Laser_SmallLaserPulse_2-Magna200P",
       "ComponentDefType": "Weapon",
@@ -155,7 +155,7 @@
       "SimGameUID": "",
       "hasPrefabName": false,
       "prefabName": null
-    },	
+    },
     {
       "ComponentDefID": "Weapon_Laser_MediumLaserPulse_2-Magna400P",
       "ComponentDefType": "Weapon",
@@ -167,7 +167,7 @@
       "SimGameUID": "",
       "hasPrefabName": false,
       "prefabName": null
-    },	
+    },
     {
       "ComponentDefID": "Weapon_Laser_SmallLaserPulse_2-Magna200P",
       "ComponentDefType": "Weapon",
@@ -191,8 +191,8 @@
       "SimGameUID": "",
       "hasPrefabName": false,
       "prefabName": null
-    },	
-],		
+    },
+],
     "MovementCapDefID": "movedef_locust_LCT-1V",
     "PathingCapDefID": "pathingdef_light",
     "HardpointDataDefID": "hardpointdatadef_locust",
@@ -371,7 +371,7 @@
     ],
     "VariantName": "LCT-1Vb",
     "ChassisTags": {
-        "items": [ "LeftArmUpperLimit", "RightArmUpperLimit" ]
+        "items": [ "ArmLimitUpperLeft", "ArmLimitUpperRight" ]
     },
     "StockRole": "Light Fire Support",
     "YangsThoughts": "This locust is super crazy, Ferro armour Endo chassis topped with a XL engine and DHS. It's firepower is equally insane for something so small."

@@ -1,6 +1,6 @@
 {
     "ChassisTags": {
-        "items": [ "LeftArmUpperLimit", "RightArmUpperLimit" ]
+        "items": [ "ArmLimitUpperLeft", "ArmLimitUpperRight" ]
     },
     "FixedEquipment" : [
         {
