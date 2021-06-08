@@ -5,20 +5,18 @@ using Object = UnityEngine.Object;
 
 namespace MechEngineer.Features.BetterLog
 {
-    internal class BetterLog : ILogAppender, IDisposable
+    internal sealed class BetterLog : ILogAppender, IDisposable
     {
-        protected readonly BetterLogSettings LogSettings;
         private readonly StreamWriter streamWriter;
         private readonly BetterLogFormatter formatter;
 
-        public BetterLog(string path, BetterLogSettings settings)
+        private BetterLog(string path, BetterLogSettings settings)
         {
-            LogSettings = settings;
             streamWriter = new StreamWriter(path) { AutoFlush = true };
             formatter = new BetterLogFormatter(settings.Formatter);
         }
 
-        public virtual void OnLogMessage(string logName, LogLevel level, object message, Object context, Exception exception, IStackTrace location)
+        public void OnLogMessage(string logName, LogLevel level, object message, Object context, Exception exception, IStackTrace location)
         {
             var formatted = formatter.GetFormattedLogLine(logName, level, message, context, exception, location);
             streamWriter.WriteLine(formatted);

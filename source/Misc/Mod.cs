@@ -1,26 +1,24 @@
+using System;
 using System.IO;
 using fastJSON;
 using HBS.Util;
 
 namespace MechEngineer.Misc
 {
-    public class Mod
+    internal class Mod
     {
-        public Mod(string directory)
+        internal Mod(string directory)
         {
             Directory = directory;
             Name = Path.GetFileName(directory);
         }
 
-        public string Name { get; }
+        private string Name { get; }
         public string Directory { get; }
 
-        public string SourcePath => Path.Combine(Directory, "source");
-        public string SettingsPath => Path.Combine(Directory, "Settings.json");
+        private string SettingsPath => Path.Combine(Directory, "Settings.json");
         public string SettingsDefaultsPath => Path.Combine(Directory, "Settings.defaults.json");
         public string SettingsLastPath => Path.Combine(Directory, "Settings.last.json");
-        public string ModsPath => Path.GetDirectoryName(Directory);
-        public string InfoPath => Path.Combine(Directory, "mod.json");
 
         internal void LoadSettings(object settings)
         {
@@ -28,30 +26,58 @@ namespace MechEngineer.Misc
             {
                 return;
             }
-            
-            using (var reader = new StreamReader(SettingsPath))
+
+            try
             {
+                using var reader = new StreamReader(SettingsPath);
                 var json = reader.ReadToEnd();
                 JSONSerializationUtility.FromJSON(settings, json);
             }
+            catch (Exception e)
+            {
+                WriteStartupError(e);
+            }
+        }
+
+        private string StartupErrorLogPath => Path.Combine(Directory, "log.txt");
+
+        internal void ResetStartupErrorLog()
+        {
+            if (!File.Exists(StartupErrorLogPath))
+            {
+                return;
+            }
+
+            try
+            {
+                using var writer = new StreamWriter(StartupErrorLogPath);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
+        internal void WriteStartupError(object o)
+        {
+            using var s = new StreamWriter(StartupErrorLogPath, true);
+            s.WriteLine(o);
         }
 
         internal void SaveSettings(object settings, string path)
         {
-            using (var writer = new StreamWriter(path))
+            using var writer = new StreamWriter(path);
+            var p = new JSONParameters
             {
-                var p = new JSONParameters
-                {
-                    EnableAnonymousTypes = true,
-                    SerializeToLowerCaseNames = false,
-                    UseFastGuid = false,
-                    KVStyleStringDictionary = false,
-                    SerializeNullValues = true
-                };
+                EnableAnonymousTypes = true,
+                SerializeToLowerCaseNames = false,
+                UseFastGuid = false,
+                KVStyleStringDictionary = false,
+                SerializeNullValues = true
+            };
 
-                var json = JSON.ToNiceJSON(settings, p);
-                writer.Write(json);
-            }
+            var json = JSON.ToNiceJSON(settings, p);
+            writer.Write(json);
         }
 
         public override string ToString()

@@ -15,11 +15,12 @@ namespace MechEngineer
 
         internal static BetterLogger Logger;
 
-        internal static MechEngineerSettings settings = new();
+        internal static readonly MechEngineerSettings settings = new();
 
         public static void Start(string modDirectory, string json)
         {
             mod = new Mod(modDirectory);
+            mod.ResetStartupErrorLog();
             try
             {
                 FileUtils.SetReadonly(mod.SettingsDefaultsPath, false);
@@ -36,6 +37,14 @@ namespace MechEngineer
                 }
 
                 Logger = BetterLog.SetupModLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), settings.BetterLog);
+            }
+            catch (Exception e)
+            {
+                mod.WriteStartupError(e);
+                throw;
+            }
+
+            try {
                 Logger.Info.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
                 Logger.Info.Log("settings loaded");
                 Logger.Debug?.Log("debugging enabled");
