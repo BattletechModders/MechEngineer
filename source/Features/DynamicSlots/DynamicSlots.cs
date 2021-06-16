@@ -6,6 +6,7 @@ using Localize;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Helper;
+using TMPro;
 
 namespace MechEngineer.Features.DynamicSlots
 {
@@ -16,13 +17,14 @@ namespace MechEngineer.Features.DynamicSlots
 
         public bool InnerAdjacentOnly { get; set; } = false;
 
-        public bool? ShowIcon { get; set; } = false;
-        public bool? ShowFixedEquipmentOverlay { get; set; } = true;
+        public bool? ShowIcon { get; set; } = DynamicSlotsFeature.settings.DefaultShowIcon;
+        public bool? ShowFixedEquipmentOverlay { get; set; } = DynamicSlotsFeature.settings.DefaultShowFixedEquipmentOverlay;
 
-        public string NameText { get; set; } = ""; // null: use component name
-        public string BonusAText { get; set; } = ""; // null: use component bonus, "": dont show
-        public string BonusBText { get; set; } = ""; // null: use component bonus, "": dont show
-        public string BackgroundColor { get; set; } = null; // null: use component color
+        public string NameText { get; set; } = DynamicSlotsFeature.settings.DefaultNameText;
+        public string DefaultBonusATextIfReservedSlot { get; set; } = DynamicSlotsFeature.settings.DefaultBonusATextIfReservedSlot;
+        public string DefaultBonusATextIfMovableSlot { get; set; } = DynamicSlotsFeature.settings.DefaultBonusATextIfMovableSlot;
+        public string BonusBText { get; set; } = DynamicSlotsFeature.settings.DefaultBonusBText;
+        public string BackgroundColor { get; set; } = DynamicSlotsFeature.settings.DefaultBackgroundColor;
 
         public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
@@ -38,35 +40,25 @@ namespace MechEngineer.Features.DynamicSlots
         {
             var adapter = new MechLabItemSlotElementAdapter(element);
 
-            if (NameText == "")
+            void SetText(string text, TextMeshProUGUI textMesh)
             {
-                adapter.nameText.gameObject.SetActive(false);
-            }
-            else if (NameText != null)
-            {
-                adapter.nameText.text = NameText;
-                adapter.nameText.gameObject.SetActive(true);
+                if (text == "")
+                {
+                    textMesh.gameObject.SetActive(false);
+                }
+                else if (text != null)
+                {
+                    textMesh.text = text;
+                    textMesh.gameObject.SetActive(true);
+                }
             }
 
-            if (BonusAText == "")
-            {
-                adapter.bonusTextA.gameObject.SetActive(false);
-            }
-            else if (BonusAText != null)
-            {
-                adapter.bonusTextA.text = BonusAText;
-                adapter.bonusTextA.gameObject.SetActive(true);
-            }
-                
-            if (BonusBText == "")
-            {
-                adapter.bonusTextB.gameObject.SetActive(false);
-            }
-            else if (BonusBText != null)
-            {
-                adapter.bonusTextB.text = BonusBText;
-                adapter.bonusTextB.gameObject.SetActive(true);
-            }
+            SetText(NameText, adapter.nameText);
+            SetText(
+                isReservedSlot ? DefaultBonusATextIfReservedSlot : DefaultBonusATextIfMovableSlot,
+                adapter.bonusTextA
+            );
+            SetText(BonusBText, adapter.bonusTextB);
 
             if (!string.IsNullOrEmpty(BackgroundColor))
             {
@@ -82,10 +74,6 @@ namespace MechEngineer.Features.DynamicSlots
             {
                 adapter.fixedEquipmentOverlay.gameObject.SetActive(ShowFixedEquipmentOverlay.Value);
             }
-            
-            var text = isReservedSlot ? DynamicSlotsFeature.settings.ReservedSlotText : DynamicSlotsFeature.settings.MovableSlotText;
-            adapter.bonusTextA.SetText(new Text(text).ToString());
-            adapter.bonusTextA.gameObject.SetActive(true);
         }
     }
 }

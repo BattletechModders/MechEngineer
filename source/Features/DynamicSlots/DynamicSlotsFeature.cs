@@ -16,7 +16,9 @@ namespace MechEngineer.Features.DynamicSlots
     {
         internal static DynamicSlotsFeature Shared = new();
 
-        internal override DynamicSlotsSettings Settings => Control.settings.DynamicSlots;
+        // TODO move settings instances to features and allow loading them one by one
+        // then AutoFixSettings depending on DynamicSlotsSettings will be resolved properly
+        internal override DynamicSlotsSettings Settings => Control.settings?.DynamicSlots ?? new DynamicSlotsSettings();
 
         internal static DynamicSlotsSettings settings => Shared.Settings;
 
@@ -72,7 +74,7 @@ namespace MechEngineer.Features.DynamicSlots
                 var otherIndex = Array.IndexOf(settings.LocationPriorityOrder, other.location);
                 return -index.CompareTo(otherIndex);
             }
-            
+
             internal bool currentFreeSlotFixed => maxSlots - currentFreeSlots < fixedSlots;
 
             internal int currentFreeSlotIndex
@@ -177,7 +179,7 @@ namespace MechEngineer.Features.DynamicSlots
         {
             AddFillersToSlots(widgetLayout);
         }
-        
+
         internal static void ClearFillers(MechLabLocationWidget widget)
         {
             if (Fillers.TryGetValue(widget.loadout.Location, out var fillers))
@@ -218,7 +220,7 @@ namespace MechEngineer.Features.DynamicSlots
 
             var existingLastIndex = fillers.Count - 1;
             var newLastIndex = layout.slots.Count - 1;
-            
+
             // only dispose/new fillers when needed, saves 600ms on my machine on pressing refit
             if (existingLastIndex > newLastIndex)
             {

@@ -23,7 +23,28 @@ namespace MechEngineer.Features.DynamicSlots
         };
         public string LocationPriorityOrderDescription = "From highest to lowest priority where to add dynamic slots too, relevant if locations have same amount of free slots. Visual impact only.";
 
-        public string ReservedSlotText = "reserved slot";
-        public string MovableSlotText = "movable slot";
+        public bool? DefaultShowIcon = false;
+        public string DefaultShowIconDescription => DefaultValueDescription;
+
+        public bool? DefaultShowFixedEquipmentOverlay = true;
+        public string DefaultShowFixedEquipmentOverlayDescription => DefaultValueDescription;
+
+        public string DefaultNameText = "";
+        public string DefaultNameTextDescription => DefaultTextDescription;
+
+        public string DefaultBonusATextIfReservedSlot = "reserved slot";
+        public string DefaultBonusATextIfReservedSlotDescription => DefaultTextDescription;
+
+        public string DefaultBonusATextIfMovableSlot = "movable slot";
+        public string DefaultBonusATextIfMovableSlotDescription => DefaultTextDescription;
+
+        public string DefaultBonusBText = "";
+        public string DefaultBonusBTextDescription => DefaultTextDescription;
+
+        public string DefaultBackgroundColor = null;
+        public string DefaultBackgroundColorDescription => DefaultValueDescription;
+
+        private static string DefaultValueDescription => @"null: use component value, value: overwrite component value";
+        private static string DefaultTextDescription => @"null: use component value, """": dont show, ""something"": show as ""something""";
     }
 }
