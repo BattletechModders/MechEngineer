@@ -18,7 +18,7 @@ namespace MechEngineer.Features.ComponentExplosions
             {
                 return;
             }
-            
+
             if (damageLevel != ComponentDamageLevel.Destroyed)
             {
                 return;
@@ -41,7 +41,7 @@ namespace MechEngineer.Features.ComponentExplosions
             {
                 ammoCount = Mathf.Max(w2.InternalAmmo, Mathf.Min(w2.ShotsWhenFired, w2.CurrentAmmo));
             }
-            
+
             var attackSequence = actor.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
 
             var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
@@ -81,15 +81,20 @@ namespace MechEngineer.Features.ComponentExplosions
                 if (actor.Combat.Constants.PilotingConstants.InjuryFromAmmoExplosion)
                 {
                     var pilot = actor.GetPilot();
-                    pilot?.SetNeedsInjury(InjuryReason.AmmoExplosion);
+                    var reason = component.componentType == ComponentType.AmmunitionBox
+                        ? InjuryReason.AmmoExplosion
+                        : InjuryReason.ComponentExplosion;
+                    pilot?.SetNeedsInjury(reason);
                 }
 
                 if (actor is Mech mech)
                 {
                     // this is very hacky as this is an invalid weapon
                     var weapon = new Weapon(mech, actor.Combat, component.mechComponentRef, component.uid);
-
-                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation) component.Location, weapon, 0, explosionDamage, 0, AttackImpactQuality.Solid, DamageType.AmmoExplosion);
+                    var type = component.componentType == ComponentType.AmmunitionBox
+                        ? DamageType.AmmoExplosion
+                        : DamageType.ComponentExplosion;
+                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation) component.Location, weapon, 0, explosionDamage, 0, AttackImpactQuality.Solid, type);
                 }
                 else if (actor is Vehicle vehicle)
                 {
