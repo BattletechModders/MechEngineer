@@ -23,7 +23,7 @@ namespace MechEngineer.Features.HardpointFix
         internal PrefabSet(int index, IEnumerable<string> prefabs)
             : this(index, prefabs
                   .Distinct()
-                  .Select(x => new Prefab(index, x))
+                  .Select(x => new Prefab(x))
                   .ToDictionary(x => x.Identifier))
         {
         }

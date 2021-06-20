@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.HardpointFix.Public;
 using MechEngineer.Misc;
 
 namespace MechEngineer.Features.HardpointFix.Patches
@@ -10,6 +11,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
     public static class Mech_InitGameRep_Patch
     {
         [HarmonyBefore(Mods.AC, Mods.CU)]
+        [HarmonyPriority(Priority.High)]
         public static void Prefix(Mech __instance)
         {
             try
@@ -19,7 +21,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
                     .Where(c => c != null)
                     .ToList();
 
-                MechHardpointRules_GetComponentPrefabName_Patch.SetupCalculator(__instance.MechDef.Chassis, componentRefs);
+                CalculatorSetup.Setup(__instance.MechDef.Chassis, componentRefs);
             }
             catch (Exception e)
             {
@@ -29,7 +31,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
 
         public static void Postfix()
         {
-            MechHardpointRules_GetComponentPrefabName_Patch.ResetCalculator();
+            CalculatorSetup.Reset();
         }
     }
 }

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 using MechEngineer.Features.CriticalEffects.Patches;
+using MechEngineer.Features.HardpointFix.Public;
 
 namespace MechEngineer.Features.HardpointFix.Patches
 {
     [HarmonyPatch(typeof(MechHardpointRules), nameof(MechHardpointRules.GetComponentBlankNames))]
     public static class MechHardpointRules_GetComponentBlankNames_Patch
     {
-        private static WeaponComponentPrefabCalculator calculator => MechHardpointRules_GetComponentPrefabName_Patch.calculator;
+        private static WeaponComponentPrefabCalculator calculator => CalculatorSetup.SharedCalculator;
 
+        [HarmonyPriority(Priority.High)]
         public static bool Prefix(ChassisLocations location, ref List<string> __result)
         {
             try

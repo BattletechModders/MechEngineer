@@ -13,7 +13,7 @@ namespace MechEngineer.Features.HardpointFix
         {
         }
 
-        internal PrefabSelectionCandidate(List<PrefabSet> freeSets, List<PrefabMapping> prefabsMappings)
+        private PrefabSelectionCandidate(List<PrefabSet> freeSets, List<PrefabMapping> prefabsMappings)
         {
             FreeSets = freeSets;
             Mappings = prefabsMappings;

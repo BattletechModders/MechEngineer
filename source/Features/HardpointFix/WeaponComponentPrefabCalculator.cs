@@ -50,7 +50,7 @@ namespace MechEngineer.Features.HardpointFix
             }
         }
 
-        internal static string PrefabHardpoint(string prefab)
+        private static string PrefabHardpoint(string prefab)
         {
             var lastIndex = prefab.LastIndexOf("_", StringComparison.Ordinal);
             return prefab.Substring(lastIndex + 1);
@@ -60,8 +60,6 @@ namespace MechEngineer.Features.HardpointFix
         {
             return blanks.TryGetValue(location, out var list) ? list : new List<string>();
         }
-
-        internal int MappedComponentRefCount => weaponMappings.Count;
 
         internal string GetPrefabName(BaseComponentRef componentRef)
         {
@@ -123,8 +121,8 @@ namespace MechEngineer.Features.HardpointFix
 
             foreach (var componentRef in sortedComponentRefs)
             {
-                var prefabIdentifier = Prefab.NormIdentifier(componentRef.Def.PrefabIdentifier);
-                var compatibleTerms = CompatibleUtils.GetCompatiblePrefabTerms(prefabIdentifier);
+                var prefabIdentifier = componentRef.Def.PrefabIdentifier;
+                var compatibleTerms = HardpointFixFeature.Shared.GetCompatiblePrefabTerms(prefabIdentifier);
 
                 Control.Logger.Debug?.Log($" componentRef={componentRef.ComponentDefID} prefabIdentifier={prefabIdentifier} compatibleTerms={compatibleTerms.JoinAsString()}");
 
@@ -188,7 +186,7 @@ namespace MechEngineer.Features.HardpointFix
             blanks[location] = requiredBlanks;
         }
 
-        internal List<PrefabSet> GetAvailablePrefabSetsForLocation(ChassisLocations location)
+        private List<PrefabSet> GetAvailablePrefabSetsForLocation(ChassisLocations location)
         {
             var weaponsData = GetWeaponData(location);
             var sets = new List<PrefabSet>();
@@ -216,9 +214,9 @@ namespace MechEngineer.Features.HardpointFix
             return sets;
         }
 
-        internal HardpointDataDef._WeaponHardpointData GetWeaponData(ChassisLocations location)
+        private HardpointDataDef._WeaponHardpointData GetWeaponData(ChassisLocations location)
         {
-            var locationString = VHLUtils.GetStringFromLocation(location);
+            var locationString = location.ToString().ToLower();
             var weaponsData = chassisDef.HardpointDataDef.HardpointData.FirstOrDefault(x => x.location == locationString);
             return weaponsData;
         }

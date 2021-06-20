@@ -2,6 +2,7 @@
 using System.Linq;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.HardpointFix.Public;
 using MechEngineer.Misc;
 
 namespace MechEngineer.Features.HardpointFix.Patches
@@ -10,11 +11,12 @@ namespace MechEngineer.Features.HardpointFix.Patches
     public static class MechRepresentationSimGame_LoadWeapons_Patch
     {
         [HarmonyBefore(Mods.CU)]
+        [HarmonyPriority(Priority.High)]
         public static void Prefix(MechRepresentationSimGame __instance)
         {
             try
             {
-                MechHardpointRules_GetComponentPrefabName_Patch.SetupCalculator(
+                CalculatorSetup.Setup(
                     __instance.mechDef?.Chassis,
                     __instance.mechDef?.Inventory?.ToList());
             }
@@ -26,7 +28,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
 
         public static void Postfix()
         {
-            MechHardpointRules_GetComponentPrefabName_Patch.ResetCalculator();
+            CalculatorSetup.Reset();
         }
     }
 }

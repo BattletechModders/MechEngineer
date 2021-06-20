@@ -8,19 +8,8 @@ namespace MechEngineer.Features.HardpointFix
         public bool TraceLogDebugMappings { get; set; } = false;
         public string TraceLogDebugMappingsDescription => "Trace all GetComponentBlankNames and GetComponentPrefabName calls. Otherwise only some of them are logged.";
 
-        // TODO add set to 4 slots per chassis location autofix variant
-        // TODO make enum so we have: set to 4, set to encountered prefabs, disabled
-        public bool AutoFixChassisDefWeaponHardpointCounts = false;
-        public string AutoFixChassisDefWeaponHardpointCountsDescription = "Changes chassis hardpoints based on configured prefabs.";
-
-        public bool EnforceHardpointLimits = false;
-        public string EnforceHardpointLimitsDescription = "Enforces hardpoint limits in mechlab only allowing configured prefabs.";
-
-        public bool AllowDefaultLoadoutWeapons = false;
-        public string AllowDefaultLoadoutWeaponsDescription = "Ignore limits that would prevent mounting default loadouts.";
-
         public string[] FallbackPrefabsForComponentDefIds = { "Weapon_Mortar_MechMortar" };
-        public string FallbackPrefabsForComponentDefIdsDescription = "A list of components that always should be assigned a weapon prefab to.";
+        public string FallbackPrefabsForComponentDefIdsDescription => "A list of components that always should be assigned a weapon prefab to.";
 
         // from: /data/weapon$ grep -R "PrefabIdentifier" . | cut -d\" -f 4 | sort | uniq
         // to: /data/hardpoints$ grep -R "chrPrfWeap" . | cut -d_ -f 5 | sort | uniq

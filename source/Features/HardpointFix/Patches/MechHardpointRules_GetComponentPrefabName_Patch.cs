@@ -3,67 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using Harmony;
+using MechEngineer.Features.HardpointFix.Public;
 
 namespace MechEngineer.Features.HardpointFix.Patches
 {
     [HarmonyPatch(typeof(MechHardpointRules), nameof(MechHardpointRules.GetComponentPrefabName))]
     public static class MechHardpointRules_GetComponentPrefabName_Patch
     {
-        internal static WeaponComponentPrefabCalculator calculator;
-
-        internal static void SetupCalculator(ChassisDef chassisDef, List<MechComponentRef> componentRefs)
-        {
-            if (chassisDef?.HardpointDataDef?.HardpointData == null)
-            {
-                return;
-            }
-
-            if (componentRefs == null || componentRefs.Count == 0)
-            {
-                return;
-            }
-            
-            componentRefs = componentRefs
-                .Where(c => c != null)
-                .Where(c => c.ComponentDefType == ComponentType.Weapon)
-                .Select(c => {
-                    if (c.DataManager == null)
-                    {
-                        c.DataManager = UnityGameInstance.BattleTechGame.DataManager;
-                        c.RefreshComponentDef();
-                    }
-                    return c;
-                })
-                .Where(c => c.Def is WeaponDef)
-                .ToList();
-
-            if (componentRefs.Count == 0)
-            {
-                return;
-            }
-            
-            try
-            {
-                calculator = new WeaponComponentPrefabCalculator(chassisDef, componentRefs);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
-        }
-
-        internal static void ResetCalculator()
-        {
-            calculator = null;
-        }
-
+        [HarmonyPriority(Priority.High)]
         public static bool Prefix(BaseComponentRef componentRef, ref string __result)
         {
             try
             {
-                if (calculator != null)
+                if (CalculatorSetup.SharedCalculator != null)
                 {
-                    __result = calculator.GetPrefabName(componentRef);
+                    __result = CalculatorSetup.SharedCalculator.GetPrefabName(componentRef);
                     return false;
                 }
             }
