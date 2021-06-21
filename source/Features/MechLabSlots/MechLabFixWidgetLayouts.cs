@@ -12,7 +12,7 @@ namespace MechEngineer.Features.MechLabSlots
     {
         internal static void FixMechLabLayouts(MechLabPanel panel)
         {
-            FixMechLabMechInfoWidgetLayout(panel);
+            // FixMechLabMechInfoWidgetLayout(panel);
             FixMechLabLocationWidgetLayouts(panel);
         }
 
