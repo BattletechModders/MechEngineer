@@ -11,7 +11,6 @@ namespace MechEngineer.Features.MechLabSlots
         {
             MoveMechRoleInfo(panel);
             MoveViewMechButton(panel);
-            ChangeHardpointDirection(panel);
 
             var Representation = panel.transform.GetChild("Representation");
             if (MechLabSlotsFeature.Shared.Settings.HideHelpButton)
@@ -63,59 +62,6 @@ namespace MechEngineer.Features.MechLabSlots
                 component.enabled = true;
             }
             layout_details.transform.SetParent(arm.transform, false);
-        }
-
-        internal static void ChangeHardpointDirection(MechLabPanel panel)
-        {
-            var layout_hardpoints = panel.transform
-                .GetChild("Representation")
-                .GetChild("OBJGROUP_LEFT")
-                .GetChild("OBJ_meta")
-                .GetChild("OBJ_status")
-                .GetChild("layout_hardpoints");
-            if (layout_hardpoints == null)
-            {
-                return;
-            }
-
-            var go = layout_hardpoints.gameObject;
-
-            {
-                var hlg = go.GetComponent<HorizontalLayoutGroup>();
-                if (hlg != null)
-                {
-                    Object.DestroyImmediate(hlg);
-                }
-                else
-                {
-                    return;
-                }
-            }
-
-            var vlg = go.GetComponent<VerticalLayoutGroup>() ?? go.AddComponent<VerticalLayoutGroup>();
-            if (vlg != null)
-            {
-                vlg.spacing = 15;
-                vlg.childControlHeight = true;
-                vlg.childControlWidth = true;
-                vlg.padding = new RectOffset(10, 10, 15, 15);
-                vlg.childAlignment = TextAnchor.UpperRight;
-                vlg.enabled = true;
-            }
-
-            foreach (var hlg in layout_hardpoints.GetComponentsInChildren<HorizontalLayoutGroup>())
-            {
-                hlg.childAlignment = TextAnchor.MiddleRight;
-                hlg.enabled = true;
-                foreach (var glg in hlg.transform.GetComponentsInChildren<GridLayoutGroup>())
-                {
-                    if (glg.gameObject.name == "TextContainer")
-                    {
-                        glg.cellSize = new Vector2(40, 20);
-                        glg.enabled = true;
-                    }
-                }
-            }
         }
 
         internal static void MoveViewMechButton(MechLabPanel panel)
