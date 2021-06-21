@@ -6,7 +6,7 @@ using MechEngineer.Features.Engines.StaticHandler;
 
 namespace MechEngineer.Features.Engines.Patches
 {
-    [HarmonyPatch(typeof(MechLabMechInfoWidget), "GetTotalHardpoints")]
+    //[HarmonyPatch(typeof(MechLabMechInfoWidget), "GetTotalHardpoints")]
     public static class MechLabMechInfoWidget_GetTotalHardpoints_Patch
     {
         public static void Postfix(MechLabPanel ___mechLab, MechLabHardpointElement[] ___hardpoints)
@@ -17,7 +17,7 @@ namespace MechEngineer.Features.Engines.Patches
                 {
                     return;
                 }
-                
+
                 ___hardpoints[4].SetData(
                     WeaponCategoryEnumeration.GetAMS(),
                     EngineMisc.GetJumpJetCountText(___mechLab.activeMechDef)

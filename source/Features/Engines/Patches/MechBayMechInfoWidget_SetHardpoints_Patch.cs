@@ -7,7 +7,7 @@ using TMPro;
 
 namespace MechEngineer.Features.Engines.Patches
 {
-    [HarmonyPatch(typeof(MechBayMechInfoWidget), "SetHardpoints")]
+    //[HarmonyPatch(typeof(MechBayMechInfoWidget), "SetHardpoints")]
     internal static class MechBayMechInfoWidget_SetHardpoints_Patch
     {
         internal static void Postfix(MechDef ___selectedMech, TextMeshProUGUI ___jumpjetHardpointText)
