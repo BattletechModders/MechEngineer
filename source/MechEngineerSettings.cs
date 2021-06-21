@@ -49,7 +49,6 @@ namespace MechEngineer
         public BetterLogSettings BetterLog = new();
 
         public AccuracyEffectsSettings AccuracyEffects = new();
-        public ArmActuatorSettings ArmActuator = new();
         public ArmorStructureChangesSettings ArmorStructureChanges = new();
         public ArmorStructureRatioSettings ArmorStructureRatio = new();
         public AutoFixerSettings AutoFixer = new();
