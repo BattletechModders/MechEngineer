@@ -6,14 +6,14 @@ using MechEngineer.Features.OverrideStatTooltips.Helper;
 
 namespace MechEngineer.Features.Engines.Patches
 {
-    [HarmonyPatch(typeof(HardpointExtentions), nameof(HardpointExtentions.GetJJCount))]
-    internal static class CC_HardpointExtentions_GetJJCount_Patch
+    [HarmonyPatch(typeof(HardpointExtentions), nameof(HardpointExtentions.GetJJCountByMechDef))]
+    internal static class CC_HardpointExtentions_GetJJCountByMechDef_Patch
     {
-        internal static bool Prefix(MechDef mechdef, ref int __result)
+        internal static bool Prefix(MechDef def, ref int __result)
         {
             try
             {
-                var stats = new MechDefMovementStatistics(mechdef);
+                var stats = new MechDefMovementStatistics(def);
                 __result = stats.JumpJetCount;
                 return false;
             }
