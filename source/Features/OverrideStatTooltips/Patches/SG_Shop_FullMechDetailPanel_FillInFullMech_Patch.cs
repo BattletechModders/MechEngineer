@@ -18,13 +18,13 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches
         {
             try
             {
-			    var settings = OverrideStatTooltipsFeature.Shared.Settings;
-			    ___Stat1.SetText(settings.FirepowerTitleText);
-			    ___Stat2.SetText(settings.MovementTitleText);
-			    ___Stat3.SetText(settings.DurabilityTitleText);
-			    ___Stat4.SetText(settings.HeatEfficiencyTitleText);
-			    ___Stat5.SetText(settings.AvgRangeTitleText);
-			    ___Stat6.SetText(settings.MeleeTitleText);
+                var settings = OverrideStatTooltipsFeature.Shared.Settings;
+                ___Stat1.SetText(settings.FirepowerTitleText);
+                ___Stat2.SetText(settings.MovementTitleText);
+                ___Stat3.SetText(settings.DurabilityTitleText);
+                ___Stat4.SetText(settings.HeatEfficiencyTitleText);
+                ___Stat5.SetText(settings.AvgRangeTitleText);
+                ___Stat6.SetText(settings.MeleeTitleText);
             }
             catch (Exception e)
             {

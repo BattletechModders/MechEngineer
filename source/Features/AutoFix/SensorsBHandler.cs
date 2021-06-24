@@ -10,7 +10,7 @@ namespace MechEngineer.Features.AutoFix
     {
         internal static MELazy<SensorsBHandler> Lazy = new();
         internal static SensorsBHandler Shared => Lazy.Value;
-        
+
         private readonly IdentityHelper identity;
         private readonly AdjustCompDefInvSizeHelper resizer;
 
@@ -39,8 +39,8 @@ namespace MechEngineer.Features.AutoFix
             if (identity.IsCustomType(upgradeDef))
             {
                 Traverse.Create(upgradeDef)
-                        .Field<ChassisLocations>(nameof(UpgradeDef.AllowedLocations))
-                        .Value = ChassisLocations.Head;
+                    .Field<ChassisLocations>(nameof(UpgradeDef.AllowedLocations))
+                    .Value = ChassisLocations.Head;
             }
             resizer?.AdjustComponentDef(upgradeDef);
         }

@@ -38,7 +38,7 @@ namespace MechEngineer.Features.DynamicSlots
             CCValidation = new CCValidationAdapter(this);
         }
 
-        private class DynamicSlotBuilder: IComparable<DynamicSlotBuilder>
+        private class DynamicSlotBuilder : IComparable<DynamicSlotBuilder>
         {
             private readonly MechDefBuilder builder;
             private readonly ChassisLocations location;
@@ -99,7 +99,7 @@ namespace MechEngineer.Features.DynamicSlots
             var fslDict = new Dictionary<ChassisLocations, DynamicSlotBuilder>();
             foreach (var location in MechDefBuilder.Locations)
             {
-                 // armorlocation = chassislocation for main locations
+                // armorlocation = chassislocation for main locations
                 var widget = mechLab.GetLocationWidget((ArmorLocation)location);
                 ClearFillers(widget);
                 var adapter = new MechLabLocationWidgetAdapter(widget);
@@ -193,7 +193,7 @@ namespace MechEngineer.Features.DynamicSlots
 
         internal static void ShowFiller(MechLabLocationWidget widget, DynamicSlots slots, int slotIndex, bool isReservedSlot)
         {
-            ChassisLocations location = widget.loadout.Location;
+            var location = widget.loadout.Location;
             Fillers[location][slotIndex].Show(slots, isReservedSlot);
         }
 

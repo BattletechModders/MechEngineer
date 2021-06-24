@@ -24,7 +24,8 @@ namespace MechEngineer.Features.HardpointFix.Public
             componentRefs = componentRefs
                 .Where(c => c != null)
                 .Where(c => c.ComponentDefType == ComponentType.Weapon)
-                .Select(c => {
+                .Select(c =>
+                {
                     if (c.DataManager == null)
                     {
                         c.DataManager = UnityGameInstance.BattleTechGame.DataManager;

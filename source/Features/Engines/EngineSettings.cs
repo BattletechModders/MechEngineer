@@ -6,7 +6,7 @@ namespace MechEngineer.Features.Engines
     {
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Provides engines that can be installed on mechs similar to how CBT works.";
-        
+
         public bool AllowMountingAllRatings = false;
         public string AllowMountingAllRatingsDescription = "Allow mounting all fusion core rating regardless of min/max sprint factors.";
 

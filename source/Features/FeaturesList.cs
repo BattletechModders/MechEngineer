@@ -36,7 +36,8 @@ namespace MechEngineer.Features
     internal class FeaturesList
     {
         // order matters, dependencies between "Features" are encoded into the order
-        internal static IFeature[] Features = {
+        internal static IFeature[] Features =
+        {
             OrderedStatusEffectsFeature.Shared,
             OverrideTonnageFeature.Shared,
             HeatSinkCapacityStatFeature.Shared,

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.ComponentExplosions
 {
-    internal class ComponentExplosionsFeature: Feature<ComponentExplosionsSettings>
+    internal class ComponentExplosionsFeature : Feature<ComponentExplosionsSettings>
     {
         internal static ComponentExplosionsFeature Shared = new();
 
@@ -24,7 +24,7 @@ namespace MechEngineer.Features.ComponentExplosions
                 return;
             }
 
-            if (!(component.componentDef.Is<ComponentExplosion>(out var exp)))
+            if (!component.componentDef.Is<ComponentExplosion>(out var exp))
             {
                 return;
             }
@@ -94,7 +94,7 @@ namespace MechEngineer.Features.ComponentExplosions
                     var type = component.componentType == ComponentType.AmmunitionBox
                         ? DamageType.AmmoExplosion
                         : DamageType.ComponentExplosion;
-                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation) component.Location, weapon, 0, explosionDamage, 0, AttackImpactQuality.Solid, type);
+                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation)component.Location, weapon, 0, explosionDamage, 0, AttackImpactQuality.Solid, type);
                 }
                 else if (actor is Vehicle vehicle)
                 {
@@ -125,7 +125,7 @@ namespace MechEngineer.Features.ComponentExplosions
         {
             return actor.allComponents
                 .Where(c => c.DamageLevel == ComponentDamageLevel.Functional)
-                .Select(componentRef => new { componentRef, CASE = componentRef.componentDef.GetComponent<CASEComponent>() } )
+                .Select(componentRef => new {componentRef, CASE = componentRef.componentDef.GetComponent<CASEComponent>()})
                 .Where(t => t.CASE != null)
                 .Where(t => t.CASE.AllLocations || t.componentRef.Location == location)
                 .Select(t => t.CASE)

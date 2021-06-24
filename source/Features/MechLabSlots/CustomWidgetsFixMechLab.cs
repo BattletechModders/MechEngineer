@@ -41,7 +41,7 @@ namespace MechEngineer.Features.MechLabSlots
             MechLabPanel mechLabPanel,
             MechLabLocationWidget armWidget,
             MechLabSlotsSettings.WidgetSettings settings
-        )
+            )
         {
             if (topWidget != null)
             {
@@ -134,7 +134,7 @@ namespace MechEngineer.Features.MechLabSlots
         {
             if (widget == TopLeftWidget || widget == TopRightWidget)
             {
-                var mechLab = (MechLabPanel) widget.parentDropTarget;
+                var mechLab = (MechLabPanel)widget.parentDropTarget;
                 mechLab.centerTorsoWidget.OnDrop(eventData);
                 return true;
             }
@@ -155,7 +155,7 @@ namespace MechEngineer.Features.MechLabSlots
             MechLabLocationWidget widget,
             bool isOriginalLocation,
             ref MechComponentRef cRef
-        )
+            )
         {
             if (cRef == null)
             {

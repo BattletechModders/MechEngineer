@@ -32,7 +32,9 @@ namespace MechEngineer.Features.Engines
                 if (!string.IsNullOrEmpty(Control.settings.Engine.IgnoreLimitEngineChassisTag) &&
                     panel.activeMechDef.Chassis.ChassisTags.Contains(
                         Control.settings.Engine.IgnoreLimitEngineChassisTag))
+                {
                     return true;
+                }
 
                 return GetMovement(panel.activeMechDef.Chassis.Tonnage).Mountable;
             }

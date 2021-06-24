@@ -8,7 +8,7 @@ namespace MechEngineer.Helper
         public TooltipPrefab_WeaponAdapter(TooltipPrefab_Weapon instance) : base(instance)
         {
         }
-        
+
         public TextMeshProUGUI bonus => traverse.Field("bonus").GetValue<TextMeshProUGUI>();
 
         public TextMeshProUGUI tonnage => traverse.Field("tonnage").GetValue<TextMeshProUGUI>();

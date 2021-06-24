@@ -198,7 +198,7 @@ namespace MechEngineer.Features.OverrideTonnage
             {
                 return 0;
             }
-            
+
             // TODO this and other places don't make EngineFactorFactor work
             // doesn't support multiple components
             // therefore it doesn't track what added/removed weights

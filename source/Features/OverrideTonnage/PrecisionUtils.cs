@@ -51,7 +51,7 @@ namespace MechEngineer.Features.OverrideTonnage
         {
             return Mathf.FloorToInt(value + OverrideTonnageFeature.settings.PrecisionEpsilon);
         }
-        
+
         private static float Round(float value, Func<float, float> rounder, float precision)
         {
             return rounder(value / precision) * precision;

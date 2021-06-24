@@ -14,7 +14,7 @@ namespace MechEngineer.Features.DebugCycleCombatSounds.Patches
 
         public static bool Prefix(TextMeshProUGUI ____version, string button)
         {
-            if (Iterator == null || (button == DebugCycleCombatSoundsFeature.Shared.Settings.SpecificButton && !Iterator.MoveNext()))
+            if (Iterator == null || button == DebugCycleCombatSoundsFeature.Shared.Settings.SpecificButton && !Iterator.MoveNext())
             {
                 SceneSingletonBehavior<WwiseManager>.Instance.LoadCombatBanks();
                 SceneSingletonBehavior<WwiseManager>.Instance.LoadCombatBanks();
@@ -33,7 +33,7 @@ namespace MechEngineer.Features.DebugCycleCombatSounds.Patches
 
         public static IEnumerator<string> EventIds()
         {
-            Type eventListAttr = typeof(WwiseEventList);
+            var eventListAttr = typeof(WwiseEventList);
             var wwiseEnums = ReflectionUtil.TypesWithAttributeInAppDomain(typeof(WwiseManagedEnum)).ToList<Type>();
             foreach (var eType in wwiseEnums)
             {

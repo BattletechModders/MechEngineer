@@ -64,7 +64,7 @@ namespace MechEngineer.Features.AutoFix.Patches
                             slots = dynamicSlotTemplate.ReflectionCopy();
                             def.AddComponent(slots);
                         }
-                        
+
                         slots.ReservedSlots = fullSize - fixedSize;
                     }
                 }

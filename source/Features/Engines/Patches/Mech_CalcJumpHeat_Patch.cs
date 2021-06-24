@@ -8,7 +8,7 @@ namespace MechEngineer.Features.Engines.Patches
     [HarmonyPatch(typeof(Mech), nameof(Mech.CalcJumpHeat))]
     public static class Mech_CalcJumpHeat_Patch
     {
-        public static bool Prefix(Mech __instance, float distJumped, ref int  __result)
+        public static bool Prefix(Mech __instance, float distJumped, ref int __result)
         {
             try
             {

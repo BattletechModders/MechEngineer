@@ -46,10 +46,10 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         }
 
         internal static T ModifyWeaponStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, WeaponDef weaponDef)
-        { 
+        {
             return ModifyWeaponStatistic<T>(stat, mechDef, weaponDef.WeaponSubType, weaponDef.Type, weaponDef.WeaponCategoryValue);
         }
-        
+
         internal static T ModifyWeaponStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, WeaponSubType subType, WeaponType type, WeaponCategoryValue categoryValue)
         {
             var effects = new List<EffectData>();
@@ -89,29 +89,29 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             }
             return stat.Get();
         }
-        
+
         // see EffectsManager.GetTargetComponents for order and logic
         internal static bool IsStatusEffectAffectingWeapon(StatisticEffectData statisticData, WeaponSubType subType, WeaponType type, WeaponCategoryValue categoryValue)
-		{
+        {
             if (statisticData.targetCollection != TargetCollection.Weapon)
             {
                 return false;
             }
 
-			if (statisticData.targetWeaponSubType != WeaponSubType.NotSet)
-			{
-				return statisticData.targetWeaponSubType == subType;
-			}
-			else if (statisticData.targetWeaponType != WeaponType.NotSet)
-			{
-				return statisticData.targetWeaponType == type;
-			}
-			else if (!statisticData.TargetWeaponCategoryValue.Is_NotSet)
-			{
-				return statisticData.TargetWeaponCategoryValue.ID == categoryValue.ID;
-			}
+            if (statisticData.targetWeaponSubType != WeaponSubType.NotSet)
+            {
+                return statisticData.targetWeaponSubType == subType;
+            }
+            else if (statisticData.targetWeaponType != WeaponType.NotSet)
+            {
+                return statisticData.targetWeaponType == type;
+            }
+            else if (!statisticData.TargetWeaponCategoryValue.Is_NotSet)
+            {
+                return statisticData.TargetWeaponCategoryValue.ID == categoryValue.ID;
+            }
 
-			return true;
-		}
+            return true;
+        }
     }
 }

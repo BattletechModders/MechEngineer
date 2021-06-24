@@ -15,7 +15,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
             MechDef ___activeMech,
             DataManager ___dataManager,
             List<GameObject> ___allComponents
-        )
+            )
         {
             try
             {

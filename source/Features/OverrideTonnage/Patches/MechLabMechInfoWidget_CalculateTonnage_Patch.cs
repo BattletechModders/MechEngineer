@@ -55,7 +55,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
                         remainingTonnageColor.SetUIColor(UIColor.Gold);
                     }
                 }
-            
+
                 totalTonnage.SetText(string.Format("{0} / {1}", InfoTonnageHelper.TonnageStandard.AsString(currentTonnage), maxTonnage));
                 if (precisionHelper.IsSmaller(maxTonnage, currentTonnage, out var tonnageLeft))
                 {
@@ -112,7 +112,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
             {
                 var rounded = PrecisionUtils.RoundUp(number, Precision);
                 var digits = new string('#', OverrideTonnageFeature.settings.MechLabMechInfoWidgetDecimalPlaces);
-                return string.Format("{0:0." + digits +"}", rounded);
+                return string.Format("{0:0." + digits + "}", rounded);
             }
 
             public bool IsSmaller(float a, float b, out float left)

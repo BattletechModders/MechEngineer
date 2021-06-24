@@ -13,29 +13,29 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches
         {
             try
             {
-				var settings = OverrideStatTooltipsFeature.Shared.Settings;
+                var settings = OverrideStatTooltipsFeature.Shared.Settings;
                 var tooltipData = (StatTooltipData)data;
-				switch (tooltipData.dataType)
-				{
-					case StatType.Movement:
-						___Title.SetText(settings.MovementTitleText);
-						break;
-					case StatType.HeatEffeciency:
-						___Title.SetText(settings.HeatEfficiencyTitleText);
-						break;
-					case StatType.Durability:
-						___Title.SetText(settings.DurabilityTitleText);
-						break;
-					case StatType.AvgRange:
-						___Title.SetText(settings.AvgRangeTitleText);
-						break;
-					case StatType.Melee:
-						___Title.SetText(settings.MeleeTitleText);
-						break;
-					case StatType.Firepower:
-						___Title.SetText(settings.FirepowerTitleText);
-						break;
-				}
+                switch (tooltipData.dataType)
+                {
+                    case StatType.Movement:
+                        ___Title.SetText(settings.MovementTitleText);
+                        break;
+                    case StatType.HeatEffeciency:
+                        ___Title.SetText(settings.HeatEfficiencyTitleText);
+                        break;
+                    case StatType.Durability:
+                        ___Title.SetText(settings.DurabilityTitleText);
+                        break;
+                    case StatType.AvgRange:
+                        ___Title.SetText(settings.AvgRangeTitleText);
+                        break;
+                    case StatType.Melee:
+                        ___Title.SetText(settings.MeleeTitleText);
+                        break;
+                    case StatType.Firepower:
+                        ___Title.SetText(settings.FirepowerTitleText);
+                        break;
+                }
             }
             catch (Exception e)
             {

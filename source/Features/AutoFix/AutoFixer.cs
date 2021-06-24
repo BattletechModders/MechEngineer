@@ -24,7 +24,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 return;
             }
-            
+
             foreach (var mechDef in mechDefs)
             {
                 try
@@ -71,7 +71,7 @@ namespace MechEngineer.Features.AutoFix
 
                 builder = new MechDefBuilder(mechDef.Chassis, inventory);
             }
-            
+
             var dataManager = mechDef.DataManager;
             {
                 var lowerDef = dataManager.UpgradeDefs.Get("emod_arm_part_lower");
@@ -87,30 +87,42 @@ namespace MechEngineer.Features.AutoFix
                     }
                     return builder.Add(def, location) != null;
                 }
-                
+
                 {
                     // TODO I need
                     //   mechDef.GetLimit("ArmLowerActuator", LeftArm).Max > 0;
                     // instead of
                     var go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitUpperLeft");
                     if (go)
+                    {
                         go = Add(lowerDef, ChassisLocations.LeftArm);
+                    }
                     if (go)
+                    {
                         go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitLowerLeft");
+                    }
                     if (go)
+                    {
                         Add(handDef, ChassisLocations.LeftArm);
+                    }
                 }
-                
+
                 {
                     var go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitUpperRight");
                     if (go)
+                    {
                         go = Add(lowerDef, ChassisLocations.RightArm);
+                    }
                     if (go)
+                    {
                         go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitLowerRight");
+                    }
                     if (go)
+                    {
                         Add(handDef, ChassisLocations.RightArm);
+                    }
                 }
-                
+
                 mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
             }
 
@@ -153,7 +165,8 @@ namespace MechEngineer.Features.AutoFix
                 // convert external heat sinks into internal ones
                 // TODO only to make space if needed, drop the rest of the heat sinks
 
-                if (AutoFixerFeature.settings.InternalizeHeatSinksOnValidEngines) {
+                if (AutoFixerFeature.settings.InternalizeHeatSinksOnValidEngines)
+                {
                     var max = engine.HeatSinkInternalAdditionalMaxCount;
                     var oldCurrent = engine.HeatBlockDef.HeatSinkCount;
                     var current = oldCurrent;
@@ -169,7 +182,7 @@ namespace MechEngineer.Features.AutoFix
                         builder.Remove(component);
                         current++;
                     }
-                    
+
                     if (current > 0)
                     {
                         var heatBlock = builder.Inventory.FirstOrDefault(r => r.Def.Is<EngineHeatBlockDef>());
@@ -179,7 +192,7 @@ namespace MechEngineer.Features.AutoFix
                         }
 
                         var heatBlockDefId = $"{AutoFixerFeature.settings.MechDefHeatBlockDef}_{current}";
-                        var def =dataManager.HeatSinkDefs.Get(heatBlockDefId);
+                        var def = dataManager.HeatSinkDefs.Get(heatBlockDefId);
                         builder.Add(def, ChassisLocations.CenterTorso, true);
 
                         Control.Logger.Debug?.Log($" Converted external heat sinks ({current - oldCurrent}) to internal ones (to make space)");
@@ -288,7 +301,7 @@ namespace MechEngineer.Features.AutoFix
 
                         // remove candidates that make no sense anymore
                         // TODO not perfect and maybe too large for small mechs
-                        engineCandidates = engineCandidates.Where(x => PrecisionUtils.SmallerOrEqualsTo(x.TotalTonnage, freeTonnage + 6*engineHeatSinkDef.Def.Tonnage + jumpJetTonnage)).ToList();
+                        engineCandidates = engineCandidates.Where(x => PrecisionUtils.SmallerOrEqualsTo(x.TotalTonnage, freeTonnage + 6 * engineHeatSinkDef.Def.Tonnage + jumpJetTonnage)).ToList();
                     }
 
                     // go through all candidates, larger first
@@ -344,7 +357,7 @@ namespace MechEngineer.Features.AutoFix
                     builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);
                 }
             }
-            
+
             // find any overused location
             if (builder.HasOveruseAtAnyLocation())
             {
@@ -375,7 +388,7 @@ namespace MechEngineer.Features.AutoFix
                     }
                 }
             }
-            
+
             mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
 
             {
@@ -459,7 +472,7 @@ namespace MechEngineer.Features.AutoFix
         private static bool IsRemovable(MechComponentRef c)
         {
             var def = c.Def;
-            
+
             if (def == null)
             {
                 return false;

@@ -9,7 +9,7 @@ namespace MechEngineer.Features.AutoFix
     {
         internal static MELazy<CockpitHandler> Lazy = new();
         internal static CockpitHandler Shared => Lazy.Value;
-        
+
         private readonly IdentityHelper identity;
         private readonly AdjustCompDefTonnageHelper reweighter;
         private readonly AdjustCompDefInvSizeHelper resizer;

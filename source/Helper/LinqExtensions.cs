@@ -27,7 +27,7 @@ namespace MechEngineer.Helper
                 {
                     return true;
                 }
-                else if (leftProp == null ^ rightProp == null)
+                else if ((leftProp == null) ^ (rightProp == null))
                 {
                     return false;
                 }
@@ -39,7 +39,7 @@ namespace MechEngineer.Helper
             public int GetHashCode(T obj)
             {
                 var prop = expr.Invoke(obj);
-                return (prop == null) ? 0 : prop.GetHashCode();
+                return prop == null ? 0 : prop.GetHashCode();
             }
         }
     }

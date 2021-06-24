@@ -59,7 +59,7 @@ namespace MechEngineer.Helper
         }
     }
 
-    public class Errors: IEnumerable<Error>
+    public class Errors : IEnumerable<Error>
     {
         internal readonly OrderedSet<Error> Messages = new();
         internal bool FailOnFirstError = false;

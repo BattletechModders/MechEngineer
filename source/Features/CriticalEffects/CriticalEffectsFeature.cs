@@ -30,7 +30,7 @@ namespace MechEngineer.Features.CriticalEffects
             {
                 return effectData;
             }
-            
+
             Control.Logger.Error.Log($"Can't find critical effect id '{effectId}'");
             return null;
         }

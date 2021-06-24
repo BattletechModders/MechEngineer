@@ -1,5 +1,4 @@
-﻿
-using CustomComponents;
+﻿using CustomComponents;
 
 namespace MechEngineer.Features.ComponentExplosions
 {

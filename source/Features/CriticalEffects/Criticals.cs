@@ -20,12 +20,12 @@ namespace MechEngineer.Features.CriticalEffects
 
         private readonly MechComponent component;
         private AbstractActor actor => component.parent;
-        
+
         internal CriticalEffects Effects => ce.Value;
         private readonly Lazy<CriticalEffects> ce;
         private bool HasLinked => Effects?.LinkedStatisticName != null;
         private CriticalEffects FetchCriticalEffects()
-        { 
+        {
             var customs = component.componentDef.GetComponents<CriticalEffects>().ToList();
 
             if (actor is Mech)
@@ -69,7 +69,7 @@ namespace MechEngineer.Features.CriticalEffects
             }
 
             SetHits(hitInfo, out damageLevel);
-            
+
             if (damageLevel == ComponentDamageLevel.Destroyed)
             {
                 PostDestructionEvents(hitInfo);
@@ -89,7 +89,7 @@ namespace MechEngineer.Features.CriticalEffects
                 var compCritsAdded = Mathf.Max(compCritsNext - compCritsPrev, 0);
 
                 ComponentHitCount(compCritsNext);
-                
+
                 // if max is reached, component is destroyed and no new effects can be applied
                 // Destroyed components can still soak up crits, requires properly configured AIM from CAC
                 effectsMax = Effects?.PenalizedEffectIDs.Length + 1 ?? DefaultEffectsMax();
@@ -110,10 +110,10 @@ namespace MechEngineer.Features.CriticalEffects
                     effectsNext = compCritsNext;
                 }
             }
-            
+
             damageLevel = effectsNext >= effectsMax ? ComponentDamageLevel.Destroyed : ComponentDamageLevel.Penalized;
             SetDamageLevel(hitInfo, damageLevel);
-            
+
             if (Effects != null)
             {
                 CancelEffects(effectsPrev, damageLevel);
@@ -300,7 +300,7 @@ namespace MechEngineer.Features.CriticalEffects
                 var util = new EffectIdUtil(effectId, resolvedEffectId, component);
                 util.CreateCriticalEffect();
             }
-            
+
             static HashSet<string> DisabledSimpleScopedEffectIdsOnActor(AbstractActor actor)
             {
                 var iter = from mc in actor.allComponents
@@ -362,11 +362,11 @@ namespace MechEngineer.Features.CriticalEffects
         internal static void CreateEffect(MechComponent component, EffectData effectData, string effectId)
         {
             var actor = component.parent;
-            
+
             Control.Logger.Debug?.Log($"Creating id={effectId} statName={effectData.statisticData.statName}");
             actor.Combat.EffectManager.CreateEffect(effectData, effectId, -1, actor, actor, default, 0);
         }
-        
+
         internal void CreateCriticalEffect()
         {
             var effectData = CriticalEffectsFeature.GetEffectData(templateEffectId);

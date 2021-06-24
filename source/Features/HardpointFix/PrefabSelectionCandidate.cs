@@ -32,7 +32,7 @@ namespace MechEngineer.Features.HardpointFix
                 .Where(x => !x.IsEmpty)
                 .ToList();
 
-            var mappings = new List<PrefabMapping>(Mappings) { newMapping };
+            var mappings = new List<PrefabMapping>(Mappings) {newMapping};
             return new PrefabSelectionCandidate(sets, mappings);
         }
 

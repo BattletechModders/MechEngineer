@@ -19,7 +19,7 @@ namespace MechEngineer.Features.DynamicSlots
             ChassisLocations.RightTorso,
             ChassisLocations.RightLeg,
             ChassisLocations.LeftArm,
-            ChassisLocations.RightArm,
+            ChassisLocations.RightArm
         };
         public string LocationPriorityOrderDescription = "From highest to lowest priority where to add dynamic slots too, relevant if locations have same amount of free slots. Visual impact only.";
 

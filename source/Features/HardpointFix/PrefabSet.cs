@@ -22,9 +22,9 @@ namespace MechEngineer.Features.HardpointFix
 
         internal PrefabSet(int index, IEnumerable<string> prefabs)
             : this(index, prefabs
-                  .Distinct()
-                  .Select(x => new Prefab(x))
-                  .ToDictionary(x => x.Identifier))
+                .Distinct()
+                .Select(x => new Prefab(x))
+                .ToDictionary(x => x.Identifier))
         {
         }
 
@@ -51,7 +51,8 @@ namespace MechEngineer.Features.HardpointFix
 
         internal Prefab GetPrefabByIdentifier(string prefabIdentifier)
         {
-            if (Prefabs.TryGetValue(prefabIdentifier, out var value)) {
+            if (Prefabs.TryGetValue(prefabIdentifier, out var value))
+            {
                 return value;
             }
             return null;

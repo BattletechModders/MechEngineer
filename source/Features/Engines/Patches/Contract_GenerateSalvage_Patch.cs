@@ -28,7 +28,7 @@ namespace MechEngineer.Features.Engines.Patches
             lastMechDef = mechDef;
             return mechDef.IsLocationDestroyed(location);
         }
-        
+
         public static bool IsIncapacitated(this Pilot pilot)
         {
             try

@@ -8,7 +8,7 @@ namespace MechEngineer.Helper
         {
             try
             {
-                result = GetValue<TEnum>(name, ignoreCase); 
+                result = GetValue<TEnum>(name, ignoreCase);
             }
             catch
             {

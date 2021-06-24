@@ -58,13 +58,13 @@ namespace MechEngineer.Features.AutoFix
                 var info = typeof(ChassisDef).GetProperty("InitialTonnage");
                 var value = Convert.ChangeType(tonnage, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
-                
+
                 Control.Logger.Debug?.Log($"set InitialTonnage={tonnage}");
             }
 
             if (AutoFixerFeature.settings.ChassisDefMaxJumpjets)
             {
-                var coreDef = new EngineCoreDef {Rating = AutoFixerFeature.settings.ChassisDefMaxJumpjetsRating };
+                var coreDef = new EngineCoreDef {Rating = AutoFixerFeature.settings.ChassisDefMaxJumpjetsRating};
                 var maxCount = Mathf.Min(
                     AutoFixerFeature.settings.ChassisDefMaxJumpjetsCount,
                     coreDef.GetMovement(chassisDef.Tonnage).JumpJetCount
@@ -72,7 +72,7 @@ namespace MechEngineer.Features.AutoFix
                 var info = typeof(ChassisDef).GetProperty("MaxJumpjets");
                 var value = Convert.ChangeType(maxCount, info.PropertyType);
                 info.SetValue(chassisDef, value, null);
-                
+
                 Control.Logger.Debug?.Log($"set MaxJumpjets={maxCount}");
             }
         }
@@ -96,7 +96,7 @@ namespace MechEngineer.Features.AutoFix
                     ModifyInventorySlots(ref locations[i], location, change);
                 }
             }
-            
+
             adapter.refreshLocationReferences();
         }
 
@@ -140,9 +140,9 @@ namespace MechEngineer.Features.AutoFix
 
             var info = typeof(LocationDef).GetField("InventorySlots");
             var value = Convert.ChangeType(newValue, info.FieldType);
-            var box = (object) locationDef;
+            var box = (object)locationDef;
             info.SetValue(box, value);
-            locationDef = (LocationDef) box;
+            locationDef = (LocationDef)box;
 
             Control.Logger.Debug?.Log($"set InventorySlots={locationDef.InventorySlots} on location={location}");
         }

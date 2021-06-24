@@ -18,10 +18,10 @@ namespace MechEngineer.Features.Performance.Patches
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
-                AccessTools.Method(typeof(object), nameof(object.Equals), new []{typeof(object)}),
+                AccessTools.Method(typeof(object), nameof(object.Equals), new[] {typeof(object)}),
                 AccessTools.Method(typeof(TweenManager_FilteredOperation_Patch), nameof(ObjectEquals))
             ).MethodReplacer(
-                AccessTools.Method(typeof(object), nameof(object.Equals), new []{typeof(object),typeof(object)}),
+                AccessTools.Method(typeof(object), nameof(object.Equals), new[] {typeof(object), typeof(object)}),
                 AccessTools.Method(typeof(TweenManager_FilteredOperation_Patch), nameof(ObjectEquals))
             );
         }

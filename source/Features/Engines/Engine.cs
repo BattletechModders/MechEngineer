@@ -85,7 +85,7 @@ namespace MechEngineer.Features.Engines
         {
             get
             {
-                var dissipation = HeatSinkDef.Def.DissipationCapacity * ( HeatSinkInternalFreeMaxCount + HeatBlockDef.HeatSinkCount );
+                var dissipation = HeatSinkDef.Def.DissipationCapacity * (HeatSinkInternalFreeMaxCount + HeatBlockDef.HeatSinkCount);
                 dissipation += CoreDef.Def.DissipationCapacity;
                 dissipation += CoolingDef.Def.DissipationCapacity;
                 return dissipation;
@@ -123,7 +123,7 @@ namespace MechEngineer.Features.Engines
         internal float HeatSinkExternalFreeTonnage => HeatSinkExternalFreeCount * HeatSinkDef.Def.Tonnage;
         internal float GyroTonnage => PrecisionUtils.RoundUp(StandardGyroTonnage * Weights.GyroFactor, WeightPrecision);
         internal float EngineTonnage => PrecisionUtils.RoundUp(StandardEngineTonnage * Weights.EngineFactor, WeightPrecision);
-        internal float HeatSinkTonnage => - HeatSinkExternalFreeTonnage;
+        internal float HeatSinkTonnage => -HeatSinkExternalFreeTonnage;
         internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;
 
         internal virtual float StandardGyroTonnage => PrecisionUtils.RoundUp(CoreDef.Rating / 100f, 1f);

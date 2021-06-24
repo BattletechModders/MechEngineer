@@ -9,8 +9,8 @@ namespace MechEngineer.Features.CriticalEffects
 
         public float DefaultMaxCritsPerSlots { get; set; } = 0.5f;
         public string DefaultMaxCritsPerSlotsDescription => "How many critical hits a component by default can take for each occupied slot. " +
-                                                             "For CBT use 0, for Expanded Critical Damage behavior use 0.5. " +
-                                                             "Custom CriticalEffects overwrite this behavior.";
+                                                            "For CBT use 0, for Expanded Critical Damage behavior use 0.5. " +
+                                                            "Custom CriticalEffects overwrite this behavior.";
 
         public ComponentType[] DefaultMaxCritsComponentTypes { get; set; } = {ComponentType.Weapon, ComponentType.AmmunitionBox, ComponentType.JumpJet, ComponentType.Upgrade};
         public string DefaultMaxCritsComponentTypesDescription => "For which types the default max crits are applied.";

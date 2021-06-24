@@ -57,7 +57,8 @@ namespace MechEngineer.Features.TagManager.Patches
         {
             foreach (var instruction in instructions)
             {
-                if (instruction.opcode == OpCodes.Ldstr && instruction.operand is string text && oldStrings.Contains(text)) {
+                if (instruction.opcode == OpCodes.Ldstr && instruction.operand is string text && oldStrings.Contains(text))
+                {
                     instruction.operand = newString;
                 }
                 yield return instruction;

@@ -15,7 +15,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
             MechLabMechInfoWidget __instance,
             MechLabPanel ___mechLab,
             MechLabHardpointElement[] ___hardpoints
-        )
+            )
         {
             try
             {

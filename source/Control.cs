@@ -44,7 +44,8 @@ namespace MechEngineer
                 throw;
             }
 
-            try {
+            try
+            {
                 Logger.Info.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
                 Logger.Info.Log("settings loaded");
                 Logger.Debug?.Log("debugging enabled");

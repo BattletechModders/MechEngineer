@@ -1,9 +1,8 @@
-﻿
-using CustomComponents;
+﻿using CustomComponents;
 
 namespace MechEngineer.Features.ArmActuators
 {
-    internal class ArmActuatorFeature: Feature<ArmActuatorSettings>
+    internal class ArmActuatorFeature : Feature<ArmActuatorSettings>
     {
         internal static ArmActuatorFeature Shared = new();
 

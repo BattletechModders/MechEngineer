@@ -26,7 +26,7 @@ namespace MechEngineer.Helper
 
             var effectData = CreatePassiveEffectData(def.Description.Id, statisticData);
 
-            var statusEffects = def.statusEffects == null ? new[] { effectData } : def.statusEffects.Append(effectData).ToArray();
+            var statusEffects = def.statusEffects == null ? new[] {effectData} : def.statusEffects.Append(effectData).ToArray();
             def.SetEffectData(statusEffects);
         }
 
@@ -37,7 +37,8 @@ namespace MechEngineer.Helper
                 effectType = EffectType.StatisticEffect,
                 nature = EffectNature.Buff,
                 durationData = new EffectDurationData {duration = -1, stackLimit = -1},
-                targetingData = new EffectTargetingData {
+                targetingData = new EffectTargetingData
+                {
                     effectTriggerType = EffectTriggerType.Passive,
                     effectTargetType = EffectTargetType.Creator
                 },

@@ -13,17 +13,14 @@ namespace MechEngineer.Features.OmniSlots.Patches
         internal static void Postfix(
             MechLabLocationWidget __instance,
             ref LocationDef ___chassisLocationDef,
-
             ref int ___currentBallisticCount,
             ref int ___currentEnergyCount,
             ref int ___currentMissileCount,
             ref int ___currentSmallCount,
-
             ref int ___totalBallisticHardpoints,
             ref int ___totalEnergyHardpoints,
             ref int ___totalMissileHardpoints,
             ref int ___totalSmallHardpoints,
-
             ref MechLabHardpointElement[] ___hardpoints,
             ref List<MechLabItemSlotElement> ___localInventory)
         {
@@ -37,9 +34,9 @@ namespace MechEngineer.Features.OmniSlots.Patches
                     Control.Logger.Debug?.Log($"hardpoints is null in location={__instance.loadout?.Location}");
                     return;
                 }
-                
+
                 var calc = new HardpointOmniUsageCalculator(inventory, hardpoints);
-                
+
                 Control.Logger.Debug?.Log(calc);
 
                 ___currentBallisticCount = calc.Ballistic.VanillaUsage;

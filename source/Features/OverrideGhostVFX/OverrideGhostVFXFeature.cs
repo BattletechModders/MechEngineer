@@ -1,4 +1,3 @@
-
 namespace MechEngineer.Features.OverrideGhostVFX
 {
     internal class OverrideGhostVFXFeature : Feature<OverrideGhostVFXSettings>

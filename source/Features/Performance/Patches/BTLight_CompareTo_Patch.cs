@@ -14,7 +14,7 @@ namespace MechEngineer.Features.Performance.Patches
             {
                 var one = __instance;
                 var other = obj as BTLight;
-                __result = (int)one.lightType -  (int)other.lightType;
+                __result = (int)one.lightType - (int)other.lightType;
                 return false;
             }
             catch (Exception e)

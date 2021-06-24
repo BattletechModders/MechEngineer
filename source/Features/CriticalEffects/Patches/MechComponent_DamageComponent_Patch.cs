@@ -24,7 +24,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches
                 mechComponent.CancelCreatedEffects(performAuraRefresh);
             }
         }
-        
+
         [HarmonyAfter(DamageIgnoreFeature.Namespace)]
         public static void Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
         {

@@ -12,7 +12,7 @@ namespace MechEngineer.Features.BetterLog
 
         private BetterLog(string path, BetterLogSettings settings)
         {
-            streamWriter = new StreamWriter(path) { AutoFlush = true };
+            streamWriter = new StreamWriter(path) {AutoFlush = true};
             formatter = new BetterLogFormatter(settings.Formatter);
         }
 

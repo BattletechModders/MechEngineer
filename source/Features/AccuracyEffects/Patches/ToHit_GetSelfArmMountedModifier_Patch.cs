@@ -17,7 +17,7 @@ namespace MechEngineer.Features.AccuracyEffects.Patches
                         mech.StatCollection,
                         weapon.mechComponentRef.MountedLocation
                     );
-                    
+
                     return false;
                 }
             }

@@ -19,15 +19,15 @@ namespace MechEngineer.Features.AccuracyEffects
                 AccuracyForLocation(statCollection, location);
             }
         }
-        
+
         internal static float AccuracyForLocation(StatCollection statCollection, ChassisLocations location)
         {
             var naming = new MechPlaceholderInterpolation(location);
             var key = naming.LocationalStatisticName("Accuracy");
             return AccuracyForKey(statCollection, key);
         }
-        
-        private static float AccuracyForKey(StatCollection statCollection, string collectionKey) 
+
+        private static float AccuracyForKey(StatCollection statCollection, string collectionKey)
         {
             var statistic = statCollection.GetStatistic(collectionKey);
             if (statistic == null)

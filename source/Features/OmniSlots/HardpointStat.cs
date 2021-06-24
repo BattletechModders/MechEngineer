@@ -13,7 +13,7 @@ namespace MechEngineer.Features.OmniSlots
 
         internal int VanillaUsage;
         internal int VanillaMax;
-            
+
         internal int VanillaMaxOver => Math.Max(VanillaUsage - VanillaMax, 0);
 
         internal int DynamicMax => VanillaMax + VanillaMaxOver + OmniFree;

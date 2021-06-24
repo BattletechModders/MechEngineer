@@ -11,7 +11,7 @@ namespace MechEngineer.Features.AutoFix
     {
     }
 
-    public class ValueChange<T> where T: struct, IComparable<T>, IEquatable<T>
+    public class ValueChange<T> where T : struct, IComparable<T>, IEquatable<T>
     {
         public T From;
         public T By;
@@ -25,7 +25,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 return null;
             }
-            
+
             var newValue = Add(originalValue, By);
 
             if (NewMin.HasValue)
@@ -95,7 +95,7 @@ namespace MechEngineer.Features.AutoFix
                 }
             }
 
-            return default(T);
+            return default;
         }
     }
 }

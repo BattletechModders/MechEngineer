@@ -47,9 +47,9 @@ namespace MechEngineer.Helper
         internal void Modify(EffectData effectData)
         {
             var modType = Type.GetType(effectData.statisticData.modType);
-			var modVariant = new Variant(modType);
-			modVariant.statName = effectData.statisticData.statName;
-			modVariant.SetValue(effectData.statisticData.modValue);
+            var modVariant = new Variant(modType);
+            modVariant.statName = effectData.statisticData.statName;
+            modVariant.SetValue(effectData.statisticData.modValue);
             StatCollection.ModifyStatistic(null, -1, effectData.statisticData.statName, effectData.statisticData.operation, modVariant, -1, true);
         }
 

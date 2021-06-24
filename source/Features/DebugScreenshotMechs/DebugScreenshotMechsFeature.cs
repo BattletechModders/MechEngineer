@@ -8,7 +8,7 @@ namespace MechEngineer.Features.DebugScreenshotMechs
         internal static DebugScreenshotMechsFeature Shared = new();
 
         internal override DebugScreenshotMechsSettings Settings => Control.settings.DebugScreenshotMechs;
-        
+
         private string screenshotDirectoryPath;
         internal string ScreenshotPath(MechDef mechDef)
         {

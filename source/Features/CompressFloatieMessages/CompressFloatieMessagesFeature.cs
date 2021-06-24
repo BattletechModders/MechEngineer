@@ -26,7 +26,7 @@ namespace MechEngineer.Features.CompressFloatieMessages
                 }
 
                 var times = 1;
-                
+
                 // parse and remove multiplier from the end of the message
                 var lastPart = message.text.m_parts.Last();
                 var m = MultiplierRegex.Match(lastPart.text);

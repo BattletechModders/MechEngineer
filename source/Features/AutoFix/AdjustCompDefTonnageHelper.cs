@@ -26,13 +26,13 @@ namespace MechEngineer.Features.AutoFix
             {
                 return;
             }
-            
+
             var newTonnage = change.Change(def.Tonnage);
             if (!newTonnage.HasValue)
             {
                 return;
             }
-            
+
             var value = newTonnage.Value;
             var propInfo = typeof(UpgradeDef).GetProperty("Tonnage");
             var propValue = Convert.ChangeType(value, propInfo.PropertyType);

@@ -21,7 +21,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
             MechComponentRef cRef,
             WeaponDef wDef,
             bool isOriginalLocation,
-            bool canBeAdded, 
+            bool canBeAdded,
             ref LocationDef ___chassisLocationDef)
         {
             try
@@ -34,7 +34,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 var hasOmni = ___chassisLocationDef.Hardpoints.Any(x => x.Omni);
                 if (hasOmni)
                 {
-                    __instance.ShowHighlightFrame(true, (!isOriginalLocation) ? ((!canBeAdded) ? UIColor.GoldHalf : UIColor.Gold) : UIColor.Blue);
+                    __instance.ShowHighlightFrame(true, !isOriginalLocation ? !canBeAdded ? UIColor.GoldHalf : UIColor.Gold : UIColor.Blue);
                 }
             }
             catch (Exception e)

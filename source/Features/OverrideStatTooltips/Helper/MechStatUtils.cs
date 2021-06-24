@@ -14,7 +14,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             currentValue = Mathf.Max(currentValue, minValue);
             currentValue = Mathf.Min(currentValue, maxValue);
         }
-        
+
         internal static float NormalizeToFraction(float value, float minValue, float maxValue)
         {
             var normalizedValue = (value - minValue) / (maxValue - minValue);

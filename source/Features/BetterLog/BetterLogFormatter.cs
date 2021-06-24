@@ -23,7 +23,7 @@ namespace MechEngineer.Features.BetterLog
                 GetFormattedLogLevel(logLevel),
                 GetFormattedName(name),
                 GetFormattedMessage(message),
-                exception == null ?  GetFormattedLocation(location) : GetFormattedException(exception)
+                exception == null ? GetFormattedLocation(location) : GetFormattedException(exception)
             );
 
             if (settings.NormalizeNewLines)
@@ -38,7 +38,7 @@ namespace MechEngineer.Features.BetterLog
 
             return line;
         }
-        
+
         private static readonly Regex NEWLINE_REGEX = new(@"\r\n|\n\r|\n|\r", RegexOptions.Compiled);
 
         private string GetFormattedTime()

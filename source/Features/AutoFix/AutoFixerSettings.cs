@@ -13,7 +13,7 @@ namespace MechEngineer.Features.AutoFix
         public string MechDefHeatBlockDef = "emod_engine_cooling";
         public string MechDefCoreDummy = "emod_engine_dummy";
 
-        public string[] IgnoreAutofixTags = { "ignore_autofix", "noautofix" };
+        public string[] IgnoreAutofixTags = {"ignore_autofix", "noautofix"};
         public string IgnoreAutofixTagsDescription => "These tags on a MechDef, ChassisDef or ComponentDef make sure that the respective object is being ignored by the autofixer";
 
         public bool InternalizeHeatSinksOnValidEngines = true;
@@ -23,10 +23,10 @@ namespace MechEngineer.Features.AutoFix
         {
             new()
             {
-                Tags = new [] { "unit_vtol" },
+                Tags = new[] {"unit_vtol"},
                 Template = new ChassisLocationNaming
                 {
-                    Names = new []
+                    Names = new[]
                     {
                         new ChassisLocationNaming.LocationName
                         {
@@ -58,10 +58,10 @@ namespace MechEngineer.Features.AutoFix
             },
             new()
             {
-                Tags = new [] { "fake_vehicle_chassis" },
+                Tags = new[] {"fake_vehicle_chassis"},
                 Template = new ChassisLocationNaming
                 {
-                    Names = new []
+                    Names = new[]
                     {
                         new ChassisLocationNaming.LocationName
                         {
@@ -97,7 +97,7 @@ namespace MechEngineer.Features.AutoFix
 
         public class MechLocationNamingTemplateByTags
         {
-            public string[] Tags = {};
+            public string[] Tags = { };
             public ChassisLocationNaming Template = new();
         }
 
@@ -109,7 +109,7 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "Gyro", // required
             AutoAddCategoryIdIfMissing = true // adds category id to items matched by optional filters
         };
-        public SlotChange GyroSlotChange = new() { From = 3, By = 1 };
+        public SlotChange GyroSlotChange = new() {From = 3, By = 1};
 
         public IdentityHelper CockpitCategorizer = new()
         {
@@ -119,8 +119,8 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "Cockpit",
             AutoAddCategoryIdIfMissing = true
         };
-        public TonnageChange CockpitTonnageChange = new() { From = 0, By = 3 };
-        public SlotChange CockpitSlotChange = new() { From = 1, By = 0 };
+        public TonnageChange CockpitTonnageChange = new() {From = 0, By = 3};
+        public SlotChange CockpitSlotChange = new() {From = 1, By = 0};
 
         public IdentityHelper SensorsACategorizer = new()
         {
@@ -139,7 +139,7 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "SensorsB",
             AutoAddCategoryIdIfMissing = true
         };
-        public SlotChange SensorsBSlotChange = new() { From = 2, By = -1 };
+        public SlotChange SensorsBSlotChange = new() {From = 2, By = -1};
 
         public IdentityHelper LegUpgradesCategorizer = new()
         {
@@ -149,9 +149,10 @@ namespace MechEngineer.Features.AutoFix
             CategoryId = "LegFootActuator",
             AutoAddCategoryIdIfMissing = true
         };
-        public SlotChange LegUpgradesSlotChange = new() { From = 3, By = -1, FromIsMin = true, NewMin = 1 };
+        public SlotChange LegUpgradesSlotChange = new() {From = 3, By = -1, FromIsMin = true, NewMin = 1};
 
-        public ChassisSlotsChange[] ChassisDefSlotsChanges = {
+        public ChassisSlotsChange[] ChassisDefSlotsChanges =
+        {
             // vanilla mechs
             new()
             {
@@ -218,7 +219,7 @@ namespace MechEngineer.Features.AutoFix
             {
                 Location = ChassisLocations.RightArm,
                 Change = new SlotChange {From = 11, By = 1}
-            },
+            }
         };
 
         public bool ChassisDefInitialTonnage = true;
@@ -234,7 +235,8 @@ namespace MechEngineer.Features.AutoFix
         public DynamicSlots.DynamicSlots AutoFixWeaponDefSplittingDynamicSlotTemplate =
             new() {InnerAdjacentOnly = true};
 
-        public WeaponDefChange[] AutoFixWeaponDefSlotsChanges = {
+        public WeaponDefChange[] AutoFixWeaponDefSlotsChanges =
+        {
             new()
             {
                 Type = WeaponSubType.AC5,

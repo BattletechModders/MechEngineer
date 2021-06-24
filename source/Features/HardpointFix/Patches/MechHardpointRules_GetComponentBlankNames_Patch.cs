@@ -34,7 +34,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
         {
             try
             {
-                if (HardpointFixFeature.Shared.Settings.TraceLogDebugMappings || (__result != null && __result.Count > 0))
+                if (HardpointFixFeature.Shared.Settings.TraceLogDebugMappings || __result != null && __result.Count > 0)
                 {
                     Control.Logger.Debug?.Log($"GetComponentBlankNames blanks=[{__result?.JoinAsString()}] location={location}");
                 }

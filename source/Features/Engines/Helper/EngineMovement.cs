@@ -50,12 +50,14 @@ namespace MechEngineer.Features.Engines.Helper
             }
         }
 
-        internal static float ConvertMPToGameDistance(float movementPoints) {
+        internal static float ConvertMPToGameDistance(float movementPoints)
+        {
             var multiplier = EngineFeature.settings.MovementPointDistanceMultiplier;
             return RoundBy1(movementPoints * multiplier);
         }
 
-        internal static float ConvertJJMPToGameDistance(float movementPoints) {
+        internal static float ConvertJJMPToGameDistance(float movementPoints)
+        {
             var multiplier = EngineFeature.settings.JumpJetMovementPointDistanceMultiplier;
             if (multiplier.HasValue)
             {

@@ -11,7 +11,7 @@ namespace MechEngineer.Features.MechLabSlots
         {
             Location = location;
         }
-        
+
         public enum MechLabWidgetLocation
         {
             TopLeft,

@@ -15,7 +15,7 @@ namespace MechEngineer.Features.MechLabSlots
             // just hide armor = 0 stuff
             widget.gameObject.SetActive(!widget.ShouldHide());
 
-            var mechLab = (MechLabPanel) widget.parentDropTarget;
+            var mechLab = (MechLabPanel)widget.parentDropTarget;
             var text = GetLocationName(mechLab.activeMechDef.Chassis, location);
 
             var adapter = new MechLabLocationWidgetAdapter(widget);

@@ -22,14 +22,14 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
         internal MechDefMovementStatistics(MechDef mechDef)
         {
             this.mechDef = mechDef;
-            
+
             Engine = mechDef.GetEngine();
             movement = Engine?.CoreDef.GetMovement(mechDef.Chassis.Tonnage);
             if (movement == null)
             {
                 return;
             }
-            
+
             WalkMovementPoint = movement.WalkMovementPoint;
             MoveMultiplier = GetMoveMultiplier();
             BaseWalkSpeed = GetWalkSpeed();
@@ -45,7 +45,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             JumpJetCount = mechDef.Inventory.Count(x => x.ComponentDefType == ComponentType.JumpJet);
             JumpJetMaxCount = GetJumpJetMaxCount();
         }
-        
+
         private float MoveMultiplier { get; }
         private float BaseWalkSpeed { get; }
         private float BaseRunSpeed { get; }
@@ -75,7 +75,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             stat.Create();
             return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
         }
-        
+
         private float GetWalkSpeed()
         {
             var stat = statCollection.WalkSpeed();

@@ -53,7 +53,7 @@ namespace MechEngineer.Features.DebugScreenshotMechs.Patches
                 tex.Apply();
 
                 // Encode texture into PNG
-                byte[] bytes = tex.EncodeToPNG();
+                var bytes = tex.EncodeToPNG();
 
                 //Save image to file
                 File.WriteAllBytes(path, bytes);

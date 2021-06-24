@@ -24,7 +24,7 @@ namespace MechEngineer.Features.DebugScreenshotMechs.Patches
                 Control.Logger.Error.Log(e);
             }
         }
-        
+
         private static IEnumerator<MechDef> mechDefsIterator;
         private static IEnumerator CallBack(SkirmishMechBayPanel panel)
         {

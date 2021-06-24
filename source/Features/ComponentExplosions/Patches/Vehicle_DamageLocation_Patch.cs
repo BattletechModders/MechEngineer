@@ -33,7 +33,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                     return;
                 }
 
-                var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(vehicle, (int) location);
+                var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(vehicle, (int)location);
                 if (properties?.MaximumDamage == null)
                 {
                     return;

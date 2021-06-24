@@ -59,7 +59,7 @@ namespace MechEngineer.Features.TagManager
             }
         }
 
-        bool Check(TagSet a, TagSet b)
+        private bool Check(TagSet a, TagSet b)
         {
             if (a.Count < 1 || b.Count < 1)
             {

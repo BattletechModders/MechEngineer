@@ -14,13 +14,13 @@ namespace MechEngineer.Features
         string EnabledDescription { get; }
     }
 
-    interface IFeature
+    internal interface IFeature
     {
         void SetupFeature();
         void SetupFeatureResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources);
     }
 
-    internal abstract class Feature<T> : IFeature where T: ISettings
+    internal abstract class Feature<T> : IFeature where T : ISettings
     {
         internal virtual bool Enabled => Settings?.Enabled ?? false;
 
@@ -35,7 +35,7 @@ namespace MechEngineer.Features
         {
             // noop
         }
-        
+
         internal bool Loaded { get; set; }
 
         // TODO remove the feature loaded method and make this virtual again? => only if loading becomes again because of sub features
@@ -62,7 +62,7 @@ namespace MechEngineer.Features
 
         private static class FeatureUtils
         {
-            internal static bool Setup<TS>(Feature<TS> feature) where TS: ISettings
+            internal static bool Setup<TS>(Feature<TS> feature) where TS : ISettings
             {
                 var type = feature.GetType();
                 var topic = type.Name;

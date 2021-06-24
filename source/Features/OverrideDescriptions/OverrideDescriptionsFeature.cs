@@ -9,7 +9,7 @@ using MechEngineer.Helper;
 
 namespace MechEngineer.Features.OverrideDescriptions
 {
-    internal class OverrideDescriptionsFeature: Feature<OverrideDescriptionsSettings>, IAdjustSlotElement, IAdjustTooltipEquipment, IAdjustTooltipWeapon, IAdjustInventoryElement
+    internal class OverrideDescriptionsFeature : Feature<OverrideDescriptionsSettings>, IAdjustSlotElement, IAdjustTooltipEquipment, IAdjustTooltipWeapon, IAdjustInventoryElement
     {
         internal static OverrideDescriptionsFeature Shared = new();
 
@@ -79,7 +79,7 @@ namespace MechEngineer.Features.OverrideDescriptions
         private static IEnumerable<MechLabItemSlotElement> Elements(MechLabPanel panel)
         {
             return MechDefBuilder.Locations
-                .Select(location => panel.GetLocationWidget((ArmorLocation) location))
+                .Select(location => panel.GetLocationWidget((ArmorLocation)location))
                 .Select(widget => new MechLabLocationWidgetAdapter(widget))
                 .SelectMany(adapter => adapter.LocalInventory);
         }

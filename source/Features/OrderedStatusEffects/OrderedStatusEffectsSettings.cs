@@ -7,7 +7,8 @@ namespace MechEngineer.Features.OrderedStatusEffects
         public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Orders status effects, so e.g. install order of mechComponents does not matter for additive and multiplicative effects. Affects all statistic data.";
 
-        public string[] OtherStatisticsRequired = {
+        public string[] OtherStatisticsRequired =
+        {
             "BaseInitiative", // actor (mech, turret, vehicle)
             "DamageLevel" // mechComponent, building
         };
@@ -16,7 +17,8 @@ namespace MechEngineer.Features.OrderedStatusEffects
         public string[] FilterStatistics = {"HeatSinkCapacity"}; // some sane default to avoid reordering everything in bigger modpacks that don't set anything
         public string FilterStatisticsDescription => "If set, only statistics listed by name will be reordered.";
 
-        public StatOperation[] Order = {
+        public StatOperation[] Order =
+        {
             StatOperation.Int_Add,
             StatOperation.Float_Add,
 

@@ -38,7 +38,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
 
             return true;
         }
-        
+
         internal static void UpdateStructureDamage(
             this Mech mech,
             ChassisLocations location,
@@ -51,7 +51,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                 return; // ignore 0 damage calls
             }
 
-            var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(mech, (int) location);
+            var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(mech, (int)location);
             if (properties == null)
             {
                 return;
@@ -59,7 +59,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
 
             ComponentExplosionsFeature.IsInternalExplosionContained = true;
             Control.Logger.Debug?.Log($"prevent explosion pass through from {Mech.GetAbbreviatedChassisLocation(location)}");
-            
+
             var maxStructureDamage = mech.GetCurrentStructure(location);
             Control.Logger.Debug?.Log($"damage={damage} maxStructureDamage={maxStructureDamage}");
 
@@ -69,19 +69,19 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                 mech.PublishFloatieMessage("EXPLOSION CONTAINED");
                 return;
             }
-            
+
             var newInternalDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
             var backDamage = damage - newInternalDamage;
             Control.Logger.Debug?.Log($"reducing structure damage from {damage} to {newInternalDamage}");
 
             damage = Mathf.Min(maxStructureDamage, newInternalDamage);
             mech.PublishFloatieMessage("EXPLOSION REDIRECTED");
-            
+
             if (backDamage <= 0)
             {
                 return;
             }
-            
+
             if ((location & ChassisLocations.Torso) == 0)
             {
                 return;

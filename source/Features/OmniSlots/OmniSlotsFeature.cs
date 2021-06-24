@@ -12,7 +12,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features.OmniSlots
 {
-    internal class OmniSlotsFeature: Feature<OmniSlotsSettings>, IValidateMech
+    internal class OmniSlotsFeature : Feature<OmniSlotsSettings>, IValidateMech
     {
         internal static OmniSlotsFeature Shared = new();
 

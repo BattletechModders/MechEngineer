@@ -29,10 +29,10 @@ namespace MechEngineer.Features.ArmorStructureRatio
 
             foreach (var location in MechDefBuilder.Locations)
             {
-                ProcessMechArmorStructureRatioForLocation(mechDef, location, applyChanges:true);
+                ProcessMechArmorStructureRatioForLocation(mechDef, location, applyChanges: true);
             }
         }
-        
+
         internal static bool ValidateMechArmorStructureRatio(
             MechDef mechDef,
             Dictionary<MechValidationType, List<Text>> errorMessages = null)
@@ -70,7 +70,7 @@ namespace MechEngineer.Features.ArmorStructureRatio
             Dictionary<MechValidationType, List<Text>> errorMessages = null,
             bool applyChanges = false)
         {
-            
+
             var mechLocationDef = mechDef.GetLocationLoadoutDef(location);
             var chassisLocationDef = mechDef.Chassis.GetLocationDef(location);
 
@@ -83,7 +83,7 @@ namespace MechEngineer.Features.ArmorStructureRatio
 
             var total = armor + armorRear;
             var totalMax = ratio * structure;
-            
+
             if (total <= totalMax)
             {
                 return true;
@@ -96,9 +96,9 @@ namespace MechEngineer.Features.ArmorStructureRatio
 
                 if ((location & ChassisLocations.Torso) != 0)
                 {
-                    mechLocationDef.AssignedArmor = PrecisionUtils.RoundUp((totalMax * 2 / 3), 5);
+                    mechLocationDef.AssignedArmor = PrecisionUtils.RoundUp(totalMax * 2 / 3, 5);
                     mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
-                    mechLocationDef.AssignedRearArmor = PrecisionUtils.RoundDown((totalMax * 1 / 3), 5);
+                    mechLocationDef.AssignedRearArmor = PrecisionUtils.RoundDown(totalMax * 1 / 3, 5);
                     mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
                 }
                 else
@@ -106,7 +106,7 @@ namespace MechEngineer.Features.ArmorStructureRatio
                     mechLocationDef.AssignedArmor = totalMax;
                     mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
                 }
-                
+
                 Control.Logger.Debug?.Log($"set AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor} on location={location}");
             }
 

@@ -25,7 +25,7 @@ namespace MechEngineer.Features.PlaceholderEffects
                 Control.Logger.Debug?.Log($"Replacing placeholders in {effect.Description.Id} with {naming.LocationId}");
 
                 effect.statisticData.statName = naming.InterpolateStatisticName(effect.statisticData.statName);
-                
+
                 effect.Description = new BaseDescriptionDef(
                     naming.InterpolateEffectId(effect.Description.Id),
                     naming.InterpolateText(effect.Description.Name),

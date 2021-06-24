@@ -13,7 +13,7 @@ namespace MechEngineer.Features.Engines.Helper
             foreach (var componentRef in componentRefs)
             {
                 var componentDef = componentRef.Def;
-                
+
                 if (componentDef.Is<EngineHeatSinkDef>())
                 {
                     result.HeatSinks.Add(componentRef);

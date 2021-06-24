@@ -50,7 +50,7 @@ namespace MechEngineer.Features.OverrideDescriptions
 
             foreach (var bonus in Bonuses)
             {
-                var split = bonus.Split(new[] { ':' }, 2);
+                var split = bonus.Split(new[] {':'}, 2);
                 var bonusKey = split[0].Trim();
 
                 if (!OverrideDescriptionsFeature.Resources.TryGetValue(bonusKey, out var settings))

@@ -19,7 +19,7 @@ namespace MechEngineer.Features.CriticalEffects
         public string OnDestroyedAudioEventName { get; set; } = null;
 
         public string LinkedStatisticName = null;
-        
+
         public string CritFloatieMessage = null;
         public string DestroyedFloatieMessage = null;
 
@@ -27,7 +27,7 @@ namespace MechEngineer.Features.CriticalEffects
         {
             return UnitType.UNDEFINED;
         }
-        
+
         // how many crits can be absorbed incl. destruction of component itself
         // used by FieldRepairs
         public int MaxHits => PenalizedEffectIDs.Length + 1;
@@ -111,5 +111,4 @@ namespace MechEngineer.Features.CriticalEffects
             return component.DamageLevel == ComponentDamageLevel.Destroyed;
         }
     }
-
 }

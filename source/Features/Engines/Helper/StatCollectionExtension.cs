@@ -44,7 +44,7 @@ namespace MechEngineer.Features.Engines.Helper
         {
             return new("WeaponHeatMultiplier", statCollection, 1);
         }
-        
+
         internal static StatisticAdapter<float> JumpHeat(this StatCollection statCollection)
         {
             return new("JumpHeat", statCollection, 0);

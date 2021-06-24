@@ -23,7 +23,7 @@ namespace MechEngineer.Features.Globals
 
         #region MechBayPanel
 
-        internal static MechDef SelectedMechDefFromBay => 
+        internal static MechDef SelectedMechDefFromBay =>
             ActiveMechBayPanel == null ? null :
                 Traverse.Create(ActiveMechBayPanel).Field("selectedMech").GetValue<MechBayMechUnitElement>()?.MechDef;
         internal static readonly WeakReference MechBayPanelReference = new(null);

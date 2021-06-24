@@ -23,7 +23,7 @@ namespace MechEngineer.Features.OmniSlots.Patches
                 {
                     return;
                 }
-                
+
                 var inventory = mechDef.Inventory.Select(x => x.Def);
                 var hardpoints = MechDefBuilder.Locations.SelectMany(x => mechDef.Chassis.GetLocationDef(x).Hardpoints).ToArray();
 

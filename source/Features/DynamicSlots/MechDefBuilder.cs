@@ -50,10 +50,10 @@ namespace MechEngineer.Features.DynamicSlots
         public override string ToString()
         {
             return $"ChassisId={Chassis.Description.Id} TotalInventoryUsage={TotalInventoryUsage} TotalDynamicGlobalUsage={TotalDynamicGlobalUsage}" +
-                $" TotalDynamicLocationRestrictedUsage={TotalDynamicLocationalUsage} TotalDynamicLocationRestrictedMissing={TotalDynamicLocationalNoSpace}";
+                   $" TotalDynamicLocationRestrictedUsage={TotalDynamicLocationalUsage} TotalDynamicLocationRestrictedMissing={TotalDynamicLocationalNoSpace}";
         }
 
-        void CalculateStats()
+        private void CalculateStats()
         {
             TotalInventoryUsage = 0;
             foreach (var group in Inventory.GroupBy(r => r.MountedLocation))
@@ -64,7 +64,7 @@ namespace MechEngineer.Features.DynamicSlots
                 locationInfo.InventoryUsage = group.Sum(r => r.Def.InventorySize);
                 TotalInventoryUsage += locationInfo.InventoryUsage;
             }
-            
+
             TotalDynamicGlobalUsage = Inventory
                 .Select(r => r.Def.GetComponent<DynamicSlots>())
                 .Where(s => s != null && !s.InnerAdjacentOnly)
@@ -96,7 +96,7 @@ namespace MechEngineer.Features.DynamicSlots
                     TotalDynamicLocationalUsage += take;
                     return take;
                 }
-                
+
                 var locationInfo = GetLocationInfo(componentRef.MountedLocation);
                 {
                     // find space on location
@@ -104,7 +104,7 @@ namespace MechEngineer.Features.DynamicSlots
                     // apply location specific changes to stats
                     locationInfo.DLPreferredUsageLocal += take;
                 }
-                
+
                 if (requiredSlots > 0)
                 {
                     // find space in inner adjacent location (if there is such a location)
@@ -117,7 +117,7 @@ namespace MechEngineer.Features.DynamicSlots
                         locationInfo.DLPreferredUsageReservedInOverflow += take;
                     }
                 }
-                
+
                 if (requiredSlots > 0) // if not necessary, since adding 0 would be find too, but this makes it clear
                 {
                     // note overuse
@@ -137,7 +137,7 @@ namespace MechEngineer.Features.DynamicSlots
             }
             internal readonly MechDefBuilder builder;
             internal readonly ChassisLocations location;
-            
+
             internal readonly int InventoryMax;
             internal int InventoryUsage;
             internal int InventoryFree => InventoryMax - InventoryUsage;
@@ -239,7 +239,7 @@ namespace MechEngineer.Features.DynamicSlots
             ChassisLocations.RightTorso,
             ChassisLocations.RightLeg,
             ChassisLocations.LeftArm,
-            ChassisLocations.RightArm,
+            ChassisLocations.RightArm
         };
 
         private static readonly ChassisLocations[] RestrictedDynamicSlotsOrder =
@@ -251,7 +251,7 @@ namespace MechEngineer.Features.DynamicSlots
             ChassisLocations.RightLeg,
             ChassisLocations.LeftTorso,
             ChassisLocations.RightTorso,
-            ChassisLocations.CenterTorso,
+            ChassisLocations.CenterTorso
         };
 
         internal static ChassisLocations GetInnerAdjacentLocation(ChassisLocations location)
@@ -339,7 +339,7 @@ namespace MechEngineer.Features.DynamicSlots
                     return null;
                 }
             }
-            
+
             var locationInfo = GetLocationInfo(location);
             var overUseAtLocation = locationInfo.CalcMaxFree < def.InventorySize; // considers locational dynamic slots
             var overUseOverall = TotalFree < def.InventorySize; // considers global dynamic slots
@@ -369,7 +369,7 @@ namespace MechEngineer.Features.DynamicSlots
                 // TODO add support, doesn't work with arm actuators either
                 throw new Exception("removing dynamic slots is not supported");
             }
-            
+
             var def = componentRef.Def;
             var locationInfo = GetLocationInfo(componentRef.MountedLocation);
             Inventory.Remove(componentRef);

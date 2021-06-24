@@ -10,7 +10,7 @@ namespace MechEngineer.Features.AutoFix
     {
         internal static MELazy<LegActuatorHandler> Lazy = new();
         internal static LegActuatorHandler Shared => Lazy.Value;
-        
+
         private readonly IdentityHelper identity;
         private readonly AdjustCompDefInvSizeHelper resizer;
 
