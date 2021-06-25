@@ -18,8 +18,7 @@ namespace MechEngineer.Features.MechLabSlots
             var mechLab = (MechLabPanel)widget.parentDropTarget;
             var text = GetLocationName(mechLab.activeMechDef.Chassis, location);
 
-            var adapter = new MechLabLocationWidgetAdapter(widget);
-            adapter.locationName.SetText(text);
+            widget.locationName.SetText(text);
         }
 
         private static Text GetLocationName(ChassisDef chassisDef, ChassisLocations location)

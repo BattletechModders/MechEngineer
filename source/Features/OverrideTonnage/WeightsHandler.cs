@@ -18,9 +18,8 @@ namespace MechEngineer.Features.OverrideTonnage
         internal static readonly WeightsHandler Shared = new();
 
         // shared between Weights and DynamicSlots
-        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef mechComponentDef)
         {
-            var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             var reservedSlots = 0;
 
             if (mechComponentDef.Is<Weights>(out var weights))
@@ -45,9 +44,8 @@ namespace MechEngineer.Features.OverrideTonnage
             }
         }
 
-        public void AdjustTooltipWeapon(TooltipPrefab_Weapon tooltipInstance, MechComponentDef mechComponentDef)
+        public void AdjustTooltipWeapon(TooltipPrefab_Weapon tooltip, MechComponentDef mechComponentDef)
         {
-            var tooltip = new TooltipPrefab_WeaponAdapter(tooltipInstance);
             var reservedSlots = 0;
 
             if (mechComponentDef.Is<Weights>(out var weights))
@@ -108,15 +106,13 @@ namespace MechEngineer.Features.OverrideTonnage
             }
 
             var tonnageChanges = CalculateWeightChanges(mechDef, weights);
-            var adapter = new MechLabItemSlotElementAdapter(instance);
-
             if (!Mathf.Approximately(tonnageChanges, 0))
             {
-                adapter.bonusTextA.text = $"{FloatToText(tonnageChanges)} ton";
+                instance.bonusTextA.text = $"{FloatToText(tonnageChanges)} ton";
             }
-            else if (adapter.bonusTextA.text.EndsWith("ton"))
+            else if (instance.bonusTextA.text.EndsWith("ton"))
             {
-                adapter.bonusTextA.text = instance.ComponentRef.Def.BonusValueA;
+                instance.bonusTextA.text = instance.ComponentRef.Def.BonusValueA;
             }
         }
 

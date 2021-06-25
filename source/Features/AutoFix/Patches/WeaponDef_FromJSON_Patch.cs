@@ -34,7 +34,7 @@ namespace MechEngineer.Features.AutoFix.Patches
                             {
                                 return;
                             }
-                            Traverse.Create(def).Property("InventorySize").SetValue(newValue.Value);
+                            def.InventorySize = newValue.Value;
                         }
 
                         if (change.TonnageChange != null)
@@ -44,7 +44,7 @@ namespace MechEngineer.Features.AutoFix.Patches
                             {
                                 return;
                             }
-                            Traverse.Create(def).Property("Tonnage").SetValue(newValue.Value);
+                            def.Tonnage = newValue.Value;
                         }
                     }
                 }
@@ -56,7 +56,7 @@ namespace MechEngineer.Features.AutoFix.Patches
                     if (fullSize > threshold)
                     {
                         var fixedSize = AutoFixerFeature.settings.AutoFixWeaponDefSplittingFixedSize;
-                        Traverse.Create(def).Property("InventorySize").SetValue(fixedSize);
+                        def.InventorySize = fixedSize;
 
                         if (!def.Is<DynamicSlots.DynamicSlots>(out var slots))
                         {

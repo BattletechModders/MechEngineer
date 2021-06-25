@@ -9,9 +9,7 @@ namespace MechEngineer.Features.Performance.Patches
     {
         public static void Postfix(ActorMovementSequence __instance)
         {
-            var traverse = Traverse.Create(__instance);
-            var combat = traverse.Property("Combat").GetValue<CombatGameState>();
-            AuraCache.RefreshECMStates(combat.AllActors, EffectTriggerType.Passive);
+            AuraCache.RefreshECMStates(__instance.Combat.AllActors, EffectTriggerType.Passive);
         }
     }
 }

@@ -94,10 +94,7 @@ namespace MechEngineer.Features.MechLabSlots
                 var widget = MechWidgetLocation(element.ComponentRef.Def);
                 if (widget != null)
                 {
-                    var inventoryParent = Traverse
-                        .Create(widget)
-                        .Field<Transform>("inventoryParent")
-                        .Value;
+                    var inventoryParent = widget.inventoryParent;
                     @this.SetParent(inventoryParent, worldPositionStays);
                     return;
                 }

@@ -34,8 +34,7 @@ namespace MechEngineer.Features.ComponentExplosions
             var ammoCount = 0;
             if (component is AmmunitionBox box)
             {
-                var adapter = new MechComponentAdapter(box);
-                ammoCount = adapter.statCollection.GetValue<int>("CurrentAmmo");
+                ammoCount = box.CurrentAmmo;
             }
             else if (component is Weapon w2)
             {
@@ -132,14 +131,5 @@ namespace MechEngineer.Features.ComponentExplosions
                 .OrderBy(CASE => CASE.AllLocations) // localized CASE always overrides global CASE
                 .FirstOrDefault();
         }
-    }
-
-    public class MechComponentAdapter : Helper.Adapter<MechComponent>
-    {
-        public MechComponentAdapter(MechComponent instance) : base(instance)
-        {
-        }
-
-        public StatCollection statCollection => traverse.Field("statCollection").GetValue<StatCollection>();
     }
 }

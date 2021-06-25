@@ -85,8 +85,7 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            var adapter = new ChassisDefAdapter(chassisDef);
-            var locations = adapter.Locations;
+            var locations = chassisDef.Locations;
 
             for (var i = 0; i < locations.Length; i++)
             {
@@ -97,7 +96,7 @@ namespace MechEngineer.Features.AutoFix
                 }
             }
 
-            adapter.refreshLocationReferences();
+            chassisDef.refreshLocationReferences();
         }
 
         private static void AutoFixLocationNaming(ChassisDef chassisDef)

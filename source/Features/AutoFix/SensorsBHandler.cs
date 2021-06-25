@@ -38,9 +38,7 @@ namespace MechEngineer.Features.AutoFix
         {
             if (identity.IsCustomType(upgradeDef))
             {
-                Traverse.Create(upgradeDef)
-                    .Field<ChassisLocations>(nameof(UpgradeDef.AllowedLocations))
-                    .Value = ChassisLocations.Head;
+                upgradeDef.AllowedLocations = ChassisLocations.Head;
             }
             resizer?.AdjustComponentDef(upgradeDef);
         }

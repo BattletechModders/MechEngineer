@@ -38,8 +38,6 @@ namespace MechEngineer.Features.DynamicSlots
 
         internal void ApplyTo(MechLabItemSlotElement element, bool isReservedSlot)
         {
-            var adapter = new MechLabItemSlotElementAdapter(element);
-
             void SetText(string text, TextMeshProUGUI textMesh)
             {
                 if (text == "")
@@ -53,26 +51,26 @@ namespace MechEngineer.Features.DynamicSlots
                 }
             }
 
-            SetText(NameText, adapter.nameText);
+            SetText(NameText, element.nameText);
             SetText(
                 isReservedSlot ? DefaultBonusATextIfReservedSlot : DefaultBonusATextIfMovableSlot,
-                adapter.bonusTextA
+                element.bonusTextA
             );
-            SetText(BonusBText, adapter.bonusTextB);
+            SetText(BonusBText, element.bonusTextB);
 
             if (!string.IsNullOrEmpty(BackgroundColor))
             {
-                adapter.backgroundColor.SetColorFromString(BackgroundColor);
+                element.backgroundColor.SetColorFromString(BackgroundColor);
             }
 
             if (ShowIcon.HasValue)
             {
-                adapter.icon.gameObject.SetActive(ShowIcon.Value);
+                element.icon.gameObject.SetActive(ShowIcon.Value);
             }
 
             if (ShowFixedEquipmentOverlay.HasValue)
             {
-                adapter.fixedEquipmentOverlay.gameObject.SetActive(ShowFixedEquipmentOverlay.Value);
+                element.fixedEquipmentOverlay.gameObject.SetActive(ShowFixedEquipmentOverlay.Value);
             }
         }
     }

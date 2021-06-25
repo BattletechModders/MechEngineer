@@ -27,8 +27,7 @@ namespace MechEngineer.Features.ArmorStructureChanges.Patches
             var armorFactor = ArmorStructureChangesFeature.GetArmorFactorForMech(mech);
             var structureFactor = ArmorStructureChangesFeature.GetStructureFactorForMech(mech);
 
-            var adapter = new MechDefAdapter(mechDef);
-            foreach (var mechLocationDef in adapter.Locations)
+            foreach (var mechLocationDef in mechDef.Locations)
             {
                 var chassisLocationDef = mechDef.Chassis.GetLocationDef(mechLocationDef.Location);
 

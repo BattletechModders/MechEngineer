@@ -42,7 +42,7 @@ namespace MechEngineer.Features.Engines
             return true;
         }
 
-        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef mechComponentDef)
         {
             var coreDef = mechComponentDef.GetComponent<EngineCoreDef>();
             if (coreDef == null)
@@ -62,7 +62,6 @@ namespace MechEngineer.Features.Engines
 
             var movement = coreDef.GetMovement(mechDef.Chassis.Tonnage);
 
-            var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
 
@@ -98,8 +97,7 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            var adapter = new MechLabItemSlotElementAdapter(instance);
-            adapter.bonusTextB.text = BonusValueEngineHeatSinkCounts(engine);
+            instance.bonusTextB.text = BonusValueEngineHeatSinkCounts(engine);
         }
 
         private static string BonusValueEngineHeatSinkCounts(Engine engine)

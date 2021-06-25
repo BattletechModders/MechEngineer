@@ -85,7 +85,7 @@ namespace MechEngineer.Features.OrderedStatusEffects
                 return;
             }
             var stat = statCollection.GetStatistic(statName);
-            var historyList = Traverse.Create(statCollection.History).Field<List<StatHistory.Event>>("historyList").Value;
+            var historyList = statCollection.History.historyList;
             if (SortLatestHistory(historyList, stat.uid))
             {
                 statCollection.RefreshStatistic(stat);

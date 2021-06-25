@@ -45,7 +45,7 @@ namespace MechEngineer.Helper
             var inventory2 = new_inventory.Select(x =>
             {
                 var r = new MechComponentRef(x.Item);
-                Traverse.Create(r).Property(nameof(MechComponentRef.MountedLocation)).SetValue(x.Location);
+                r.MountedLocation = x.Location;
                 return r;
             }).ToList();
 

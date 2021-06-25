@@ -14,7 +14,7 @@ namespace MechEngineer.Features.Engines
     {
         public int HeatSinkCount { get; set; }
 
-        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltipInstance, MechComponentDef mechComponentDef)
+        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef mechComponentDef)
         {
             var def = mechComponentDef.GetComponent<EngineHeatBlockDef>();
             if (def == null)
@@ -33,7 +33,6 @@ namespace MechEngineer.Features.Engines
 
             engine.HeatBlockDef = def;
 
-            var tooltip = new TooltipPrefab_EquipmentAdapter(tooltipInstance);
             var originalText = tooltip.detailText.text;
             tooltip.detailText.text = "";
 
@@ -70,9 +69,8 @@ namespace MechEngineer.Features.Engines
                 return;
             }
 
-            var adapter = new MechLabItemSlotElementAdapter(instance);
-            adapter.bonusTextA.text = BonusValueEngineHeatDissipation(engine);
-            adapter.bonusTextB.text = BonusValueEngineHeatSinkCounts(engine);
+            instance.bonusTextA.text = BonusValueEngineHeatDissipation(engine);
+            instance.bonusTextB.text = BonusValueEngineHeatSinkCounts(engine);
         }
 
         private static string BonusValueEngineHeatDissipation(Engine engine)

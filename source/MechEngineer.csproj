@@ -12,6 +12,7 @@
       $(AssemblySearchPaths);
       $(ReferencePath);
     </AssemblySearchPaths>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CustomComponents">

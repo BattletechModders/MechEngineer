@@ -36,7 +36,7 @@ namespace MechEngineer.Features.PlaceholderEffects.Patches
                 {
                     return;
                 }
-                Traverse.Create(__instance).Property<StatCollection>("statCollection").Value = component.StatCollection;
+                __instance.statCollection = component.StatCollection;
             }
             catch (Exception e)
             {

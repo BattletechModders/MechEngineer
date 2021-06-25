@@ -40,27 +40,25 @@ namespace MechEngineer.Features.DynamicSlots
 
         private class DynamicSlotBuilder : IComparable<DynamicSlotBuilder>
         {
-            private readonly MechDefBuilder builder;
             private readonly ChassisLocations location;
             private readonly int maxSlots;
-            internal readonly MechLabLocationWidgetAdapter adapter;
+            internal readonly MechLabLocationWidget widget;
             internal int currentFreeSlots;
             internal int fixedSlots;
 
             internal DynamicSlotBuilder(
                 MechDefBuilder builder,
                 ChassisLocations location,
-                MechLabLocationWidgetAdapter adapter)
+                MechLabLocationWidget widget)
             {
-                this.builder = builder;
                 this.location = location;
-                this.adapter = adapter;
+                this.widget = widget;
 
                 var locationInfo = builder.GetLocationInfo(location);
                 currentFreeSlots = locationInfo.InventoryFree;
                 fixedSlots = locationInfo.CalcMinimumFixedSlotsLocalAndGlobal;
 
-                maxSlots = adapter.maxSlots;
+                maxSlots = widget.maxSlots;
             }
 
             int IComparable<DynamicSlotBuilder>.CompareTo(DynamicSlotBuilder other)
@@ -102,8 +100,7 @@ namespace MechEngineer.Features.DynamicSlots
                 // armorlocation = chassislocation for main locations
                 var widget = mechLab.GetLocationWidget((ArmorLocation)location);
                 ClearFillers(widget);
-                var adapter = new MechLabLocationWidgetAdapter(widget);
-                var dsbuilder = new DynamicSlotBuilder(builder, location, adapter);
+                var dsbuilder = new DynamicSlotBuilder(builder, location, widget);
                 fslList.Add(dsbuilder);
                 fslDict.Add(location, dsbuilder);
             }
@@ -122,7 +119,7 @@ namespace MechEngineer.Features.DynamicSlots
                     var fsl = fslDict[location];
                     while (fsl.currentFreeSlots > 0 && reservedSlots > 0)
                     {
-                        ShowFiller(fsl.adapter.instance, slot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
+                        ShowFiller(fsl.widget, slot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
                         fsl.currentFreeSlots--;
                         reservedSlots--;
                     }
@@ -140,7 +137,7 @@ namespace MechEngineer.Features.DynamicSlots
                     var fsl = fslDict[location];
                     while (fsl.currentFreeSlots > 0 && reservedSlots > 0)
                     {
-                        ShowFiller(fsl.adapter.instance, slot, fsl.currentFreeSlotIndex, true);
+                        ShowFiller(fsl.widget, slot, fsl.currentFreeSlotIndex, true);
                         fsl.currentFreeSlots--;
                         reservedSlots--;
                     }
@@ -158,7 +155,7 @@ namespace MechEngineer.Features.DynamicSlots
                     {
                         return; // no free slots left to use if thats the max
                     }
-                    ShowFiller(fsl.adapter.instance, slot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
+                    ShowFiller(fsl.widget, slot, fsl.currentFreeSlotIndex, fsl.currentFreeSlotFixed);
                     fsl.currentFreeSlots--;
                     reservedSlots--;
                 }

@@ -13,8 +13,7 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches
         {
             try
             {
-                var adapter = new TooltipPrefab_EquipmentAdapter(__instance);
-                adapter.ShowBonuses = true;
+                __instance.ShowBonuses(true);
 
                 if (data is MechComponentDef def)
                 {

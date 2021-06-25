@@ -36,14 +36,12 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
                     return;
                 }
 
-                var traverse = Traverse.Create(__instance);
-                var combat = traverse.Property("Combat").GetValue<CombatGameState>();
-                if (combat.Constants.Heat.ShutdownCausesInjury)
+                if (__instance.Combat.Constants.Heat.ShutdownCausesInjury)
                 {
                     return;
                 }
 
-                var mech = traverse.Property("OwningMech").GetValue<Mech>();
+                var mech = __instance.OwningMech;
                 receiveShutdownInjury = mech.StatCollection.ReceiveShutdownInjury().Get();
             }
             catch (Exception e)

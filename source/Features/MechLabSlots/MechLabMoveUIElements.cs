@@ -66,8 +66,7 @@ namespace MechEngineer.Features.MechLabSlots
 
         internal static void MoveViewMechButton(MechLabPanel panel)
         {
-            var adapter = new MechLabPanelAdapter(panel);
-            var vb = adapter.btn_mechViewerButton;
+            var vb = panel.btn_mechViewerButton;
             var rect = vb.GetComponent<RectTransform>();
             // below works similar to OBJ_value
             rect.anchorMin = new Vector2(1, 1);

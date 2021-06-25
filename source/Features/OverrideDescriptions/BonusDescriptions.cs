@@ -19,9 +19,7 @@ namespace MechEngineer.Features.OverrideDescriptions
 
         public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
-            var adapter = new TooltipPrefab_EquipmentAdapter(tooltip);
-            //GUILogUtils.LogHierarchy(tooltip.transform);
-            adapter.ShowBonuses = false;
+            tooltip.ShowBonuses(false);
         }
 
         public void AdjustInventoryElement(ListElementController_BASE_NotListView element)
@@ -66,18 +64,17 @@ namespace MechEngineer.Features.OverrideDescriptions
             }
 
             {
-                var adapter = new MechComponentDefAdapter(Def);
                 var count = 0;
                 foreach (var description in descriptions.Select(x => x.Short).Where(x => x != null).Take(2))
                 {
                     if (count == 0)
                     {
-                        adapter.BonusValueA = description;
+                        Def.BonusValueA = description;
                         count++;
                     }
                     else if (count == 1)
                     {
-                        adapter.BonusValueB = description;
+                        Def.BonusValueB = description;
                     }
                 }
             }

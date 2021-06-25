@@ -80,8 +80,7 @@ namespace MechEngineer.Features.OverrideDescriptions
         {
             return MechDefBuilder.Locations
                 .Select(location => panel.GetLocationWidget((ArmorLocation)location))
-                .Select(widget => new MechLabLocationWidgetAdapter(widget))
-                .SelectMany(adapter => adapter.LocalInventory);
+                .SelectMany(widget => widget.localInventory);
         }
     }
 }
