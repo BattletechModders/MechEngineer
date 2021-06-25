@@ -1,5 +1,4 @@
 ﻿using MechEngineer.Features.AccuracyEffects;
-using MechEngineer.Features.ArmActuators;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
@@ -18,7 +17,6 @@ using MechEngineer.Features.HeatSinkCapacityStat;
 using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
-using MechEngineer.Features.OmniSlots;
 using MechEngineer.Features.OrderedStatusEffects;
 using MechEngineer.Features.OverrideDescriptions;
 using MechEngineer.Features.OverrideGhostVFX;
