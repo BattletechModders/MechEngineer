@@ -15,10 +15,11 @@ install [BattleTech Advanced](https://www.nexusmods.com/battletech/mods/452) for
 
 or
 
-* HBS BattleTech ModLoader is supported
-  * (optional) install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek) if you don't like the ModLoader from BattleTech.
+* install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
 * install [CustomComponents](https://github.com/BattletechModders/CustomComponents/releases) using [instructions here](https://github.com/BattletechModders/CustomComponents)
-* install MechEngineer by copying the MechEngineer folder to the mods/ directory of ModTek or the ModLoader.
+* install MechEngineer by copying the MechEngineer folder to the mods/ directory of ModTek
+
+Note: HBS BattleTech ModLoader is not supported, you need to get ModTekV2 for DLC support.
 
 ## Suggested Mods
 
@@ -30,7 +31,9 @@ or
 
 ## Contributors
 
-Maintainer: CptMoore
+Maintainers:
+CptMoore ([MechEngineer](https://github.com/BattletechModders/MechEngineer))
+, Denadan ([CustomComponents](https://github.com/BattletechModders/CustomComponents))
 
 * adammartinez271828 - rounding logic
 * Aliencreature - ideas, lore and rules, item variants, testing
@@ -41,6 +44,18 @@ Maintainer: CptMoore
 * Gentleman Reaper - ideas, lore and rules, testing
 * LadyAlekto - ideas, lore and rules, testing, items
 * TotalMeltdown - ideas, lore and rules
+
+### How-to start contributing
+
+MechEngineer uses publicized assemblies, those are .NET dlls whose classes and methods visibility were changed to public.
+
+0. Install ModTekV2 if not already done.
+1. Download the improved AssemblyPublicizer from [MrPurple6411/AssemblyPublicizer](https://github.com/MrPurple6411/AssemblyPublicizer).
+2. Drag'n Drop all dlls found in BATTLETECH/BattleTech_Data/Managed/ onto the exe and it will create a BATTLETECH/BattleTech_Data/Managed/publicized_assemblies directory.
+3. Checkout the MechEngineer repository to BATTLETECH/mods/MechEngineer.
+4. Copy the Directory.Build.props.template to Directory.Build.props and replace the ReferencePath directory with the location of the publicized_assemblies directory.
+5. Open the solution in Visual Studio 2019 and compile the MechEngineer.dll .
+6. Start the game.
 
 ## Features
 
@@ -66,63 +81,3 @@ Since the engine heat sink type is derived from the mechs heat sink system, this
 - **Engine Cooling System** (e.g. E-Cooling + 2):
 In CBT additional heat sinks can be added to engines for core sizes 275 and higher,
 this item represents the additional heat sinks added.
-
-#### Components
-
-Some of the components introduced are only aesthetic or placeholders for the converted upgrades.
-
-RogueTech introduces more components.
-
-Cockpit | test only
---- | ---
-standard | -
-small | yes
-cockpit upgrades* | -
-
-*\*vanilla upgrades are auto-converted to be the items themselves*
-
-Gyro | test only
---- | ---
-standard | -
-gryo upgrades* | -
-
-*\*vanilla upgrades are auto-converted to be the items themselves*
-
-Engine Core | test only
---- | ---
-rating 005-400 | -
-
-engine type | test only
---- | ---
-std | -
-xl | -
-compact | yes
-light | yes
-cxl | yes
-xxl | yes
-cxxl | yes
-
-E-Cooling | test only
---- | ---
-DHS | -
-CDHS | yes
-
-Heat Sink | test only
---- | ---
-Clan Double Heat Sink | yes
-
-Armor | test only
---- | ---
-standard | -
-ferros-fibrous | -
-clan ferros-fibrous | yes
-light ferros-fibrous | yes
-heavy ferros-fibrous | yes
-stealth | yes
-
-Structure | test only
---- | ---
-standard | -
-endo-steel | -
-clan endo-steel | yes
-endo-composite | yes
