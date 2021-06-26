@@ -17,7 +17,7 @@ namespace MechEngineer.Features.HeatSinkCapacityStat
 
         internal bool IgnoreShutdown(MechComponent mechComponent)
         {
-            if (Settings.ShutdownStatuseffectsExcludedComponenTypes.Contains(mechComponent.componentType))
+            if (Settings.ShutdownStatusEffectsExcludedComponentTypes.Contains(mechComponent.componentType))
             {
                 return true;
             }
