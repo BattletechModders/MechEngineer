@@ -56,7 +56,7 @@ jobs:
   latest:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/CCUnitTypes'
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Download Build
         uses: actions/download-artifact@master
@@ -67,7 +67,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "CCUnitTypes-latest"
+          automatic_release_tag: "latest"
           prerelease: true
           files: MechEngineer.zip
 
