@@ -3,8 +3,7 @@ name: Release Build
 
 jobs:
   build:
-    runs-on: windows-latest
-    #runs-on: ubuntu-latest # missing .NET 4.6 Framework
+    runs-on: ubuntu-latest
     steps:
     - name: Download Build Dependencies
       shell: bash
