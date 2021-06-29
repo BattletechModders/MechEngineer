@@ -3,8 +3,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net472</TargetFramework>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\</OutputPath>
     <LangVersion>preview</LangVersion>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
@@ -14,6 +12,9 @@
     </AssemblySearchPaths>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <Target Name="CopyDLLtoModDir" AfterTargets="AfterBuild">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(SolutionDir)" />
+  </Target>
   <ItemGroup>
     <Reference Include="CustomComponents">
       <HintPath>..\..\CustomComponents\CustomComponents.dll</HintPath>
