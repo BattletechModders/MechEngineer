@@ -28,6 +28,9 @@ namespace MechEngineer.Features.HeatSinkCapacityStat
 
         internal void InitEffectStats(Mech mech)
         {
+            // mech.statCollection["HeatSinkCapacity"].OnStatValueChanged +=
+            //     statistic => Control.Logger.Debug?.Log($"Changed stat {statistic.name} to {statistic.value} for {mech.Nickname} {mech.GUID}\n{Environment.StackTrace}");
+
             var core = mech.miscComponents.FirstOrDefault(x => x.componentDef.Is<EngineCoreDef>());
             if (core != null)
             {
