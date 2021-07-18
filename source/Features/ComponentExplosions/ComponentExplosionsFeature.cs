@@ -44,10 +44,10 @@ namespace MechEngineer.Features.ComponentExplosions
             var attackSequence = actor.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
 
             var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
-            Control.Logger.Debug?.Log($"heatDamage={heatDamage}");
             if (!Mathf.Approximately(heatDamage, 0))
             {
-                actor.AddExternalHeat("AMMO EXPLOSION HEAT", (int)heatDamage);
+                Control.Logger.Debug?.Log($"heatDamage={heatDamage}");
+                actor.AddExternalHeat($"{component.Name} EXPLOSION HEAT", (int)heatDamage);
                 attackSequence?.FlagAttackDidHeatDamage(actor.GUID);
             }
 
@@ -55,21 +55,20 @@ namespace MechEngineer.Features.ComponentExplosions
                 if (actor is Mech mech)
                 {
                     var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
-                    Control.Logger.Debug?.Log($"stabilityDamage={stabilityDamage}");
                     if (!Mathf.Approximately(stabilityDamage, 0))
                     {
+                        Control.Logger.Debug?.Log($"stabilityDamage={stabilityDamage}");
                         mech.AddAbsoluteInstability(stabilityDamage, StabilityChangeSource.Effect, hitInfo.targetId);
                     }
                 }
             }
 
             var explosionDamage = exp.ExplosionDamage + ammoCount * exp.ExplosionDamagePerAmmo;
-            Control.Logger.Debug?.Log($"explosionDamage={explosionDamage}");
-
             if (Mathf.Approximately(explosionDamage, 0))
             {
                 return;
             }
+            Control.Logger.Debug?.Log($"explosionDamage={explosionDamage}");
 
             IsInternalExplosion = true;
             try
@@ -128,7 +127,7 @@ namespace MechEngineer.Features.ComponentExplosions
                 .Where(t => t.CASE != null)
                 .Where(t => t.CASE.AllLocations || t.componentRef.Location == location)
                 .Select(t => t.CASE)
-                .OrderBy(CASE => CASE.AllLocations) // localized CASE always overrides global CASE
+                .OrderBy(c => c.AllLocations) // localized CASE always overrides global CASE
                 .FirstOrDefault();
         }
     }

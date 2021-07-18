@@ -4,122 +4,35 @@ using System.Text.RegularExpressions;
 using Harmony;
 using HBS.Logging;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace MechEngineer.Features.BetterLog
 {
     public class BetterLogFormatter
     {
-        private readonly BetterLogFormatterSettings settings;
-        public BetterLogFormatter(BetterLogFormatterSettings settings)
+        internal static string GetFormattedLogLine(LogLevel logLevel, object message, Exception exception)
         {
-            this.settings = settings;
-        }
-
-        internal string GetFormattedLogLine(string name, LogLevel logLevel, object message, Object context, Exception exception, IStackTrace location)
-        {
-            var line = string.Format(settings.LogLineFormat,
-                GetFormattedTime(),
-                GetFormattedLogLevel(logLevel),
-                GetFormattedName(name),
-                GetFormattedMessage(message),
-                exception == null ? GetFormattedLocation(location) : GetFormattedException(exception)
-            );
-
-            if (settings.NormalizeNewLines)
-            {
-                line = NEWLINE_REGEX.Replace(line, Environment.NewLine);
-            }
-
-            if (settings.IndentNewLines)
-            {
-                line = NEWLINE_REGEX.Replace(line, Environment.NewLine + "\t");
-            }
+            var exSuffix = exception == null ? null : $" Exception: {exception}";
+            var line = $"{StartupTime()} [{LogToString(logLevel),-5}] {message}{exSuffix}";
 
             return line;
         }
 
-        private static readonly Regex NEWLINE_REGEX = new(@"\r\n|\n\r|\n|\r", RegexOptions.Compiled);
-
-        private string GetFormattedTime()
-        {
-            return settings.UseAbsoluteTime ? GetFormattedAbsoluteTime() : GetFormattedStartupTime();
-        }
-
-        private string GetFormattedStartupTime()
+        private static string StartupTime()
         {
             var value = TimeSpan.FromSeconds(Time.realtimeSinceStartup);
-            var formatted = string.Format(
-                settings.StartupTimeFormat,
-                value.Hours,
-                value.Minutes,
-                value.Seconds,
-                value.Milliseconds);
-            return formatted;
+            return $"{value.Minutes:D2}:{value.Seconds:D2}.{value.Milliseconds:D3}";
         }
 
-        internal string GetFormattedAbsoluteTime()
+        private static string LogToString(LogLevel level)
         {
-            return DateTime.UtcNow.ToString(settings.AbsoluteTimeFormat, System.Globalization.CultureInfo.InvariantCulture);
-        }
-
-        private string GetFormattedLogLevel(LogLevel logLevel)
-        {
-            var text = LogToString(logLevel);
-            var formatted = string.Format(settings.LogLevelFormat, text);
-            return formatted;
-        }
-
-        private string LogToString(LogLevel level)
-        {
-            switch (level)
+            return level switch
             {
-                case LogLevel.Debug:
-                    return "DEBUG";
-                case LogLevel.Log:
-                    return "LOG";
-                case LogLevel.Warning:
-                    return "WARN";
-                case LogLevel.Error:
-                    return "ERROR";
-                default:
-                    return "?????";
-            }
-        }
-
-        private string GetFormattedName(string name)
-        {
-            var formatted = string.Format(settings.NameFormat, name);
-            return formatted;
-        }
-
-        private string GetFormattedMessage(object message)
-        {
-            var formatted = string.Format(settings.MessageFormat, message);
-            return formatted;
-        }
-
-        private string GetFormattedException(Exception exception)
-        {
-            var formatted = string.Format(settings.ExceptionFormat, exception);
-            return formatted;
-        }
-
-        private string GetFormattedLocation(IStackTrace location)
-        {
-            if (!HBS.Logging.Logger.IsStackTraceEnabled || location == null || location.FrameCount < 1)
-            {
-                return null;
-            }
-
-            var stackTrace = ((DiagnosticsStackTrace)location).stackTrace;
-            if (stackTrace == null || stackTrace.FrameCount < 1)
-            {
-                return null;
-            }
-            var method = stackTrace.GetFrame(0).GetMethod();
-            var formatted = string.Format(settings.LocationFormat, method.DeclaringType, method.Name);
-            return formatted;
+                LogLevel.Debug => "DEBUG",
+                LogLevel.Log => "LOG",
+                LogLevel.Warning => "WARN",
+                LogLevel.Error => "ERROR",
+                _ => "?????"
+            };
         }
     }
 }

@@ -235,14 +235,14 @@ namespace MechEngineer.Features.AutoFix
                             builder.Remove(jumpJet);
                             jumpJets.Remove(jumpJet);
 
-                            Control.Logger.Debug?.Log("  Removed JumpJet");
+                            Control.Logger.Trace?.Log("  Removed JumpJet");
                         }
                     }
 
                     {
                         var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.Weights, externalHeatSinks, false);
 
-                        Control.Logger.Debug?.Log($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
+                        Control.Logger.Trace?.Log($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
 
                         engineCandidates.Add(candidate);
 
@@ -256,7 +256,7 @@ namespace MechEngineer.Features.AutoFix
                             builder.Remove(component);
                             internalHeatSinksCount++;
 
-                            Control.Logger.Debug?.Log("  ~Converted external heat sinks to internal ones");
+                            Control.Logger.Trace?.Log("  ~Converted external heat sinks to internal ones");
                         }
 
                         // this only runs on the engine that takes the most heat sinks (since this is in a for loop with rating descending order)
@@ -269,7 +269,7 @@ namespace MechEngineer.Features.AutoFix
                             var newComponent = builder.Add(component.Def);
                             if (newComponent == null)
                             {
-                                Control.Logger.Debug?.Log("  Removed external heat sink that doesn't fit");
+                                Control.Logger.Trace?.Log("  Removed external heat sink that doesn't fit");
                                 // might still need to remove some
                                 continue;
                             }
@@ -285,13 +285,13 @@ namespace MechEngineer.Features.AutoFix
                             var externalHeatSink = builder.Add(engineHeatSinkDef.Def);
                             if (externalHeatSink == null)
                             {
-                                Control.Logger.Debug?.Log("  ~Dropped external when converting from internal");
+                                Control.Logger.Trace?.Log("  ~Dropped external when converting from internal");
                                 freeTonnage++;
                             }
                             else
                             {
                                 externalHeatSinks.Add(externalHeatSink);
-                                Control.Logger.Debug?.Log("  ~Converted internal heat sink to external one");
+                                Control.Logger.Trace?.Log("  ~Converted internal heat sink to external one");
                             }
                             internalHeatSinksCount--;
                         }
@@ -408,17 +408,11 @@ namespace MechEngineer.Features.AutoFix
                         .Where(IsRemovable)
                         .OrderBy(c => c.Def.Tonnage)
                         .ThenByDescending(c => c.Def.InventorySize)
-                        .ThenByDescending(c =>
+                        .ThenByDescending(c => c.ComponentDefType switch
                         {
-                            switch (c.ComponentDefType)
-                            {
-                                case ComponentType.HeatSink:
-                                    return 2;
-                                case ComponentType.JumpJet:
-                                    return 1;
-                                default:
-                                    return 0;
-                            }
+                            ComponentType.HeatSink => 2,
+                            ComponentType.JumpJet => 1,
+                            _ => 0
                         })
                         .ToList();
 
@@ -489,7 +483,7 @@ namespace MechEngineer.Features.AutoFix
             //    return false;
             //}
 
-            return def.ComponentType == ComponentType.HeatSink || def.ComponentType == ComponentType.JumpJet;
+            return def.ComponentType is ComponentType.HeatSink or ComponentType.JumpJet;
         }
     }
 }

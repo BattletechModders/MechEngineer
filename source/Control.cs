@@ -36,7 +36,7 @@ namespace MechEngineer
                     FileUtils.SetReadonly(mod.SettingsLastPath, true);
                 }
 
-                Logger = BetterLog.SetupModLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), settings.BetterLog);
+                Logger = BetterLogger.SetupModLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), settings.BetterLog);
             }
             catch (Exception e)
             {
