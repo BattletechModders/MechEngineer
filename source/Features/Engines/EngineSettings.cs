@@ -51,5 +51,8 @@ namespace MechEngineer.Features.Engines
 
         public bool LimitEngineCoresToTonnage = true;
         public string IgnoreLimitEngineChassisTag = "";
+
+        public string ProtoMechEngineTag = "";
+        public string ProtoMechEngineTagDescription => "ChassisTag that overwrites engine calculations to adhere to ProtoMech rules";
     }
 }

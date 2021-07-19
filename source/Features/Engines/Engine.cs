@@ -18,7 +18,7 @@ namespace MechEngineer.Features.Engines
                 return null;
             }
 
-            if (chassisDef.ChassisTags.Contains("ProtoMech")) // TODO hardcoded, we want to introduce more options than just this (probably some chassis custom)
+            if (chassisDef.ChassisTags.Contains(EngineFeature.settings.ProtoMechEngineTag))
             {
                 return new ProtoMechEngine(result);
             }
