@@ -13,8 +13,15 @@ namespace MechEngineer.Features.Engines.Patches
         {
             try
             {
-                var stats = new MechDefMovementStatistics(def);
-                __result = stats.JumpJetMaxCount;
+                if (def == null)
+                {
+                    __result = -1;
+                }
+                else
+                {
+                    var stats = new MechDefMovementStatistics(def);
+                    __result = stats.JumpJetMaxCount;
+                }
                 return false;
             }
             catch (Exception e)
