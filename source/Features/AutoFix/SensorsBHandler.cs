@@ -36,7 +36,7 @@ namespace MechEngineer.Features.AutoFix
 
         public void AdjustUpgradeDef(UpgradeDef upgradeDef)
         {
-            if (identity.IsCustomType(upgradeDef))
+            if (identity?.IsCustomType(upgradeDef) ?? false)
             {
                 upgradeDef.AllowedLocations = ChassisLocations.Head;
             }
