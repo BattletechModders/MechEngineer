@@ -5,7 +5,7 @@ using MechEngineer.Helper;
 
 namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
 {
-    [HarmonyPatch(typeof(Mech), "InitEffectStats")]
+    [HarmonyPatch(typeof(Mech), nameof(Mech.InitEffectStats))]
     public static class Mech_InitEffectStats_Patch
     {
         public static void Prefix(Mech __instance)
@@ -19,6 +19,10 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
                 if (ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled)
                 {
                     __instance.StatCollection.ReceiveHeatDamageInjury().Create();
+                }
+                if (ShutdownInjuryProtectionFeature.settings.OverheatedOnActivationEndInjuryEnabled)
+                {
+                    __instance.StatCollection.ReceiveOverheatedOnActivationEndInjury().Create();
                 }
             }
             catch (Exception e)
@@ -38,6 +42,11 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
         internal static StatisticAdapter<bool> ReceiveHeatDamageInjury(this StatCollection statCollection)
         {
             return new("ReceiveHeatDamageInjury", statCollection, false);
+        }
+
+        internal static StatisticAdapter<bool> ReceiveOverheatedOnActivationEndInjury(this StatCollection statCollection)
+        {
+            return new("ReceiveOverheatedOnActivationEndInjury", statCollection, false);
         }
     }
 }

@@ -4,18 +4,18 @@ using Harmony;
 
 namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
 {
-    [HarmonyPatch(typeof(Mech), "CheckForHeatDamage")]
+    [HarmonyPatch(typeof(Mech), nameof(Mech.CheckForHeatDamage))]
     public static class Mech_CheckForHeatDamage_Patch
     {
+        public static bool Prepare()
+        {
+            return !ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled;
+        }
+
         public static void Prefix(Mech __instance)
         {
             try
             {
-                if (!ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled)
-                {
-                    return;
-                }
-
                 var mech = __instance;
                 if (!mech.IsOverheated)
                 {

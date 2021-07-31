@@ -5,14 +5,19 @@ using Harmony;
 
 namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
 {
-    [HarmonyPatch(typeof(MechShutdownSequence), "CheckForHeatDamage")]
+    [HarmonyPatch(typeof(MechShutdownSequence), nameof(MechShutdownSequence.CheckForHeatDamage))]
     public static class MechShutdownSequence_CheckForHeatDamage_Patch
     {
+        public static bool Prepare()
+        {
+            return !ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled;
+        }
+
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
                 AccessTools.Method(typeof(CombatGameConstants), "get_Heat"),
-                AccessTools.Method(typeof(MechShutdownSequence_CheckForHeatDamage_Patch), "OverrideHeat")
+                AccessTools.Method(typeof(MechShutdownSequence_CheckForHeatDamage_Patch), nameof(OverrideHeat))
             );
         }
 
@@ -31,11 +36,6 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
         {
             try
             {
-                if (!ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled)
-                {
-                    return;
-                }
-
                 if (__instance.Combat.Constants.Heat.ShutdownCausesInjury)
                 {
                     return;
