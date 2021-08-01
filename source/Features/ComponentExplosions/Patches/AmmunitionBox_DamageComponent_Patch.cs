@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Reflection.Emit;
 using BattleTech;
 using Harmony;
 
@@ -8,25 +7,22 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
     [HarmonyPatch(typeof(AmmunitionBox), nameof(AmmunitionBox.DamageComponent))]
     public static class AmmunitionBox_DamageComponent_Patch
     {
+        public static bool Prepare()
+        {
+            return ComponentExplosionsFeature.settings.DisableVanillaAmmunitionBoxDefCanExplode;
+        }
+
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
-            var count = 0;
-            foreach (var instruction in instructions)
-            {
-                if (instruction.opcode == OpCodes.Ldarg_3)
-                {
-                    count++;
-                }
+            return instructions.MethodReplacer(
+                AccessTools.Property(typeof(MechComponentDef), nameof(MechComponentDef.CanExplode)).GetGetMethod(),
+                AccessTools.Method(typeof(AmmunitionBox_DamageComponent_Patch), nameof(get_CanExplode))
+            );
+        }
 
-                if (count == 2)
-                {
-                    instruction.operand = null;
-                    instruction.opcode = OpCodes.Ret;
-                    yield return instruction;
-                    yield break;
-                }
-                yield return instruction;
-            }
+        public static bool get_CanExplode(this MechComponentDef def)
+        {
+            return false;
         }
     }
 }

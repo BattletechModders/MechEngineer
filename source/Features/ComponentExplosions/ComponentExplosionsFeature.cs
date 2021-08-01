@@ -13,6 +13,8 @@ namespace MechEngineer.Features.ComponentExplosions
 
         internal override ComponentExplosionsSettings Settings => Control.settings.ComponentExplosions;
 
+        internal static ComponentExplosionsSettings settings => Shared.Settings;
+
         internal void CheckForExplosion(MechComponent component, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
         {
             if (!applyEffects)
