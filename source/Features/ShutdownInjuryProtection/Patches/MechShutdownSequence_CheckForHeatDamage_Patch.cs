@@ -13,46 +13,28 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
             return !ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled;
         }
 
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return instructions.MethodReplacer(
-                AccessTools.Method(typeof(CombatGameConstants), "get_Heat"),
-                AccessTools.Method(typeof(MechShutdownSequence_CheckForHeatDamage_Patch), nameof(OverrideHeat))
-            );
-        }
-
-        public static HeatConstantsDef OverrideHeat(this CombatGameConstants @this)
-        {
-            var heat = @this.Heat;
-            if (ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled)
-            {
-                heat.ShutdownCausesInjury = receiveShutdownInjury;
-            }
-            return heat;
-        }
-
-        private static bool receiveShutdownInjury = true;
         public static void Prefix(MechShutdownSequence __instance)
         {
             try
             {
-                if (__instance.Combat.Constants.Heat.ShutdownCausesInjury)
+                var mech = __instance.OwningMech;
+                var receiveShutdownInjury = __instance.Combat.Constants.Heat.ShutdownCausesInjury
+                                        || mech.StatCollection.ReceiveShutdownInjury().Get();
+
+                if (!receiveShutdownInjury)
                 {
                     return;
                 }
 
-                var mech = __instance.OwningMech;
-                receiveShutdownInjury = mech.StatCollection.ReceiveShutdownInjury().Get();
+                var sourceID = __instance.instigatorGUID;
+                var stackItemUID = __instance.RootSequenceGUID;
+
+                ShutdownInjuryProtectionFeature.InjurePilot(mech, sourceID, stackItemUID);
             }
             catch (Exception e)
             {
                 Control.Logger.Error.Log(e);
             }
-        }
-
-        public static void Postfix()
-        {
-            receiveShutdownInjury = false;
         }
     }
 }

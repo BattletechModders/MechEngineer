@@ -12,19 +12,17 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
             return !ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled;
         }
 
-        public static void Prefix(Mech __instance)
+        public static void Prefix(Mech __instance, int stackID, string attackerID)
         {
             try
             {
                 var mech = __instance;
-                if (!mech.IsOverheated)
+                if (!mech.StatCollection.ReceiveHeatDamageInjury().Get())
                 {
                     return;
                 }
-                if (mech.StatCollection.ReceiveHeatDamageInjury().Get())
-                {
-                    mech.pilot?.SetNeedsInjury(Pilot_InjuryReasonDescription_Patch.InjuryReasonOverheated);
-                }
+
+                ShutdownInjuryProtectionFeature.InjurePilot(mech, attackerID, stackID);
             }
             catch (Exception e)
             {

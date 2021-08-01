@@ -13,5 +13,8 @@
 
         public bool ShutdownInjuryEnabled = true;
         public string ShutdownInjuryEnabledDescription => "Every time a mech shuts down, check if an injury can be applied.";
+
+        public bool InjuryAudioEnabled = true;
+        public string InjuryAudioEnabledDescription => "Every time the pilot gets injury, play the pilot taking damage audio.";
     }
 }
