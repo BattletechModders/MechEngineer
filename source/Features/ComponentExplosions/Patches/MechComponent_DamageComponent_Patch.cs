@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
@@ -7,11 +8,6 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
     [HarmonyPatch(typeof(MechComponent), nameof(MechComponent.DamageComponent))]
     public static class MechComponent_DamageComponent_Patch
     {
-        public static bool Prepare()
-        {
-            return ComponentExplosionsFeature.settings.DisableVanillaMechComponentDefCanExplode;
-        }
-
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             return instructions.MethodReplacer(
@@ -23,6 +19,18 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
         public static bool get_CanExplode(this MechComponentDef def)
         {
             return false;
+        }
+
+        public static void Postfix(MechComponent __instance, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
+        {
+            try
+            {
+                ComponentExplosionsFeature.Shared.CheckForExplosion(__instance, hitInfo, damageLevel, applyEffects);
+            }
+            catch (Exception e)
+            {
+                Control.Logger.Error.Log(e);
+            }
         }
     }
 }

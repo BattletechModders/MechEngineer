@@ -37,11 +37,13 @@ namespace MechEngineer.Features.ComponentExplosions
             var ammoCount = 0;
             if (component is AmmunitionBox box)
             {
-                ammoCount = box.CurrentAmmo;
+                // can't use CurrentAmmo property as that always returns 0 on destroyed ammo boxes
+                ammoCount = box.statCollection.GetValue<int>("CurrentAmmo");
             }
             else if (component is Weapon w2)
             {
-                ammoCount = Mathf.Max(w2.InternalAmmo, Mathf.Min(w2.ShotsWhenFired, w2.CurrentAmmo));
+                var loadedAmmo = Mathf.Min(w2.ShotsWhenFired, w2.CurrentAmmo);
+                ammoCount = Mathf.Max(w2.InternalAmmo, loadedAmmo);
             }
 
             var attackSequence = actor.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
@@ -66,6 +68,7 @@ namespace MechEngineer.Features.ComponentExplosions
                 }
             }
 
+            Control.Logger.Warning.Log($"#### {exp.ExplosionDamage} {ammoCount} {exp.ExplosionDamagePerAmmo}");
             var explosionDamage = exp.ExplosionDamage + ammoCount * exp.ExplosionDamagePerAmmo;
             if (Mathf.Approximately(explosionDamage, 0))
             {
