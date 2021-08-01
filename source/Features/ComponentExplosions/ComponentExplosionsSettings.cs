@@ -6,9 +6,9 @@
         public string EnabledDescription => "Allows each component to define destructive forces in case they explode, also implements proper CASE.";
 
         public bool DisableVanillaAmmunitionBoxDefCanExplode => true;
-        public string VanillaAmmunitionBoxDefCanExplodeDescription => "Disables vanilla CanExplode on AmmunitionBoxDef.";
+        public string DisableVanillaAmmunitionBoxDefCanExplodeDescription => "Disables vanilla CanExplode on AmmunitionBoxDef.";
 
         public bool DisableVanillaMechComponentDefCanExplode => true;
-        public string VanillaMechComponentDefCanExplodeDescription => "Disables vanilla CanExplode on MechComponentDef.";
+        public string DisableVanillaMechComponentDefCanExplodeDescription => "Disables vanilla CanExplode on MechComponentDef.";
     }
 }
