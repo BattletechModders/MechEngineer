@@ -2,6 +2,7 @@
 using BattleTech;
 using CustomComponents;
 using MechEngineer.Helper;
+using MechEngineer.Misc;
 using UnityEngine;
 
 namespace MechEngineer.Features.ComponentExplosions
@@ -70,6 +71,13 @@ namespace MechEngineer.Features.ComponentExplosions
             }
             Control.Logger.Debug?.Log($"explosionDamage={explosionDamage}");
 
+            var reason = component.componentType == ComponentType.AmmunitionBox
+                ? InjuryReason.AmmoExplosion
+                : InjuryReason.ComponentExplosion;
+            var damageType = component.componentType == ComponentType.AmmunitionBox
+                ? DamageType.AmmoExplosion
+                : DamageType.ComponentExplosion;
+
             IsInternalExplosion = true;
             try
             {
@@ -78,21 +86,14 @@ namespace MechEngineer.Features.ComponentExplosions
                 actor.PublishFloatieMessage($"{component.Name} EXPLOSION");
                 if (actor.Combat.Constants.PilotingConstants.InjuryFromAmmoExplosion)
                 {
-                    var pilot = actor.GetPilot();
-                    var reason = component.componentType == ComponentType.AmmunitionBox
-                        ? InjuryReason.AmmoExplosion
-                        : InjuryReason.ComponentExplosion;
-                    pilot?.SetNeedsInjury(reason);
+                    InjuryUtils.InjurePilot(actor, hitInfo.attackerId, hitInfo.stackItemUID, reason, damageType);
                 }
 
                 if (actor is Mech mech)
                 {
                     // this is very hacky as this is an invalid weapon
                     var weapon = new Weapon(mech, actor.Combat, component.mechComponentRef, component.uid);
-                    var type = component.componentType == ComponentType.AmmunitionBox
-                        ? DamageType.AmmoExplosion
-                        : DamageType.ComponentExplosion;
-                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation)component.Location, weapon, 0, explosionDamage, 0, AttackImpactQuality.Solid, type);
+                    mech.DamageLocation(component.Location, hitInfo, (ArmorLocation)component.Location, weapon, 0, explosionDamage, 0, AttackImpactQuality.Solid, damageType);
                 }
                 else if (actor is Vehicle vehicle)
                 {
