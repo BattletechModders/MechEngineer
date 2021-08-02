@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots
 {
-    internal class CustomWidgetsFixLanceMechEquipment
+    internal static class CustomWidgetsFixLanceMechEquipment
     {
         internal static GameObject TopLeft;
         internal static GameObject TopRight;
@@ -61,8 +61,10 @@ namespace MechEngineer.Features.MechLabSlots
             {
                 foreach (var mechComponentRef in list)
                 {
-                    var gameObject = dataManager.PooledInstantiate("uixPrfPanl_LC_MechLoadoutItem",
-                        BattleTechResourceType.UIModulePrefabs);
+                    var gameObject = dataManager.PooledInstantiate(
+                        "uixPrfPanl_LC_MechLoadoutItem",
+                        BattleTechResourceType.UIModulePrefabs
+                    );
                     var component = gameObject.GetComponent<LanceMechEquipmentListItem>();
                     var bgColor = MechComponentRef.GetUIColor(mechComponentRef);
                     if (mechComponentRef.DamageLevel == ComponentDamageLevel.Destroyed)
@@ -70,8 +72,12 @@ namespace MechEngineer.Features.MechLabSlots
                         bgColor = UIColor.Disabled;
                     }
 
-                    component.SetData(mechComponentRef.Def.Description.UIName, mechComponentRef.DamageLevel,
-                        UIColor.White, bgColor);
+                    component.SetData(
+                        mechComponentRef.Def.Description.UIName,
+                        mechComponentRef.DamageLevel,
+                        UIColor.White,
+                        bgColor
+                    );
                     component.SetTooltipData(mechComponentRef.Def);
                     gameObject.transform.SetParent(widget.transform, false);
                     allComponents.Add(gameObject);

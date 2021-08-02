@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots.Patches
 {
-    [HarmonyPatch(typeof(LanceMechEquipmentList), "SetLoadout", new Type[0])]
+    [HarmonyPatch(typeof(LanceMechEquipmentList), nameof(LanceMechEquipmentList.SetLoadout), new Type[0])]
     public static class LanceMechEquipmentList_SetLoadout_Patch
     {
         public static void Postfix(
