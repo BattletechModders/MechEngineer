@@ -25,7 +25,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
                 {
                     return;
                 }
-                ShutdownInjuryProtectionFeature.InjurePilot(mech, sourceID, stackItemID);
+                ShutdownInjuryProtectionFeature.SetInjury(mech, sourceID, stackItemID);
             }
             catch (Exception e)
             {

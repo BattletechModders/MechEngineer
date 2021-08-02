@@ -22,7 +22,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
                     return;
                 }
 
-                ShutdownInjuryProtectionFeature.InjurePilot(mech, attackerID, stackID);
+                ShutdownInjuryProtectionFeature.SetInjury(mech, attackerID, stackID);
             }
             catch (Exception e)
             {

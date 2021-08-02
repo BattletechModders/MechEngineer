@@ -14,15 +14,14 @@ namespace MechEngineer.Features.ShutdownInjuryProtection
 
         internal static ShutdownInjuryProtectionSettings settings => Shared.Settings;
 
-        internal static void InjurePilot(Mech mech, string sourceID, int stackItemUID)
+        internal static void SetInjury(Mech mech, string sourceID, int stackItemUID)
         {
             if (!mech.IsOverheated)
             {
                 return;
             }
 
-            var damageType = mech.GUID == sourceID ? DamageType.OverheatSelf : DamageType.Overheat;
-            InjuryUtils.InjurePilot(mech, sourceID, stackItemUID, Pilot_InjuryReasonDescription_Patch.InjuryReasonOverheated, damageType);
+            InjuryUtils.SetInjury(mech, sourceID, stackItemUID, Pilot_InjuryReasonDescription_Patch.InjuryReasonOverheated);
         }
     }
 }

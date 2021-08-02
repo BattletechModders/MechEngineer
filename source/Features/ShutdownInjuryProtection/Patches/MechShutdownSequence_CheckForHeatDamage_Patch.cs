@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using BattleTech;
 using Harmony;
 
@@ -13,7 +12,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
             return !ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled;
         }
 
-        public static void Prefix(MechShutdownSequence __instance)
+        public static bool Prefix(MechShutdownSequence __instance)
         {
             try
             {
@@ -21,20 +20,22 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches
                 var receiveShutdownInjury = __instance.Combat.Constants.Heat.ShutdownCausesInjury
                                         || mech.StatCollection.ReceiveShutdownInjury().Get();
 
-                if (!receiveShutdownInjury)
+                if (receiveShutdownInjury && mech.IsOverheated)
                 {
-                    return;
+                    var sourceID = __instance.instigatorGUID;
+                    var stackItemUID = __instance.RootSequenceGUID;
+
+                    ShutdownInjuryProtectionFeature.SetInjury(mech, sourceID, stackItemUID);
                 }
 
-                var sourceID = __instance.instigatorGUID;
-                var stackItemUID = __instance.RootSequenceGUID;
-
-                ShutdownInjuryProtectionFeature.InjurePilot(mech, sourceID, stackItemUID);
+                return false;
             }
             catch (Exception e)
             {
                 Control.Logger.Error.Log(e);
             }
+
+            return true;
         }
     }
 }

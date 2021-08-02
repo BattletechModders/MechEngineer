@@ -68,7 +68,6 @@ namespace MechEngineer.Features.ComponentExplosions
                 }
             }
 
-            Control.Logger.Warning.Log($"#### {exp.ExplosionDamage} {ammoCount} {exp.ExplosionDamagePerAmmo}");
             var explosionDamage = exp.ExplosionDamage + ammoCount * exp.ExplosionDamagePerAmmo;
             if (Mathf.Approximately(explosionDamage, 0))
             {
@@ -91,7 +90,7 @@ namespace MechEngineer.Features.ComponentExplosions
                 actor.PublishFloatieMessage($"{component.Name} EXPLOSION");
                 if (actor.Combat.Constants.PilotingConstants.InjuryFromAmmoExplosion)
                 {
-                    InjuryUtils.InjurePilot(actor, hitInfo.attackerId, hitInfo.stackItemUID, reason, damageType);
+                    InjuryUtils.SetInjury(actor, hitInfo.attackerId, hitInfo.stackItemUID, reason);
                 }
 
                 if (actor is Mech mech)

@@ -1,10 +1,11 @@
-﻿using BattleTech;
+﻿using System.Linq;
+using BattleTech;
 
 namespace MechEngineer.Misc
 {
     internal static class InjuryUtils
     {
-        internal static void InjurePilot(AbstractActor actor, string sourceID, int stackItemUID, InjuryReason reason, DamageType damageType)
+        internal static void SetInjury(AbstractActor actor, string sourceID, int stackItemUID, InjuryReason reason)
         {
             var pilot = actor.GetPilot();
             if (pilot == null)
@@ -12,45 +13,38 @@ namespace MechEngineer.Misc
                 return;
             }
 
+            // check if we might override an existing injury
             if (pilot.NeedsInjury)
             {
+                // TODO use a temp var and switcharoo instead
                 Control.Logger.Warning.Log($"Can't apply heat injury as another injury is already queued, conflicting res={pilot.injuryReason} desc={pilot.InjuryReasonDescription}");
                 return;
             }
 
-            var sourceActor = actor.Combat.FindActorByGUID(sourceID);
-
-            // TBAS: keep track of health for resist detection
-            var health = pilot.Health;
-            // TBAS: SetNeedsInjury (and therefore ClearNeedsInjury) is needed for resistance detection
-            pilot.SetNeedsInjury(reason);
-            // injure the pilot
-            pilot.InjurePilot(sourceID, stackItemUID, 1, damageType, default, sourceActor);
-            // TBAS: clear SetsNeedsInjury
-            pilot.ClearNeedsInjury();
-            // TBAS: made the pilot resist the injury
-            if (health == pilot.Health)
+            // attack sequences still going on will call CheckPilotStatusFromAttack at the end
+            var hasAnyAttackSequence = actor.Combat.AttackDirector.GetAllAttackSequencesThatAffectCombatant(actor).Any();
+            if (ForceInjuryImmediatelyIfOutsideAttackSequence || AllowDelayedInjuryUntilNextTurn || hasAnyAttackSequence)
             {
-                return;
+                pilot.SetNeedsInjury(reason);
             }
-
-            PlayAudio(actor);
+            if (ForceInjuryImmediatelyIfOutsideAttackSequence && !hasAnyAttackSequence)
+            {
+                CheckPilotStatusForInjuries(actor, sourceID, stackItemUID);
+            }
         }
 
-        private static void PlayAudio(AbstractActor actor)
+        internal static void CheckPilotStatusForInjuries(AbstractActor actor, string sourceID, int stackItemUID)
         {
-            // from MechShutdownSequence.CheckForHeatDamage
-            if (actor.GetPilot().IsIncapacitated)
-            {
-                return;
-            }
-
-            AudioEventManager.SetPilotVOSwitch(AudioSwitch_dialog_dark_light.dark, actor);
-            AudioEventManager.PlayPilotVO(VOEvents.Pilot_TakeDamage, actor);
-            if (actor.team.LocalPlayerControlsTeam)
-            {
-                AudioEventManager.PlayAudioEvent("audioeventdef_musictriggers_combat", "friendly_warrior_injured");
-            }
+            // if actor.GUID == sourceID -> self inflicting, probably always the case when outside an attack sequence
+            actor.CheckPilotStatusFromAttack(sourceID, -1, stackItemUID);
         }
+
+        // TODO workarounds are still mainly here because of mods
+        // - vanilla does not destroy single components outside attacks
+        // - in ME, overheating damage can lead to injuries, after movement and still not cooled down -> injury outside attack sequence
+        // - kmissions custom activatable can destroy components outside of attack sequence
+        // - other mods also can destroy components / add heat, e.g. during movements, skill checks
+        public static bool AllowDelayedInjuryUntilNextTurn = true;
+        public static bool ForceInjuryImmediatelyIfOutsideAttackSequence = true;
     }
 }
