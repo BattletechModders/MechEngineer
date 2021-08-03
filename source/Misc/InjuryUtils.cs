@@ -51,62 +51,62 @@ namespace MechEngineer.Misc
             var pilot = actor.GetPilot();
             if (pilot.IsIncapacitated || !pilot.NeedsInjury)
             {
-	            return;
+                return;
             }
 
             var health = pilot.Health;
-	        pilot.InjurePilot(sourceID, stackItemID, 1, damageType, null, actor.Combat.FindActorByGUID(sourceID));
-	        var injuryIgnored = pilot.Health == health;
+            pilot.InjurePilot(sourceID, stackItemID, 1, damageType, null, actor.Combat.FindActorByGUID(sourceID));
+            var injuryIgnored = pilot.Health == health;
 
-	        if (pilot.IsIncapacitated)
-	        {
-		        pilot.ShowInjuryMessage(Strings.T("PILOT INCAPACITATED!"));
-		        pilot.PlayDeathMusic();
-		        pilot.PlayDeathVO();
-		        if (actor.IsDead || actor.IsFlaggedForDeath)
-		        {
-			        return;
-		        }
-		        actor.FlagForDeath("Pilot Killed", DeathMethod.PilotKilled, damageType, 1, stackItemID, sourceID, false);
-		        actor.HandleDeath(sourceID);
-	        }
-	        else
-	        {
-		        if (injuryIgnored)
-		        {
-			        pilot.ShowInjuryMessage(Strings.T("{0}: INJURY IGNORED", pilot.InjuryReasonDescription));
-		        }
-		        else
-		        {
-			        pilot.ShowInjuryMessage( Strings.T("{0}: PILOT INJURED", pilot.InjuryReasonDescription));
-			        pilot.PlayInjuryMusic();
-			        pilot.PlayInjuryVO();
-		        }
-	        }
+            if (pilot.IsIncapacitated)
+            {
+                pilot.ShowInjuryMessage(Strings.T("PILOT INCAPACITATED!"));
+                pilot.PlayDeathMusic();
+                pilot.PlayDeathVO();
+                if (actor.IsDead || actor.IsFlaggedForDeath)
+                {
+                    return;
+                }
+                actor.FlagForDeath("Pilot Killed", DeathMethod.PilotKilled, damageType, 1, stackItemID, sourceID, false);
+                actor.HandleDeath(sourceID);
+            }
+            else
+            {
+                if (injuryIgnored)
+                {
+                    pilot.ShowInjuryMessage(Strings.T("{0}: INJURY IGNORED", pilot.InjuryReasonDescription));
+                }
+                else
+                {
+                    pilot.ShowInjuryMessage(Strings.T("{0}: PILOT INJURED", pilot.InjuryReasonDescription));
+                    pilot.PlayInjuryMusic();
+                    pilot.PlayInjuryVO();
+                }
+            }
 
-	        pilot.ClearNeedsInjury();
+            pilot.ClearNeedsInjury();
         }
 
         private static void ShowInjuryMessage(this Pilot pilot, string message)
         {
-	        var sequence = new ShowActorInfoSequence(pilot.ParentActor, message, FloatieMessage.MessageNature.PilotInjury, true);
-	        pilot.ParentActor.Combat.MessageCenter.PublishMessage(new AddSequenceToStackMessage(sequence));
+            var sequence = new ShowActorInfoSequence(pilot.ParentActor, message, FloatieMessage.MessageNature.PilotInjury, true);
+            pilot.ParentActor.Combat.MessageCenter.PublishMessage(new AddSequenceToStackMessage(sequence));
         }
 
         private static void PlayInjuryMusic(this Pilot pilot)
         {
-	        AudioEventManager.PlayAudioEvent(
-		        AudioConstantsDef.MUSICTRIGGERS_COMBAT,
-		        pilot.ParentActor.team.LocalPlayerControlsTeam
-			        ? nameof(AudioTriggerList.friendly_warrior_injured)
-			        : nameof(AudioTriggerList.enemy_warrior_injured)
-			);
+            AudioEventManager.PlayAudioEvent(
+                AudioConstantsDef.MUSICTRIGGERS_COMBAT,
+                pilot.ParentActor.team.LocalPlayerControlsTeam
+                    ? nameof(AudioTriggerList.friendly_warrior_injured)
+                    : nameof(AudioTriggerList.enemy_warrior_injured)
+            );
         }
 
         private static void PlayInjuryVO(this Pilot pilot)
         {
-	        AudioEventManager.SetPilotVOSwitch(AudioSwitch_dialog_dark_light.dark, pilot.ParentActor);
-	        AudioEventManager.PlayPilotVO(VOEvents.Pilot_TakeDamage, pilot.ParentActor);
+            AudioEventManager.SetPilotVOSwitch(AudioSwitch_dialog_dark_light.dark, pilot.ParentActor);
+            AudioEventManager.PlayPilotVO(VOEvents.Pilot_TakeDamage, pilot.ParentActor);
         }
     }
 }
