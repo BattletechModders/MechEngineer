@@ -21,7 +21,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection
                 return;
             }
 
-            InjuryUtils.SetInjury(mech, sourceID, stackItemUID, Pilot_InjuryReasonDescription_Patch.InjuryReasonOverheated);
+            InjuryUtils.SetInjury(mech, sourceID, stackItemUID, Pilot_InjuryReasonDescription_Patch.InjuryReasonOverheated, mech.GUID == sourceID ? DamageType.OverheatSelf : DamageType.Overheat);
         }
     }
 }
