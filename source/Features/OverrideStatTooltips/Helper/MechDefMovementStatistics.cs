@@ -109,9 +109,9 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper
             var raw = movement.JumpJetCount;
             var multiplier = GetJumpJetMaxCountMultiplier();
             var mutiplied = raw * multiplier;
-            var rounded = PrecisionUtils.RoundDownToInt(mutiplied);
+            var rounded = PrecisionUtils.RoundUpToInt(mutiplied); // rounding up as run mp are also rounded up
             var cropped = Mathf.Min(rounded, mechDef.Chassis.MaxJumpjets);
-            Control.Logger.Debug?.Log($"raw={raw} multiplier={multiplier} mutiplied={mutiplied} rounded={rounded} cropped={cropped}");
+            Control.Logger.Debug?.Log($"GetJumpJetMaxCount raw={raw} multiplier={multiplier} mutiplied={mutiplied} rounded={rounded} cropped={cropped}");
             return cropped;
         }
 
