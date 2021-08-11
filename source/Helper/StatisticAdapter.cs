@@ -31,9 +31,19 @@ namespace MechEngineer.Helper
             return StatCollection.GetValue<T>(Key);
         }
 
-        internal void Set(T value)
+        internal void SetValue(T value)
         {
             StatCollection.GetStatistic(Key).SetValue(value);
+        }
+
+        internal void SetDefault(T value, bool reset = true)
+        {
+            var stat = StatCollection.GetStatistic(Key);
+            stat.defaultValue.objVal = value;
+            if (reset)
+            {
+                stat.Reset();
+            }
         }
 
         internal void CreateIfMissing()

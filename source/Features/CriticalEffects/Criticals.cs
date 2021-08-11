@@ -157,7 +157,7 @@ namespace MechEngineer.Features.CriticalEffects
             stat.CreateIfMissing(); // move to Mech.init and remove "CreateIfMissing" from StatAdapter
             if (setHits.HasValue)
             {
-                stat.Set(setHits.Value);
+                stat.SetValue(setHits.Value);
             }
             return stat.Get();
         }
