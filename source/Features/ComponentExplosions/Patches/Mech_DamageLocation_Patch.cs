@@ -21,7 +21,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches
                 if (ComponentExplosionsFeature.IsInternalExplosionContained)
                 {
                     __result = false;
-                    Control.Logger.Warning.Log("prevented explosion pass through (you should never see this message)");
+                    Control.Logger.Warning?.Log("prevented explosion pass through (you should never see this message)");
                     return false;
                 }
 

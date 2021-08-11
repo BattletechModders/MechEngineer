@@ -8,12 +8,10 @@ namespace MechEngineer.Features.BetterLog
     internal sealed class BetterLogAppender : ILogAppender, IDisposable
     {
         private readonly StreamWriter writer;
-        private readonly BetterLogFormatter formatter = new();
 
         internal BetterLogAppender(string path)
         {
             writer = new StreamWriter(path) {AutoFlush = true};
-            formatter = new BetterLogFormatter();
         }
 
         public void OnLogMessage(string logName, LogLevel level, object message, Object context, Exception exception, IStackTrace location)

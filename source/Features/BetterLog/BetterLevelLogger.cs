@@ -5,8 +5,8 @@ namespace MechEngineer.Features.BetterLog
 {
     internal class BetterLevelLogger
     {
-        private ILog log;
-        private LogLevel level;
+        private readonly ILog log;
+        private readonly LogLevel level;
 
         public BetterLevelLogger(ILog log, LogLevel level)
         {

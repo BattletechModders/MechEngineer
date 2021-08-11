@@ -206,7 +206,7 @@ namespace MechEngineer.Features.HardpointFix
                     }
                     catch (Exception e)
                     {
-                        Control.Logger.Warning.Log($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
+                        Control.Logger.Warning?.Log($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
                         //throw;
                     }
                 }

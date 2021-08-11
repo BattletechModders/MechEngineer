@@ -77,7 +77,7 @@ namespace MechEngineer.Features
                     }
                     catch (Exception e)
                     {
-                        Control.Logger.Warning.Log($"{topic} failed patching", e);
+                        Control.Logger.Warning?.Log($"{topic} failed patching", e);
                         return false;
                     }
 
@@ -87,15 +87,15 @@ namespace MechEngineer.Features
                     }
                     catch (Exception e)
                     {
-                        Control.Logger.Warning.Log($"{topic} failed registering customs", e);
+                        Control.Logger.Warning?.Log($"{topic} failed registering customs", e);
                         return false;
                     }
 
-                    Control.Logger.Info.Log($"{topic} enabled");
+                    Control.Logger.Info?.Log($"{topic} enabled");
                 }
                 else
                 {
-                    Control.Logger.Info.Log($"{topic} disabled");
+                    Control.Logger.Info?.Log($"{topic} disabled");
                 }
 
                 return enabled;

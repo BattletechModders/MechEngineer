@@ -17,7 +17,7 @@ namespace MechEngineer.Misc
             // check if we might override an existing injury
             if (pilot.NeedsInjury)
             {
-                Control.Logger.Warning.Log($"Can't apply heat injury as another injury is already queued, conflicting res={pilot.injuryReason} desc={pilot.InjuryReasonDescription}");
+                Control.Logger.Warning?.Log($"Can't apply heat injury as another injury is already queued, conflicting res={pilot.injuryReason} desc={pilot.InjuryReasonDescription}");
                 return;
             }
 

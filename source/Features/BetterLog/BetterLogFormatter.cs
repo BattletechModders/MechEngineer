@@ -1,13 +1,10 @@
 using System;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using Harmony;
 using HBS.Logging;
 using UnityEngine;
 
 namespace MechEngineer.Features.BetterLog
 {
-    public class BetterLogFormatter
+    public static class BetterLogFormatter
     {
         internal static string GetFormattedLogLine(LogLevel logLevel, object message, Exception exception)
         {

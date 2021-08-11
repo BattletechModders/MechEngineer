@@ -2,6 +2,7 @@
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
+using MechEngineer.Features.BetterLog;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
@@ -31,11 +32,12 @@ using MechEngineer.Features.TurretMechComponents;
 
 namespace MechEngineer.Features
 {
-    internal class FeaturesList
+    internal static class FeaturesList
     {
         // order matters, dependencies between "Features" are encoded into the order
         internal static IFeature[] Features =
         {
+            BetterLogFeature.Shared,
             OrderedStatusEffectsFeature.Shared,
             OverrideTonnageFeature.Shared,
             HeatSinkCapacityStatFeature.Shared,

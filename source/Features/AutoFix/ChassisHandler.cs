@@ -22,7 +22,7 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            Control.Logger.Info.Log($"Auto fixing chassisDef={chassisDef.Description.Id}");
+            Control.Logger.Info?.Log($"Auto fixing chassisDef={chassisDef.Description.Id}");
 
             AutoFixChassisDef(chassisDef);
             AutoFixSlots(chassisDef);

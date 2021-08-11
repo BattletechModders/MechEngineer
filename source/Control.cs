@@ -36,7 +36,7 @@ namespace MechEngineer
                     FileUtils.SetReadonly(mod.SettingsLastPath, true);
                 }
 
-                Logger = BetterLogger.SetupModLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), settings.BetterLog);
+                Logger = BetterLogFeature.SetupLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), settings.BetterLog);
             }
             catch (Exception e)
             {
@@ -46,8 +46,8 @@ namespace MechEngineer
 
             try
             {
-                Logger.Info.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
-                Logger.Info.Log("settings loaded");
+                Logger.Info?.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
+                Logger.Info?.Log("settings loaded");
                 Logger.Debug?.Log("debugging enabled");
 
                 Logger.Debug?.Log("setting up features");
@@ -57,7 +57,7 @@ namespace MechEngineer
                     feature.SetupFeature();
                 }
 
-                Logger.Info.Log("started");
+                Logger.Info?.Log("started");
             }
             catch (Exception e)
             {
@@ -75,7 +75,7 @@ namespace MechEngineer
                     feature.SetupFeatureResources(customResources);
                 }
 
-                Logger.Info.Log("loaded");
+                Logger.Info?.Log("loaded");
             }
             catch (Exception e)
             {

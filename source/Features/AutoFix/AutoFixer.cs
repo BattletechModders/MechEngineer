@@ -55,7 +55,7 @@ namespace MechEngineer.Features.AutoFix
                 return;
             }
 
-            Control.Logger.Info.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
+            Control.Logger.Info?.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
 
             MechDefBuilder builder;
             {
@@ -361,7 +361,7 @@ namespace MechEngineer.Features.AutoFix
             // find any overused location
             if (builder.HasOveruseAtAnyLocation())
             {
-                Control.Logger.Info.Log($" Overuse found");
+                Control.Logger.Info?.Log($" Overuse found");
                 // heatsinks, upgrades
                 var itemsToBeReordered = builder.Inventory
                     .Where(IsMovable)
@@ -380,7 +380,7 @@ namespace MechEngineer.Features.AutoFix
                 {
                     if (builder.Add(item.Def) == null)
                     {
-                        Control.Logger.Warning.Log($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
+                        Control.Logger.Warning?.Log($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
                     }
                     else
                     {
