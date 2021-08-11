@@ -20,8 +20,8 @@ namespace MechEngineer.Features.Engines.StaticHandler
 
             var movement = engine.CoreDef.GetMovement(tonnage);
 
-            mech.StatCollection.WalkSpeed().Set(movement.WalkSpeed);
-            mech.StatCollection.RunSpeed().Set(movement.RunSpeed);
+            mech.StatCollection.WalkSpeed().SetDefault(movement.WalkSpeed);
+            mech.StatCollection.RunSpeed().SetDefault(movement.RunSpeed);
         }
 
         internal static void SetJumpJetHardpointCount(MechLabMechInfoWidget widget, MechLabPanel mechLab, MechLabHardpointElement[] hardpoints)
