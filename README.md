@@ -37,12 +37,14 @@ CptMoore ([MechEngineer](https://github.com/BattletechModders/MechEngineer))
 
 * adammartinez271828 - rounding logic
 * Aliencreature - ideas, lore and rules, item variants, testing
+* bhtail - ideas, testing
 * Colobos - ideas, lore and rules, item and mech balancing, testing
 * CptMoore - ideas, rules, coding, testing, core items
 * CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
 * Denadan - ideas, custom components lib, coding
 * Gentleman Reaper - ideas, lore and rules, testing
-* LadyAlekto - ideas, lore and rules, testing, items
+* kmission - russian localization support improvements
+* LadyAlekto + RT Team - ideas, lore and rules, lots of testing, items
 * TotalMeltdown - ideas, lore and rules
 
 ### How-to start contributing
