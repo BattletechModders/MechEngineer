@@ -6,16 +6,6 @@ namespace MechEngineer.Helper
 {
     internal static class MechComponentDefExtensions
     {
-        internal static bool HasCustomFlag(this MechComponentDef def, string flag)
-        {
-            return def.Is<Flags>(out var f) && f.flags.Contains(flag);
-        }
-
-        internal static bool HasComponentTag(this MechComponentDef def, string tag)
-        {
-            return def.ComponentTags.Contains(tag);
-        }
-
         internal static void AddPassiveStatisticEffectIfMissing(this MechComponentDef def, StatisticEffectData statisticData)
         {
             if (def.statusEffects != null && def.statusEffects.Any(x => statisticData.statName == x.statisticData.statName))

@@ -1,5 +1,5 @@
 ﻿using BattleTech;
-using MechEngineer.Helper;
+using CustomComponents;
 
 namespace MechEngineer.Features.DamageIgnore
 {
@@ -7,7 +7,7 @@ namespace MechEngineer.Features.DamageIgnore
     {
         public static bool IsIgnoreDamage(this MechComponentDef def)
         {
-            return def.HasCustomFlag("ignore_damage");
+            return def.Is<Flags>(out var f) && f.IsSet("ignore_damage");
         }
 
         public static int OverrideLocation(this MechComponent component)
