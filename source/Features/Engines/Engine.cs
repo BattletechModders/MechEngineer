@@ -8,9 +8,9 @@ using UnityEngine;
 
 namespace MechEngineer.Features.Engines
 {
-    internal class Engine
+    public class Engine
     {
-        internal static Engine GetEngine(ChassisDef chassisDef, IEnumerable<MechComponentRef> componentRefs)
+        public static Engine GetEngine(ChassisDef chassisDef, IEnumerable<MechComponentRef> componentRefs)
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
             if (result.CoolingDef == null || result.CoreDef == null || result.HeatBlockDef == null)
@@ -26,7 +26,7 @@ namespace MechEngineer.Features.Engines
             return new Engine(result);
         }
 
-        protected Engine(EngineSearcher.Result result) : this(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks)
+        internal Engine(EngineSearcher.Result result) : this(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks)
         {
         }
 
@@ -56,7 +56,7 @@ namespace MechEngineer.Features.Engines
         }
 
         private CoolingDef _coolingDef;
-        internal CoolingDef CoolingDef
+        public CoolingDef CoolingDef
         {
             get => _coolingDef;
             set
@@ -73,15 +73,15 @@ namespace MechEngineer.Features.Engines
             HeatSinkExternalCount = MatchingCount(HeatSinksExternal, HeatSinkDef.Def);
         }
 
-        internal List<MechComponentRef> HeatSinksExternal { get; set; }
+        public List<MechComponentRef> HeatSinksExternal { get; set; }
         private int HeatSinkExternalCount { get; set; }
 
-        internal EngineCoreDef CoreDef { get; set; }
-        internal Weights Weights { get; set; }
-        internal EngineHeatBlockDef HeatBlockDef { get; set; } // amount of internal heat sinks
-        internal EngineHeatSinkDef HeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
+        public EngineCoreDef CoreDef { get; set; }
+        public Weights Weights { get; set; }
+        public EngineHeatBlockDef HeatBlockDef { get; set; } // amount of internal heat sinks
+        public EngineHeatSinkDef HeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
 
-        internal float EngineHeatDissipation
+        public float EngineHeatDissipation
         {
             get
             {
