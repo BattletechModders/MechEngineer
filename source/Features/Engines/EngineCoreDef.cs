@@ -14,7 +14,7 @@ namespace MechEngineer.Features.Engines
     {
         public int Rating { get; set; }
 
-        internal EngineMovement GetMovement(float tonnage)
+        public EngineMovement GetMovement(float tonnage)
         {
             return new(Rating, tonnage);
         }
