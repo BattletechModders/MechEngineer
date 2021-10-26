@@ -90,7 +90,7 @@ namespace MechEngineer.Features.ComponentExplosions
                 actor.PublishFloatieMessage($"{component.Name} EXPLOSION");
                 if (actor.Combat.Constants.PilotingConstants.InjuryFromAmmoExplosion)
                 {
-                    InjuryUtils.SetInjury(actor, hitInfo.attackerId, hitInfo.stackItemUID, reason, damageType);
+                    actor.SetInjury(hitInfo.attackerId, hitInfo.stackItemUID, reason, damageType);
                 }
 
                 if (actor is Mech mech)

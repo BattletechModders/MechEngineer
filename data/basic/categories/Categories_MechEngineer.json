@@ -52,7 +52,7 @@
                 "InventorySorter": "Cockpit2",
                 "Sorter": 2,
                 "CriticalEffects": {
-                    "DeathMethod": "PilotKilled"
+                    "DeathMethod": "CockpitDestroyed"
                 }
             }
         },

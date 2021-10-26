@@ -6,7 +6,7 @@ namespace MechEngineer.Misc
 {
     internal static class InjuryUtils
     {
-        internal static void SetInjury(AbstractActor actor, string sourceID, int stackItemUID, InjuryReason reason, DamageType damageType)
+        internal static void SetInjury(this AbstractActor actor, string sourceID, int stackItemUID, InjuryReason reason, DamageType damageType)
         {
             var pilot = actor.GetPilot();
             if (pilot == null)
@@ -17,7 +17,7 @@ namespace MechEngineer.Misc
             // check if we might override an existing injury
             if (pilot.NeedsInjury)
             {
-                Control.Logger.Warning?.Log($"Can't apply heat injury as another injury is already queued, conflicting res={pilot.injuryReason} desc={pilot.InjuryReasonDescription}");
+                Control.Logger.Warning?.Log($"Can't apply injury as another injury is already queued, conflicting res={pilot.injuryReason} desc={pilot.InjuryReasonDescription}");
                 return;
             }
 
@@ -87,7 +87,7 @@ namespace MechEngineer.Misc
             pilot.ClearNeedsInjury();
         }
 
-        private static void ShowInjuryMessage(this Pilot pilot, string message)
+        internal static void ShowInjuryMessage(this Pilot pilot, string message)
         {
             var sequence = new ShowActorInfoSequence(pilot.ParentActor, message, FloatieMessage.MessageNature.PilotInjury, true);
             pilot.ParentActor.Combat.MessageCenter.PublishMessage(new AddSequenceToStackMessage(sequence));
