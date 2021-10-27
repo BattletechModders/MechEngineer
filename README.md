@@ -52,7 +52,7 @@ CptMoore ([MechEngineer](https://github.com/BattletechModders/MechEngineer))
 MechEngineer uses publicized assemblies, those are .NET dlls whose classes and methods visibility were changed to public.
 
 0. Install ModTekV2 if not already done.
-1. Download the improved AssemblyPublicizer from [MrPurple6411/AssemblyPublicizer](https://github.com/MrPurple6411/AssemblyPublicizer).
+1. Download the [improved AssemblyPublicizer](https://github.com/BattletechModders/MechEngineer/releases/download/v2.3.10/AssemblyPublicizer.exe) (originally from [MrPurple6411/AssemblyPublicizer](https://github.com/MrPurple6411/AssemblyPublicizer) but that one release there adds publicized suffixes to all dlls)
 2. Drag'n Drop all dlls found in BATTLETECH/BattleTech_Data/Managed/ onto the exe and it will create a BATTLETECH/BattleTech_Data/Managed/publicized_assemblies directory.
 3. Checkout the MechEngineer repository to BATTLETECH/mods/MechEngineer.
 4. Copy the Directory.Build.props.template to Directory.Build.props and replace the ReferencePath directory with the location of the publicized_assemblies directory.
