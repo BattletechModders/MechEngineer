@@ -10,28 +10,33 @@ namespace MechEngineer.Features.MechLabSlots
 {
     internal static class CustomWidgetsFixLanceMechEquipment
     {
-        internal static GameObject TopLeft;
-        internal static GameObject TopRight;
-
-        public static void SetupContainers(GameObject template)
+        public static void Awake(LocalizableText centerTorsoLabel)
         {
-            void Setup(MechLabSlotsSettings.WidgetSettings settings, ref GameObject go)
+            var centerTorso = centerTorsoLabel.transform.parent.gameObject;
+            void Setup(MechLabSlotsSettings.WidgetSettings settings)
             {
-                go = Object.Instantiate(template, null);
-                go.name = settings.ShortLabel;
+                var go = GetWidgetViaCenterTorso(settings, centerTorso);
+                if (go != null)
+                {
+                    return;
+                }
+                go = Object.Instantiate(centerTorso, null);
+                go.name = settings.ShortLabel; // required for identification, needs to be unique
                 var labelGo = go.transform.GetChild("CT-txt").gameObject;
                 labelGo.name = go.name + "-txt";
                 labelGo.GetComponent<LocalizableText>().SetText(settings.ShortLabel);
-                go.transform.SetParent(template.transform.parent, false);
+                go.transform.SetParent(centerTorso.transform.parent, false);
                 go.transform.SetAsFirstSibling();
             }
 
-            Setup(MechLabSlotsFeature.settings.TopLeftWidget, ref TopLeft);
-            Setup(MechLabSlotsFeature.settings.TopRightWidget, ref TopRight);
+            Setup(MechLabSlotsFeature.settings.TopLeftWidget);
+            Setup(MechLabSlotsFeature.settings.TopRightWidget);
         }
 
-        public static void SetLoadout(MechDef mechDef, DataManager dataManager, List<GameObject> allComponents)
+        public static void SetLoadout(LocalizableText centerTorsoLabel, MechDef mechDef, DataManager dataManager, List<GameObject> allComponents)
         {
+            var centerTorso = centerTorsoLabel.transform.parent.gameObject;
+
             var topLeft = new List<MechComponentRef>();
             var topRight = new List<MechComponentRef>();
             foreach (var componentRef in mechDef.Inventory)
@@ -57,8 +62,9 @@ namespace MechEngineer.Features.MechLabSlots
                 }
             }
 
-            void Setup(GameObject widget, List<MechComponentRef> list)
+            void Setup(MechLabSlotsSettings.WidgetSettings settings, List<MechComponentRef> list)
             {
+                var widget = GetWidgetViaCenterTorso(settings, centerTorso);
                 foreach (var mechComponentRef in list)
                 {
                     var gameObject = dataManager.PooledInstantiate(
@@ -86,8 +92,13 @@ namespace MechEngineer.Features.MechLabSlots
                 widget.SetActive(list.Count > 0);
             }
 
-            Setup(TopLeft, topLeft);
-            Setup(TopRight, topRight);
+            Setup(MechLabSlotsFeature.settings.TopLeftWidget, topLeft);
+            Setup(MechLabSlotsFeature.settings.TopRightWidget, topRight);
+        }
+
+        private static GameObject GetWidgetViaCenterTorso(MechLabSlotsSettings.WidgetSettings settings, GameObject centerTorso)
+        {
+            return centerTorso.transform.parent.GetChild(settings.ShortLabel)?.gameObject;
         }
     }
 }
