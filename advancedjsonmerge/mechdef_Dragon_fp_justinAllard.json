@@ -1,0 +1,10 @@
+{
+	"TargetID": "mechdef_Dragon_fp_justinAllard",
+	"Instructions": [
+		{
+			"JSONPath": "inventory[?(@.ComponentDefID == 'Ammo_AmmunitionBox_Generic_LRM')].MountedLocation",
+			"Action": "Replace",
+			"Value": "LeftLeg"
+		}
+	]
+}
