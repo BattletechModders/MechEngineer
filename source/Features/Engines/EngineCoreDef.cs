@@ -14,6 +14,7 @@ namespace MechEngineer.Features.Engines
     {
         public int Rating { get; set; }
 
+        // This methid goes public -- bhtrail
         public EngineMovement GetMovement(float tonnage)
         {
             return new(Rating, tonnage);

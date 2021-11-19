@@ -4,6 +4,7 @@ using CustomComponents;
 
 namespace MechEngineer.Features.Engines.Helper
 {
+    // Extensions method became public for BV reasons -- bhtrail
     public static class EngineExtensions
     {
         public static Engine GetEngine(this MechDef @this)

@@ -3,8 +3,10 @@ using MechEngineer.Features.OverrideTonnage;
 
 namespace MechEngineer.Features.Engines.Helper
 {
+    // publicized to have access from BV module -- bhtrail
     public class EngineMovement
     {
+        // goes public too -- bhtrail
         public EngineMovement(int rating, float tonnage)
         {
             WalkMovementPoint = RoundWalkMovementPoints(rating / tonnage);
@@ -15,6 +17,7 @@ namespace MechEngineer.Features.Engines.Helper
             WalkMovementPoint = RoundWalkMovementPoints(walkMovementPoint);
         }
 
+        // Five below goes public too -- bhtrail
         public float WalkMovementPoint { get; }
 
         public float WalkSpeed => EngineFeature.settings.AdditionalWalkSpeed + ConvertMPToGameDistance(WalkMovementPoint);

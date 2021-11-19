@@ -8,8 +8,10 @@ using UnityEngine;
 
 namespace MechEngineer.Features.Engines
 {
+    // Public due necessity to have access from BattleValue module -- bhtrail
     public class Engine
     {
+        // Declared public to have access from BattleValue module -- bhtrail
         public static Engine GetEngine(ChassisDef chassisDef, IEnumerable<MechComponentRef> componentRefs)
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
@@ -26,6 +28,7 @@ namespace MechEngineer.Features.Engines
             return new Engine(result);
         }
 
+        // Lifted from protected to internal to have proper work publicized method
         internal Engine(EngineSearcher.Result result) : this(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks)
         {
         }
@@ -56,6 +59,7 @@ namespace MechEngineer.Features.Engines
         }
 
         private CoolingDef _coolingDef;
+        // Also publicized -- bhtrail
         public CoolingDef CoolingDef
         {
             get => _coolingDef;
@@ -73,9 +77,11 @@ namespace MechEngineer.Features.Engines
             HeatSinkExternalCount = MatchingCount(HeatSinksExternal, HeatSinkDef.Def);
         }
 
+        // Publicized -- bhtrail
         public List<MechComponentRef> HeatSinksExternal { get; set; }
         private int HeatSinkExternalCount { get; set; }
 
+        // these 4 props goes public for same reasons as above -- bhtrail
         public EngineCoreDef CoreDef { get; set; }
         public Weights Weights { get; set; }
         public EngineHeatBlockDef HeatBlockDef { get; set; } // amount of internal heat sinks
