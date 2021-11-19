@@ -12,7 +12,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches
         {
             try
             {
-                CustomWidgetsFixLanceMechEquipment.SetupContainers(___centerTorsoLabel.transform.parent.gameObject);
+                CustomWidgetsFixLanceMechEquipment.Awake(___centerTorsoLabel);
             }
             catch (Exception e)
             {

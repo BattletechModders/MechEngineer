@@ -1,0 +1,11 @@
+{
+	"TargetID": "chassisdef_raven_RVN-3X",
+	"TargetType": "ChassisDef",
+	"Instructions": [
+		{
+			"JSONPath": "FixedEquipment[?(@.ComponentDefID == 'Gear_Structure_Prototype_TSM')].MountedLocation",
+			"Action": "Replace",
+			"Value": "RightTorso"
+		}
+	]
+}

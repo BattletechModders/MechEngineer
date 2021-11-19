@@ -1,0 +1,10 @@
+{
+	"TargetID": "mechdef_Catapult_fp_justinAllard",
+	"Instructions": [
+		{
+			"JSONPath": "inventory[?(@.ComponentDefID == 'Gear_TargetingTrackingSystem_Hartford_F1800')].MountedLocation",
+			"Action": "Replace",
+			"Value": "Head"
+		}
+	]
+}
