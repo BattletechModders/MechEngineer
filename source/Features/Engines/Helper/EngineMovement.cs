@@ -3,9 +3,11 @@ using MechEngineer.Features.OverrideTonnage;
 
 namespace MechEngineer.Features.Engines.Helper
 {
-    internal class EngineMovement
+    // publicized to have access from BV module -- bhtrail
+    public class EngineMovement
     {
-        internal EngineMovement(int rating, float tonnage)
+        // goes public too -- bhtrail
+        public EngineMovement(int rating, float tonnage)
         {
             WalkMovementPoint = RoundWalkMovementPoints(rating / tonnage);
         }
@@ -15,14 +17,15 @@ namespace MechEngineer.Features.Engines.Helper
             WalkMovementPoint = RoundWalkMovementPoints(walkMovementPoint);
         }
 
-        internal float WalkMovementPoint { get; }
+        // Five below goes public too -- bhtrail
+        public float WalkMovementPoint { get; }
 
-        internal float WalkSpeed => EngineFeature.settings.AdditionalWalkSpeed + ConvertMPToGameDistance(WalkMovementPoint);
-        internal float RunMovementPoint => RoundRunMovementPoints(WalkMovementPoint * EngineFeature.settings.RunMultiplier);
-        internal float RunSpeed => EngineFeature.settings.AdditionalRunSpeed + ConvertMPToGameDistance(RunMovementPoint);
-        internal int JumpJetCount => PrecisionUtils.RoundDownToInt(WalkMovementPoint);
+        public float WalkSpeed => EngineFeature.settings.AdditionalWalkSpeed + ConvertMPToGameDistance(WalkMovementPoint);
+        public float RunMovementPoint => RoundRunMovementPoints(WalkMovementPoint * EngineFeature.settings.RunMultiplier);
+        public float RunSpeed => EngineFeature.settings.AdditionalRunSpeed + ConvertMPToGameDistance(RunMovementPoint);
+        public int JumpJetCount => PrecisionUtils.RoundDownToInt(WalkMovementPoint);
 
-        internal bool Mountable
+        public bool Mountable
         {
             get
             {

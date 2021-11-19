@@ -8,9 +8,11 @@ using UnityEngine;
 
 namespace MechEngineer.Features.Engines
 {
-    internal class Engine
+    // Public due necessity to have access from BattleValue module -- bhtrail
+    public class Engine
     {
-        internal static Engine GetEngine(ChassisDef chassisDef, IEnumerable<MechComponentRef> componentRefs)
+        // Declared public to have access from BattleValue module -- bhtrail
+        public static Engine GetEngine(ChassisDef chassisDef, IEnumerable<MechComponentRef> componentRefs)
         {
             var result = EngineSearcher.SearchInventory(componentRefs);
             if (result.CoolingDef == null || result.CoreDef == null || result.HeatBlockDef == null)
@@ -26,7 +28,8 @@ namespace MechEngineer.Features.Engines
             return new Engine(result);
         }
 
-        protected Engine(EngineSearcher.Result result) : this(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks)
+        // Lifted from protected to internal to have proper work publicized method
+        internal Engine(EngineSearcher.Result result) : this(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks)
         {
         }
 
@@ -56,7 +59,8 @@ namespace MechEngineer.Features.Engines
         }
 
         private CoolingDef _coolingDef;
-        internal CoolingDef CoolingDef
+        // Also publicized -- bhtrail
+        public CoolingDef CoolingDef
         {
             get => _coolingDef;
             set
@@ -73,15 +77,17 @@ namespace MechEngineer.Features.Engines
             HeatSinkExternalCount = MatchingCount(HeatSinksExternal, HeatSinkDef.Def);
         }
 
-        internal List<MechComponentRef> HeatSinksExternal { get; set; }
+        // Publicized -- bhtrail
+        public List<MechComponentRef> HeatSinksExternal { get; set; }
         private int HeatSinkExternalCount { get; set; }
 
-        internal EngineCoreDef CoreDef { get; set; }
-        internal Weights Weights { get; set; }
-        internal EngineHeatBlockDef HeatBlockDef { get; set; } // amount of internal heat sinks
-        internal EngineHeatSinkDef HeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
+        // these 4 props goes public for same reasons as above -- bhtrail
+        public EngineCoreDef CoreDef { get; set; }
+        public Weights Weights { get; set; }
+        public EngineHeatBlockDef HeatBlockDef { get; set; } // amount of internal heat sinks
+        public EngineHeatSinkDef HeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
 
-        internal float EngineHeatDissipation
+        public float EngineHeatDissipation
         {
             get
             {

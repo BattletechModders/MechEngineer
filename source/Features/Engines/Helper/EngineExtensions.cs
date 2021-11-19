@@ -4,14 +4,15 @@ using CustomComponents;
 
 namespace MechEngineer.Features.Engines.Helper
 {
-    internal static class EngineExtensions
+    // Extensions method became public for BV reasons -- bhtrail
+    public static class EngineExtensions
     {
-        internal static Engine GetEngine(this MechDef @this)
+        public static Engine GetEngine(this MechDef @this)
         {
             return Engine.GetEngine(@this.Chassis, @this.Inventory);
         }
 
-        internal static bool HasDestroyedEngine(this MechDef mechDef)
+        public static bool HasDestroyedEngine(this MechDef mechDef)
         {
             return mechDef.Inventory.Any(x => x.DamageLevel == ComponentDamageLevel.Destroyed && x.Is<EngineCoreDef>());
         }
