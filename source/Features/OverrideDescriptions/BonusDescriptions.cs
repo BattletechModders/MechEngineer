@@ -19,7 +19,15 @@ namespace MechEngineer.Features.OverrideDescriptions
 
         public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
         {
-            tooltip.ShowBonuses(false);
+            // we list bonuses in the description, disable bonus sections
+            AdjustTooltipEquipment_ShowBonusSection(tooltip,false);
+        }
+
+        internal static void AdjustTooltipEquipment_ShowBonusSection(TooltipPrefab_Equipment tooltip, bool? show = null)
+        {
+            show ??= !string.IsNullOrEmpty(tooltip.bonusesText.OriginalText) && tooltip.bonusesText.OriginalText != "-";
+            var text = tooltip.bonusesText.transform.parent.parent.parent;
+            text.gameObject.SetActive(show.Value);
         }
 
         public void AdjustInventoryElement(ListElementController_BASE_NotListView element)

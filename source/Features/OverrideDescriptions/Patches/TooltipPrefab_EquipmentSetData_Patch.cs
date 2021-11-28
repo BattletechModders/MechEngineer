@@ -6,14 +6,14 @@ using MechEngineer.Helper;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches
 {
-    [HarmonyPatch(typeof(TooltipPrefab_Equipment), "SetData")]
+    [HarmonyPatch(typeof(TooltipPrefab_Equipment), nameof(TooltipPrefab_Equipment.SetData))]
     public static class TooltipPrefab_EquipmentSetData_Patch
     {
         public static void Postfix(TooltipPrefab_Equipment __instance, object data)
         {
             try
             {
-                __instance.ShowBonuses(true);
+                BonusDescriptions.AdjustTooltipEquipment_ShowBonusSection(__instance);
 
                 if (data is MechComponentDef def)
                 {
