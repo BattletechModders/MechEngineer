@@ -12,8 +12,7 @@
         "TraceEnabled": true
     },
     "HardpointFix": {
-        "AutoFixChassisDefWeaponHardpointCounts": false,
-        "EnforceHardpointLimits": false
+        "Enabled": false
     },
     "Performance": {
         "Enabled": true

@@ -2,11 +2,8 @@ namespace MechEngineer.Features.HardpointFix
 {
     internal class HardpointFixSettings : ISettings
     {
-        public bool Enabled { get; set; } = true;
+        public bool Enabled { get; set; } = false;
         public string EnabledDescription => "Optimizes the way installed weapons are shown on a mech model.";
-
-        public bool TraceLogDebugMappings { get; set; } = false;
-        public string TraceLogDebugMappingsDescription => "Trace all GetComponentBlankNames and GetComponentPrefabName calls. Otherwise only some of them are logged.";
 
         public string[] FallbackPrefabsForComponentDefIds = {"Weapon_Mortar_MechMortar"};
         public string FallbackPrefabsForComponentDefIdsDescription => "A list of components that always should be assigned a weapon prefab to.";

@@ -32,10 +32,7 @@ namespace MechEngineer.Features.HardpointFix.Patches
         {
             try
             {
-                if (HardpointFixFeature.Shared.Settings.TraceLogDebugMappings || componentRef.ComponentDefType == ComponentType.Weapon && string.IsNullOrEmpty(__result))
-                {
-                    Control.Logger.Debug?.Log($"GetComponentPrefabName prefabName={__result} ComponentDefID={componentRef.ComponentDefID} PrefabIdentifier={componentRef.Def.PrefabIdentifier}");
-                }
+                Control.Logger.Trace?.Log($"GetComponentPrefabName prefabName={__result} ComponentDefID={componentRef.ComponentDefID} PrefabIdentifier={componentRef.Def.PrefabIdentifier}");
             }
             catch (Exception e)
             {
