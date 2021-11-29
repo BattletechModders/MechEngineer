@@ -1,5 +1,14 @@
 {
     "ChassisTags": {
         "items": [ "ArmLimitLowerRight" ]
-    }
+    },
+    "FixedEquipment": [
+        {
+            "MountedLocation": "CenterTorso",
+            "ComponentDefID": "Gear_General_Intercept_System",
+            "ComponentDefType": "Upgrade",
+            "DamageLevel": "Functional",
+            "IsFixed": true
+        }
+    ]
 }
