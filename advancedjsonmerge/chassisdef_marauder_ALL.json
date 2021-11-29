@@ -1,0 +1,16 @@
+{
+	"TargetIDs": [
+		"chassisdef_marauder_MAD-2R",
+		"chassisdef_marauder_MAD-3D",
+		"chassisdef_marauder_MAD-3R",
+		"chassisdef_marauder_MAD-BH",
+		"chassisdef_marauder_MAD-CM"
+	],
+	"Instructions": [
+		{
+			"JSONPath": "FixedEquipment[?(@.ComponentDefID == 'Gear_General_Lance_Command_Module')].MountedLocation",
+			"Action": "Replace",
+			"Value": "CenterTorso"
+		}
+	]
+}
