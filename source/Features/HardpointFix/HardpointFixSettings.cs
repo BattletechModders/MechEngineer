@@ -2,7 +2,7 @@ namespace MechEngineer.Features.HardpointFix
 {
     internal class HardpointFixSettings : ISettings
     {
-        public bool Enabled { get; set; } = false;
+        public bool Enabled { get; set; } = true;
         public string EnabledDescription => "Optimizes the way installed weapons are shown on a mech model.";
 
         public string[] FallbackPrefabsForComponentDefIds = {"Weapon_Mortar_MechMortar"};

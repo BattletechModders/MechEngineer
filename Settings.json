@@ -11,9 +11,6 @@
 		"Level": "Debug",
         "TraceEnabled": true
     },
-    "HardpointFix": {
-        "Enabled": false
-    },
     "Performance": {
         "Enabled": true
     }
