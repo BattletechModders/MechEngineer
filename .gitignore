@@ -8,6 +8,7 @@ log.txt
 /dist/
 Settings.defaults.json
 Settings.last.json
+Directory.Build.props
 
 # User-specific files
 *.suo
