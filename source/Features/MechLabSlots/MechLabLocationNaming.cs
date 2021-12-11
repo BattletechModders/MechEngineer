@@ -1,10 +1,9 @@
-﻿using BattleTech.UI;
-using System.Linq;
+﻿using System.Linq;
 using BattleTech;
+using BattleTech.UI;
 using CustomComponents;
 using Localize;
-using MechEngineer.Helper;
-using UnityEngine;
+using MechEngineer.Features.OverrideTonnage;
 
 namespace MechEngineer.Features.MechLabSlots
 {
@@ -18,11 +17,10 @@ namespace MechEngineer.Features.MechLabSlots
             var mechLab = (MechLabPanel)widget.parentDropTarget;
             var text = GetLocationName(mechLab.activeMechDef.Chassis, location);
 
-            var adapter = new MechLabLocationWidgetAdapter(widget);
-            adapter.locationName.SetText(text);
+            widget.locationName.SetText(text);
         }
 
-        static Text GetLocationName(ChassisDef chassisDef, ChassisLocations location)
+        private static Text GetLocationName(ChassisDef chassisDef, ChassisLocations location)
         {
             if (chassisDef.Is<ChassisLocationNaming>(out var naming))
             {
@@ -36,16 +34,20 @@ namespace MechEngineer.Features.MechLabSlots
                     return new Text(text);
                 }
             }
+
             return Mech.GetLongChassisLocation(location);
         }
     }
 
     internal static class MechLabLocationWidgetExtensions
     {
-        // locations not used by vehicles in mechlab use maxarmor = 0
+        // hide any location with maxArmor <= 0 && structure <= 1
+        // for vehicles and troopers
         internal static bool ShouldHide(this MechLabLocationWidget widget)
         {
-            return Mathf.Approximately(widget.maxArmor, 0);
+            var def = widget.chassisLocationDef;
+            return PrecisionUtils.SmallerOrEqualsTo(def.MaxArmor, 0)
+                && PrecisionUtils.SmallerOrEqualsTo(def.InternalStructure, 1);
         }
     }
 }
