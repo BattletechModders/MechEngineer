@@ -25,20 +25,23 @@ namespace MechEngineer.Features.MechLabSlots
 
             {
                 var template = mechLabPanel.centerTorsoWidget;
-                var container = mechLabPanel.rightArmWidget.transform.parent.gameObject;
+                var parent = mechLabPanel.rightArmWidget.transform.parent;
+                var container = parent.gameObject;
                 var clg = container.GetComponent<VerticalLayoutGroup>();
                 clg.padding = new RectOffset(0, 0, MechLabSlotsFeature.settings.MechLabArmTopPadding, 0);
                 var go = UnityEngine.Object.Instantiate(template.gameObject, null);
 
                 {
-                    go.transform.SetParent(mechLabPanel.rightArmWidget.transform, false);
+                    go.transform.SetParent(parent, false);
+                    go.transform.SetAsFirstSibling();
                     go.GetComponent<LayoutElement>().ignoreLayout = true;
                     go.transform.GetChild("layout_armor").gameObject.SetActive(false);
                     go.transform.GetChild("layout_hardpoints").gameObject.SetActive(false);
                     go.transform.GetChild("layout_locationText").GetChild("txt_structure").gameObject.SetActive(false);
                     var rect = go.GetComponent<RectTransform>();
+                    rect.localPosition = new Vector3(0, 0);
                     rect.pivot = new Vector2(0, 0);
-                    rect.localPosition = new Vector3(0, 20);
+                    rect.anchoredPosition = new Vector2(0, -120 + 20);
                     var vlg = go.GetComponent<VerticalLayoutGroup>();
                     vlg.padding = new RectOffset(0, 0, 0, 3);
                     vlg.spacing = 4;
