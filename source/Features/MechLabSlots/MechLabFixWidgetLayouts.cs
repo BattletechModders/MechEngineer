@@ -25,12 +25,17 @@ namespace MechEngineer.Features.MechLabSlots
                     var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
                     component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
                     component.enabled = true;
-                    go.GetComponent<VerticalLayoutGroup>().spacing = 56;
+                    {
+                        var clg = go.GetComponent<VerticalLayoutGroup>();
+                        clg.padding = new RectOffset(0, 0, 0, 0);
+                        clg.spacing = 56;
+                    }
                 }
 
                 foreach (Transform widget in container)
                 {
-                    if (widget.GetComponent<MechLabLocationWidget>() == null)
+                    var widgetComponent = widget.GetComponent<MechLabLocationWidget>();
+                    if (widgetComponent == null || CustomWidgetsFixMechLab.IsCustomWidget(widgetComponent))
                     {
                         continue;
                     }
