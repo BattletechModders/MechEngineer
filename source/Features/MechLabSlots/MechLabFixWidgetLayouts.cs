@@ -61,7 +61,7 @@ namespace MechEngineer.Features.MechLabSlots
                     var cgo = new GameObject("TextContainer");
                     cgo.transform.parent = go.transform.parent;
                     go.transform.parent = cgo.transform;
-                    
+
                     var height = 20f;
                     var width = go.name.Contains("jump") ? 40f : 20f;
                     FixRect(go, height);
@@ -159,7 +159,8 @@ namespace MechEngineer.Features.MechLabSlots
 
                 foreach (Transform widget in container)
                 {
-                    if (widget.GetComponent<MechLabLocationWidget>() == null)
+                    var widgetComponent = widget.GetComponent<MechLabLocationWidget>();
+                    if (widgetComponent == null || MechPropertiesWidget.IsCustomWidget(widgetComponent))
                     {
                         continue;
                     }

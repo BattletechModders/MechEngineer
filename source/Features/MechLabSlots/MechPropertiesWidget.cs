@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace MechEngineer.Features.MechLabSlots
 {
@@ -14,51 +15,61 @@ namespace MechEngineer.Features.MechLabSlots
     {
         private static MechLabLocationWidget PropertiesWidget;
 
+        internal static bool IsCustomWidget(MechLabLocationWidget widget)
+        {
+            return PropertiesWidget == widget;
+        }
+
         internal static void Setup(MechLabPanel mechLabPanel)
         {
-            if (PropertiesWidget != null)
-            {
-                PropertiesWidget.gameObject.transform.SetParent(mechLabPanel.rightArmWidget.transform, false);
-                PropertiesWidget.Init(mechLabPanel);
-                return;
-            }
-
+            var armWidget = mechLabPanel.rightArmWidget;
+            GameObject go;
+            if (PropertiesWidget == null)
             {
                 var template = mechLabPanel.centerTorsoWidget;
-                var parent = mechLabPanel.rightArmWidget.transform.parent;
-                var container = parent.gameObject;
-                var clg = container.GetComponent<VerticalLayoutGroup>();
-                clg.padding = new RectOffset(0, 0, MechLabSlotsFeature.settings.MechLabArmTopPadding, 0);
-                var go = UnityEngine.Object.Instantiate(template.gameObject, null);
 
+                go = Object.Instantiate(template.gameObject, null);
+                go.name = "MechPropertiesWidget";
+                go.SetActive(MechLabSlotsFeature.settings.MechLabGeneralWidgetEnabled);
                 {
-                    go.transform.SetParent(parent, false);
-                    go.transform.SetAsFirstSibling();
-                    go.GetComponent<LayoutElement>().ignoreLayout = true;
-                    go.transform.GetChild("layout_armor").gameObject.SetActive(false);
-                    go.transform.GetChild("layout_hardpoints").gameObject.SetActive(false);
-                    go.transform.GetChild("layout_locationText").GetChild("txt_structure").gameObject.SetActive(false);
-                    var rect = go.GetComponent<RectTransform>();
-                    rect.localPosition = new Vector3(0, 0);
-                    rect.pivot = new Vector2(0, 0);
-                    rect.anchoredPosition = new Vector2(0, -120 + 20);
                     var vlg = go.GetComponent<VerticalLayoutGroup>();
                     vlg.padding = new RectOffset(0, 0, 0, 3);
                     vlg.spacing = 4;
                 }
 
-                go.name = "MechPropertiesWidget";
+                go.transform.GetChild("layout_armor").gameObject.SetActive(false);
+                go.transform.GetChild("layout_hardpoints").gameObject.SetActive(false);
+                go.transform.GetChild("layout_locationText").GetChild("txt_structure").gameObject.SetActive(false);
                 go.transform.GetChild("layout_locationText").GetChild("txt_location").GetComponent<TextMeshProUGUI>().text = MechLabSlotsFeature.settings.MechLabGeneralWidgetLabel;
-                go.SetActive(MechLabSlotsFeature.settings.MechLabGeneralWidgetEnabled);
-                PropertiesWidget = go.GetComponent<MechLabLocationWidget>();
-                PropertiesWidget.Init(mechLabPanel);
-                var layout = new WidgetLayout(PropertiesWidget);
 
-                MechLabSlotsFixer.ModifyLayoutSlotCount(layout, MechLabSlotsFeature.settings.MechLabGeneralSlots);
+                PropertiesWidget = go.GetComponent<MechLabLocationWidget>();
+            }
+            else
+            {
+                go = PropertiesWidget.gameObject;
             }
 
+            var parent = armWidget.transform.parent;
+            go.transform.SetParent(parent, false);
+            go.transform.SetAsFirstSibling();
+            go.GetComponent<LayoutElement>().ignoreLayout = true;
             {
-                var mechRectTransform = mechLabPanel.leftArmWidget.transform.parent.parent.GetComponent<RectTransform>();
+                var rect = go.GetComponent<RectTransform>();
+                rect.localPosition = new Vector3(0, 0);
+                rect.pivot = new Vector2(0, 0);
+                rect.anchoredPosition = new Vector2(0, -MechLabSlotsFeature.settings.MechLabArmTopPadding + 20);
+            }
+            {
+                var clg = parent.GetComponent<VerticalLayoutGroup>();
+                clg.padding = new RectOffset(0, 0, MechLabSlotsFeature.settings.MechLabArmTopPadding, 0);
+            }
+
+            PropertiesWidget.Init(mechLabPanel);
+
+            var layout = new WidgetLayout(PropertiesWidget);
+            MechLabSlotsFixer.ModifyLayoutSlotCount(layout, MechLabSlotsFeature.settings.MechLabGeneralSlots);
+            {
+                var mechRectTransform = parent.parent.GetComponent<RectTransform>();
                 LayoutRebuilder.ForceRebuildLayoutImmediate(mechRectTransform);
             }
         }
