@@ -4,6 +4,7 @@ using BattleTech;
 using BattleTech.UI;
 using Harmony;
 using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots.Patches
@@ -30,12 +31,32 @@ namespace MechEngineer.Features.MechLabSlots.Patches
                 var widgetLayout = new WidgetLayout(widget);
                 MechLabSlotsFixer.FixSlots(widgetLayout, ___maxSlots);
                 DynamicSlotsFeature.PrepareWidget(widgetLayout);
-                MechLabLocationNaming.AdjustLocationNaming(widget, loadout.Location);
+                AdjustMechLabLocationNaming(widget, loadout.Location);
             }
             catch (Exception e)
             {
                 Control.Logger.Error.Log(e);
             }
+        }
+
+        private static void AdjustMechLabLocationNaming(MechLabLocationWidget widget, ChassisLocations location)
+        {
+            // just hide armor = 0 stuff
+            widget.gameObject.SetActive(!ShouldHide(widget));
+
+            var mechLab = (MechLabPanel)widget.parentDropTarget;
+            var text = ChassisLocationNamingUtils.GetLocationLabel(mechLab.activeMechDef.Chassis, location);
+
+            widget.locationName.SetText(text);
+        }
+
+        // hide any location with maxArmor <= 0 && structure <= 1
+        // for vehicles and troopers
+        private static bool ShouldHide(MechLabLocationWidget widget)
+        {
+            var def = widget.chassisLocationDef;
+            return PrecisionUtils.SmallerOrEqualsTo(def.MaxArmor, 0)
+                   && PrecisionUtils.SmallerOrEqualsTo(def.InternalStructure, 1);
         }
     }
 }

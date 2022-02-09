@@ -10,8 +10,9 @@ namespace MechEngineer.Features.MechLabSlots
 
         public class LocationName
         {
-            public ChassisLocations location;
-            public string text;
+            public ChassisLocations Location;
+            public string Label;
+            public string ShortLabel;
         }
     }
 }

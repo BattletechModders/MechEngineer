@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
-using BattleTech.Data;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
 using CustomComponents;
+using Localize;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace MechEngineer.Features.MechLabSlots
 {
@@ -33,13 +36,62 @@ namespace MechEngineer.Features.MechLabSlots
             Setup(MechLabSlotsFeature.settings.TopRightWidget);
         }
 
-        public static void SetLoadout(LocalizableText centerTorsoLabel, MechDef mechDef, DataManager dataManager, List<GameObject> allComponents)
+        public static void SetLoadout_LabelDefaults(LanceMechEquipmentList el)
         {
-            var centerTorso = centerTorsoLabel.transform.parent.gameObject;
+            SetupWidgetSections(el);
+
+            void SetLabel(LocalizableText label, ChassisLocations location)
+            {
+                var text = Mech.GetAbbreviatedChassisLocation(location);
+                label.SetText(text);
+            }
+            SetLoadout(el, SetLabel);
+        }
+
+        public static void SetLoadout_LabelOverrides(LanceMechEquipmentList el)
+        {
+            var chassisDef = el.activeMech.Chassis;
+            if (!chassisDef.Is<ChassisLocationNaming>(out var naming))
+            {
+                return;
+            }
+
+            void SetLabel(LocalizableText label, ChassisLocations location)
+            {
+                var shortLabel = naming.Names
+                    .Where(x => x.Location == location)
+                    .Select(x => x.ShortLabel)
+                    .FirstOrDefault();
+
+                if (shortLabel != null)
+                {
+                    var text = new Text(shortLabel);
+                    label.SetText(text);
+                }
+            }
+            SetLoadout(el, SetLabel);
+        }
+
+        // have to iterate ourselves, in case CustomUnits skips the vanilla iteration
+        private static void SetLoadout(LanceMechEquipmentList list, Action<LocalizableText, ChassisLocations> setLabel)
+        {
+            setLabel(list.headLabel, ChassisLocations.Head);
+            setLabel(list.leftArmLabel, ChassisLocations.LeftArm);
+            setLabel(list.leftTorsoLabel, ChassisLocations.LeftTorso);
+            setLabel(list.centerTorsoLabel, ChassisLocations.CenterTorso);
+            setLabel(list.rightTorsoLabel, ChassisLocations.RightTorso);
+            setLabel(list.rightArmLabel, ChassisLocations.RightArm);
+            setLabel(list.leftLegLabel, ChassisLocations.LeftLeg);
+            setLabel(list.rightLegLabel, ChassisLocations.RightLeg);
+        }
+
+        private static void SetupWidgetSections(LanceMechEquipmentList el)
+        {
+            var centerTorso = el.centerTorsoLabel.transform.parent.gameObject;
 
             var topLeft = new List<MechComponentRef>();
             var topRight = new List<MechComponentRef>();
-            foreach (var componentRef in mechDef.Inventory)
+            foreach (var componentRef in el.activeMech.Inventory)
             {
                 if (componentRef.Flags<CCFlags>().HideFromEquip)
                 {
@@ -67,7 +119,7 @@ namespace MechEngineer.Features.MechLabSlots
                 var widget = GetWidgetViaCenterTorso(settings, centerTorso);
                 foreach (var mechComponentRef in list)
                 {
-                    var gameObject = dataManager.PooledInstantiate(
+                    var gameObject = el.dataManager.PooledInstantiate(
                         "uixPrfPanl_LC_MechLoadoutItem",
                         BattleTechResourceType.UIModulePrefabs
                     );
@@ -86,7 +138,7 @@ namespace MechEngineer.Features.MechLabSlots
                     );
                     component.SetTooltipData(mechComponentRef.Def);
                     gameObject.transform.SetParent(widget.transform, false);
-                    allComponents.Add(gameObject);
+                    el.allComponents.Add(gameObject);
                 }
 
                 widget.SetActive(list.Count > 0);

@@ -30,28 +30,33 @@ namespace MechEngineer.Features.AutoFix
                     {
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.LeftArm,
-                            text = "FRONT"
+                            Location = ChassisLocations.LeftArm,
+                            Label = "FRONT",
+                            ShortLabel = "F"
                         },
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.RightArm,
-                            text = "REAR"
+                            Location = ChassisLocations.RightArm,
+                            Label = "REAR",
+                            ShortLabel = "R"
                         },
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.LeftLeg,
-                            text = "LEFT SIDE"
+                            Location = ChassisLocations.LeftLeg,
+                            Label = "LEFT SIDE",
+                            ShortLabel = "LS"
                         },
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.RightLeg,
-                            text = "RIGHT SIDE"
+                            Location = ChassisLocations.RightLeg,
+                            Label = "RIGHT SIDE",
+                            ShortLabel = "RS"
                         },
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.Head,
-                            text = "ROTOR"
+                            Location = ChassisLocations.Head,
+                            Label = "ROTOR",
+                            ShortLabel = "RO"
                         }
                     }
                 }
@@ -65,28 +70,33 @@ namespace MechEngineer.Features.AutoFix
                     {
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.LeftArm,
-                            text = "FRONT"
+                            Location = ChassisLocations.LeftArm,
+                            Label = "FRONT",
+                            ShortLabel = "F"
                         },
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.RightArm,
-                            text = "REAR"
+                            Location = ChassisLocations.RightArm,
+                            Label = "REAR",
+                            ShortLabel = "R"
                         },
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.LeftLeg,
-                            text = "LEFT SIDE"
+                            Location = ChassisLocations.LeftLeg,
+                            Label = "LEFT SIDE",
+                            ShortLabel = "LS"
                         },
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.RightLeg,
-                            text = "RIGHT SIDE"
+                            Location = ChassisLocations.RightLeg,
+                            Label = "RIGHT SIDE",
+                            ShortLabel = "RS"
                         },
                         new ChassisLocationNaming.LocationName
                         {
-                            location = ChassisLocations.Head,
-                            text = "TURRET"
+                            Location = ChassisLocations.Head,
+                            Label = "TURRET",
+                            ShortLabel = "T"
                         }
                     }
                 }
