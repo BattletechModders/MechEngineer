@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
+    <!-- when you checkout MechEngineer as Mods/MechEngineer use the following -->
   	<ReferencePath>C:\Games\Steam\SteamApps\common\BATTLETECH\BattleTech_Data\Managed\publicized_assemblies</ReferencePath>
+  	<!-- if you don't want MechEngineer there, use the following settings so it can find CustomComponents dll and publish the MechEngineer dll to the right place-->
+  	<!--
+  	<ReferencePath>C:\Games\Steam\SteamApps\common\BATTLETECH\BattleTech_Data\Managed\publicized_assemblies;C:\Games\Steam\SteamApps\common\BATTLETECH\Mods\CustomComponents</ReferencePath>
+  	<ModDir>C:\Games\Steam\SteamApps\common\BATTLETECH\Mods\MechEngineer</ModDir>
+  	-->
   </PropertyGroup>
 </Project>
