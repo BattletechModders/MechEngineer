@@ -1,6 +1,7 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.OverrideTonnage.Patches
 {
@@ -12,6 +13,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches
             try
             {
                 currentValue += WeightsHandler.Shared.TonnageChanges(mechDef);
+                StoredTonnage.UnRoundedTonnage = currentValue;
                 currentValue = PrecisionUtils.RoundUp(currentValue, OverrideTonnageFeature.settings.TonnageStandardPrecision);
                 maxValue = mechDef.Chassis.Tonnage;
             }
