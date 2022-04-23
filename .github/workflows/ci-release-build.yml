@@ -23,11 +23,11 @@ jobs:
         # CustomComponents
         curl -L -o CustomComponents.zip https://github.com/BattletechModders/CustomComponents/releases/download/latest/CustomComponents.zip
         unzip CustomComponents.zip
-    - name: Checkout MechEngineer
+    - name: Checkout
       uses: actions/checkout@master
       with:
         path: MechEngineer/
-    - name: Fetch MechEngineer Branches and Tags
+    - name: Fetch Branches and Tags
       shell: bash
       run: |
         cd MechEngineer/
