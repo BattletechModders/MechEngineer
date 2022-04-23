@@ -40,26 +40,16 @@ jobs:
         set -e
         cd "$GITHUB_WORKSPACE/MechEngineer/"
         ./release.sh "-p:ReferencePath=$GITHUB_WORKSPACE/deps"
-    - name: Tag latest
-      shell: bash
-      if: github.ref == 'refs/heads/master'
-      run: |
-        cd MechEngineer/
-        git tag -f latest
-        git push -f origin refs/tags/latest
-    - name: Release latest
-      uses: "softprops/action-gh-release@master"
+    - name: Release Latest
+      uses: "marvinpinto/action-automatic-releases@latest"
       if: github.ref == 'refs/heads/master'
       with:
-        draft: false
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        title: "Latest (unstable)"
         prerelease: true
-        files: "./MechEngineer/dist/MechEngineer.zip"
-        name: "Latest (unstable)"
-        tag_name: "latest"
-        body: |
-          Latest unstable release, even less tested than normal releases.
-          Works with best with ModTek v2
-          - MechEngineer.zip contains only the bare bones mod + CustomComponents
+        files: |
+          ./MechEngineer/dist/MechEngineer.zip
     - name: Release stable
       uses: "softprops/action-gh-release@master"
       if: startsWith(github.ref, 'refs/tags')
