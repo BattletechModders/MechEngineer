@@ -5,15 +5,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Download Build Dependencies
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: '6.0'
+        include-prerelease: true
+    - name: Download Dependencies
       shell: bash
       env:
         MANAGED_ARCHIVE_PW: ${{ secrets.MANAGED_ARCHIVE_PW }}
         MANAGED_ARCHIVE_URL: ${{ secrets.MANAGED_ARCHIVE_URL }}
       run: |
         set -e
+        # BattleTech Managed
         curl -L -o "$GITHUB_WORKSPACE/Managed.7z" "$MANAGED_ARCHIVE_URL"
         7z e -p"$MANAGED_ARCHIVE_PW" -o"$GITHUB_WORKSPACE/deps" "$GITHUB_WORKSPACE/Managed.7z"
+        # CustomComponents
+        curl -L -o CustomComponents.zip https://github.com/BattletechModders/CustomComponents/releases/download/latest/CustomComponents.zip
+        unzip CustomComponents.zip
     - name: Checkout MechEngineer
       uses: actions/checkout@master
       with:
@@ -23,22 +32,6 @@ jobs:
       run: |
         cd MechEngineer/
         git fetch --prune --unshallow
-    - name: Checkout CustomComponents
-      uses: actions/checkout@master
-      with:
-        repository: BattletechModders/CustomComponents
-        ref: UnitTypes
-        path: CustomComponents/
-    - name: Fetch CustomComponents Branches and Tags
-      shell: bash
-      run: |
-        cd CustomComponents/
-        git fetch --prune --unshallow
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@master
-      with:
-        dotnet-version: '7.0'
-        include-prerelease: true
     - name: Build Release
       shell: bash
       env:
