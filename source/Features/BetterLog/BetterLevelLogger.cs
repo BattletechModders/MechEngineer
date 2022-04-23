@@ -1,5 +1,6 @@
 using System;
 using HBS.Logging;
+using LogLevel = HBS.Logging.LogLevel;
 
 namespace MechEngineer.Features.BetterLog
 {

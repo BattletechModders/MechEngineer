@@ -9,11 +9,9 @@
     <LangVersion>preview</LangVersion>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <AssemblySearchPaths>
-      $(AssemblySearchPaths);
-      $(ReferencePath);
-    </AssemblySearchPaths>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblySearchPaths>$(ReferencePath);{HintPathFromItem}</AssemblySearchPaths>
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
   <Target Name="CopyDLLtoModDir" AfterTargets="AfterBuild">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDir)" />
@@ -40,6 +38,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">

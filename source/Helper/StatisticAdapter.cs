@@ -1,5 +1,6 @@
 ﻿using System;
 using BattleTech;
+using Variant = BattleTech.Variant;
 
 namespace MechEngineer.Helper
 {

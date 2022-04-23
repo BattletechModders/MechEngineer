@@ -1,6 +1,6 @@
 using System;
-using HBS.Logging;
 using UnityEngine;
+using LogLevel = HBS.Logging.LogLevel;
 
 namespace MechEngineer.Features.BetterLog
 {

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using BattleTech;
-using Localize;
+using Strings = Localize.Strings;
 
 namespace MechEngineer.Misc
 {
