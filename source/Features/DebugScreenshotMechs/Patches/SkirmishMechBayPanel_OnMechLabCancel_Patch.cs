@@ -8,55 +8,54 @@ using BattleTech.UI;
 using Harmony;
 using UnityEngine;
 
-namespace MechEngineer.Features.DebugScreenshotMechs.Patches
+namespace MechEngineer.Features.DebugScreenshotMechs.Patches;
+
+[HarmonyPatch(typeof(SkirmishMechBayPanel), nameof(SkirmishMechBayPanel.OnMechLabCancel))]
+public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
 {
-    [HarmonyPatch(typeof(SkirmishMechBayPanel), nameof(SkirmishMechBayPanel.OnMechLabCancel))]
-    public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
+    public static void Postfix(SkirmishMechBayPanel __instance)
     {
-        public static void Postfix(SkirmishMechBayPanel __instance)
+        try
         {
-            try
+            __instance.StartCoroutine(CallBack(__instance));
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
+        }
+    }
+
+    private static IEnumerator<MechDef> mechDefsIterator;
+    private static IEnumerator CallBack(SkirmishMechBayPanel panel)
+    {
+        yield return new WaitForEndOfFrame();
+        try
+        {
+            if (mechDefsIterator == null)
             {
-                __instance.StartCoroutine(CallBack(__instance));
+                mechDefsIterator = panel.allMechs.GetEnumerator();
             }
-            catch (Exception e)
+            while (mechDefsIterator.MoveNext())
             {
-                Control.Logger.Error.Log(e);
+                var mechDef = mechDefsIterator.Current;
+                var screenshotPath = DebugScreenshotMechsFeature.Shared.ScreenshotPath(mechDef);
+                if (File.Exists(screenshotPath))
+                {
+                    continue;
+                }
+                if (DebugScreenshotMechsFeature.Shared.Settings.OnlyInvalidMechs
+                    && MechValidationRules.ValidateMechDef(MechValidationLevel.Full, panel.dataManager, mechDef, null).All(x => !x.Value.Any()))
+                {
+                    continue;
+                }
+                panel.SelectMech(mechDef);
+                panel.OnEditMechClicked();
+                break;
             }
         }
-
-        private static IEnumerator<MechDef> mechDefsIterator;
-        private static IEnumerator CallBack(SkirmishMechBayPanel panel)
+        catch (Exception e)
         {
-            yield return new WaitForEndOfFrame();
-            try
-            {
-                if (mechDefsIterator == null)
-                {
-                    mechDefsIterator = panel.allMechs.GetEnumerator();
-                }
-                while (mechDefsIterator.MoveNext())
-                {
-                    var mechDef = mechDefsIterator.Current;
-                    var screenshotPath = DebugScreenshotMechsFeature.Shared.ScreenshotPath(mechDef);
-                    if (File.Exists(screenshotPath))
-                    {
-                        continue;
-                    }
-                    if (DebugScreenshotMechsFeature.Shared.Settings.OnlyInvalidMechs
-                        && MechValidationRules.ValidateMechDef(MechValidationLevel.Full, panel.dataManager, mechDef, null).All(x => !x.Value.Any()))
-                    {
-                        continue;
-                    }
-                    panel.SelectMech(mechDef);
-                    panel.OnEditMechClicked();
-                    break;
-                }
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            Control.Logger.Error.Log(e);
         }
     }
 }

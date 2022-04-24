@@ -1,21 +1,20 @@
 ﻿using CustomComponents;
 
-namespace MechEngineer.Features.MechLabSlots
+namespace MechEngineer.Features.MechLabSlots;
+
+[CustomComponent("CustomWidget")]
+public class CustomWidget : SimpleCustomComponent, IValueComponent<CustomWidget.MechLabWidgetLocation>
 {
-    [CustomComponent("CustomWidget")]
-    public class CustomWidget : SimpleCustomComponent, IValueComponent<CustomWidget.MechLabWidgetLocation>
+    public MechLabWidgetLocation Location { get; set; } = MechLabWidgetLocation.TopLeft;
+
+    public void LoadValue(MechLabWidgetLocation location)
     {
-        public MechLabWidgetLocation Location { get; set; } = MechLabWidgetLocation.TopLeft;
+        Location = location;
+    }
 
-        public void LoadValue(MechLabWidgetLocation location)
-        {
-            Location = location;
-        }
-
-        public enum MechLabWidgetLocation
-        {
-            TopLeft,
-            TopRight
-        }
+    public enum MechLabWidgetLocation
+    {
+        TopLeft,
+        TopRight
     }
 }

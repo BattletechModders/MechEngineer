@@ -1,18 +1,17 @@
 ﻿using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer.Features.MechLabSlots
-{
-    [CustomComponent("ChassisLocationNaming")]
-    public class ChassisLocationNaming : SimpleCustomChassis
-    {
-        public LocationName[] Names = new LocationName[0];
+namespace MechEngineer.Features.MechLabSlots;
 
-        public class LocationName
-        {
-            public ChassisLocations Location;
-            public string Label;
-            public string ShortLabel;
-        }
+[CustomComponent("ChassisLocationNaming")]
+public class ChassisLocationNaming : SimpleCustomChassis
+{
+    public LocationName[] Names = new LocationName[0];
+
+    public class LocationName
+    {
+        public ChassisLocations Location;
+        public string Label;
+        public string ShortLabel;
     }
 }

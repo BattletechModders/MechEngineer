@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.AccuracyEffects.Patches
+namespace MechEngineer.Features.AccuracyEffects.Patches;
+
+[HarmonyPatch(typeof(Mech), "InitEffectStats")]
+public static class Mech_InitEffectStats_Patch
 {
-    [HarmonyPatch(typeof(Mech), "InitEffectStats")]
-    public static class Mech_InitEffectStats_Patch
+    public static void Prefix(Mech __instance)
     {
-        public static void Prefix(Mech __instance)
+        try
         {
-            try
-            {
-                AccuracyEffectsFeature.SetupAccuracyStatistics(__instance.StatCollection);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            AccuracyEffectsFeature.SetupAccuracyStatistics(__instance.StatCollection);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

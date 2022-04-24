@@ -2,21 +2,20 @@
 using Harmony;
 using HBS.Logging;
 
-namespace MechEngineer.Features.BetterLog.Patches
+namespace MechEngineer.Features.BetterLog.Patches;
+
+[HarmonyPatch(typeof(Logger), nameof(Logger.SetLoggerLevel))]
+internal static class Logger_SetLoggerLevel_Patch
 {
-    [HarmonyPatch(typeof(Logger), nameof(Logger.SetLoggerLevel))]
-    internal static class Logger_SetLoggerLevel_Patch
+    public static void Postfix(string name)
     {
-        public static void Postfix(string name)
+        try
         {
-            try
-            {
-                BetterLogFeature.OnSetLoggerLevel(name);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            BetterLogFeature.OnSetLoggerLevel(name);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

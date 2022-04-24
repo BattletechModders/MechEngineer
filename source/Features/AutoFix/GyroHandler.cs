@@ -3,39 +3,38 @@ using BattleTech;
 using CustomComponents;
 using MechEngineer.Misc;
 
-namespace MechEngineer.Features.AutoFix
+namespace MechEngineer.Features.AutoFix;
+
+internal class GyroHandler : IAdjustUpgradeDef, IPreProcessor
 {
-    internal class GyroHandler : IAdjustUpgradeDef, IPreProcessor
+    internal static readonly MELazy<GyroHandler> Lazy = new();
+    internal static GyroHandler Shared => Lazy.Value;
+
+    private readonly IdentityHelper identity;
+    private readonly AdjustCompDefInvSizeHelper resizer;
+
+    public GyroHandler()
     {
-        internal static MELazy<GyroHandler> Lazy = new();
-        internal static GyroHandler Shared => Lazy.Value;
+        identity = AutoFixerFeature.settings.GyroCategorizer;
 
-        private readonly IdentityHelper identity;
-        private readonly AdjustCompDefInvSizeHelper resizer;
-
-        public GyroHandler()
+        if (identity == null)
         {
-            identity = AutoFixerFeature.settings.GyroCategorizer;
-
-            if (identity == null)
-            {
-                return;
-            }
-
-            if (AutoFixerFeature.settings.GyroSlotChange != null)
-            {
-                resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.GyroSlotChange);
-            }
+            return;
         }
 
-        public void PreProcess(object target, Dictionary<string, object> values)
+        if (AutoFixerFeature.settings.GyroSlotChange != null)
         {
-            identity?.PreProcess(target, values);
+            resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.GyroSlotChange);
         }
+    }
 
-        public void AdjustUpgradeDef(UpgradeDef upgradeDef)
-        {
-            resizer?.AdjustComponentDef(upgradeDef);
-        }
+    public void PreProcess(object target, Dictionary<string, object> values)
+    {
+        identity?.PreProcess(target, values);
+    }
+
+    public void AdjustUpgradeDef(UpgradeDef upgradeDef)
+    {
+        resizer?.AdjustComponentDef(upgradeDef);
     }
 }

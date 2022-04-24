@@ -2,25 +2,24 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.OrderedStatusEffects.Patches
+namespace MechEngineer.Features.OrderedStatusEffects.Patches;
+
+[HarmonyPatch(typeof(StatCollection), nameof(StatCollection.ModifyStatistic))]
+public static class StatCollection_ModifyStatistic_Patch
 {
-    [HarmonyPatch(typeof(StatCollection), nameof(StatCollection.ModifyStatistic))]
-    public static class StatCollection_ModifyStatistic_Patch
+    public static void Postfix(StatCollection __instance, string statName, int __result)
     {
-        public static void Postfix(StatCollection __instance, string statName, int __result)
+        try
         {
-            try
+            if (__result < 0)
             {
-                if (__result < 0)
-                {
-                    return;
-                }
-                OrderedStatusEffectsFeature.Shared.ModifyStatisticPostfix(__instance, statName);
+                return;
             }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            OrderedStatusEffectsFeature.Shared.ModifyStatisticPostfix(__instance, statName);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

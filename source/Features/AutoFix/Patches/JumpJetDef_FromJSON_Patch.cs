@@ -5,48 +5,47 @@ using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Helper;
 
-namespace MechEngineer.Features.AutoFix.Patches
+namespace MechEngineer.Features.AutoFix.Patches;
+
+[HarmonyPatch(typeof(JumpJetDef), nameof(JumpJetDef.FromJSON))]
+public static class JumpJetDef_FromJSON_Patch
 {
-    [HarmonyPatch(typeof(JumpJetDef), nameof(JumpJetDef.FromJSON))]
-    public static class JumpJetDef_FromJSON_Patch
+    // reduce upgrade components for the center torso that are 3 or larger
+    public static void Postfix(JumpJetDef __instance)
     {
-        // reduce upgrade components for the center torso that are 3 or larger
-        public static void Postfix(JumpJetDef __instance)
+        try
         {
-            try
-            {
-                JumpJetDef_FromJSON(__instance);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            JumpJetDef_FromJSON(__instance);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
+        }
+    }
+
+    internal static void JumpJetDef_FromJSON(JumpJetDef def)
+    {
+        {
+            var statisticData = StatCollectionExtension
+                .JumpCapacity(null)
+                .CreateStatisticData(
+                    StatCollection.StatOperation.Float_Add,
+                    def.JumpCapacity
+                );
+
+            def.AddPassiveStatisticEffectIfMissing(statisticData);
         }
 
-        internal static void JumpJetDef_FromJSON(JumpJetDef def)
+        if (EngineFeature.settings.JumpJetDefaultJumpHeat.HasValue)
         {
-            {
-                var statisticData = StatCollectionExtension
-                    .JumpCapacity(null)
-                    .CreateStatisticData(
-                        StatCollection.StatOperation.Float_Add,
-                        def.JumpCapacity
-                    );
+            var statisticData = StatCollectionExtension
+                .JumpHeat(null)
+                .CreateStatisticData(
+                    StatCollection.StatOperation.Float_Add,
+                    EngineFeature.settings.JumpJetDefaultJumpHeat.Value
+                );
 
-                def.AddPassiveStatisticEffectIfMissing(statisticData);
-            }
-
-            if (EngineFeature.settings.JumpJetDefaultJumpHeat.HasValue)
-            {
-                var statisticData = StatCollectionExtension
-                    .JumpHeat(null)
-                    .CreateStatisticData(
-                        StatCollection.StatOperation.Float_Add,
-                        EngineFeature.settings.JumpJetDefaultJumpHeat.Value
-                    );
-
-                def.AddPassiveStatisticEffectIfMissing(statisticData);
-            }
+            def.AddPassiveStatisticEffectIfMissing(statisticData);
         }
     }
 }

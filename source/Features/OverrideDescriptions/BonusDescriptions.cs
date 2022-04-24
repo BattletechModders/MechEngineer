@@ -8,142 +8,140 @@ using CustomComponents;
 using CustomComponents.ExtendedDetails;
 using fastJSON;
 using Localize;
-using MechEngineer.Helper;
 
-namespace MechEngineer.Features.OverrideDescriptions
+namespace MechEngineer.Features.OverrideDescriptions;
+
+[CustomComponent("BonusDescriptions")]
+public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment, IAdjustInventoryElement, IAfterLoad
 {
-    [CustomComponent("BonusDescriptions")]
-    public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment, IAdjustInventoryElement, IAfterLoad
+    public string[] Bonuses { get; set; }
+
+    public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
     {
-        public string[] Bonuses { get; set; }
+        // we list bonuses in the description, disable bonus sections
+        AdjustTooltipEquipment_ShowBonusSection(tooltip,false);
+    }
 
-        public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
+    internal static void AdjustTooltipEquipment_ShowBonusSection(TooltipPrefab_Equipment tooltip, bool? show = null)
+    {
+        show ??= !string.IsNullOrEmpty(tooltip.bonusesText.OriginalText) && tooltip.bonusesText.OriginalText != "-";
+        var text = tooltip.bonusesText.transform.parent.parent.parent;
+        text.gameObject.SetActive(show.Value);
+    }
+
+    public void AdjustInventoryElement(ListElementController_BASE_NotListView element)
+    {
+        var count = 0;
+        foreach (var description in descriptions.Select(x => x.Long).Where(x => x != null).Take(2))
         {
-            // we list bonuses in the description, disable bonus sections
-            AdjustTooltipEquipment_ShowBonusSection(tooltip,false);
+            if (count == 0)
+            {
+                element.ItemWidget.gearBonusText.text = description;
+                count++;
+            }
+            else if (count == 1)
+            {
+                element.ItemWidget.gearBonusTextB.text = description;
+            }
+        }
+    }
+
+    public void OnLoaded(Dictionary<string, object> values)
+    {
+        if (Bonuses.Length < 1)
+        {
+            return;
         }
 
-        internal static void AdjustTooltipEquipment_ShowBonusSection(TooltipPrefab_Equipment tooltip, bool? show = null)
+        foreach (var bonus in Bonuses)
         {
-            show ??= !string.IsNullOrEmpty(tooltip.bonusesText.OriginalText) && tooltip.bonusesText.OriginalText != "-";
-            var text = tooltip.bonusesText.transform.parent.parent.parent;
-            text.gameObject.SetActive(show.Value);
+            var split = bonus.Split(new[] {':'}, 2);
+            var bonusKey = split[0].Trim();
+
+            if (!OverrideDescriptionsFeature.Resources.TryGetValue(bonusKey, out var settings))
+            {
+                Control.Logger.Error.Log($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
+                continue;
+            }
+
+            var args = split.Length >= 2 ? split[1].Split(',').Select(c => c.Trim()).ToArray() : new string[0];
+
+            var description = new BonusDescription(settings, args);
+            descriptions.Add(description);
         }
 
-        public void AdjustInventoryElement(ListElementController_BASE_NotListView element)
         {
             var count = 0;
-            foreach (var description in descriptions.Select(x => x.Long).Where(x => x != null).Take(2))
+            foreach (var description in descriptions.Select(x => x.Short).Where(x => x != null).Take(2))
             {
                 if (count == 0)
                 {
-                    element.ItemWidget.gearBonusText.text = description;
+                    Def.BonusValueA = description;
                     count++;
                 }
                 else if (count == 1)
                 {
-                    element.ItemWidget.gearBonusTextB.text = description;
+                    Def.BonusValueB = description;
                 }
             }
         }
 
-        public void OnLoaded(Dictionary<string, object> values)
+        AddTemplatedExtendedDetail(
+            ExtendedDetails.GetOrCreate(Def),
+            descriptions.Select(x => x.Full),
+            OverrideDescriptionsFeature.settings.BonusDescriptionsElementTemplate,
+            OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate,
+            OverrideDescriptionsFeature.settings.DescriptionIdentifier
+        );
+    }
+
+    internal static void AddTemplatedExtendedDetail(
+        ExtendedDetails extended,
+        IEnumerable<string> elements,
+        string elementTemplate,
+        string descriptionTemplate,
+        string identifier,
+        UnitType unityType = UnitType.UNDEFINED)
+    {
+        var elementsText = string.Join("", elements.Where(x => x != null).Select(x => elementTemplate.Replace("{{element}}", x)).ToArray());
+        var text = descriptionTemplate.Replace("{{elements}}", elementsText);
+        var detail = new ExtendedDetail
         {
-            if (Bonuses.Length < 1)
-            {
-                return;
-            }
+            UnitType = unityType,
+            Index = -1,
+            Text = text,
+            Identifier = identifier
+        };
+        extended.AddDetail(detail);
+    }
 
-            foreach (var bonus in Bonuses)
-            {
-                var split = bonus.Split(new[] {':'}, 2);
-                var bonusKey = split[0].Trim();
+    [JsonIgnore]
+    private readonly List<BonusDescription> descriptions = new();
 
-                if (!OverrideDescriptionsFeature.Resources.TryGetValue(bonusKey, out var settings))
-                {
-                    Control.Logger.Error.Log($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
-                    continue;
-                }
-
-                var args = split.Length >= 2 ? split[1].Split(',').Select(c => c.Trim()).ToArray() : new string[0];
-
-                var description = new BonusDescription(settings, args);
-                descriptions.Add(description);
-            }
-
-            {
-                var count = 0;
-                foreach (var description in descriptions.Select(x => x.Short).Where(x => x != null).Take(2))
-                {
-                    if (count == 0)
-                    {
-                        Def.BonusValueA = description;
-                        count++;
-                    }
-                    else if (count == 1)
-                    {
-                        Def.BonusValueB = description;
-                    }
-                }
-            }
-
-            AddTemplatedExtendedDetail(
-                ExtendedDetails.GetOrCreate(Def),
-                descriptions.Select(x => x.Full),
-                OverrideDescriptionsFeature.settings.BonusDescriptionsElementTemplate,
-                OverrideDescriptionsFeature.settings.BonusDescriptionsDescriptionTemplate,
-                OverrideDescriptionsFeature.settings.DescriptionIdentifier
-            );
+    private class BonusDescription
+    {
+        internal BonusDescription(BonusDescriptionSettings settings, string[] values)
+        {
+            Short = Process(settings.Short, values);
+            Long = Process(settings.Long, values);
+            Full = Process(settings.Full, values);
         }
 
-        internal static void AddTemplatedExtendedDetail(
-            ExtendedDetails extended,
-            IEnumerable<string> elements,
-            string elementTemplate,
-            string descriptionTemplate,
-            string identifier,
-            UnitType unityType = UnitType.UNDEFINED)
-        {
-            var elementsText = string.Join("", elements.Where(x => x != null).Select(x => elementTemplate.Replace("{{element}}", x)).ToArray());
-            var text = descriptionTemplate.Replace("{{elements}}", elementsText);
-            var detail = new ExtendedDetail
-            {
-                UnitType = unityType,
-                Index = -1,
-                Text = text,
-                Identifier = identifier
-            };
-            extended.AddDetail(detail);
-        }
+        public string Short { get; }
+        public string Long { get; }
+        public string Full { get; }
 
-        [JsonIgnore]
-        private readonly List<BonusDescription> descriptions = new();
-
-        private class BonusDescription
+        private string Process(string format, string[] values)
         {
-            internal BonusDescription(BonusDescriptionSettings settings, string[] values)
+            try
             {
-                Short = Process(settings.Short, values);
-                Long = Process(settings.Long, values);
-                Full = Process(settings.Full, values);
+                return string.IsNullOrEmpty(format) ? null : new Text(format, values).ToString();
             }
-
-            public string Short { get; }
-            public string Long { get; }
-            public string Full { get; }
-
-            private string Process(string format, string[] values)
+            catch (Exception e)
             {
-                try
-                {
-                    return string.IsNullOrEmpty(format) ? null : new Text(format, values).ToString();
-                }
-                catch (Exception e)
-                {
-                    var message = $"Can't process '{format}'";
-                    Control.Logger.Error.Log(message, e);
-                    return message;
-                }
+                var message = $"Can't process '{format}'";
+                Control.Logger.Error.Log(message, e);
+                return message;
             }
         }
     }

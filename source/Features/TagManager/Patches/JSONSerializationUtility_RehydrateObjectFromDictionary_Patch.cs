@@ -4,34 +4,33 @@ using HBS.Util;
 using System;
 using System.Reflection;
 
-namespace MechEngineer.Features.TagManager.Patches
-{
-    [HarmonyPatch]
-    public static class JSONSerializationUtility_RehydrateObjectFromDictionary_Patch
-    {
-        public static MethodBase TargetMethod()
-        {
-            return typeof(JSONSerializationUtility).GetMethod("RehydrateObjectFromDictionary", BindingFlags.NonPublic | BindingFlags.Static);
-        }
+namespace MechEngineer.Features.TagManager.Patches;
 
-        [HarmonyPriority(Priority.High)]
-        public static void Postfix(object target)
+[HarmonyPatch]
+public static class JSONSerializationUtility_RehydrateObjectFromDictionary_Patch
+{
+    public static MethodBase TargetMethod()
+    {
+        return typeof(JSONSerializationUtility).GetMethod("RehydrateObjectFromDictionary", BindingFlags.NonPublic | BindingFlags.Static);
+    }
+
+    [HarmonyPriority(Priority.High)]
+    public static void Postfix(object target)
+    {
+        try
         {
-            try
+            if (target is MechComponentDef componentDef)
             {
-                if (target is MechComponentDef componentDef)
-                {
-                    TagManagerFeature.Shared.ManageComponentTags(componentDef);
-                }
-                else if (target is MechDef mechDef)
-                {
-                    TagManagerFeature.Shared.ManageMechTags(mechDef);
-                }
+                TagManagerFeature.Shared.ManageComponentTags(componentDef);
             }
-            catch (Exception e)
+            else if (target is MechDef mechDef)
             {
-                Control.Logger.Error.Log(e);
+                TagManagerFeature.Shared.ManageMechTags(mechDef);
             }
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer.Features.DynamicSlots.Patches
+namespace MechEngineer.Features.DynamicSlots.Patches;
+
+[HarmonyPatch(typeof(MechLabItemSlotElement), "OnPointerExit")]
+public static class MechLabItemSlotElement_OnPointerExit_Patch
 {
-    [HarmonyPatch(typeof(MechLabItemSlotElement), "OnPointerExit")]
-    public static class MechLabItemSlotElement_OnPointerExit_Patch
+    public static bool Prefix(MechLabItemSlotElement __instance)
     {
-        public static bool Prefix(MechLabItemSlotElement __instance)
-        {
-            return !__instance.IsDynamicSlotElement();
-        }
+        return !__instance.IsDynamicSlotElement();
     }
 }

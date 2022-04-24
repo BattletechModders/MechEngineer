@@ -1,9 +1,8 @@
 ﻿using BattleTech.UI;
 
-namespace MechEngineer.Features.OverrideDescriptions
+namespace MechEngineer.Features.OverrideDescriptions;
+
+internal interface IAdjustInventoryElement
 {
-    internal interface IAdjustInventoryElement
-    {
-        void AdjustInventoryElement(ListElementController_BASE_NotListView element);
-    }
+    void AdjustInventoryElement(ListElementController_BASE_NotListView element);
 }

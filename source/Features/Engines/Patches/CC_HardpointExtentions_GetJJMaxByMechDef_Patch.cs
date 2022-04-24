@@ -4,31 +4,30 @@ using CustomComponents;
 using Harmony;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 
-namespace MechEngineer.Features.Engines.Patches
+namespace MechEngineer.Features.Engines.Patches;
+
+[HarmonyPatch(typeof(HardpointExtentions), nameof(HardpointExtentions.GetJJMaxByMechDef))]
+internal static class CC_HardpointExtentions_GetJJMaxByMechDef_Patch
 {
-    [HarmonyPatch(typeof(HardpointExtentions), nameof(HardpointExtentions.GetJJMaxByMechDef))]
-    internal static class CC_HardpointExtentions_GetJJMaxByMechDef_Patch
+    internal static bool Prefix(MechDef def, ref int __result)
     {
-        internal static bool Prefix(MechDef def, ref int __result)
+        try
         {
-            try
+            if (def == null)
             {
-                if (def == null)
-                {
-                    __result = -1;
-                }
-                else
-                {
-                    var stats = new MechDefMovementStatistics(def);
-                    __result = stats.JumpJetMaxCount;
-                }
-                return false;
+                __result = -1;
             }
-            catch (Exception e)
+            else
             {
-                Control.Logger.Error.Log(e);
+                var stats = new MechDefMovementStatistics(def);
+                __result = stats.JumpJetMaxCount;
             }
-            return true;
+            return false;
         }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
+        }
+        return true;
     }
 }

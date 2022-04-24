@@ -2,18 +2,17 @@
 using HBS.Collections;
 using MechEngineer.Features.AutoFix;
 
-namespace MechEngineer.Helper
+namespace MechEngineer.Helper;
+
+public static class TagSetExtensions
 {
-    public static class TagSetExtensions
+    public static bool IgnoreAutofix(this TagSet set)
     {
-        public static bool IgnoreAutofix(this TagSet set)
+        if (set == null)
         {
-            if (set == null)
-            {
-                Control.Logger.Error.Log("Found null tagset!");
-                throw new NullReferenceException();
-            }
-            return set.ContainsAny(AutoFixerFeature.Shared.IgnoreAutofixTags);
+            Control.Logger.Error.Log("Found null tagset!");
+            throw new NullReferenceException();
         }
+        return set.ContainsAny(AutoFixerFeature.Shared.IgnoreAutofixTags);
     }
 }

@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.OverrideStatTooltips.Patches
+namespace MechEngineer.Features.OverrideStatTooltips.Patches;
+
+[HarmonyPatch(typeof(StatTooltipData), "SetFirepowerData")]
+public static class StatTooltipData_SetFirepowerData_Patch
 {
-    [HarmonyPatch(typeof(StatTooltipData), "SetFirepowerData")]
-    public static class StatTooltipData_SetFirepowerData_Patch
+    public static void Postfix(StatTooltipData __instance, MechDef def)
     {
-        public static void Postfix(StatTooltipData __instance, MechDef def)
+        try
         {
-            try
-            {
-                OverrideStatTooltipsFeature.FirepowerStat.SetupTooltip(__instance, def);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            OverrideStatTooltipsFeature.FirepowerStat.SetupTooltip(__instance, def);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

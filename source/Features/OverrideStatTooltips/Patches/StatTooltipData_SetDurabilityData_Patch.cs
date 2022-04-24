@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.OverrideStatTooltips.Patches
+namespace MechEngineer.Features.OverrideStatTooltips.Patches;
+
+[HarmonyPatch(typeof(StatTooltipData), "SetDurabilityData")]
+public static class StatTooltipData_SetDurabilityData_Patch
 {
-    [HarmonyPatch(typeof(StatTooltipData), "SetDurabilityData")]
-    public static class StatTooltipData_SetDurabilityData_Patch
+    public static void Postfix(StatTooltipData __instance, MechDef def)
     {
-        public static void Postfix(StatTooltipData __instance, MechDef def)
+        try
         {
-            try
-            {
-                OverrideStatTooltipsFeature.DurabilityStat.SetupTooltip(__instance, def);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            OverrideStatTooltipsFeature.DurabilityStat.SetupTooltip(__instance, def);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

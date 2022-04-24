@@ -1,14 +1,13 @@
 ﻿using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer.Features.CriticalEffects
+namespace MechEngineer.Features.CriticalEffects;
+
+[CustomComponent("MechCriticalEffects")]
+public class MechCriticalEffects : CriticalEffects
 {
-    [CustomComponent("MechCriticalEffects")]
-    public class MechCriticalEffects : CriticalEffects
+    public override UnitType GetUnitType()
     {
-        public override UnitType GetUnitType()
-        {
-            return UnitType.Mech;
-        }
+        return UnitType.Mech;
     }
 }

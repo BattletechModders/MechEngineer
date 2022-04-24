@@ -2,21 +2,20 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer.Features.MechLabSlots.Patches
+namespace MechEngineer.Features.MechLabSlots.Patches;
+
+[HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
+public static class MechLabPanel_LoadMech_Patch
 {
-    [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
-    public static class MechLabPanel_LoadMech_Patch
+    public static void Postfix(MechLabPanel __instance)
     {
-        public static void Postfix(MechLabPanel __instance)
+        try
         {
-            try
-            {
-                MechLabAutoZoom.LoadMech(__instance);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            MechLabAutoZoom.LoadMech(__instance);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

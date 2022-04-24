@@ -2,24 +2,23 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.ArmorStructureChanges.Patches
+namespace MechEngineer.Features.ArmorStructureChanges.Patches;
+
+[HarmonyPatch(typeof(Mech), "InitStats")]
+public static class Mech_InitStats_Patch
 {
-    [HarmonyPatch(typeof(Mech), "InitStats")]
-    public static class Mech_InitStats_Patch
+    public static void Prefix(Mech __instance)
     {
-        public static void Prefix(Mech __instance)
+        try
         {
-            try
+            if (!__instance.Combat.IsLoadingFromSave)
             {
-                if (!__instance.Combat.IsLoadingFromSave)
-                {
-                    ArmorStructureChangesFeature.Shared.InitStats(__instance);
-                }
+                ArmorStructureChangesFeature.Shared.InitStats(__instance);
             }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

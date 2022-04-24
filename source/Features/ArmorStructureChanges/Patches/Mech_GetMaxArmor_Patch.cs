@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.ArmorStructureChanges.Patches
+namespace MechEngineer.Features.ArmorStructureChanges.Patches;
+
+[HarmonyPatch(typeof(Mech), nameof(Mech.GetMaxArmor))]
+public static class Mech_GetMaxArmor_Patch
 {
-    [HarmonyPatch(typeof(Mech), nameof(Mech.GetMaxArmor))]
-    public static class Mech_GetMaxArmor_Patch
+    public static void Postfix(Mech __instance, ref float __result)
     {
-        public static void Postfix(Mech __instance, ref float __result)
+        try
         {
-            try
-            {
-                __result *= ArmorStructureChangesFeature.GetArmorFactorForMech(__instance);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            __result *= ArmorStructureChangesFeature.GetArmorFactorForMech(__instance);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

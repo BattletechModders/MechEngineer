@@ -2,28 +2,26 @@
 using BattleTech;
 using BattleTech.UI.Tooltips;
 using Harmony;
-using MechEngineer.Helper;
 
-namespace MechEngineer.Features.OverrideDescriptions.Patches
+namespace MechEngineer.Features.OverrideDescriptions.Patches;
+
+[HarmonyPatch(typeof(TooltipPrefab_Equipment), nameof(TooltipPrefab_Equipment.SetData))]
+public static class TooltipPrefab_EquipmentSetData_Patch
 {
-    [HarmonyPatch(typeof(TooltipPrefab_Equipment), nameof(TooltipPrefab_Equipment.SetData))]
-    public static class TooltipPrefab_EquipmentSetData_Patch
+    public static void Postfix(TooltipPrefab_Equipment __instance, object data)
     {
-        public static void Postfix(TooltipPrefab_Equipment __instance, object data)
+        try
         {
-            try
-            {
-                BonusDescriptions.AdjustTooltipEquipment_ShowBonusSection(__instance);
+            BonusDescriptions.AdjustTooltipEquipment_ShowBonusSection(__instance);
 
-                if (data is MechComponentDef def)
-                {
-                    OverrideDescriptionsFeature.Shared.AdjustTooltipEquipment(__instance, def);
-                }
-            }
-            catch (Exception e)
+            if (data is MechComponentDef def)
             {
-                Control.Logger.Error.Log(e);
+                OverrideDescriptionsFeature.Shared.AdjustTooltipEquipment(__instance, def);
             }
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

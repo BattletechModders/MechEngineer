@@ -5,41 +5,40 @@ using BattleTech.UI;
 using Harmony;
 using Localize;
 
-namespace MechEngineer.Features.InvalidInventory.Patches
+namespace MechEngineer.Features.InvalidInventory.Patches;
+
+[HarmonyPatch(typeof(MechLabPanel), "GetNonFieldableErrorString")]
+public static class MechLabPanel_GetNonFieldableErrorString_Patch
 {
-    [HarmonyPatch(typeof(MechLabPanel), "GetNonFieldableErrorString")]
-    public static class MechLabPanel_GetNonFieldableErrorString_Patch
+    private static bool _isSimGame;
+
+    public static void Prefix(MechLabPanel __instance)
     {
-        private static bool _isSimGame;
+        _isSimGame = __instance.IsSimGame;
+    }
 
-        public static void Prefix(MechLabPanel __instance)
-        {
-            _isSimGame = __instance.IsSimGame;
-        }
+    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    {
+        return instructions.MethodReplacer(
+            AccessTools.Method(typeof(MechValidationRules), "GetValidationErrors"),
+            AccessTools.Method(typeof(MechLabPanel_GetNonFieldableErrorString_Patch), "GetValidationErrors")
+        );
+    }
 
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    public static List<Text> GetValidationErrors(Dictionary<MechValidationType, List<Text>> errorMessages, List<MechValidationType> validationTypes)
+    {
+        try
         {
-            return instructions.MethodReplacer(
-                AccessTools.Method(typeof(MechValidationRules), "GetValidationErrors"),
-                AccessTools.Method(typeof(MechLabPanel_GetNonFieldableErrorString_Patch), "GetValidationErrors")
-            );
-        }
-
-        public static List<Text> GetValidationErrors(Dictionary<MechValidationType, List<Text>> errorMessages, List<MechValidationType> validationTypes)
-        {
-            try
+            if (_isSimGame)
             {
-                if (_isSimGame)
-                {
-                    validationTypes.Add(MechValidationType.InvalidInventorySlots);
-                }
+                validationTypes.Add(MechValidationType.InvalidInventorySlots);
             }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
-
-            return MechValidationRules.GetValidationErrors(errorMessages, validationTypes);
         }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
+        }
+
+        return MechValidationRules.GetValidationErrors(errorMessages, validationTypes);
     }
 }

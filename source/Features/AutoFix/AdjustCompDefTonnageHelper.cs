@@ -2,41 +2,40 @@
 using BattleTech;
 using MechEngineer.Misc;
 
-namespace MechEngineer.Features.AutoFix
+namespace MechEngineer.Features.AutoFix;
+
+internal class AdjustCompDefTonnageHelper
 {
-    internal class AdjustCompDefTonnageHelper
+    private readonly IIdentifier identifier;
+    private readonly ValueChange<float> change;
+
+    internal AdjustCompDefTonnageHelper(IIdentifier identifier, ValueChange<float> change)
     {
-        private readonly IIdentifier identifier;
-        private readonly ValueChange<float> change;
+        this.identifier = identifier;
+        this.change = change;
+    }
 
-        internal AdjustCompDefTonnageHelper(IIdentifier identifier, ValueChange<float> change)
+    internal void AdjustComponentDef(MechComponentDef def)
+    {
+        if (change == null)
         {
-            this.identifier = identifier;
-            this.change = change;
+            return;
         }
 
-        internal void AdjustComponentDef(MechComponentDef def)
+        if (!identifier.IsCustomType(def))
         {
-            if (change == null)
-            {
-                return;
-            }
-
-            if (!identifier.IsCustomType(def))
-            {
-                return;
-            }
-
-            var newTonnage = change.Change(def.Tonnage);
-            if (!newTonnage.HasValue)
-            {
-                return;
-            }
-
-            var value = newTonnage.Value;
-            var propInfo = typeof(UpgradeDef).GetProperty("Tonnage");
-            var propValue = Convert.ChangeType(value, propInfo.PropertyType);
-            propInfo.SetValue(def, propValue, null);
+            return;
         }
+
+        var newTonnage = change.Change(def.Tonnage);
+        if (!newTonnage.HasValue)
+        {
+            return;
+        }
+
+        var value = newTonnage.Value;
+        var propInfo = typeof(UpgradeDef).GetProperty("Tonnage");
+        var propValue = Convert.ChangeType(value, propInfo.PropertyType);
+        propInfo.SetValue(def, propValue, null);
     }
 }

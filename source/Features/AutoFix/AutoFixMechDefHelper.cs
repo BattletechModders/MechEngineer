@@ -3,32 +3,31 @@ using System.Linq;
 using BattleTech;
 using MechEngineer.Misc;
 
-namespace MechEngineer.Features.AutoFix
+namespace MechEngineer.Features.AutoFix;
+
+internal class AutoFixMechDefHelper : IAutoFixMechDef
 {
-    internal class AutoFixMechDefHelper : IAutoFixMechDef
+    private readonly IIdentifier identifier;
+    private readonly AddHelper adder;
+
+    public AutoFixMechDefHelper(IdentityHelper identifier, AddHelper adder)
     {
-        private readonly IIdentifier identifier;
-        private readonly AddHelper adder;
+        this.identifier = identifier;
+        this.adder = adder;
+    }
 
-        public AutoFixMechDefHelper(IdentityHelper identifier, AddHelper adder)
+    public void AutoFixMechDef(MechDef mechDef)
+    {
+        if (mechDef.Inventory.Any(x => x.Def != null && identifier.IsCustomType(x.Def)))
         {
-            this.identifier = identifier;
-            this.adder = adder;
+            return;
         }
 
-        public void AutoFixMechDef(MechDef mechDef)
-        {
-            if (mechDef.Inventory.Any(x => x.Def != null && identifier.IsCustomType(x.Def)))
-            {
-                return;
-            }
+        var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
 
-            var componentRefs = new List<MechComponentRef>(mechDef.Inventory);
+        var componentRef = new MechComponentRef(adder.ComponentDefId, null, adder.ComponentType, adder.ChassisLocation);
+        componentRefs.Add(componentRef);
 
-            var componentRef = new MechComponentRef(adder.ComponentDefId, null, adder.ComponentType, adder.ChassisLocation);
-            componentRefs.Add(componentRef);
-
-            mechDef.SetInventory(componentRefs.ToArray());
-        }
+        mechDef.SetInventory(componentRefs.ToArray());
     }
 }

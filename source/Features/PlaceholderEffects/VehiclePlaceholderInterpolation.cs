@@ -1,47 +1,46 @@
 using BattleTech;
 
-namespace MechEngineer.Features.PlaceholderEffects
+namespace MechEngineer.Features.PlaceholderEffects;
+
+internal class VehiclePlaceholderInterpolation : PlaceholderInterpolation
 {
-    internal class VehiclePlaceholderInterpolation : PlaceholderInterpolation
+    private readonly VehicleChassisLocations Location;
+
+    internal VehiclePlaceholderInterpolation(MechComponent mechComponent) : base(mechComponent)
     {
-        private readonly VehicleChassisLocations Location;
+        Location = mechComponent.vehicleComponentRef.MountedLocation;
+    }
 
-        internal VehiclePlaceholderInterpolation(MechComponent mechComponent) : base(mechComponent)
-        {
-            Location = mechComponent.vehicleComponentRef.MountedLocation;
-        }
+    internal override string InterpolateEffectId(string id)
+    {
+        return base.InterpolateEffectId(id).Replace(LocationPlaceholder, LocationId);
+    }
 
-        internal override string InterpolateEffectId(string id)
-        {
-            return base.InterpolateEffectId(id).Replace(LocationPlaceholder, LocationId);
-        }
+    internal override string InterpolateStatisticName(string id)
+    {
+        return id.Replace(LocationPlaceholder, LocationId);
+    }
 
-        internal override string InterpolateStatisticName(string id)
-        {
-            return id.Replace(LocationPlaceholder, LocationId);
-        }
+    internal override string InterpolateText(string text)
+    {
+        return text.Replace(LocationPlaceholder, LocationName);
+    }
 
-        internal override string InterpolateText(string text)
+    internal override string LocationId
+    {
+        get
         {
-            return text.Replace(LocationPlaceholder, LocationName);
-        }
-
-        internal override string LocationId
-        {
-            get
+            switch (Location)
             {
-                switch (Location)
-                {
-                    case VehicleChassisLocations.Left:
-                        return "LeftSide";
-                    case VehicleChassisLocations.Right:
-                        return "RightSide";
-                    default:
-                        return Location.ToString();
-                }
+                case VehicleChassisLocations.Left:
+                    return "LeftSide";
+                case VehicleChassisLocations.Right:
+                    return "RightSide";
+                default:
+                    return Location.ToString();
             }
         }
-
-        private string LocationName => Location.ToString().ToLowerInvariant();
     }
+
+    private string LocationName => Location.ToString().ToLowerInvariant();
 }

@@ -1,9 +1,8 @@
 ﻿using BattleTech.UI;
 
-namespace MechEngineer.Features.OverrideDescriptions
+namespace MechEngineer.Features.OverrideDescriptions;
+
+internal interface IAdjustSlotElement
 {
-    internal interface IAdjustSlotElement
-    {
-        void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel);
-    }
+    void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel);
 }

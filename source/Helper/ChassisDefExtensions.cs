@@ -1,12 +1,11 @@
 ﻿using BattleTech;
 
-namespace MechEngineer.Helper
+namespace MechEngineer.Helper;
+
+public static class ChassisDefExtensions
 {
-    public static class ChassisDefExtensions
+    public static bool IgnoreAutofix(this ChassisDef def)
     {
-        public static bool IgnoreAutofix(this ChassisDef def)
-        {
-            return def.ChassisTags.IgnoreAutofix();
-        }
+        return def.ChassisTags.IgnoreAutofix();
     }
 }

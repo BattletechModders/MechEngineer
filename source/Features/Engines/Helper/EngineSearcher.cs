@@ -3,53 +3,52 @@ using BattleTech;
 using CustomComponents;
 using MechEngineer.Features.OverrideTonnage;
 
-namespace MechEngineer.Features.Engines.Helper
+namespace MechEngineer.Features.Engines.Helper;
+
+internal class EngineSearcher
 {
-    internal class EngineSearcher
+    internal static Result SearchInventory(IEnumerable<MechComponentRef> componentRefs)
     {
-        internal static Result SearchInventory(IEnumerable<MechComponentRef> componentRefs)
+        var result = new Result();
+        foreach (var componentRef in componentRefs)
         {
-            var result = new Result();
-            foreach (var componentRef in componentRefs)
+            var componentDef = componentRef.Def;
+
+            if (componentDef.Is<EngineHeatSinkDef>())
             {
-                var componentDef = componentRef.Def;
-
-                if (componentDef.Is<EngineHeatSinkDef>())
-                {
-                    result.HeatSinks.Add(componentRef);
-                }
-
-                if (componentDef.Is<CoolingDef>(out var coolingDef))
-                {
-                    result.CoolingDef = coolingDef;
-                }
-
-                if (componentDef.Is<Weights>(out var weightSavings))
-                {
-                    result.Weights.Combine(weightSavings);
-                }
-
-                if (componentDef.Is<EngineCoreDef>(out var coreDef))
-                {
-                    result.CoreDef = coreDef;
-                }
-
-                if (componentDef.Is<EngineHeatBlockDef>(out var blockDef))
-                {
-                    result.HeatBlockDef = blockDef;
-                }
+                result.HeatSinks.Add(componentRef);
             }
 
-            return result;
+            if (componentDef.Is<CoolingDef>(out var coolingDef))
+            {
+                result.CoolingDef = coolingDef;
+            }
+
+            if (componentDef.Is<Weights>(out var weightSavings))
+            {
+                result.Weights.Combine(weightSavings);
+            }
+
+            if (componentDef.Is<EngineCoreDef>(out var coreDef))
+            {
+                result.CoreDef = coreDef;
+            }
+
+            if (componentDef.Is<EngineHeatBlockDef>(out var blockDef))
+            {
+                result.HeatBlockDef = blockDef;
+            }
         }
 
-        internal class Result
-        {
-            internal CoolingDef CoolingDef;
-            internal EngineHeatBlockDef HeatBlockDef;
-            internal EngineCoreDef CoreDef;
-            internal Weights Weights = new();
-            internal List<MechComponentRef> HeatSinks = new();
-        }
+        return result;
+    }
+
+    internal class Result
+    {
+        internal CoolingDef CoolingDef;
+        internal EngineHeatBlockDef HeatBlockDef;
+        internal EngineCoreDef CoreDef;
+        internal readonly Weights Weights = new();
+        internal readonly List<MechComponentRef> HeatSinks = new();
     }
 }

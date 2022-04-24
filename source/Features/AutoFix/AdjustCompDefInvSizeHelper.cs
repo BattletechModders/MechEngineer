@@ -2,41 +2,40 @@
 using BattleTech;
 using MechEngineer.Misc;
 
-namespace MechEngineer.Features.AutoFix
+namespace MechEngineer.Features.AutoFix;
+
+internal class AdjustCompDefInvSizeHelper
 {
-    internal class AdjustCompDefInvSizeHelper
+    private readonly IIdentifier identifier;
+    private readonly ValueChange<int> change;
+
+    internal AdjustCompDefInvSizeHelper(IIdentifier identifier, ValueChange<int> change)
     {
-        private readonly IIdentifier identifier;
-        private readonly ValueChange<int> change;
+        this.identifier = identifier;
+        this.change = change;
+    }
 
-        internal AdjustCompDefInvSizeHelper(IIdentifier identifier, ValueChange<int> change)
+    internal void AdjustComponentDef(MechComponentDef def)
+    {
+        if (change == null)
         {
-            this.identifier = identifier;
-            this.change = change;
+            return;
         }
 
-        internal void AdjustComponentDef(MechComponentDef def)
+        if (!identifier.IsCustomType(def))
         {
-            if (change == null)
-            {
-                return;
-            }
-
-            if (!identifier.IsCustomType(def))
-            {
-                return;
-            }
-
-            var newSize = change.Change(def.InventorySize);
-            if (!newSize.HasValue)
-            {
-                return;
-            }
-
-            var value = newSize.Value;
-            var propInfo = typeof(UpgradeDef).GetProperty("InventorySize");
-            var propValue = Convert.ChangeType(value, propInfo.PropertyType);
-            propInfo.SetValue(def, propValue, null);
+            return;
         }
+
+        var newSize = change.Change(def.InventorySize);
+        if (!newSize.HasValue)
+        {
+            return;
+        }
+
+        var value = newSize.Value;
+        var propInfo = typeof(UpgradeDef).GetProperty("InventorySize");
+        var propValue = Convert.ChangeType(value, propInfo.PropertyType);
+        propInfo.SetValue(def, propValue, null);
     }
 }

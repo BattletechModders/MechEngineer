@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.AutoFix.Patches
+namespace MechEngineer.Features.AutoFix.Patches;
+
+[HarmonyPatch(typeof(ChassisDef), "FromJSON")]
+public static class ChassisDef_FromJSON_Patch
 {
-    [HarmonyPatch(typeof(ChassisDef), "FromJSON")]
-    public static class ChassisDef_FromJSON_Patch
+    public static void Postfix(ChassisDef __instance)
     {
-        public static void Postfix(ChassisDef __instance)
+        try
         {
-            try
-            {
-                ChassisHandler.OverrideChassisSettings(__instance);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            ChassisHandler.OverrideChassisSettings(__instance);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

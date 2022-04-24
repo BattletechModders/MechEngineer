@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.OverrideStatTooltips.Patches
+namespace MechEngineer.Features.OverrideStatTooltips.Patches;
+
+[HarmonyPatch(typeof(StatTooltipData), "SetRangeData")]
+public static class StatTooltipData_SetRangeData_Patch
 {
-    [HarmonyPatch(typeof(StatTooltipData), "SetRangeData")]
-    public static class StatTooltipData_SetRangeData_Patch
+    public static void Postfix(StatTooltipData __instance, MechDef def)
     {
-        public static void Postfix(StatTooltipData __instance, MechDef def)
+        try
         {
-            try
-            {
-                OverrideStatTooltipsFeature.RangeStat.SetupTooltip(__instance, def);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            OverrideStatTooltipsFeature.RangeStat.SetupTooltip(__instance, def);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

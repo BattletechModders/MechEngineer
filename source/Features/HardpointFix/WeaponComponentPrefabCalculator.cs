@@ -6,219 +6,218 @@ using BattleTech;
 using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.DynamicSlots;
 
-namespace MechEngineer.Features.HardpointFix
+namespace MechEngineer.Features.HardpointFix;
+
+internal class WeaponComponentPrefabCalculator
 {
-    internal class WeaponComponentPrefabCalculator
+    private readonly ChassisDef chassisDef;
+    private readonly IDictionary<MechComponentRef, string> weaponMappings = new Dictionary<MechComponentRef, string>();
+    private readonly IDictionary<ChassisLocations, List<string>> blanks = new Dictionary<ChassisLocations, List<string>>();
+    private readonly IDictionary<ChassisLocations, List<PrefabSet>> fallbackPrefabs = new Dictionary<ChassisLocations, List<PrefabSet>>();
+    private readonly HashSet<string> preMappedPrefabNames;
+
+    internal WeaponComponentPrefabCalculator(ChassisDef chassisDef, List<MechComponentRef> allComponentRefs, ChassisLocations location = ChassisLocations.All)
     {
-        private readonly ChassisDef chassisDef;
-        private readonly IDictionary<MechComponentRef, string> weaponMappings = new Dictionary<MechComponentRef, string>();
-        private readonly IDictionary<ChassisLocations, List<string>> blanks = new Dictionary<ChassisLocations, List<string>>();
-        private readonly IDictionary<ChassisLocations, List<PrefabSet>> fallbackPrefabs = new Dictionary<ChassisLocations, List<PrefabSet>>();
-        private readonly HashSet<string> preMappedPrefabNames;
+        this.chassisDef = chassisDef;
 
-        internal WeaponComponentPrefabCalculator(ChassisDef chassisDef, List<MechComponentRef> allComponentRefs, ChassisLocations location = ChassisLocations.All)
+        preMappedPrefabNames = allComponentRefs.Select(c => GetPredefinedPrefabName(c)).Where(x => x != null).ToHashSet();
+
+        var componentRefs = allComponentRefs
+            .Where(c => c.ComponentDefType == ComponentType.Weapon)
+            .Where(c => GetPredefinedPrefabName(c) == null)
+            .OrderByDescending(c => c.Def.InventorySize)
+            .ThenByDescending(c => c.Def.Tonnage)
+            .ThenByDescending(c => ((WeaponDef)c.Def).Damage)
+            .ThenByDescending(c => c.ComponentDefID)
+            .ToList();
+
+        if (!MechDefBuilder.Locations.Contains(location))
         {
-            this.chassisDef = chassisDef;
-
-            preMappedPrefabNames = allComponentRefs.Select(c => GetPredefinedPrefabName(c)).Where(x => x != null).ToHashSet();
-
-            var componentRefs = allComponentRefs
-                .Where(c => c.ComponentDefType == ComponentType.Weapon)
-                .Where(c => GetPredefinedPrefabName(c) == null)
-                .OrderByDescending(c => c.Def.InventorySize)
-                .ThenByDescending(c => c.Def.Tonnage)
-                .ThenByDescending(c => ((WeaponDef)c.Def).Damage)
-                .ThenByDescending(c => c.ComponentDefID)
-                .ToList();
-
-            if (!MechDefBuilder.Locations.Contains(location))
-            {
-                location = ChassisLocations.All;
-            }
-
-            if (location == ChassisLocations.All)
-            {
-                foreach (var tlocation in MechDefBuilder.Locations)
-                {
-                    var localRefs = componentRefs.Where(c => c.MountedLocation == tlocation).ToList();
-                    CalculateMappingForLocation(tlocation, localRefs);
-                }
-            }
-            else
-            {
-                CalculateMappingForLocation(location, componentRefs);
-            }
+            location = ChassisLocations.All;
         }
 
-        private static string PrefabHardpoint(string prefab)
+        if (location == ChassisLocations.All)
         {
-            var lastIndex = prefab.LastIndexOf("_", StringComparison.Ordinal);
-            return prefab.Substring(lastIndex + 1);
-        }
-
-        internal List<string> GetRequiredBlankPrefabNamesInLocation(ChassisLocations location)
-        {
-            return blanks.TryGetValue(location, out var list) ? list : new List<string>();
-        }
-
-        internal string GetPrefabName(BaseComponentRef componentRef)
-        {
-            var pre = GetPredefinedPrefabName(componentRef);
-            if (pre != null)
+            foreach (var tlocation in MechDefBuilder.Locations)
             {
-                return pre;
+                var localRefs = componentRefs.Where(c => c.MountedLocation == tlocation).ToList();
+                CalculateMappingForLocation(tlocation, localRefs);
             }
-            if (componentRef is MechComponentRef mechComponentRef)
-            {
-                if (weaponMappings.TryGetValue(mechComponentRef, out var prefabName))
-                {
-                    return prefabName;
-                }
-                if (HardpointFixFeature.Shared.Settings.FallbackPrefabsForComponentDefIds.Contains(componentRef.ComponentDefID))
-                {
-                    return GetFallbackPrefabIdentifier(mechComponentRef);
-                }
-            }
-            return null;
         }
-
-        private string GetFallbackPrefabIdentifier(MechComponentRef mechComponentRef)
+        else
         {
-            var location = mechComponentRef.MountedLocation;
-            if (fallbackPrefabs.TryGetValue(location, out var sets))
-            {
-                // we assume not more than one fallback per location is required, meaning we don't have to remove fallback candidates
-                var name = sets.Where(x => x.Any()).Select(x => x.First().Name).FirstOrDefault();
-                if (name == null)
-                {
-                    name = chassisDef.HardpointDataDef.HardpointData?[0].weapons?[0]?[0];
-                }
-                if (name == null)
-                {
-                    Control.Logger.Error.Log($"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}");
-                }
-                return name;
-            }
-            return null;
+            CalculateMappingForLocation(location, componentRefs);
         }
+    }
 
-        private string GetPredefinedPrefabName(BaseComponentRef componentRef)
+    private static string PrefabHardpoint(string prefab)
+    {
+        var lastIndex = prefab.LastIndexOf("_", StringComparison.Ordinal);
+        return prefab.Substring(lastIndex + 1);
+    }
+
+    internal List<string> GetRequiredBlankPrefabNamesInLocation(ChassisLocations location)
+    {
+        return blanks.TryGetValue(location, out var list) ? list : new List<string>();
+    }
+
+    internal string GetPrefabName(BaseComponentRef componentRef)
+    {
+        var pre = GetPredefinedPrefabName(componentRef);
+        if (pre != null)
         {
-            if (componentRef.Def.PrefabIdentifier.StartsWith("chrPrfWeap", true, CultureInfo.InvariantCulture)
-                || componentRef.Def.PrefabIdentifier.StartsWith("chrPrfComp", true, CultureInfo.InvariantCulture))
-            {
-                return componentRef.Def.PrefabIdentifier;
-            }
-            return null;
+            return pre;
         }
-
-        private void CalculateMappingForLocation(ChassisLocations location, List<MechComponentRef> sortedComponentRefs)
+        if (componentRef is MechComponentRef mechComponentRef)
         {
-            var availablePrefabSets = GetAvailablePrefabSetsForLocation(location);
-            var bestSelection = new PrefabSelectionCandidate(availablePrefabSets);
-
-            Control.Logger.Debug?.Log($"CalculateMappingForLocation chassisDef={chassisDef.Description.Id} location={location} availablePrefabSets={availablePrefabSets.JoinAsString()} sortedComponentRefs=[{sortedComponentRefs.Select(x => x.ComponentDefID).JoinAsString()}]");
-
-            foreach (var componentRef in sortedComponentRefs)
+            if (weaponMappings.TryGetValue(mechComponentRef, out var prefabName))
             {
-                var prefabIdentifier = componentRef.Def.PrefabIdentifier;
-                var compatibleTerms = HardpointFixFeature.Shared.GetCompatiblePrefabTerms(prefabIdentifier);
+                return prefabName;
+            }
+            if (HardpointFixFeature.Shared.Settings.FallbackPrefabsForComponentDefIds.Contains(componentRef.ComponentDefID))
+            {
+                return GetFallbackPrefabIdentifier(mechComponentRef);
+            }
+        }
+        return null;
+    }
 
-                Control.Logger.Debug?.Log($" componentRef={componentRef.ComponentDefID} prefabIdentifier={prefabIdentifier} compatibleTerms={compatibleTerms.JoinAsString()}");
+    private string GetFallbackPrefabIdentifier(MechComponentRef mechComponentRef)
+    {
+        var location = mechComponentRef.MountedLocation;
+        if (fallbackPrefabs.TryGetValue(location, out var sets))
+        {
+            // we assume not more than one fallback per location is required, meaning we don't have to remove fallback candidates
+            var name = sets.Where(x => x.Any()).Select(x => x.First().Name).FirstOrDefault();
+            if (name == null)
+            {
+                name = chassisDef.HardpointDataDef.HardpointData?[0].weapons?[0]?[0];
+            }
+            if (name == null)
+            {
+                Control.Logger.Error.Log($"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}");
+            }
+            return name;
+        }
+        return null;
+    }
 
-                foreach (var compatibleTerm in compatibleTerms)
+    private string GetPredefinedPrefabName(BaseComponentRef componentRef)
+    {
+        if (componentRef.Def.PrefabIdentifier.StartsWith("chrPrfWeap", true, CultureInfo.InvariantCulture)
+            || componentRef.Def.PrefabIdentifier.StartsWith("chrPrfComp", true, CultureInfo.InvariantCulture))
+        {
+            return componentRef.Def.PrefabIdentifier;
+        }
+        return null;
+    }
+
+    private void CalculateMappingForLocation(ChassisLocations location, List<MechComponentRef> sortedComponentRefs)
+    {
+        var availablePrefabSets = GetAvailablePrefabSetsForLocation(location);
+        var bestSelection = new PrefabSelectionCandidate(availablePrefabSets);
+
+        Control.Logger.Debug?.Log($"CalculateMappingForLocation chassisDef={chassisDef.Description.Id} location={location} availablePrefabSets={availablePrefabSets.JoinAsString()} sortedComponentRefs=[{sortedComponentRefs.Select(x => x.ComponentDefID).JoinAsString()}]");
+
+        foreach (var componentRef in sortedComponentRefs)
+        {
+            var prefabIdentifier = componentRef.Def.PrefabIdentifier;
+            var compatibleTerms = HardpointFixFeature.Shared.GetCompatiblePrefabTerms(prefabIdentifier);
+
+            Control.Logger.Debug?.Log($" componentRef={componentRef.ComponentDefID} prefabIdentifier={prefabIdentifier} compatibleTerms={compatibleTerms.JoinAsString()}");
+
+            foreach (var compatibleTerm in compatibleTerms)
+            {
+                var prefab = bestSelection.FreeSets
+                    .Select(x => x.GetPrefabByIdentifier(compatibleTerm))
+                    .FirstOrDefault(x => x != null);
+
+                if (prefab == null)
                 {
-                    var prefab = bestSelection.FreeSets
-                        .Select(x => x.GetPrefabByIdentifier(compatibleTerm))
-                        .FirstOrDefault(x => x != null);
-
-                    if (prefab == null)
-                    {
-                        continue;
-                    }
-
-                    Control.Logger.Debug?.Log($"  prefab={prefab}");
-
-                    var newMapping = new PrefabMapping(prefab, componentRef);
-                    bestSelection = bestSelection.CreateWithoutPrefab(prefab, newMapping);
-
-                    break;
+                    continue;
                 }
 
-            }
-            fallbackPrefabs[location] = bestSelection.FreeSets;
-            Control.Logger.Debug?.Log($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
-            foreach (var mapping in bestSelection.Mappings)
-            {
-                weaponMappings[mapping.MechComponentRef] = mapping.Prefab.Name;
+                Control.Logger.Debug?.Log($"  prefab={prefab}");
+
+                var newMapping = new PrefabMapping(prefab, componentRef);
+                bestSelection = bestSelection.CreateWithoutPrefab(prefab, newMapping);
+
+                break;
             }
 
-            CalculateBlanksForLocation(location);
+        }
+        fallbackPrefabs[location] = bestSelection.FreeSets;
+        Control.Logger.Debug?.Log($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
+        foreach (var mapping in bestSelection.Mappings)
+        {
+            weaponMappings[mapping.MechComponentRef] = mapping.Prefab.Name;
         }
 
-        private void CalculateBlanksForLocation(ChassisLocations location)
+        CalculateBlanksForLocation(location);
+    }
+
+    private void CalculateBlanksForLocation(ChassisLocations location)
+    {
+        var weaponData = GetWeaponData(location);
+        if (weaponData.weapons == null || weaponData.blanks == null)
         {
-            var weaponData = GetWeaponData(location);
-            if (weaponData.weapons == null || weaponData.blanks == null)
-            {
-                return;
-            }
-
-            var usedMappings = weaponMappings
-                .Where(x => x.Key.MountedLocation == location)
-                .Select(x => x.Value)
-                .Distinct()
-                .ToList();
-
-            var usedSlots = weaponData.weapons
-                .Where(x => x.Any(y => usedMappings.Contains(y))) // find all mappings in the same groups
-                .SelectMany(x => x)
-                .Select(PrefabHardpoint) // we only care about the last part of the id
-                .Distinct()
-                .ToList();
-
-            var requiredBlanks = weaponData.blanks
-                .Where(x => !usedSlots.Contains(PrefabHardpoint(x)))
-                .ToList();
-
-            Control.Logger.Debug?.Log($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
-
-            blanks[location] = requiredBlanks;
+            return;
         }
 
-        private List<PrefabSet> GetAvailablePrefabSetsForLocation(ChassisLocations location)
+        var usedMappings = weaponMappings
+            .Where(x => x.Key.MountedLocation == location)
+            .Select(x => x.Value)
+            .Distinct()
+            .ToList();
+
+        var usedSlots = weaponData.weapons
+            .Where(x => x.Any(y => usedMappings.Contains(y))) // find all mappings in the same groups
+            .SelectMany(x => x)
+            .Select(PrefabHardpoint) // we only care about the last part of the id
+            .Distinct()
+            .ToList();
+
+        var requiredBlanks = weaponData.blanks
+            .Where(x => !usedSlots.Contains(PrefabHardpoint(x)))
+            .ToList();
+
+        Control.Logger.Debug?.Log($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
+
+        blanks[location] = requiredBlanks;
+    }
+
+    private List<PrefabSet> GetAvailablePrefabSetsForLocation(ChassisLocations location)
+    {
+        var weaponsData = GetWeaponData(location);
+        var sets = new List<PrefabSet>();
+        if (weaponsData.weapons == null)
         {
-            var weaponsData = GetWeaponData(location);
-            var sets = new List<PrefabSet>();
-            if (weaponsData.weapons == null)
+            Control.Logger.Debug?.Log($"no hardpoint data found for {chassisDef.Description.Id} at {location}");
+        }
+        else
+        {
+            foreach (var weapons in weaponsData.weapons)
             {
-                Control.Logger.Debug?.Log($"no hardpoint data found for {chassisDef.Description.Id} at {location}");
-            }
-            else
-            {
-                foreach (var weapons in weaponsData.weapons)
+                var index = sets.Count;
+                try
                 {
-                    var index = sets.Count;
-                    try
-                    {
-                        var set = new PrefabSet(index, weapons.Where(x => !preMappedPrefabNames.Contains(x)));
-                        sets.Add(set);
-                    }
-                    catch (Exception e)
-                    {
-                        Control.Logger.Warning?.Log($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
-                        //throw;
-                    }
+                    var set = new PrefabSet(index, weapons.Where(x => !preMappedPrefabNames.Contains(x)));
+                    sets.Add(set);
+                }
+                catch (Exception e)
+                {
+                    Control.Logger.Warning?.Log($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
+                    //throw;
                 }
             }
-            return sets;
         }
+        return sets;
+    }
 
-        private HardpointDataDef._WeaponHardpointData GetWeaponData(ChassisLocations location)
-        {
-            var locationString = location.ToString().ToLower();
-            var weaponsData = chassisDef.HardpointDataDef.HardpointData.FirstOrDefault(x => x.location == locationString);
-            return weaponsData;
-        }
+    private HardpointDataDef._WeaponHardpointData GetWeaponData(ChassisLocations location)
+    {
+        var locationString = location.ToString().ToLower();
+        var weaponsData = chassisDef.HardpointDataDef.HardpointData.FirstOrDefault(x => x.location == locationString);
+        return weaponsData;
     }
 }

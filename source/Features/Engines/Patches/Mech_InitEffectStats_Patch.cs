@@ -3,33 +3,32 @@ using BattleTech;
 using Harmony;
 using MechEngineer.Features.Engines.StaticHandler;
 
-namespace MechEngineer.Features.Engines.Patches
-{
-    [HarmonyPatch(typeof(Mech), "InitEffectStats")]
-    public static class Mech_InitEffectStats_Patch
-    {
-        public static void Prefix(Mech __instance)
-        {
-            try
-            {
-                Jumping.InitEffectStats(__instance);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
-        }
+namespace MechEngineer.Features.Engines.Patches;
 
-        public static void Postfix(Mech __instance)
+[HarmonyPatch(typeof(Mech), "InitEffectStats")]
+public static class Mech_InitEffectStats_Patch
+{
+    public static void Prefix(Mech __instance)
+    {
+        try
         {
-            try
-            {
-                EngineMisc.OverrideInitEffectStats(__instance);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            Jumping.InitEffectStats(__instance);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
+        }
+    }
+
+    public static void Postfix(Mech __instance)
+    {
+        try
+        {
+            EngineMisc.OverrideInitEffectStats(__instance);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

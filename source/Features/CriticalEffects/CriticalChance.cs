@@ -1,10 +1,9 @@
 ﻿using CustomComponents;
 
-namespace MechEngineer.Features.CriticalEffects
+namespace MechEngineer.Features.CriticalEffects;
+
+[CustomComponent("CriticalChance")]
+public class CriticalChance : SimpleCustomComponent
 {
-    [CustomComponent("CriticalChance")]
-    public class CriticalChance : SimpleCustomComponent
-    {
-        public int Size { get; set; } // allows the override the inventory size in a location
-    }
+    public int Size { get; set; } // allows the override the inventory size in a location
 }

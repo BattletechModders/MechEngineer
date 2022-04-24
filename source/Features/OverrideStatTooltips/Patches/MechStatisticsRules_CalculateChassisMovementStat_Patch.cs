@@ -3,23 +3,22 @@ using BattleTech;
 using Harmony;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 
-namespace MechEngineer.Features.OverrideStatTooltips.Patches
+namespace MechEngineer.Features.OverrideStatTooltips.Patches;
+
+[HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateChassisMovementStat))]
+public static class MechStatisticsRules_CalculateChassisMovementStat_Patch
 {
-    [HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateChassisMovementStat))]
-    public static class MechStatisticsRules_CalculateChassisMovementStat_Patch
+    public static bool Prefix(ChassisDef chassisDef, ref float currentValue, ref float maxValue)
     {
-        public static bool Prefix(ChassisDef chassisDef, ref float currentValue, ref float maxValue)
+        try
         {
-            try
-            {
-                MechStatUtils.SetStatValues(0, ref currentValue, ref maxValue);
-                return false;
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
-            return true;
+            MechStatUtils.SetStatValues(0, ref currentValue, ref maxValue);
+            return false;
         }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
+        }
+        return true;
     }
 }

@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.OverrideStatTooltips.Patches
+namespace MechEngineer.Features.OverrideStatTooltips.Patches;
+
+[HarmonyPatch(typeof(StatTooltipData), "SetHeatData")]
+public static class StatTooltipData_SetHeatData_Patch
 {
-    [HarmonyPatch(typeof(StatTooltipData), "SetHeatData")]
-    public static class StatTooltipData_SetHeatData_Patch
+    public static void Postfix(StatTooltipData __instance, MechDef def)
     {
-        public static void Postfix(StatTooltipData __instance, MechDef def)
+        try
         {
-            try
-            {
-                OverrideStatTooltipsFeature.HeatEfficiencyStat.SetupTooltip(__instance, def);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            OverrideStatTooltipsFeature.HeatEfficiencyStat.SetupTooltip(__instance, def);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

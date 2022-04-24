@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.ArmorStructureChanges.Patches
+namespace MechEngineer.Features.ArmorStructureChanges.Patches;
+
+[HarmonyPatch(typeof(Mech), "get_ArmorMultiplier")]
+public static class Mech_get_ArmorMultiplier_Patch
 {
-    [HarmonyPatch(typeof(Mech), "get_ArmorMultiplier")]
-    public static class Mech_get_ArmorMultiplier_Patch
+    public static void Postfix(Mech __instance, ref float __result)
     {
-        public static void Postfix(Mech __instance, ref float __result)
+        try
         {
-            try
-            {
-                __result = __result * ArmorStructureChangesFeature.GetArmorFactorForMech(__instance);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            __result = __result * ArmorStructureChangesFeature.GetArmorFactorForMech(__instance);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace MechEngineer.Features.TurretMechComponents
-{
-    internal class TurretMechComponentsFeature : Feature<TurretMechComponentSettings>
-    {
-        internal static TurretMechComponentsFeature Shared = new();
+﻿namespace MechEngineer.Features.TurretMechComponents;
 
-        internal override TurretMechComponentSettings Settings => Control.settings.TurretMechComponents;
-    }
+internal class TurretMechComponentsFeature : Feature<TurretMechComponentSettings>
+{
+    internal static readonly TurretMechComponentsFeature Shared = new();
+
+    internal override TurretMechComponentSettings Settings => Control.settings.TurretMechComponents;
 }

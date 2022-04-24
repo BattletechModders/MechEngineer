@@ -2,40 +2,39 @@ using BattleTech;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.PlaceholderEffects;
 
-namespace MechEngineer.Features.AccuracyEffects
+namespace MechEngineer.Features.AccuracyEffects;
+
+internal class AccuracyEffectsFeature : Feature<AccuracyEffectsSettings>
 {
-    internal class AccuracyEffectsFeature : Feature<AccuracyEffectsSettings>
+    internal static readonly AccuracyEffectsFeature Shared = new();
+
+    internal override AccuracyEffectsSettings Settings => Control.settings.AccuracyEffects;
+
+    internal override bool Enabled => base.Enabled && PlaceholderEffectsFeature.Shared.Loaded;
+
+    internal static void SetupAccuracyStatistics(StatCollection statCollection)
     {
-        internal static AccuracyEffectsFeature Shared = new();
-
-        internal override AccuracyEffectsSettings Settings => Control.settings.AccuracyEffects;
-
-        internal override bool Enabled => base.Enabled && PlaceholderEffectsFeature.Shared.Loaded;
-
-        internal static void SetupAccuracyStatistics(StatCollection statCollection)
+        foreach (var location in MechDefBuilder.Locations)
         {
-            foreach (var location in MechDefBuilder.Locations)
-            {
-                AccuracyForLocation(statCollection, location);
-            }
+            AccuracyForLocation(statCollection, location);
         }
+    }
 
-        internal static float AccuracyForLocation(StatCollection statCollection, ChassisLocations location)
-        {
-            var naming = new MechPlaceholderInterpolation(location);
-            var key = naming.LocationalStatisticName("Accuracy");
-            return AccuracyForKey(statCollection, key);
-        }
+    internal static float AccuracyForLocation(StatCollection statCollection, ChassisLocations location)
+    {
+        var naming = new MechPlaceholderInterpolation(location);
+        var key = naming.LocationalStatisticName("Accuracy");
+        return AccuracyForKey(statCollection, key);
+    }
 
-        private static float AccuracyForKey(StatCollection statCollection, string collectionKey)
+    private static float AccuracyForKey(StatCollection statCollection, string collectionKey)
+    {
+        var statistic = statCollection.GetStatistic(collectionKey);
+        if (statistic == null)
         {
-            var statistic = statCollection.GetStatistic(collectionKey);
-            if (statistic == null)
-            {
-                const float defaultValue = 0.0f;
-                statistic = statCollection.AddStatistic(collectionKey, defaultValue);
-            }
-            return statistic.Value<float>();
+            const float defaultValue = 0.0f;
+            statistic = statCollection.AddStatistic(collectionKey, defaultValue);
         }
+        return statistic.Value<float>();
     }
 }

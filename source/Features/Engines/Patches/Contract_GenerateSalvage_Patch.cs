@@ -4,46 +4,45 @@ using BattleTech;
 using Harmony;
 using MechEngineer.Features.Engines.Helper;
 
-namespace MechEngineer.Features.Engines.Patches
+namespace MechEngineer.Features.Engines.Patches;
+
+[HarmonyPatch(typeof(Contract), "GenerateSalvage")]
+public static class Contract_GenerateSalvage_Patch
 {
-    [HarmonyPatch(typeof(Contract), "GenerateSalvage")]
-    public static class Contract_GenerateSalvage_Patch
+    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
-        {
-            return instructions
-                .MethodReplacer(
-                    AccessTools.Method(typeof(MechDef), nameof(MechDef.IsLocationDestroyed)),
-                    AccessTools.Method(typeof(Contract_GenerateSalvage_Patch), nameof(IsLocationDestroyed))
-                )
-                .MethodReplacer(
-                    AccessTools.Property(typeof(Pilot), "IsIncapacitated").GetGetMethod(),
-                    AccessTools.Method(typeof(Contract_GenerateSalvage_Patch), nameof(IsIncapacitated))
-                );
-        }
+        return instructions
+            .MethodReplacer(
+                AccessTools.Method(typeof(MechDef), nameof(MechDef.IsLocationDestroyed)),
+                AccessTools.Method(typeof(Contract_GenerateSalvage_Patch), nameof(IsLocationDestroyed))
+            )
+            .MethodReplacer(
+                AccessTools.Property(typeof(Pilot), "IsIncapacitated").GetGetMethod(),
+                AccessTools.Method(typeof(Contract_GenerateSalvage_Patch), nameof(IsIncapacitated))
+            );
+    }
 
-        private static MechDef lastMechDef;
-        public static bool IsLocationDestroyed(this MechDef mechDef, ChassisLocations location)
-        {
-            lastMechDef = mechDef;
-            return mechDef.IsLocationDestroyed(location);
-        }
+    private static MechDef lastMechDef;
+    public static bool IsLocationDestroyed(this MechDef mechDef, ChassisLocations location)
+    {
+        lastMechDef = mechDef;
+        return mechDef.IsLocationDestroyed(location);
+    }
 
-        public static bool IsIncapacitated(this Pilot pilot)
+    public static bool IsIncapacitated(this Pilot pilot)
+    {
+        try
         {
-            try
+            if (!pilot.IsIncapacitated && lastMechDef != null && lastMechDef.HasDestroyedEngine())
             {
-                if (!pilot.IsIncapacitated && lastMechDef != null && lastMechDef.HasDestroyedEngine())
-                {
-                    return true;
-                }
+                return true;
             }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
-
-            return pilot.IsIncapacitated;
         }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
+        }
+
+        return pilot.IsIncapacitated;
     }
 }

@@ -3,46 +3,45 @@ using BattleTech;
 using CustomComponents;
 using MechEngineer.Misc;
 
-namespace MechEngineer.Features.AutoFix
+namespace MechEngineer.Features.AutoFix;
+
+internal class CockpitHandler : IAdjustUpgradeDef, IPreProcessor
 {
-    internal class CockpitHandler : IAdjustUpgradeDef, IPreProcessor
+    internal static readonly MELazy<CockpitHandler> Lazy = new();
+    internal static CockpitHandler Shared => Lazy.Value;
+
+    private readonly IdentityHelper identity;
+    private readonly AdjustCompDefTonnageHelper reweighter;
+    private readonly AdjustCompDefInvSizeHelper resizer;
+
+    public CockpitHandler()
     {
-        internal static MELazy<CockpitHandler> Lazy = new();
-        internal static CockpitHandler Shared => Lazy.Value;
+        identity = AutoFixerFeature.settings.CockpitCategorizer;
 
-        private readonly IdentityHelper identity;
-        private readonly AdjustCompDefTonnageHelper reweighter;
-        private readonly AdjustCompDefInvSizeHelper resizer;
-
-        public CockpitHandler()
+        if (identity == null)
         {
-            identity = AutoFixerFeature.settings.CockpitCategorizer;
-
-            if (identity == null)
-            {
-                return;
-            }
-
-            if (AutoFixerFeature.settings.CockpitTonnageChange != null)
-            {
-                reweighter = new AdjustCompDefTonnageHelper(identity, AutoFixerFeature.settings.CockpitTonnageChange);
-            }
-
-            if (AutoFixerFeature.settings.CockpitSlotChange != null)
-            {
-                resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.CockpitSlotChange);
-            }
+            return;
         }
 
-        public void PreProcess(object target, Dictionary<string, object> values)
+        if (AutoFixerFeature.settings.CockpitTonnageChange != null)
         {
-            identity?.PreProcess(target, values);
+            reweighter = new AdjustCompDefTonnageHelper(identity, AutoFixerFeature.settings.CockpitTonnageChange);
         }
 
-        public void AdjustUpgradeDef(UpgradeDef upgradeDef)
+        if (AutoFixerFeature.settings.CockpitSlotChange != null)
         {
-            reweighter?.AdjustComponentDef(upgradeDef);
-            resizer?.AdjustComponentDef(upgradeDef);
+            resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.CockpitSlotChange);
         }
+    }
+
+    public void PreProcess(object target, Dictionary<string, object> values)
+    {
+        identity?.PreProcess(target, values);
+    }
+
+    public void AdjustUpgradeDef(UpgradeDef upgradeDef)
+    {
+        reweighter?.AdjustComponentDef(upgradeDef);
+        resizer?.AdjustComponentDef(upgradeDef);
     }
 }

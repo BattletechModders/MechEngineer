@@ -4,88 +4,87 @@ using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 
-namespace MechEngineer.Features.CriticalEffects.Patches
+namespace MechEngineer.Features.CriticalEffects.Patches;
+
+//[HarmonyPatch(typeof(CombatHUDStatusPanel), "ShowEffectStatuses")]
+internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
 {
-    //[HarmonyPatch(typeof(CombatHUDStatusPanel), "ShowEffectStatuses")]
-    internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
+    internal static void Prefix(AbstractActor actor)
     {
-        internal static void Prefix(AbstractActor actor)
+        try
         {
-            try
-            {
-                DebugUtils.LogActor("ShowEffectStatuses Prefix", actor);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            DebugUtils.LogActor("ShowEffectStatuses Prefix", actor);
         }
-
-        internal static void Postfix(Dictionary<string, CombatHUDStatusIndicator> ___effectDict)
+        catch (Exception e)
         {
-            try
-            {
-                Control.Logger.Debug?.Log($"ShowEffectStatuses Postfix effectDict {___effectDict.Keys.JoinAsString()}");
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            Control.Logger.Error.Log(e);
         }
     }
 
-    //[HarmonyPatch(typeof(EffectManager), "CancelEffect")]
-    internal static class EffectManager_CancelEffect_Patch
+    internal static void Postfix(Dictionary<string, CombatHUDStatusIndicator> ___effectDict)
     {
-        internal static void Prefix(Effect e)
+        try
         {
-            try
-            {
-                Control.Logger.Debug?.Log($"CancelEffect Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
-            }
-            catch (Exception e2)
-            {
-                Control.Logger.Error.Log(e2);
-            }
+            Control.Logger.Debug?.Log($"ShowEffectStatuses Postfix effectDict {___effectDict.Keys.JoinAsString()}");
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
+}
 
-    //[HarmonyPatch(typeof(EffectManager), "EffectComplete")]
-    internal static class EffectManager_EffectComplete_Patch
+//[HarmonyPatch(typeof(EffectManager), "CancelEffect")]
+internal static class EffectManager_CancelEffect_Patch
+{
+    internal static void Prefix(Effect e)
     {
-        internal static void Prefix(Effect e)
+        try
         {
-            try
-            {
-                Control.Logger.Debug?.Log($"EffectComplete Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
-            }
-            catch (Exception e2)
-            {
-                Control.Logger.Error.Log(e2);
-            }
+            Control.Logger.Debug?.Log($"CancelEffect Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
+        }
+        catch (Exception e2)
+        {
+            Control.Logger.Error.Log(e2);
         }
     }
+}
 
-    internal static class DebugUtils
+//[HarmonyPatch(typeof(EffectManager), "EffectComplete")]
+internal static class EffectManager_EffectComplete_Patch
+{
+    internal static void Prefix(Effect e)
     {
-        internal static void LogActor(string topic, AbstractActor actor)
+        try
         {
-            var effects = actor.Combat.EffectManager.GetAllEffectsTargeting(actor);
-            Control.Logger.Debug?.Log($"{topic} effects on actor {actor.GUID} {effects.Select(x => x.EffectData.Description.Id).JoinAsString()}");
+            Control.Logger.Debug?.Log($"EffectComplete Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
         }
-
-        internal static string JoinAsString<T>(this IEnumerable<T> @this) where T : class
+        catch (Exception e2)
         {
-            return string.Join(", ", @this.Select(x => x.ToString()).ToArray());
+            Control.Logger.Error.Log(e2);
         }
     }
+}
 
-    //[HarmonyPatch(typeof(CombatHUDStatusPanel), "ShouldShowEffect")]
-    internal static class CombatHUDStatusPanel_ShouldShowEffect_Patch
+internal static class DebugUtils
+{
+    internal static void LogActor(string topic, AbstractActor actor)
     {
-        internal static void Postfix(ref bool __result)
-        {
-            Control.Logger.Debug?.Log($"ShouldShowEffect {__result}");
-        }
+        var effects = actor.Combat.EffectManager.GetAllEffectsTargeting(actor);
+        Control.Logger.Debug?.Log($"{topic} effects on actor {actor.GUID} {effects.Select(x => x.EffectData.Description.Id).JoinAsString()}");
+    }
+
+    internal static string JoinAsString<T>(this IEnumerable<T> @this) where T : class
+    {
+        return string.Join(", ", @this.Select(x => x.ToString()).ToArray());
+    }
+}
+
+//[HarmonyPatch(typeof(CombatHUDStatusPanel), "ShouldShowEffect")]
+internal static class CombatHUDStatusPanel_ShouldShowEffect_Patch
+{
+    internal static void Postfix(ref bool __result)
+    {
+        Control.Logger.Debug?.Log($"ShouldShowEffect {__result}");
     }
 }

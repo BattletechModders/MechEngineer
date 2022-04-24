@@ -1,46 +1,44 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
-using Harmony;
 using MechEngineer.Misc;
 
-namespace MechEngineer.Features.AutoFix
+namespace MechEngineer.Features.AutoFix;
+
+internal class SensorsBHandler : IAdjustUpgradeDef, IPreProcessor
 {
-    internal class SensorsBHandler : IAdjustUpgradeDef, IPreProcessor
+    internal static readonly MELazy<SensorsBHandler> Lazy = new();
+    internal static SensorsBHandler Shared => Lazy.Value;
+
+    private readonly IdentityHelper identity;
+    private readonly AdjustCompDefInvSizeHelper resizer;
+
+    public SensorsBHandler()
     {
-        internal static MELazy<SensorsBHandler> Lazy = new();
-        internal static SensorsBHandler Shared => Lazy.Value;
+        identity = AutoFixerFeature.settings.SensorsBCategorizer;
 
-        private readonly IdentityHelper identity;
-        private readonly AdjustCompDefInvSizeHelper resizer;
-
-        public SensorsBHandler()
+        if (identity == null)
         {
-            identity = AutoFixerFeature.settings.SensorsBCategorizer;
-
-            if (identity == null)
-            {
-                return;
-            }
-
-            if (AutoFixerFeature.settings.SensorsBSlotChange != null)
-            {
-                resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.SensorsBSlotChange);
-            }
+            return;
         }
 
-        public void PreProcess(object target, Dictionary<string, object> values)
+        if (AutoFixerFeature.settings.SensorsBSlotChange != null)
         {
-            identity?.PreProcess(target, values);
+            resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.SensorsBSlotChange);
         }
+    }
 
-        public void AdjustUpgradeDef(UpgradeDef upgradeDef)
+    public void PreProcess(object target, Dictionary<string, object> values)
+    {
+        identity?.PreProcess(target, values);
+    }
+
+    public void AdjustUpgradeDef(UpgradeDef upgradeDef)
+    {
+        if (identity?.IsCustomType(upgradeDef) ?? false)
         {
-            if (identity?.IsCustomType(upgradeDef) ?? false)
-            {
-                upgradeDef.AllowedLocations = ChassisLocations.Head;
-            }
-            resizer?.AdjustComponentDef(upgradeDef);
+            upgradeDef.AllowedLocations = ChassisLocations.Head;
         }
+        resizer?.AdjustComponentDef(upgradeDef);
     }
 }

@@ -1,11 +1,10 @@
-﻿namespace MechEngineer.Features.OverrideTonnage
+﻿namespace MechEngineer.Features.OverrideTonnage;
+
+internal class OverrideTonnageFeature : Feature<OverrideTonnageSettings>
 {
-    internal class OverrideTonnageFeature : Feature<OverrideTonnageSettings>
-    {
-        internal static readonly OverrideTonnageFeature Shared = new();
+    internal static readonly OverrideTonnageFeature Shared = new();
 
-        internal override OverrideTonnageSettings Settings => Control.settings.OverrideTonnage;
+    internal override OverrideTonnageSettings Settings => Control.settings.OverrideTonnage;
 
-        internal static OverrideTonnageSettings settings => Shared.Settings;
-    }
+    internal static OverrideTonnageSettings settings => Shared.Settings;
 }

@@ -1,30 +1,29 @@
 ﻿using BattleTech;
 using MechEngineer.Helper;
 
-namespace MechEngineer.Misc
+namespace MechEngineer.Misc;
+
+internal interface IIdentifier
 {
-    internal interface IIdentifier
-    {
-        bool IsCustomType(MechComponentDef def);
-    }
+    bool IsCustomType(MechComponentDef def);
+}
 
-    internal interface IValidateMech
-    {
-        void ValidateMech(MechDef mechDef, Errors errors);
-    }
+internal interface IValidateMech
+{
+    void ValidateMech(MechDef mechDef, Errors errors);
+}
 
-    internal interface ITonnageChanges
-    {
-        float TonnageChanges(MechDef mechDef);
-    }
+internal interface ITonnageChanges
+{
+    float TonnageChanges(MechDef mechDef);
+}
 
-    internal interface IAdjustUpgradeDef
-    {
-        void AdjustUpgradeDef(UpgradeDef upgradeDef);
-    }
+internal interface IAdjustUpgradeDef
+{
+    void AdjustUpgradeDef(UpgradeDef upgradeDef);
+}
 
-    internal interface IAutoFixMechDef
-    {
-        void AutoFixMechDef(MechDef mechDef);
-    }
+internal interface IAutoFixMechDef
+{
+    void AutoFixMechDef(MechDef mechDef);
 }

@@ -3,24 +3,23 @@ using BattleTech;
 using BattleTech.UI.Tooltips;
 using Harmony;
 
-namespace MechEngineer.Features.OverrideDescriptions.Patches
+namespace MechEngineer.Features.OverrideDescriptions.Patches;
+
+[HarmonyPatch(typeof(TooltipPrefab_Weapon), "SetData")]
+public static class TooltipPrefab_WeaponSetData_Patch
 {
-    [HarmonyPatch(typeof(TooltipPrefab_Weapon), "SetData")]
-    public static class TooltipPrefab_WeaponSetData_Patch
+    public static void Postfix(TooltipPrefab_Weapon __instance, object data)
     {
-        public static void Postfix(TooltipPrefab_Weapon __instance, object data)
+        try
         {
-            try
+            if (data is MechComponentDef def)
             {
-                if (data is MechComponentDef def)
-                {
-                    OverrideDescriptionsFeature.Shared.AdjustTooltipWeapon(__instance, def);
-                }
+                OverrideDescriptionsFeature.Shared.AdjustTooltipWeapon(__instance, def);
             }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

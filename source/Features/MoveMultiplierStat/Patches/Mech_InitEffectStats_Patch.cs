@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.MoveMultiplierStat.Patches
+namespace MechEngineer.Features.MoveMultiplierStat.Patches;
+
+[HarmonyPatch(typeof(Mech), "InitEffectStats")]
+public static class Mech_InitEffectStats_Patch
 {
-    [HarmonyPatch(typeof(Mech), "InitEffectStats")]
-    public static class Mech_InitEffectStats_Patch
+    public static void Prefix(Mech __instance)
     {
-        public static void Prefix(Mech __instance)
+        try
         {
-            try
-            {
-                MoveMultiplierStatFeature.Shared.InitEffectStats(__instance);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            MoveMultiplierStatFeature.Shared.InitEffectStats(__instance);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

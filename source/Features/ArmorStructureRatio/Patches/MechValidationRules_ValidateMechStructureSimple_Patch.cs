@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.ArmorStructureRatio.Patches
+namespace MechEngineer.Features.ArmorStructureRatio.Patches;
+
+[HarmonyPatch(typeof(MechValidationRules), nameof(MechValidationRules.ValidateMechStructureSimple))]
+public static class MechValidationRules_ValidateMechStructureSimple_Patch
 {
-    [HarmonyPatch(typeof(MechValidationRules), nameof(MechValidationRules.ValidateMechStructureSimple))]
-    public static class MechValidationRules_ValidateMechStructureSimple_Patch
+    public static void Postfix(MechDef mechDef)
     {
-        public static void Postfix(MechDef mechDef)
+        try
         {
-            try
-            {
-                ArmorStructureRatioFeature.ValidateMechArmorStructureRatio(mechDef);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            ArmorStructureRatioFeature.ValidateMechArmorStructureRatio(mechDef);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

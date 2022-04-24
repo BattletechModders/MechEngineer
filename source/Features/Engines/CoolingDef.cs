@@ -1,11 +1,10 @@
 ﻿using BattleTech;
 using CustomComponents;
 
-namespace MechEngineer.Features.Engines
+namespace MechEngineer.Features.Engines;
+
+[CustomComponent("Cooling")]
+public class CoolingDef : SimpleCustom<HeatSinkDef>
 {
-    [CustomComponent("Cooling")]
-    public class CoolingDef : SimpleCustom<HeatSinkDef>
-    {
-        public string HeatSinkDefId { get; set; }
-    }
+    public string HeatSinkDefId { get; set; }
 }

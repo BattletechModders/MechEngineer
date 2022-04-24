@@ -1,10 +1,9 @@
 ﻿using BattleTech;
 
-namespace MechEngineer.Features.AutoFix
+namespace MechEngineer.Features.AutoFix;
+
+internal class ChassisSlotsChange
 {
-    internal class ChassisSlotsChange
-    {
-        public ChassisLocations Location;
-        public ValueChange<int> Change;
-    }
+    public ChassisLocations Location;
+    public ValueChange<int> Change;
 }

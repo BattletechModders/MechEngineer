@@ -1,11 +1,10 @@
-namespace MechEngineer.Features.MechLabSlots
+namespace MechEngineer.Features.MechLabSlots;
+
+internal class MechLabSlotsFeature : Feature<MechLabSlotsSettings>
 {
-    internal class MechLabSlotsFeature : Feature<MechLabSlotsSettings>
-    {
-        internal static MechLabSlotsFeature Shared = new();
+    internal static readonly MechLabSlotsFeature Shared = new();
 
-        internal override MechLabSlotsSettings Settings => Control.settings.MechLabSlots;
+    internal override MechLabSlotsSettings Settings => Control.settings.MechLabSlots;
 
-        internal static MechLabSlotsSettings settings => Shared.Settings;
-    }
+    internal static MechLabSlotsSettings settings => Shared.Settings;
 }

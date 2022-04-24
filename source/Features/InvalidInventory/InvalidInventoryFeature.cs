@@ -1,9 +1,8 @@
-namespace MechEngineer.Features.InvalidInventory
-{
-    internal class InvalidInventoryFeature : Feature<InvalidInventorySettings>
-    {
-        internal static InvalidInventoryFeature Shared = new();
+namespace MechEngineer.Features.InvalidInventory;
 
-        internal override InvalidInventorySettings Settings => Control.settings.InvalidInventory;
-    }
+internal class InvalidInventoryFeature : Feature<InvalidInventorySettings>
+{
+    internal static readonly InvalidInventoryFeature Shared = new();
+
+    internal override InvalidInventorySettings Settings => Control.settings.InvalidInventory;
 }

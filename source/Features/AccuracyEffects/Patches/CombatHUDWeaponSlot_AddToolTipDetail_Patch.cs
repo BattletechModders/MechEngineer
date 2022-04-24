@@ -2,24 +2,23 @@
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer.Features.AccuracyEffects.Patches
+namespace MechEngineer.Features.AccuracyEffects.Patches;
+
+[HarmonyPatch(typeof(CombatHUDWeaponSlot), "AddToolTipDetail")]
+public static class CombatHUDWeaponSlot_AddToolTipDetail_Patch
 {
-    [HarmonyPatch(typeof(CombatHUDWeaponSlot), "AddToolTipDetail")]
-    public static class CombatHUDWeaponSlot_AddToolTipDetail_Patch
+    public static void Prefix(ref string description)
     {
-        public static void Prefix(ref string description)
+        try
         {
-            try
+            if (description == "ARM MOUNTED")
             {
-                if (description == "ARM MOUNTED")
-                {
-                    description = AccuracyEffectsFeature.Shared.Settings.CombatHUDTooltipName;
-                }
+                description = AccuracyEffectsFeature.Shared.Settings.CombatHUDTooltipName;
             }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }

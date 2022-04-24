@@ -3,22 +3,21 @@ using System.Reflection.Emit;
 using BattleTech.UI;
 using Harmony;
 
-namespace MechEngineer.Features.HeatSinkCapacityStat.Patches
+namespace MechEngineer.Features.HeatSinkCapacityStat.Patches;
+
+[HarmonyPatch(typeof(CombatHUD), nameof(CombatHUD.GrantBonusHeatSinksAndUnhittable))]
+public static class CombatHUD_GrantBonusHeatSinksAndUnhittable_Patch
 {
-    [HarmonyPatch(typeof(CombatHUD), nameof(CombatHUD.GrantBonusHeatSinksAndUnhittable))]
-    public static class CombatHUD_GrantBonusHeatSinksAndUnhittable_Patch
+    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        foreach (var codeInstruction in instructions)
         {
-            foreach (var codeInstruction in instructions)
+            if (codeInstruction.opcode == OpCodes.Isinst)
             {
-                if (codeInstruction.opcode == OpCodes.Isinst)
-                {
-                    // force isInst to always false
-                    codeInstruction.operand = typeof(CombatHUD_GrantBonusHeatSinksAndUnhittable_Patch);
-                }
-                yield return codeInstruction;
+                // force isInst to always false
+                codeInstruction.operand = typeof(CombatHUD_GrantBonusHeatSinksAndUnhittable_Patch);
             }
+            yield return codeInstruction;
         }
     }
 }

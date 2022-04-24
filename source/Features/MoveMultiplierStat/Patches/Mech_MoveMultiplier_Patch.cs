@@ -2,21 +2,20 @@
 using BattleTech;
 using Harmony;
 
-namespace MechEngineer.Features.MoveMultiplierStat.Patches
+namespace MechEngineer.Features.MoveMultiplierStat.Patches;
+
+[HarmonyPatch(typeof(Mech), "MoveMultiplier", MethodType.Getter)]
+internal static class Mech_MoveMultiplier_Patch
 {
-    [HarmonyPatch(typeof(Mech), "MoveMultiplier", MethodType.Getter)]
-    internal static class Mech_MoveMultiplier_Patch
+    public static void Postfix(Mech __instance, ref float __result)
     {
-        public static void Postfix(Mech __instance, ref float __result)
+        try
         {
-            try
-            {
-                MoveMultiplierStatFeature.Shared.MoveMultiplier(__instance, ref __result);
-            }
-            catch (Exception e)
-            {
-                Control.Logger.Error.Log(e);
-            }
+            MoveMultiplierStatFeature.Shared.MoveMultiplier(__instance, ref __result);
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
         }
     }
 }
