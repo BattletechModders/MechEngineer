@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ModDir>$(SolutionDir)</ModDir>
+    <MechEngineerModPath>$(SolutionDir)</MechEngineerModPath>
+    <CustomComponentsModPath>..\..\CustomComponents</CustomComponentsModPath>
+    <ReferencePath>
+      $(BattleTechGameDir)\BattleTech_Data\Managed\publicized;
+      $(BattleTechGameDir)\BattleTech_Data\Managed;
+      $(CustomComponentsModPath);
+    </ReferencePath>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -10,15 +16,14 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <AssemblySearchPaths>$(ReferencePath);{HintPathFromItem}</AssemblySearchPaths>
+    <AssemblySearchPaths>$(ReferencePath)</AssemblySearchPaths>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
   <Target Name="CopyDLLtoModDir" AfterTargets="AfterBuild">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MechEngineerModPath)" />
   </Target>
   <ItemGroup>
     <Reference Include="CustomComponents">
-      <HintPath>..\..\CustomComponents\CustomComponents.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
