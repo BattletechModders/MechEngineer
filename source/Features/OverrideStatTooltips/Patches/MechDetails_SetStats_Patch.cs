@@ -5,7 +5,7 @@ using Harmony;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 
-[HarmonyPatch(typeof(MechDetails), "SetStats")]
+[HarmonyPatch(typeof(MechDetails), nameof(MechDetails.SetStats))]
 public static class MechDetails_SetStats_Patch
 {
     public static void Postfix(List<LanceStat> ___statList)

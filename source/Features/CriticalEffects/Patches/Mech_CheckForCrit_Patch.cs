@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.CriticalEffects.Patches;
 
-[HarmonyPatch(typeof(Mech), "CheckForCrit")]
+[HarmonyPatch(typeof(Mech), nameof(Mech.CheckForCrit))]
 public static class Mech_CheckForCrit_Patch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

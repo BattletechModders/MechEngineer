@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.AccuracyEffects.Patches;
 
-[HarmonyPatch(typeof(ToHit), "GetSelfArmMountedModifier")]
+[HarmonyPatch(typeof(ToHit), nameof(ToHit.GetSelfArmMountedModifier))]
 public static class ToHit_GetSelfArmMountedModifier_Patch
 {
     public static bool Prefix(Weapon weapon, ref float __result)

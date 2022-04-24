@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.DynamicSlots.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "ValidateLoadout")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.ValidateLoadout))]
 public static class MechLabPanel_ValidateLoadout_Patch
 {
     public static void Postfix(MechLabPanel __instance)

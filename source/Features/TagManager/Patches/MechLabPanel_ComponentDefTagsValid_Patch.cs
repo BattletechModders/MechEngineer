@@ -8,7 +8,7 @@ using System.Reflection.Emit;
 
 namespace MechEngineer.Features.TagManager.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "ComponentDefTagsValid")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.ComponentDefTagsValid))]
 public static class MechLabPanel_ComponentDefTagsValid_Patch
 {
     public static bool Prefix(MechLabPanel __instance, MechComponentDef def, ref bool __result, bool ___isDebugLab)

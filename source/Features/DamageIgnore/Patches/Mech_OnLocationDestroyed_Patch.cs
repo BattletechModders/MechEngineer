@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.DamageIgnore.Patches;
 
-[HarmonyPatch(typeof(Mech), "OnLocationDestroyed")]
+[HarmonyPatch(typeof(Mech), nameof(Mech.OnLocationDestroyed))]
 internal static class Mech_OnLocationDestroyed_Patch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

@@ -5,7 +5,7 @@ using Harmony;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "CreateMechComponentItem")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.CreateMechComponentItem))]
 internal static class MechLabPanel_CreateMechComponentItem_Patch
 {
     internal static void Postfix(MechLabPanel __instance, MechComponentRef componentRef, MechLabItemSlotElement __result)

@@ -4,14 +4,14 @@ using Harmony;
 
 namespace MechEngineer.Features.ArmorStructureChanges.Patches;
 
-[HarmonyPatch(typeof(Mech), "get_StructureMultiplier")]
-public static class Mech_get_StructureMultiplier_Patch
+[HarmonyPatch(typeof(Mech), nameof(Mech.ArmorMultiplier), MethodType.Getter)]
+public static class Mech_ArmorMultiplier_Getter_Patch
 {
     public static void Postfix(Mech __instance, ref float __result)
     {
         try
         {
-            __result = __result * ArmorStructureChangesFeature.GetStructureFactorForMech(__instance);
+            __result *= ArmorStructureChangesFeature.GetArmorFactorForMech(__instance);
         }
         catch (Exception e)
         {

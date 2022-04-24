@@ -59,6 +59,9 @@
     <Reference Include="UnityEngine.ImageConversionModule">
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.ParticleSystemModule">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <Private>False</Private>
     </Reference>

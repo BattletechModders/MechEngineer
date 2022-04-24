@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using Harmony;
 
 namespace MechEngineer.Features.CriticalEffects.Patches;
 
-//[HarmonyPatch(typeof(CombatHUDStatusPanel), "ShowEffectStatuses")]
+[HarmonyPatch(typeof(CombatHUDStatusPanel), nameof(CombatHUDStatusPanel.ShowEffectStatuses))]
 internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
 {
+    public static bool Prepare()
+    {
+        return !CriticalEffectsFeature.settings.DebugLogEffects;
+    }
+
     internal static void Prefix(AbstractActor actor)
     {
         try
@@ -34,9 +40,14 @@ internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
     }
 }
 
-//[HarmonyPatch(typeof(EffectManager), "CancelEffect")]
+[HarmonyPatch(typeof(EffectManager), nameof(EffectManager.CancelEffect))]
 internal static class EffectManager_CancelEffect_Patch
 {
+    public static bool Prepare()
+    {
+        return !CriticalEffectsFeature.settings.DebugLogEffects;
+    }
+
     internal static void Prefix(Effect e)
     {
         try
@@ -50,9 +61,14 @@ internal static class EffectManager_CancelEffect_Patch
     }
 }
 
-//[HarmonyPatch(typeof(EffectManager), "EffectComplete")]
+[HarmonyPatch(typeof(EffectManager), nameof(EffectManager.EffectComplete))]
 internal static class EffectManager_EffectComplete_Patch
 {
+    public static bool Prepare()
+    {
+        return !CriticalEffectsFeature.settings.DebugLogEffects;
+    }
+
     internal static void Prefix(Effect e)
     {
         try
@@ -80,9 +96,14 @@ internal static class DebugUtils
     }
 }
 
-//[HarmonyPatch(typeof(CombatHUDStatusPanel), "ShouldShowEffect")]
+[HarmonyPatch(typeof(CombatHUDStatusPanel), nameof(CombatHUDStatusPanel.ShouldShowEffect))]
 internal static class CombatHUDStatusPanel_ShouldShowEffect_Patch
 {
+    public static bool Prepare()
+    {
+        return !CriticalEffectsFeature.settings.DebugLogEffects;
+    }
+
     internal static void Postfix(ref bool __result)
     {
         Control.Logger.Debug?.Log($"ShouldShowEffect {__result}");

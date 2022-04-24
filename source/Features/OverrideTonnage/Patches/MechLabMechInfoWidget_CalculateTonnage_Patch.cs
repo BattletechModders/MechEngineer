@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.OverrideTonnage.Patches;
 
-[HarmonyPatch(typeof(MechLabMechInfoWidget), "CalculateTonnage")]
+[HarmonyPatch(typeof(MechLabMechInfoWidget), nameof(MechLabMechInfoWidget.CalculateTonnage))]
 public static class MechLabMechInfoWidget_CalculateTonnage_Patch
 {
     public static void Postfix(

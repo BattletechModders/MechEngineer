@@ -7,7 +7,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features.HardpointFix.Patches;
 
-[HarmonyPatch(typeof(Mech), "InitGameRep")]
+[HarmonyPatch(typeof(Mech), nameof(Mech.InitGameRep))]
 public static class Mech_InitGameRep_Patch
 {
     [HarmonyBefore(Mods.AC, Mods.CU)]

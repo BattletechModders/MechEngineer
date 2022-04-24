@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.Globals.Patches;
 
-[HarmonyPatch(typeof(MechBayPanel), "SelectMech")]
+[HarmonyPatch(typeof(MechBayPanel), nameof(MechBayPanel.SelectMech))]
 public static class MechBayPanel_SelectMech_Patch
 {
     public static void Postfix(MechBayPanel __instance)

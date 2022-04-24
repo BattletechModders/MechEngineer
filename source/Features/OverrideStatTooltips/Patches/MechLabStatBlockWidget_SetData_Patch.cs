@@ -4,7 +4,7 @@ using System;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 
-[HarmonyPatch(typeof(MechLabStatBlockWidget), "Awake")]
+[HarmonyPatch(typeof(MechLabStatBlockWidget), nameof(MechLabStatBlockWidget.Awake))]
 public static class MechLabStatBlockWidget_Awake_Patch
 {
     public static void Postfix(LanceStat[] ___mechStats)

@@ -6,7 +6,7 @@ using Harmony;
 
 namespace MechEngineer.Features.PlaceholderEffects.Patches;
 
-[HarmonyPatch(typeof(StatisticEffect), "initStatisiticEffect")]
+[HarmonyPatch(typeof(StatisticEffect), nameof(StatisticEffect.initStatisiticEffect))]
 public static class StatisticEffect_initStatisiticEffect_Patch
 {
     public static void Postfix(StatisticEffect __instance, ICombatant target)

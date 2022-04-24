@@ -7,7 +7,7 @@ using Localize;
 
 namespace MechEngineer.Features.InvalidInventory.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "GetCantSaveErrorString")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.GetCantSaveErrorString))]
 public static class MechLabPanel_GetCantSaveErrorString_Patch
 {
     private static bool _isSimGame;

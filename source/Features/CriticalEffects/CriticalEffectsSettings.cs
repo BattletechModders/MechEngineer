@@ -7,6 +7,9 @@ public class CriticalEffectsSettings : ISettings
     public bool Enabled { get; set; } = true;
     public string EnabledDescription => "Allows custom multiple critical hit states for individual components.";
 
+    public bool DebugLogEffects { get; set; } = false;
+    public string DebugLogEffectsDescription => "Log effect changes for debugging purposes.";
+
     public float DefaultMaxCritsPerSlots { get; set; } = 0.5f;
     public string DefaultMaxCritsPerSlotsDescription => "How many critical hits a component by default can take for each occupied slot. " +
                                                         "For CBT use 0, for Expanded Critical Damage behavior use 0.5. " +

@@ -7,7 +7,7 @@ using Localize;
 
 namespace MechEngineer.Features.InvalidInventory.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "GetNonFieldableErrorString")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.GetNonFieldableErrorString))]
 public static class MechLabPanel_GetNonFieldableErrorString_Patch
 {
     private static bool _isSimGame;

@@ -7,7 +7,7 @@ using SVGImporter;
 
 namespace MechEngineer.Features.DynamicSlots.Patches;
 
-[HarmonyPatch(typeof(MechLabItemSlotElement), "SetIconAndText")]
+[HarmonyPatch(typeof(MechLabItemSlotElement), nameof(MechLabItemSlotElement.SetIconAndText))]
 public static class MechLabItemSlotElement_SetIconAndText_Patch
 {
     public static void Postfix(

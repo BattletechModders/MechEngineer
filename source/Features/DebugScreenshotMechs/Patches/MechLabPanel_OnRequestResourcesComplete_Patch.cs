@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.DebugScreenshotMechs.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "OnRequestResourcesComplete")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.OnRequestResourcesComplete))]
 public static class MechLabPanel_OnRequestResourcesComplete_Patch
 {
     public static void Postfix(MechLabPanel __instance)

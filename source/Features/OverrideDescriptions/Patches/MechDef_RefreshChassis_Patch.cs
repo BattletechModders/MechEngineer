@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches;
 
-[HarmonyPatch(typeof(MechDef), "RefreshChassis")]
+[HarmonyPatch(typeof(MechDef), nameof(MechDef.RefreshChassis))]
 public static class MechDef_RefreshChassis_Patch
 {
     public static void Postfix(MechDef __instance)

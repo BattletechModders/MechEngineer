@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.AccuracyEffects.Patches;
 
-[HarmonyPatch(typeof(CombatHUDWeaponSlot), "AddToolTipDetail")]
+[HarmonyPatch(typeof(CombatHUDWeaponSlot), nameof(CombatHUDWeaponSlot.AddToolTipDetail))]
 public static class CombatHUDWeaponSlot_AddToolTipDetail_Patch
 {
     public static void Prefix(ref string description)

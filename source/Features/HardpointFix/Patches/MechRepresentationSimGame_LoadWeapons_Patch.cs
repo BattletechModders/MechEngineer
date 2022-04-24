@@ -7,7 +7,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features.HardpointFix.Patches;
 
-[HarmonyPatch(typeof(MechRepresentationSimGame), "LoadWeapons")]
+[HarmonyPatch(typeof(MechRepresentationSimGame), nameof(MechRepresentationSimGame.LoadWeapons))]
 public static class MechRepresentationSimGame_LoadWeapons_Patch
 {
     [HarmonyBefore(Mods.CU)]

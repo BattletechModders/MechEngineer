@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.ArmorStructureChanges.Patches;
 
-[HarmonyPatch(typeof(Mech), "InitStats")]
+[HarmonyPatch(typeof(Mech), nameof(Mech.InitStats))]
 public static class Mech_InitStats_Patch
 {
     public static void Prefix(Mech __instance)

@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 
-[HarmonyPatch(typeof(StatTooltipData), "SetHeatData")]
+[HarmonyPatch(typeof(StatTooltipData), nameof(StatTooltipData.SetHeatData))]
 public static class StatTooltipData_SetHeatData_Patch
 {
     public static void Postfix(StatTooltipData __instance, MechDef def)

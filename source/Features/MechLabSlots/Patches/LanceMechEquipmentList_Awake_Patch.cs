@@ -5,7 +5,7 @@ using Harmony;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
 
-[HarmonyPatch(typeof(LanceMechEquipmentList), "Awake")]
+[HarmonyPatch(typeof(LanceMechEquipmentList), nameof(LanceMechEquipmentList.Awake))]
 public static class LanceMechEquipmentList_Awake_Patch
 {
     public static void Postfix(LocalizableText ___centerTorsoLabel)

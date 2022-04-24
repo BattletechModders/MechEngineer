@@ -6,7 +6,7 @@ using MechEngineer.Features.Engines.Helper;
 
 namespace MechEngineer.Features.Engines.Patches;
 
-[HarmonyPatch(typeof(Contract), "GenerateSalvage")]
+[HarmonyPatch(typeof(Contract), nameof(Contract.GenerateSalvage))]
 public static class Contract_GenerateSalvage_Patch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

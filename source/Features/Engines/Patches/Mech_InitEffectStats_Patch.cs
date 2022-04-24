@@ -5,7 +5,7 @@ using MechEngineer.Features.Engines.StaticHandler;
 
 namespace MechEngineer.Features.Engines.Patches;
 
-[HarmonyPatch(typeof(Mech), "InitEffectStats")]
+[HarmonyPatch(typeof(Mech), nameof(Mech.InitEffectStats))]
 public static class Mech_InitEffectStats_Patch
 {
     public static void Prefix(Mech __instance)

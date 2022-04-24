@@ -6,7 +6,7 @@ using Harmony;
 
 namespace MechEngineer.Features.DebugSaveMechToFile.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "DoConfirmRefit")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.DoConfirmRefit))]
 public static class MechLabPanel_DoConfirmRefit_Patch
 {
     public static void Prefix(MechLabPanel __instance)

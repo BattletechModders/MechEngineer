@@ -1,15 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BattleTech.UI;
+using Harmony;
 using HBS;
 using HBS.Scripting.Reflection;
 using TMPro;
 
 namespace MechEngineer.Features.DebugCycleCombatSounds.Patches;
 
-//[HarmonyPatch(typeof(MainMenu), "ReceiveButtonPress")]
+[HarmonyPatch(typeof(MainMenu), nameof(MainMenu.ReceiveButtonPress))]
 public static class MainMenu_ReceiveButtonPress_Patch
 {
+    public static bool Prepare()
+    {
+        return !DebugCycleCombatSoundsFeature.settings.DebugMainCycleSoundsOnReceiveButtonEnabled;
+    }
+
     private static IEnumerator<string> Iterator = null;
 
     public static bool Prefix(TextMeshProUGUI ____version, string button)

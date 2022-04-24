@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.LoadMech))]
 public static class MechLabPanel_LoadMech_Patch
 {
     public static void Postfix(MechLabPanel __instance)

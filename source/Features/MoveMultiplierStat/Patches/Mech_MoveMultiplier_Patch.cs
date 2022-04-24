@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.MoveMultiplierStat.Patches;
 
-[HarmonyPatch(typeof(Mech), "MoveMultiplier", MethodType.Getter)]
+[HarmonyPatch(typeof(Mech), nameof(Mech.MoveMultiplier), MethodType.Getter)]
 internal static class Mech_MoveMultiplier_Patch
 {
     public static void Postfix(Mech __instance, ref float __result)

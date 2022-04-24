@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
 
-[HarmonyPatch(typeof(MechLabLocationWidget), "SetData")]
+[HarmonyPatch(typeof(MechLabLocationWidget), nameof(MechLabLocationWidget.SetData))]
 public static class MechLabLocationWidget_SetData_Patch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

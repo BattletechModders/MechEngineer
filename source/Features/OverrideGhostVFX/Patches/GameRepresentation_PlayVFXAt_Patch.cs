@@ -5,7 +5,7 @@ using Harmony;
 
 namespace MechEngineer.Features.OverrideGhostVFX.Patches;
 
-[HarmonyPatch(typeof(GameRepresentation), "PlayVFXAt")]
+[HarmonyPatch(typeof(GameRepresentation), nameof(GameRepresentation.PlayVFXAt))]
 public static class GameRepresentation_PlayVFXAt_Patch
 {
     public static bool Prefix(string vfxName)

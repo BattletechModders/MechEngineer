@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.ComponentExplosions.Patches;
 
-[HarmonyPatch(typeof(Mech), "DamageLocation")]
+[HarmonyPatch(typeof(Mech), nameof(Mech.DamageLocation))]
 internal static class Mech_DamageLocation_Patch
 {
     public static bool Prefix(

@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.Globals.Patches;
 
-[HarmonyPatch(typeof(MechBayPanel), "CloseMechBay")]
+[HarmonyPatch(typeof(MechBayPanel), nameof(MechBayPanel.CloseMechBay))]
 public static class MechBayPanel_CloseMechBay_Patch
 {
     public static void Postfix(MechBayPanel __instance)

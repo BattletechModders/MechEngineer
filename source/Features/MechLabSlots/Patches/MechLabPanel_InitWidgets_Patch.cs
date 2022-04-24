@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), "InitWidgets")]
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.InitWidgets))]
 public static class MechLabPanel_InitWidgets_Patch
 {
     public static void Postfix(MechLabPanel __instance)

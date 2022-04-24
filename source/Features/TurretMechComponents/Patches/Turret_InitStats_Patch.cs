@@ -4,7 +4,7 @@ using Harmony;
 
 namespace MechEngineer.Features.TurretMechComponents.Patches;
 
-[HarmonyPatch(typeof(Turret), "InitStats")]
+[HarmonyPatch(typeof(Turret), nameof(Turret.InitStats))]
 public static class Turret_InitStats_Patch
 {
     public static void Prefix(Turret __instance)

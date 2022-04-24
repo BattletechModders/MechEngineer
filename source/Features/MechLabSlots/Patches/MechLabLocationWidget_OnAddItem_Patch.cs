@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
 
-[HarmonyPatch(typeof(MechLabLocationWidget), "OnAddItem")]
+[HarmonyPatch(typeof(MechLabLocationWidget), nameof(MechLabLocationWidget.OnAddItem))]
 public static class MechLabLocationWidget_OnAddItem_Patch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

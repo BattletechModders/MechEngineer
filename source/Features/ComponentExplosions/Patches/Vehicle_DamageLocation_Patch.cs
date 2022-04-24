@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.ComponentExplosions.Patches;
 
-[HarmonyPatch(typeof(Vehicle), "DamageLocation")]
+[HarmonyPatch(typeof(Vehicle), nameof(Vehicle.DamageLocation))]
 internal static class Vehicle_DamageLocation_Patch
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
