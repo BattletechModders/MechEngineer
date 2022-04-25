@@ -37,6 +37,7 @@ CptMoore ([MechEngineer](https://github.com/BattletechModders/MechEngineer))
 
 * adammartinez271828 - rounding logic
 * Aliencreature - ideas, lore and rules, item variants, testing
+* barak1001 - rules, coding armor maxing, testing
 * bhtail - ideas, testing
 * Colobos - ideas, lore and rules, item and mech balancing, testing
 * CptMoore - ideas, rules, coding, testing, core items

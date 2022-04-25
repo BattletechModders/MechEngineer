@@ -1,4 +1,5 @@
 ﻿using MechEngineer.Features.AccuracyEffects;
+using MechEngineer.Features.ArmorMaximizer;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
@@ -56,6 +57,7 @@ internal static class FeaturesList
         ComponentExplosionsFeature.Shared,
         ArmorStructureRatioFeature.Shared,
         ArmorStructureChangesFeature.Shared,
+        ArmorMaximizerFeature.Shared,
         HardpointFixFeature.Shared,
         AutoFixerFeature.Shared,
         GlobalsFeature.Shared,

@@ -181,7 +181,11 @@ internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjus
         var tonnageChanges = 0.0f;
 
         tonnageChanges += CalculateEngineTonnageChanges(state.Engine, weights);
-        tonnageChanges += CalcChanges(state.Armor, weights.ArmorFactor, ArmorRoundingPrecision);
+
+        // TODO
+        var armorRoundingPrecision = PrecisionUtils.RoundUp(DefaultArmorRoundingPrecision * weights.ArmorFactor, 0.001f);
+        tonnageChanges += CalcChanges(state.Armor, weights.ArmorFactor, armorRoundingPrecision);
+
         tonnageChanges += CalcChanges(state.Structure, weights.StructureFactor);
         tonnageChanges += CalcChanges(state.Chassis, weights.ChassisFactor);
 
@@ -209,7 +213,7 @@ internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjus
         return newTonnage - defaultTonnage;
     }
 
-    private static float ArmorRoundingPrecision { get; }
+    private static float DefaultArmorRoundingPrecision { get; }
         = OverrideTonnageFeature.settings.ArmorRoundingPrecision ??
           UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_STEP
           * UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;

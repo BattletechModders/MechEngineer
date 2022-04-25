@@ -134,9 +134,7 @@ internal class AutoFixer : IAutoFixMechDef
 
         float CalcFreeTonnage()
         {
-            float currentTotalTonnage = 0, maxValue = 0;
-            MechStatisticsRules.CalculateTonnage(mechDef, ref currentTotalTonnage, ref maxValue);
-            var freeTonnage = mechDef.Chassis.Tonnage - currentTotalTonnage;
+            var freeTonnage = WeightsUtils.CalculateFreeTonnage(mechDef);
             Control.Logger.Debug?.Log($" Chassis tonnage={mechDef.Chassis.Tonnage} initialTonnage={mechDef.Chassis.InitialTonnage} armorTonnage={mechDef.ArmorTonnage()} freeTonnage={freeTonnage}");
             return freeTonnage;
         }

@@ -1,5 +1,6 @@
 ﻿using BattleTech;
 using MechEngineer.Features.AccuracyEffects;
+using MechEngineer.Features.ArmorMaximizer;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
@@ -50,6 +51,7 @@ internal class MechEngineerSettings
     public AccuracyEffectsSettings AccuracyEffects = new();
     public ArmorStructureChangesSettings ArmorStructureChanges = new();
     public ArmorStructureRatioSettings ArmorStructureRatio = new();
+    public ArmorMaximizerSettings ArmorMaximizer = new();
     public AutoFixerSettings AutoFixer = new();
     public ComponentExplosionsSettings ComponentExplosions = new();
     public CompressFloatieMessagesSettings CompressFloatieMessages = new();
