@@ -1,0 +1,16 @@
+{
+	"TargetIDs": [
+		"settings"
+	],
+	"Instructions": [
+		{
+			"JSONPath": "loggerLevels",
+			"Action": "ArrayAdd",
+			"Value":
+			{
+				"k" : "MechEngineer",
+				"v" : "Debug"
+			}
+		}
+	]
+}
