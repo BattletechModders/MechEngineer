@@ -185,7 +185,7 @@ internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjus
         var standardArmorRoundingPrecision =
             OverrideTonnageFeature.settings.ArmorRoundingPrecision
             ?? UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
-        var armorRoundingPrecision = PrecisionUtils.RoundUp(standardArmorRoundingPrecision * weights.ArmorFactor, 0.001f);
+        var armorRoundingPrecision = PrecisionUtils.RoundUp(standardArmorRoundingPrecision * weights.ArmorFactor, 0.0001f);
 
         tonnageChanges += CalcChanges(state.Armor, weights.ArmorFactor, armorRoundingPrecision);
         tonnageChanges += CalcChanges(state.Structure, weights.StructureFactor);
