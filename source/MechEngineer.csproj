@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
+  <PropertyGroup Condition="'$(MechEngineerModPath)' == ''">
     <MechEngineerModPath>$(SolutionDir)</MechEngineerModPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(CustomComponentsModPath)' == ''">
     <CustomComponentsModPath>..\..\CustomComponents</CustomComponentsModPath>
-    <ReferencePath>
-      $(BattleTechGameDir)\BattleTech_Data\Managed\publicized;
-      $(BattleTechGameDir)\BattleTech_Data\Managed;
-      $(CustomComponentsModPath);
-    </ReferencePath>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -16,6 +13,11 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ReferencePath>
+      $(BattleTechGameDir)\BattleTech_Data\Managed\publicized;
+      $(BattleTechGameDir)\BattleTech_Data\Managed;
+      $(CustomComponentsModPath);
+    </ReferencePath>
     <AssemblySearchPaths>$(ReferencePath)</AssemblySearchPaths>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
   </PropertyGroup>
