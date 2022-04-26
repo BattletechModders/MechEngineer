@@ -34,6 +34,14 @@ public static class WeightsUtils
     
     internal static float CalculateFreeTonnage(MechDef mechDef)
     {
-        return mechDef.Chassis.Tonnage - CalculateTonnage(mechDef);
+        var freeTonnage = mechDef.Chassis.Tonnage - CalculateTonnage(mechDef);
+        Control.Logger.Debug?.Log($" Chassis tonnage={mechDef.Chassis.Tonnage} initialTonnage={mechDef.Chassis.InitialTonnage} armorTonnage={mechDef.StandardArmorTonnage()} freeTonnage={freeTonnage}");
+        return freeTonnage;
+    }
+
+    internal static float StandardArmorTonnage(this MechDef mechDef)
+    {
+        var armorPerTon = UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f;
+        return mechDef.MechDefAssignedArmor / armorPerTon;
     }
 }

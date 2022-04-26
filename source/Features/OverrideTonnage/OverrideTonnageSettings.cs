@@ -18,7 +18,7 @@ public class OverrideTonnageSettings : ISettings
     public string KilogramStandardPrecisionDescription = "Used for Small Support Vehicles, ProtoMechs and battlesuits.";
 
     public float? ArmorRoundingPrecision = null;
-    public string ArmorRoundingPrecisionDescription = "If not set, default is ARMOR_PER_STEP * TONNAGE_PER_ARMOR_POINT";
+    public string ArmorRoundingPrecisionDescription = "Defaults to vanilla MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT";
 
     public float UnderweightWarningThreshold = 1f;
     public string UnderweightWarningThresholdDescription = "How many tons a mech has to be underweight to show a warning";
