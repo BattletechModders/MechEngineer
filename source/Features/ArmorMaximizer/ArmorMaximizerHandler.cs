@@ -267,4 +267,16 @@ public static class ArmorMaximizerHandler
             settings.HeadPointsUnChanged = !settings.HeadPointsUnChanged;
         }
     }
+    public static bool handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
+    {
+        var hk = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        if (hk)
+        {
+            widget.ModifyArmor(isRearArmor, amount, true);
+            return false;
+        }
+
+        widget.ModifyArmor(isRearArmor, amount * 5f, true);
+        return false;
+    }
 }

@@ -139,4 +139,24 @@ public static class ArmorUtils
         }
         return true;
     }
+    public static bool IsDivisible(float x, float y)
+    {
+        if (x < 0) x *= -1f;
+        if (y < 0) y *= -1f;
+        return (x % y) == 0.0f;
+    }
+    public static float RoundDown(float x, float y)
+    {
+        x /= y;
+        x = Mathf.Floor(x);
+        x *= y;
+        return x;
+    }
+    public static float RoundUp(float x, float y)
+    {
+        x /= y;
+        x = Mathf.Ceil(x);
+        x *= y;
+        return x;
+    }
 }
