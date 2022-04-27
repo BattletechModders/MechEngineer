@@ -301,6 +301,7 @@ public static class ArmorMaximizerHandler
                             widget.ModifyArmor(isRearArmor, originalAmount, true);
                             return false;
                         }
+                        //TODO: Add a GUI element that pops up for a few seconds if they are trying to add more armor than points available.
                     }
                     currentArmor = PrecisionUtils.RoundUp(currentArmor, amount);
                     widget.SetArmor(isRearArmor, currentArmor, true);
@@ -325,6 +326,7 @@ public static class ArmorMaximizerHandler
             if(amount > 0)
             {
                 if (amount > maxArmor) return false;
+                //TODO: Add a GUI element that pops up for a few seconds if they are trying to add more armor than points available.
             }
             widget.ModifyArmor(isRearArmor, amount, true);
             return false;
@@ -336,6 +338,7 @@ public static class ArmorMaximizerHandler
         if (amount > 0)
         {
             if(amount > maxArmor) return false;
+            //TODO: Add a GUI element that pops up for a few seconds if they are trying to add more armor than points available.
         }
         widget.ModifyArmor(isRearArmor, amount, true);
         return false;
