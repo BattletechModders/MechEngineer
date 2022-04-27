@@ -1,5 +1,7 @@
-﻿using BattleTech.UI;
+﻿using BattleTech;
+using BattleTech.UI;
 using UnityEngine;
+using MechEngineer.Features.OverrideTonnage;
 
 namespace MechEngineer.Features.ArmorMaximizer;
 
@@ -269,17 +271,21 @@ public static class ArmorMaximizerHandler
     }
     public static bool handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
     {
+        var location = widget.loadout.Location;
+        var ratio = location == ChassisLocations.Head ? 3 : 2;
+        var mechDef = Globals.Global.ActiveMechDef;
+        var enforcedArmor = mechDef.Chassis.GetLocationDef(location).InternalStructure;
+        enforcedArmor = PrecisionUtils.RoundDown(enforcedArmor, 5);
+        enforcedArmor *= ratio;
         float currentArmor = widget.currentArmor;
-        float maxArmor = widget.maxArmor;
+        float currentRearArmor = widget.currentRearArmor;
+        float maxArmor = enforcedArmor - currentArmor - currentRearArmor;
         float originalAmount = amount;
         var hk = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-
         if (isRearArmor)
         {
-            maxArmor = widget.maxRearArmor;
             currentArmor = widget.currentRearArmor;
         }
-
         if (hk)
         {
             bool isDivisible = ArmorUtils.IsDivisible(currentArmor, 5f);
@@ -288,23 +294,23 @@ public static class ArmorMaximizerHandler
             {
                 if (amount > 0)
                 {
-                    if(currentArmor + amount > maxArmor)
+                    if (amount > maxArmor)
                     {
-                        if (currentArmor + originalAmount <= maxArmor)
+                        if (originalAmount <= maxArmor)
                         {
                             widget.ModifyArmor(isRearArmor, originalAmount, true);
                             return false;
                         }
                     }
-                    currentArmor = OverrideTonnage.PrecisionUtils.RoundUp(currentArmor, amount);
+                    currentArmor = PrecisionUtils.RoundUp(currentArmor, amount);
                     widget.SetArmor(isRearArmor, currentArmor, true);
                     return false;
                 }
                 if(amount < 0)
                 {
-                    if(currentArmor + amount < 0)
+                    if(amount < 0)
                     {
-                        if (currentArmor + originalAmount > 0)
+                        if (originalAmount > 0)
                         {
                             widget.ModifyArmor(isRearArmor, originalAmount, true);
                             return false;
@@ -316,6 +322,10 @@ public static class ArmorMaximizerHandler
                     return false;
                 }
             }
+            if(amount > 0)
+            {
+                if (amount > maxArmor) return false;
+            }
             widget.ModifyArmor(isRearArmor, amount, true);
             return false;
         }
@@ -325,7 +335,7 @@ public static class ArmorMaximizerHandler
         }
         if (amount > 0)
         {
-            if(currentArmor + amount > maxArmor) return false;
+            if(amount > maxArmor) return false;
         }
         widget.ModifyArmor(isRearArmor, amount, true);
         return false;

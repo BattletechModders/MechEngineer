@@ -145,11 +145,4 @@ public static class ArmorUtils
         if (y < 0) y *= -1f;
         return (x % y) == 0.0f;
     }
-    public static float RoundDown(float x, float y)
-    {
-        if(y<0) y *= -1f;
-        x /= y;
-        x = Mathf.Floor(x);
-        return x *= y;
-    }
 }
