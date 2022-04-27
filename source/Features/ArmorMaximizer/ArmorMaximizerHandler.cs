@@ -269,14 +269,65 @@ public static class ArmorMaximizerHandler
     }
     public static bool handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
     {
+        float currentArmor = widget.currentArmor;
+        float maxArmor = widget.maxArmor;
+        float originalAmount = amount;
         var hk = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        if (isRearArmor)
+        {
+            maxArmor = widget.maxRearArmor;
+            currentArmor = widget.currentRearArmor;
+        }
+
         if (hk)
         {
+            bool isDivisible = ArmorUtils.IsDivisible(currentArmor, 5f);
+            amount *= 5f;
+            if (!isDivisible)
+            {
+                if (amount > 0)
+                {
+                    if(currentArmor + amount > maxArmor)
+                    {
+                        if (currentArmor + originalAmount <= maxArmor)
+                        {
+                            widget.ModifyArmor(isRearArmor, originalAmount, true);
+                            return false;
+                        }
+                    }
+                    currentArmor = OverrideTonnage.PrecisionUtils.RoundUp(currentArmor, amount);
+                    widget.SetArmor(isRearArmor, currentArmor, true);
+                    return false;
+                }
+                if(amount < 0)
+                {
+                    if(currentArmor + amount < 0)
+                    {
+                        if (currentArmor + originalAmount > 0)
+                        {
+                            widget.ModifyArmor(isRearArmor, originalAmount, true);
+                            return false;
+                        }
+                    }
+                    float flippedAmount = amount * -1;
+                    currentArmor = OverrideTonnage.PrecisionUtils.RoundDown(currentArmor, flippedAmount);
+                    widget.SetArmor(isRearArmor, currentArmor, true);
+                    return false;
+                }
+            }
             widget.ModifyArmor(isRearArmor, amount, true);
             return false;
         }
-
-        widget.ModifyArmor(isRearArmor, amount * 5f, true);
+        if (amount < 0)
+        {
+            if(currentArmor - amount < 0) return false;
+        }
+        if (amount > 0)
+        {
+            if(currentArmor + amount > maxArmor) return false;
+        }
+        widget.ModifyArmor(isRearArmor, amount, true);
         return false;
     }
 }

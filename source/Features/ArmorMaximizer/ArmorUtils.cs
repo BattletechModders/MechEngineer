@@ -147,16 +147,9 @@ public static class ArmorUtils
     }
     public static float RoundDown(float x, float y)
     {
+        if(y<0) y *= -1f;
         x /= y;
         x = Mathf.Floor(x);
-        x *= y;
-        return x;
-    }
-    public static float RoundUp(float x, float y)
-    {
-        x /= y;
-        x = Mathf.Ceil(x);
-        x *= y;
-        return x;
+        return x *= y;
     }
 }
