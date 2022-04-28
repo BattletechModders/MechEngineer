@@ -200,10 +200,13 @@ public static class ArmorMaximizerHandler
             }
             //Set the armor points variables for the front and rear torso positions based on the settings in the json.
             float ct_Front = Mathf.Ceil(ct_AssignedAP * settings.CenterTorsoRatio);
+            if (ArmorUtils.IsDivisible(ct_AssignedAP, 5.0f)) ct_Front = PrecisionUtils.RoundUp(ct_Front, 5);
             float ct_Rear = ct_AssignedAP - ct_Front;
             float lt_Front = Mathf.Ceil(lt_AssignedAP * settings.LeftTorsoRatio);
+            if (ArmorUtils.IsDivisible(lt_AssignedAP, 5.0f)) lt_Front = PrecisionUtils.RoundUp(lt_Front, 5);
             float lt_Rear = lt_AssignedAP - lt_Front;
             float rt_Front = Mathf.Ceil(rt_AssignedAP * settings.RightTorsoRatio);
+            if (ArmorUtils.IsDivisible(rt_AssignedAP, 5.0f)) rt_Front = PrecisionUtils.RoundUp(rt_Front, 5);
             float rt_Rear = rt_AssignedAP - rt_Front;
             //If rear armor is 0 add one point to it, but only if the front has 2 points or more available.
             if (ct_Rear == 0)
@@ -258,8 +261,7 @@ public static class ArmorMaximizerHandler
          
         var mechDef = Globals.Global.ActiveMechDef;
         ArmorState state = new(mechDef);
-        float availableAP = state.AvailableArmorPoints;
-        float currentAP = state.CurrentArmorPoints;
+        float availableAP = state.AvailableArmorPoints - state.CurrentArmorPoints;
         var ratio = widget.loadout.Location == ChassisLocations.Head ? 3 : 2;
         var enforcedArmor = widget.chassisLocationDef.InternalStructure;
         enforcedArmor = PrecisionUtils.RoundDown(enforcedArmor, 5);
@@ -267,8 +269,8 @@ public static class ArmorMaximizerHandler
         float currentArmor = widget.currentArmor;
         float currentRearArmor = widget.currentRearArmor;
         float maxArmor = enforcedArmor - currentArmor - currentRearArmor;
-        float originalAmount = amount;
         var hk = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        float originalAmount = amount;
         if (isRearArmor)
         {
             currentArmor = widget.currentRearArmor;
@@ -281,25 +283,24 @@ public static class ArmorMaximizerHandler
             {
                 if (amount > 0)
                 {
-                    if(availableAP - currentAP <= 0) return false;
-                    if (amount > maxArmor)
+                    if (availableAP < amount)
                     {
-                        if (originalAmount <= maxArmor)
+                        if (availableAP >= originalAmount)
                         {
                             widget.ModifyArmor(isRearArmor, originalAmount, true);
                             return false;
                         }
-                        //TODO: Add a GUI element that pops up for a few seconds if they are trying to add more armor than points available.
                     }
+                    if (maxArmor - amount < 0) return false;
                     currentArmor = PrecisionUtils.RoundUp(currentArmor, amount);
                     widget.SetArmor(isRearArmor, currentArmor, true);
                     return false;
                 }
                 if(amount < 0)
                 {
-                    if(amount < 0)
+                    if (currentArmor + amount < 0)
                     {
-                        if (originalAmount > 0)
+                        if (currentArmor + originalAmount >= 0)
                         {
                             widget.ModifyArmor(isRearArmor, originalAmount, true);
                             return false;
@@ -311,23 +312,15 @@ public static class ArmorMaximizerHandler
                     return false;
                 }
             }
-            if(amount > 0)
-            {
-                if (amount > maxArmor) return false;
-                //TODO: Add a GUI element that pops up for a few seconds if they are trying to add more armor than points available.
-            }
-            widget.ModifyArmor(isRearArmor, amount, true);
-            return false;
+        }
+        if (amount > 0)
+        {
+            if (availableAP < amount) return false;
+            if (maxArmor - amount < 0) return false;
         }
         if (amount < 0)
         {
             if(currentArmor - amount < 0) return false;
-        }
-        if (amount > 0)
-        {
-            if(availableAP - currentAP <= 0) return false;
-            if(amount > maxArmor) return false;
-            //TODO: Add a GUI element that pops up for a few seconds if they are trying to add more armor than points available.
         }
         widget.ModifyArmor(isRearArmor, amount, true);
         return false;
