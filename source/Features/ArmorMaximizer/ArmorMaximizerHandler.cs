@@ -270,7 +270,6 @@ public static class ArmorMaximizerHandler
         float currentRearArmor = widget.currentRearArmor;
         float maxArmor = enforcedArmor - currentArmor - currentRearArmor;
         var hk = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        float originalAmount = amount;
         if (isRearArmor)
         {
             currentArmor = widget.currentRearArmor;
@@ -283,11 +282,12 @@ public static class ArmorMaximizerHandler
             {
                 if (amount > 0)
                 {
+                    if (availableAP <= 0) return false;
                     if (availableAP < amount)
                     {
-                        if (availableAP >= originalAmount)
+                        if(currentArmor + availableAP >= enforcedArmor)
                         {
-                            widget.ModifyArmor(isRearArmor, originalAmount, true);
+                            widget.SetArmor(isRearArmor, enforcedArmor, true);
                             return false;
                         }
                     }
@@ -300,11 +300,8 @@ public static class ArmorMaximizerHandler
                 {
                     if (currentArmor + amount < 0)
                     {
-                        if (currentArmor + originalAmount >= 0)
-                        {
-                            widget.ModifyArmor(isRearArmor, originalAmount, true);
-                            return false;
-                        }
+                        widget.SetArmor(isRearArmor, 0, true);
+                        return false;
                     }
                     float flippedAmount = amount * -1;
                     currentArmor = OverrideTonnage.PrecisionUtils.RoundDown(currentArmor, flippedAmount);
