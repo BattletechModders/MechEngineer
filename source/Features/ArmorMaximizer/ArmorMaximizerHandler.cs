@@ -243,23 +243,7 @@ public static class ArmorMaximizerHandler
             __instance.rightArmWidget.SetArmor(false, ra_AssignedAP, true);
             __instance.leftLegWidget.SetArmor(false, ll_AssignedAP, true);
             __instance.rightLegWidget.SetArmor(false, rl_AssignedAP, true);
-/*                logger.Log("availableAP: " + availableArmor);
-                logger.Log("assignedAP: " + assignedPoints);
-                logger.Log("h_assignedAP: " + h_AssignedAP);
-                logger.Log("ct_Front: " + ct_Front);
-                logger.Log("ct_Rear: " + ct_Rear);
-                logger.Log("lt_Front: " + lt_Front);
-                logger.Log("lt_Rear: " + lt_Rear);
-                logger.Log("rt_Front: " + rt_Front);
-                logger.Log("rt_Rear: " + rt_Rear);
-                logger.Log("la_assignedAP: " + la_AssignedAP);
-                logger.Log("ra_assignedAP: " + ra_AssignedAP);
-                logger.Log("ll_assignedAP: " + ll_AssignedAP);
-                logger.Log("rl_assignedAP: " + rl_AssignedAP);
-                logger.Log("");
-*/
             ___mechInfoWidget.RefreshInfo(false);
-            //Flag as modified in the GUI
             __instance.FlagAsModified();
             __instance.ValidateLoadout(false);
         }
@@ -271,10 +255,13 @@ public static class ArmorMaximizerHandler
     }
     public static bool handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
     {
-        var location = widget.loadout.Location;
-        var ratio = location == ChassisLocations.Head ? 3 : 2;
+         
         var mechDef = Globals.Global.ActiveMechDef;
-        var enforcedArmor = mechDef.Chassis.GetLocationDef(location).InternalStructure;
+        ArmorState state = new(mechDef);
+        float availableAP = state.AvailableArmorPoints;
+        float currentAP = state.CurrentArmorPoints;
+        var ratio = widget.loadout.Location == ChassisLocations.Head ? 3 : 2;
+        var enforcedArmor = widget.chassisLocationDef.InternalStructure;
         enforcedArmor = PrecisionUtils.RoundDown(enforcedArmor, 5);
         enforcedArmor *= ratio;
         float currentArmor = widget.currentArmor;
@@ -294,6 +281,7 @@ public static class ArmorMaximizerHandler
             {
                 if (amount > 0)
                 {
+                    if(availableAP - currentAP <= 0) return false;
                     if (amount > maxArmor)
                     {
                         if (originalAmount <= maxArmor)
@@ -337,6 +325,7 @@ public static class ArmorMaximizerHandler
         }
         if (amount > 0)
         {
+            if(availableAP - currentAP <= 0) return false;
             if(amount > maxArmor) return false;
             //TODO: Add a GUI element that pops up for a few seconds if they are trying to add more armor than points available.
         }
