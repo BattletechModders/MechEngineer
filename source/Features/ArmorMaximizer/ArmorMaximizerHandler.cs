@@ -319,7 +319,7 @@ public static class ArmorMaximizerHandler
                             widget.SetArmor(isRearArmor, currentArmor, true);
                             return false;
                         }
-
+                        return false;
                     }
                     currentArmor = ArmorUtils.RoundUp(currentArmor, amount);
                     widget.SetArmor(isRearArmor, currentArmor, true);
@@ -357,7 +357,7 @@ public static class ArmorMaximizerHandler
                     widget.SetArmor(isRearArmor, currentArmor, true);
                     return false;
                 }
-
+                return false;
             }
         }
         if (amount < 0)
