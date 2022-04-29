@@ -141,8 +141,19 @@ public static class ArmorUtils
     }
     public static bool IsDivisible(float x, float y)
     {
-        if (x < 0) x *= -1f;
         if (y < 0) y *= -1f;
         return (x % y) == 0.0f;
+    }
+    public static float RoundUp(float x, float y)
+    {
+        if (y < 0) y *= -1f;
+        x = Mathf.Ceil(x / y);
+        return x * y;
+    }
+    public static float RoundDown(float x, float y)
+    {
+        if (y < 0) y *= -1f;
+        x = Mathf.Floor(x / y);
+        return x * y;
     }
 }

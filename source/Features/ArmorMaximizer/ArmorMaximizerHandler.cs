@@ -2,6 +2,7 @@
 using BattleTech.UI;
 using UnityEngine;
 using MechEngineer.Features.OverrideTonnage;
+using System;
 
 namespace MechEngineer.Features.ArmorMaximizer;
 
@@ -10,7 +11,7 @@ public static class ArmorMaximizerHandler
     public static void OnMaxArmor(MechLabPanel __instance, MechLabMechInfoWidget ___mechInfoWidget, MechLabItemSlotElement ___dragItem)
     {
         var settings = ArmorMaximizerFeature.Shared.Settings;
-//            var logger = HBS.Logging.Logger.GetLogger("Sysinfo");
+        //            var logger = HBS.Logging.Logger.GetLogger("Sysinfo");
         //Store the Mods.Settings.Unchanged value.
         bool originalSetting = settings.HeadPointsUnChanged;
         var hk = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -60,139 +61,158 @@ public static class ArmorMaximizerHandler
             if (assignedPoints < availableArmor)
             {
                 bool pass = false;
-                float h_points = h_MaxAP - h_MaxAP;
-                float ct_points = ct_MaxAP - ct_AssignedAP;
-                float lt_points = lt_MaxAP - lt_AssignedAP;
-                float rt_points = rt_MaxAP - rt_AssignedAP;
-                float la_points = la_MaxAP - la_AssignedAP;
-                float ra_points = ra_MaxAP - ra_AssignedAP;
-                float ll_points = ll_MaxAP - ll_AssignedAP;
-                float rl_points = rl_MaxAP - rl_AssignedAP;
-                float torsoPoints = h_points + ct_points + lt_points + rt_points;
-                float extremityPoints = la_points + ra_points + ll_points + rl_points;
+                float maxTorso = 4;
+                if (settings.HeadPointsUnChanged)
+                {
+                    maxTorso = 3;
+                }
+                float torsoPoints = 0;
+                float extremityPoints = 0;
+
+                bool h_Full = false;
+                bool ct_Full = false;
+                bool lt_Full = false;
+                bool rt_Full = false;
+                bool la_Full = false;
+                bool ra_Full = false;
+                bool ll_Full = false;
+                bool rl_Full = false;
+
                 while (remainingPoints > 0)
                 {
-                    if (torsoPoints > 0)
+                    if (!h_Full)
                     {
                         if (!settings.HeadPointsUnChanged)
                         {
-                            if (h_points > 0)
+                            if (h_AssignedAP < h_MaxAP)
                             {
-//                                    logger.Log("Added Head");
+                                if (remainingPoints <= 0) break;
                                 h_AssignedAP++;
-                                torsoPoints--;
                                 remainingPoints--;
-                                if (remainingPoints <= 0)
+                            }
+                            else
+                            {
+                                h_Full = true;
+                                torsoPoints++;
+                            }
+                        }
+                        else
+                        {
+                            if (torsoPoints == maxTorso && extremityPoints == 4)
+                            {
+                                if (h_AssignedAP < h_MaxAP)
                                 {
-                                    break;
+                                    if (remainingPoints <= 0) break;
+                                    h_AssignedAP++;
+                                    remainingPoints--;
+                                }
+                                else
+                                {
+                                    h_Full = true;
+                                    torsoPoints++;
                                 }
                             }
                         }
-                        if (ct_points > 0)
+                    }
+                    if (!ct_Full)
+                    {
+                        if (ct_AssignedAP < ct_MaxAP)
                         {
-//                                logger.Log("Added CenterTorso");
+                            if (remainingPoints <= 0) break;
                             ct_AssignedAP++;
-                            torsoPoints--;
                             remainingPoints--;
-                            if (remainingPoints <= 0)
-                            {
-                                break;
-                            }
                         }
-                        if (lt_points > 0)
+                        else
                         {
-//                                logger.Log("Added LeftTorso");
-                            lt_AssignedAP++;
-                            torsoPoints--;
-                            remainingPoints--;
-                            if (remainingPoints <= 0)
-                            {
-                                break;
-                            }
-                        }
-                        if (rt_points > 0)
-                        {
-//                                logger.Log("Added RightTorso");
-                            rt_AssignedAP++;
-                            torsoPoints--;
-                            remainingPoints--;
-                            if (remainingPoints <= 0)
-                            {
-                                break;
-                            }
+                            ct_Full = true;
+                            torsoPoints++;
                         }
                     }
-                    if (torsoPoints <= 0 && extremityPoints <= 0 && settings.HeadPointsUnChanged)
+                    if (!lt_Full)
                     {
-//                            logger.Log("Added Head");
-                        h_AssignedAP++;
-                        remainingPoints--;
-                        if (remainingPoints <= 0)
+                        if (lt_AssignedAP < lt_MaxAP)
                         {
-                            break;
+                            if (remainingPoints <= 0) break;
+                            lt_AssignedAP++;
+                            remainingPoints--;
+                        }
+                        else
+                        {
+                            lt_Full = true;
+                            torsoPoints++;
+                        }
+                    }
+                    if (!rt_Full)
+                    {
+                        if (rt_AssignedAP < rt_MaxAP)
+                        {
+                            if (remainingPoints <= 0) break;
+                            rt_AssignedAP++;
+                            remainingPoints--;
+                        }
+                        else
+                        {
+                            rt_Full = true;
+                            torsoPoints++;
                         }
                     }
                     if (pass)
                     {
-                        if (extremityPoints > 0)
+                        if (!la_Full)
                         {
-                            if (la_points > 0)
+                            if (la_AssignedAP < la_MaxAP)
                             {
-//                                    logger.Log("Added LeftArm");
-                                ll_AssignedAP++;
-                                extremityPoints--;
+                                if (remainingPoints <= 0) break;
+                                la_AssignedAP++;
                                 remainingPoints--;
-                                if (remainingPoints <= 0)
-                                {
-                                    break;
-                                }
                             }
-
-                        }
-                        if (extremityPoints > 0)
-                        {
-                            if (ra_points > 0)
+                            else
                             {
-//                                    logger.Log("Added RightArm");
+                                la_Full = true;
+                                extremityPoints++;
+                            }
+                        }
+                        if (!ra_Full)
+                        {
+                            if (ra_AssignedAP < ra_MaxAP)
+                            {
+                                if (remainingPoints <= 0) break;
                                 ra_AssignedAP++;
-                                extremityPoints--;
                                 remainingPoints--;
-                                if (remainingPoints <= 0)
-                                {
-                                    break;
-                                }
                             }
-
-                        }
-                        if (extremityPoints > 0)
-                        {
-                            if (ll_points > 0)
+                            else
                             {
-//                                    logger.Log("Added LeftLeg");
+                                ra_Full = true;
+                                extremityPoints++;
+                            }
+                        }
+                        if (!ll_Full)
+                        {
+                            if (ll_AssignedAP < ll_MaxAP)
+                            {
+                                if (remainingPoints <= 0) break;
                                 ll_AssignedAP++;
-                                extremityPoints--;
                                 remainingPoints--;
-                                if (remainingPoints <= 0)
-                                {
-                                    break;
-                                }
                             }
-
-                        }
-                        if (extremityPoints > 0)
-                        {
-                            if (rl_points > 0)
+                            else
                             {
-//                                    logger.Log("Added RightLeg");
-                                rl_AssignedAP++;
-                                extremityPoints--;
-                                remainingPoints--;
-                                if (remainingPoints <= 0)
-                                {
-                                    break;
-                                }
+                                ll_Full = true;
+                                extremityPoints++;
                             }
-
+                        }
+                        if (!rl_Full)
+                        {
+                            if (rl_AssignedAP < rl_MaxAP)
+                            {
+                                if (remainingPoints <= 0) break;
+                                rl_AssignedAP++;
+                                remainingPoints--;
+                            }
+                            else
+                            {
+                                rl_Full = true;
+                                extremityPoints++;
+                            }
                         }
                     }
                     pass = !pass;
@@ -233,8 +253,7 @@ public static class ArmorMaximizerHandler
                     rt_Rear++;
                 }
             }
-            //Set the armor points based on the defined variables.
-//                assignedPoints = h_AssignedAP + ct_AssignedAP + lt_AssignedAP + rt_AssignedAP +la_AssignedAP + ra_AssignedAP + ll_AssignedAP + rl_AssignedAP;
+
             __instance.headWidget.SetArmor(false, h_AssignedAP, true);
             __instance.centerTorsoWidget.SetArmor(false, ct_Front, true);
             __instance.centerTorsoWidget.SetArmor(true, ct_Rear, true);
@@ -258,13 +277,15 @@ public static class ArmorMaximizerHandler
     }
     public static bool handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
     {
-         
-        var mechDef = Globals.Global.ActiveMechDef;
-        ArmorState state = new(mechDef);
-        float availableAP = state.AvailableArmorPoints - state.CurrentArmorPoints;
+        var mechDef = widget.mechLab.activeMechDef;
+        float originalAmount = amount;
+        float tonsPerPoint = ArmorUtils.TonPerPoint(mechDef);
+        float freeTonnage = WeightsUtils.CalculateFreeTonnage(mechDef);
+        freeTonnage = ArmorUtils.RoundUp(freeTonnage, 0.0005f);
+        float armorWeight = amount * tonsPerPoint;
         var ratio = widget.loadout.Location == ChassisLocations.Head ? 3 : 2;
-        var enforcedArmor = widget.chassisLocationDef.InternalStructure;
-        enforcedArmor = PrecisionUtils.RoundDown(enforcedArmor, 5);
+        float enforcedArmor = widget.chassisLocationDef.InternalStructure;
+        enforcedArmor = ArmorUtils.RoundDown(enforcedArmor, 5);
         enforcedArmor *= ratio;
         float currentArmor = widget.currentArmor;
         float currentRearArmor = widget.currentRearArmor;
@@ -276,35 +297,42 @@ public static class ArmorMaximizerHandler
         }
         if (hk)
         {
-            bool isDivisible = ArmorUtils.IsDivisible(currentArmor, 5f);
-            amount *= 5f;
-            if (!isDivisible)
+           amount *= 5f;
+            bool divisible = ArmorUtils.IsDivisible(currentArmor, amount);
+            if (!divisible)
             {
                 if (amount > 0)
                 {
-                    if (availableAP <= 0) return false;
-                    if (availableAP < amount)
+                    if (freeTonnage < tonsPerPoint) return false;
+                    float multWeight = armorWeight * amount;
+                    if(multWeight > freeTonnage)
                     {
-                        if(currentArmor + availableAP >= enforcedArmor)
+                        float freePoints = freeTonnage / tonsPerPoint;
+                        freePoints = ArmorUtils.RoundDown(freePoints,1);
+                        if (freePoints > 0)
                         {
-                            widget.SetArmor(isRearArmor, enforcedArmor, true);
+                            currentArmor += freePoints;
+                            if(freePoints > maxArmor)
+                            {
+                                currentArmor += maxArmor;
+                            }
+                            widget.SetArmor(isRearArmor, currentArmor, true);
                             return false;
                         }
+
                     }
-                    if (maxArmor - amount < 0) return false;
-                    currentArmor = PrecisionUtils.RoundUp(currentArmor, amount);
+                    currentArmor = ArmorUtils.RoundUp(currentArmor, amount);
                     widget.SetArmor(isRearArmor, currentArmor, true);
                     return false;
                 }
-                if(amount < 0)
+                if (amount < 0)
                 {
-                    if (currentArmor + amount < 0)
+                    if (currentArmor <= 0) return false;
+                    currentArmor = ArmorUtils.RoundDown(currentArmor, amount);
+                    if(currentArmor < 0)
                     {
-                        widget.SetArmor(isRearArmor, 0, true);
-                        return false;
+                        currentArmor = 0;
                     }
-                    float flippedAmount = amount * -1;
-                    currentArmor = OverrideTonnage.PrecisionUtils.RoundDown(currentArmor, flippedAmount);
                     widget.SetArmor(isRearArmor, currentArmor, true);
                     return false;
                 }
@@ -312,12 +340,29 @@ public static class ArmorMaximizerHandler
         }
         if (amount > 0)
         {
-            if (availableAP < amount) return false;
-            if (maxArmor - amount < 0) return false;
+            if (freeTonnage < tonsPerPoint) return false;
+            if (maxArmor <= 0) return false;
+            float multWeight = armorWeight * amount;
+            if (multWeight > freeTonnage)
+            {
+                float freePoints = freeTonnage / tonsPerPoint;
+                freePoints = ArmorUtils.RoundDown(freePoints, 1);
+                if (freePoints > 0)
+                {
+                    currentArmor += freePoints;
+                    if (freePoints > maxArmor)
+                    {
+                        currentArmor += maxArmor;
+                    }
+                    widget.SetArmor(isRearArmor, currentArmor, true);
+                    return false;
+                }
+
+            }
         }
         if (amount < 0)
         {
-            if(currentArmor - amount < 0) return false;
+            if (currentArmor <= 0) return false;
         }
         widget.ModifyArmor(isRearArmor, amount, true);
         return false;
