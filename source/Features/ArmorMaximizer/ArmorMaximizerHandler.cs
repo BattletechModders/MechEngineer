@@ -278,7 +278,6 @@ public static class ArmorMaximizerHandler
     public static bool handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
     {
         var mechDef = widget.mechLab.activeMechDef;
-        float originalAmount = amount;
         float tonsPerPoint = ArmorUtils.TonPerPoint(mechDef);
         float freeTonnage = WeightsUtils.CalculateFreeTonnage(mechDef);
         freeTonnage = ArmorUtils.RoundUp(freeTonnage, 0.0005f);

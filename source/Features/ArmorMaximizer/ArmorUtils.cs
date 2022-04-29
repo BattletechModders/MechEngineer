@@ -37,12 +37,7 @@ public static class ArmorUtils
     //Max total armor points that the Mech can have based on CBT rules as per MechEngineer.
     public static float MaxArmorPoints(this MechDef mechDef)
     {
-        float headValue = mechDef.Chassis.Head.InternalStructure*3;
-        float headMax = mechDef.Chassis.Head.MaxArmor;
-        if (headValue > headMax)
-        {
-            headValue = headMax;
-        }
+        float headValue = RoundDown(mechDef.Chassis.Head.InternalStructure*3,5);
         float maxPoints = headValue +
                           mechDef.Chassis.CenterTorso.InternalStructure * 2 +
                           mechDef.Chassis.LeftTorso.InternalStructure * 2 +
@@ -56,10 +51,19 @@ public static class ArmorUtils
     //Calculates available armor points based usable weight.
     public static float AvailableAP(this MechDef mechDef)
     {
+        float mathFactor = 1000f;
         float maxAP = mechDef.MaxArmorPoints();
-        float availableAP = mechDef.UsableWeight();
-        availableAP /= mechDef.TonPerPoint();
-        availableAP = Mathf.Floor(availableAP);
+        float tonsPerPoint = mechDef.TonPerPoint() * mathFactor;
+        float availableAP = mechDef.UsableWeight() * mathFactor;
+        bool divisible = (IsDivisible(availableAP, tonsPerPoint));
+        availableAP /= tonsPerPoint;
+        if (!divisible)
+        {
+            Control.Logger.Error.Log("Not Divisible!!!!");
+            availableAP = RoundDown(availableAP,0.001f);
+            Control.Logger.Error.Log("availableAP: " + availableAP);
+            return availableAP;
+        }
         if (availableAP > mechDef.MaxArmorPoints())
         {
             return maxAP;
@@ -86,12 +90,7 @@ public static class ArmorUtils
         float maxAP = locationDef.InternalStructure * 2;
         if (location == mechDef.Head)
         {
-            maxAP = locationDef.InternalStructure * 3;
-            float maxArmor = mechDef.Chassis.Head.MaxArmor;
-            if(maxArmor < maxAP)
-            {
-                maxAP = maxArmor;
-            }
+            maxAP = RoundDown(locationDef.InternalStructure * 3,5);
         }
         return maxAP;
     }
@@ -142,7 +141,7 @@ public static class ArmorUtils
     public static bool IsDivisible(float x, float y)
     {
         if (y < 0) y *= -1f;
-        return (x % y) == 0.0f;
+        return (x % y) == 0f;
     }
     public static float RoundUp(float x, float y)
     {
