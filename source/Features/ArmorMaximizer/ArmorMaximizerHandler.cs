@@ -2,13 +2,12 @@
 using BattleTech.UI;
 using UnityEngine;
 using MechEngineer.Features.OverrideTonnage;
-using System;
 
 namespace MechEngineer.Features.ArmorMaximizer;
 
-public static class ArmorMaximizerHandler
+internal static class ArmorMaximizerHandler
 {
-    public static void OnMaxArmor(MechLabPanel __instance, MechLabMechInfoWidget ___mechInfoWidget, MechLabItemSlotElement ___dragItem)
+    internal static void OnMaxArmor(MechLabPanel __instance, MechLabMechInfoWidget ___mechInfoWidget, MechLabItemSlotElement ___dragItem)
     {
         var settings = ArmorMaximizerFeature.Shared.Settings;
         //            var logger = HBS.Logging.Logger.GetLogger("Sysinfo");
@@ -275,7 +274,8 @@ public static class ArmorMaximizerHandler
             settings.HeadPointsUnChanged = !settings.HeadPointsUnChanged;
         }
     }
-    public static void handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
+
+    internal static void HandleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
     {
         var mechDef = widget.mechLab.activeMechDef;
         float tonsPerPoint = ArmorUtils.TonPerPoint(mechDef);
@@ -364,6 +364,5 @@ public static class ArmorMaximizerHandler
             if (currentArmor <= 0) return;
         }
         widget.ModifyArmor(isRearArmor, amount, true);
-        return;
     }
 }

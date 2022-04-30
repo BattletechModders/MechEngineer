@@ -11,7 +11,7 @@ public static class MechLabLocationWidget_OnRearArmorSubtract_Patch
     {
         try
         {
-            ArmorMaximizerHandler.handleArmorUpdate(__instance, true, -1f);
+            ArmorMaximizerHandler.HandleArmorUpdate(__instance, true, -1f);
             return false;
         }
         catch (Exception e)
