@@ -151,7 +151,7 @@ internal class AutoFixer : IAutoFixMechDef
         if (res.CoreDef != null)
         {
             Control.Logger.Debug?.Log($" Found an existing engine");
-            engine = new Engine(res.CoolingDef, res.HeatBlockDef, res.CoreDef, res.Weights, new List<MechComponentRef>());
+            engine = new Engine(res.CoolingDef, res.HeatBlockDef, res.CoreDef, res.WeightFactors, new List<MechComponentRef>());
 
             // convert external heat sinks into internal ones
             // TODO only to make space if needed, drop the rest of the heat sinks
@@ -193,7 +193,7 @@ internal class AutoFixer : IAutoFixMechDef
         else
         {
             Control.Logger.Debug?.Log(" Finding engine");
-            var freeTonnage = WeightsUtils.CalculateFreeTonnage(mechDef);
+            var freeTonnage = Weights.CalculateFreeTonnage(mechDef);
 
             var jumpJets = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
             var jumpJetTonnage = jumpJets.Select(x => x.Def.Tonnage).FirstOrDefault(); //0 if no jjs
@@ -231,7 +231,7 @@ internal class AutoFixer : IAutoFixMechDef
                 }
 
                 {
-                    var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.Weights, externalHeatSinks, false);
+                    var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.WeightFactors, externalHeatSinks, false);
 
                     Control.Logger.Trace?.Log($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
 
@@ -383,7 +383,7 @@ internal class AutoFixer : IAutoFixMechDef
         mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
 
         {
-            var freeTonnage = WeightsUtils.CalculateFreeTonnage(mechDef);
+            var freeTonnage = Weights.CalculateFreeTonnage(mechDef);
             if (PrecisionUtils.Equals(freeTonnage, 0))
             {
                 // do nothing

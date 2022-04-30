@@ -1,19 +1,15 @@
-﻿using System.Linq;
-using BattleTech;
+﻿using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
-using MechEngineer.Features.Engines;
-using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
-using MechEngineer.Helper;
-using MechEngineer.Misc;
+using TMPro;
 using UnityEngine;
 
 namespace MechEngineer.Features.OverrideTonnage;
 
-internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjustTooltipWeapon, IAdjustSlotElement
+internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, IAdjustSlotElement
 {
     internal static readonly WeightsHandler Shared = new();
 
@@ -22,13 +18,13 @@ internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjus
     {
         var reservedSlots = 0;
 
-        if (mechComponentDef.Is<Weights>(out var weights))
+        if (mechComponentDef.Is<WeightFactors>(out var weightFactors))
         {
-            reservedSlots += weights.ReservedSlots;
+            reservedSlots += weightFactors.ReservedSlots;
             var mechDef = Global.ActiveMechDef;
             if (mechDef != null)
             {
-                var tonnageChanges = CalculateWeightChanges(mechDef, weights);
+                var tonnageChanges = Weights.CalculateWeightFactorsChange(mechDef, weightFactors);
                 tooltip.tonnageText.text = FormatChanges(mechComponentDef.Tonnage, tonnageChanges);
             }
         }
@@ -48,13 +44,13 @@ internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjus
     {
         var reservedSlots = 0;
 
-        if (mechComponentDef.Is<Weights>(out var weights))
+        if (mechComponentDef.Is<WeightFactors>(out var weightFactors))
         {
-            reservedSlots += weights.ReservedSlots;
+            reservedSlots += weightFactors.ReservedSlots;
             var mechDef = Global.ActiveMechDef;
             if (mechDef != null)
             {
-                var tonnageChanges = CalculateWeightChanges(mechDef, weights);
+                var tonnageChanges = Weights.CalculateWeightFactorsChange(mechDef, weightFactors);
                 tooltip.tonnage.text = FormatChanges(mechComponentDef.Tonnage, tonnageChanges);
             }
         }
@@ -86,15 +82,10 @@ internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjus
         }
     }
 
-    public float TonnageChanges(MechDef mechDef)
-    {
-        return CalculateWeightChanges(mechDef);
-    }
-
     public void AdjustSlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
     {
-        var weights = instance.ComponentRef?.Def?.GetComponent<Weights>();
-        if (weights == null)
+        var weightFactors = instance.ComponentRef?.Def?.GetComponent<WeightFactors>();
+        if (weightFactors == null)
         {
             return;
         }
@@ -105,7 +96,7 @@ internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjus
             return;
         }
 
-        var tonnageChanges = CalculateWeightChanges(mechDef, weights);
+        var tonnageChanges = Weights.CalculateWeightFactorsChange(mechDef, weightFactors);
         if (!Mathf.Approximately(tonnageChanges, 0))
         {
             instance.bonusTextA.text = $"{FloatToText(tonnageChanges)} ton";
@@ -127,101 +118,51 @@ internal class WeightsHandler : ITonnageChanges, IAdjustTooltipEquipment, IAdjus
         return $"{sign}{number:0.##}";
     }
 
-    private static float CalculateWeightChanges(MechDef mechDef)
+    internal static void AdjustInfoWidget(
+        MechDef mechDef,
+        UIColorRefTracker totalTonnageColor,
+        UIColorRefTracker remainingTonnageColor,
+        TextMeshProUGUI totalTonnage,
+        TextMeshProUGUI remainingTonnage,
+        out float currentTonnage)
     {
-        var state = new BaseWeightState(mechDef);
+        currentTonnage = Weights.CalculateTotalTonnage(mechDef);
 
-        if (mechDef?.Inventory == null)
+        var precisionHelper = InfoTonnageHelper.KilogramStandard;
+
+        var maxTonnage = mechDef.Chassis.Tonnage;
+
+        if (precisionHelper.IsSmaller(maxTonnage, currentTonnage))
         {
-            return 0;
+            totalTonnageColor.SetUIColor(UIColor.Red);
+            remainingTonnageColor.SetUIColor(UIColor.Red);
+        }
+        else
+        {
+            totalTonnageColor.SetUIColor(UIColor.WhiteHalf);
+            if (precisionHelper.IsSmaller(maxTonnage, currentTonnage + OverrideTonnageFeature.settings.UnderweightWarningThreshold))
+            {
+                remainingTonnageColor.SetUIColor(UIColor.White);
+            }
+            else
+            {
+                remainingTonnageColor.SetUIColor(UIColor.Gold);
+            }
         }
 
-        var tonnageChanges = mechDef.Inventory
-            .Select(r => r.Def?.GetComponent<Weights>())
-            .Where(w => w != null)
-            .Sum(weights => CalculateWeightChanges(state, weights));
-
-        if (state.Engine != null)
+        totalTonnage.SetText($"{InfoTonnageHelper.TonnageStandard.AsString(currentTonnage)} / {maxTonnage}");
+        if (precisionHelper.IsSmaller(maxTonnage, currentTonnage, out var tonnageLeft))
         {
-            // WORKAROUND
-            // didn't add free heat sink tonnages to the actual cores, since RT doesn't either we fix it here
-            var beforeTonnageChanges = tonnageChanges;
-            tonnageChanges -= state.Engine.HeatSinkExternalFreeTonnage;
-            Control.Logger.Debug?.Log($"state.Engine.HeatSinkExternalFreeTonnage={state.Engine.HeatSinkExternalFreeTonnage} tonnageChanges={tonnageChanges} beforeTonnageChanges={beforeTonnageChanges}");
+            tonnageLeft = Mathf.Abs(tonnageLeft);
+            var left = precisionHelper.AsString(tonnageLeft);
+            var s = precisionHelper.IsSame(tonnageLeft, 1f) ? "s" : string.Empty;
+            remainingTonnage.SetText($"{left} ton{s} overweight");
         }
-
-        return tonnageChanges;
-    }
-
-    private static float CalculateWeightChanges(MechDef mechDef, Weights weights)
-    {
-        var state = new BaseWeightState(mechDef);
-
-        return CalculateWeightChanges(state, weights);
-    }
-
-    private class BaseWeightState
-    {
-        internal readonly float Armor;
-        internal readonly float Structure;
-        internal readonly float Chassis;
-        internal readonly Engine Engine;
-
-        internal BaseWeightState(MechDef mechDef)
+        else
         {
-            Armor = mechDef.StandardArmorTonnage();
-            Structure = mechDef.Chassis.Tonnage / 10f;
-            Chassis = mechDef.Chassis.Tonnage;
-            Engine = mechDef.GetEngine();
+            var left = precisionHelper.AsString(tonnageLeft);
+            var s = precisionHelper.IsSame(tonnageLeft, 1f) ? "s" : string.Empty;
+            remainingTonnage.SetText($"{left} ton{s} remaining");
         }
-    }
-
-    private static float CalculateWeightChanges(BaseWeightState state, Weights weights)
-    {
-        var tonnageChanges = 0.0f;
-
-        tonnageChanges += CalculateEngineTonnageChanges(state.Engine, weights);
-
-        var standardArmorRoundingPrecision =
-            OverrideTonnageFeature.settings.ArmorRoundingPrecision
-            ?? UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
-        var armorRoundingPrecision = PrecisionUtils.RoundUp(standardArmorRoundingPrecision * weights.ArmorFactor, 0.0001f);
-        if(armorRoundingPrecision < 0.0000001f) armorRoundingPrecision = 0.0000001f;
-        tonnageChanges += CalcChanges(state.Armor, weights.ArmorFactor, armorRoundingPrecision);
-        tonnageChanges += CalcChanges(state.Structure, weights.StructureFactor);
-        tonnageChanges += CalcChanges(state.Chassis, weights.ChassisFactor);
-
-        return tonnageChanges;
-    }
-
-    private static float CalculateEngineTonnageChanges(Engine engine, Weights weights)
-    {
-        if (engine == null)
-        {
-            return 0;
-        }
-
-        // TODO this and other places don't make EngineFactorFactor work
-        // doesn't support multiple components
-        // therefore it doesn't track what added/removed weights
-        engine.Weights = new Weights();
-
-        var defaultTonnage = engine.TotalTonnage;
-
-        engine.Weights = weights;
-
-        var newTonnage = engine.TotalTonnage;
-
-        return newTonnage - defaultTonnage;
-    }
-
-    private static float CalcChanges(float unmodified, float factor, float? precision = null)
-    {
-        var modified = unmodified * factor;
-        var modifiedRounded = precision == null
-            ? PrecisionUtils.RoundUp(modified, OverrideTonnageFeature.settings.TonnageStandardPrecision)
-            : PrecisionUtils.RoundUp(modified, (float)precision);
-        var changes = modifiedRounded - unmodified;
-        return changes;
     }
 }

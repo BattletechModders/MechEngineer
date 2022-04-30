@@ -5,7 +5,7 @@ public class OverrideTonnageSettings : ISettings
     public bool Enabled { get; set; } = true;
     public string EnabledDescription => "Allows other features to override tonnage calculations.";
 
-    public float PrecisionEpsilon = 0.001f;
+    public float PrecisionEpsilon = 0.0001f;
     public string PrecisionEpsilonDescription = "The maximum tonnage two values can be apart to be viewed as being the same, vanilla uses 100 grams.";
 
     public int MechLabMechInfoWidgetDecimalPlaces = 3;
@@ -17,7 +17,7 @@ public class OverrideTonnageSettings : ISettings
     public float KilogramStandardPrecision = 0.001f;
     public string KilogramStandardPrecisionDescription = "Used for Small Support Vehicles, ProtoMechs and battlesuits.";
 
-    public float? ArmorRoundingPrecision = 0.001f;
+    public float? ArmorRoundingPrecision = null;
     public string ArmorRoundingPrecisionDescription = "Defaults to vanilla MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT";
 
     public float UnderweightWarningThreshold = 1f;

@@ -279,7 +279,7 @@ internal static class ArmorMaximizerHandler
     {
         var mechDef = widget.mechLab.activeMechDef;
         float tonsPerPoint = ArmorUtils.TonPerPoint(mechDef);
-        float freeTonnage = WeightsUtils.CalculateFreeTonnage(mechDef);
+        float freeTonnage = Weights.CalculateFreeTonnage(mechDef);
         freeTonnage = ArmorUtils.RoundUp(freeTonnage, 0.0005f);
         float armorWeight = amount * tonsPerPoint;
         var ratio = widget.loadout.Location == ChassisLocations.Head ? 3 : 2;

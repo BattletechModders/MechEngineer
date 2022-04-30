@@ -29,7 +29,7 @@ public static class ArmorUtils
     public static float UsableWeight(this MechDef mechDef)
     {
         float weight = CalcArmorWeight(mechDef);
-        weight += WeightsUtils.CalculateFreeTonnage(mechDef);
+        weight += Weights.CalculateFreeTonnage(mechDef);
         if (weight <= 0)
         {
             return 0;

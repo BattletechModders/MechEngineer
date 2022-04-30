@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using CustomComponents;
 
@@ -16,32 +17,30 @@ public static class WeightsUtils
         }
 
         var armorFactor = mechDef.Inventory
-                              .Select(r => r.Def?.GetComponent<Weights>())
+                              .Select(r => r.Def?.GetComponent<WeightFactors>())
                               .Where(w => w != null)
                               .Sum(weights => weights.ArmorFactor - 1)
                           + 1;
         return armorFactor;
-    }
-    
-    internal static float CalculateTonnage(MechDef mechDef)
-    {
-        var tonnage = mechDef.Chassis.InitialTonnage;
-        tonnage += mechDef.MechDefAssignedArmor / (UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f);
-        tonnage += mechDef.Inventory.Sum(mechComponentRef => mechComponentRef.Def.Tonnage);
-        tonnage += WeightsHandler.Shared.TonnageChanges(mechDef);
-        return tonnage;
-    }
-    
-    internal static float CalculateFreeTonnage(MechDef mechDef)
-    {
-        var freeTonnage = mechDef.Chassis.Tonnage - CalculateTonnage(mechDef);
-        Control.Logger.Debug?.Log($" Chassis tonnage={mechDef.Chassis.Tonnage} initialTonnage={mechDef.Chassis.InitialTonnage} armorTonnage={mechDef.StandardArmorTonnage()} freeTonnage={freeTonnage}");
-        return freeTonnage;
     }
 
     internal static float StandardArmorTonnage(this MechDef mechDef)
     {
         var armorPerTon = UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f;
         return mechDef.MechDefAssignedArmor / armorPerTon;
+    }
+
+    internal static WeightFactors GetWeightFactorsFromInventory(IList<MechComponentRef> componentRefs)
+    {
+        var weightFactors = new WeightFactors();
+        foreach (var componentRef in componentRefs)
+        {
+            var componentDef = componentRef.Def;
+            if (componentDef.Is<WeightFactors>(out var weightSavings))
+            {
+                weightFactors.Combine(weightSavings);
+            }
+        }
+        return weightFactors;
     }
 }

@@ -13,11 +13,6 @@ internal interface IValidateMech
     void ValidateMech(MechDef mechDef, Errors errors);
 }
 
-internal interface ITonnageChanges
-{
-    float TonnageChanges(MechDef mechDef);
-}
-
 internal interface IAdjustUpgradeDef
 {
     void AdjustUpgradeDef(UpgradeDef upgradeDef);

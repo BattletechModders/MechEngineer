@@ -12,7 +12,7 @@ namespace MechEngineer.Features.Engines;
 public class Engine
 {
     // Declared public to have access from BattleValue module -- bhtrail
-    public static Engine GetEngine(ChassisDef chassisDef, IEnumerable<MechComponentRef> componentRefs)
+    public static Engine GetEngine(ChassisDef chassisDef, IList<MechComponentRef> componentRefs)
     {
         var result = EngineSearcher.SearchInventory(componentRefs);
         if (result.CoolingDef == null || result.CoreDef == null || result.HeatBlockDef == null)
@@ -28,8 +28,8 @@ public class Engine
         return new Engine(result);
     }
 
-    // Lifted from protected to internal to have proper work publicized method
-    internal Engine(EngineSearcher.Result result) : this(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.Weights, result.HeatSinks)
+    // Declared internal to have access from BattleValue module -- bhtrail
+    internal Engine(EngineSearcher.Result result) : this(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.WeightFactors, result.HeatSinks)
     {
     }
 
@@ -38,14 +38,14 @@ public class Engine
         CoolingDef coolingDef,
         EngineHeatBlockDef heatBlockDef,
         EngineCoreDef coreDef,
-        Weights weights,
+        WeightFactors weightFactors,
         List<MechComponentRef> heatSinksExternal,
         bool calculate = true)
     {
         HeatSinksExternal = heatSinksExternal;
         HeatBlockDef = heatBlockDef;
         CoreDef = coreDef;
-        Weights = weights;
+        WeightFactors = weightFactors;
         CoolingDef = coolingDef;
         if (calculate)
         {
@@ -53,13 +53,13 @@ public class Engine
         }
     }
 
-    public static int MatchingCount(IEnumerable<MechComponentRef> heatSinks, HeatSinkDef heatSinkDef)
+    private static int MatchingCount(IEnumerable<MechComponentRef> heatSinks, HeatSinkDef heatSinkDef)
     {
         return heatSinks.Select(r => r.Def).Count(d => d == heatSinkDef);
     }
 
     private CoolingDef _coolingDef;
-    // Also publicized -- bhtrail
+    // Declared public to have access from BattleValue module -- bhtrail
     public CoolingDef CoolingDef
     {
         get => _coolingDef;
@@ -77,16 +77,19 @@ public class Engine
         HeatSinkExternalCount = MatchingCount(HeatSinksExternal, HeatSinkDef.Def);
     }
 
-    // Publicized -- bhtrail
+    // Declared public to have access from BattleValue module -- bhtrail
     public List<MechComponentRef> HeatSinksExternal { get; set; }
     private int HeatSinkExternalCount { get; set; }
 
-    // these 4 props goes public for same reasons as above -- bhtrail
+    // Declared public to have access from BattleValue module -- bhtrail
     public EngineCoreDef CoreDef { get; set; }
-    public Weights Weights { get; set; }
+    internal WeightFactors WeightFactors { get; set; }
+    // Declared public to have access from BattleValue module -- bhtrail
     public EngineHeatBlockDef HeatBlockDef { get; set; } // amount of internal heat sinks
+    // Declared public to have access from BattleValue module -- bhtrail
     public EngineHeatSinkDef HeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
 
+    // Declared public to have access from BattleValue module -- bhtrail
     public float EngineHeatDissipation
     {
         get
@@ -127,8 +130,8 @@ public class Engine
     #region weights
 
     internal float HeatSinkExternalFreeTonnage => HeatSinkExternalFreeCount * HeatSinkDef.Def.Tonnage;
-    internal float GyroTonnage => PrecisionUtils.RoundUp(StandardGyroTonnage * Weights.GyroFactor, WeightPrecision);
-    internal float EngineTonnage => PrecisionUtils.RoundUp(StandardEngineTonnage * Weights.EngineFactor, WeightPrecision);
+    internal float GyroTonnage => PrecisionUtils.RoundUp(StandardGyroTonnage * WeightFactors.GyroFactor, WeightPrecision);
+    internal float EngineTonnage => PrecisionUtils.RoundUp(StandardEngineTonnage * WeightFactors.EngineFactor, WeightPrecision);
     internal float HeatSinkTonnage => -HeatSinkExternalFreeTonnage;
     internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;
 

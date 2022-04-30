@@ -7,7 +7,7 @@ namespace MechEngineer.Features.Engines.Helper;
 
 internal class EngineSearcher
 {
-    internal static Result SearchInventory(IEnumerable<MechComponentRef> componentRefs)
+    internal static Result SearchInventory(IList<MechComponentRef> componentRefs)
     {
         var result = new Result();
         foreach (var componentRef in componentRefs)
@@ -24,11 +24,6 @@ internal class EngineSearcher
                 result.CoolingDef = coolingDef;
             }
 
-            if (componentDef.Is<Weights>(out var weightSavings))
-            {
-                result.Weights.Combine(weightSavings);
-            }
-
             if (componentDef.Is<EngineCoreDef>(out var coreDef))
             {
                 result.CoreDef = coreDef;
@@ -40,6 +35,8 @@ internal class EngineSearcher
             }
         }
 
+        result.WeightFactors = WeightsUtils.GetWeightFactorsFromInventory(componentRefs);
+
         return result;
     }
 
@@ -48,7 +45,7 @@ internal class EngineSearcher
         internal CoolingDef CoolingDef;
         internal EngineHeatBlockDef HeatBlockDef;
         internal EngineCoreDef CoreDef;
-        internal readonly Weights Weights = new();
+        internal WeightFactors WeightFactors = new();
         internal readonly List<MechComponentRef> HeatSinks = new();
     }
 }
