@@ -4,6 +4,7 @@ using BattleTech.UI;
 using MechEngineer.Features.DynamicSlots;
 using UnityEngine;
 using MechEngineer.Features.OverrideTonnage;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.ArmorMaximizer;
 
@@ -28,9 +29,10 @@ internal static class ArmorMaximizerHandler
             // 2 iterations: 2x4 + 1x4
             var stepSize = state.Remaining >= (2*4 + 1*4) * 5 ? 5 : 1;
 
+            var changesDuringIteration = false;
             foreach (var location in MechDefBuilder.Locations)
             {
-                Control.Logger.Trace?.Log($"location={location} state.Remaining={state.Remaining} stepSize={stepSize} skipArmsAndLegs={skipArmsAndLegs}");
+                Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} state.Remaining={state.Remaining} stepSize={stepSize} skipArmsAndLegs={skipArmsAndLegs}");
 
                 if (state.Remaining < stepSize)
                 {
@@ -43,7 +45,7 @@ internal static class ArmorMaximizerHandler
                 }
 
                 var locationState = state.Locations[location];
-                Control.Logger.Trace?.Log($"location={location} locationState={locationState}");
+                Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} locationState={locationState}");
 
                 if (locationState.IsFull)
                 {
@@ -52,8 +54,14 @@ internal static class ArmorMaximizerHandler
 
                 locationState.Assigned += stepSize;
                 state.Remaining -= stepSize;
+                changesDuringIteration = true;
 
-                Control.Logger.Trace?.Log($"location={location} locationState={locationState}");
+                Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} locationState={locationState}");
+            }
+
+            if (!changesDuringIteration)
+            {
+                break;
             }
 
             skipArmsAndLegs = !skipArmsAndLegs;
@@ -65,18 +73,20 @@ internal static class ArmorMaximizerHandler
             var locationState = state.Locations[location];
             if ((location & ChassisLocations.Torso) != ChassisLocations.None)
             {
-                var front = PrecisionUtils.RoundUp(locationState.Assigned * settings.TorsoFrontBackRatio, 1f);
+                var front = PrecisionUtils.RoundDownToInt(locationState.Assigned * settings.TorsoFrontBackRatio);
                 if (PrecisionUtils.SmallerThan(5f, locationState.Assigned))
                 {
-                    front = PrecisionUtils.RoundDown(front, 5);
+                    front = (int)PrecisionUtils.RoundDown(front, 5);
                 }
                 var rear = locationState.Assigned - front;
-                widget.SetArmor(false, front, true);
-                widget.SetArmor(true, rear, true);
+                widget.SetArmor(false, front);
+                widget.SetArmor(true, rear);
+                Control.Logger.Trace?.Log($"SetArmor Assigned={locationState.Assigned} Max={locationState.Max} front={front} rear={rear}");
             }
             else
             {
                 widget.SetArmor(false, locationState.Assigned);
+                Control.Logger.Trace?.Log($"SetArmor Assigned={locationState.Assigned} Max={locationState.Max}");
             }
         }
 
@@ -148,7 +158,7 @@ internal static class ArmorMaximizerHandler
                     {
                         currentArmor = 0;
                     }
-                    widget.SetArmor(isRearArmor, currentArmor, true);
+                    widget.SetArmor(isRearArmor, currentArmor);
                     return;
                 }
             }

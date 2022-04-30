@@ -11,7 +11,7 @@ public static class MechLabPanel_OnMaxArmor_Patch
     {
         try
         {
-            if (__instance.Initialized && ___dragItem != null)
+            if (__instance.Initialized && ___dragItem == null)
             {
                 ArmorMaximizerHandler.OnMaxArmor(__instance, ___mechInfoWidget);
                 return false;

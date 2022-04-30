@@ -7,7 +7,7 @@ namespace MechEngineer.Features.ArmorMaximizer;
 public static class ArmorUtils
 {
     //Takes TONNAGE_PER_ARMOR_POINT and multiplies it by the ArmorFactor provided by equipped items.
-    public static float TonPerPointWithFactor(this MechDef mechDef)
+    public static float TonPerPointWithFactor(MechDef mechDef)
     {
         var tonPerPoint = UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
         var armorFactor = WeightsUtils.CalculateArmorFactor(mechDef);

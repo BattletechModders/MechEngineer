@@ -12,15 +12,16 @@ internal class APState
     internal Dictionary<ChassisLocations, LocationState> Locations = new();
     internal class LocationState
     {
-        internal float Assigned;
-        internal float Max;
+        internal int Assigned;
+        internal int Max;
         public LocationState(float assigned, float max)
         {
-            Assigned = assigned;
-            Max = max;
+            Max = PrecisionUtils.RoundDownToInt(max);
+            Assigned = PrecisionUtils.RoundDownToInt(assigned);
+            Assigned = Mathf.Min(Assigned, Max);
         }
 
-        internal bool IsFull => Assigned < Max;
+        internal bool IsFull => Assigned >= Max;
 
         public override string ToString()
         {
@@ -49,7 +50,7 @@ internal class APState
 
     private static int CalculateRemaining(MechDef mechDef)
     {
-        var tonsPerPoint = mechDef.TonPerPointWithFactor();
+        var tonsPerPoint = ArmorUtils.TonPerPointWithFactor(mechDef);
         var maxPointsWithoutWeightLimit = (int)ArmorStructureRatioFeature.GetMaximumArmorPoints(mechDef);
         var maxWeightWithoutWeightLimit = maxPointsWithoutWeightLimit * tonsPerPoint;
 
@@ -61,6 +62,7 @@ internal class APState
         var maxPoints = PrecisionUtils.RoundDownToInt(maxWeight / tonsPerPoint);
 
         var assigned = PrecisionUtils.RoundDownToInt(mechDef.MechDefAssignedArmor);
+        Control.Logger.Trace?.Log($"CalculateRemaining tonsPerPoint={tonsPerPoint} maxWeightWithoutWeightLimit={maxWeightWithoutWeightLimit} maxWeight={maxWeight} maxPoints={maxPoints} assigned={assigned}");
         return maxPoints - assigned;
     }
 }
