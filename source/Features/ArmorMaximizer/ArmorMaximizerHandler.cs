@@ -275,7 +275,7 @@ public static class ArmorMaximizerHandler
             settings.HeadPointsUnChanged = !settings.HeadPointsUnChanged;
         }
     }
-    public static bool handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
+    public static void handleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float amount)
     {
         var mechDef = widget.mechLab.activeMechDef;
         float tonsPerPoint = ArmorUtils.TonPerPoint(mechDef);
@@ -302,7 +302,7 @@ public static class ArmorMaximizerHandler
             {
                 if (amount > 0)
                 {
-                    if (freeTonnage < tonsPerPoint) return false;
+                    if (freeTonnage < tonsPerPoint) return;
                     float multWeight = armorWeight * amount;
                     if(multWeight > freeTonnage)
                     {
@@ -316,31 +316,31 @@ public static class ArmorMaximizerHandler
                                 currentArmor += maxArmor;
                             }
                             widget.SetArmor(isRearArmor, currentArmor, true);
-                            return false;
+                            return;
                         }
-                        return false;
+                        return;
                     }
                     currentArmor = ArmorUtils.RoundUp(currentArmor, amount);
                     widget.SetArmor(isRearArmor, currentArmor, true);
-                    return false;
+                    return;
                 }
                 if (amount < 0)
                 {
-                    if (currentArmor <= 0) return false;
+                    if (currentArmor <= 0) return;
                     currentArmor = ArmorUtils.RoundDown(currentArmor, amount);
                     if(currentArmor < 0)
                     {
                         currentArmor = 0;
                     }
                     widget.SetArmor(isRearArmor, currentArmor, true);
-                    return false;
+                    return;
                 }
             }
         }
         if (amount > 0)
         {
-            if (freeTonnage < tonsPerPoint) return false;
-            if (maxArmor <= 0) return false;
+            if (freeTonnage < tonsPerPoint) return;
+            if (maxArmor <= 0) return;
             float multWeight = armorWeight * amount;
             if (multWeight > freeTonnage)
             {
@@ -354,16 +354,16 @@ public static class ArmorMaximizerHandler
                         currentArmor += maxArmor;
                     }
                     widget.SetArmor(isRearArmor, currentArmor, true);
-                    return false;
+                    return;
                 }
-                return false;
+                return;
             }
         }
         if (amount < 0)
         {
-            if (currentArmor <= 0) return false;
+            if (currentArmor <= 0) return;
         }
         widget.ModifyArmor(isRearArmor, amount, true);
-        return false;
+        return;
     }
 }
