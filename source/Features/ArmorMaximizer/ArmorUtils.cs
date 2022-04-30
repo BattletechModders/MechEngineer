@@ -1,5 +1,7 @@
-﻿using BattleTech;
-using MechEngineer.Features.AutoFix;
+﻿using System.Linq;
+using BattleTech;
+using MechEngineer.Features.ArmorStructureRatio;
+using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
@@ -37,16 +39,10 @@ public static class ArmorUtils
     //Max total armor points that the Mech can have based on CBT rules as per MechEngineer.
     public static float MaxArmorPoints(this MechDef mechDef)
     {
-        float headValue = RoundDown(mechDef.Chassis.Head.InternalStructure*3,5);
-        float maxPoints = headValue +
-                          mechDef.Chassis.CenterTorso.InternalStructure * 2 +
-                          mechDef.Chassis.LeftTorso.InternalStructure * 2 +
-                          mechDef.Chassis.RightTorso.InternalStructure * 2 +
-                          mechDef.Chassis.LeftArm.InternalStructure * 2 +
-                          mechDef.Chassis.RightArm.InternalStructure * 2 +
-                          mechDef.Chassis.LeftLeg.InternalStructure * 2 +
-                          mechDef.Chassis.RightLeg.InternalStructure * 2;
-        return maxPoints;
+        return MechDefBuilder.Locations
+            .Select(location => mechDef.Chassis.GetLocationDef(location))
+            .Select(ArmorStructureRatioFeature.GetArmorPoints)
+            .Sum();
     }
     //Calculates available armor points based usable weight.
     public static float AvailableAP(this MechDef mechDef)

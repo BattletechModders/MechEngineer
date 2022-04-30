@@ -79,10 +79,8 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
 
         var structure = chassisLocationDef.InternalStructure;
 
-        var ratio = location == ChassisLocations.Head ? 3 : 2;
-
         var total = armor + armorRear;
-        var totalMax = ratio * structure;
+        var totalMax = GetArmorPoints(chassisLocationDef);
 
         if (total <= totalMax)
         {
@@ -115,9 +113,20 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
         if (errorMessages != null)
         {
             var locationName = Mech.GetLongChassisLocation(location);
-            errorMessages[MechValidationType.InvalidHardpoints].Add(new Text($"ARMOR {locationName}: Armor can only be {ratio} times more than structure."));
+            errorMessages[MechValidationType.InvalidHardpoints].Add(new Text($"ARMOR {locationName}: Armor can only be {GetArmorToStructureRatio(location)} times more than structure."));
         }
 
         return false;
+    }
+
+    internal static float GetArmorPoints(LocationDef locationDef)
+    {
+        var ratio = GetArmorToStructureRatio(locationDef.Location);
+        return locationDef.InternalStructure * ratio;
+    }
+
+    private static float GetArmorToStructureRatio(ChassisLocations location)
+    {
+        return location == ChassisLocations.Head ? 3 : 2;
     }
 }
