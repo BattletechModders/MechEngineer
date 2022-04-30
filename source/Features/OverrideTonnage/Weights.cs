@@ -11,7 +11,7 @@ internal class Weights
     internal static float CalculateFreeTonnage(MechDef mechDef)
     {
         var weights = new Weights(mechDef);
-        Control.Logger.Debug?.Log($" Chassis={mechDef.Chassis.Description.Id} weights={weights}");
+        Control.Logger.Debug?.Log($"Chassis={mechDef.Chassis.Description.Id} weights={weights}");
         return weights.FreeWeight;
     }
 
@@ -30,11 +30,11 @@ internal class Weights
         return after - before;
     }
 
-    internal readonly float StandardArmorWeight;
-    internal readonly float StandardStructureWeight;
-    internal readonly float StandardChassisWeightCapacity;
-    internal readonly float ComponentSumWeight;
-    internal readonly Engine? Engine;
+    internal float StandardArmorWeight;
+    internal float StandardStructureWeight;
+    internal float StandardChassisWeightCapacity;
+    internal float ComponentSumWeight;
+    internal Engine? Engine;
 
     internal WeightFactors Factors;
     internal void SetFactors(WeightFactors value)
@@ -64,9 +64,9 @@ internal class Weights
     internal float EngineWeight => Engine?.TotalTonnage ?? 0;
     internal float ChassisWeightCapacity => CalculateWeight(StandardChassisWeightCapacity, Factors.ChassisFactor);
 
-    private float ArmorRoundingPrecision => PrecisionUtils.RoundUp(StandardArmorRoundingPrecision * Factors.ArmorFactor, 0.0001f);
+    internal float ArmorRoundingPrecision => PrecisionUtils.RoundUp(StandardArmorRoundingPrecision * Factors.ArmorFactor, 0.0001f);
 
-    private static float StandardArmorRoundingPrecision =>
+    internal float StandardArmorRoundingPrecision =
         OverrideTonnageFeature.settings.ArmorRoundingPrecision
         ?? UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
 

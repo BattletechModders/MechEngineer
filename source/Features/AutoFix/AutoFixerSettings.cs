@@ -234,6 +234,7 @@ internal class AutoFixerSettings : ISettings
 
     public bool ChassisDefInitialTonnage = true;
     public float ChassisDefInitialToTotalTonnageFactor = 0.1f; // 10% structure weight
+    public bool ChassisDefArmorStructureRatio = true;
     public bool ChassisDefMaxJumpjets = true;
     public int ChassisDefMaxJumpjetsCount = 8;
     public int ChassisDefMaxJumpjetsRating = 400;

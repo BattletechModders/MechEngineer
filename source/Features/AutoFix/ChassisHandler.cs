@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using CustomComponents;
 using ErosionBrushPlugin;
+using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Helper;
@@ -11,10 +11,8 @@ using UnityEngine;
 
 namespace MechEngineer.Features.AutoFix;
 
-internal class ChassisHandler
+internal static class ChassisHandler
 {
-    private static readonly Dictionary<string, float> OriginalInitialTonnages = new();
-
     internal static void OverrideChassisSettings(ChassisDef chassisDef)
     {
         if (chassisDef.ChassisTags.IgnoreAutofix())
@@ -29,31 +27,10 @@ internal class ChassisHandler
         AutoFixLocationNaming(chassisDef);
     }
 
-    public static float? GetOriginalInitialTonnage(ChassisDef chassisDef)
-    {
-        if (OriginalInitialTonnages.TryGetValue(chassisDef.Description.Id, out var value))
-        {
-            return value;
-        }
-
-        return null;
-    }
-
-    private static void SetOriginalInitialTonnage(ChassisDef chassisDef)
-    {
-        if (OriginalInitialTonnages.ContainsKey(chassisDef.Description.Id))
-        {
-            return;
-        }
-
-        OriginalInitialTonnages[chassisDef.Description.Id] = chassisDef.InitialTonnage;
-    }
-
     private static void AutoFixChassisDef(ChassisDef chassisDef)
     {
         if (AutoFixerFeature.settings.ChassisDefInitialTonnage)
         {
-            SetOriginalInitialTonnage(chassisDef);
             var tonnage = chassisDef.Tonnage * AutoFixerFeature.settings.ChassisDefInitialToTotalTonnageFactor;
             var info = typeof(ChassisDef).GetProperty("InitialTonnage");
             var value = Convert.ChangeType(tonnage, info.PropertyType);
@@ -74,6 +51,11 @@ internal class ChassisHandler
             info.SetValue(chassisDef, value, null);
 
             Control.Logger.Debug?.Log($"set MaxJumpjets={maxCount}");
+        }
+
+        if (AutoFixerFeature.settings.ChassisDefArmorStructureRatio)
+        {
+            ArmorStructureRatioFeature.Shared.AutoFixChassisDef(chassisDef);
         }
     }
 

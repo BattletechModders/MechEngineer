@@ -5,6 +5,7 @@
 
 	"Enabled": true,
 	"DependsOn": ["CustomComponents"],
+	"ConflictsWith": ["Pansar"],
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
