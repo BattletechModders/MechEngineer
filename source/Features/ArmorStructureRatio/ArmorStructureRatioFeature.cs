@@ -136,7 +136,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
 
             if ((location & ChassisLocations.Torso) != 0)
             {
-                mechLocationDef.AssignedArmor = PrecisionUtils.RoundUp(totalMax * ArmorMaximizerFeature.Shared.Settings.TorsoFrontBackRatio, 5);
+                mechLocationDef.AssignedArmor = PrecisionUtils.RoundDown(totalMax * ArmorMaximizerFeature.Shared.Settings.TorsoFrontBackRatio, ArmorPerStep);
                 mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
                 mechLocationDef.AssignedRearArmor = totalMax - mechLocationDef.AssignedArmor;
                 mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
@@ -161,7 +161,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
         return false;
     }
 
-    internal static float GetMaximumArmorPoints(MechDef mechDef)
+    internal static int GetMaximumArmorPoints(MechDef mechDef)
     {
         return MechDefBuilder.Locations
             .Select(location => mechDef.Chassis.GetLocationDef(location))
@@ -169,11 +169,13 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
             .Sum();
     }
 
-    internal static float GetMaximumArmorPoints(LocationDef locationDef)
+    internal static int GetMaximumArmorPoints(LocationDef locationDef)
     {
         var ratio = GetArmorToStructureRatio(locationDef.Location);
-        return locationDef.InternalStructure * ratio;
+        return (int)PrecisionUtils.RoundDown(locationDef.InternalStructure * ratio, ArmorPerStep);
     }
+
+    internal static int ArmorPerStep => (int)UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_STEP;
 
     private static int GetArmorToStructureRatio(ChassisLocations location)
     {

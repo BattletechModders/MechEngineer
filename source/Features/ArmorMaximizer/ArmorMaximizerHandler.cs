@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using BattleTech;
 using BattleTech.UI;
+using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using UnityEngine;
 using MechEngineer.Features.OverrideTonnage;
@@ -19,52 +21,38 @@ internal static class ArmorMaximizerHandler
             return;
         }
 
-        var skipArmsAndLegs = false;
-        var armsAndLegsLocation = ChassisLocations.Arms | ChassisLocations.Legs;
+        var locationStates = state.Locations.Values.ToArray();
+        var stepSize = ArmorStructureRatioFeature.ArmorPerStep;
 
-        while (state.Remaining >= 1)
+        while (state.Remaining >= stepSize)
         {
-            // 4 that always get called
-            // 4 that only get called every odd numbers
-            // 2 iterations: 2x4 + 1x4
-            var stepSize = state.Remaining >= (2*4 + 1*4) * 5 ? 5 : 1;
-
-            var changesDuringIteration = false;
-            foreach (var location in MechDefBuilder.Locations)
+            Array.Sort(locationStates, (x, y) =>
             {
-                Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} state.Remaining={state.Remaining} stepSize={stepSize} skipArmsAndLegs={skipArmsAndLegs}");
+                var cmp = -(x.PriorityPrimary - y.PriorityPrimary);
+                if (cmp != 0)
+                {
+                    return cmp;
+                }
 
-                if (state.Remaining < stepSize)
+                return -(x.PrioritySecondary - y.PrioritySecondary);
+            });
+
+            var locationState = locationStates[0];
+            {
+                var location = locationState.Location;
+                Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} state.Remaining={state.Remaining} stepSize={stepSize}");
+
+                // with priority queues, we would just not re-queued any location that is Full
+                if (locationState.IsFull)
                 {
                     break;
                 }
 
-                if (skipArmsAndLegs && (location & armsAndLegsLocation) != ChassisLocations.None)
-                {
-                    continue;
-                }
-
-                var locationState = state.Locations[location];
-                Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} locationState={locationState}");
-
-                if (locationState.IsFull)
-                {
-                    continue;
-                }
-
                 locationState.Assigned += stepSize;
                 state.Remaining -= stepSize;
-                changesDuringIteration = true;
 
                 Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} locationState={locationState}");
             }
-
-            if (!changesDuringIteration)
-            {
-                break;
-            }
-
-            skipArmsAndLegs = !skipArmsAndLegs;
         }
 
         void SetArmor(ChassisLocations location)
@@ -76,7 +64,7 @@ internal static class ArmorMaximizerHandler
                 var front = PrecisionUtils.RoundDownToInt(locationState.Assigned * settings.TorsoFrontBackRatio);
                 if (PrecisionUtils.SmallerThan(5f, locationState.Assigned))
                 {
-                    front = (int)PrecisionUtils.RoundDown(front, 5);
+                    front = (int)PrecisionUtils.RoundDown(front, ArmorStructureRatioFeature.ArmorPerStep);
                 }
                 var rear = locationState.Assigned - front;
                 widget.SetArmor(false, front);
@@ -109,7 +97,7 @@ internal static class ArmorMaximizerHandler
         var armorWeight = amount * tonsPerPoint;
         var ratio = widget.loadout.Location == ChassisLocations.Head ? 3 : 2;
         var enforcedArmor = widget.chassisLocationDef.InternalStructure;
-        enforcedArmor = ArmorUtils.RoundDown(enforcedArmor, 5);
+        enforcedArmor = ArmorUtils.RoundDown(enforcedArmor, ArmorStructureRatioFeature.ArmorPerStep);
         enforcedArmor *= ratio;
         var currentArmor = widget.currentArmor;
         var currentRearArmor = widget.currentRearArmor;

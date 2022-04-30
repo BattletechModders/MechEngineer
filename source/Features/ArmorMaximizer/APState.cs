@@ -12,34 +12,57 @@ internal class APState
     internal Dictionary<ChassisLocations, LocationState> Locations = new();
     internal class LocationState
     {
-        internal int Assigned;
+        internal ChassisLocations Location;
         internal int Max;
-        public LocationState(float assigned, float max)
+        internal int Assigned;
+
+        internal LocationState(ChassisLocations location, int max, int assigned)
         {
-            Max = PrecisionUtils.RoundDownToInt(max);
-            Assigned = PrecisionUtils.RoundDownToInt(assigned);
+            Location = location;
+            Max = max;
+            Assigned = assigned;
             Assigned = Mathf.Min(Assigned, Max);
         }
 
-        internal bool IsFull => Assigned >= Max;
+        internal bool IsFull => Missing <= 0;
+        private int Missing => Max - Assigned;
+
+        internal int PriorityPrimary => Missing;
+        internal int PrioritySecondary => Location switch
+        {
+            ChassisLocations.Head => 10,
+            ChassisLocations.CenterTorso => 9,
+            ChassisLocations.LeftTorso => 8,
+            ChassisLocations.RightTorso => 7,
+            ChassisLocations.LeftLeg => 6,
+            ChassisLocations.RightLeg => 5,
+            ChassisLocations.LeftArm => 4,
+            ChassisLocations.RightArm => 3,
+            _ => 0
+        };
 
         public override string ToString()
         {
-            return $"[Assigned={Assigned} Max={Max}]";
+            return $"[Location={Location} Assigned={Assigned} Max={Max}]";
         }
     }
 
     internal int Remaining;
     internal APState(MechDef mechDef)
     {
-        Remaining = CalculateRemaining(mechDef);
+        var mechMax = CalculateMaximum(mechDef);
+        var mechAssigned = PrecisionUtils.RoundDownToInt(mechDef.MechDefAssignedArmor);
+        Remaining = mechMax - mechAssigned;
         void Add(ChassisLocations location)
         {
             var locationDef = mechDef.Chassis.GetLocationDef(location);
             var loadoutDef = mechDef.GetLocationLoadoutDef(location);
+            var locationMax = ArmorStructureRatioFeature.GetMaximumArmorPoints(locationDef);
+            var locationAssigned = PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor + loadoutDef.AssignedRearArmor);
             Locations[location] = new LocationState(
-                loadoutDef.AssignedArmor + loadoutDef.AssignedRearArmor,
-                ArmorStructureRatioFeature.GetMaximumArmorPoints(locationDef)
+                location,
+                locationMax,
+                locationAssigned
             );
         }
         foreach (var location in MechDefBuilder.Locations)
@@ -48,7 +71,7 @@ internal class APState
         }
     }
 
-    private static int CalculateRemaining(MechDef mechDef)
+    private static int CalculateMaximum(MechDef mechDef)
     {
         var tonsPerPoint = ArmorUtils.TonPerPointWithFactor(mechDef);
         var maxPointsWithoutWeightLimit = (int)ArmorStructureRatioFeature.GetMaximumArmorPoints(mechDef);
@@ -60,9 +83,6 @@ internal class APState
         };
         var maxWeight = Mathf.Min(maxWeightWithoutWeightLimit, weights.FreeWeight);
         var maxPoints = PrecisionUtils.RoundDownToInt(maxWeight / tonsPerPoint);
-
-        var assigned = PrecisionUtils.RoundDownToInt(mechDef.MechDefAssignedArmor);
-        Control.Logger.Trace?.Log($"CalculateRemaining tonsPerPoint={tonsPerPoint} maxWeightWithoutWeightLimit={maxWeightWithoutWeightLimit} maxWeight={maxWeight} maxPoints={maxPoints} assigned={assigned}");
-        return maxPoints - assigned;
+        return maxPoints;
     }
 }
