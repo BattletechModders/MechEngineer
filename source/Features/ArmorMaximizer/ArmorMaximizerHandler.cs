@@ -99,7 +99,7 @@ internal static class ArmorMaximizerHandler
     internal static void HandleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float direction)
     {
         var precision = AltModifierPressed ? 1 : ArmorStructureRatioFeature.ArmorPerStep;
-        var stepSize = ShiftModifierPressed ? 50 : (ControlModifierPressed ? 999 : 1);
+        var stepSize = ShiftModifierPressed ? 25 : (ControlModifierPressed ? 999 : 1);
 
         var stepDirection = direction < 0 ? -1 : 1;
         var current = isRearArmor ? widget.currentRearArmor : widget.currentArmor;
@@ -108,17 +108,24 @@ internal static class ArmorMaximizerHandler
             ? PrecisionUtils.RoundUp(current + stepSize, precision)
             : PrecisionUtils.RoundDown(current - stepSize, precision);
 
+        Control.Logger.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={precision} isRearArmor={isRearArmor}");
         if (stepDirection > 0)
         {
-            var max = MaxForFrontOrRearArmor(widget, isRearArmor);
+            var max = isRearArmor ? widget.maxRearArmor : widget.maxArmor;
             updated = Mathf.Min(updated, max);
+
+            var maxTotal = ArmorStructureRatioFeature.GetMaximumArmorPoints(widget.chassisLocationDef);
+            var maxOther = maxTotal - updated;
+            var currentOther = isRearArmor ? widget.currentArmor : widget.currentRearArmor;
+            var updatedOther = Mathf.Min(currentOther,maxOther);
+            widget.SetArmor(!isRearArmor, updatedOther);
+            Control.Logger.Trace?.Log($"HandleArmorUpdate maxTotal={maxTotal} maxOther={maxOther} currentOther={currentOther} updated={updatedOther} isRearArmor={updatedOther}");
         }
         else
         {
             updated = Mathf.Max(updated, 0);
         }
-
-        Control.Logger.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={precision} updated={updated} isRearArmor={isRearArmor}");
+        Control.Logger.Trace?.Log($"HandleArmorUpdate updated={updated}");
         widget.SetArmor(isRearArmor, updated);
     }
 
@@ -141,8 +148,9 @@ internal static class ArmorMaximizerHandler
 
             const UIColor limitReachedColor = UIColor.MedGray;
             {
-                var max = widget.useRearArmor ? MaxForFrontOrRearArmor(widget, isRearArmor) : widget.maxArmor;
-                var maxReached = PrecisionUtils.SmallerOrEqualsTo(max, isRearArmor ? widget.currentRearArmor : widget.currentArmor);
+                var max = isRearArmor ? widget.maxRearArmor : widget.maxArmor;
+                var current = isRearArmor ? widget.currentRearArmor : widget.currentArmor;
+                var maxReached = PrecisionUtils.SmallerOrEqualsTo(max, current);
                 SetButtonColor("bttn_plus", maxReached ? limitReachedColor : UIColor.White);
             }
             {
@@ -156,15 +164,6 @@ internal static class ArmorMaximizerHandler
         {
             RefreshArmorBar(widget.rearArmorBar, true);
         }
-    }
-
-    private static int MaxForFrontOrRearArmor(MechLabLocationWidget widget, bool isRearArmor)
-    {
-        var max = ArmorStructureRatioFeature.GetMaximumArmorPoints(widget.chassisLocationDef);
-        max -= isRearArmor
-            ? PrecisionUtils.RoundUpToInt(widget.currentArmor)
-            : PrecisionUtils.RoundUpToInt(widget.currentRearArmor);
-        return max;
     }
 
     private static bool ShiftModifierPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
