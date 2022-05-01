@@ -131,12 +131,13 @@ internal static class ArmorMaximizerHandler
 
     internal static void OnRefreshArmor(MechLabLocationWidget widget)
     {
-        void RefreshArmorBar(LanceStat armorBar, bool isRearArmor) {
-            armorBar.SetTextColor(UIColor.White, UIColor.White);
+        void RefreshArmorBar(LanceStat lanceStat, bool isRearArmor)
+        {
+            lanceStat.SetTextColor(UIColor.White, UIColor.White);
 
             void SetButtonColor(string buttonId, UIColor uiColor)
             {
-                var button = armorBar.transform.GetChild(buttonId);
+                var button = lanceStat.transform.GetChild(buttonId);
                 // the plus icon is actually made of two minus icons
                 var icons = button.GetChild("startButtonFill").GetChildren();
                 foreach (var icon in icons)
@@ -164,6 +165,11 @@ internal static class ArmorMaximizerHandler
         {
             RefreshArmorBar(widget.rearArmorBar, true);
         }
+    }
+
+    internal static void OnBarClick(MechLabLocationWidget widget, bool isRearArmor)
+    {
+        Control.Logger.Trace?.Log($"onClick Location={widget.chassisLocationDef.Location.GetShortString()} isRearArmor={isRearArmor}");
     }
 
     private static bool ShiftModifierPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
