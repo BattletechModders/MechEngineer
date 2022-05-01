@@ -4,6 +4,7 @@ using BattleTech;
 using BattleTech.UI;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
+using MechEngineer.Features.MechLabSlots;
 using UnityEngine;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Helper;
@@ -90,14 +91,6 @@ internal static class ArmorMaximizerHandler
             SetArmor(location);
         }
 
-        {
-            // how to fetch the correct widget and change the color
-            // not sure how to detect clicks on, but maybe alt and click on + or - to lock/unlock?
-            var widget = mechLabPanel.GetLocationWidget(ChassisLocations.Head);
-            widget.armorBar?.valueTextColor?.SetUIColor(UIColor.Gold); // this doesnt do anything
-            widget.armorBar?.nameTextColor?.SetUIColor(UIColor.Blue); // this works
-        }
-
         infoWidget.RefreshInfo();
         mechLabPanel.FlagAsModified();
         mechLabPanel.ValidateLoadout(false);
@@ -114,17 +107,58 @@ internal static class ArmorMaximizerHandler
             ? PrecisionUtils.RoundUp(current + 1, precision)
             : PrecisionUtils.RoundDown(current - 1, precision);
 
-        // TODO add visual indicated that max is reached -> new patch that can react to existing armor (init), maximizer and updater
-        if (direction > 0)
+        if (stepDirection > 0)
         {
-            var max = ArmorStructureRatioFeature.GetMaximumArmorPoints(widget.chassisLocationDef);
-            max -= isRearArmor
-                ? PrecisionUtils.RoundUpToInt(widget.currentArmor)
-                : PrecisionUtils.RoundUpToInt(widget.currentRearArmor);
+            var max = MaxForFrontOrRearArmor(widget, isRearArmor);
             updated = Mathf.Min(updated, max);
         }
 
         Control.Logger.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={precision} updated={updated} isRearArmor={isRearArmor}");
         widget.SetArmor(isRearArmor, updated);
+    }
+
+    internal static void OnRefreshArmor(MechLabLocationWidget widget)
+    {
+        void RefreshArmorBar(LanceStat armorBar, bool isRearArmor) {
+            armorBar.SetTextColor(UIColor.White, UIColor.White);
+
+            void SetButtonColor(string buttonId, UIColor uiColor)
+            {
+                var button = armorBar.transform.GetChild(buttonId);
+                // the plus icon is actually made of two minus icons
+                var icons = button.GetChild("startButtonFill").GetChildren();
+                foreach (var icon in icons)
+                {
+                    var colorRefTracker = icon.GetComponent<UIColorRefTracker>();
+                    colorRefTracker.SetUIColor(uiColor);
+                }
+            }
+
+            const UIColor limitReachedColor = UIColor.MedGray;
+            {
+                var max = widget.useRearArmor ? MaxForFrontOrRearArmor(widget, isRearArmor) : widget.maxArmor;
+                var maxReached = PrecisionUtils.SmallerOrEqualsTo(max, isRearArmor ? widget.currentRearArmor : widget.currentArmor);
+                SetButtonColor("bttn_plus", maxReached ? limitReachedColor : UIColor.White);
+            }
+            {
+                var minReached = PrecisionUtils.SmallerOrEqualsTo(isRearArmor ? widget.currentRearArmor : widget.currentArmor, 0);
+                SetButtonColor("bttn_minus", minReached ? limitReachedColor : UIColor.White);
+            }
+        }
+
+        RefreshArmorBar(widget.armorBar, false);
+        if (widget.useRearArmor)
+        {
+            RefreshArmorBar(widget.rearArmorBar, true);
+        }
+    }
+
+    private static int MaxForFrontOrRearArmor(MechLabLocationWidget widget, bool isRearArmor)
+    {
+        var max = ArmorStructureRatioFeature.GetMaximumArmorPoints(widget.chassisLocationDef);
+        max -= isRearArmor
+            ? PrecisionUtils.RoundUpToInt(widget.currentArmor)
+            : PrecisionUtils.RoundUpToInt(widget.currentRearArmor);
+        return max;
     }
 }
