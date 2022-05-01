@@ -98,19 +98,24 @@ internal static class ArmorMaximizerHandler
 
     internal static void HandleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float direction)
     {
-        var shiftModifierPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        var precision = shiftModifierPressed ? 1 : ArmorStructureRatioFeature.ArmorPerStep;
+        var precision = AltModifierPressed ? 1 : ArmorStructureRatioFeature.ArmorPerStep;
+        var stepSize = ShiftModifierPressed ? 50 : (ControlModifierPressed ? 999 : 1);
+
         var stepDirection = direction < 0 ? -1 : 1;
         var current = isRearArmor ? widget.currentRearArmor : widget.currentArmor;
 
         var updated = stepDirection > 0
-            ? PrecisionUtils.RoundUp(current + 1, precision)
-            : PrecisionUtils.RoundDown(current - 1, precision);
+            ? PrecisionUtils.RoundUp(current + stepSize, precision)
+            : PrecisionUtils.RoundDown(current - stepSize, precision);
 
         if (stepDirection > 0)
         {
             var max = MaxForFrontOrRearArmor(widget, isRearArmor);
             updated = Mathf.Min(updated, max);
+        }
+        else
+        {
+            updated = Mathf.Max(updated, 0);
         }
 
         Control.Logger.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={precision} updated={updated} isRearArmor={isRearArmor}");
@@ -161,4 +166,8 @@ internal static class ArmorMaximizerHandler
             : PrecisionUtils.RoundUpToInt(widget.currentRearArmor);
         return max;
     }
+
+    private static bool ShiftModifierPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+    private static bool ControlModifierPressed => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+    private static bool AltModifierPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
 }
