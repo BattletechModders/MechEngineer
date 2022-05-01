@@ -114,15 +114,14 @@ internal static class ArmorMaximizerHandler
             ? PrecisionUtils.RoundUp(current + 1, precision)
             : PrecisionUtils.RoundDown(current - 1, precision);
 
-        // TODO not yet working
-        // ratio enforcement
+        // TODO add visual indicated that max is reached -> new patch that can react to existing armor (init), maximizer and updater
         if (direction > 0)
         {
             var max = ArmorStructureRatioFeature.GetMaximumArmorPoints(widget.chassisLocationDef);
             max -= isRearArmor
                 ? PrecisionUtils.RoundUpToInt(widget.currentArmor)
                 : PrecisionUtils.RoundUpToInt(widget.currentRearArmor);
-            Mathf.Min(updated, max);
+            updated = Mathf.Min(updated, max);
         }
 
         Control.Logger.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={precision} updated={updated} isRearArmor={isRearArmor}");
