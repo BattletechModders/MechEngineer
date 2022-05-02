@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
@@ -28,6 +29,8 @@ internal static class ArmorMaximizerHandler
 
         while (state.Remaining >= stepSize)
         {
+            // TODO make location states based on ArmorLocation
+            // TODO remove location states that are locked
             Array.Sort(locationStates, (x, y) =>
             {
                 var cmp = -(x.PriorityPrimary - y.PriorityPrimary);
@@ -75,8 +78,16 @@ internal static class ArmorMaximizerHandler
                     front = (int)PrecisionUtils.RoundDown(front, ArmorStructureRatioFeature.ArmorPerStep);
                 }
                 var rear = locationState.Assigned - front;
-                widget.SetArmor(false, front);
-                widget.SetArmor(true, rear);
+
+                if (!ArmorLocationLocker.IsLocked(widget.loadout.Location, false))
+                {
+                    widget.SetArmor(false, front);
+                }
+                if (!ArmorLocationLocker.IsLocked(widget.loadout.Location, true))
+                {
+                    widget.SetArmor(true, rear);
+                }
+
                 Control.Logger.Trace?.Log($"SetArmor Assigned={locationState.Assigned} Max={locationState.Max} front={front} rear={rear}");
             }
             else
@@ -98,6 +109,11 @@ internal static class ArmorMaximizerHandler
 
     internal static void HandleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float direction)
     {
+        if (ArmorLocationLocker.IsLocked(widget.loadout.Location, isRearArmor))
+        {
+            return;
+        }
+
         var precision = AltModifierPressed ? 1 : ArmorStructureRatioFeature.ArmorPerStep;
         var stepSize = ShiftModifierPressed ? 25 : (ControlModifierPressed ? 999 : 1);
 
@@ -118,15 +134,22 @@ internal static class ArmorMaximizerHandler
             var maxOther = maxTotal - updated;
             var currentOther = isRearArmor ? widget.currentArmor : widget.currentRearArmor;
             var updatedOther = Mathf.Min(currentOther,maxOther);
-            widget.SetArmor(!isRearArmor, updatedOther);
-            Control.Logger.Trace?.Log($"HandleArmorUpdate maxTotal={maxTotal} maxOther={maxOther} currentOther={currentOther} updated={updatedOther} isRearArmor={updatedOther}");
+
+            var otherNotChanged = PrecisionUtils.Equals(currentOther, updatedOther);
+            if (otherNotChanged || !ArmorLocationLocker.IsLocked(widget.loadout.Location, !isRearArmor))
+            {
+                widget.SetArmor(isRearArmor, updated);
+                widget.SetArmor(!isRearArmor, updatedOther);
+            }
+
+            Control.Logger.Trace?.Log($"HandleArmorUpdate updated={updated} maxTotal={maxTotal} maxOther={maxOther} currentOther={currentOther} updatedOther={updatedOther} isRearArmor={updatedOther}");
         }
         else
         {
             updated = Mathf.Max(updated, 0);
+            widget.SetArmor(isRearArmor, updated);
+            Control.Logger.Trace?.Log($"HandleArmorUpdate updated={updated}");
         }
-        Control.Logger.Trace?.Log($"HandleArmorUpdate updated={updated}");
-        widget.SetArmor(isRearArmor, updated);
     }
 
     internal static void OnRefreshArmor(MechLabLocationWidget widget)
@@ -134,6 +157,7 @@ internal static class ArmorMaximizerHandler
         void RefreshArmorBar(LanceStat lanceStat, bool isRearArmor)
         {
             lanceStat.SetTextColor(UIColor.White, UIColor.White);
+            RefreshBarColor(widget, isRearArmor);
 
             void SetButtonColor(string buttonId, UIColor uiColor)
             {
@@ -169,7 +193,16 @@ internal static class ArmorMaximizerHandler
 
     internal static void OnBarClick(MechLabLocationWidget widget, bool isRearArmor)
     {
-        Control.Logger.Trace?.Log($"onClick Location={widget.chassisLocationDef.Location.GetShortString()} isRearArmor={isRearArmor}");
+        ArmorLocationLocker.ToggleLock(widget.loadout.Location, isRearArmor);
+        RefreshBarColor(widget, isRearArmor);
+    }
+
+    private static void RefreshBarColor(MechLabLocationWidget widget, bool isRearArmor)
+    {
+        var isLocked = ArmorLocationLocker.IsLocked(widget.loadout.Location, isRearArmor);
+        var lanceStat = isRearArmor ? widget.rearArmorBar : widget.armorBar;
+        lanceStat.fillColor.SetUIColor(isLocked ? UIColor.Gold : UIColor.White);
+        lanceStat.nameTextColor.SetUIColor(isLocked ? UIColor.Gold : UIColor.White);
     }
 
     private static bool ShiftModifierPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
