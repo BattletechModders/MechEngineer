@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BattleTech;
+﻿using System.Linq;
 using BattleTech.UI;
+using MechEngineer.Features.ArmorMaximizer.Maximizer;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.MechLabSlots;
 using UnityEngine;
 using MechEngineer.Features.OverrideTonnage;
-using MechEngineer.Helper;
 
 namespace MechEngineer.Features.ArmorMaximizer;
 
@@ -16,90 +13,21 @@ internal static class ArmorMaximizerHandler
 {
     internal static void OnMaxArmor(MechLabPanel mechLabPanel, MechLabMechInfoWidget infoWidget)
     {
-        var settings = ArmorMaximizerFeature.Shared.Settings;
-        APState state = new(mechLabPanel.activeMechDef);
         if (MechDefBuilder.Locations.Any(location => mechLabPanel.GetLocationWidget(location).IsDestroyed))
         {
             return;
         }
 
-        var locationStates = state.Locations.Values.ToArray();
-        var stepSize = ArmorStructureRatioFeature.ArmorPerStep;
-        var changes = false;
-
-        while (state.Remaining >= stepSize)
-        {
-            // TODO make location states based on ArmorLocation
-            // TODO remove location states that are locked
-            Array.Sort(locationStates, (x, y) =>
-            {
-                var cmp = -(x.PriorityPrimary - y.PriorityPrimary);
-                if (cmp != 0)
-                {
-                    return cmp;
-                }
-
-                return -(x.PrioritySecondary - y.PrioritySecondary);
-            });
-
-            var locationState = locationStates[0];
-            {
-                var location = locationState.Location;
-                Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} state.Remaining={state.Remaining} stepSize={stepSize}");
-
-                // with priority queues, we would just not re-queued any location that is Full
-                if (locationState.IsFull)
-                {
-                    break;
-                }
-
-                locationState.Assigned += stepSize;
-                state.Remaining -= stepSize;
-                changes = true;
-
-                Control.Logger.Trace?.Log($"OnMaxArmor location={location.GetShortString()} locationState={locationState}");
-            }
-        }
-
-        if (!changes)
+        if (!MechArmorState.Maximize(mechLabPanel.activeMechDef, ArmorStructureRatioFeature.ArmorPerStep, out var updates))
         {
             return;
         }
 
-        void SetArmor(ChassisLocations location)
+        foreach (var update in updates)
         {
-            var widget = mechLabPanel.GetLocationWidget(location);
-            var locationState = state.Locations[location];
-            if ((location & ChassisLocations.Torso) != ChassisLocations.None)
-            {
-                var front = PrecisionUtils.RoundDownToInt(locationState.Assigned * settings.TorsoFrontBackRatio);
-                if (PrecisionUtils.SmallerThan(5f, locationState.Assigned))
-                {
-                    front = (int)PrecisionUtils.RoundDown(front, ArmorStructureRatioFeature.ArmorPerStep);
-                }
-                var rear = locationState.Assigned - front;
-
-                if (!ArmorLocationLocker.IsLocked(widget.loadout.Location, false))
-                {
-                    widget.SetArmor(false, front);
-                }
-                if (!ArmorLocationLocker.IsLocked(widget.loadout.Location, true))
-                {
-                    widget.SetArmor(true, rear);
-                }
-
-                Control.Logger.Trace?.Log($"SetArmor Assigned={locationState.Assigned} Max={locationState.Max} front={front} rear={rear}");
-            }
-            else
-            {
-                widget.SetArmor(false, locationState.Assigned);
-                Control.Logger.Trace?.Log($"SetArmor Assigned={locationState.Assigned} Max={locationState.Max}");
-            }
-        }
-
-        foreach (var location in MechDefBuilder.Locations)
-        {
-            SetArmor(location);
+            var widget = mechLabPanel.GetLocationWidget(update.Location);
+            widget.SetArmor(update.Location.IsRear(), update.Assigned);
+            Control.Logger.Trace?.Log($"SetArmor update={update}");
         }
 
         infoWidget.RefreshInfo();
@@ -107,13 +35,8 @@ internal static class ArmorMaximizerHandler
         mechLabPanel.ValidateLoadout(false);
     }
 
-    internal static void HandleArmorUpdate(MechLabLocationWidget widget, bool isRearArmor, float direction)
+    internal static void OnArmorAddOrSubtract(MechLabLocationWidget widget, bool isRearArmor, float direction)
     {
-        if (ArmorLocationLocker.IsLocked(widget.loadout.Location, isRearArmor))
-        {
-            return;
-        }
-
         var precision = AltModifierPressed ? 1 : ArmorStructureRatioFeature.ArmorPerStep;
         var stepSize = ShiftModifierPressed ? 25 : (ControlModifierPressed ? 999 : 1);
 
