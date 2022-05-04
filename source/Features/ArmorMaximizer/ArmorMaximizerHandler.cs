@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 using MechEngineer.Features.ArmorMaximizer.Maximizer;
 using MechEngineer.Features.ArmorStructureRatio;
-using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.MechLabSlots;
 using UnityEngine;
 using MechEngineer.Features.OverrideTonnage;
@@ -11,13 +9,26 @@ namespace MechEngineer.Features.ArmorMaximizer;
 
 internal static class ArmorMaximizerHandler
 {
-    internal static void OnMaxArmor(MechLabPanel mechLabPanel, MechLabMechInfoWidget infoWidget)
+    internal static void OnStripArmor(MechLabPanel mechLabPanel)
     {
-        if (MechDefBuilder.Locations.Any(location => mechLabPanel.GetLocationWidget(location).IsDestroyed))
+        if (!MechArmorState.Strip(mechLabPanel.activeMechDef, out var updates))
         {
             return;
         }
 
+        foreach (var update in updates)
+        {
+            var widget = mechLabPanel.GetLocationWidget(update.Location);
+            widget.SetArmor(update.Location.IsRear(), update.Assigned);
+            Control.Logger.Trace?.Log($"OnStripArmor.SetArmor update={update}");
+        }
+
+        mechLabPanel.FlagAsModified();
+        mechLabPanel.ValidateLoadout(false);
+    }
+
+    internal static void OnMaxArmor(MechLabPanel mechLabPanel, MechLabMechInfoWidget infoWidget)
+    {
         if (!MechArmorState.Maximize(mechLabPanel.activeMechDef, ArmorStructureRatioFeature.ArmorPerStep, out var updates))
         {
             return;
@@ -27,7 +38,7 @@ internal static class ArmorMaximizerHandler
         {
             var widget = mechLabPanel.GetLocationWidget(update.Location);
             widget.SetArmor(update.Location.IsRear(), update.Assigned);
-            Control.Logger.Trace?.Log($"SetArmor update={update}");
+            Control.Logger.Trace?.Log($"OnMaxArmor.SetArmor update={update}");
         }
 
         infoWidget.RefreshInfo();

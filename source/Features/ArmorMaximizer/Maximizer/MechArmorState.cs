@@ -16,6 +16,12 @@ internal class MechArmorState
         return mechArmorState.Maximize(armorPerStep, out updates);
     }
 
+    internal static bool Strip(MechDef mechDef, out List<ArmorLocationState> updates)
+    {
+        var mechArmorState = new MechArmorState(mechDef);
+        return mechArmorState.Strip(out updates);
+    }
+
     private List<ArmorLocationState> Locations { get; } = new();
 
     private int Max { get; }
@@ -112,6 +118,21 @@ internal class MechArmorState
             );
             Locations.Add(armorLocationState);
         }
+    }
+
+    private bool Strip(out List<ArmorLocationState> updates)
+    {
+        Locations.RemoveAll(s => s.IsEmpty || ArmorLocationLocker.IsLocked(s.Location));
+        updates = Locations.ToList();
+        foreach (var location in Locations)
+        {
+            if (location.LinkedChassisLocationState != null)
+            {
+                location.LinkedChassisLocationState.Assigned -= location.Assigned;
+            }
+            location.Assigned = 0;
+        }
+        return updates.Count > 0;
     }
 
     private bool Maximize(int armorPerStep, out List<ArmorLocationState> updates)

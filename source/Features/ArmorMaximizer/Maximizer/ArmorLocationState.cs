@@ -28,6 +28,7 @@ internal class ArmorLocationState : IComparable<ArmorLocationState>
         LinkedChassisLocationState = linkedChassisLocationState;
     }
 
+    internal bool IsEmpty => Assigned <= 0;
     internal bool IsFull => Assigned >= Max;
     internal int Remaining => Max - Assigned;
 

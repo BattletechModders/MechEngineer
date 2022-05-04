@@ -5,8 +5,8 @@ using Harmony;
 
 namespace MechEngineer.Features.ArmorMaximizer.Patches;
 
-[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.OnMaxArmor))]
-public static class MechLabPanel_OnMaxArmor_Patch
+[HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.OnStripArmor))]
+public static class MechLabPanel_OnStripArmor_Patch
 {
     public static bool Prefix(MechLabPanel __instance, MechLabMechInfoWidget ___mechInfoWidget, MechLabItemSlotElement ___dragItem)
     {
@@ -14,7 +14,7 @@ public static class MechLabPanel_OnMaxArmor_Patch
         {
             if (__instance.Initialized && ___dragItem == null && !LocationExtensions.ChassisLocationList.Any(location => __instance.GetLocationWidget(location).IsDestroyed))
             {
-                ArmorMaximizerHandler.OnMaxArmor(__instance, ___mechInfoWidget);
+                ArmorMaximizerHandler.OnStripArmor(__instance);
                 return false;
             }
         }
