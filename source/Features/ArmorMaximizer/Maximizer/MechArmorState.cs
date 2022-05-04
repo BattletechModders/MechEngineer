@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
@@ -68,13 +69,11 @@ internal class MechArmorState
     private void PrepareNonTorsoLocation(ChassisLocations chassisLocation, LocationDef locationDef, LocationLoadoutDef loadoutDef)
     {
         var armorLocation = chassisLocation.ToArmorLocation(false);
-        var locationMax = PrecisionUtils.RoundDownToInt(locationDef.MaxArmor);
-        var locationAssigned = PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor);
         var armorLocationState = new ArmorLocationState(
             armorLocation,
-            locationMax,
-            locationMax,
-            locationAssigned,
+            GetArmorAllocationRatio(armorLocation),
+            PrecisionUtils.RoundDownToInt(locationDef.MaxArmor),
+            PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor),
             null
         );
         Locations.Add(armorLocationState);
@@ -87,19 +86,13 @@ internal class MechArmorState
             PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor + loadoutDef.AssignedRearArmor)
         );
 
-        var ratio = ArmorMaximizerFeature.Shared.Settings.TorsoFrontBackRatio;
-        var locationTargetFront = PrecisionUtils.RoundDownToInt(chassisLocationState.Max * ratio);
-        var locationTargetBack = chassisLocationState.Max - locationTargetFront;
-
         {
             var armorLocation = chassisLocation.ToArmorLocation(false);
-            var locationMax = PrecisionUtils.RoundDownToInt(locationDef.MaxArmor);
-            var locationAssigned = PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor);
             var armorLocationState = new ArmorLocationState(
                 armorLocation,
-                locationMax,
-                locationTargetFront,
-                locationAssigned,
+                GetArmorAllocationRatio(armorLocation),
+                PrecisionUtils.RoundDownToInt(locationDef.MaxArmor),
+                PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor),
                 chassisLocationState
             );
             Locations.Add(armorLocationState);
@@ -107,29 +100,48 @@ internal class MechArmorState
 
         {
             var armorLocation = chassisLocation.ToArmorLocation(true);
-            var locationMax = PrecisionUtils.RoundDownToInt(locationDef.MaxRearArmor);
-            var locationAssigned = PrecisionUtils.RoundDownToInt(loadoutDef.AssignedRearArmor);
             var armorLocationState = new ArmorLocationState(
                 armorLocation,
-                locationMax,
-                locationTargetBack,
-                locationAssigned,
+                GetArmorAllocationRatio(armorLocation),
+                PrecisionUtils.RoundDownToInt(locationDef.MaxRearArmor),
+                PrecisionUtils.RoundDownToInt(loadoutDef.AssignedRearArmor),
                 chassisLocationState
             );
             Locations.Add(armorLocationState);
         }
     }
 
+    private static float GetArmorAllocationRatio(ArmorLocation location)
+    {
+        var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
+        return location switch
+        {
+            ArmorLocation.Head => constants.ArmorAllocationRatioHead,
+            ArmorLocation.CenterTorso => constants.ArmorAllocationRatioCenterTorso,
+            ArmorLocation.CenterTorsoRear => constants.ArmorAllocationRatioCenterTorsoRear,
+            ArmorLocation.LeftTorso => constants.ArmorAllocationRatioLeftTorso,
+            ArmorLocation.LeftTorsoRear => constants.ArmorAllocationRatioLeftTorsoRear,
+            ArmorLocation.RightTorso => constants.ArmorAllocationRatioRightTorso,
+            ArmorLocation.RightTorsoRear => constants.ArmorAllocationRatioRightTorsoRear,
+            ArmorLocation.LeftArm => constants.ArmorAllocationRatioLeftArm,
+            ArmorLocation.RightArm => constants.ArmorAllocationRatioRightArm,
+            ArmorLocation.LeftLeg => constants.ArmorAllocationRatioLeftLeg,
+            ArmorLocation.RightLeg => constants.ArmorAllocationRatioRightLeg,
+            _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
+        };
+    }
+
     private bool Strip(out List<ArmorLocationState> updates)
     {
-        Locations.RemoveAll(s => s.IsEmpty || ArmorLocationLocker.IsLocked(s.Location));
         updates = Locations.ToList();
-        foreach (var location in Locations)
+        updates.RemoveAll(s => s.IsEmpty || ArmorLocationLocker.IsLocked(s.Location));
+        foreach (var location in updates)
         {
             if (location.LinkedChassisLocationState != null)
             {
                 location.LinkedChassisLocationState.Assigned -= location.Assigned;
             }
+            Assigned -= location.Assigned;
             location.Assigned = 0;
         }
         return updates.Count > 0;
@@ -137,18 +149,28 @@ internal class MechArmorState
 
     private bool Maximize(int armorPerStep, out List<ArmorLocationState> updates)
     {
-        Locations.RemoveAll(s => s.IsFull || (s.LinkedChassisLocationState?.IsFull ?? false) || ArmorLocationLocker.IsLocked(s.Location));
-        updates = Locations.ToList();
+        if (ArmorMaximizerFeature.Shared.Settings.StripBeforeMax)
+        {
+            Strip(out _);
+        }
 
+        updates = Locations.ToList();
+        updates.RemoveAll(s => s.IsFull || (s.LinkedChassisLocationState?.IsFull ?? false) || ArmorLocationLocker.IsLocked(s.Location));
+        var tmp = Locations.ToList();
+
+        // this does a lot of looping, just 20ms on my machine though for an empty atlas
+        Control.Logger.Trace?.Log($"Maximize before loop");
         while (Remaining > 0)
         {
-            Locations.RemoveAll(s => s.IsFull || (s.LinkedChassisLocationState?.IsFull ?? false));
-            if (Locations.Count == 0)
+            tmp.RemoveAll(s => s.IsFull || (s.LinkedChassisLocationState?.IsFull ?? false));
+            if (tmp.Count == 0)
             {
                 break;
             }
-            Increment(Locations.Max(), armorPerStep);
+            Increment(tmp.Max(), armorPerStep);
         }
+        Control.Logger.Trace?.Log($"Maximize after loop");
+
         return HasChanges;
     }
 

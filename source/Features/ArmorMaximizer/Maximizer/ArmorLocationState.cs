@@ -9,22 +9,23 @@ namespace MechEngineer.Features.ArmorMaximizer.Maximizer;
 internal class ArmorLocationState : IComparable<ArmorLocationState>
 {
     internal ArmorLocation Location { get; }
+    private float BasePriority { get; }
     private int Max { get; }
-    private int Target { get; }
     internal int Assigned { get; set; }
     internal ChassisLocationState? LinkedChassisLocationState { get; }
 
     internal ArmorLocationState(
         ArmorLocation location,
+        float basePriority, // used to calculate priority, priority is reduced linearly by assigned points
         int max, // actual max to calculate IsFull
-        int target, // used to calculate priority
         int assigned,
-        ChassisLocationState? linkedChassisLocationState // used for torso armor locations that have shared limits
-    ) {
+        ChassisLocationState? linkedChassisLocationState
+        // used for torso armor locations that have shared limits
+        ) {
         Location = location;
+        BasePriority = basePriority;
         Max = max;
-        Target = target;
-        Assigned = Mathf.Min(assigned, target);
+        Assigned = assigned;
         LinkedChassisLocationState = linkedChassisLocationState;
     }
 
@@ -41,7 +42,7 @@ internal class ArmorLocationState : IComparable<ArmorLocationState>
         }
         return LocationPriority - other.LocationPriority;
     }
-    private float ArmorPointsPriority => Target / (float)Assigned;
+    private float ArmorPointsPriority => BasePriority / Assigned;
     private int LocationPriority => Location switch
     {
         ArmorLocation.Head => 60,
@@ -60,6 +61,6 @@ internal class ArmorLocationState : IComparable<ArmorLocationState>
 
     public override string ToString()
     {
-        return $"[Location={Location} Max={Max} Target={Target} Assigned={Assigned} ChassisLocationState={LinkedChassisLocationState}]";
+        return $"[Location={Location} BasePriority={BasePriority} Max={Max} Assigned={Assigned} ChassisLocationState={LinkedChassisLocationState}]";
     }
 }
