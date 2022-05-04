@@ -1,5 +1,3 @@
-using BattleTech;
-
 namespace MechEngineer.Features.ArmorMaximizer;
 
 internal class ArmorMaximizerFeature : Feature<ArmorMaximizerSettings>
@@ -10,10 +8,9 @@ internal class ArmorMaximizerFeature : Feature<ArmorMaximizerSettings>
 
     internal override void SetupFeatureLoaded()
     {
-        // TODO move to per mech change
-        if (Settings.LockHeadByDefault)
+        foreach (var location in Settings.ArmorLocationsLockedByDefault)
         {
-            ArmorLocationLocker.ToggleLock(ArmorLocation.Head);
+            ArmorLocationLocker.ToggleLock(location);
         }
     }
 }

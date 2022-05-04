@@ -2,28 +2,27 @@
 using System;
 using BattleTech;
 using MechEngineer.Features.OverrideTonnage;
-using UnityEngine;
 
 namespace MechEngineer.Features.ArmorMaximizer.Maximizer;
 
 internal class ArmorLocationState : IComparable<ArmorLocationState>
 {
     internal ArmorLocation Location { get; }
-    private float BasePriority { get; }
+    private int AllocationPriority { get; }
     private int Max { get; }
     internal int Assigned { get; set; }
     internal ChassisLocationState? LinkedChassisLocationState { get; }
 
     internal ArmorLocationState(
         ArmorLocation location,
-        float basePriority, // used to calculate priority, priority is reduced linearly by assigned points
+        int allocationPriority, // used to calculate priority, priority is reduced linearly by assigned points
         int max, // actual max to calculate IsFull
         int assigned,
         ChassisLocationState? linkedChassisLocationState
         // used for torso armor locations that have shared limits
         ) {
         Location = location;
-        BasePriority = basePriority;
+        AllocationPriority = allocationPriority;
         Max = max;
         Assigned = assigned;
         LinkedChassisLocationState = linkedChassisLocationState;
@@ -42,7 +41,7 @@ internal class ArmorLocationState : IComparable<ArmorLocationState>
         }
         return LocationPriority - other.LocationPriority;
     }
-    private float ArmorPointsPriority => BasePriority / Assigned;
+    private int ArmorPointsPriority => Assigned == 0 ? 2 * AllocationPriority : AllocationPriority / Assigned;
     private int LocationPriority => Location switch
     {
         ArmorLocation.Head => 60,
@@ -61,6 +60,6 @@ internal class ArmorLocationState : IComparable<ArmorLocationState>
 
     public override string ToString()
     {
-        return $"[Location={Location} BasePriority={BasePriority} Max={Max} Assigned={Assigned} ChassisLocationState={LinkedChassisLocationState}]";
+        return $"[Location={Location} AllocationPriority={AllocationPriority} ArmorPointsPriority={ArmorPointsPriority} Max={Max} Assigned={Assigned} ChassisLocationState={LinkedChassisLocationState}]";
     }
 }

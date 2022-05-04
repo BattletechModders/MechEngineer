@@ -124,6 +124,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
         var total = armor + armorRear;
         var totalMax = GetMaximumArmorPoints(chassisLocationDef);
 
+        // only fix over-allocated locations
         if (total <= totalMax)
         {
             return true;
@@ -131,12 +132,13 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
 
         if (applyChanges)
         {
-            Control.Logger.Trace?.Log($"structure={structure} location={location} totalMax={totalMax}");
+            Control.Logger.Trace?.Log($"structure={structure} location={location} total={total} totalMax={totalMax}");
             Control.Logger.Trace?.Log($"before AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor}");
 
             if ((location & ChassisLocations.Torso) != 0)
             {
-                mechLocationDef.AssignedArmor = PrecisionUtils.RoundDown(totalMax * ArmorMaximizerFeature.Shared.Settings.TorsoFrontBackRatio, ArmorPerStep);
+                var ratio = ArmorAllocationRatioFrontRear(location);
+                mechLocationDef.AssignedArmor = PrecisionUtils.RoundDown(totalMax * ratio, ArmorPerStep);
                 mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
                 mechLocationDef.AssignedRearArmor = totalMax - mechLocationDef.AssignedArmor;
                 mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
@@ -176,6 +178,28 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
     }
 
     internal static int ArmorPerStep => (int)UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_STEP;
+
+    private static float ArmorAllocationRatioFrontRear(ChassisLocations location)
+    {
+        var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
+        float front, back;
+        if (location == ChassisLocations.LeftTorso)
+        {
+            front = constants.ArmorAllocationRatioLeftTorso;
+            back = constants.ArmorAllocationRatioLeftTorsoRear;
+        }
+        else if (location == ChassisLocations.RightTorso)
+        {
+            front = constants.ArmorAllocationRatioRightTorso;
+            back = constants.ArmorAllocationRatioRightTorsoRear;
+        }
+        else
+        {
+            front = constants.ArmorAllocationRatioCenterTorso;
+            back = constants.ArmorAllocationRatioCenterTorsoRear;
+        }
+        return front / back;
+    }
 
     private static int GetArmorToStructureRatio(ChassisLocations location)
     {

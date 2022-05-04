@@ -4,6 +4,7 @@ using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.MechLabSlots;
 using UnityEngine;
 using MechEngineer.Features.OverrideTonnage;
+using MechEngineer.Helper;
 
 namespace MechEngineer.Features.ArmorMaximizer;
 
@@ -11,7 +12,7 @@ internal static class ArmorMaximizerHandler
 {
     internal static void OnStripArmor(MechLabPanel mechLabPanel)
     {
-        if (!MechArmorState.Strip(mechLabPanel.activeMechDef, out var updates))
+        if (!MechArmorState.Strip(mechLabPanel.activeMechDef, InputUtils.ControlModifierPressed, out var updates))
         {
             return;
         }
@@ -29,7 +30,7 @@ internal static class ArmorMaximizerHandler
 
     internal static void OnMaxArmor(MechLabPanel mechLabPanel, MechLabMechInfoWidget infoWidget)
     {
-        if (!MechArmorState.Maximize(mechLabPanel.activeMechDef, ArmorStructureRatioFeature.ArmorPerStep, out var updates))
+        if (!MechArmorState.Maximize(mechLabPanel.activeMechDef, InputUtils.ControlModifierPressed, ArmorStructureRatioFeature.ArmorPerStep, out var updates))
         {
             return;
         }
@@ -48,17 +49,17 @@ internal static class ArmorMaximizerHandler
 
     internal static void OnArmorAddOrSubtract(MechLabLocationWidget widget, bool isRearArmor, float direction)
     {
-        var precision = AltModifierPressed ? 1 : ArmorStructureRatioFeature.ArmorPerStep;
-        var stepSize = ShiftModifierPressed ? 25 : (ControlModifierPressed ? 999 : 1);
+        var stepPrecision = ArmorMaximizerFeature.Shared.Settings.StepPrecision.Get() ?? ArmorStructureRatioFeature.ArmorPerStep;
+        var stepSize = ArmorMaximizerFeature.Shared.Settings.StepSize.Get() ?? ArmorStructureRatioFeature.ArmorPerStep;
 
         var stepDirection = direction < 0 ? -1 : 1;
         var current = isRearArmor ? widget.currentRearArmor : widget.currentArmor;
 
         var updated = stepDirection > 0
-            ? PrecisionUtils.RoundUp(current + stepSize, precision)
-            : PrecisionUtils.RoundDown(current - stepSize, precision);
+            ? PrecisionUtils.RoundUp(current + stepSize, stepPrecision)
+            : PrecisionUtils.RoundDown(current - stepSize, stepPrecision);
 
-        Control.Logger.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={precision} isRearArmor={isRearArmor}");
+        Control.Logger.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={stepPrecision} isRearArmor={isRearArmor}");
         if (stepDirection > 0)
         {
             var max = isRearArmor ? widget.maxRearArmor : widget.maxArmor;
@@ -138,8 +139,4 @@ internal static class ArmorMaximizerHandler
         lanceStat.fillColor.SetUIColor(isLocked ? UIColor.Gold : UIColor.White);
         lanceStat.nameTextColor.SetUIColor(isLocked ? UIColor.Gold : UIColor.White);
     }
-
-    private static bool ShiftModifierPressed => Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-    private static bool ControlModifierPressed => Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
-    private static bool AltModifierPressed => Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
 }

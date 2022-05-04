@@ -1,4 +1,7 @@
-﻿namespace MechEngineer.Features.ArmorMaximizer;
+﻿using BattleTech;
+using MechEngineer.Helper;
+
+namespace MechEngineer.Features.ArmorMaximizer;
 
 public class ArmorMaximizerSettings : ISettings
 {
@@ -8,8 +11,42 @@ public class ArmorMaximizerSettings : ISettings
     public bool StripBeforeMax { get; set; } = true;
     public string StripBeforeMaxDescription => "Avoid dirty locations when going after Max";
 
-	public bool LockHeadByDefault { get; set; } = false;
-	public string LockHeadByDefaultDescription => "When maximizing armor, head armor will be ignored. (Not yet supported, thinking about locking any armor location via UI)";
+	public ArmorLocation[] ArmorLocationsLockedByDefault { get; set; } = {};
+	public string ArmorLocationsLockedByDefaultDescription => $"A list of armor locations locked by default. Possible values: {string.Join(",", LocationExtensions.ArmorLocationList)}";
 
-	public float TorsoFrontBackRatio { get; set; } = 0.69f;
+	public ValueByModifier StepSize = new ValueByModifier
+	{
+		Shift = 25f,
+		Control = 999f,
+	};
+
+	public ValueByModifier StepPrecision = new ValueByModifier
+	{
+		Alt = 0.5f,
+	};
+
+	public class ValueByModifier
+	{
+		public float? Alt { get; set; }
+		public float? Control { get; set; }
+		public float? Shift { get; set; }
+		public float? Default { get; set; }
+
+		internal float? Get()
+		{
+			if (Alt != null && InputUtils.AltModifierPressed)
+			{
+				return Alt;
+			}
+			if (Control != null && InputUtils.ControlModifierPressed)
+			{
+				return Control;
+			}
+			if (Shift != null && InputUtils.ShiftModifierPressed)
+			{
+				return Shift;
+			}
+			return Default;
+		}
+	}
 }

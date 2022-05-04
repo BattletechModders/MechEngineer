@@ -11,28 +11,30 @@ namespace MechEngineer.Features.ArmorMaximizer.Maximizer;
 
 internal class MechArmorState
 {
-    internal static bool Maximize(MechDef mechDef, int armorPerStep, out List<ArmorLocationState> updates)
+    internal static bool Maximize(MechDef mechDef, bool ignoreLocks, int armorPerStep, out List<ArmorLocationState> updates)
     {
-        var mechArmorState = new MechArmorState(mechDef);
+        var mechArmorState = new MechArmorState(mechDef, ignoreLocks);
         return mechArmorState.Maximize(armorPerStep, out updates);
     }
 
-    internal static bool Strip(MechDef mechDef, out List<ArmorLocationState> updates)
+    internal static bool Strip(MechDef mechDef, bool ignoreLocks, out List<ArmorLocationState> updates)
     {
-        var mechArmorState = new MechArmorState(mechDef);
+        var mechArmorState = new MechArmorState(mechDef, ignoreLocks);
         return mechArmorState.Strip(out updates);
     }
 
     private List<ArmorLocationState> Locations { get; } = new();
 
+    private bool IgnoreLocks { get; }
     private int Max { get; }
     private int Assigned { get; set; }
     private bool HasChanges { get; set; }
 
     private int Remaining => Max - Assigned;
 
-    private MechArmorState(MechDef mechDef)
+    private MechArmorState(MechDef mechDef, bool ignoreLocks)
     {
+        IgnoreLocks = ignoreLocks;
         Max = CalculateMaximum(mechDef);
         Assigned = PrecisionUtils.RoundDownToInt(mechDef.MechDefAssignedArmor);
 
@@ -71,7 +73,7 @@ internal class MechArmorState
         var armorLocation = chassisLocation.ToArmorLocation(false);
         var armorLocationState = new ArmorLocationState(
             armorLocation,
-            GetArmorAllocationRatio(armorLocation),
+            GetArmorAllocationPriority(armorLocation),
             PrecisionUtils.RoundDownToInt(locationDef.MaxArmor),
             PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor),
             null
@@ -90,7 +92,7 @@ internal class MechArmorState
             var armorLocation = chassisLocation.ToArmorLocation(false);
             var armorLocationState = new ArmorLocationState(
                 armorLocation,
-                GetArmorAllocationRatio(armorLocation),
+                GetArmorAllocationPriority(armorLocation),
                 PrecisionUtils.RoundDownToInt(locationDef.MaxArmor),
                 PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor),
                 chassisLocationState
@@ -102,7 +104,7 @@ internal class MechArmorState
             var armorLocation = chassisLocation.ToArmorLocation(true);
             var armorLocationState = new ArmorLocationState(
                 armorLocation,
-                GetArmorAllocationRatio(armorLocation),
+                GetArmorAllocationPriority(armorLocation),
                 PrecisionUtils.RoundDownToInt(locationDef.MaxRearArmor),
                 PrecisionUtils.RoundDownToInt(loadoutDef.AssignedRearArmor),
                 chassisLocationState
@@ -111,10 +113,10 @@ internal class MechArmorState
         }
     }
 
-    private static float GetArmorAllocationRatio(ArmorLocation location)
+    private static int GetArmorAllocationPriority(ArmorLocation location)
     {
         var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
-        return location switch
+        var ratio = location switch
         {
             ArmorLocation.Head => constants.ArmorAllocationRatioHead,
             ArmorLocation.CenterTorso => constants.ArmorAllocationRatioCenterTorso,
@@ -129,12 +131,18 @@ internal class MechArmorState
             ArmorLocation.RightLeg => constants.ArmorAllocationRatioRightLeg,
             _ => throw new ArgumentOutOfRangeException(nameof(location), location, null)
         };
+        const int someMultiplierLargeEnoughSoDividingByAssignedWorksAsPriority = 1000000;
+        return PrecisionUtils.RoundDownToInt(ratio * someMultiplierLargeEnoughSoDividingByAssignedWorksAsPriority);
     }
 
     private bool Strip(out List<ArmorLocationState> updates)
     {
         updates = Locations.ToList();
-        updates.RemoveAll(s => s.IsEmpty || ArmorLocationLocker.IsLocked(s.Location));
+        updates.RemoveAll(s => s.IsEmpty);
+        if (!IgnoreLocks)
+        {
+            updates.RemoveAll(s =>ArmorLocationLocker.IsLocked(s.Location));
+        }
         foreach (var location in updates)
         {
             if (location.LinkedChassisLocationState != null)
@@ -155,7 +163,11 @@ internal class MechArmorState
         }
 
         updates = Locations.ToList();
-        updates.RemoveAll(s => s.IsFull || (s.LinkedChassisLocationState?.IsFull ?? false) || ArmorLocationLocker.IsLocked(s.Location));
+        updates.RemoveAll(s => s.IsFull || (s.LinkedChassisLocationState?.IsFull ?? false));
+        if (!IgnoreLocks)
+        {
+            updates.RemoveAll(s =>ArmorLocationLocker.IsLocked(s.Location));
+        }
         var tmp = Locations.ToList();
 
         // this does a lot of looping, just 20ms on my machine though for an empty atlas
@@ -197,7 +209,7 @@ internal class MechArmorState
             armorLocationState.LinkedChassisLocationState.Assigned += change;
         }
 
-        Control.Logger.Trace?.Log($"Increment Location={armorLocationState.Location} change={change} Assigned={Assigned} armor.Assigned={armorLocationState.Assigned} chassis.Assigned={armorLocationState.LinkedChassisLocationState?.Assigned}");
+        Control.Logger.Trace?.Log($"Increment change={change} Assigned={Assigned} armorLocationState={armorLocationState}");
         HasChanges = true;
     }
 }
