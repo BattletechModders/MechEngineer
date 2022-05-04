@@ -1,4 +1,7 @@
 {
     "MaxSprintFactor" : 350.0,
-    "MinSprintFactor" : 125.0
+    "MinSprintFactor" : 125.0,
+    "ArmorAllocationRatioCenterTorsoRear" : 0.04,
+    "ArmorAllocationRatioLeftTorsoRear" : 0.04,
+    "ArmorAllocationRatioRightTorsoRear" : 0.04
 }
