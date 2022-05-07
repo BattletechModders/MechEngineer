@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable disable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
@@ -17,10 +18,10 @@ internal class AutoFixer : IAutoFixMechDef
 {
     internal static readonly AutoFixer Shared = new();
 
-    public void AutoFix(List<MechDef> mechDefs, SimGameState simgame)
+    public void AutoFix(List<MechDef> mechDefs, SimGameState simGameState)
     {
         // we dont fix save games anymore, have to have money and time to fix an ongoing campaign
-        if (simgame != null)
+        if (simGameState != null)
         {
             return;
         }
@@ -136,7 +137,7 @@ internal class AutoFixer : IAutoFixMechDef
         {
             // remove incompatible heat sinks
             var incompatibleHeatSinks = builder.Inventory
-                .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory != engineHeatSinkDef.HSCategory)
+                .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HeatSinkCategory != engineHeatSinkDef.HeatSinkCategory)
                 .ToList();
 
             foreach (var incompatibleHeatSink in incompatibleHeatSinks)
@@ -163,7 +164,7 @@ internal class AutoFixer : IAutoFixMechDef
                 var current = oldCurrent;
 
                 var heatSinks = builder.Inventory
-                    .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory == engineHeatSinkDef.HSCategory)
+                    .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HeatSinkCategory == engineHeatSinkDef.HeatSinkCategory)
                     .ToList();
 
                 while (current < max && heatSinks.Count > 0)
@@ -199,7 +200,7 @@ internal class AutoFixer : IAutoFixMechDef
             var jumpJetTonnage = jumpJets.Select(x => x.Def.Tonnage).FirstOrDefault(); //0 if no jjs
 
             var externalHeatSinks = builder.Inventory
-                .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HSCategory == engineHeatSinkDef.HSCategory)
+                .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HeatSinkCategory == engineHeatSinkDef.HeatSinkCategory)
                 .ToList();
             var internalHeatSinksCount = res.HeatBlockDef.HeatSinkCount;
 
@@ -342,7 +343,7 @@ internal class AutoFixer : IAutoFixMechDef
             var max = engine.HeatSinkExternalFreeMaxCount;
             var current = builder.Inventory
                 .Count(r => r.Def.Is<EngineHeatSinkDef>(out var hs)
-                            && hs.HSCategory == engineHeatSinkDef.HSCategory);
+                            && hs.HeatSinkCategory == engineHeatSinkDef.HeatSinkCategory);
             for (var i = current; i < max; i++)
             {
                 builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);

@@ -4,5 +4,5 @@ internal class TurretMechComponentsFeature : Feature<TurretMechComponentSettings
 {
     internal static readonly TurretMechComponentsFeature Shared = new();
 
-    internal override TurretMechComponentSettings Settings => Control.settings.TurretMechComponents;
+    internal override TurretMechComponentSettings Settings => Control.Settings.TurretMechComponents;
 }

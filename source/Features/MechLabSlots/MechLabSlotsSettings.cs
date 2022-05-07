@@ -26,8 +26,8 @@ internal class MechLabSlotsSettings : ISettings
 
     internal class WidgetSettings
     {
-        public string Label;
-        public string ShortLabel;
+        public string Label = null!;
+        public string ShortLabel = null!;
         public int Slots;
         public bool Enabled => Slots > 0;
     }

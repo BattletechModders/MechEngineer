@@ -23,7 +23,7 @@ public static class HeatSinkDef_FromJSON_Patch
         }
     }
 
-    internal static void HeatSinkDef_FromJSON(HeatSinkDef def)
+    private static void HeatSinkDef_FromJSON(HeatSinkDef def)
     {
         if (Mathf.Approximately(def.DissipationCapacity, 0))
         {
@@ -31,7 +31,7 @@ public static class HeatSinkDef_FromJSON_Patch
         }
 
         var statisticData = StatCollectionExtension
-            .HeatSinkCapacity(null)
+            .HeatSinkCapacity(null!)
             .CreateStatisticData(
                 StatCollection.StatOperation.Int_Add,
                 (int)def.DissipationCapacity

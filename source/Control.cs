@@ -11,36 +11,35 @@ namespace MechEngineer;
 
 public static class Control
 {
-    internal static Mod mod;
+    internal static Mod Mod = null!;
+    internal static BetterLogger Logger = null!;
 
-    internal static BetterLogger Logger;
-
-    internal static readonly MechEngineerSettings settings = new();
+    internal static readonly MechEngineerSettings Settings = new();
 
     public static void Start(string modDirectory, string json)
     {
-        mod = new Mod(modDirectory);
-        mod.ResetStartupErrorLog();
+        Mod = new Mod(modDirectory);
+        Mod.ResetStartupErrorLog();
         try
         {
-            FileUtils.SetReadonly(mod.SettingsDefaultsPath, false);
-            FileUtils.SetReadonly(mod.SettingsLastPath, false);
+            FileUtils.SetReadonly(Mod.SettingsDefaultsPath, false);
+            FileUtils.SetReadonly(Mod.SettingsLastPath, false);
 
-            mod.SaveSettings(settings, mod.SettingsDefaultsPath);
-            mod.LoadSettings(settings);
-            mod.SaveSettings(settings, mod.SettingsLastPath);
+            Mod.SaveSettings(Settings, Mod.SettingsDefaultsPath);
+            Mod.LoadSettings(Settings);
+            Mod.SaveSettings(Settings, Mod.SettingsLastPath);
 
-            if (settings.GeneratedSettingsFilesReadonly)
+            if (Settings.GeneratedSettingsFilesReadonly)
             {
-                FileUtils.SetReadonly(mod.SettingsDefaultsPath, true);
-                FileUtils.SetReadonly(mod.SettingsLastPath, true);
+                FileUtils.SetReadonly(Mod.SettingsDefaultsPath, true);
+                FileUtils.SetReadonly(Mod.SettingsLastPath, true);
             }
 
-            Logger = BetterLogFeature.SetupLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), settings.BetterLog);
+            Logger = BetterLogFeature.SetupLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), Settings.BetterLog);
         }
         catch (Exception e)
         {
-            mod.WriteStartupError(e);
+            Mod.WriteStartupError(e);
             throw;
         }
 

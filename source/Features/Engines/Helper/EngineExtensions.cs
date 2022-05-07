@@ -8,7 +8,7 @@ namespace MechEngineer.Features.Engines.Helper;
 public static class EngineExtensions
 {
     // Extensions method became public for BV reasons -- bhtrail
-    public static Engine GetEngine(this MechDef @this)
+    public static Engine? GetEngine(this MechDef @this)
     {
         return Engine.GetEngine(@this.Chassis, @this.Inventory);
     }

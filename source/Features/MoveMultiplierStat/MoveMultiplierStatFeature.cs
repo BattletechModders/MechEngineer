@@ -7,7 +7,7 @@ internal class MoveMultiplierStatFeature : Feature<MoveMultiplierStatSettings>
 {
     internal static readonly MoveMultiplierStatFeature Shared = new();
 
-    internal override MoveMultiplierStatSettings Settings => Control.settings.MoveMultiplierStat;
+    internal override MoveMultiplierStatSettings Settings => Control.Settings.MoveMultiplierStat;
 
     internal void InitEffectStats(Mech mech)
     {

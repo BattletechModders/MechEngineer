@@ -19,11 +19,11 @@ public class DynamicSlots : SimpleCustomComponent, IAdjustTooltipEquipment, IAdj
     public bool? ShowIcon { get; set; } = DynamicSlotsFeature.settings.DefaultShowIcon;
     public bool? ShowFixedEquipmentOverlay { get; set; } = DynamicSlotsFeature.settings.DefaultShowFixedEquipmentOverlay;
 
-    public string NameText { get; set; } = DynamicSlotsFeature.settings.DefaultNameText;
-    public string DefaultBonusATextIfReservedSlot { get; set; } = DynamicSlotsFeature.settings.DefaultBonusATextIfReservedSlot;
-    public string DefaultBonusATextIfMovableSlot { get; set; } = DynamicSlotsFeature.settings.DefaultBonusATextIfMovableSlot;
-    public string BonusBText { get; set; } = DynamicSlotsFeature.settings.DefaultBonusBText;
-    public string BackgroundColor { get; set; } = DynamicSlotsFeature.settings.DefaultBackgroundColor;
+    public string? NameText { get; set; } = DynamicSlotsFeature.settings.DefaultNameText;
+    public string? DefaultBonusATextIfReservedSlot { get; set; } = DynamicSlotsFeature.settings.DefaultBonusATextIfReservedSlot;
+    public string? DefaultBonusATextIfMovableSlot { get; set; } = DynamicSlotsFeature.settings.DefaultBonusATextIfMovableSlot;
+    public string? BonusBText { get; set; } = DynamicSlotsFeature.settings.DefaultBonusBText;
+    public string? BackgroundColor { get; set; } = DynamicSlotsFeature.settings.DefaultBackgroundColor;
 
     public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
     {
@@ -37,7 +37,7 @@ public class DynamicSlots : SimpleCustomComponent, IAdjustTooltipEquipment, IAdj
 
     internal void ApplyTo(MechLabItemSlotElement element, bool isReservedSlot)
     {
-        void SetText(string text, TextMeshProUGUI textMesh)
+        void SetText(string? text, TextMeshProUGUI textMesh)
         {
             if (text == "")
             {
@@ -59,7 +59,7 @@ public class DynamicSlots : SimpleCustomComponent, IAdjustTooltipEquipment, IAdj
 
         if (!string.IsNullOrEmpty(BackgroundColor))
         {
-            element.backgroundColor.SetColorFromString(BackgroundColor);
+            element.backgroundColor.SetColorFromString(BackgroundColor!);
         }
 
         if (ShowIcon.HasValue)

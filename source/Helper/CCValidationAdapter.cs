@@ -32,7 +32,7 @@ internal class CCValidationAdapter
         return !errors.Any();
     }
 
-    public string ValidateDrop(MechLabItemSlotElement drop_item, List<InvItem> new_inventory)
+    public string ValidateDrop(MechLabItemSlotElement dropItem, List<InvItem> newInventory)
     {
         var mechDef = MechLabHelper.CurrentMechLab.ActiveMech;
 
@@ -40,10 +40,12 @@ internal class CCValidationAdapter
         validator.ValidateMech(mechDef, errors1);
 
         var mechDef2 = new MechDef(mechDef);
-        var inventory2 = new_inventory.Select(x =>
+        var inventory2 = newInventory.Select(x =>
         {
-            var r = new MechComponentRef(x.Item);
-            r.MountedLocation = x.Location;
+            var r = new MechComponentRef(x.Item)
+            {
+                MountedLocation = x.Location
+            };
             return r;
         }).ToList();
 
@@ -59,8 +61,8 @@ internal class CCValidationAdapter
 
 public class Errors : IEnumerable<Error>
 {
-    internal readonly OrderedSet<Error> Messages = new();
-    internal bool FailOnFirstError = false;
+    private readonly OrderedSet<Error> Messages = new();
+    internal bool FailOnFirstError;
 
     internal bool Add(MechValidationType type, string message)
     {
@@ -104,7 +106,7 @@ public class Error : IEquatable<Error>
         return Equals(obj as Error);
     }
 
-    public bool Equals(Error other)
+    public bool Equals(Error? other)
     {
         return other != null &&
                Type == other.Type &&

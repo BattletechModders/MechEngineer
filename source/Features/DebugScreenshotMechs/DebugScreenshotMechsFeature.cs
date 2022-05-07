@@ -7,14 +7,14 @@ internal class DebugScreenshotMechsFeature : Feature<DebugScreenshotMechsSetting
 {
     internal static readonly DebugScreenshotMechsFeature Shared = new();
 
-    internal override DebugScreenshotMechsSettings Settings => Control.settings.DebugScreenshotMechs;
+    internal override DebugScreenshotMechsSettings Settings => Control.Settings.DebugScreenshotMechs;
 
-    private string screenshotDirectoryPath;
-    internal string ScreenshotPath(MechDef mechDef)
+    private string? screenshotDirectoryPath;
+    internal string? ScreenshotPath(MechDef mechDef)
     {
         if (screenshotDirectoryPath == null)
         {
-            screenshotDirectoryPath = Path.Combine(Control.mod.Directory, Settings.ScreenshotDirectoryPath);
+            screenshotDirectoryPath = Path.Combine(Control.Mod.Directory, Settings.ScreenshotDirectoryPath);
         }
 
         if (!Directory.Exists(screenshotDirectoryPath))

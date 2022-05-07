@@ -13,7 +13,7 @@ internal class HeatSinkCapacityStatFeature : Feature<HeatSinkCapacityStatSetting
 {
     internal static readonly HeatSinkCapacityStatFeature Shared = new();
 
-    internal override HeatSinkCapacityStatSettings Settings => Control.settings.HeatSinkCapacityStat;
+    internal override HeatSinkCapacityStatSettings Settings => Control.Settings.HeatSinkCapacityStat;
 
     internal bool IgnoreShutdown(MechComponent mechComponent)
     {
@@ -51,7 +51,7 @@ internal class HeatSinkCapacityStatFeature : Feature<HeatSinkCapacityStatSetting
                                 ?? EngineFeature.settings.EngineMissingFallbackHeatSinkCapacity;
 
         var statisticData = StatCollectionExtension
-            .HeatSinkCapacity(null)
+            .HeatSinkCapacity(null!)
             .CreateStatisticData(
                 StatCollection.StatOperation.Int_Add,
                 (int)engineDissipation

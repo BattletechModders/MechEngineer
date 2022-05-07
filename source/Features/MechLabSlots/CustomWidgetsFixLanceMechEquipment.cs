@@ -150,6 +150,6 @@ internal static class CustomWidgetsFixLanceMechEquipment
 
     private static GameObject GetWidgetViaCenterTorso(MechLabSlotsSettings.WidgetSettings settings, GameObject centerTorso)
     {
-        return centerTorso.transform.parent.GetChild(settings.ShortLabel)?.gameObject;
+        return centerTorso.transform.parent.GetChild(settings.ShortLabel).gameObject;
     }
 }

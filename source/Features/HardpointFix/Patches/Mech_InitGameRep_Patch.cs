@@ -19,6 +19,7 @@ public static class Mech_InitGameRep_Patch
             var componentRefs = __instance.Weapons.Union(__instance.supportComponents)
                 .Select(w => w.baseComponentRef as MechComponentRef)
                 .Where(c => c != null)
+                .Select(c => c!)
                 .ToList();
 
             CalculatorSetup.Setup(__instance.MechDef.Chassis, componentRefs);

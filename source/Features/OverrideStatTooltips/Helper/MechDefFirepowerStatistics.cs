@@ -19,12 +19,13 @@ internal class MechDefFirepowerStatistics
     {
     }
 
-    internal MechDefFirepowerStatistics(MechDef mechDef, Func<WeaponDef, bool> customFilter = null)
+    internal MechDefFirepowerStatistics(MechDef mechDef, Func<WeaponDef, bool> customFilter)
     {
         var weaponStats = mechDef.Inventory
             .Where(x => x.IsFunctionalORInstalling())
             .Select(x => x.Def as WeaponDef)
             .Where(x => x != null)
+            .Select(x => x!)
             .Where(customFilter)
             .Select(x => new WeaponDefFirepowerStatistics(mechDef, x))
             .ToList();

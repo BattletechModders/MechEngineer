@@ -8,7 +8,7 @@ internal class AccuracyEffectsFeature : Feature<AccuracyEffectsSettings>
 {
     internal static readonly AccuracyEffectsFeature Shared = new();
 
-    internal override AccuracyEffectsSettings Settings => Control.settings.AccuracyEffects;
+    internal override AccuracyEffectsSettings Settings => Control.Settings.AccuracyEffects;
 
     internal override bool Enabled => base.Enabled && PlaceholderEffectsFeature.Shared.Loaded;
 

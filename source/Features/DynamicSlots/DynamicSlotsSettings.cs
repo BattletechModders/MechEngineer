@@ -29,19 +29,19 @@ public class DynamicSlotsSettings : ISettings
     public bool? DefaultShowFixedEquipmentOverlay = true;
     public string DefaultShowFixedEquipmentOverlayDescription => DefaultValueDescription;
 
-    public string DefaultNameText = "";
+    public string? DefaultNameText = "";
     public string DefaultNameTextDescription => DefaultTextDescription;
 
-    public string DefaultBonusATextIfReservedSlot = "reserved slot";
+    public string? DefaultBonusATextIfReservedSlot = "reserved slot";
     public string DefaultBonusATextIfReservedSlotDescription => DefaultTextDescription;
 
-    public string DefaultBonusATextIfMovableSlot = "movable slot";
+    public string? DefaultBonusATextIfMovableSlot = "movable slot";
     public string DefaultBonusATextIfMovableSlotDescription => DefaultTextDescription;
 
-    public string DefaultBonusBText = "";
+    public string? DefaultBonusBText = "";
     public string DefaultBonusBTextDescription => DefaultTextDescription;
 
-    public string DefaultBackgroundColor = null;
+    public string? DefaultBackgroundColor = null;
     public string DefaultBackgroundColorDescription => DefaultValueDescription;
 
     private static string DefaultValueDescription => @"null: use component value, value: overwrite component value";

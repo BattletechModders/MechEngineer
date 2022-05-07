@@ -1,4 +1,3 @@
-#nullable enable
 using HBS.Logging;
 
 namespace MechEngineer.Features.BetterLog;

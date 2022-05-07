@@ -9,7 +9,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper;
 
 internal static class MechDefStatisticModifier
 {
-    internal static T ModifyStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, bool acceptAllDamageLevels = false)
+    internal static T ModifyStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, bool acceptAllDamageLevels = false) where T : notnull
     {
         var effects = new List<EffectData>();
         foreach (var componentDef in mechDef.Inventory.Where(x => acceptAllDamageLevels || x.IsFunctionalORInstalling()).Select(x => x.Def))
@@ -45,12 +45,12 @@ internal static class MechDefStatisticModifier
         return stat.Get();
     }
 
-    internal static T ModifyWeaponStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, WeaponDef weaponDef)
+    internal static T ModifyWeaponStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, WeaponDef weaponDef) where T : notnull
     {
         return ModifyWeaponStatistic<T>(stat, mechDef, weaponDef.WeaponSubType, weaponDef.Type, weaponDef.WeaponCategoryValue);
     }
 
-    internal static T ModifyWeaponStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, WeaponSubType subType, WeaponType type, WeaponCategoryValue categoryValue)
+    private static T ModifyWeaponStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, WeaponSubType subType, WeaponType type, WeaponCategoryValue categoryValue) where T : notnull
     {
         var effects = new List<EffectData>();
         foreach (var componentDef in mechDef.Inventory.Where(x => x.IsFunctionalORInstalling()).Select(x => x.Def))
@@ -91,7 +91,7 @@ internal static class MechDefStatisticModifier
     }
 
     // see EffectsManager.GetTargetComponents for order and logic
-    internal static bool IsStatusEffectAffectingWeapon(StatisticEffectData statisticData, WeaponSubType subType, WeaponType type, WeaponCategoryValue categoryValue)
+    private static bool IsStatusEffectAffectingWeapon(StatisticEffectData statisticData, WeaponSubType subType, WeaponType type, WeaponCategoryValue categoryValue)
     {
         if (statisticData.targetCollection != TargetCollection.Weapon)
         {

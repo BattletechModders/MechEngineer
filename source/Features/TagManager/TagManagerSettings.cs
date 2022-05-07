@@ -37,17 +37,17 @@ public class TagManagerSettings : ISettings
     }
 
     [JsonIgnore]
-    public TagSet SkirmishWhitelistTagSet = null;
+    public TagSet SkirmishWhitelistTagSet = null!;
 
     [JsonIgnore]
-    public TagSet WhitelistComponentTagSet = null;
+    public TagSet WhitelistComponentTagSet = null!;
 
     [JsonIgnore]
-    public TagSet BlacklistComponentTagSet = null;
+    public TagSet BlacklistComponentTagSet = null!;
 
     [JsonIgnore]
-    public TagSet WhitelistMechTagSet = null;
+    public TagSet WhitelistMechTagSet = null!;
 
     [JsonIgnore]
-    public TagSet BlacklistMechTagSet = null;
+    public TagSet BlacklistMechTagSet = null!;
 }

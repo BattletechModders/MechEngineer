@@ -12,7 +12,7 @@ internal class OverrideDescriptionsFeature : Feature<OverrideDescriptionsSetting
 {
     internal static readonly OverrideDescriptionsFeature Shared = new();
 
-    internal override OverrideDescriptionsSettings Settings => Control.settings.OverrideDescriptions;
+    internal override OverrideDescriptionsSettings Settings => Control.Settings.OverrideDescriptions;
 
     internal static OverrideDescriptionsSettings settings => Shared.Settings;
 
@@ -63,7 +63,7 @@ internal class OverrideDescriptionsFeature : Feature<OverrideDescriptionsSetting
 
     public void AdjustInventoryElement(ListElementController_BASE_NotListView element)
     {
-        var componentDef = element?.componentDef;
+        var componentDef = element.componentDef;
         if (componentDef == null)
         {
             return;

@@ -11,7 +11,7 @@ public class ChassisLocationNaming : SimpleCustomChassis
     public class LocationName
     {
         public ChassisLocations Location;
-        public string Label;
-        public string ShortLabel;
+        public string Label = null!;
+        public string ShortLabel = null!;
     }
 }

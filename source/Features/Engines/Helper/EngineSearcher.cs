@@ -5,7 +5,7 @@ using MechEngineer.Features.OverrideTonnage;
 
 namespace MechEngineer.Features.Engines.Helper;
 
-internal class EngineSearcher
+internal static class EngineSearcher
 {
     internal static Result SearchInventory(IList<MechComponentRef> componentRefs)
     {
@@ -42,9 +42,9 @@ internal class EngineSearcher
 
     internal class Result
     {
-        internal CoolingDef CoolingDef;
-        internal EngineHeatBlockDef HeatBlockDef;
-        internal EngineCoreDef CoreDef;
+        internal CoolingDef? CoolingDef;
+        internal EngineHeatBlockDef? HeatBlockDef;
+        internal EngineCoreDef? CoreDef;
         internal WeightFactors WeightFactors = new();
         internal readonly List<MechComponentRef> HeatSinks = new();
     }

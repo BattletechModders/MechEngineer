@@ -111,7 +111,7 @@ internal class AutoFixerSettings : ISettings
         public ChassisLocationNaming Template = new();
     }
 
-    public IdentityHelper GyroCategorizer = new()
+    public IdentityHelper? GyroCategorizer = new()
     {
         AllowedLocations = ChassisLocations.CenterTorso, // optional if category is properly setup
         ComponentType = ComponentType.Upgrade, // optional if category is properly setup
@@ -119,9 +119,9 @@ internal class AutoFixerSettings : ISettings
         CategoryId = "Gyro", // required
         AutoAddCategoryIdIfMissing = true // adds category id to items matched by optional filters
     };
-    public SlotChange GyroSlotChange = new() {From = 3, By = 1};
+    public SlotChange? GyroSlotChange = new() {From = 3, By = 1};
 
-    public IdentityHelper CockpitCategorizer = new()
+    public IdentityHelper? CockpitCategorizer = new()
     {
         AllowedLocations = ChassisLocations.Head,
         ComponentType = ComponentType.Upgrade,
@@ -129,10 +129,10 @@ internal class AutoFixerSettings : ISettings
         CategoryId = "Cockpit",
         AutoAddCategoryIdIfMissing = true
     };
-    public TonnageChange CockpitTonnageChange = new() {From = 0, By = 3};
-    public SlotChange CockpitSlotChange = new() {From = 1, By = 0};
+    public TonnageChange? CockpitTonnageChange = new() {From = 0, By = 3};
+    public SlotChange? CockpitSlotChange = new() {From = 1, By = 0};
 
-    public IdentityHelper SensorsACategorizer = new()
+    public IdentityHelper? SensorsACategorizer = new()
     {
         AllowedLocations = ChassisLocations.Head,
         ComponentType = ComponentType.Upgrade,
@@ -141,7 +141,7 @@ internal class AutoFixerSettings : ISettings
         AutoAddCategoryIdIfMissing = true
     };
 
-    public IdentityHelper SensorsBCategorizer = new()
+    public IdentityHelper? SensorsBCategorizer = new()
     {
         AllowedLocations = ChassisLocations.All,
         ComponentType = ComponentType.Upgrade,
@@ -149,9 +149,9 @@ internal class AutoFixerSettings : ISettings
         CategoryId = "SensorsB",
         AutoAddCategoryIdIfMissing = true
     };
-    public SlotChange SensorsBSlotChange = new() {From = 2, By = -1};
+    public SlotChange? SensorsBSlotChange = new() {From = 2, By = -1};
 
-    public IdentityHelper LegUpgradesCategorizer = new()
+    public IdentityHelper? LegUpgradesCategorizer = new()
     {
         AllowedLocations = ChassisLocations.Legs,
         ComponentType = ComponentType.Upgrade,
@@ -159,7 +159,7 @@ internal class AutoFixerSettings : ISettings
         CategoryId = "LegFootActuator",
         AutoAddCategoryIdIfMissing = true
     };
-    public SlotChange LegUpgradesSlotChange = new() {From = 3, By = -1, FromIsMin = true, NewMin = 1};
+    public SlotChange? LegUpgradesSlotChange = new() {From = 3, By = -1, FromIsMin = true, NewMin = 1};
 
     public ChassisSlotsChange[] ChassisDefSlotsChanges =
     {

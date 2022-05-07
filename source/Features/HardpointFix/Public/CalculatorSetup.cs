@@ -7,9 +7,9 @@ namespace MechEngineer.Features.HardpointFix.Public;
 
 public static class CalculatorSetup
 {
-    internal static WeaponComponentPrefabCalculator SharedCalculator;
+    internal static WeaponComponentPrefabCalculator? SharedCalculator;
 
-    public static void Setup(ChassisDef chassisDef, List<MechComponentRef> componentRefs)
+    public static void Setup(ChassisDef? chassisDef, List<MechComponentRef>? componentRefs)
     {
         if (chassisDef?.HardpointDataDef?.HardpointData == null)
         {

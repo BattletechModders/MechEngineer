@@ -8,7 +8,7 @@ internal class ArmorStructureChangesFeature : Feature<ArmorStructureChangesSetti
 {
     internal static readonly ArmorStructureChangesFeature Shared = new();
 
-    internal override ArmorStructureChangesSettings Settings => Control.settings.ArmorStructureChanges;
+    internal override ArmorStructureChangesSettings Settings => Control.Settings.ArmorStructureChanges;
 
     internal void InitStats(Mech mech)
     {

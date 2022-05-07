@@ -9,7 +9,7 @@ namespace MechEngineer.Features.HardpointFix.Patches;
 public static class MechHardpointRules_GetComponentPrefabName_Patch
 {
     [HarmonyPriority(Priority.High)]
-    public static bool Prefix(BaseComponentRef componentRef, ref string __result)
+    public static bool Prefix(BaseComponentRef componentRef, ref string? __result)
     {
         try
         {

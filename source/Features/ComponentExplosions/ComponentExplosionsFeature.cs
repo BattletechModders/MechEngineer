@@ -11,7 +11,7 @@ internal class ComponentExplosionsFeature : Feature<ComponentExplosionsSettings>
 {
     internal static readonly ComponentExplosionsFeature Shared = new();
 
-    internal override ComponentExplosionsSettings Settings => Control.settings.ComponentExplosions;
+    internal override ComponentExplosionsSettings Settings => Control.Settings.ComponentExplosions;
 
     internal static ComponentExplosionsSettings settings => Shared.Settings;
 

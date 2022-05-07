@@ -12,8 +12,8 @@ namespace MechEngineer.Features.MechLabSlots;
 
 public class CustomWidgetsFixMechLab
 {
-    private static MechLabLocationWidget TopLeftWidget;
-    private static MechLabLocationWidget TopRightWidget;
+    private static MechLabLocationWidget? TopLeftWidget;
+    private static MechLabLocationWidget? TopRightWidget;
 
     internal static bool IsCustomWidget(MechLabLocationWidget widget)
     {
@@ -41,7 +41,7 @@ public class CustomWidgetsFixMechLab
 
     internal static void SetupWidget(
         string id,
-        ref MechLabLocationWidget topWidget,
+        ref MechLabLocationWidget? topWidget,
         MechLabPanel mechLabPanel,
         MechLabLocationWidget armWidget,
         MechLabSlotsSettings.WidgetSettings settings
@@ -119,7 +119,7 @@ public class CustomWidgetsFixMechLab
         @this.SetParent(parent, worldPositionStays);
     }
 
-    internal static MechLabLocationWidget MechWidgetLocation(MechComponentDef def)
+    private static MechLabLocationWidget? MechWidgetLocation(MechComponentDef? def)
     {
         if (def != null && def.Is<CustomWidget>(out var config))
         {
@@ -151,19 +151,19 @@ public class CustomWidgetsFixMechLab
         return false;
     }
 
-    internal static void RefreshDropHighlights(MechLabLocationWidget widget, IMechLabDraggableItem item)
+    internal static void RefreshDropHighlights(MechLabLocationWidget widget, IMechLabDraggableItem? item)
     {
         if (item == null)
         {
-            TopLeftWidget.ShowHighlightFrame(false);
-            TopRightWidget.ShowHighlightFrame(false);
+            TopLeftWidget!.ShowHighlightFrame(false);
+            TopRightWidget!.ShowHighlightFrame(false);
         }
     }
 
     internal static bool ShowHighlightFrame(
         MechLabLocationWidget widget,
         bool isOriginalLocation,
-        ref MechComponentRef cRef
+        ref MechComponentRef? cRef
         )
     {
         if (cRef == null)

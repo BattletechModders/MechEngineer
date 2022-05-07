@@ -16,7 +16,7 @@ public static class MechLabPanel_DoConfirmRefit_Patch
             var mechDef = __instance.CreateMechDef();
 
             var id = $"{mechDef.Description.Name}_{mechDef.Description.Id}";
-            var path = Path.Combine(Path.Combine(Control.mod.Directory, "Saves"), $"{id}.json");
+            var path = Path.Combine(Path.Combine(Control.Mod.Directory, "Saves"), $"{id}.json");
             Directory.CreateDirectory(Directory.GetParent(path).FullName);
 
             using (var writer = new StreamWriter(path))

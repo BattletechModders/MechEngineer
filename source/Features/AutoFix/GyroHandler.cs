@@ -7,11 +7,11 @@ namespace MechEngineer.Features.AutoFix;
 
 internal class GyroHandler : IAdjustUpgradeDef, IPreProcessor
 {
-    internal static readonly MELazy<GyroHandler> Lazy = new();
+    private static readonly Lazier<GyroHandler> Lazy = new();
     internal static GyroHandler Shared => Lazy.Value;
 
-    private readonly IdentityHelper identity;
-    private readonly AdjustCompDefInvSizeHelper resizer;
+    private readonly IdentityHelper? identity;
+    private readonly AdjustCompDefInvSizeHelper? resizer;
 
     public GyroHandler()
     {

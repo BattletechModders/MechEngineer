@@ -4,11 +4,11 @@ using Variant = BattleTech.Variant;
 
 namespace MechEngineer.Helper;
 
-internal class StatisticAdapter<T>
+internal class StatisticAdapter<T> where T : notnull
 {
     internal readonly string Key;
-    internal readonly StatCollection StatCollection;
-    internal readonly T DefaultValue;
+    private readonly StatCollection StatCollection;
+    private readonly T DefaultValue;
 
     internal StatisticAdapter(string key, StatCollection statCollection, T defaultValue)
     {

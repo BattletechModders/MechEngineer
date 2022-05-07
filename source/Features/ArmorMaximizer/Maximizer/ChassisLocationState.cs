@@ -1,4 +1,3 @@
-#nullable enable
 namespace MechEngineer.Features.ArmorMaximizer.Maximizer;
 
 internal class ChassisLocationState

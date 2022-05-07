@@ -14,7 +14,7 @@ namespace MechEngineer.Features.OverrideDescriptions;
 [CustomComponent("BonusDescriptions")]
 public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment, IAdjustInventoryElement, IAfterLoad
 {
-    public string[] Bonuses { get; set; }
+    public string[] Bonuses { get; set; } = null!;
 
     public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
     {
@@ -97,7 +97,7 @@ public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment,
 
     internal static void AddTemplatedExtendedDetail(
         ExtendedDetails extended,
-        IEnumerable<string> elements,
+        IEnumerable<string?> elements,
         string elementTemplate,
         string descriptionTemplate,
         string identifier,
@@ -127,15 +127,16 @@ public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment,
             Full = Process(settings.Full, values);
         }
 
-        public string Short { get; }
-        public string Long { get; }
-        public string Full { get; }
+        public string? Short { get; }
+        public string? Long { get; }
+        public string? Full { get; }
 
-        private string Process(string format, string[] values)
+        private string? Process(string? format, string[] values)
         {
             try
             {
-                return string.IsNullOrEmpty(format) ? null : new Text(format, values).ToString();
+                var objects = values.Select(x => (object)x).ToArray();
+                return string.IsNullOrEmpty(format) ? null : new Text(format, objects).ToString();
             }
             catch (Exception e)
             {

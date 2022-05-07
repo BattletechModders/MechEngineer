@@ -319,7 +319,7 @@ internal class MechDefBuilder
     // track and allow moving of dynamic slots, with a bias towards locational slots near original item.
     // work by tracking and converting "movable", "reserved" and "missing" locational slots per location
     // where each location has to find its reserved slots from the locations nearby (CT more than LT)
-    internal MechComponentRef Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None, bool force = false)
+    internal MechComponentRef? Add(MechComponentDef def, ChassisLocations location = ChassisLocations.None, bool force = false)
     {
         if (def.Is<DynamicSlots>())
         {

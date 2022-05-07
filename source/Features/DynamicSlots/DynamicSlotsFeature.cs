@@ -18,7 +18,7 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
 
     // TODO move settings instances to features and allow loading them one by one
     // then AutoFixSettings depending on DynamicSlotsSettings will be resolved properly
-    internal override DynamicSlotsSettings Settings => Control.settings?.DynamicSlots ?? new DynamicSlotsSettings();
+    internal override DynamicSlotsSettings Settings => Control.Settings?.DynamicSlots ?? new DynamicSlotsSettings();
 
     internal static DynamicSlotsSettings settings => Shared.Settings;
 
@@ -313,7 +313,7 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
 
             Reset();
             DataManager.PoolGameObject(MechLabPanel.MECHCOMPONENT_ITEM_PREFAB, gameObject);
-            gameObject = null;
+            gameObject = null!;
         }
 
         public void Update(Transform parent)
@@ -326,8 +326,7 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
         {
             gameObject = DataManager.PooledInstantiate(
                 MechLabPanel.MECHCOMPONENT_ITEM_PREFAB,
-                BTLoadUtils.GetResourceType(nameof(BattleTechResourceType.UIModulePrefabs)),
-                null, null);
+                BTLoadUtils.GetResourceType(nameof(BattleTechResourceType.UIModulePrefabs)));
 
 
             {
@@ -344,8 +343,8 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
 
             {
                 var rep = gameObject.transform.GetChild("Representation");
-                var layout_components = rep.GetChild("layout_component");
-                var backgrounds = layout_components.GetChild("BACKGROUNDS");
+                var layoutComponents = rep.GetChild("layout_component");
+                var backgrounds = layoutComponents.GetChild("BACKGROUNDS");
                 backgroundsRect = backgrounds.GetComponent<RectTransform>();
             }
         }

@@ -9,5 +9,5 @@ internal class GlobalsFeature : Feature<GlobalsSettings>
 
     internal override bool Enabled => Settings.Enabled && (OverrideTonnageFeature.Shared.Enabled || EngineFeature.Shared.Enabled);
 
-    internal override GlobalsSettings Settings => Control.settings.Globals;
+    internal override GlobalsSettings Settings => Control.Settings.Globals;
 }

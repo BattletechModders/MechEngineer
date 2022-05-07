@@ -13,7 +13,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
 {
     internal static readonly ArmorStructureRatioFeature Shared = new();
 
-    internal override ArmorStructureRatioSettings Settings => Control.settings.ArmorStructureRatio;
+    internal override ArmorStructureRatioSettings Settings => Control.Settings.ArmorStructureRatio;
 
     internal static ArmorStructureRatioSettings settings => Shared.Settings;
 
@@ -77,7 +77,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
 
     internal static bool ValidateMechArmorStructureRatio(
         MechDef mechDef,
-        Dictionary<MechValidationType, List<Text>> errorMessages = null)
+        Dictionary<MechValidationType, List<Text>>? errorMessages = null)
     {
         if (mechDef.Chassis.ChassisTags.Contains(settings.IgnoreChassisTag))
         {
@@ -109,7 +109,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
     private static bool ProcessMechArmorStructureRatioForLocation(
         MechDef mechDef,
         ChassisLocations location,
-        Dictionary<MechValidationType, List<Text>> errorMessages = null,
+        Dictionary<MechValidationType, List<Text>>? errorMessages = null,
         bool applyChanges = false)
     {
 

@@ -23,11 +23,11 @@ public static class JumpJetDef_FromJSON_Patch
         }
     }
 
-    internal static void JumpJetDef_FromJSON(JumpJetDef def)
+    private static void JumpJetDef_FromJSON(JumpJetDef def)
     {
         {
             var statisticData = StatCollectionExtension
-                .JumpCapacity(null)
+                .JumpCapacity(null!)
                 .CreateStatisticData(
                     StatCollection.StatOperation.Float_Add,
                     def.JumpCapacity
@@ -39,7 +39,7 @@ public static class JumpJetDef_FromJSON_Patch
         if (EngineFeature.settings.JumpJetDefaultJumpHeat.HasValue)
         {
             var statisticData = StatCollectionExtension
-                .JumpHeat(null)
+                .JumpHeat(null!)
                 .CreateStatisticData(
                     StatCollection.StatOperation.Float_Add,
                     EngineFeature.settings.JumpJetDefaultJumpHeat.Value

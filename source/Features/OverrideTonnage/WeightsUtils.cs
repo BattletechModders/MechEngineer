@@ -11,7 +11,7 @@ public static class WeightsUtils
     // TODO not properly correct as not the same as other calculations
     internal static float CalculateArmorFactor(MechDef mechDef)
     {
-        if (mechDef?.Inventory == null)
+        if (mechDef.Inventory == null)
         {
             return 0;
         }
@@ -19,6 +19,7 @@ public static class WeightsUtils
         var armorFactor = mechDef.Inventory
                               .Select(r => r.Def?.GetComponent<WeightFactors>())
                               .Where(w => w != null)
+                              .Select(w => w!)
                               .Sum(weights => weights.ArmorFactor - 1)
                           + 1;
         return armorFactor;

@@ -8,8 +8,9 @@ internal class MechLabSlotsFixer
 {
     internal static void FixSlots(WidgetLayout widgetLayout, int ___maxSlots)
     {
+        var mechLabPanel = (MechLabPanel)widgetLayout.widget.parentDropTarget;
         // MechPropertiesWidget feature
-        if (widgetLayout.widget == (widgetLayout.widget.parentDropTarget as MechLabPanel).centerTorsoWidget)
+        if (widgetLayout.widget == mechLabPanel.centerTorsoWidget)
         {
             ___maxSlots = Mathf.Max(0,
                 ___maxSlots - MechLabSlotsFeature.settings.TopLeftWidget.Slots -

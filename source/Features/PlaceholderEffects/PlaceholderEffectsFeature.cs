@@ -11,7 +11,7 @@ internal class PlaceholderEffectsFeature : Feature<PlaceholderEffectsSettings>
     // TODO introduce nice dependency resolver
     internal override bool Enabled => Settings.Enabled && (AccuracyEffectsFeature.Shared.Settings?.Enabled ?? false) || (CriticalEffectsFeature.Shared.Settings?.Enabled ?? false);
 
-    internal override PlaceholderEffectsSettings Settings => Control.settings.PlaceholderEffects;
+    internal override PlaceholderEffectsSettings Settings => Control.Settings.PlaceholderEffects;
 
     internal static bool ProcessLocationalEffectData(ref EffectData effect, MechComponent mechComponent)
     {

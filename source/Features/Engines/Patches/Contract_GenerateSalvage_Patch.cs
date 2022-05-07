@@ -22,7 +22,7 @@ public static class Contract_GenerateSalvage_Patch
             );
     }
 
-    private static MechDef lastMechDef;
+    private static MechDef? lastMechDef;
     public static bool IsLocationDestroyed(this MechDef mechDef, ChassisLocations location)
     {
         lastMechDef = mechDef;

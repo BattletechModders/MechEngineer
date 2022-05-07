@@ -15,13 +15,13 @@ public class CriticalEffects : SimpleCustomComponent, IAfterLoad, IIsDestroyed
     public string[] OnDestroyedDisableEffectIds { get; set; } = new string[0];
 
     public DeathMethod DeathMethod { get; set; } = DeathMethod.NOT_SET;
-    public string OnDestroyedVFXName { get; set; } = null;
-    public string OnDestroyedAudioEventName { get; set; } = null;
+    public string? OnDestroyedVFXName { get; set; } = null;
+    public string? OnDestroyedAudioEventName { get; set; } = null;
 
-    public readonly string LinkedStatisticName = null;
+    public readonly string? LinkedStatisticName = null;
 
-    public readonly string CritFloatieMessage = null;
-    public readonly string DestroyedFloatieMessage = null;
+    public readonly string? CritFloatieMessage = null;
+    public readonly string? DestroyedFloatieMessage = null;
 
     public virtual UnitType GetUnitType()
     {
@@ -36,7 +36,7 @@ public class CriticalEffects : SimpleCustomComponent, IAfterLoad, IIsDestroyed
     {
         var descriptions = new List<string>();
 
-        string GetEffectDescription(string effectId)
+        string? GetEffectDescription(string effectId)
         {
             var effectData = CriticalEffectsFeature.GetEffectData(effectId);
             if (effectData == null || effectData.targetingData.showInStatusPanel == false)

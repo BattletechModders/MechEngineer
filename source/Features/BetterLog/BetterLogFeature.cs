@@ -9,7 +9,7 @@ internal class BetterLogFeature : Feature<BetterLogSettings>
 {
     internal static readonly BetterLogFeature Shared = new();
 
-    internal override BetterLogSettings Settings => Control.settings.BetterLog;
+    internal override BetterLogSettings Settings => Control.Settings.BetterLog;
 
     private static readonly List<BetterLogger> Loggers = new();
 

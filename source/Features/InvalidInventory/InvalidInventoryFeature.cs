@@ -4,5 +4,5 @@ internal class InvalidInventoryFeature : Feature<InvalidInventorySettings>
 {
     internal static readonly InvalidInventoryFeature Shared = new();
 
-    internal override InvalidInventorySettings Settings => Control.settings.InvalidInventory;
+    internal override InvalidInventorySettings Settings => Control.Settings.InvalidInventory;
 }

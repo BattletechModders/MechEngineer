@@ -1,5 +1,4 @@
-﻿using BattleTech;
-using MechEngineer.Features.AccuracyEffects;
+﻿using MechEngineer.Features.AccuracyEffects;
 using MechEngineer.Features.ArmorMaximizer;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
@@ -33,13 +32,6 @@ using MechEngineer.Features.TurretLimitedAmmo;
 using MechEngineer.Features.TurretMechComponents;
 
 namespace MechEngineer;
-
-public class AddHelper
-{
-    public string ComponentDefId { get; set; }
-    public ChassisLocations ChassisLocation { get; set; }
-    public ComponentType ComponentType { get; set; }
-}
 
 internal class MechEngineerSettings
 {

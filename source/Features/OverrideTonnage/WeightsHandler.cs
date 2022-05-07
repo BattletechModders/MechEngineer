@@ -84,11 +84,13 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
 
     public void AdjustSlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
     {
-        var weightFactors = instance.ComponentRef?.Def?.GetComponent<WeightFactors>();
+        var mechComponentDefNullable = instance.ComponentRef?.Def;
+        var weightFactors = mechComponentDefNullable?.GetComponent<WeightFactors>();
         if (weightFactors == null)
         {
             return;
         }
+        var mechComponentDef = mechComponentDefNullable!;
 
         var mechDef = panel.CreateMechDef();
         if (mechDef == null)
@@ -103,7 +105,7 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
         }
         else if (instance.bonusTextA.text.EndsWith("ton"))
         {
-            instance.bonusTextA.text = instance.ComponentRef.Def.BonusValueA;
+            instance.bonusTextA.text = mechComponentDef.BonusValueA;
         }
     }
 

@@ -107,7 +107,7 @@ internal class HardpointFixSettings : ISettings
 
     public class WeaponPrefabMapping
     {
-        public string PrefabIdentifier;
-        public string[] HardpointCandidates;
+        public string PrefabIdentifier = null!;
+        public string[] HardpointCandidates = null!;
     }
 }

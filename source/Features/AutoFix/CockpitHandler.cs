@@ -7,12 +7,12 @@ namespace MechEngineer.Features.AutoFix;
 
 internal class CockpitHandler : IAdjustUpgradeDef, IPreProcessor
 {
-    internal static readonly MELazy<CockpitHandler> Lazy = new();
+    private static readonly Lazier<CockpitHandler> Lazy = new();
     internal static CockpitHandler Shared => Lazy.Value;
 
-    private readonly IdentityHelper identity;
-    private readonly AdjustCompDefTonnageHelper reweighter;
-    private readonly AdjustCompDefInvSizeHelper resizer;
+    private readonly IdentityHelper? identity;
+    private readonly AdjustCompDefTonnageHelper? reweighter;
+    private readonly AdjustCompDefInvSizeHelper? resizer;
 
     public CockpitHandler()
     {

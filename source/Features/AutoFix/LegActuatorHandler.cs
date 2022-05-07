@@ -8,11 +8,11 @@ namespace MechEngineer.Features.AutoFix;
 // this isn't yet leg actuators, but we still did reduce the legs size
 internal class LegActuatorHandler : IAdjustUpgradeDef, IPreProcessor
 {
-    internal static readonly MELazy<LegActuatorHandler> Lazy = new();
+    private static readonly Lazier<LegActuatorHandler> Lazy = new();
     internal static LegActuatorHandler Shared => Lazy.Value;
 
-    private readonly IdentityHelper identity;
-    private readonly AdjustCompDefInvSizeHelper resizer;
+    private readonly IdentityHelper? identity;
+    private readonly AdjustCompDefInvSizeHelper? resizer;
 
     public LegActuatorHandler()
     {

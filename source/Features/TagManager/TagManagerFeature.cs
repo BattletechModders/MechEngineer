@@ -7,7 +7,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 {
     internal static readonly TagManagerFeature Shared = new();
 
-    internal override TagManagerSettings Settings => Control.settings.TagManager;
+    internal override TagManagerSettings Settings => Control.Settings.TagManager;
 
     internal override void SetupFeatureLoaded()
     {

@@ -26,12 +26,12 @@ public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment,
 
     public bool CheckFilter(MechLabPanel panel)
     {
-        if (Control.settings.Engine.LimitEngineCoresToTonnage)
+        if (Control.Settings.Engine.LimitEngineCoresToTonnage)
         {
 
-            if (!string.IsNullOrEmpty(Control.settings.Engine.IgnoreLimitEngineChassisTag) &&
+            if (!string.IsNullOrEmpty(Control.Settings.Engine.IgnoreLimitEngineChassisTag) &&
                 panel.activeMechDef.Chassis.ChassisTags.Contains(
-                    Control.settings.Engine.IgnoreLimitEngineChassisTag))
+                    Control.Settings.Engine.IgnoreLimitEngineChassisTag))
             {
                 return true;
             }
@@ -50,12 +50,13 @@ public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment,
             return;
         }
 
-        var mechDef = Global.ActiveMechDef;
-        var engine = mechDef?.GetEngine();
+        var mechDefNullable = Global.ActiveMechDef;
+        var engine = mechDefNullable?.GetEngine();
         if (engine == null)
         {
             return;
         }
+        var mechDef = mechDefNullable!;
 
         engine.CoreDef = coreDef;
 

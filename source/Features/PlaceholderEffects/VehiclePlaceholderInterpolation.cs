@@ -6,8 +6,9 @@ internal class VehiclePlaceholderInterpolation : PlaceholderInterpolation
 {
     private readonly VehicleChassisLocations Location;
 
-    internal VehiclePlaceholderInterpolation(MechComponent mechComponent) : base(mechComponent)
+    internal VehiclePlaceholderInterpolation(MechComponent mechComponent)
     {
+        MechComponent = mechComponent;
         Location = mechComponent.vehicleComponentRef.MountedLocation;
     }
 

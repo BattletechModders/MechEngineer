@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Linq;
+﻿using System.Linq;
 using BattleTech;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;

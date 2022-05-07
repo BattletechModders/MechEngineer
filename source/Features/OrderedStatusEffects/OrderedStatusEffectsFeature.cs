@@ -10,7 +10,7 @@ internal class OrderedStatusEffectsFeature : Feature<OrderedStatusEffectsSetting
 {
     internal static readonly OrderedStatusEffectsFeature Shared = new();
 
-    internal override OrderedStatusEffectsSettings Settings => Control.settings.OrderedStatusEffects;
+    internal override OrderedStatusEffectsSettings Settings => Control.Settings.OrderedStatusEffects;
 
     internal void SortEffectDataList(List<EffectData> list)
     {
@@ -31,7 +31,7 @@ internal class OrderedStatusEffectsFeature : Feature<OrderedStatusEffectsSetting
         var modified = false;
         var lastIndex = 0;
         var lastOrder = 0;
-        StatHistory.Event lastEvent = null;
+        StatHistory.Event? lastEvent = null;
         // from newest (last) to oldest (current)
         for (var currentIndex = historyList.Count - 1; currentIndex >= 0; currentIndex--)
         {

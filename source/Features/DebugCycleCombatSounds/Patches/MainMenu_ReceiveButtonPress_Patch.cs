@@ -17,8 +17,9 @@ public static class MainMenu_ReceiveButtonPress_Patch
         return !DebugCycleCombatSoundsFeature.settings.DebugMainCycleSoundsOnReceiveButtonEnabled;
     }
 
-    private static IEnumerator<string> Iterator = null;
+    private static IEnumerator<string>? Iterator = null;
 
+    // ReSharper disable once InconsistentNaming
     public static bool Prefix(TextMeshProUGUI ____version, string button)
     {
         if (Iterator == null || button == DebugCycleCombatSoundsFeature.Shared.Settings.SpecificButton && !Iterator.MoveNext())

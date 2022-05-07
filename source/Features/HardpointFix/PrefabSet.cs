@@ -49,7 +49,7 @@ internal class PrefabSet : IEnumerable<Prefab>
         return Prefabs.Values.Any(x => x.Name.Equals(prefab.Name));
     }
 
-    internal Prefab GetPrefabByIdentifier(string prefabIdentifier)
+    internal Prefab? GetPrefabByIdentifier(string prefabIdentifier)
     {
         if (Prefabs.TryGetValue(prefabIdentifier, out var value))
         {

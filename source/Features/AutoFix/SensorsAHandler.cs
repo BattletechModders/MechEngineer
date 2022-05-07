@@ -6,10 +6,10 @@ namespace MechEngineer.Features.AutoFix;
 
 internal class SensorsAHandler : IPreProcessor
 {
-    internal static readonly MELazy<SensorsAHandler> Lazy = new();
+    private static readonly Lazier<SensorsAHandler> Lazy = new();
     internal static SensorsAHandler Shared => Lazy.Value;
 
-    private readonly IdentityHelper identity;
+    private readonly IdentityHelper? identity;
 
     public SensorsAHandler()
     {

@@ -6,5 +6,5 @@ internal class DamageIgnoreFeature : Feature<DamageIgnoreSettings>
 
     internal static readonly DamageIgnoreFeature Shared = new();
 
-    internal override DamageIgnoreSettings Settings => Control.settings.DamageIgnore;
+    internal override DamageIgnoreSettings Settings => Control.Settings.DamageIgnore;
 }

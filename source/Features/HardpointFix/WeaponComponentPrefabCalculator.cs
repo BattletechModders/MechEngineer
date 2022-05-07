@@ -20,7 +20,11 @@ internal class WeaponComponentPrefabCalculator
     {
         this.chassisDef = chassisDef;
 
-        preMappedPrefabNames = allComponentRefs.Select(c => GetPredefinedPrefabName(c)).Where(x => x != null).ToHashSet();
+        preMappedPrefabNames = allComponentRefs
+            .Select(GetPredefinedPrefabName)
+            .Where(x => x != null)
+            .Select(x => x!)
+            .ToHashSet();
 
         var componentRefs = allComponentRefs
             .Where(c => c.ComponentDefType == ComponentType.Weapon)
@@ -61,7 +65,7 @@ internal class WeaponComponentPrefabCalculator
         return blanks.TryGetValue(location, out var list) ? list : new List<string>();
     }
 
-    internal string GetPrefabName(BaseComponentRef componentRef)
+    internal string? GetPrefabName(BaseComponentRef componentRef)
     {
         var pre = GetPredefinedPrefabName(componentRef);
         if (pre != null)
@@ -82,7 +86,7 @@ internal class WeaponComponentPrefabCalculator
         return null;
     }
 
-    private string GetFallbackPrefabIdentifier(MechComponentRef mechComponentRef)
+    private string? GetFallbackPrefabIdentifier(MechComponentRef mechComponentRef)
     {
         var location = mechComponentRef.MountedLocation;
         if (fallbackPrefabs.TryGetValue(location, out var sets))
@@ -102,7 +106,7 @@ internal class WeaponComponentPrefabCalculator
         return null;
     }
 
-    private string GetPredefinedPrefabName(BaseComponentRef componentRef)
+    private string? GetPredefinedPrefabName(BaseComponentRef componentRef)
     {
         if (componentRef.Def.PrefabIdentifier.StartsWith("chrPrfWeap", true, CultureInfo.InvariantCulture)
             || componentRef.Def.PrefabIdentifier.StartsWith("chrPrfComp", true, CultureInfo.InvariantCulture))

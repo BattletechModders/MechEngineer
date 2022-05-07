@@ -10,7 +10,7 @@ namespace MechEngineer.Features.HardpointFix.Patches;
 [HarmonyPatch(typeof(MechHardpointRules), nameof(MechHardpointRules.GetComponentBlankNames))]
 public static class MechHardpointRules_GetComponentBlankNames_Patch
 {
-    private static WeaponComponentPrefabCalculator calculator => CalculatorSetup.SharedCalculator;
+    private static WeaponComponentPrefabCalculator? calculator => CalculatorSetup.SharedCalculator;
 
     [HarmonyPriority(Priority.High)]
     public static bool Prefix(ChassisLocations location, ref List<string> __result)

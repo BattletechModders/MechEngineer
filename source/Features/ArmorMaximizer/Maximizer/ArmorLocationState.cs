@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using BattleTech;
 using MechEngineer.Features.OverrideTonnage;

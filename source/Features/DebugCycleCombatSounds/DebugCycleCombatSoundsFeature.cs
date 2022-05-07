@@ -4,7 +4,7 @@ internal class DebugCycleCombatSoundsFeature : Feature<DebugCycleCombatSoundsSet
 {
     internal static readonly DebugCycleCombatSoundsFeature Shared = new();
 
-    internal override DebugCycleCombatSoundsSettings Settings => Control.settings.DebugCycleCombatSounds;
+    internal override DebugCycleCombatSoundsSettings Settings => Control.Settings.DebugCycleCombatSounds;
 
     internal static DebugCycleCombatSoundsSettings settings => Shared.Settings;
 }

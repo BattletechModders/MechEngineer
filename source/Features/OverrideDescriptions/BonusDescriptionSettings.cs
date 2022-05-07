@@ -2,10 +2,8 @@
 
 internal class BonusDescriptionSettings
 {
-#pragma warning disable 649
-    public string Bonus;
-    public string Short;
-    public string Long;
-    public string Full;
-#pragma warning restore 649
+    public string Bonus = null!;
+    public string? Short { get; set; }
+    public string? Long { get; set; }
+    public string? Full { get; set; }
 }

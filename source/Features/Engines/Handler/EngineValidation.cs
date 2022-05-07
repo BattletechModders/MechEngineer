@@ -58,7 +58,7 @@ internal class EngineValidation : IValidateMech
             inventoryHeatSinkTypes.Add(engine.HeatSinkDef);
             foreach (var hs in inventoryHeatSinkTypes)
             {
-                types.Add(hs.HSCategory);
+                types.Add(hs.HeatSinkCategory);
                 if (types.Count <= 1)
                 {
                     continue;

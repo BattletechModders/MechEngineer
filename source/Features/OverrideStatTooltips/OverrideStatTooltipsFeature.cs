@@ -6,7 +6,7 @@ internal class OverrideStatTooltipsFeature : Feature<OverrideStatTooltipsSetting
 {
     internal static readonly OverrideStatTooltipsFeature Shared = new();
 
-    internal override OverrideStatTooltipsSettings Settings => Control.settings.OverrideStatTooltips;
+    internal override OverrideStatTooltipsSettings Settings => Control.Settings.OverrideStatTooltips;
 
     internal static readonly IStatHandler DurabilityStat = new LongRangeStat();
     internal static readonly IStatHandler FirepowerStat = new CloseRangeStat();

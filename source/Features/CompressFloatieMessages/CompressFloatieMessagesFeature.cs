@@ -9,7 +9,7 @@ internal class CompressFloatieMessagesFeature : Feature<CompressFloatieMessagesS
 {
     internal static readonly CompressFloatieMessagesFeature Shared = new();
 
-    internal override CompressFloatieMessagesSettings Settings => Control.settings.CompressFloatieMessages;
+    internal override CompressFloatieMessagesSettings Settings => Control.Settings.CompressFloatieMessages;
 
     internal static CompressFloatieMessagesSettings settings => Shared.Settings;
 

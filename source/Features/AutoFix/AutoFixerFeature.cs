@@ -8,7 +8,7 @@ internal class AutoFixerFeature : Feature<AutoFixerSettings>
 {
     internal static readonly AutoFixerFeature Shared = new();
 
-    internal override AutoFixerSettings Settings => Control.settings.AutoFixer;
+    internal override AutoFixerSettings Settings => Control.Settings.AutoFixer;
 
     internal static AutoFixerSettings settings => Shared.Settings;
 

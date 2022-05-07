@@ -8,11 +8,11 @@ using UnityEngine;
 
 namespace MechEngineer.Features.Engines;
 
-// Public due necessity to have access from BattleValue module -- bhtrail
+// Declared public to have access from BattleValue module -- bhtrail
 public class Engine
 {
     // Declared public to have access from BattleValue module -- bhtrail
-    public static Engine GetEngine(ChassisDef chassisDef, IList<MechComponentRef> componentRefs)
+    public static Engine? GetEngine(ChassisDef chassisDef, IList<MechComponentRef> componentRefs)
     {
         var result = EngineSearcher.SearchInventory(componentRefs);
         if (result.CoolingDef == null || result.CoreDef == null || result.HeatBlockDef == null)
@@ -28,8 +28,7 @@ public class Engine
         return new Engine(result);
     }
 
-    // Declared internal to have access from BattleValue module -- bhtrail
-    internal Engine(EngineSearcher.Result result) : this(result.CoolingDef, result.HeatBlockDef, result.CoreDef, result.WeightFactors, result.HeatSinks)
+    internal Engine(EngineSearcher.Result result) : this(result.CoolingDef!, result.HeatBlockDef!, result.CoreDef!, result.WeightFactors, result.HeatSinks)
     {
     }
 
@@ -42,28 +41,23 @@ public class Engine
         List<MechComponentRef> heatSinksExternal,
         bool calculate = true)
     {
-        HeatSinksExternal = heatSinksExternal;
+        CoolingDef = coolingDef;
         HeatBlockDef = heatBlockDef;
         CoreDef = coreDef;
         WeightFactors = weightFactors;
-        CoolingDef = coolingDef;
+        HeatSinksExternal = heatSinksExternal;
         if (calculate)
         {
             CalculateStats();
         }
     }
 
-    private static int MatchingCount(IEnumerable<MechComponentRef> heatSinks, HeatSinkDef heatSinkDef)
-    {
-        return heatSinks.Select(r => r.Def).Count(d => d == heatSinkDef);
-    }
-
-    private CoolingDef _coolingDef;
+    private CoolingDef _coolingDef = null!;
     // Declared public to have access from BattleValue module -- bhtrail
     public CoolingDef CoolingDef
     {
         get => _coolingDef;
-        set
+        private set
         {
             _coolingDef = value;
             var id = _coolingDef.HeatSinkDefId;
@@ -71,23 +65,31 @@ public class Engine
             HeatSinkDef = def.GetComponent<EngineHeatSinkDef>();
         }
     }
+    // Declared public to have access from BattleValue module -- bhtrail
+    // type of internal heat sinks and compatible external heat sinks
+    public EngineHeatSinkDef HeatSinkDef { get; set; } = null!;
 
+    // Declared public to have access from BattleValue module -- bhtrail
+    // amount of internal heat sinks
+    public EngineHeatBlockDef HeatBlockDef { get; set; }
+
+    // Declared public to have access from BattleValue module -- bhtrail
+    public EngineCoreDef CoreDef { get; set; }
+
+    internal WeightFactors WeightFactors { get; set; }
+
+    // Declared public to have access from BattleValue module -- bhtrail
+    public List<MechComponentRef> HeatSinksExternal { get; set; }
+
+    private int HeatSinkExternalCount { get; set; }
     internal void CalculateStats()
     {
         HeatSinkExternalCount = MatchingCount(HeatSinksExternal, HeatSinkDef.Def);
     }
-
-    // Declared public to have access from BattleValue module -- bhtrail
-    public List<MechComponentRef> HeatSinksExternal { get; set; }
-    private int HeatSinkExternalCount { get; set; }
-
-    // Declared public to have access from BattleValue module -- bhtrail
-    public EngineCoreDef CoreDef { get; set; }
-    internal WeightFactors WeightFactors { get; set; }
-    // Declared public to have access from BattleValue module -- bhtrail
-    public EngineHeatBlockDef HeatBlockDef { get; set; } // amount of internal heat sinks
-    // Declared public to have access from BattleValue module -- bhtrail
-    public EngineHeatSinkDef HeatSinkDef { get; set; } // type of internal heat sinks and compatible external heat sinks
+    private static int MatchingCount(IEnumerable<MechComponentRef> heatSinks, HeatSinkDef heatSinkDef)
+    {
+        return heatSinks.Select(r => r.Def).Count(d => d == heatSinkDef);
+    }
 
     // Declared public to have access from BattleValue module -- bhtrail
     public float EngineHeatDissipation
@@ -129,16 +131,16 @@ public class Engine
 
     #region weights
 
-    internal float HeatSinkExternalFreeTonnage => HeatSinkExternalFreeCount * HeatSinkDef.Def.Tonnage;
+    private float HeatSinkExternalFreeTonnage => HeatSinkExternalFreeCount * HeatSinkDef.Def.Tonnage;
     internal float GyroTonnage => PrecisionUtils.RoundUp(StandardGyroTonnage * WeightFactors.GyroFactor, WeightPrecision);
     internal float EngineTonnage => PrecisionUtils.RoundUp(StandardEngineTonnage * WeightFactors.EngineFactor, WeightPrecision);
     internal float HeatSinkTonnage => -HeatSinkExternalFreeTonnage;
     internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;
 
-    internal virtual float StandardGyroTonnage => PrecisionUtils.RoundUp(CoreDef.Rating / 100f, 1f);
-    internal virtual float StandardEngineTonnage => CoreDef.Def.Tonnage - StandardGyroTonnage;
+    protected virtual float StandardGyroTonnage => PrecisionUtils.RoundUp(CoreDef.Rating / 100f, 1f);
+    protected virtual float StandardEngineTonnage => CoreDef.Def.Tonnage - StandardGyroTonnage;
 
-    internal virtual float WeightPrecision => OverrideTonnageFeature.settings.TonnageStandardPrecision;
+    protected virtual float WeightPrecision => OverrideTonnageFeature.settings.TonnageStandardPrecision;
 
     #endregion
 }
@@ -155,8 +157,8 @@ internal class ProtoMechEngine : Engine
     internal override int HeatSinkInternalAdditionalMaxCount => 0;
     internal override int HeatSinkExternalFreeMaxCount => 0;
 
-    internal override float StandardGyroTonnage => 0;
-    internal override float StandardEngineTonnage => CoreDef.Def.Tonnage;
+    protected override float StandardGyroTonnage => 0;
+    protected override float StandardEngineTonnage => CoreDef.Def.Tonnage;
 
-    internal override float WeightPrecision => OverrideTonnageFeature.settings.KilogramStandardPrecision;
+    protected override float WeightPrecision => OverrideTonnageFeature.settings.KilogramStandardPrecision;
 }

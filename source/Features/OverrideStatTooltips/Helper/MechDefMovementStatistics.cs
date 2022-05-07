@@ -10,7 +10,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper;
 
 internal class MechDefMovementStatistics
 {
-    internal Engine Engine { get; }
+    internal Engine? Engine { get; }
 
     internal float WalkMovementPoint { get; }
     internal float WalkSpeed { get; }
@@ -54,7 +54,7 @@ internal class MechDefMovementStatistics
     private float BaseJumpDistance { get; }
 
     private readonly MechDef mechDef;
-    private readonly EngineMovement movement;
+    private readonly EngineMovement? movement;
     private readonly StatCollection statCollection = new();
 
     internal float GetStatisticRating()
@@ -78,6 +78,10 @@ internal class MechDefMovementStatistics
 
     private float GetWalkSpeed()
     {
+        if (movement == null)
+        {
+            return 0;
+        }
         var stat = statCollection.WalkSpeed();
         stat.CreateWithDefault(movement.WalkSpeed);
         return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
@@ -85,6 +89,10 @@ internal class MechDefMovementStatistics
 
     private float GetRunSpeed()
     {
+        if (movement == null)
+        {
+            return 0;
+        }
         var stat = statCollection.RunSpeed();
         stat.CreateWithDefault(movement.RunSpeed);
         return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
@@ -106,6 +114,10 @@ internal class MechDefMovementStatistics
 
     private int GetJumpJetMaxCount()
     {
+        if (movement == null)
+        {
+            return 0;
+        }
         var raw = movement.JumpJetCount;
         var multiplier = GetJumpJetMaxCountMultiplier();
         var mutiplied = raw * multiplier;

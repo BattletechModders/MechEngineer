@@ -4,11 +4,7 @@ namespace MechEngineer.Features.PlaceholderEffects;
 
 internal abstract class PlaceholderInterpolation
 {
-    protected PlaceholderInterpolation(MechComponent mechComponent)
-    {
-        MechComponent = mechComponent;
-    }
-    internal MechComponent MechComponent { get; }
+    internal MechComponent? MechComponent { get; set; }
 
     protected const string LocationPlaceholder = "{location}";
 
@@ -18,7 +14,7 @@ internal abstract class PlaceholderInterpolation
 
     internal virtual string InterpolateEffectId(string id)
     {
-        return id.Replace(ComponentUIDPlaceholder, MechComponent.uid);
+        return id.Replace(ComponentUIDPlaceholder, MechComponent?.uid);
     }
     internal abstract string InterpolateStatisticName(string id);
     internal abstract string InterpolateText(string text);
@@ -32,7 +28,7 @@ internal abstract class PlaceholderInterpolation
     {
         if (!HasPlaceholders(effectId))
         {
-            naming = null;
+            naming = null!;
             return false;
         }
 
@@ -48,7 +44,7 @@ internal abstract class PlaceholderInterpolation
             return true;
         }
 
-        naming = null;
+        naming = null!;
         return false;
     }
 }

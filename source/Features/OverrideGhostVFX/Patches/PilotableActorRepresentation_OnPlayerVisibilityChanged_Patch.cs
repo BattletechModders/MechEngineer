@@ -15,11 +15,11 @@ public static class PilotableActorRepresentation_OnPlayerVisibilityChanged_Patch
             OverrideGhostVFXSettings.BlipGhostType blip;
             if (rep.BlipObjectGhostWeak.activeSelf)
             {
-                blip = Control.settings.OverrideGhostVFX.BlipWeak;
+                blip = Control.Settings.OverrideGhostVFX.BlipWeak;
             }
             else if (rep.BlipObjectGhostStrong.activeSelf)
             {
-                blip = Control.settings.OverrideGhostVFX.BlipStrong;
+                blip = Control.Settings.OverrideGhostVFX.BlipStrong;
             }
             else
             {

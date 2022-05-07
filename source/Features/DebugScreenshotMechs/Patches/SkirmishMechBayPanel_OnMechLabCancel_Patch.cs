@@ -25,7 +25,7 @@ public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
         }
     }
 
-    private static IEnumerator<MechDef> mechDefsIterator;
+    private static IEnumerator<MechDef>? mechDefsIterator;
     private static IEnumerator CallBack(SkirmishMechBayPanel panel)
     {
         yield return new WaitForEndOfFrame();
@@ -38,6 +38,10 @@ public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
             while (mechDefsIterator.MoveNext())
             {
                 var mechDef = mechDefsIterator.Current;
+                if (mechDef == null)
+                {
+                    continue;
+                }
                 var screenshotPath = DebugScreenshotMechsFeature.Shared.ScreenshotPath(mechDef);
                 if (File.Exists(screenshotPath))
                 {

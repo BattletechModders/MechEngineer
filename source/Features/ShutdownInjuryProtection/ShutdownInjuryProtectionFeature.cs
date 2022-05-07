@@ -10,7 +10,7 @@ internal class ShutdownInjuryProtectionFeature : Feature<ShutdownInjuryProtectio
 
     internal override bool Enabled => base.Enabled && (settings.ShutdownInjuryEnabled || settings.HeatDamageInjuryEnabled);
 
-    internal override ShutdownInjuryProtectionSettings Settings => Control.settings.ShutdownInjuryProtection;
+    internal override ShutdownInjuryProtectionSettings Settings => Control.Settings.ShutdownInjuryProtection;
 
     internal static ShutdownInjuryProtectionSettings settings => Shared.Settings;
 

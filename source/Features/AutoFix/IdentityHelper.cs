@@ -9,10 +9,10 @@ namespace MechEngineer.Features.AutoFix;
 
 public class IdentityHelper : IIdentifier, IPreProcessor
 {
-    public string Prefix { get; set; }
+    public string? Prefix { get; set; }
     public ChassisLocations AllowedLocations { get; set; }
     public ComponentType ComponentType { get; set; }
-    public string CategoryId { get; set; }
+    public string CategoryId { get; set; } = null!;
     public bool AutoAddCategoryIdIfMissing { get; set; }
 
     public bool IsCustomType(MechComponentDef def)

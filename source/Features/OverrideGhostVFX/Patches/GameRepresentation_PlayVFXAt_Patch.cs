@@ -12,7 +12,7 @@ public static class GameRepresentation_PlayVFXAt_Patch
     {
         try
         {
-            if (Control.settings.OverrideGhostVFX.Blacklisted.Contains(vfxName))
+            if (Control.Settings.OverrideGhostVFX.Blacklisted.Contains(vfxName))
             {
                 Control.Logger.Debug?.Log($"skipped {vfxName}");
                 return false;

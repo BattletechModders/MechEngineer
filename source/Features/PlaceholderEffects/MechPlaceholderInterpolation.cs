@@ -8,12 +8,13 @@ internal class MechPlaceholderInterpolation : PlaceholderInterpolation
 
     private readonly ChassisLocations Location;
 
-    internal MechPlaceholderInterpolation(MechComponent mechComponent) : base(mechComponent)
+    internal MechPlaceholderInterpolation(MechComponent mechComponent)
     {
+        MechComponent = mechComponent;
         Location = mechComponent.mechComponentRef.MountedLocation;
     }
 
-    internal MechPlaceholderInterpolation(ChassisLocations location) : base(null)
+    internal MechPlaceholderInterpolation(ChassisLocations location)
     {
         Location = location;
     }

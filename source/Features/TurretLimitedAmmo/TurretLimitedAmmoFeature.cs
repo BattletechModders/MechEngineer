@@ -4,5 +4,5 @@ internal class TurretLimitedAmmoFeature : Feature<TurretLimitedAmmoSettings>
 {
     internal static readonly TurretLimitedAmmoFeature Shared = new();
 
-    internal override TurretLimitedAmmoSettings Settings => Control.settings.TurretLimitedAmmo;
+    internal override TurretLimitedAmmoSettings Settings => Control.Settings.TurretLimitedAmmo;
 }
