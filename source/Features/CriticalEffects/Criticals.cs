@@ -1,5 +1,4 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
@@ -16,16 +15,16 @@ internal class Criticals
     internal Criticals(MechComponent component)
     {
         this.component = component;
-        ce = new Lazy<CriticalEffects>(FetchCriticalEffects);
+        ce = new Lazy<CriticalEffects?>(FetchCriticalEffects);
     }
 
     private readonly MechComponent component;
-    private AbstractActor actor => component.parent;
+    private AbstractActor? actor => component.parent;
 
-    internal CriticalEffects Effects => ce.Value;
-    private readonly Lazy<CriticalEffects> ce;
+    internal CriticalEffects? Effects => ce.Value;
+    private readonly Lazy<CriticalEffects?> ce;
     private bool HasLinked => Effects?.LinkedStatisticName != null;
-    private CriticalEffects FetchCriticalEffects()
+    private CriticalEffects? FetchCriticalEffects()
     {
         var customs = component.componentDef.GetComponents<CriticalEffects>().ToList();
 
@@ -79,6 +78,11 @@ internal class Criticals
 
     private void SetHits(WeaponHitInfo hitInfo, out ComponentDamageLevel damageLevel)
     {
+        if (actor == null)
+        {
+            throw new NullReferenceException();
+        }
+
         int effectsMax, effectsPrev, effectsNext;
         {
             var compCritsMax = ComponentHitMax();
@@ -165,6 +169,11 @@ internal class Criticals
 
     private int GroupHitCount(int? setHits = null)
     {
+        if (actor == null)
+        {
+            throw new NullReferenceException();
+        }
+
         var statisticName = LinkedScopedId();
         var collection = actor.StatCollection;
 
@@ -178,7 +187,12 @@ internal class Criticals
 
     private string LinkedScopedId()
     {
-        return ScopedId(Effects.LinkedStatisticName);
+        if (Effects == null)
+        {
+            throw new NullReferenceException();
+        }
+
+        return ScopedId(Effects.LinkedStatisticName!);
     }
 
     private string ScopedId(string id)
@@ -199,7 +213,12 @@ internal class Criticals
 
     private void SetDamageLevel(WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
     {
-        SetDamageLevel(component, hitInfo, damageLevel);
+        if (actor == null)
+        {
+            throw new NullReferenceException();
+        }
+
+        LocalSetDamageLevel(component, hitInfo, damageLevel);
 
         if (HasLinked)
         {
@@ -222,13 +241,13 @@ internal class Criticals
                 var otherId = otherCriticals.LinkedScopedId();
                 if (id == otherId)
                 {
-                    SetDamageLevel(otherMechComponent, hitInfo, damageLevel);
+                    LocalSetDamageLevel(otherMechComponent, hitInfo, damageLevel);
                 }
 
             }
         }
 
-        static void SetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
+        static void LocalSetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
         {
             Control.Logger.Debug?.Log($"damageLevel={damageLevel} uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location})");
             mechComponent.StatCollection.ModifyStat(
@@ -247,6 +266,11 @@ internal class Criticals
 
     private void CancelEffects(int critsPrev, ComponentDamageLevel damageLevel)
     {
+        if (Effects == null)
+        {
+            throw new NullReferenceException();
+        }
+
         var effectIdsIndex = critsPrev - 1;
 
         var effectIds = new string[0];
@@ -270,6 +294,15 @@ internal class Criticals
 
     private void CreateEffects(int critsNext, ComponentDamageLevel damageLevel)
     {
+        if (Effects == null)
+        {
+            throw new NullReferenceException();
+        }
+        if (actor == null)
+        {
+            throw new NullReferenceException();
+        }
+
         var effectIdsIndex = critsNext - 1;
 
         string[] effectIds;
@@ -309,7 +342,8 @@ internal class Criticals
                 let ce = mc.Criticals().Effects
                 where ce != null
                 from effectId in ce.OnDestroyedDisableEffectIds
-                select mc.Criticals().ScopedId(effectId);
+                select mc.
+                    Criticals().ScopedId(effectId);
 
             return new HashSet<string>(iter);
         }
@@ -320,6 +354,10 @@ internal class Criticals
         if (Effects == null)
         {
             return;
+        }
+        if (actor == null)
+        {
+            throw new NullReferenceException();
         }
 
         if (Effects.DeathMethod != DeathMethod.NOT_SET)
