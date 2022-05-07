@@ -198,7 +198,8 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
             front = constants.ArmorAllocationRatioCenterTorso;
             back = constants.ArmorAllocationRatioCenterTorsoRear;
         }
-        return front / back;
+        var total = front + back;
+        return front / total;
     }
 
     private static int GetArmorToStructureRatio(ChassisLocations location)
