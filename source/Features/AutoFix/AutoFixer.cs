@@ -1,5 +1,4 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
@@ -18,7 +17,7 @@ internal class AutoFixer : IAutoFixMechDef
 {
     internal static readonly AutoFixer Shared = new();
 
-    public void AutoFix(List<MechDef> mechDefs, SimGameState simGameState)
+    public void AutoFix(List<MechDef> mechDefs, SimGameState? simGameState)
     {
         // we dont fix save games anymore, have to have money and time to fix an ongoing campaign
         if (simGameState != null)
@@ -130,6 +129,14 @@ internal class AutoFixer : IAutoFixMechDef
         ArmorStructureRatioFeature.Shared.AutoFixMechDef(mechDef);
 
         var res = EngineSearcher.SearchInventory(builder.Inventory);
+        if (res.CoolingDef == null)
+        {
+            throw new NullReferenceException("No CoolingDef found");
+        }
+        if (res.HeatBlockDef == null)
+        {
+            throw new NullReferenceException("No HeatBlockDef found");
+        }
 
         var engineHeatSinkDef = dataManager.HeatSinkDefs.Get(res.CoolingDef.HeatSinkDefId).GetComponent<EngineHeatSinkDef>();
 
@@ -148,7 +155,7 @@ internal class AutoFixer : IAutoFixMechDef
             }
         }
 
-        Engine engine = null;
+        Engine? engine = null;
         if (res.CoreDef != null)
         {
             Control.Logger.Debug?.Log($" Found an existing engine");
@@ -309,7 +316,10 @@ internal class AutoFixer : IAutoFixMechDef
             {
                 Control.Logger.Debug?.Log($" engine={engine.CoreDef} freeTonnage={freeTonnage}");
                 var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == AutoFixerFeature.settings.MechDefCoreDummy);
-                builder.Remove(dummyCore);
+                if (dummyCore != null)
+                {
+                    builder.Remove(dummyCore);
+                }
                 builder.Add(engine.CoreDef.Def, ChassisLocations.CenterTorso, true);
 
                 // convert internal heat sinks back as external ones if the mech can fit it
