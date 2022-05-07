@@ -22,9 +22,8 @@ public class EngineHeatBlockDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquip
         }
 
 
-        var panel = Global.ActiveMechLabPanel;
-
-        var engine = panel?.CreateMechDef()?.GetEngine();
+        var mechDef = Global.ActiveMechDef;
+        var engine = mechDef?.GetEngine();
         if (engine == null)
         {
             return;

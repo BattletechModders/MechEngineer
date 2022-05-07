@@ -4,32 +4,24 @@ using BattleTech.UI;
 
 namespace MechEngineer.Features.Globals;
 
+// ReSharper disable Unity.NoNullPropagation
 internal static class Global
 {
     internal static MechDef ActiveMechDef => ActiveMechDefFromLab ?? SelectedMechDefFromBay;
 
-    #region MechLabPanel
-
-    internal static MechDef ActiveMechDefFromLab => ActiveMechLabPanel?.CreateMechDef();
-    internal static readonly WeakReference MechLabPanelReference = new(null);
+    private static MechDef ActiveMechDefFromLab => ActiveMechLabPanel?.CreateMechDef();
+    private static readonly WeakReference MechLabPanelReference = new(null);
     internal static MechLabPanel ActiveMechLabPanel
     {
         set => MechLabPanelReference.Target = value;
-        get => MechLabPanelReference.Target as MechLabPanel;
+        private get => MechLabPanelReference.Target as MechLabPanel;
     }
 
-    #endregion
-
-    #region MechBayPanel
-
-    internal static MechDef SelectedMechDefFromBay =>
-        ActiveMechBayPanel == null ? null : ActiveMechBayPanel.selectedMech.MechDef;
-    internal static readonly WeakReference MechBayPanelReference = new(null);
+    private static MechDef SelectedMechDefFromBay => ActiveMechBayPanel?.selectedMech?.MechDef;
+    private static readonly WeakReference MechBayPanelReference = new(null);
     internal static MechBayPanel ActiveMechBayPanel
     {
         set => MechBayPanelReference.Target = value;
-        get => MechBayPanelReference.Target as MechBayPanel;
+        private get => MechBayPanelReference.Target as MechBayPanel;
     }
-
-    #endregion
 }

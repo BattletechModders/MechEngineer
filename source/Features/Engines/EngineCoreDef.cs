@@ -50,8 +50,7 @@ public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment,
             return;
         }
 
-        var panel = Global.ActiveMechLabPanel;
-        var mechDef = panel?.CreateMechDef();
+        var mechDef = Global.ActiveMechDef;
         var engine = mechDef?.GetEngine();
         if (engine == null)
         {
