@@ -25,7 +25,7 @@ internal class Weights
     {
         var weights = new Weights(mechDef);
         var before = weights.TotalWeight;
-        weights.SetFactors(changedFactors);
+        weights.Factors.Combine(changedFactors);
         var after = weights.TotalWeight;
         return after - before;
     }
