@@ -1,13 +1,14 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;
 
 [HarmonyPatch(typeof(Mech), nameof(Mech.OnActivationEnd))]
 public static class Mech_OnActivationEnd_Patch
 {
-    [HarmonyPrepare]
+    [UsedByHarmony]
     public static bool Prepare()
     {
         return !ShutdownInjuryProtectionFeature.settings.OverheatedOnActivationEndInjuryEnabled;

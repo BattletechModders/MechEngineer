@@ -1,11 +1,9 @@
 <assembly name="0Harmony">
+    <!-- common harmony attributes -->
     <member name="T:Harmony.HarmonyPatch">
         <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
     </member>
-    <member name="T:Harmony.HarmonyPrepare">
-        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
-    </member>
-    <member name="T:Harmony.HarmonyCleanup">
+    <member name="T:Harmony.HarmonyPostfix">
         <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
     </member>
     <member name="T:Harmony.HarmonyPrefix">
@@ -14,7 +12,17 @@
     <member name="T:Harmony.HarmonyTranspiler">
         <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
     </member>
-    <member name="T:Harmony.HarmonyPostfix">
+    <!-- Warning, these harmony attributes are bugged for < 2.x -->
+    <member name="T:Harmony.HarmonyCleanup">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:Harmony.HarmonyPrepare">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:Harmony.HarmonyTargetMethod">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:Harmony.HarmonyTargetMethods">
         <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
     </member>
 </assembly>

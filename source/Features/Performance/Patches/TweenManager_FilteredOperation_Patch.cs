@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Harmony;
+using MechEngineer.Misc;
 using UnityEngine;
 
 namespace MechEngineer.Features.Performance.Patches;
@@ -10,7 +11,7 @@ namespace MechEngineer.Features.Performance.Patches;
 [HarmonyPatch]
 public static class TweenManager_FilteredOperation_Patch
 {
-    [HarmonyTargetMethod]
+    [UsedByHarmony]
     public static MethodBase TargetMethod()
     {
         return AccessTools.Method("DG.Tweening.Core.TweenManager:FilteredOperation");

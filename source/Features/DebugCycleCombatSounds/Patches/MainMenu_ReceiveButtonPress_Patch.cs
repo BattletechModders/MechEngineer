@@ -5,6 +5,7 @@ using BattleTech.UI;
 using Harmony;
 using HBS;
 using HBS.Scripting.Reflection;
+using MechEngineer.Misc;
 using TMPro;
 
 namespace MechEngineer.Features.DebugCycleCombatSounds.Patches;
@@ -12,7 +13,7 @@ namespace MechEngineer.Features.DebugCycleCombatSounds.Patches;
 [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.ReceiveButtonPress))]
 public static class MainMenu_ReceiveButtonPress_Patch
 {
-    [HarmonyPrepare]
+    [UsedByHarmony]
     public static bool Prepare()
     {
         return !DebugCycleCombatSoundsFeature.settings.DebugMainCycleSoundsOnReceiveButtonEnabled;

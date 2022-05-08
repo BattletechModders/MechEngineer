@@ -16,9 +16,10 @@ public static class Control
 
     internal static readonly MechEngineerSettings Settings = new();
 
+    [UsedByModTek]
     public static void Start(string modDirectory, string json)
     {
-        Mod = new Mod(modDirectory);
+        Mod = new(modDirectory);
         Mod.ResetStartupErrorLog();
         try
         {

@@ -6,7 +6,7 @@ namespace MechEngineer.Features.TagManager;
 
 public class TagManagerSettings : ISettings
 {
-    public bool Enabled { get; set; } = false;
+    public bool Enabled { get; set; }
     public string EnabledDescription => "Manipulates MechDef and ComponentDef Tags";
 
     public string[] SkirmishWhitelistTags = {MechValidationRules.ComponentTag_Stock};
@@ -29,11 +29,11 @@ public class TagManagerSettings : ISettings
 
     internal void Setup()
     {
-        SkirmishWhitelistTagSet = new TagSet(SkirmishWhitelistTags);
-        WhitelistComponentTagSet = new TagSet(WhitelistComponentTags);
-        BlacklistComponentTagSet = new TagSet(BlacklistComponentTags);
-        WhitelistMechTagSet = new TagSet(WhitelistMechTags);
-        BlacklistMechTagSet = new TagSet(BlacklistMechTags);
+        SkirmishWhitelistTagSet = new(SkirmishWhitelistTags);
+        WhitelistComponentTagSet = new(WhitelistComponentTags);
+        BlacklistComponentTagSet = new(BlacklistComponentTags);
+        WhitelistMechTagSet = new(WhitelistMechTags);
+        BlacklistMechTagSet = new(BlacklistMechTags);
     }
 
     [JsonIgnore]

@@ -1,13 +1,14 @@
 ﻿using System;
 using BattleTech;
 using Harmony;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;
 
 [HarmonyPatch(typeof(MechShutdownSequence), nameof(MechShutdownSequence.CheckForHeatDamage))]
 public static class MechShutdownSequence_CheckForHeatDamage_Patch
 {
-    [HarmonyPrepare]
+    [UsedByHarmony]
     public static bool Prepare()
     {
         return !ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled;
