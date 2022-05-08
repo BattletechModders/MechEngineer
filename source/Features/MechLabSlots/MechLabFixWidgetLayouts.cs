@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace MechEngineer.Features.MechLabSlots;
 
-internal class MechLabFixWidgetLayouts
+internal static class MechLabFixWidgetLayouts
 {
     internal static void FixMechLabLayouts(MechLabPanel panel)
     {

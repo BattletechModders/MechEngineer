@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace MechEngineer.Features.MechLabSlots;
 
-internal class MechLabAutoZoom
+internal static class MechLabAutoZoom
 {
     internal static void LoadMech(MechLabPanel mechLabPanel)
     {

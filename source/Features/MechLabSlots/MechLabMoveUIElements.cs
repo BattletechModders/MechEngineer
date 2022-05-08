@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace MechEngineer.Features.MechLabSlots;
 
-internal class MechLabMoveUIElements
+internal static class MechLabMoveUIElements
 {
     internal static void MoveMechUIElements(MechLabPanel panel)
     {

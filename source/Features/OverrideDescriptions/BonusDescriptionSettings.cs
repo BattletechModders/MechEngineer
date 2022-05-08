@@ -1,5 +1,8 @@
-﻿namespace MechEngineer.Features.OverrideDescriptions;
+﻿using MechEngineer.Misc;
 
+namespace MechEngineer.Features.OverrideDescriptions;
+
+[SettingsFromJson]
 internal class BonusDescriptionSettings
 {
     public string Bonus = null!;

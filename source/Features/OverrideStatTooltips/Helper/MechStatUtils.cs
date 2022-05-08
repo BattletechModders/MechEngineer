@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Helper;
 
-internal class MechStatUtils
+internal static class MechStatUtils
 {
     internal static void SetStatValues(float fraction, ref float currentValue, ref float maxValue)
     {

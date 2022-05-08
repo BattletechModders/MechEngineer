@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots;
 
-internal class MechLabSlotsFixer
+internal static class MechLabSlotsFixer
 {
     internal static void FixSlots(WidgetLayout widgetLayout, int ___maxSlots)
     {
