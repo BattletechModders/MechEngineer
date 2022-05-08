@@ -116,7 +116,7 @@ internal static class CustomWidgetsFixLanceMechEquipment
 
         void Setup(MechLabSlotsSettings.WidgetSettings settings, List<MechComponentRef> list)
         {
-            var widget = GetWidgetViaCenterTorso(settings, centerTorso);
+            var widget = GetWidgetViaCenterTorso(settings, centerTorso)!;
             foreach (var mechComponentRef in list)
             {
                 var gameObject = el.dataManager.PooledInstantiate(
@@ -148,8 +148,8 @@ internal static class CustomWidgetsFixLanceMechEquipment
         Setup(MechLabSlotsFeature.settings.TopRightWidget, topRight);
     }
 
-    private static GameObject GetWidgetViaCenterTorso(MechLabSlotsSettings.WidgetSettings settings, GameObject centerTorso)
+    private static GameObject? GetWidgetViaCenterTorso(MechLabSlotsSettings.WidgetSettings settings, GameObject centerTorso)
     {
-        return centerTorso.transform.parent.GetChild(settings.ShortLabel).gameObject;
+        return centerTorso.transform.parent.GetChild(settings.ShortLabel)?.gameObject;
     }
 }

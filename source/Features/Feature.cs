@@ -151,7 +151,7 @@ internal abstract class Feature<T> : IFeature where T : ISettings
                     continue;
                 }
 
-                Control.Logger.Debug?.Log($"found {type.Namespace}.{type.Name}");
+                // Control.Logger.Trace?.Log($"found {type.Namespace}.{type.Name}");
 
                 yield return type;
             }
