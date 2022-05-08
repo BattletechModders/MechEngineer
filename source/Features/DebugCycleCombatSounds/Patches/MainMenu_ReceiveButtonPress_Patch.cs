@@ -16,7 +16,7 @@ public static class MainMenu_ReceiveButtonPress_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return !DebugCycleCombatSoundsFeature.settings.DebugMainCycleSoundsOnReceiveButtonEnabled;
+        return DebugCycleCombatSoundsFeature.settings.DebugMainCycleSoundsOnReceiveButtonEnabled;
     }
 
     private static IEnumerator<string>? Iterator = null;

@@ -14,7 +14,7 @@ internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return !CriticalEffectsFeature.settings.DebugLogEffects;
+        return CriticalEffectsFeature.settings.DebugLogEffects;
     }
 
     [HarmonyPrefix]
@@ -50,7 +50,7 @@ internal static class EffectManager_CancelEffect_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return !CriticalEffectsFeature.settings.DebugLogEffects;
+        return CriticalEffectsFeature.settings.DebugLogEffects;
     }
 
     [HarmonyPrefix]
@@ -73,7 +73,7 @@ internal static class EffectManager_EffectComplete_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return !CriticalEffectsFeature.settings.DebugLogEffects;
+        return CriticalEffectsFeature.settings.DebugLogEffects;
     }
 
     [HarmonyPrefix]
@@ -110,7 +110,7 @@ internal static class CombatHUDStatusPanel_ShouldShowEffect_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return !CriticalEffectsFeature.settings.DebugLogEffects;
+        return CriticalEffectsFeature.settings.DebugLogEffects;
     }
 
     [HarmonyPostfix]

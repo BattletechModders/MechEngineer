@@ -11,7 +11,7 @@ public static class Mech_OnActivationEnd_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return !ShutdownInjuryProtectionFeature.settings.OverheatedOnActivationEndInjuryEnabled;
+        return ShutdownInjuryProtectionFeature.settings.OverheatedOnActivationEndInjuryEnabled;
     }
 
     [HarmonyPrefix]

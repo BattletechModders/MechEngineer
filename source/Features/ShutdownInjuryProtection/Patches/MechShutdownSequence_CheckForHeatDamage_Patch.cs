@@ -11,7 +11,7 @@ public static class MechShutdownSequence_CheckForHeatDamage_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return !ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled;
+        return ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled;
     }
 
     [HarmonyPrefix]

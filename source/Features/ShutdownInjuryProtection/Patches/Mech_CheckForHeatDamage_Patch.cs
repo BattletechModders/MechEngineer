@@ -11,7 +11,7 @@ public static class Mech_CheckForHeatDamage_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return !ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled;
+        return ShutdownInjuryProtectionFeature.settings.HeatDamageInjuryEnabled;
     }
 
     [HarmonyPrefix]
