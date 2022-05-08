@@ -9,7 +9,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 
     internal override TagManagerSettings Settings => Control.Settings.TagManager;
 
-    internal override void SetupFeatureLoaded()
+    protected override void SetupFeatureLoaded()
     {
         Settings.Setup();
     }

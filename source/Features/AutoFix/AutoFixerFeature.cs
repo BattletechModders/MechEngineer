@@ -12,7 +12,7 @@ internal class AutoFixerFeature : Feature<AutoFixerSettings>
 
     internal static AutoFixerSettings settings => Shared.Settings;
 
-    internal override void SetupFeatureLoaded()
+    protected override void SetupFeatureLoaded()
     {
         Registry.RegisterPreProcessor(CockpitHandler.Shared);
         Registry.RegisterPreProcessor(SensorsAHandler.Shared);

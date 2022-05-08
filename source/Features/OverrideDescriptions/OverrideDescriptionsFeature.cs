@@ -16,14 +16,14 @@ internal class OverrideDescriptionsFeature : Feature<OverrideDescriptionsSetting
 
     internal static OverrideDescriptionsSettings settings => Shared.Settings;
 
-    internal override void SetupFeatureLoaded()
+    protected override void SetupFeatureLoaded()
     {
         Registry.RegisterSimpleCustomComponents(typeof(BonusDescriptions));
     }
 
     internal static Dictionary<string, BonusDescriptionSettings> Resources { get; set; } = new();
 
-    internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+    protected override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
     {
         Resources = SettingsResourcesTools.Enumerate<BonusDescriptionSettings>("MEBonusDescriptions", customResources)
             .ToDictionary(entry => entry.Bonus);

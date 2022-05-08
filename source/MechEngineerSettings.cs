@@ -30,9 +30,11 @@ using MechEngineer.Features.ShutdownInjuryProtection;
 using MechEngineer.Features.TagManager;
 using MechEngineer.Features.TurretLimitedAmmo;
 using MechEngineer.Features.TurretMechComponents;
+using MechEngineer.Misc;
 
 namespace MechEngineer;
 
+[SettingsFromJson]
 internal class MechEngineerSettings
 {
     public bool GeneratedSettingsFilesReadonly = true;

@@ -11,7 +11,7 @@ internal class EngineFeature : Feature<EngineSettings>
 
     internal static EngineSettings settings => Shared.Settings;
 
-    internal override void SetupFeatureLoaded()
+    protected override void SetupFeatureLoaded()
     {
         Validator.RegisterMechValidator(EngineValidation.Shared.CCValidation.ValidateMech, EngineValidation.Shared.CCValidation.ValidateMechCanBeFielded);
     }

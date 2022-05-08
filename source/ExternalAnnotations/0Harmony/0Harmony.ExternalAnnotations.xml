@@ -1,0 +1,20 @@
+<assembly name="0Harmony">
+    <member name="T:Harmony.HarmonyPatch">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:Harmony.HarmonyPrepare">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:Harmony.HarmonyCleanup">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:Harmony.HarmonyPrefix">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:Harmony.HarmonyTranspiler">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:Harmony.HarmonyPostfix">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+</assembly>

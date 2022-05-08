@@ -22,7 +22,7 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
 
     internal static DynamicSlotsSettings settings => Shared.Settings;
 
-    internal override void SetupFeatureLoaded()
+    protected override void SetupFeatureLoaded()
     {
         Validator.RegisterMechValidator(CCValidation.ValidateMech, CCValidation.ValidateMechCanBeFielded);
         if (settings.DynamicSlotsValidateDropEnabled)

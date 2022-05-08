@@ -5,9 +5,11 @@ using System.Reflection.Emit;
 using BattleTech;
 using CustomComponents;
 using Harmony;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features;
 
+[SettingsFromJson]
 public interface ISettings
 {
     bool Enabled { get; }
@@ -25,13 +27,13 @@ internal abstract class Feature<T> : IFeature where T : ISettings
     internal virtual bool Enabled => Settings?.Enabled ?? false;
 
     // called when the feature is enabled and its patches have been successfully loaded
-    internal virtual void SetupFeatureLoaded()
+    protected virtual void SetupFeatureLoaded()
     {
         // noop
     }
 
     // called setup a feature via resources
-    internal virtual void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+    protected virtual void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
     {
         // noop
     }

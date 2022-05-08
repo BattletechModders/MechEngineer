@@ -6,7 +6,7 @@ internal class ArmorMaximizerFeature : Feature<ArmorMaximizerSettings>
 
     internal override ArmorMaximizerSettings Settings => Control.Settings.ArmorMaximizer;
 
-    internal override void SetupFeatureLoaded()
+    protected override void SetupFeatureLoaded()
     {
         foreach (var location in Settings.ArmorLocationsLockedByDefault)
         {

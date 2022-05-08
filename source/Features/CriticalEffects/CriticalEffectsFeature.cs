@@ -16,7 +16,7 @@ internal class CriticalEffectsFeature : Feature<CriticalEffectsSettings>
 
     internal static CriticalEffectsSettings settings => Shared.Settings;
 
-    internal override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
+    protected override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
     {
         Resources = SettingsResourcesTools.Enumerate<EffectData>("MECriticalEffects", customResources)
             .ToDictionary(entry => entry.Description.Id);
