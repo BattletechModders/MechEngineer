@@ -8,6 +8,7 @@ namespace MechEngineer.Features.ArmorMaximizer.Patches;
 [HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.OnStripArmor))]
 public static class MechLabPanel_OnStripArmor_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(MechLabPanel __instance, MechLabMechInfoWidget ___mechInfoWidget, MechLabItemSlotElement ___dragItem)
     {
         try

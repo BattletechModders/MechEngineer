@@ -12,6 +12,7 @@ public static class Mech_InitGameRep_Patch
 {
     [HarmonyBefore(Mods.AC, Mods.CU)]
     [HarmonyPriority(Priority.High)]
+    [HarmonyPrefix]
     public static void Prefix(Mech __instance)
     {
         try
@@ -30,6 +31,7 @@ public static class Mech_InitGameRep_Patch
         }
     }
 
+    [HarmonyPostfix]
     public static void Postfix()
     {
         CalculatorSetup.Reset();

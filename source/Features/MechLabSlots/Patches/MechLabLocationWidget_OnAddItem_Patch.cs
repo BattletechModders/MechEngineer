@@ -8,6 +8,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 [HarmonyPatch(typeof(MechLabLocationWidget), nameof(MechLabLocationWidget.OnAddItem))]
 public static class MechLabLocationWidget_OnAddItem_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

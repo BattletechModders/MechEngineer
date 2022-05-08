@@ -8,6 +8,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 [HarmonyPatch(typeof(TooltipPrefab_Mech), nameof(TooltipPrefab_Mech.SetData))]
 public static class TooltipPrefab_Mech_SetData_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(
         LanceStatGraphic ___FirepowerBar,
         LanceStatGraphic ___HeatEffBar,

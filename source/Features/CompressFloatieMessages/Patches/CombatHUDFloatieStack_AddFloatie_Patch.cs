@@ -9,6 +9,7 @@ namespace MechEngineer.Features.CompressFloatieMessages.Patches;
 [HarmonyPatch(typeof(CombatHUDFloatieStack), nameof(CombatHUDFloatieStack.AddFloatie), typeof(FloatieMessage))]
 public static class CombatHUDFloatieStack_AddFloatie_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(
         CombatHUDFloatieStack __instance,
         FloatieMessage message,

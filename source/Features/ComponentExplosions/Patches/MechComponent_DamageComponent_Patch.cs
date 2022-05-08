@@ -8,6 +8,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches;
 [HarmonyPatch(typeof(MechComponent), nameof(MechComponent.DamageComponent))]
 public static class MechComponent_DamageComponent_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(
@@ -21,6 +22,7 @@ public static class MechComponent_DamageComponent_Patch
         return false;
     }
 
+    [HarmonyPostfix]
     public static void Postfix(MechComponent __instance, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
     {
         try

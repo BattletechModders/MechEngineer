@@ -6,6 +6,7 @@ namespace MechEngineer.Features.HeatSinkCapacityStat.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.GetHeatSinkDissipation))]
 public static class Mech_GetHeatSinkDissipation_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(ref float __result)
     {
         __result = 0;

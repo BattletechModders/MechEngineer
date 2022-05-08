@@ -8,6 +8,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches;
 [HarmonyPatch(typeof(MechLabMechInfoWidget), nameof(MechLabMechInfoWidget.CalculateTonnage))]
 public static class MechLabMechInfoWidget_CalculateTonnage_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(
         MechLabPanel ___mechLab,
         ref float ___currentTonnage,

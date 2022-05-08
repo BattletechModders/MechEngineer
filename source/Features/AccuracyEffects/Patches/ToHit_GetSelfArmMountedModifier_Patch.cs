@@ -7,6 +7,7 @@ namespace MechEngineer.Features.AccuracyEffects.Patches;
 [HarmonyPatch(typeof(ToHit), nameof(ToHit.GetSelfArmMountedModifier))]
 public static class ToHit_GetSelfArmMountedModifier_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(Weapon weapon, ref float __result)
     {
         try

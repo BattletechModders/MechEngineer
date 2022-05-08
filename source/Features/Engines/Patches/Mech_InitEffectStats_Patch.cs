@@ -8,6 +8,7 @@ namespace MechEngineer.Features.Engines.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.InitEffectStats))]
 public static class Mech_InitEffectStats_Patch
 {
+    [HarmonyPrefix]
     public static void Prefix(Mech __instance)
     {
         try
@@ -20,6 +21,7 @@ public static class Mech_InitEffectStats_Patch
         }
     }
 
+    [HarmonyPostfix]
     public static void Postfix(Mech __instance)
     {
         try

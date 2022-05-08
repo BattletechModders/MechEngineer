@@ -9,6 +9,7 @@ namespace MechEngineer.Features.Performance.Patches;
 [HarmonyPatch(typeof(CombatHUDEvasiveBarPips), nameof(CombatHUDEvasiveBarPips.TrySetButton))]
 public static class CombatHUDEvasiveBarPips_TrySetButton_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

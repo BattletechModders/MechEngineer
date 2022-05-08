@@ -8,6 +8,7 @@ namespace MechEngineer.Features.OverrideGhostVFX.Patches;
 [HarmonyPatch(typeof(GameRepresentation), nameof(GameRepresentation.PlayVFXAt))]
 public static class GameRepresentation_PlayVFXAt_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(string vfxName)
     {
         try

@@ -7,11 +7,13 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.OnActivationEnd))]
 public static class Mech_OnActivationEnd_Patch
 {
+    [HarmonyPrepare]
     public static bool Prepare()
     {
         return !ShutdownInjuryProtectionFeature.settings.OverheatedOnActivationEndInjuryEnabled;
     }
 
+    [HarmonyPrefix]
     public static void Prefix(Mech __instance, string sourceID, int stackItemID)
     {
         try

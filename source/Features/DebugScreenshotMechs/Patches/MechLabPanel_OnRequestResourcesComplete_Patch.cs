@@ -10,6 +10,7 @@ namespace MechEngineer.Features.DebugScreenshotMechs.Patches;
 [HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.OnRequestResourcesComplete))]
 public static class MechLabPanel_OnRequestResourcesComplete_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(MechLabPanel __instance)
     {
         try

@@ -8,6 +8,7 @@ namespace MechEngineer.Features.HeatSinkCapacityStat.Patches;
 [HarmonyPatch(typeof(CombatHUD), nameof(CombatHUD.GrantBonusHeatSinksAndUnhittable))]
 public static class CombatHUD_GrantBonusHeatSinksAndUnhittable_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         foreach (var codeInstruction in instructions)

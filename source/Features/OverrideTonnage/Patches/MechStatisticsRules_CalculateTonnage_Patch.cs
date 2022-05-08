@@ -7,6 +7,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches;
 [HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateTonnage))]
 public static class MechStatisticsRules_CalculateTonnage_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(MechDef mechDef, ref float currentValue, ref float maxValue)
     {
         try
@@ -21,7 +22,8 @@ public static class MechStatisticsRules_CalculateTonnage_Patch
         }
         return true;
     }
-    
+
+    [HarmonyPostfix]
     public static void Postfix(ref float currentValue)
     {
         try

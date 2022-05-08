@@ -12,6 +12,7 @@ namespace MechEngineer.Features.DebugCycleCombatSounds.Patches;
 [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.ReceiveButtonPress))]
 public static class MainMenu_ReceiveButtonPress_Patch
 {
+    [HarmonyPrepare]
     public static bool Prepare()
     {
         return !DebugCycleCombatSoundsFeature.settings.DebugMainCycleSoundsOnReceiveButtonEnabled;
@@ -20,6 +21,7 @@ public static class MainMenu_ReceiveButtonPress_Patch
     private static IEnumerator<string>? Iterator = null;
 
     // ReSharper disable once InconsistentNaming
+    [HarmonyPrefix]
     public static bool Prefix(TextMeshProUGUI ____version, string button)
     {
         if (Iterator == null || button == DebugCycleCombatSoundsFeature.Shared.Settings.SpecificButton && !Iterator.MoveNext())

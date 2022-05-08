@@ -10,6 +10,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches;
 [HarmonyPatch(typeof(Vehicle), nameof(Vehicle.DamageLocation))]
 internal static class Vehicle_DamageLocation_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions

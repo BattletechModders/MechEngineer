@@ -7,6 +7,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches;
 [HarmonyPatch(typeof(AmmunitionBox), nameof(AmmunitionBox.DamageComponent))]
 public static class AmmunitionBox_DamageComponent_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

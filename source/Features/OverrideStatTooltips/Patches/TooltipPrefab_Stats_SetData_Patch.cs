@@ -9,6 +9,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 [HarmonyPatch(typeof(TooltipPrefab_Stats), nameof(TooltipPrefab_Stats.SetData))]
 public static class TooltipPrefab_Stats_SetData_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(object data, LocalizableText ___Title)
     {
         try

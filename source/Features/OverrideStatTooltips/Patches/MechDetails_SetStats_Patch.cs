@@ -8,6 +8,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 [HarmonyPatch(typeof(MechDetails), nameof(MechDetails.SetStats))]
 public static class MechDetails_SetStats_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(List<LanceStat> ___statList)
     {
         try

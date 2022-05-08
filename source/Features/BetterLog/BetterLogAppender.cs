@@ -23,7 +23,7 @@ internal sealed class BetterLogAppender : ILogAppender, IDisposable
 
     public void Dispose()
     {
-        writer?.Dispose();
+        writer.Dispose();
     }
 
     public void Flush()

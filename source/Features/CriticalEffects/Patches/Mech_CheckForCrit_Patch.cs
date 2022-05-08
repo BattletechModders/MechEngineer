@@ -7,6 +7,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.CheckForCrit))]
 public static class Mech_CheckForCrit_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

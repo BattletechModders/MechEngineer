@@ -9,6 +9,7 @@ namespace MechEngineer.Features.ArmorStructureChanges.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.ToMechDef))]
 public static class Mech_ToMechDef_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(Mech __instance, MechDef __result)
     {
         try

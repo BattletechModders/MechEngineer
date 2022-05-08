@@ -9,6 +9,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches;
 [HarmonyPatch(typeof(AbstractActor), nameof(AbstractActor.FlagForDeath))]
 internal static class AbstractActor_FlagForDeath_Patch
 {
+    [HarmonyPrefix]
     public static void Prefix(
         AbstractActor __instance,
         DeathMethod deathMethod,

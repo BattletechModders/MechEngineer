@@ -10,6 +10,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches;
 internal static class MechComponent_inventorySize_Patch
 {
     [HarmonyAfter(DamageIgnoreFeature.Namespace)]
+    [HarmonyPrefix]
     public static bool Prefix(MechComponent __instance, ref int __result)
     {
         try

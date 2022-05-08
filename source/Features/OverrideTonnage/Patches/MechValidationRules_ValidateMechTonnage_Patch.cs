@@ -10,6 +10,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches;
 [HarmonyPatch(typeof(MechValidationRules), nameof(MechValidationRules.ValidateMechTonnage))]
 public static class MechValidationRules_ValidateMechTonnage_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         foreach (var instruction in instructions)

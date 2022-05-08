@@ -10,11 +10,13 @@ namespace MechEngineer.Features.CriticalEffects.Patches;
 [HarmonyPatch(typeof(CombatHUDStatusPanel), nameof(CombatHUDStatusPanel.ShowEffectStatuses))]
 internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
 {
+    [HarmonyPrepare]
     public static bool Prepare()
     {
         return !CriticalEffectsFeature.settings.DebugLogEffects;
     }
 
+    [HarmonyPrefix]
     internal static void Prefix(AbstractActor actor)
     {
         try
@@ -27,6 +29,7 @@ internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
         }
     }
 
+    [HarmonyPostfix]
     internal static void Postfix(Dictionary<string, CombatHUDStatusIndicator> ___effectDict)
     {
         try
@@ -43,11 +46,13 @@ internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
 [HarmonyPatch(typeof(EffectManager), nameof(EffectManager.CancelEffect))]
 internal static class EffectManager_CancelEffect_Patch
 {
+    [HarmonyPrepare]
     public static bool Prepare()
     {
         return !CriticalEffectsFeature.settings.DebugLogEffects;
     }
 
+    [HarmonyPrefix]
     internal static void Prefix(Effect e)
     {
         try
@@ -64,11 +69,13 @@ internal static class EffectManager_CancelEffect_Patch
 [HarmonyPatch(typeof(EffectManager), nameof(EffectManager.EffectComplete))]
 internal static class EffectManager_EffectComplete_Patch
 {
+    [HarmonyPrepare]
     public static bool Prepare()
     {
         return !CriticalEffectsFeature.settings.DebugLogEffects;
     }
 
+    [HarmonyPrefix]
     internal static void Prefix(Effect e)
     {
         try
@@ -99,11 +106,13 @@ internal static class DebugUtils
 [HarmonyPatch(typeof(CombatHUDStatusPanel), nameof(CombatHUDStatusPanel.ShouldShowEffect))]
 internal static class CombatHUDStatusPanel_ShouldShowEffect_Patch
 {
+    [HarmonyPrepare]
     public static bool Prepare()
     {
         return !CriticalEffectsFeature.settings.DebugLogEffects;
     }
 
+    [HarmonyPostfix]
     internal static void Postfix(ref bool __result)
     {
         Control.Logger.Debug?.Log($"ShouldShowEffect {__result}");

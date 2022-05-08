@@ -8,6 +8,7 @@ namespace MechEngineer.Features.Performance.Patches;
 [HarmonyPatch(typeof(BTLight), nameof(BTLight.CompareTo))]
 public static class BTLight_CompareTo_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(BTLight __instance, object obj, ref int __result)
     {
         try

@@ -10,11 +10,13 @@ namespace MechEngineer.Features.Performance.Patches;
 [HarmonyPatch]
 public static class TweenManager_FilteredOperation_Patch
 {
+    [HarmonyTargetMethod]
     public static MethodBase TargetMethod()
     {
         return AccessTools.Method("DG.Tweening.Core.TweenManager:FilteredOperation");
     }
 
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

@@ -7,6 +7,7 @@ namespace MechEngineer.Features.Globals.Patches;
 [HarmonyPatch(typeof(MechBayPanel), nameof(MechBayPanel.SelectMech))]
 public static class MechBayPanel_SelectMech_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(MechBayPanel __instance)
     {
         try

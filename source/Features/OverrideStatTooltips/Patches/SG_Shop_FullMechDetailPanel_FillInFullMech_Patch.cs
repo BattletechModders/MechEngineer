@@ -7,6 +7,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 [HarmonyPatch(typeof(SG_Shop_FullMechDetailPanel), nameof(SG_Shop_FullMechDetailPanel.FillInFullMech))]
 public static class SG_Shop_FullMechDetailPanel_FillInFullMech_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(
         LanceStat ___Stat1,
         LanceStat ___Stat2,

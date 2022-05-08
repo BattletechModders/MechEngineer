@@ -7,6 +7,7 @@ namespace MechEngineer.Features.BetterLog.Patches;
 [HarmonyPatch(typeof(Logger), nameof(Logger.SetLoggerLevel))]
 internal static class Logger_SetLoggerLevel_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(string name)
     {
         try

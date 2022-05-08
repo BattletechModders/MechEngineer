@@ -7,6 +7,7 @@ namespace MechEngineer.Features.TurretMechComponents.Patches;
 [HarmonyPatch(typeof(Turret), nameof(Turret.InitStats))]
 public static class Turret_InitStats_Patch
 {
+    [HarmonyPrefix]
     public static void Prefix(Turret __instance)
     {
         try

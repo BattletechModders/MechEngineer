@@ -12,11 +12,13 @@ public static class MechLabPanel_GetNonFieldableErrorString_Patch
 {
     private static bool _isSimGame;
 
+    [HarmonyPrefix]
     public static void Prefix(MechLabPanel __instance)
     {
         _isSimGame = __instance.IsSimGame;
     }
 
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

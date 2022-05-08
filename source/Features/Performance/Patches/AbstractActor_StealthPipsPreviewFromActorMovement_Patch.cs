@@ -8,6 +8,7 @@ namespace MechEngineer.Features.Performance.Patches;
 [HarmonyPatch(typeof(AbstractActor), nameof(AbstractActor.StealthPipsPreviewFromActorMovement))]
 public static class AbstractActor_StealthPipsPreviewFromActorMovement_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(AbstractActor __instance, ref int __result)
     {
         try

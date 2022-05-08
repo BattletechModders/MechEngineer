@@ -12,6 +12,7 @@ public static class MechRepresentationSimGame_LoadWeapons_Patch
 {
     [HarmonyBefore(Mods.CU)]
     [HarmonyPriority(Priority.High)]
+    [HarmonyPrefix]
     public static void Prefix(MechRepresentationSimGame __instance)
     {
         try
@@ -26,6 +27,7 @@ public static class MechRepresentationSimGame_LoadWeapons_Patch
         }
     }
 
+    [HarmonyPostfix]
     public static void Postfix()
     {
         CalculatorSetup.Reset();

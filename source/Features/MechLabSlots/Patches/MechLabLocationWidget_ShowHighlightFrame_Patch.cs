@@ -18,6 +18,7 @@ public static class MechLabLocationWidget_ShowHighlightFrame_Patch
 {
     [HarmonyBefore(Mods.CC)]
     [HarmonyPriority(Priority.HigherThanNormal)]
+    [HarmonyPrefix]
     public static bool Prefix(MechLabLocationWidget __instance, bool isOriginalLocation, ref MechComponentRef? cRef)
     {
         try

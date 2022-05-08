@@ -7,6 +7,7 @@ namespace MechEngineer.Features.PlaceholderEffects.Patches;
 [HarmonyPatch(typeof(MechComponent), nameof(MechComponent.ApplyPassiveEffectToTarget))]
 public static class MechComponent_ApplyPassiveEffectToTarget_Patch
 {
+    [HarmonyPrefix]
     public static void Prefix(MechComponent __instance, ref EffectData effect)
     {
         try

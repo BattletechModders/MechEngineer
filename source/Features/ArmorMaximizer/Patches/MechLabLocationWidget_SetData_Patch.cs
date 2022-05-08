@@ -10,6 +10,7 @@ namespace MechEngineer.Features.ArmorMaximizer.Patches;
 [HarmonyPatch(typeof(MechLabLocationWidget), nameof(MechLabLocationWidget.SetData))]
 public static class MechLabLocationWidget_SetData_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(MechLabLocationWidget __instance)
     {
         try

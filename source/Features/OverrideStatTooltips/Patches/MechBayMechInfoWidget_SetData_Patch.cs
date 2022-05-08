@@ -7,6 +7,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 [HarmonyPatch(typeof(MechBayMechInfoWidget), nameof(MechBayMechInfoWidget.Awake))]
 public static class MechBayMechInfoWidget_Awake_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(LanceStat[] ___mechStats)
     {
         try

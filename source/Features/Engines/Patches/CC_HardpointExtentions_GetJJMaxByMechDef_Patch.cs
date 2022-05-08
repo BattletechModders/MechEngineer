@@ -9,7 +9,8 @@ namespace MechEngineer.Features.Engines.Patches;
 [HarmonyPatch(typeof(HardpointExtentions), nameof(HardpointExtentions.GetJJMaxByMechDef))]
 internal static class CC_HardpointExtentions_GetJJMaxByMechDef_Patch
 {
-    internal static bool Prefix(MechDef def, ref int __result)
+    [HarmonyPrefix]
+    internal static bool Prefix(MechDef? def, ref int __result)
     {
         try
         {

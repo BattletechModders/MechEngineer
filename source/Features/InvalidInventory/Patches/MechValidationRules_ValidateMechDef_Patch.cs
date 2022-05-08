@@ -9,6 +9,7 @@ namespace MechEngineer.Features.InvalidInventory.Patches;
 [HarmonyPatch(typeof(MechValidationRules), nameof(MechValidationRules.ValidateMechDef))]
 internal static class MechValidationRules_ValidateMechDef_Patch
 {
+    [HarmonyPostfix]
     internal static void Postfix(MechValidationLevel validationLevel, DataManager dataManager, MechDef mechDef, ref Dictionary<MechValidationType, List<Text>> __result)
     {
         if (validationLevel == MechValidationLevel.MechLab)

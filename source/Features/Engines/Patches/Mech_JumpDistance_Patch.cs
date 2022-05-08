@@ -8,6 +8,7 @@ namespace MechEngineer.Features.Engines.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.JumpDistance), MethodType.Getter)]
 public static class Mech_JumpDistance_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(Mech __instance, ref float __result)
     {
         try

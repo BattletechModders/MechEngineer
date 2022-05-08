@@ -11,6 +11,7 @@ namespace MechEngineer.Features.AutoFix.Patches;
 [HarmonyPatch(typeof(WeaponDef), nameof(Weapon.FromJSON))]
 public static class WeaponDef_FromJSON_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(WeaponDef __instance)
     {
         try

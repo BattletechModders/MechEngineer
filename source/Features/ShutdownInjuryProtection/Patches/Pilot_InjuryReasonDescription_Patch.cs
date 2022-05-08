@@ -7,6 +7,7 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;
 [HarmonyPatch(typeof(Pilot), nameof(Pilot.InjuryReasonDescription), MethodType.Getter)]
 public static class Pilot_InjuryReasonDescription_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(Pilot __instance, ref string __result)
     {
         try

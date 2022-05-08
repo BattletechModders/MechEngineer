@@ -9,6 +9,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.DamageLocation))]
 internal static class Mech_DamageLocation_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(
         Mech __instance,
         WeaponHitInfo hitInfo,

@@ -13,6 +13,7 @@ public static class MechHardpointRules_GetComponentBlankNames_Patch
     private static WeaponComponentPrefabCalculator? calculator => CalculatorSetup.SharedCalculator;
 
     [HarmonyPriority(Priority.High)]
+    [HarmonyPrefix]
     public static bool Prefix(ChassisLocations location, ref List<string> __result)
     {
         try
@@ -30,6 +31,7 @@ public static class MechHardpointRules_GetComponentBlankNames_Patch
         return true;
     }
 
+    [HarmonyPostfix]
     public static void Postfix(ChassisLocations location, ref List<string> __result)
     {
         try

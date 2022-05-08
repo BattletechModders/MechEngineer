@@ -12,6 +12,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 [HarmonyPatch(typeof(MechLabLocationWidget), nameof(MechLabLocationWidget.SetData))]
 public static class MechLabLocationWidget_SetData_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(
@@ -22,6 +23,7 @@ public static class MechLabLocationWidget_SetData_Patch
         );
     }
 
+    [HarmonyPostfix]
     public static void Postfix(MechLabLocationWidget __instance, int ___maxSlots, ref LocationLoadoutDef loadout)
     {
         try

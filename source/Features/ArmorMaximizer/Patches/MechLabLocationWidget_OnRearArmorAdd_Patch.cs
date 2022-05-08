@@ -7,6 +7,7 @@ namespace MechEngineer.Features.ArmorMaximizer.Patches;
 [HarmonyPatch(typeof (MechLabLocationWidget), nameof(MechLabLocationWidget.OnRearArmorAdd))]
 public static class MechLabLocationWidget_OnRearArmorAdd_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(MechLabLocationWidget __instance)
     {
         try

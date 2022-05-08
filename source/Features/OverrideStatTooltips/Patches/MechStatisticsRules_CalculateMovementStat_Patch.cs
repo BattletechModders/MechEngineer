@@ -8,6 +8,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 [HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateMovementStat))]
 public static class MechStatisticsRules_CalculateMovementStat_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(MechDef mechDef, ref float currentValue, ref float maxValue)
     {
         try

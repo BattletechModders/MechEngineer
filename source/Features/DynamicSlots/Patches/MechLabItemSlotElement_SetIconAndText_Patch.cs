@@ -10,6 +10,7 @@ namespace MechEngineer.Features.DynamicSlots.Patches;
 [HarmonyPatch(typeof(MechLabItemSlotElement), nameof(MechLabItemSlotElement.SetIconAndText))]
 public static class MechLabItemSlotElement_SetIconAndText_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(
         MechComponentRef ___componentRef,
         SVGImage ___icon,

@@ -8,6 +8,7 @@ namespace MechEngineer.Features.DamageIgnore.Patches;
 [HarmonyPatch(nameof(MechComponent.inventorySize), MethodType.Getter)]
 public static class MechComponent_inventorySize_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(MechComponent __instance, ref int __result)
     {
         try

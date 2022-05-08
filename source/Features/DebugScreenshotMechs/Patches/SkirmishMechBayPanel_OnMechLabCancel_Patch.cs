@@ -13,6 +13,7 @@ namespace MechEngineer.Features.DebugScreenshotMechs.Patches;
 [HarmonyPatch(typeof(SkirmishMechBayPanel), nameof(SkirmishMechBayPanel.OnMechLabCancel))]
 public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(SkirmishMechBayPanel __instance)
     {
         try

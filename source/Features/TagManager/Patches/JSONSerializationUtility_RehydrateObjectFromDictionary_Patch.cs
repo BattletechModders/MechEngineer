@@ -9,12 +9,14 @@ namespace MechEngineer.Features.TagManager.Patches;
 [HarmonyPatch]
 public static class JSONSerializationUtility_RehydrateObjectFromDictionary_Patch
 {
+    [HarmonyTargetMethod]
     public static MethodBase TargetMethod()
     {
         return typeof(JSONSerializationUtility).GetMethod(nameof(JSONSerializationUtility.RehydrateObjectFromDictionary), BindingFlags.NonPublic | BindingFlags.Static);
     }
 
     [HarmonyPriority(Priority.High)]
+    [HarmonyPostfix]
     public static void Postfix(object target)
     {
         try

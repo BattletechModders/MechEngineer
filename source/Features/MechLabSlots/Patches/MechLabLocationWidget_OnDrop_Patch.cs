@@ -8,6 +8,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 [HarmonyPatch(typeof(MechLabLocationWidget), nameof(MechLabLocationWidget.OnDrop))]
 public static class MechLabLocationWidget_OnDrop_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(MechLabLocationWidget __instance, PointerEventData eventData)
     {
         try

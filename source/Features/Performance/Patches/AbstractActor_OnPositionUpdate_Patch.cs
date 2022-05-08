@@ -9,6 +9,7 @@ namespace MechEngineer.Features.Performance.Patches;
 [HarmonyPatch(typeof(AbstractActor), nameof(AbstractActor.OnPositionUpdate))]
 public static class AbstractActor_OnPositionUpdate_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

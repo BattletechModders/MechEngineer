@@ -8,7 +8,8 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 [HarmonyPatch(typeof(MechStatisticsRules), nameof(MechStatisticsRules.CalculateChassisMeleeStat))]
 public static class MechStatisticsRules_CalculateChassisMeleeStat_Patch
 {
-    public static bool Prefix(ChassisDef chassisDef, ref float currentValue, ref float maxValue)
+    [HarmonyPrefix]
+    public static bool Prefix(ref float currentValue, ref float maxValue)
     {
         try
         {

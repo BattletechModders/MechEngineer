@@ -6,6 +6,7 @@ namespace MechEngineer.Features.Engines.Patches;
 [HarmonyPatch(typeof(HardpointExtentions), nameof(HardpointExtentions.GetJJMaxByChassisDef))]
 internal static class CC_HardpointExtentions_GetJJMaxByChassisDef_Patch
 {
+    [HarmonyPrefix]
     internal static bool Prefix(ref int __result)
     {
         __result = -1;

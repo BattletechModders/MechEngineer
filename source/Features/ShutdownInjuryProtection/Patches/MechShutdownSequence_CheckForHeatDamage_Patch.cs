@@ -7,11 +7,13 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;
 [HarmonyPatch(typeof(MechShutdownSequence), nameof(MechShutdownSequence.CheckForHeatDamage))]
 public static class MechShutdownSequence_CheckForHeatDamage_Patch
 {
+    [HarmonyPrepare]
     public static bool Prepare()
     {
         return !ShutdownInjuryProtectionFeature.settings.ShutdownInjuryEnabled;
     }
 
+    [HarmonyPrefix]
     public static bool Prefix(MechShutdownSequence __instance)
     {
         try

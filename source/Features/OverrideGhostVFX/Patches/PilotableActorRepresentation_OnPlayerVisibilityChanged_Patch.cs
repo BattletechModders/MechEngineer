@@ -7,6 +7,7 @@ namespace MechEngineer.Features.OverrideGhostVFX.Patches;
 [HarmonyPatch(typeof(PilotableActorRepresentation), nameof(PilotableActorRepresentation.OnPlayerVisibilityChanged))]
 public static class PilotableActorRepresentation_OnPlayerVisibilityChanged_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(PilotableActorRepresentation __instance)
     {
         try

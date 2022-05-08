@@ -11,6 +11,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 )]
 public static class CCLanceMechEquipmentList_MountedLocation_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(this MechComponentRef componentRef, ref ChassisLocations __result)
     {
         try

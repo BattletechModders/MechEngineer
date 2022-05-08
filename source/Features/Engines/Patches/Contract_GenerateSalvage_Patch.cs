@@ -9,6 +9,7 @@ namespace MechEngineer.Features.Engines.Patches;
 [HarmonyPatch(typeof(Contract), nameof(Contract.GenerateSalvage))]
 public static class Contract_GenerateSalvage_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions

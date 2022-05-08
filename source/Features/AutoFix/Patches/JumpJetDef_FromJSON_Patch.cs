@@ -10,6 +10,7 @@ namespace MechEngineer.Features.AutoFix.Patches;
 [HarmonyPatch(typeof(JumpJetDef), nameof(JumpJetDef.FromJSON))]
 public static class JumpJetDef_FromJSON_Patch
 {
+    [HarmonyPostfix]
     // reduce upgrade components for the center torso that are 3 or larger
     public static void Postfix(JumpJetDef __instance)
     {

@@ -13,6 +13,7 @@ public static class BTLightController_State
 [HarmonyPatch(typeof(BTLightController), nameof(BTLightController.GetLightArray))]
 public static class BTLightController_GetLightArray_Patch
 {
+    [HarmonyPrefix]
     public static void Prefix(List<BTLight> ___lightList)
     {
         if (BTLightController_State.RequiresSorting)
@@ -25,6 +26,7 @@ public static class BTLightController_GetLightArray_Patch
 [HarmonyPatch(typeof(BTLightController), nameof(BTLightController.ProcessCommandBufferLegacy))]
 public static class BTLightController_ProcessCommandBufferLegacy_Patch
 {
+    [HarmonyPrefix]
     public static void Prefix(List<BTLight> ___lightList)
     {
         if (BTLightController_State.RequiresSorting)
@@ -38,6 +40,7 @@ public static class BTLightController_ProcessCommandBufferLegacy_Patch
 [HarmonyPatch(typeof(BTLightController), nameof(BTLightController.SortList))]
 public static class BTLightController_SortList_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix()
     {
         BTLightController_State.RequiresSorting = true;
@@ -47,6 +50,7 @@ public static class BTLightController_SortList_Patch
 [HarmonyPatch(typeof(BTLightController), nameof(BTLightController.AddLight))]
 public static class BTLightController_AddLight_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

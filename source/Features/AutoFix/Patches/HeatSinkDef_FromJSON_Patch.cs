@@ -10,6 +10,7 @@ namespace MechEngineer.Features.AutoFix.Patches;
 [HarmonyPatch(typeof(HeatSinkDef), nameof(HeatSinkDef.FromJSON))]
 public static class HeatSinkDef_FromJSON_Patch
 {
+    [HarmonyPostfix]
     // reduce upgrade components for the center torso that are 3 or larger 
     public static void Postfix(HeatSinkDef __instance)
     {

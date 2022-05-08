@@ -7,6 +7,7 @@ namespace MechEngineer.Features.HeatSinkCapacityStat.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.RestartCreatedEffects))]
 public static class Mech_RestartCreatedEffects_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions

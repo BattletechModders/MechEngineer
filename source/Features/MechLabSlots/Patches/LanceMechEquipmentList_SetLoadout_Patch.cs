@@ -12,6 +12,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 public static class LanceMechEquipmentList_SetLoadout_Patch
 {
     [HarmonyPriority(Priority.High)]
+    [HarmonyPrefix]
     public static void Prefix(LanceMechEquipmentList __instance)
     {
         try
@@ -25,6 +26,7 @@ public static class LanceMechEquipmentList_SetLoadout_Patch
     }
 
     [HarmonyPriority(Priority.Low)]
+    [HarmonyPostfix]
     public static void Postfix(LanceMechEquipmentList __instance)
     {
         try

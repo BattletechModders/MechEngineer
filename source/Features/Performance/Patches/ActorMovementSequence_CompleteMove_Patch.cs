@@ -7,6 +7,7 @@ namespace MechEngineer.Features.Performance.Patches;
 [HarmonyPatch(typeof(ActorMovementSequence), nameof(ActorMovementSequence.CompleteMove))]
 public static class ActorMovementSequence_CompleteMove_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(ActorMovementSequence __instance)
     {
         AuraCache.RefreshECMStates(__instance.Combat.AllActors, EffectTriggerType.Passive);

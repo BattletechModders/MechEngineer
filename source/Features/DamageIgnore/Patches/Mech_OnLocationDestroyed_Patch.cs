@@ -7,6 +7,7 @@ namespace MechEngineer.Features.DamageIgnore.Patches;
 [HarmonyPatch(typeof(Mech), nameof(Mech.OnLocationDestroyed))]
 internal static class Mech_OnLocationDestroyed_Patch
 {
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(

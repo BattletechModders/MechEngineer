@@ -9,6 +9,7 @@ namespace MechEngineer.Features.PlaceholderEffects.Patches;
 [HarmonyPatch(typeof(StatisticEffect), nameof(StatisticEffect.initStatisiticEffect))]
 public static class StatisticEffect_initStatisiticEffect_Patch
 {
+    [HarmonyPostfix]
     public static void Postfix(StatisticEffect __instance, ICombatant target)
     {
         try

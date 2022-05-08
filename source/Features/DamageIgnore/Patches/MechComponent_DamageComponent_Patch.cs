@@ -7,6 +7,7 @@ namespace MechEngineer.Features.DamageIgnore.Patches;
 [HarmonyPatch(typeof(MechComponent), nameof(MechComponent.DamageComponent))]
 public static class MechComponent_DamageComponent_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(MechComponent __instance, ref ComponentDamageLevel damageLevel)
     {
         try

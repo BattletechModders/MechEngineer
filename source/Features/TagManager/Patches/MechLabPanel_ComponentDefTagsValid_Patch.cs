@@ -11,6 +11,7 @@ namespace MechEngineer.Features.TagManager.Patches;
 [HarmonyPatch(typeof(MechLabPanel), nameof(MechLabPanel.ComponentDefTagsValid))]
 public static class MechLabPanel_ComponentDefTagsValid_Patch
 {
+    [HarmonyPrefix]
     public static bool Prefix(MechLabPanel __instance, MechComponentDef def, ref bool __result, bool ___isDebugLab)
     {
         try
@@ -47,6 +48,7 @@ public static class MechLabPanel_ComponentDefTagsValid_Patch
         return true;
     }
 
+    [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         // fix hardcoded LosTech filter in skirmish mechlab, should be using blacklisted anyway!
