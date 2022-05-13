@@ -7,6 +7,7 @@ using MechEngineer.Features.BetterLog;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
+using MechEngineer.Features.CustomCapacities;
 using MechEngineer.Features.DamageIgnore;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
@@ -41,6 +42,7 @@ internal static class FeaturesList
         BetterLogFeature.Shared,
         OrderedStatusEffectsFeature.Shared,
         OverrideTonnageFeature.Shared,
+        CustomCapacitiesFeature.Shared,
         HeatSinkCapacityStatFeature.Shared,
         EngineFeature.Shared,
         MoveMultiplierStatFeature.Shared,

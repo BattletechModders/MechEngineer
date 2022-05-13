@@ -74,54 +74,35 @@ internal class AutoFixer : IAutoFixMechDef
 
         var dataManager = mechDef.DataManager;
         {
-            var lowerDef = dataManager.UpgradeDefs.Get("emod_arm_part_lower");
-            //var lowerCat = lowerDef.GetCategory("ArmLowerActuator");
-            var handDef = dataManager.UpgradeDefs.Get("emod_arm_part_hand");
-            //var handCat = handDef.GetCategory("ArmHandActuator");
-
-            bool Add(MechComponentDef def, ChassisLocations location)
+            bool CheckAndAdd(ChassisLocations location, string defId, string categoryId, string tagLimit)
             {
-                if (builder.Contains(def, location))
+                if (mechDef.Chassis.ChassisTags.Contains(tagLimit))
+                {
+                    return false;
+                }
+                if (builder.Inventory.Any(x => x.MountedLocation == location && x.GetCategory(categoryId) != null))
                 {
                     return true;
                 }
+                var def = dataManager.UpgradeDefs.Get(defId);
                 return builder.Add(def, location) != null;
             }
 
+            void CheckArm(ChassisLocations location)
             {
-                // TODO I need
-                //   mechDef.GetLimit("ArmLowerActuator", LeftArm).Max > 0;
-                // instead of
-                var go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitUpperLeft");
-                if (go)
+                var leftRight = location == ChassisLocations.LeftArm ? "Left" : "Right";
+                // TODO normalize naming across the board
+                // Gear_Actuator_Arm_Lower
+                // ActuatorArmLower
+                // LimitActuatorArmUpper
+                if (CheckAndAdd(location, "emod_arm_part_lower", "ArmLowerActuator", "ArmLimitUpper"+leftRight))
                 {
-                    go = Add(lowerDef, ChassisLocations.LeftArm);
-                }
-                if (go)
-                {
-                    go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitLowerLeft");
-                }
-                if (go)
-                {
-                    Add(handDef, ChassisLocations.LeftArm);
+                    CheckAndAdd(location, "emod_arm_part_hand", "ArmHandActuator", "ArmLimitLower"+leftRight);
                 }
             }
 
-            {
-                var go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitUpperRight");
-                if (go)
-                {
-                    go = Add(lowerDef, ChassisLocations.RightArm);
-                }
-                if (go)
-                {
-                    go = !mechDef.Chassis.ChassisTags.Contains("ArmLimitLowerRight");
-                }
-                if (go)
-                {
-                    Add(handDef, ChassisLocations.RightArm);
-                }
-            }
+            CheckArm(ChassisLocations.LeftArm);
+            CheckArm(ChassisLocations.RightArm);
 
             mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
         }

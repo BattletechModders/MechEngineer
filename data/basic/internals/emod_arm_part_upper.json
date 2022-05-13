@@ -1,8 +1,5 @@
 {
 	"Custom": {
-		"ArmActuator" : {
-			"Type" : "PartUpper"
-		},
 		"Flags" : [ "default", "hide_equip" ],
 		"Category" : { "CategoryID" : "ArmUpperActuator" }
 	},

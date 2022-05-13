@@ -1,0 +1,13 @@
+{
+    "Custom" : {
+        "Category" : { "CategoryID" : "ArmHandActuator" },
+        "CarryUsage" : 9
+    },
+    "InventorySize" : 1,
+    "Tonnage" : 0,
+    "ComponentTags" : {
+        "items" : [
+            "component_type_stock"
+        ]
+    }
+}

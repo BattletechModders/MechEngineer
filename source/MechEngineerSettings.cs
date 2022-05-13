@@ -7,6 +7,7 @@ using MechEngineer.Features.BetterLog;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
+using MechEngineer.Features.CustomCapacities;
 using MechEngineer.Features.DamageIgnore;
 using MechEngineer.Features.DebugCycleCombatSounds;
 using MechEngineer.Features.DebugSaveMechToFile;
@@ -69,6 +70,7 @@ internal class MechEngineerSettings
     public TurretLimitedAmmoSettings TurretLimitedAmmo = new();
     public TurretMechComponentSettings TurretMechComponents = new();
     public TagManagerSettings TagManager = new();
+    public CustomCapacitiesSettings CustomCapacities = new();
 
     public PerformanceSettings Performance = new();
 

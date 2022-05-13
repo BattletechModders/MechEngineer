@@ -1,0 +1,32 @@
+{
+    "Custom": {
+        "Category": { "CategoryID": "Quirk" },
+        "CarryCapacityFactor": 2
+    },
+    "Description": {
+        "Cost": 0,
+        "Rarity": 99,
+        "Purchasable": false,
+        "Manufacturer": "Bergan",
+        "Model": "TSM",
+        "UIName": "TSM",
+        "Id": "Gear_Myomer_TSM",
+        "Name": "TripleStrengthMyomer",
+        "Details": "Triple Strength Myomer is an experimental structural material that grants a ‘Mech more physical strength and flexibility, granting melee and movement bonuses.",
+        "Icon": "uixSvgIcon_ability_angelofdeath"
+    },
+    "BonusValueA": "2 x Carry Capacity",
+    "BonusValueB": "",
+    "ComponentType": "Upgrade",
+    "ComponentSubType": "NotSet",
+    "InventorySize": 1,
+    "Tonnage": 0,
+    "AllowedLocations": "All",
+    "DisallowedLocations": "All",
+    "ComponentTags": {
+        "items": [
+            "BUILT-IN"
+        ],
+        "tagSetSourceFile": ""
+    }
+}

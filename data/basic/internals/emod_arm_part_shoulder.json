@@ -1,8 +1,5 @@
 {
 	"Custom": {
-		"ArmActuator" : {
-			"Type" : "PartShoulder"
-		},
 		"Flags" : [ "default", "hide_equip" ],
 		"Category" : { "CategoryID" : "ArmShoulder" }
 	},

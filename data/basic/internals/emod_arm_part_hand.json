@@ -1,8 +1,5 @@
 {
 	"Custom": {
-		"ArmActuator" : {
-			"Type" : "PartHand"
-		},
         "BonusDescriptions": {
             "Bonuses": [
                 "MeleeAccuracyBonus: 1"
