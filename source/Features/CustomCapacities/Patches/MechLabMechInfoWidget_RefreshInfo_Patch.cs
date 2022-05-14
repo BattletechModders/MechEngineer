@@ -26,7 +26,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
                 return;
             }
 
-            CustomCapacitiesFeature.CalculateCarryWeight(mechDef, out var capacity, out var usage);
+            CustomCapacitiesFeature.CalculateCarryWeightResults(mechDef, out var capacity, out var usage);
 
             var layoutTonnage = ___remainingTonnage.transform.parent;
             var objStatus = layoutTonnage.parent;
@@ -60,8 +60,8 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
                     {
                         Object.Destroy(child.gameObject);
                     }
-                    FixVerticalLayoutGroup(container).padding = new(5, 5, 5, 5);;
 
+                    FixVerticalLayoutGroup(container).padding = new(10, 10, 5, 5);;
                     FixContentSizeFitter(container);
                     FixRectTransform(container);
 
@@ -71,40 +71,14 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
             }
 
             {
-                const string id = "carry_weight";
+                var id = "carry_weight";
                 var customCapacity = customCapacities.Find(id);
                 if (customCapacity == null)
                 {
                     var go = Object.Instantiate(___remainingTonnage.gameObject, null);
                     go.name = id;
 
-                    FixLayoutElement(go, 80, 30);
-                    FixRectTransform(go);
-                    FixContentSizeFitter(go);
-                    FixLocalizableText(go);
-
-                    customCapacity = go.transform;
-                    customCapacity.SetParent(customCapacities, false);
-
-                    /*
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(objStatus.GetComponent<RectTransform>());
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(objStatus.GetComponent<RectTransform>());
-                    LayoutRebuilder.ForceRebuildLayoutImmediate(objStatus.GetComponent<RectTransform>());
-                    */
-                }
-                SetText(customCapacity.gameObject, CustomCapacitiesFeature.Shared.Settings.CarryWeightLabel, capacity, usage);
-            }
-
-            /*
-            {
-                const string id = "specialist";
-                var customCapacity = customCapacities.Find(id);
-                if (customCapacity == null)
-                {
-                    var go = Object.Instantiate(___remainingTonnage.gameObject, null);
-                    go.name = id;
-
-                    FixLayoutElement(go, 80, 30);
+                    FixLayoutElement(go, 90, 30);
                     FixRectTransform(go);
                     FixContentSizeFitter(go);
                     FixLocalizableText(go);
@@ -112,9 +86,13 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
                     customCapacity = go.transform;
                     customCapacity.SetParent(customCapacities, false);
                 }
-                SetText(customCapacity.gameObject, "Specialist", 13f, 0f);
+                SetText(
+                    customCapacity.gameObject,
+                    CustomCapacitiesFeature.Shared.Settings.CarryTotalLabel,
+                    capacity,
+                    usage
+                );
             }
-            */
         }
         catch (Exception e)
         {
@@ -124,8 +102,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
 
     private static void SetText(GameObject go, string label, float capacity, float usage)
     {
-        var text = $"{label}\n{usage:0} / {capacity:0}";
-        Control.Logger.Info?.Log(text);
+        var text = $"{label}\n{usage:0.0} / {capacity:0.0}";
         var textComponent = go.GetComponent<LocalizableText>();
         textComponent.SetText(text);
         var colorTracker = go.GetComponent<UIColorRefTracker>();

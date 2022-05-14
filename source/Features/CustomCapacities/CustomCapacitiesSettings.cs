@@ -5,11 +5,9 @@ public class CustomCapacitiesSettings : ISettings
     public bool Enabled { get; set; } = true;
     public string EnabledDescription => "Enables some carry rules.";
 
-    public string ErrorOverweight = "OVERWEIGHT: 'Mechs carry weight exceeds maximum.";
-    public string ErrorOneFreeHand = "OVERWEIGHT: 'Mechs carry weight requires one free hand.";
+    public string CarryHandErrorOverweight = "OVERWEIGHT: 'Mechs handheld carry weight exceeds maximum.";
+    public string CarryHandErrorOneFreeHand = "OVERWEIGHT: 'Mechs handheld carry weight requires one free hand.";
 
-    public string CarryWeightLabel = "Lifting";
-
-    // TODO implement UI, best something new inside hardpoint list or above
-    // TODO find a way to set carry weights for arm actuators (right now all are just set to 1 usage)
+    public string CarryTotalErrorOverweight = "OVERWEIGHT: 'Mechs total carry weight exceeds maximum.";
+    public string CarryTotalLabel = "Carry Weight";
 }

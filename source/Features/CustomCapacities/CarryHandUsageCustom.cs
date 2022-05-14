@@ -2,10 +2,10 @@
 
 namespace MechEngineer.Features.CustomCapacities;
 
-[CustomComponent("CarryUsage")]
-public class CarryUsageCustom : SimpleCustomComponent, IValueComponent<float>
+[CustomComponent("CarryHandUsage")]
+public class CarryHandUsageCustom : SimpleCustomComponent, IValueComponent<float>
 {
-    internal float Value = 0;
+    internal float Value;
 
     public void LoadValue(float value)
     {

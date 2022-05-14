@@ -9,7 +9,7 @@
             "StatusEffect-Attack_DamageMelee-T{amt}: 70",
             "StatusEffect-Attack_ToHitMelee-T{amt}: 1"
         ],
-        "CarryUsage" : 9
+        "CarryHandUsage" : 9
     },
     "InventorySize" : 3,
     "Tonnage" : 3,

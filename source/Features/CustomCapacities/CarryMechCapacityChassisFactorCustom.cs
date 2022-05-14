@@ -2,10 +2,11 @@
 
 namespace MechEngineer.Features.CustomCapacities;
 
-[CustomComponent("CarryCapacityOnArmChassisFactor")]
-public class CarryCapacityOnArmChassisFactorCustom : SimpleCustomComponent, IValueComponent<float>
+[CustomComponent("CarryMechCapacityChassisFactor")]
+public class CarryMechCapacityChassisFactorCustom : SimpleCustomComponent, IValueComponent<float>
 {
     internal float Value;
+
     public void LoadValue(float value)
     {
         Value = value;

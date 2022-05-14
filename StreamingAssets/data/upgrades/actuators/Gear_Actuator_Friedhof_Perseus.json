@@ -9,7 +9,7 @@
             "StatusEffect-Attack_DamageStabMelee-T{amt}: 20",
             "StatusEffect-Attack_ToHitMelee-T{amt}: 1"
         ],
-        "CarryUsage" : 0
+        "CarryHandUsage" : 2
     },
     "Description" : {
         "UIName" : "Hand +"

@@ -19,9 +19,11 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         Validator.RegisterMechValidator(ccValidation.ValidateMech, ccValidation.ValidateMechCanBeFielded);
     }
 
-    internal static void CalculateCarryWeight(MechDef mechDef, out float totalCapacity, out float totalUsage)
+    internal static void CalculateCarryWeightResults(MechDef mechDef, out float capacity, out float usage)
     {
-        CalculateCarryWeight(mechDef, out totalCapacity, out totalUsage, out _, out _);
+        var context = CalculateCarryWeight(mechDef);
+        capacity = context.TotalCapacity;
+        usage = context.TotalUsage;
     }
 
     public void ValidateMech(MechDef mechDef, Errors errors)
@@ -33,55 +35,80 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     // HandHeld Weapons - TacOps p.316
     private void ValidateCarryWeight(MechDef mechDef, Errors errors)
     {
-        CalculateCarryWeight(mechDef, out var capacity, out var usage, out var left, out var right);
+        var result = CalculateCarryWeight(mechDef);
 
-        if (PrecisionUtils.SmallerThan(capacity, usage))
+        if (PrecisionUtils.SmallerThan(result.HandCapacity, result.HandUsage))
         {
-            errors.Add(MechValidationType.Overweight, Settings.ErrorOverweight);
+            errors.Add(MechValidationType.Overweight, Settings.CarryHandErrorOverweight);
         }
-        else if ((left == MinHandReq.Two && right != MinHandReq.None) || (right == MinHandReq.Two && left != MinHandReq.None))
+        else if ((result.LeftHandReq == MinHandReq.Two && result.RightHandReq != MinHandReq.None) || (result.RightHandReq == MinHandReq.Two && result.LeftHandReq != MinHandReq.None))
         {
-            errors.Add(MechValidationType.Overweight, Settings.ErrorOneFreeHand);
+            errors.Add(MechValidationType.Overweight, Settings.CarryHandErrorOneFreeHand);
+        }
+        else if (PrecisionUtils.SmallerThan(result.TotalCapacity, result.TotalUsage))
+        {
+            errors.Add(MechValidationType.Overweight, Settings.CarryTotalErrorOverweight);
         }
     }
 
-    private static void CalculateCarryWeight(MechDef mechDef, out float totalCapacity, out float totalUsage, out MinHandReq left, out MinHandReq right)
+    private static CarryContext CalculateCarryWeight(MechDef mechDef)
     {
-        var capacitySum = 0f;
-        var usageSum = 0f;
+        var result = new CarryContext
+        {
+            CapacityFactor = GetCapacityFactor(mechDef)
+        };
+        CalculateCarryHand(mechDef, result);
+        CalculateCarryMech(mechDef, result);
+        return result;
+    }
 
-        var globalCapacityFactor = mechDef.Inventory
-            .Select(x => x.GetComponent<CarryCapacityFactorCustom>())
-            .Where(x => x != null)
-            .Select(x => x.Value)
-            .Aggregate(1f, (previous, value) => previous * value);
+    private static void CalculateCarryMech(MechDef mechDef, CarryContext context)
+    {
+        context.MechCapacityRaw = GetCarryMechCapacity(mechDef);
+        context.MechUsage = GetCarryMechUsage(mechDef);
+    }
 
+    private static void CalculateCarryHand(MechDef mechDef, CarryContext context)
+    {
         MinHandReq CheckArm(ChassisLocations location)
         {
-            var capacity = GetCarryCapacityOnLocation(mechDef, location, globalCapacityFactor);
-            var usage = GetCarryUsageOnLocation(mechDef, location);
+            var capacityOnLocation = GetCarryHandCapacityOnLocation(mechDef, location);
+            var usageOnLocation = GetCarryHandUsageOnLocation(mechDef, location);
 
-            capacitySum += capacity;
-            usageSum += usage;
+            context.HandCapacityRaw += capacityOnLocation;
+            context.HandUsage += usageOnLocation;
 
-            if (PrecisionUtils.SmallerThan(capacity, usage))
+            if (PrecisionUtils.SmallerThan(capacityOnLocation, usageOnLocation))
             {
                 return MinHandReq.Two;
             }
-            if (PrecisionUtils.SmallerThan(0, usage))
+            if (PrecisionUtils.SmallerThan(0, usageOnLocation))
             {
                 return MinHandReq.One;
             }
             return MinHandReq.None;
         }
-        left = CheckArm(ChassisLocations.LeftArm);
-        right = CheckArm(ChassisLocations.RightArm);
+        context.LeftHandReq = CheckArm(ChassisLocations.LeftArm);
+        context.RightHandReq = CheckArm(ChassisLocations.RightArm);
+    }
 
-        capacitySum += GetLiftCapacity(mechDef, globalCapacityFactor);
-        usageSum += GetLiftUsage(mechDef);
+    private class CarryContext
+    {
+        internal float CapacityFactor;
 
-        totalCapacity = capacitySum;
-        totalUsage = usageSum;
+        internal float HandCapacityRaw;
+        internal float HandCapacity => HandCapacityRaw * CapacityFactor;
+        internal float HandUsage;
+
+        internal float MechCapacityRaw;
+        private float MechCapacity => MechCapacityRaw * CapacityFactor;
+        internal float MechUsage;
+
+        internal float TotalCapacity => HandCapacity + MechCapacity;
+        internal float TotalUsage => HandUsage + MechUsage;
+
+        internal MinHandReq LeftHandReq;
+        internal MinHandReq RightHandReq;
     }
 
     private enum MinHandReq
@@ -91,48 +118,48 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         Two
     }
 
-    private static float GetCarryCapacityOnLocation(MechDef mechDef, ChassisLocations location, float globalCapacityFactor)
+    private static float GetCapacityFactor(MechDef mechDef)
     {
-        var baseCapacity = mechDef.Inventory
-            .Where(x => x.MountedLocation == location)
-            .Select(x => x.GetComponent<CarryCapacityOnArmChassisFactorCustom>())
+        return mechDef.Inventory
+            .Select(x => x.GetComponent<CarryCapacityFactorCustom>())
             .Where(x => x != null)
             .Select(x => x.Value)
-            .Aggregate(0f, (previous, value) => previous + mechDef.Chassis.Tonnage * value);
-
-        if (PrecisionUtils.Equals(baseCapacity, 0))
-        {
-            return 0;
-        }
-
-        return baseCapacity * globalCapacityFactor;
+            .Aggregate(1f, (previous, value) => previous * value);
     }
 
-    private static float GetCarryUsageOnLocation(MechDef mechDef, ChassisLocations location)
+    private static float GetCarryHandCapacityOnLocation(MechDef mechDef, ChassisLocations location)
     {
         return mechDef.Inventory
             .Where(x => x.MountedLocation == location)
-            .Select(x => x.GetComponent<CarryUsageCustom>())
+            .Select(x => x.GetComponent<CarryHandCapacityChassisFactorCustom>())
+            .Where(x => x != null)
+            .Select(x => x.Value)
+            .Aggregate(0f, (previous, value) => previous + mechDef.Chassis.Tonnage * value);
+    }
+
+    private static float GetCarryHandUsageOnLocation(MechDef mechDef, ChassisLocations location)
+    {
+        return mechDef.Inventory
+            .Where(x => x.MountedLocation == location)
+            .Select(x => x.GetComponent<CarryHandUsageCustom>())
             .Where(x => x != null)
             .Select(x => x.Value)
             .Aggregate(0f, (previous, value) => previous + value);
     }
 
-    private static float GetLiftCapacity(MechDef mechDef, float globalCapacityFactor)
+    private static float GetCarryMechCapacity(MechDef mechDef)
     {
-        var baseCapacity = mechDef.Inventory
-            .Select(x => x.GetComponent<LiftCapacityOnMechChassisFactorCustom>())
+        return mechDef.Inventory
+            .Select(x => x.GetComponent<CarryMechCapacityChassisFactorCustom>())
             .Where(x => x != null)
             .Select(x => x.Value)
             .Aggregate(0f, (previous, value) => previous + mechDef.Chassis.Tonnage * value);
-
-        return baseCapacity * globalCapacityFactor;
     }
 
-    private static float GetLiftUsage(MechDef mechDef)
+    private static float GetCarryMechUsage(MechDef mechDef)
     {
         return mechDef.Inventory
-            .Select(x => x.GetComponent<LiftUsageCustom>())
+            .Select(x => x.GetComponent<CarryMechUsageCustom>())
             .Where(x => x != null)
             .Select(x => x.Value)
             .Aggregate(0f, (previous, value) => previous + value);
