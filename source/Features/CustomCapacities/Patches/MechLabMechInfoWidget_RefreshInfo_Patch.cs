@@ -36,7 +36,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
             {
                 {
                     var go = layoutTonnage.gameObject;
-                    FixLayoutElement(go, 220, 79);
+                    FixLayoutElement(go, 220, 69);
                     FixRectTransform(go);
                 }
 
@@ -78,7 +78,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
                     var go = Object.Instantiate(___remainingTonnage.gameObject, null);
                     go.name = id;
 
-                    FixLayoutElement(go, 90, 40);
+                    FixLayoutElement(go, 80, 30);
                     FixRectTransform(go);
                     FixContentSizeFitter(go);
                     FixLocalizableText(go);
@@ -104,7 +104,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
                     var go = Object.Instantiate(___remainingTonnage.gameObject, null);
                     go.name = id;
 
-                    FixLayoutElement(go, 90, 40);
+                    FixLayoutElement(go, 80, 30);
                     FixRectTransform(go);
                     FixContentSizeFitter(go);
                     FixLocalizableText(go);

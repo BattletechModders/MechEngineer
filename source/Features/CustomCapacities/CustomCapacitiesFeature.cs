@@ -58,8 +58,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
         MinHandReq CheckArm(ChassisLocations location)
         {
-            var capacity = GetCarryCapacity(mechDef, location, globalCapacityFactor);
-            var usage = GetCarryUsage(mechDef, location);
+            var capacity = GetCarryCapacityOnLocation(mechDef, location, globalCapacityFactor);
+            var usage = GetCarryUsageOnLocation(mechDef, location);
 
             capacitySum += capacity;
             usageSum += usage;
@@ -74,9 +74,12 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             }
             return MinHandReq.None;
         }
-
         left = CheckArm(ChassisLocations.LeftArm);
         right = CheckArm(ChassisLocations.RightArm);
+
+        capacitySum += GetLiftCapacity(mechDef, globalCapacityFactor);
+        usageSum += GetLiftUsage(mechDef);
+
         totalCapacity = capacitySum;
         totalUsage = usageSum;
     }
@@ -88,7 +91,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         Two
     }
 
-    private static float GetCarryCapacity(MechDef mechDef, ChassisLocations location, float globalCapacityFactor)
+    private static float GetCarryCapacityOnLocation(MechDef mechDef, ChassisLocations location, float globalCapacityFactor)
     {
         var baseCapacity = mechDef.Inventory
             .Where(x => x.MountedLocation == location)
@@ -105,11 +108,31 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         return baseCapacity * globalCapacityFactor;
     }
 
-    private static float GetCarryUsage(MechDef mechDef, ChassisLocations location)
+    private static float GetCarryUsageOnLocation(MechDef mechDef, ChassisLocations location)
     {
         return mechDef.Inventory
             .Where(x => x.MountedLocation == location)
             .Select(x => x.GetComponent<CarryUsageCustom>())
+            .Where(x => x != null)
+            .Select(x => x.Value)
+            .Aggregate(0f, (previous, value) => previous + value);
+    }
+
+    private static float GetLiftCapacity(MechDef mechDef, float globalCapacityFactor)
+    {
+        var baseCapacity = mechDef.Inventory
+            .Select(x => x.GetComponent<LiftCapacityOnMechChassisFactorCustom>())
+            .Where(x => x != null)
+            .Select(x => x.Value)
+            .Aggregate(0f, (previous, value) => previous + mechDef.Chassis.Tonnage * value);
+
+        return baseCapacity * globalCapacityFactor;
+    }
+
+    private static float GetLiftUsage(MechDef mechDef)
+    {
+        return mechDef.Inventory
+            .Select(x => x.GetComponent<LiftUsageCustom>())
             .Where(x => x != null)
             .Select(x => x.Value)
             .Aggregate(0f, (previous, value) => previous + value);
