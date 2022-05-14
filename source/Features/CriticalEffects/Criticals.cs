@@ -15,22 +15,22 @@ internal class Criticals
     internal Criticals(MechComponent component)
     {
         this.component = component;
-        ce = new Lazy<CriticalEffects?>(FetchCriticalEffects);
+        ce = new Lazy<CriticalEffectsCustom?>(FetchCriticalEffects);
     }
 
     private readonly MechComponent component;
     private AbstractActor? actor => component.parent;
 
-    internal CriticalEffects? Effects => ce.Value;
-    private readonly Lazy<CriticalEffects?> ce;
+    internal CriticalEffectsCustom? Effects => ce.Value;
+    private readonly Lazy<CriticalEffectsCustom?> ce;
     private bool HasLinked => Effects?.LinkedStatisticName != null;
-    private CriticalEffects? FetchCriticalEffects()
+    private CriticalEffectsCustom? FetchCriticalEffects()
     {
-        var customs = component.componentDef.GetComponents<CriticalEffects>().ToList();
+        var customs = component.componentDef.GetComponents<CriticalEffectsCustom>().ToList();
 
         if (actor is Mech)
         {
-            var custom = customs.FirstOrDefault(x => x is MechCriticalEffects);
+            var custom = customs.FirstOrDefault(x => x is MechCriticalEffectsCustom);
             if (custom != null)
             {
                 return custom;
@@ -39,7 +39,7 @@ internal class Criticals
 
         if (actor is Turret)
         {
-            var custom = customs.FirstOrDefault(x => x is TurretCriticalEffects);
+            var custom = customs.FirstOrDefault(x => x is TurretCriticalEffectsCustom);
             if (custom != null)
             {
                 return custom;
@@ -48,7 +48,7 @@ internal class Criticals
 
         if (actor is Vehicle)
         {
-            var custom = customs.FirstOrDefault(x => x is VehicleCriticalEffects);
+            var custom = customs.FirstOrDefault(x => x is VehicleCriticalEffectsCustom);
             if (custom != null)
             {
                 return custom;
@@ -56,7 +56,7 @@ internal class Criticals
         }
 
         {
-            var custom = customs.FirstOrDefault(x => !(x is MechCriticalEffects) && !(x is TurretCriticalEffects) && !(x is VehicleCriticalEffects));
+            var custom = customs.FirstOrDefault(x => !(x is MechCriticalEffectsCustom) && !(x is TurretCriticalEffectsCustom) && !(x is VehicleCriticalEffectsCustom));
             return custom;
         }
     }

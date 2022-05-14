@@ -67,9 +67,15 @@
         },
         {
             "Bonus" : "MeleeDamage",
-            "Short" : "{0} Mel. Dmg",
+            "Short" : "{0} Me. Dmg",
             "Long" : "{0} Melee Dmg",
             "Full" : "{0} damage with all melee attacks"
+        },
+        {
+            "Bonus" : "MeleeStabilityDamage",
+            "Short" : "{0} Stb. Dmg",
+            "Long" : "{0} Melee Stb Dmg",
+            "Full" : "{0} stability damage with all melee attacks"
         },
         {
             "Bonus" : "CarryCapacity",

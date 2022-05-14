@@ -3,11 +3,11 @@ using CustomComponents;
 
 namespace MechEngineer.Features.CriticalEffects;
 
-[CustomComponent("TurretCriticalEffects")]
-public class TurretCriticalEffects : CriticalEffects
+[CustomComponent("MechCriticalEffects")]
+public class MechCriticalEffectsCustom : CriticalEffectsCustom
 {
     public override UnitType GetUnitType()
     {
-        return UnitType.Turret;
+        return UnitType.Mech;
     }
 }

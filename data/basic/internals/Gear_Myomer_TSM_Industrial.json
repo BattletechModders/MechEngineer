@@ -1,0 +1,36 @@
+{
+    "Custom": {
+        "Category": { "CategoryID": "Quirk" },
+        "BonusDescriptions": [
+            "CarryCapacity: 2 x"
+        ],
+        "CarryCapacityFactor": 2
+    },
+    "Description": {
+        "Cost": 580000,
+        "Rarity": 20,
+        "Purchasable": false,
+        "Manufacturer": "Bergan",
+        "Model": "Prototype",
+        "UIName": "TSM Industrial",
+        "Id": "Gear_Myomer_TSM_Industrial",
+        "Name": "TripleStrengthMyomer",
+        "Details": "Triple-Strength Myomer Industrial  is an experimental structural material that grants a ‘Mech more physical strength.",
+        "Icon": "uixSvgIcon_ability_angelofdeath"
+    },
+    "BonusValueA": "",
+    "BonusValueB": "",
+    "ComponentType": "Upgrade",
+    "ComponentSubType": "NotSet",
+    "InventorySize": 1,
+    "Tonnage": 0,
+    "AllowedLocations": "CenterTorso",
+    "DisallowedLocations": "All",
+    "ComponentTags": {
+        "items": [
+            "component_type_stock"
+        ],
+        "tagSetSourceFile": ""
+    },
+    "statusEffects" : null
+}

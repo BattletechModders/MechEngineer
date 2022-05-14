@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using BattleTech;
 using CustomComponents;
 using CustomComponents.ExtendedDetails;
@@ -9,7 +8,7 @@ using MechEngineer.Features.OverrideDescriptions;
 namespace MechEngineer.Features.CriticalEffects;
 
 [CustomComponent("CriticalEffects")]
-public class CriticalEffects : SimpleCustomComponent, IAfterLoad, IIsDestroyed
+public class CriticalEffectsCustom : SimpleCustomComponent, IAfterLoad, IIsDestroyed
 {
     public string[][] PenalizedEffectIDs { get; set; } = new string[0][];
     public string[] OnDestroyedEffectIDs { get; set; } = new string[0];

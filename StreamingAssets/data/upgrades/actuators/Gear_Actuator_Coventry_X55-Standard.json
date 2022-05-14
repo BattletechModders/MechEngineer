@@ -1,0 +1,17 @@
+{
+    "Custom" : {
+        "Category" : { "CategoryID" : "ArmHandActuator" },
+        "BonusDescriptions": [
+            "MeleeDamage: + 5",
+            "MeleeAccuracy: + 1"
+        ],
+        "StatusEffects": [
+            "StatusEffect-Attack_DamageMelee-T{amt}: 5",
+            "StatusEffect-Attack_ToHitMelee-T{amt}: 1"
+        ],
+        "CarryUsage" : 0
+    },
+    "InventorySize" : 2,
+    "Tonnage" : 0,
+    "statusEffects" : null
+}
