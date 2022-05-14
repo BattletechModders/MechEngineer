@@ -565,7 +565,7 @@
             "DefaultCustoms": {
                 "InventorySorter": "ActuatorArm3",
                 "Sorter": 3,
-                "CarryCapacityBaseAddendByChassisFactor": 0.05,
+                "CarryCapacityOnArmChassisFactor": 0.05,
                 "CriticalEffects": {
                     "DestroyedFloatieMessage": "Actuator DESTROYED",
                     "OnDestroyedEffectIDs": [ "CriticalEffect-ArmHandActuatorDestroyed-{location}" ]

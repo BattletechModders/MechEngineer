@@ -4,28 +4,28 @@
         "CarryCapacityFactor": 2
     },
     "Description": {
-        "Cost": 0,
-        "Rarity": 99,
+        "Cost": 580000,
+        "Rarity": 20,
         "Purchasable": false,
         "Manufacturer": "Bergan",
-        "Model": "TSM",
-        "UIName": "TSM",
-        "Id": "Gear_Myomer_TSM",
+        "Model": "Prototype",
+        "UIName": "TSM Prototype",
+        "Id": "Gear_Myomer_TSM_Prototype",
         "Name": "TripleStrengthMyomer",
-        "Details": "Triple Strength Myomer is an experimental structural material that grants a ‘Mech more physical strength and flexibility, granting melee and movement bonuses.",
+        "Details": "Triple-Strength Myomer Prototype is an experimental structural material that grants a ‘Mech more physical strength and flexibility, granting melee bonuses.",
         "Icon": "uixSvgIcon_ability_angelofdeath"
     },
-    "BonusValueA": "2 x Carry Capacity",
-    "BonusValueB": "",
+    "BonusValueA": "2 x Melee Dmg",
+    "BonusValueB": "2 x Carry Cap.",
     "ComponentType": "Upgrade",
     "ComponentSubType": "NotSet",
     "InventorySize": 1,
     "Tonnage": 0,
-    "AllowedLocations": "All",
+    "AllowedLocations": "CenterTorso",
     "DisallowedLocations": "All",
     "ComponentTags": {
         "items": [
-            "BUILT-IN"
+            "component_type_stock"
         ],
         "tagSetSourceFile": ""
     }

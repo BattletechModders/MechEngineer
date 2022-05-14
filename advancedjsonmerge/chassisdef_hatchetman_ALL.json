@@ -10,7 +10,7 @@
 			"Value": [
                 {
                     "MountedLocation" : "CenterTorso",
-                    "ComponentDefID" : "Gear_Myomer_TSM",
+                    "ComponentDefID" : "Gear_Myomer_TSM_Prototype",
                     "SimGameUID" : "",
                     "ComponentDefType" : "Upgrade",
                     "HardpointSlot" : -1,
