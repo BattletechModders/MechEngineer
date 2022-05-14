@@ -1,11 +1,9 @@
 {
 	"Custom": {
-		"BonusDescriptions": {
-			"Bonuses": [
-				"ArmorWeightReduction: 11%",
-				"ReservedSlots: 14"
-			]
-		},
+		"BonusDescriptions": [
+            "ArmorWeight: - 11%",
+            "Slots: - 14"
+        ],
 		"Category" : { 
 			"CategoryID" : "Armor" 
 		},

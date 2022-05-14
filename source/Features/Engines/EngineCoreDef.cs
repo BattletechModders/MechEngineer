@@ -9,9 +9,14 @@ using MechEngineer.Features.OverrideDescriptions;
 namespace MechEngineer.Features.Engines;
 
 [CustomComponent("EngineCore")]
-public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment, IAdjustSlotElement, IMechLabFilter
+public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment, IAdjustSlotElement, IMechLabFilter, IValueComponent<int>
 {
     public int Rating { get; set; }
+
+    public void LoadValue(int value)
+    {
+        Rating = value;
+    }
 
     // This methid goes public -- bhtrail
     public EngineMovement GetMovement(float tonnage)

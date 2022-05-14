@@ -1,13 +1,9 @@
 {
 	"Custom": {
-		"EngineCore": {
-			"Rating": 225
-		},
-		"BonusDescriptions": {
-			"Bonuses": [
-				"EngineHSFreeExt: 1"
-			]
-		},
+		"EngineCore": 225,
+		"BonusDescriptions": [
+            "EngineHSFreeExt: 1"
+        ],
 		"WorkOrderCosts": {
 			"Default": {
 				"TechCost": "0",

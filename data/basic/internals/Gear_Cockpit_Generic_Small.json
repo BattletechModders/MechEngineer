@@ -1,12 +1,10 @@
 {
 	"Custom": {
-        "BonusDescriptions": {
-            "Bonuses": [
-                "FreedSlots: 1",
-                "AccuracyLoss: 1",
-                "OverheatDamage"
-            ]
-        },
+        "BonusDescriptions": [
+            "Slots: + 1",
+            "Accuracy: - 1",
+            "OverheatDamage"
+        ],
 		"Category" : [
 			{"CategoryID": "Cockpit"},
 			{"CategoryID": "LifeSupportB"}

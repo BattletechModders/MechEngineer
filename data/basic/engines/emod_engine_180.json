@@ -1,13 +1,9 @@
 {
 	"Custom": {
-		"EngineCore": {
-			"Rating": 180
-		},
-		"BonusDescriptions": {
-			"Bonuses": [
-				"EngineHSFreeExt: 3"
-			]
-		},
+		"EngineCore": 180,
+		"BonusDescriptions": [
+            "EngineHSFreeExt: 3"
+        ],
 		"WorkOrderCosts": {
 			"Default": {
 				"TechCost": "0",
@@ -50,7 +46,7 @@
     "statusEffects" : null,
     "ComponentTags" : {
         "items" : [
-            "component_type_stock"
+            "component_type_variant"
         ],
         "tagSetSourceFile" : ""
     }

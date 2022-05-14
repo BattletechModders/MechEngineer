@@ -1,13 +1,9 @@
 {
 	"Custom": {
-		"EngineCore": {
-			"Rating": 250
-		},
-		"BonusDescriptions": {
-			"Bonuses": [
-				
-			]
-		},
+		"EngineCore": 250,
+		"BonusDescriptions": [
+            
+        ],
 		"WorkOrderCosts": {
 			"Default": {
 				"TechCost": "0",
@@ -50,7 +46,7 @@
     "statusEffects" : null,
     "ComponentTags" : {
         "items" : [
-            "component_type_stock"
+            "component_type_variant"
         ],
         "tagSetSourceFile" : ""
     }

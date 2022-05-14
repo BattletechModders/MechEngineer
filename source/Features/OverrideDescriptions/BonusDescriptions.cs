@@ -12,9 +12,14 @@ using Localize;
 namespace MechEngineer.Features.OverrideDescriptions;
 
 [CustomComponent("BonusDescriptions")]
-public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment, IAdjustInventoryElement, IAfterLoad
+public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment, IAdjustInventoryElement, IAfterLoad, IListComponent<string>
 {
     public string[] Bonuses { get; set; } = null!;
+
+    public void LoadList(IEnumerable<string> items)
+    {
+        Bonuses = items.ToArray();
+    }
 
     public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef componentDef)
     {

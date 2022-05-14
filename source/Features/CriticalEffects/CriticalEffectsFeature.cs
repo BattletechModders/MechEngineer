@@ -18,7 +18,7 @@ internal class CriticalEffectsFeature : Feature<CriticalEffectsSettings>
 
     protected override void SetupResources(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
     {
-        Resources = SettingsResourcesTools.Enumerate<EffectData>("MECriticalEffects", customResources)
+        Resources = SettingsResourcesTools.Enumerate<EffectData>("MEStatusEffects", customResources)
             .ToDictionary(entry => entry.Description.Id);
     }
 

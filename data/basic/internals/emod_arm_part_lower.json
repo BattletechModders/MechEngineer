@@ -1,10 +1,8 @@
 {
     "Custom": {
-        "BonusDescriptions": {
-            "Bonuses": [
-                "ArmAccuracyBonus: 1"
-            ]
-        },
+        "BonusDescriptions": [
+            "AccuracyArm: + 1"
+        ],
         "Category" : { "CategoryID" : "ArmLowerActuator" },
         "Flags" : [ "autorepair", "not_broken" ]
     },

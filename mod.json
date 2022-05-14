@@ -13,7 +13,7 @@
 		"Enabled" : false
 	},
 	
-	"CustomResourceTypes": ["MEBonusDescriptions", "MECriticalEffects"],
+	"CustomResourceTypes": ["MEBonusDescriptions", "MEStatusEffects"],
 
 	"Manifest": [
 		{
@@ -27,8 +27,8 @@
 			"ShouldMergeJSON": false
 		},
 		{
-			"Type": "MECriticalEffects",
-			"Path": "data/basic/criticalEffects/",
+			"Type": "MEStatusEffects",
+			"Path": "data/basic/statusEffects/",
 			"ShouldMergeJSON": false
 		},
 		{

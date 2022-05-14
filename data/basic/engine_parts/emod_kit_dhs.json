@@ -1,10 +1,8 @@
 {
 	"Custom": {
-		"BonusDescriptions": {
-			"Bonuses": [
-				"CoolingSystemDHS"
-			]
-		},
+		"BonusDescriptions": [
+            "CoolingSystem: 2 x"
+        ],
 		"Cooling": {
 			"HeatSinkDefId": "Gear_HeatSink_Generic_Double"
 		},

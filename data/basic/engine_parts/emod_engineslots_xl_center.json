@@ -4,12 +4,10 @@
 			"ReservedSlots": 6,
 			"EngineFactor": 0.5
 		},
-		"BonusDescriptions": {
-			"Bonuses": [
-				"EngineWeightReduction: 50%",
-				"ReservedSlots: 6"
-			]
-		},
+		"BonusDescriptions": [
+            "EngineWeight: - 50%",
+            "Slots: - 6"
+        ],
 		"WorkOrderCosts": {
 			"Default": {
 				"TechCost": "0",

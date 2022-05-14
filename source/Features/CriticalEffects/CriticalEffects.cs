@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using CustomComponents;
 using CustomComponents.ExtendedDetails;
@@ -89,6 +90,11 @@ public class CriticalEffects : SimpleCustomComponent, IAfterLoad, IIsDestroyed
                 var actorDescription = actorType.ToString();
                 descriptionTemplate = $"{actorDescription} {descriptionTemplate}";
             }
+        }
+
+        if (descriptions.Count == 0)
+        {
+            return;
         }
 
         BonusDescriptions.AddTemplatedExtendedDetail(

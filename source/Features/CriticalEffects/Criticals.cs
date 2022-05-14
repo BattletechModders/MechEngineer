@@ -415,6 +415,7 @@ internal class EffectIdUtil
         }
         if (effectData.targetingData.effectTriggerType != EffectTriggerType.Passive) // we only support passive for now
         {
+            Control.Logger.Warning?.Log($"Effect templateEffectId={templateEffectId} is not passive");
             return;
         }
 

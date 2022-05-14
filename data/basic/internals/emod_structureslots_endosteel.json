@@ -1,11 +1,9 @@
 {
 	"Custom": {
-		"BonusDescriptions": {
-			"Bonuses": [
-				"StructureWeightReduction: 50%",
-				"ReservedSlots: 14"
-			]
-		},
+		"BonusDescriptions": [
+            "StructureWeight: - 50%",
+            "Slots: - 14"
+        ],
 		"Category" : { 
 			"CategoryID" : "Structure" 
 		},

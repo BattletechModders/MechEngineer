@@ -3,12 +3,10 @@
 		"EngineHeatBlock": {
 			"HeatSinkCount": 2
 		},
-		"BonusDescriptions": {
-			"Bonuses": [
-				"Whitespace",
-				"EngineHSAdd: 2"
-			]
-		},
+		"BonusDescriptions": [
+            "Whitespace",
+            "EngineHS: + 2"
+        ],
 		"WorkOrderCosts": {
 			"Default": {
 				"TechCost": "0",

@@ -13,69 +13,75 @@
         },
         {
             "Bonus" : "EngineHSCap",
-            "Short" : "+ {0} HS Cap",
-            "Long" : "+ {0} HS Cap",
-            "Full" : "+ {0} additional installable engine heat sinks"
+            "Short" : "{0} HS Cap",
+            "Long" : "{0} HS Cap",
+            "Full" : "{0} additional installable engine heat sinks"
         },
         {
-            "Bonus" : "EngineHSAdd",
-            "Short" : "+ {0} HS",
-            "Long" : "+ {0} Heat Sink",
-            "Full" : "+ {0} additional engine heat sinks"
+            "Bonus" : "EngineHS",
+            "Short" : "{0} HS",
+            "Long" : "{0} Heat Sink",
+            "Full" : "{0} additional engine heat sinks"
         },
         {
-            "Bonus" : "EngineWeightReduction",
-            "Short" : "- {0} E. Weight",
-            "Long" : "- {0} Engine Weight",
-            "Full" : "- {0} engine weight"
+            "Bonus" : "EngineWeight",
+            "Short" : "{0} E. Weight",
+            "Long" : "{0} Engine Weight",
+            "Full" : "{0} engine weight"
         },
         {
-            "Bonus" : "StructureWeightReduction",
-            "Short" : "- {0} S. Weight",
-            "Long" : "- {0} Structure Weight",
-            "Full" : "- {0} structure weight"
+            "Bonus" : "StructureWeight",
+            "Short" : "{0} S. Weight",
+            "Long" : "{0} Structure Weight",
+            "Full" : "{0} structure weight"
         },
         {
-            "Bonus" : "ArmorWeightReduction",
-            "Short" : "- {0} A. Weight",
-            "Long" : "- {0} Armor Weight",
-            "Full" : "- {0} armor weight"
+            "Bonus" : "ArmorWeight",
+            "Short" : "{0} A. Weight",
+            "Long" : "{0} Armor Weight",
+            "Full" : "{0} armor weight"
         },
         {
-            "Bonus" : "FreedSlots",
-            "Short" : "+ {0} Slots",
-            "Long" : "+ {0} Slots Available",
-            "Full" : "+ {0} slots available"
+            "Bonus" : "Slots",
+            "Short" : "{0} Slots",
+            "Long" : "{0} Slots Available",
+            "Full" : "{0} slots available"
         },
         {
-            "Bonus" : "ReservedSlots",
-            "Short" : "- {0} Slots",
-            "Long" : "- {0} Slots Available",
-            "Full" : "- {0} slots available"
+            "Bonus" : "Accuracy",
+            "Short" : "{0} Acc.",
+            "Long" : "{0} Accuracy",
+            "Full" : "{0} accuracy with all attack"
         },
         {
-            "Bonus" : "ArmAccuracyBonus",
-            "Short" : "+ {0} Acc. (Arm)",
-            "Long" : "+ {0} Accuracy (Arm)",
-            "Full" : "+ {0} accuracy with arm mounted weapons"
+            "Bonus" : "AccuracyArm",
+            "Short" : "{0} Acc. (Arm)",
+            "Long" : "{0} Accuracy (Arm)",
+            "Full" : "{0} accuracy with arm mounted weapons"
         },
         {
-            "Bonus" : "MeleeAccuracyBonus",
-            "Short" : "+ {0} Melee Hit",
-            "Long" : "+ {0} Melee Hit",
-            "Full" : "+ {0} accuracy with all melee attacks"
+            "Bonus" : "MeleeAccuracy",
+            "Short" : "{0} Melee Hit",
+            "Long" : "{0} Melee Hit",
+            "Full" : "{0} accuracy with all melee attacks"
         },
         {
-            "Bonus" : "AccuracyLoss",
-            "Short" : "- {0} Acc.",
-            "Long" : "- {0} Accuracy",
-            "Full" : "- {0} accuracy with all attack"
+            "Bonus" : "MeleeDamage",
+            "Short" : "{0} Mel. Dmg",
+            "Long" : "{0} Melee Dmg",
+            "Full" : "{0} damage with all melee attacks"
         },
         {
-            "Bonus" : "CoolingSystemDHS",
-            "Short" : "2 x Cooling",
-            "Long" : "2 x Cooling",
-            "Full" : "2 x cooling throughout the BattleMech"
+            "Bonus" : "CarryCapacity",
+            "Short" : "{0} Carry Cap.",
+            "Long" : "{0} Carry Capacity",
+            "Full" : "{0} carry capacity of the BattleMech"
+        },
+        {
+            "Bonus" : "CoolingSystem",
+            "Short" : "{0} Cooling",
+            "Long" : "{0} Cooling",
+            "Full" : "{0} cooling throughout the BattleMech"
         },
         {
             "Bonus" : "OverheatDamage",
