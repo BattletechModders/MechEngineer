@@ -11,15 +11,15 @@ internal static class MechLabMoveUIElements
         MoveMechRoleInfo(panel);
         MoveViewMechButton(panel);
 
-        var Representation = panel.transform.GetChild("Representation");
+        var Representation = panel.transform.Find("Representation");
         if (MechLabSlotsFeature.Shared.Settings.HideHelpButton)
         {
-            Representation.GetChild("OBJ_helpBttn").gameObject.SetActive(false);
+            Representation.Find("OBJ_helpBttn").gameObject.SetActive(false);
         }
 
         if (MechLabSlotsFeature.Shared.Settings.HideECMButton)
         {
-            Representation.GetChild("OBJ_ECMBttn").gameObject.SetActive(false);
+            Representation.Find("OBJ_ECMBttn").gameObject.SetActive(false);
         }
     }
 
@@ -28,11 +28,8 @@ internal static class MechLabMoveUIElements
         var armWidget = panel.rightArmWidget;
 
         var layout_details = panel.transform
-                                 .GetChild("Representation")
-                                 .GetChild("OBJ_mech")
-                                 .GetChild("Centerline")
-                                 .GetChild("layout_details")
-                             ?? armWidget.transform.GetChild("layout_details");
+                                 .Find("Representation/OBJ_mech/Centerline/layout_details")
+                             ?? armWidget.transform.Find("layout_details");
         if (layout_details == null)
         {
             return;

@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleTech.UI;
 using Harmony;
-using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Helper;
 using UnityEngine.UI;
 
@@ -18,7 +17,7 @@ public static class MechLabLocationWidget_SetData_Patch
             var widget = __instance;
             void Setup(LanceStat lanceStat, bool isRearArmor)
             {
-                var child = lanceStat.transform.GetChild("hit_tooltip");
+                var child = lanceStat.transform.Find("hit_tooltip");
                 var button = child.gameObject.GetComponent<Button>() ?? child.gameObject.AddComponent<Button>();
                 button.onClick.RemoveAllListeners();
                 button.onClick.AddListener(() => ArmorMaximizerHandler.OnBarClick(widget, isRearArmor));

@@ -10,7 +10,7 @@ internal class WidgetLayout
     internal WidgetLayout(MechLabLocationWidget widget)
     {
         this.widget = widget;
-        layout_slots = widget.transform.GetChild("layout_slots");
+        layout_slots = widget.transform.Find("layout_slots");
         slots = layout_slots.GetChildren()
             .Where(x => x.name.StartsWith("slot"))
             .ToList();

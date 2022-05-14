@@ -14,8 +14,8 @@ internal static class MechLabFixWidgetLayouts
 
     private static void FixMechLabLocationWidgetLayouts(MechLabPanel mechLabPanel)
     {
-        var Representation = mechLabPanel.transform.GetChild("Representation");
-        var OBJ_mech = Representation.GetChild("OBJ_mech");
+        var Representation = mechLabPanel.transform.Find("Representation");
+        var OBJ_mech = Representation.Find("OBJ_mech");
 
         foreach (Transform container in OBJ_mech)
         {
@@ -41,12 +41,12 @@ internal static class MechLabFixWidgetLayouts
                 }
 
                 EnableLayout(widget.gameObject);
-                EnableLayout(widget.GetChild("layout_slots").gameObject);
+                EnableLayout(widget.Find("layout_slots").gameObject);
 
                 // fix different distances for lower bracket
                 var rect = widget
-                    .GetChild("layout_bg")
-                    .GetChild("bracket_btm")
+                    .Find("layout_bg")
+                    .Find("bracket_btm")
                     .GetComponent<RectTransform>();
                 rect.anchoredPosition = new Vector2(0, 0);
                 rect.offsetMin = new Vector2(0, -2);

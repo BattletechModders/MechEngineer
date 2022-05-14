@@ -19,6 +19,11 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         Validator.RegisterMechValidator(ccValidation.ValidateMech, ccValidation.ValidateMechCanBeFielded);
     }
 
+    internal static void CalculateCarryWeight(MechDef mechDef, out float totalCapacity, out float totalUsage)
+    {
+        CalculateCarryWeight(mechDef, out totalCapacity, out totalUsage, out _, out _);
+    }
+
     public void ValidateMech(MechDef mechDef, Errors errors)
     {
         ValidateCarryWeight(mechDef, errors);
@@ -28,8 +33,22 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     // HandHeld Weapons - TacOps p.316
     private void ValidateCarryWeight(MechDef mechDef, Errors errors)
     {
-        var totalCapacity = 0f;
-        var totalUsage = 0f;
+        CalculateCarryWeight(mechDef, out var capacity, out var usage, out var left, out var right);
+
+        if (PrecisionUtils.SmallerThan(capacity, usage))
+        {
+            errors.Add(MechValidationType.Overweight, Settings.ErrorOverweight);
+        }
+        else if ((left == MinHandReq.Two && right != MinHandReq.None) || (right == MinHandReq.Two && left != MinHandReq.None))
+        {
+            errors.Add(MechValidationType.Overweight, Settings.ErrorOneFreeHand);
+        }
+    }
+
+    private static void CalculateCarryWeight(MechDef mechDef, out float totalCapacity, out float totalUsage, out MinHandReq left, out MinHandReq right)
+    {
+        var capacitySum = 0f;
+        var usageSum = 0f;
 
         var globalCapacityFactor = mechDef.Inventory
             .Select(x => x.GetComponent<CarryCapacityFactorCustom>())
@@ -42,8 +61,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             var capacity = GetCarryCapacity(mechDef, location, globalCapacityFactor);
             var usage = GetCarryUsage(mechDef, location);
 
-            totalCapacity += capacity;
-            totalUsage += usage;
+            capacitySum += capacity;
+            usageSum += usage;
 
             if (PrecisionUtils.SmallerThan(capacity, usage))
             {
@@ -55,18 +74,11 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             }
             return MinHandReq.None;
         }
-        var left = CheckArm(ChassisLocations.LeftArm);
-        var right = CheckArm(ChassisLocations.RightArm);
 
-        if (PrecisionUtils.SmallerThan(totalCapacity, totalUsage))
-        {
-            errors.Add(MechValidationType.Overweight, Settings.ErrorOverweight);
-        }
-
-        if ((left == MinHandReq.Two && right != MinHandReq.None) || (right == MinHandReq.Two && left != MinHandReq.None))
-        {
-            errors.Add(MechValidationType.Overweight, Settings.ErrorOneFreeHand);
-        }
+        left = CheckArm(ChassisLocations.LeftArm);
+        right = CheckArm(ChassisLocations.RightArm);
+        totalCapacity = capacitySum;
+        totalUsage = usageSum;
     }
 
     private enum MinHandReq

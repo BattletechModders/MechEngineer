@@ -342,9 +342,9 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
             }
 
             {
-                var rep = gameObject.transform.GetChild("Representation");
-                var layoutComponents = rep.GetChild("layout_component");
-                var backgrounds = layoutComponents.GetChild("BACKGROUNDS");
+                var rep = gameObject.transform.Find("Representation");
+                var layoutComponents = rep.Find("layout_component");
+                var backgrounds = layoutComponents.Find("BACKGROUNDS");
                 backgroundsRect = backgrounds.GetComponent<RectTransform>();
             }
         }

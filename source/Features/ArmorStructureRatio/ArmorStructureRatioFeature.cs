@@ -2,7 +2,6 @@
 using System.Linq;
 using BattleTech;
 using Localize;
-using MechEngineer.Features.ArmorMaximizer;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;

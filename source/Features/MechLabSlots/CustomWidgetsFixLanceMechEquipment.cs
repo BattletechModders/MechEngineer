@@ -25,7 +25,7 @@ internal static class CustomWidgetsFixLanceMechEquipment
             }
             go = Object.Instantiate(centerTorso, null);
             go.name = settings.ShortLabel; // required for identification, needs to be unique
-            var labelGo = go.transform.GetChild("CT-txt").gameObject;
+            var labelGo = go.transform.Find("CT-txt").gameObject;
             labelGo.name = go.name + "-txt";
             labelGo.GetComponent<LocalizableText>().SetText(settings.ShortLabel);
             go.transform.SetParent(centerTorso.transform.parent, false);
@@ -150,6 +150,6 @@ internal static class CustomWidgetsFixLanceMechEquipment
 
     private static GameObject? GetWidgetViaCenterTorso(MechLabSlotsSettings.WidgetSettings settings, GameObject centerTorso)
     {
-        return centerTorso.transform.parent.GetChild(settings.ShortLabel)?.gameObject;
+        return centerTorso.transform.parent.Find(settings.ShortLabel)?.gameObject;
     }
 }

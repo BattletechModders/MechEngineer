@@ -8,8 +8,8 @@ internal static class MechLabAutoZoom
 {
     internal static void LoadMech(MechLabPanel mechLabPanel)
     {
-        var Representation = mechLabPanel.transform.GetChild("Representation");
-        var OBJ_mech = Representation.GetChild("OBJ_mech");
+        var Representation = mechLabPanel.transform.Find("Representation");
+        var OBJ_mech = Representation.Find("OBJ_mech");
 
         var mechRectTransform = OBJ_mech.GetComponent<RectTransform>();
         // Unity (?) does not handle layout propagation properly, so we need to force several layout passes here
@@ -22,11 +22,11 @@ internal static class MechLabAutoZoom
         mechRectTransform.anchorMax = new Vector2(mechRectTransform.anchorMin.x, 1);
         mechRectTransform.pivot = new Vector2(mechRectTransform.pivot.x, 1);
 
-        var OBJ_actions = Representation.GetChild("OBJ_actions");
+        var OBJ_actions = Representation.Find("OBJ_actions");
         mechRectTransform.position = new Vector3(OBJ_mech.position.x, OBJ_actions.position.y, OBJ_mech.position.z);
 
         {
-            var OBJ_cancelconfirm = Representation.GetChild("OBJ_cancelconfirm");
+            var OBJ_cancelconfirm = Representation.Find("OBJ_cancelconfirm");
             var confirmRectTransform = OBJ_cancelconfirm.GetComponent<RectTransform>();
 
             var mechSize = mechRectTransform.sizeDelta.y;

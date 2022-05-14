@@ -11,6 +11,9 @@
         ],
         "CarryUsage" : 0
     },
+    "Description" : {
+        "UIName" : "Hand + + +"
+    },
     "InventorySize" : 4,
     "Tonnage" : 1,
     "statusEffects" : null

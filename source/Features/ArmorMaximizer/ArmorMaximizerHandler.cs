@@ -96,9 +96,9 @@ internal static class ArmorMaximizerHandler
 
             void SetButtonColor(string buttonId, UIColor uiColor)
             {
-                var button = lanceStat.transform.GetChild(buttonId);
+                var button = lanceStat.transform.Find(buttonId);
                 // the plus icon is actually made of two minus icons
-                var icons = button.GetChild("startButtonFill").GetChildren();
+                var icons = button.Find("startButtonFill").GetChildren();
                 foreach (var icon in icons)
                 {
                     var colorRefTracker = icon.GetComponent<UIColorRefTracker>();

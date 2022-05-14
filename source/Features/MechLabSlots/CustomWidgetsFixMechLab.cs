@@ -61,10 +61,10 @@ public class CustomWidgetsFixMechLab
                 vlg.spacing = 4;
             }
 
-            go.transform.GetChild("layout_armor").gameObject.SetActive(false);
-            go.transform.GetChild("layout_hardpoints").gameObject.SetActive(false);
-            go.transform.GetChild("layout_locationText").GetChild("txt_structure").gameObject.SetActive(false);
-            go.transform.GetChild("layout_locationText").GetChild("txt_location").GetComponent<TextMeshProUGUI>().text = settings.Label;
+            go.transform.Find("layout_armor").gameObject.SetActive(false);
+            go.transform.Find("layout_hardpoints").gameObject.SetActive(false);
+            go.transform.Find("layout_locationText/txt_structure").gameObject.SetActive(false);
+            go.transform.Find("layout_locationText/txt_location").GetComponent<TextMeshProUGUI>().text = settings.Label;
 
             topWidget = go.GetComponent<MechLabLocationWidget>();
         }
