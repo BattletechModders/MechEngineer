@@ -3,7 +3,9 @@
         "Category" : { "CategoryID" : "ArmHandActuator" },
         "BonusDescriptions": [
             "MeleeDamage: + 60",
-            "MeleeAccuracy: + 1"
+            "CarryHandUsage: 7",
+            "MeleeAccuracy: + 1",
+            "CarryCapacity: 5 %"
         ],
         "StatusEffects": [
             "StatusEffect-Attack_DamageMelee-T{amt}: 60",
@@ -12,7 +14,7 @@
         "CarryHandUsage" : 7
     },
     "Description" : {
-        "UIName" : "Hand + + +"
+        "UIName" : "Hammer + + +"
     },
     "InventorySize" : 6,
     "Tonnage" : 3,

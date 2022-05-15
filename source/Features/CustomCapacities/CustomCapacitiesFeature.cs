@@ -31,13 +31,6 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         );
     }
 
-    internal static void CalculateCarryWeightResults(MechDef mechDef, out float capacity, out float usage)
-    {
-        var context = CalculateCarryWeight(mechDef);
-        capacity = context.TotalCapacity;
-        usage = context.TotalUsage;
-    }
-
     public void ValidateMech(MechDef mechDef, Errors errors)
     {
         ValidateCarryWeight(mechDef, errors);
@@ -47,23 +40,23 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     // HandHeld Weapons - TacOps p.316
     private void ValidateCarryWeight(MechDef mechDef, Errors errors)
     {
-        var result = CalculateCarryWeight(mechDef);
+        var context = CalculateCarryWeight(mechDef);
 
-        if (PrecisionUtils.SmallerThan(result.HandCapacity, result.HandUsage))
+        if (context.IsHandOverweight)
         {
             errors.Add(MechValidationType.Overweight, Settings.CarryHandErrorOverweight);
         }
-        else if ((result.LeftHandReq == MinHandReq.Two && result.RightHandReq != MinHandReq.None) || (result.RightHandReq == MinHandReq.Two && result.LeftHandReq != MinHandReq.None))
+        else if (context.IsHandMissingFreeHand)
         {
             errors.Add(MechValidationType.Overweight, Settings.CarryHandErrorOneFreeHand);
         }
-        else if (PrecisionUtils.SmallerThan(result.TotalCapacity, result.TotalUsage))
+        else if (context.IsTotalOverweight)
         {
             errors.Add(MechValidationType.Overweight, Settings.CarryTotalErrorOverweight);
         }
     }
 
-    private static CarryContext CalculateCarryWeight(MechDef mechDef)
+    internal static CarryContext CalculateCarryWeight(MechDef mechDef)
     {
         var context = new CarryContext();
         CalculateCarryMech(mechDef, context);
@@ -105,10 +98,12 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         context.RightHandReq = CheckArm(ChassisLocations.RightArm);
     }
 
-    private class CarryContext
+    internal class CarryContext
     {
         internal float HandCapacity;
         internal float HandUsage;
+
+        internal bool IsHandOverweight => PrecisionUtils.SmallerThan(HandCapacity, HandUsage);
 
         internal float MechCapacity;
         internal float MechUsage;
@@ -116,11 +111,17 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         internal float TotalCapacity => HandCapacity + MechCapacity;
         internal float TotalUsage => HandUsage + MechUsage;
 
+        internal bool IsTotalOverweight => PrecisionUtils.SmallerThan(TotalCapacity, TotalUsage);
+
         internal MinHandReq LeftHandReq;
         internal MinHandReq RightHandReq;
+
+        internal bool IsHandMissingFreeHand =>
+            (LeftHandReq == MinHandReq.Two && RightHandReq != MinHandReq.None)
+            || (RightHandReq == MinHandReq.Two && LeftHandReq != MinHandReq.None);
     }
 
-    private enum MinHandReq
+    internal enum MinHandReq
     {
         None,
         One,

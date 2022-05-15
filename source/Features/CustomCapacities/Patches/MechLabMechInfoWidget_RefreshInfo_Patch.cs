@@ -83,7 +83,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
             }
         }
 
-        void SetCapacity(string id, string label, string format, float capacity, float usage, bool hideIfNotUsed = false)
+        void SetCapacity(string id, string text, UIColor color, bool hideIfNotUsed, float height = 30)
         {
             var customCapacityTransform = customCapacities.Find(id);
             if (customCapacityTransform == null)
@@ -91,7 +91,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
                 var go = Object.Instantiate(remainingTonnage.gameObject, null);
                 go.name = id;
 
-                FixLayoutElement(go, 90, 30);
+                FixLayoutElement(go, 90, height);
                 FixRectTransform(go);
                 FixContentSizeFitter(go);
                 FixLocalizableText(go);
@@ -106,47 +106,61 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
 
                 SetText(
                     go,
-                    label,
-                    format,
-                    capacity,
-                    usage
+                    text,
+                    color
                 );
             }
         }
 
         {
-            CustomCapacitiesFeature.CalculateCarryWeightResults(mechDef, out var capacity, out var usage);
+            var context = CustomCapacitiesFeature.CalculateCarryWeight(mechDef);
+            var label = CustomCapacitiesFeature.Shared.Settings.CarryTotalLabel;
+            var format = CustomCapacitiesFeature.Shared.Settings.CarryTotalFormat;
+            var text = label
+                      + "\n"
+                      + string.Format(format, context.TotalUsage, context.TotalCapacity);
+            UIColor color;
+            if (context.IsTotalOverweight)
+            {
+                color = UIColor.Red;
+            }
+            else if (context.IsHandOverweight || context.IsHandMissingFreeHand)
+            {
+                color = UIColor.Gold;
+            }
+            else
+            {
+                color = UIColor.White;
+            }
             SetCapacity(
                 "carry_weight",
-                CustomCapacitiesFeature.Shared.Settings.CarryTotalLabel,
-                CustomCapacitiesFeature.Shared.Settings.CarryTotalFormat,
-                capacity,
-                usage
+                text,
+                color,
+                false
             );
         }
 
         foreach (var customCapacity in CustomCapacitiesFeature.Shared.Settings.CustomCapacities)
         {
             CustomCapacitiesFeature.CalculateCustomCapacityResults(mechDef, customCapacity.Collection, out var capacity, out var usage);
+            var text = customCapacity.Label + "\n" + string.Format(customCapacity.Format, usage, capacity);
+            var color = PrecisionUtils.SmallerThan(capacity, usage) ? UIColor.Red : UIColor.White;
             var hideIfNotUsed = customCapacity.HideIfNoUsageAndCapacity && PrecisionUtils.Equals(capacity, 0) && PrecisionUtils.Equals(usage, 0);
             SetCapacity(
                 customCapacity.Collection,
-                customCapacity.Label,
-                customCapacity.Format,
-                capacity,
-                usage,
+                text,
+                color,
                 hideIfNotUsed
             );
         }
     }
 
-    private static void SetText(GameObject go, string label, string format, float capacity, float usage)
+    private static void SetText(GameObject go, string text, UIColor color)
     {
-        var text = label + "\n" + string.Format(format, usage, capacity);
         var textComponent = go.GetComponent<LocalizableText>();
         textComponent.SetText(text);
         var colorTracker = go.GetComponent<UIColorRefTracker>();
-        colorTracker.SetUIColor(PrecisionUtils.SmallerThan(capacity, usage) ? UIColor.Red : UIColor.White);
+        colorTracker.SetUIColor(color);
     }
 
     private static void FixLocalizableText(GameObject go)

@@ -79,9 +79,15 @@
         },
         {
             "Bonus" : "CarryCapacity",
-            "Short" : "{0} Carry Cap.",
+            "Short" : "{0} Carry Cap",
             "Long" : "{0} Carry Capacity",
-            "Full" : "{0} carry capacity of the BattleMech"
+            "Full" : "{0} carry capacity for the BattleMech"
+        },
+        {
+            "Bonus" : "CarryHandUsage",
+            "Short" : "{0} Carry (Arm)",
+            "Long" : "{0} Carry Weight (Arm)",
+            "Full" : "{0} carry weight using arms, requires hand actuator(s)"
         },
         {
             "Bonus" : "CoolingSystem",
