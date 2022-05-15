@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using CustomComponents;
 
@@ -31,6 +32,6 @@ public class StatusEffectsCustom : SimpleCustomComponent, IListComponent<string>
             effect.FromJSON(data);
             effects.Add(effect);
         }
-        Def.statusEffects = effects.ToArray();
+        Def.statusEffects = Def.statusEffects.Union(effects).ToArray();
     }
 }
