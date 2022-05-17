@@ -91,7 +91,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
                 var go = Object.Instantiate(remainingTonnage.gameObject, null);
                 go.name = id;
 
-                FixLayoutElement(go, 90, height);
+                FixLayoutElement(go, 85, height);
                 FixRectTransform(go);
                 FixContentSizeFitter(go);
                 FixLocalizableText(go);

@@ -1,17 +1,14 @@
 {
     "Custom" : {
-        "Category" : { "CategoryID" : "ArmHandActuator" },
+        "Category" : { "CategoryID" : "HandHeld" },
         "BonusDescriptions": [
             "MeleeDamage: + 70",
-            "CarryHandUsage: 9",
-            "MeleeAccuracy: + 1",
-            "CarryCapacity: 5 %"
+            "CarryHandUsage: 9"
         ],
         "StatusEffects": [
-            "StatusEffect-Attack_DamageMelee-T{amt}: 70",
-            "StatusEffect-Attack_ToHitMelee-T{amt}: 1"
+            "StatusEffect-Attack_DamageMelee-T{amt}: 70"
         ],
-        "CarryHandUsage" : 9
+        "CarryHandUsage" : 8
     },
     "InventorySize" : 3,
     "Tonnage" : 3,

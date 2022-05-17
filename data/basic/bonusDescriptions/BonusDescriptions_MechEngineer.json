@@ -84,10 +84,16 @@
             "Full" : "{0} carry capacity for the BattleMech"
         },
         {
+            "Bonus" : "CarryHandCapacityPercent",
+            "Short" : "{0} % Cap (Arm)",
+            "Long" : "{0} % Carry Cap (Arm)",
+            "Full" : "{0} % of chassis tonnage as arm carry capacity"
+        },
+        {
             "Bonus" : "CarryHandUsage",
-            "Short" : "{0} Carry (Arm)",
-            "Long" : "{0} Carry Weight (Arm)",
-            "Full" : "{0} carry weight using arms, requires hand actuator(s)"
+            "Short" : "{0} ton (Arm)",
+            "Long" : "{0} ton (Arm)",
+            "Full" : "{0} ton carry capacity used up on the arm"
         },
         {
             "Bonus" : "CoolingSystem",

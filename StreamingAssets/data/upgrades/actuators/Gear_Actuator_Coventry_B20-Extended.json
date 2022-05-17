@@ -1,20 +1,17 @@
 {
     "Custom" : {
-        "Category" : { "CategoryID" : "ArmHandActuator" },
+        "Category" : { "CategoryID" : "HandHeld" },
         "BonusDescriptions": [
             "MeleeDamage: + 20",
-            "CarryHandUsage: 3",
-            "MeleeAccuracy: + 1",
-            "CarryCapacity: 5 %"
+            "CarryHandUsage: 3"
         ],
         "StatusEffects": [
-            "StatusEffect-Attack_DamageMelee-T{amt}: 20",
-            "StatusEffect-Attack_ToHitMelee-T{amt}: 1"
+            "StatusEffect-Attack_DamageMelee-T{amt}: 20"
         ],
         "CarryHandUsage" : 3
     },
     "Description" : {
-        "UIName" : "Hammer +"
+        "UIName" : "Sword + + +"
     },
     "InventorySize" : 4,
     "Tonnage" : 1,

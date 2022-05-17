@@ -1,20 +1,17 @@
 {
     "Custom" : {
-        "Category" : { "CategoryID" : "ArmHandActuator" },
+        "Category" : { "CategoryID" : "HandHeld" },
         "BonusDescriptions": [
             "MeleeStabilityDamage: + 20",
-            "CarryHandUsage: 2",
-            "MeleeAccuracy: + 1",
-            "CarryCapacity: 5 %"
+            "CarryHandUsage: 2"
         ],
         "StatusEffects": [
-            "StatusEffect-Attack_DamageStabMelee-T{amt}: 20",
-            "StatusEffect-Attack_ToHitMelee-T{amt}: 1"
+            "StatusEffect-Attack_DamageStabMelee-T{amt}: 20"
         ],
         "CarryHandUsage" : 2
     },
     "Description" : {
-        "UIName" : "Hammer +"
+        "UIName" : "Mace +"
     },
     "InventorySize" : 2,
     "Tonnage" : 0,

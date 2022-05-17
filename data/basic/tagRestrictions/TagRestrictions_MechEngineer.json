@@ -11,6 +11,12 @@
             "RequiredTagsOnSameLocation": [
                 "ArmLowerActuator"
             ]
+        },
+        {
+            "Tag": "HandHeld",
+            "RequiredTagsOnSameLocation": [
+                "ArmHandActuator"
+            ]
         }
     ]
 }

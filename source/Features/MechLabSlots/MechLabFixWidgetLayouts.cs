@@ -51,6 +51,12 @@ internal static class MechLabFixWidgetLayouts
                 rect.anchoredPosition = new Vector2(0, 0);
                 rect.offsetMin = new Vector2(0, -2);
                 rect.offsetMax = new Vector2(0, 2);
+
+                // put repair upper border ONTO widget lower border, since both color it fits and looks attached perfectly
+                // saves pixels
+                widget.Find("layout_repair")
+                    .GetComponent<RectTransform>()
+                    .anchoredPosition = new(0, -41);
             }
         }
 

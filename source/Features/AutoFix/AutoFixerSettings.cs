@@ -203,32 +203,6 @@ internal class AutoFixerSettings : ISettings
         {
             Location = ChassisLocations.RightArm,
             Change = new SlotChange {From = 8, By = 4}
-        },
-        // old ME values
-        new()
-        {
-            Location = ChassisLocations.LeftLeg,
-            Change = new SlotChange {From = 2, By = 4}
-        },
-        new()
-        {
-            Location = ChassisLocations.RightLeg,
-            Change = new SlotChange {From = 2, By = 4}
-        },
-        new()
-        {
-            Location = ChassisLocations.Head,
-            Change = new SlotChange {From = 3, By = 3}
-        },
-        new()
-        {
-            Location = ChassisLocations.LeftArm,
-            Change = new SlotChange {From = 11, By = 1}
-        },
-        new()
-        {
-            Location = ChassisLocations.RightArm,
-            Change = new SlotChange {From = 11, By = 1}
         }
     };
 
