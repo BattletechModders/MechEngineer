@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
+using BattleTech.UI.Tooltips;
 using Harmony;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.OverrideTonnage;
@@ -36,6 +38,10 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
         }
     }
 
+    // to allow more space for capacities, we could move elements around
+    private const float LeftShift = 0; // 10;
+    private const float RightShift = 0; // 30;
+
     private static void SetupCapacitiesLayout(MechDef mechDef, LocalizableText remainingTonnage)
     {
 
@@ -45,15 +51,35 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
 
         if (customCapacities == null)
         {
-            {
+            { // TODO move to MechLabSlots
                 var go = layoutTonnage.gameObject;
                 FixLayoutElement(go, 220, 69);
                 FixRectTransform(go);
             }
 
-            {
+            { // TODO move to MechLabSlots
                 var go = objStatus.gameObject;
                 FixVerticalLayoutGroup(go).spacing = 5;
+
+                go.GetComponent<RectTransform>().anchoredPosition = new(515 - LeftShift, 0);
+
+                {
+                    var objMeta = objStatus.parent;
+                    var objGroupLeft = objMeta.parent;
+                    var representation = objGroupLeft.parent;
+                    {
+                        var objWarnings = representation.Find("OBJ_warnings");
+                        objWarnings.GetComponent<RectTransform>().anchoredPosition = new(300 + RightShift, -32);
+                    }
+                    {
+                        var objMech = representation.Find("OBJ_mech");
+                        objMech.GetComponent<RectTransform>().anchoredPosition = new(300 + RightShift, -185);
+                    }
+                    {
+                        var objActions = representation.Find("OBJ_actions");
+                        objActions.GetComponent<RectTransform>().anchoredPosition = new(588 + RightShift, -185);
+                    }
+                }
             }
 
             {
@@ -83,27 +109,47 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
             }
         }
 
-        void SetCapacity(string id, string text, UIColor color, bool hideIfNotUsed, float height = 30)
+        void SetCapacity(CustomCapacitiesSettings.CustomCapacity customCapacity)
         {
-            var customCapacityTransform = customCapacities.Find(id);
+            var customCapacityTransform = customCapacities.Find(customCapacity.Collection);
             if (customCapacityTransform == null)
             {
                 var go = Object.Instantiate(remainingTonnage.gameObject, null);
-                go.name = id;
+                go.name = customCapacity.Collection;
 
-                FixLayoutElement(go, 85, height);
+                FixLayoutElement(go, 85 + LeftShift + RightShift, 30);
                 FixRectTransform(go);
                 FixContentSizeFitter(go);
                 FixLocalizableText(go);
+
+                if (customCapacity.ToolTipHeader != null && customCapacity.ToolTipBody != null)
+                {
+                    var tooltip = go.AddComponent<HBSTooltip>();
+                    tooltip.defaultStateData.SetObject(new BaseDescriptionDef
+                    {
+                        Name = customCapacity.ToolTipHeader,
+                        Details = customCapacity.ToolTipBody
+                    });
+                }
 
                 customCapacityTransform = go.transform;
                 customCapacityTransform.SetParent(customCapacities, false);
             }
 
             {
+                CustomCapacitiesFeature.CalculateCustomCapacityResults(mechDef, customCapacity.Collection, out var capacity, out var usage, out var hasError);
+
+                var hideIfNotUsed = customCapacity.HideIfNoUsageAndCapacity && PrecisionUtils.Equals(capacity, 0) && PrecisionUtils.Equals(usage, 0);
                 var go = customCapacityTransform.gameObject;
                 go.SetActive(!hideIfNotUsed);
 
+                var text = customCapacity.Label
+                    + "\n"
+                    + usage.ToString(customCapacity.Format, CultureInfo.InvariantCulture)
+                    + " / "
+                    + capacity.ToString(customCapacity.Format, CultureInfo.InvariantCulture)
+                    ;
+                var color = hasError ? UIColor.Red : UIColor.White;
                 SetText(
                     go,
                     text,
@@ -112,46 +158,10 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
             }
         }
 
-        {
-            var context = CustomCapacitiesFeature.CalculateCarryWeight(mechDef);
-            var label = CustomCapacitiesFeature.Shared.Settings.CarryTotalLabel;
-            var format = CustomCapacitiesFeature.Shared.Settings.CarryTotalFormat;
-            var text = label
-                      + "\n"
-                      + string.Format(format, context.TotalUsage, context.TotalCapacity);
-            UIColor color;
-            if (context.IsTotalOverweight)
-            {
-                color = UIColor.Red;
-            }
-            else if (context.IsHandOverweight || context.IsHandMissingFreeHand)
-            {
-                color = UIColor.Gold;
-            }
-            else
-            {
-                color = UIColor.White;
-            }
-            SetCapacity(
-                "carry_weight",
-                text,
-                color,
-                false
-            );
-        }
-
+        SetCapacity(CustomCapacitiesFeature.Shared.Settings.CarryWeight);
         foreach (var customCapacity in CustomCapacitiesFeature.Shared.Settings.CustomCapacities)
         {
-            CustomCapacitiesFeature.CalculateCustomCapacityResults(mechDef, customCapacity.Collection, out var capacity, out var usage);
-            var text = customCapacity.Label + "\n" + string.Format(customCapacity.Format, usage, capacity);
-            var color = PrecisionUtils.SmallerThan(capacity, usage) ? UIColor.Red : UIColor.White;
-            var hideIfNotUsed = customCapacity.HideIfNoUsageAndCapacity && PrecisionUtils.Equals(capacity, 0) && PrecisionUtils.Equals(usage, 0);
-            SetCapacity(
-                customCapacity.Collection,
-                text,
-                color,
-                hideIfNotUsed
-            );
+            SetCapacity(customCapacity);
         }
     }
 

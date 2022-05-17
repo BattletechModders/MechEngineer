@@ -20,8 +20,17 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         Validator.RegisterMechValidator(ccValidation.ValidateMech, ccValidation.ValidateMechCanBeFielded);
     }
 
-    internal static void CalculateCustomCapacityResults(MechDef mechDef, string collectionId, out float capacity, out float usage)
+    internal static void CalculateCustomCapacityResults(MechDef mechDef, string collectionId, out float capacity, out float usage, out bool hasError)
     {
+        if (collectionId == Shared.Settings.CarryWeight.Collection)
+        {
+            var context = CalculateCarryWeight(mechDef);
+            capacity = context.TotalCapacity;
+            usage = context.TotalUsage;
+            hasError = context.IsTotalOverweight || context.IsHandOverweight || context.IsHandMissingFreeHand;
+            return;
+        }
+
         CalculateCapacity(
             mechDef,
             ChassisLocations.All,
@@ -29,6 +38,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             out capacity,
             out usage
         );
+        hasError = PrecisionUtils.SmallerThan(capacity, usage);
     }
 
     public void ValidateMech(MechDef mechDef, Errors errors)
@@ -52,7 +62,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         }
         else if (context.IsTotalOverweight)
         {
-            errors.Add(MechValidationType.Overweight, Settings.CarryTotalErrorOverweight);
+            errors.Add(MechValidationType.Overweight, Settings.CarryWeight.ErrorOverweight);
         }
     }
 
