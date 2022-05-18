@@ -12,7 +12,7 @@ public static class MechLabPanel_InitWidgets_Patch
     {
         try
         {
-            MechLabFixWidgetLayouts.FixMechLabLayouts(__instance);
+            MechLabLayoutUtils.FixMechLabLayouts(__instance);
             CustomWidgetsFixMechLab.Setup(__instance);
             MechLabMoveUIElements.MoveMechUIElements(__instance);
         }

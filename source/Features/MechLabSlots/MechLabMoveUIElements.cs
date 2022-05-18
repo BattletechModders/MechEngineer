@@ -11,15 +11,15 @@ internal static class MechLabMoveUIElements
         MoveMechRoleInfo(panel);
         MoveViewMechButton(panel);
 
-        var Representation = panel.transform.Find("Representation");
+        var finder = new MechLabLayoutFinder(panel);
         if (MechLabSlotsFeature.Shared.Settings.HideHelpButton)
         {
-            Representation.Find("OBJ_helpBttn").gameObject.SetActive(false);
+            finder.ObjHelpBttn.gameObject.SetActive(false);
         }
 
         if (MechLabSlotsFeature.Shared.Settings.HideECMButton)
         {
-            Representation.Find("OBJ_ECMBttn").gameObject.SetActive(false);
+            finder.ObjEcmBttn.gameObject.SetActive(false);
         }
     }
 
@@ -27,9 +27,8 @@ internal static class MechLabMoveUIElements
     {
         var armWidget = panel.rightArmWidget;
 
-        var layout_details = panel.transform
-                                 .Find("Representation/OBJ_mech/Centerline/layout_details")
-                             ?? armWidget.transform.Find("layout_details");
+        var finder = new MechLabLayoutFinder(panel);
+        var layout_details = finder.LayoutDetails ?? armWidget.transform.Find("layout_details");
         if (layout_details == null)
         {
             return;
@@ -44,13 +43,13 @@ internal static class MechLabMoveUIElements
         }
 
         var arm = armWidget.transform.parent;
-        MechLabFixWidgetLayouts.EnableLayout(arm.gameObject);
+        MechLabLayoutUtils.EnableLayout(arm.gameObject);
         {
             var component = go.GetComponent<RectTransform>();
-            component.pivot = new Vector2(0, 1);
-            component.anchorMin = new Vector2(0, 0);
-            component.anchorMax = new Vector2(0, 0);
-            component.anchoredPosition = new Vector2(0, -40);
+            component.pivot = new(0, 1);
+            component.anchorMin = new(0, 0);
+            component.anchorMax = new(0, 0);
+            component.anchoredPosition = new(0, -40);
         }
         {
             var component = go.GetComponent<LayoutElement>() ?? go.AddComponent<LayoutElement>();
@@ -65,9 +64,9 @@ internal static class MechLabMoveUIElements
         var vb = panel.btn_mechViewerButton;
         var rect = vb.GetComponent<RectTransform>();
         // below works similar to OBJ_value
-        rect.anchorMin = new Vector2(1, 1);
-        rect.anchorMax = new Vector2(1, 1);
-        rect.pivot = new Vector2(1, 1);
-        rect.anchoredPosition = new Vector2(-32, -780);
+        rect.anchorMin = new(1, 1);
+        rect.anchorMax = new(1, 1);
+        rect.pivot = new(1, 1);
+        rect.anchoredPosition = new(-32, -780);
     }
 }

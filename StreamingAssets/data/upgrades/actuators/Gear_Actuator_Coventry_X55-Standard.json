@@ -11,7 +11,8 @@
         "CarryHandUsage" : 1
     },
     "Description" : {
-        "UIName" : "Sword"
+        "UIName" : "Sword",
+        "Icon" : "UixSvgIcon_specialEquip_Melee"
     },
     "InventorySize" : 2,
     "Tonnage" : 0,

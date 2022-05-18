@@ -8,6 +8,12 @@ internal class MechLabSlotsSettings : ISettings
     public bool HideHelpButton = false;
     public bool HideECMButton = false;
 
+    public float MechLabStatusLeftShift = 10;
+    public string MechLabStatusLeftShiftDescription => "Between 0 (vanilla) and 10. Allows custom capacities to be wider.";
+
+    public float MechLabMechRightShift = 30;
+    public string MechLabMechRightShiftDescription => "Between 0 (vanilla) and 30. Allows custom capacities to be wider.";
+
     public int MechLabArmTopPadding = 73;
     public string MechLabArmTopPaddingDescription =>
         "Optimal numbers" +

@@ -11,7 +11,8 @@
         "CarryHandUsage" : 1
     },
     "Description" : {
-        "UIName" : "Mace"
+        "UIName" : "Mace",
+        "Icon" : "UixSvgIcon_specialEquip_Melee"
     },
     "InventorySize" : 2,
     "Tonnage" : 0,
