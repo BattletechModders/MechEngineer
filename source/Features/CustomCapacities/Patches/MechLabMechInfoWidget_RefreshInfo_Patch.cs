@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Globalization;
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
-using BattleTech.UI.Tooltips;
 using Harmony;
 using MechEngineer.Features.MechLabSlots;
-using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
 namespace MechEngineer.Features.CustomCapacities.Patches;
 
@@ -46,98 +42,72 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
 
         if (customCapacities == null)
         {
-            var layoutHardpoints = objStatus.Find("layout_hardpoints");
-            MechLabLayoutUtils.NormalizeRectTransform(layoutHardpoints.gameObject);
-            var container = Object.Instantiate(layoutHardpoints.gameObject, null);
-            container.name = "custom_capacities";
-            customCapacities = container.transform;
-            var horizontal = container.GetComponent<HorizontalLayoutGroup>();
-            if (horizontal != null)
             {
-                Object.DestroyImmediate(horizontal);
-            }
-            foreach (var child in customCapacities.GetChildren())
-            {
-                Object.Destroy(child.gameObject);
+                var layoutHardpoints = objStatus.Find("layout_hardpoints");
+                MechLabLayoutUtils.NormalizeRectTransform(layoutHardpoints.gameObject);
             }
 
-            var vlg = MechLabLayoutUtils.NormalizeVerticalLayoutGroup(container);
-            vlg.padding = new(10, 10, 5, 5);
-            vlg.spacing = 8;
-            MechLabLayoutUtils.NormalizeContentSizeFitter(container);
-            MechLabLayoutUtils.NormalizeRectTransform(container);
+            var go = new GameObject("custom_capacities");
 
+            go.AddComponent<Image>();
+            var tracker = go.AddComponent<UIColorRefTracker>();
+            tracker.SetUIColor(UIColor.DarkGray);
+
+            var group = go.AddComponent<VerticalLayoutGroup>();
+            group.childForceExpandHeight = group.childForceExpandWidth = false;
+            group.childControlHeight = group.childControlWidth = true;
+            group.childAlignment = TextAnchor.UpperRight;
+            group.spacing = 5;
+            group.padding = new(0, 0, 5, 5);
+
+            var fitter = go.AddComponent<ContentSizeFitter>();
+            fitter.horizontalFit = fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            MechLabLayoutUtils.NormalizeRectTransform(go);
+
+            customCapacities = go.transform;
             customCapacities.SetParent(objStatus, false);
             customCapacities.SetSiblingIndex(1);
         }
 
         void SetCapacity(CustomCapacitiesSettings.CustomCapacity customCapacity, ref int shownCounter)
         {
-            var customCapacityTransform = customCapacities.Find(customCapacity.Collection);
-            if (customCapacityTransform == null)
+            var id = customCapacity.Description.Id;
+            var element = customCapacities.Find(id)?.GetComponent<CustomCapacityUIElement>();
+
+            if (element == null)
             {
-                var go = Object.Instantiate(remainingTonnage.gameObject, null);
-                go.name = customCapacity.Collection;
-
-                MechLabLayoutUtils.NormalizeLayoutElement(go, 83 + MechLabLayoutUtils.Shifted, 30);
-                MechLabLayoutUtils.NormalizeRectTransform(go);
-                MechLabLayoutUtils.NormalizeContentSizeFitter(go);
-                MechLabLayoutUtils.NormalizeLocalizableText(go, 12);
-
-                if (customCapacity.ToolTipHeader != null && customCapacity.ToolTipBody != null)
-                {
-                    var tooltip = go.AddComponent<HBSTooltip>();
-                    tooltip.defaultStateData.SetObject(new BaseDescriptionDef
-                    {
-                        Name = customCapacity.ToolTipHeader,
-                        Details = customCapacity.ToolTipBody
-                    });
-                }
-
-                customCapacityTransform = go.transform;
-                customCapacityTransform.SetParent(customCapacities, false);
+                var go = new GameObject(id);
+                element = go.AddComponent<CustomCapacityUIElement>();
+                go.transform.SetParent(customCapacities, false);
             }
 
             {
-                CustomCapacitiesFeature.CalculateCustomCapacityResults(mechDef, customCapacity.Collection, out var capacity, out var usage, out var hasError);
+                CustomCapacitiesFeature.CalculateCustomCapacityResults(
+                    mechDef,
+                    customCapacity,
+                    out var description,
+                    out var text,
+                    out var color,
+                    out var show
+                );
 
-                var hideIfNotUsed = customCapacity.HideIfNoUsageAndCapacity && PrecisionUtils.Equals(capacity, 0) && PrecisionUtils.Equals(usage, 0);
-                var go = customCapacityTransform.gameObject;
-                if (!hideIfNotUsed)
+                element.SetData(description, text, color);
+
+                if (show)
                 {
                     shownCounter++;
                 }
-                go.SetActive(!hideIfNotUsed);
-
-                var text = customCapacity.Label
-                    + "\n"
-                    + usage.ToString(customCapacity.Format, CultureInfo.InvariantCulture)
-                    + " / "
-                    + capacity.ToString(customCapacity.Format, CultureInfo.InvariantCulture)
-                    ;
-                var color = hasError ? UIColor.Red : UIColor.White;
-                SetText(
-                    go,
-                    text,
-                    color
-                );
+                element.gameObject.SetActive(show);
             }
         }
 
         var shownCounter = 0;
         SetCapacity(CustomCapacitiesFeature.Shared.Settings.CarryWeight, ref shownCounter);
-        foreach (var customCapacity in CustomCapacitiesFeature.Shared.Settings.CustomCapacities)
+        foreach (var customCapacity in CustomCapacitiesFeature.Shared.Settings.Capacities)
         {
             SetCapacity(customCapacity, ref shownCounter);
         }
         customCapacities.gameObject.SetActive(shownCounter > 0);
-    }
-
-    private static void SetText(GameObject go, string text, UIColor color)
-    {
-        var textComponent = go.GetComponent<LocalizableText>();
-        textComponent.SetText(text);
-        var colorTracker = go.GetComponent<UIColorRefTracker>();
-        colorTracker.SetUIColor(color);
     }
 }

@@ -51,6 +51,7 @@ internal class MechEngineerSettings
     public ComponentExplosionsSettings ComponentExplosions = new();
     public CompressFloatieMessagesSettings CompressFloatieMessages = new();
     public CriticalEffectsSettings CriticalEffects = new();
+    public CustomCapacitiesSettings CustomCapacities = new();
     public DamageIgnoreSettings DamageIgnore = new();
     public DynamicSlotsSettings DynamicSlots = new();
     public EngineSettings Engine = new();
@@ -70,7 +71,6 @@ internal class MechEngineerSettings
     public TurretLimitedAmmoSettings TurretLimitedAmmo = new();
     public TurretMechComponentSettings TurretMechComponents = new();
     public TagManagerSettings TagManager = new();
-    public CustomCapacitiesSettings CustomCapacities = new();
 
     public PerformanceSettings Performance = new();
 

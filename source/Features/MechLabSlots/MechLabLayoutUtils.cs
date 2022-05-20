@@ -194,11 +194,11 @@ internal static class MechLabLayoutUtils
         return component;
     }
 
-    internal static ContentSizeFitter NormalizeContentSizeFitter(GameObject go)
+    internal static ContentSizeFitter NormalizeContentSizeFitter(GameObject go, ContentSizeFitter.FitMode mode = ContentSizeFitter.FitMode.MinSize)
     {
         var component = go.GetComponent<ContentSizeFitter>() ?? go.AddComponent<ContentSizeFitter>();
-        component.horizontalFit = ContentSizeFitter.FitMode.MinSize;
-        component.verticalFit = ContentSizeFitter.FitMode.MinSize;
+        component.horizontalFit = mode;
+        component.verticalFit = mode;
         return component;
     }
 }

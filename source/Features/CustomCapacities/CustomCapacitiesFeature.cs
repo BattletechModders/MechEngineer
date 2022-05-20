@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using BattleTech;
+using BattleTech.UI;
 using CustomComponents;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Helper;
@@ -20,25 +21,47 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         Validator.RegisterMechValidator(ccValidation.ValidateMech, ccValidation.ValidateMechCanBeFielded);
     }
 
-    internal static void CalculateCustomCapacityResults(MechDef mechDef, string collectionId, out float capacity, out float usage, out bool hasError)
+    internal static void CalculateCustomCapacityResults(
+        MechDef mechDef,
+        CustomCapacitiesSettings.CustomCapacity customCapacity,
+        out BaseDescriptionDef description,
+        out string text,
+        out UIColor color,
+        out bool show)
     {
-        if (collectionId == Shared.Settings.CarryWeight.Collection)
+        var id = customCapacity.Description.Id;
+
+        float usage, capacity;
+        bool hasError;
+        if (customCapacity == Shared.Settings.CarryWeight)
         {
             var context = CalculateCarryWeight(mechDef);
             capacity = context.TotalCapacity;
             usage = context.TotalUsage;
             hasError = context.IsTotalOverweight || context.IsHandOverweight || context.IsHandMissingFreeHand;
-            return;
+            description = new(customCapacity.Description);
+            description.Details +=
+                $"\r\n" +
+                $"\r\n<i>Total</i>   usage <b>{context.TotalUsage}</b>   capacity <b>{context.TotalCapacity}</b>" +
+                $"\r\n<i>Mech</i>   usage <b>{context.MechUsage}</b>   capacity <b>{context.MechCapacity}</b>" +
+                $"\r\n<i>HandHeld</i>   usage <b>{context.HandUsage}</b>   capacity <b>{context.HandCapacity}</b>" +
+                $"\r\n<i>Hand Requirements</i>   left <b>{context.LeftHandReq}</b>   right <b>{context.RightHandReq}</b>";
         }
-
-        CalculateCapacity(
-            mechDef,
-            ChassisLocations.All,
-            collectionId,
-            out capacity,
-            out usage
-        );
-        hasError = PrecisionUtils.SmallerThan(capacity, usage);
+        else
+        {
+            CalculateCapacity(
+                mechDef,
+                ChassisLocations.All,
+                id,
+                out capacity,
+                out usage
+            );
+            hasError = PrecisionUtils.SmallerThan(capacity, usage);
+            description = customCapacity.Description;
+        }
+        color = hasError ? UIColor.Red : UIColor.White;
+        text = string.Format(customCapacity.Format, usage, capacity);
+        show = !(customCapacity.HideIfNoUsageAndCapacity && PrecisionUtils.Equals(capacity, 0) && PrecisionUtils.Equals(usage, 0));
     }
 
     public void ValidateMech(MechDef mechDef, Errors errors)
