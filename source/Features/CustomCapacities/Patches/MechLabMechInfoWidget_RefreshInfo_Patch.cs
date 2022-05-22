@@ -83,7 +83,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
             }
 
             {
-                CustomCapacitiesFeature.CalculateCustomCapacityResults(
+                CustomCapacitiesFeature.Shared.CalculateCustomCapacityResults(
                     mechDef,
                     customCapacity,
                     out var description,

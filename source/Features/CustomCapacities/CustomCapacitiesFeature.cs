@@ -6,6 +6,7 @@ using CustomComponents;
 using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Helper;
 using MechEngineer.Misc;
+using UnityEngine;
 
 namespace MechEngineer.Features.CustomCapacities;
 
@@ -21,7 +22,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         Validator.RegisterMechValidator(ccValidation.ValidateMech, ccValidation.ValidateMechCanBeFielded);
     }
 
-    internal static void CalculateCustomCapacityResults(
+    internal void CalculateCustomCapacityResults(
         MechDef mechDef,
         CustomCapacitiesSettings.CustomCapacity customCapacity,
         out BaseDescriptionDef description,
@@ -36,23 +37,35 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         if (customCapacity == Shared.Settings.CarryWeight)
         {
             var context = CalculateCarryWeight(mechDef);
-            capacity = context.TotalCapacity;
-            usage = context.TotalUsage;
-            hasError = context.IsTotalOverweight || context.IsHandOverweight || context.IsHandMissingFreeHand;
+            capacity = context.MechCapacity + context.HandTotalCapacity;
+            usage = context.MechUsage + context.HandTotalUsage;
+            hasError = context.IsMechOverweight || context.IsHandOverweight || context.IsHandMissingFreeHand;
             description = new(customCapacity.Description);
+            string ReqString(MinHandReq req)
+            {
+                return req switch
+                {
+                    MinHandReq.None => "",
+                    MinHandReq.One => "one-handed",
+                    MinHandReq.Two => "two-handed req.",
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+            }
             description.Details +=
                 $"\r\n" +
-                $"\r\n<i>Total</i>   usage <b>{context.TotalUsage}</b>   capacity <b>{context.TotalCapacity}</b>" +
-                $"\r\n<i>Mech</i>   usage <b>{context.MechUsage}</b>   capacity <b>{context.MechCapacity}</b>" +
-                $"\r\n<i>HandHeld</i>   usage <b>{context.HandUsage}</b>   capacity <b>{context.HandCapacity}</b>" +
-                $"\r\n<i>Hand Requirements</i>   left <b>{context.LeftHandReq}</b>   right <b>{context.RightHandReq}</b>";
+                (context.HasMechUsageOrCapacity ? $"\r\n<i>Mech</i>   usage <b>{context.MechUsage:0.##} / {context.MechCapacity:0.###}</b>" : "") +
+                (context.HasSharedTopOffCapacity ? $"\r\n<i>Shared Top Off</i>   usage <b>{context.SharedTopOffUsage:0.##} / {context.SharedTopOffCapacity:0.###}</b>" : "") +
+                $"\r\n<i>HandHeld</i>" +
+                $"\r\n   <i>Total</i>   usage <b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>" +
+                $"\r\n   <i>Left</i>    usage <b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>   <b>{ReqString(context.LeftHandReq)}</b>" +
+                $"\r\n   <i>Right</i>   usage <b>{context.HandRightUsage:0.###} / {context.HandRightCapacity:0.###}</b>   <b>{ReqString(context.RightHandReq)}</b>";
         }
         else
         {
             CalculateCapacity(
                 mechDef,
-                ChassisLocations.All,
                 id,
+                ChassisLocations.All,
                 out capacity,
                 out usage
             );
@@ -83,40 +96,75 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         {
             errors.Add(MechValidationType.Overweight, Settings.CarryHandErrorOneFreeHand);
         }
-        else if (context.IsTotalOverweight)
+        else if (context.IsMechOverweight)
         {
             errors.Add(MechValidationType.Overweight, Settings.CarryWeight.ErrorOverweight);
         }
     }
 
-    internal static CarryContext CalculateCarryWeight(MechDef mechDef)
+    private CarryContext CalculateCarryWeight(MechDef mechDef)
     {
         var context = new CarryContext();
+        CalculateSharedTopOff(mechDef, context);
         CalculateCarryMech(mechDef, context);
         CalculateCarryHand(mechDef, context);
         return context;
+    }
+
+    private void CalculateSharedTopOff(MechDef mechDef, CarryContext context)
+    {
+        CalculateCapacity(
+            mechDef,
+            SharedTopOffCollectionId,
+            ChassisLocations.All,
+            out context.SharedTopOffCapacity,
+            out _,
+            Settings.SharedTopOff * mechDef.Chassis.Tonnage);
     }
 
     private static void CalculateCarryMech(MechDef mechDef, CarryContext context)
     {
         CalculateCapacity(
             mechDef,
-            ChassisLocations.All,
             CarryOnMechCollectionId,
-            out context.MechCapacity,
-            out context.MechUsage
-        );
+            ChassisLocations.All,
+            out context.StatMechCapacity,
+            out context.StatMechUsage);
     }
 
     private static void CalculateCarryHand(MechDef mechDef, CarryContext context)
     {
-        MinHandReq CheckArm(ChassisLocations location)
+        CalculateCapacity(
+            mechDef,
+            CarryInHandCollectionId,
+            ChassisLocations.LeftArm,
+            out context.StatHandLeftCapacity,
+            out context.StatHandLeftUsage
+        );
+
+        CalculateCapacity(
+            mechDef,
+            CarryInHandCollectionId,
+            ChassisLocations.RightArm,
+            out context.StatHandRightCapacity,
+            out context.StatHandRightUsage
+        );
+    }
+
+    private class CarryContext
+    {
+        internal bool IsHandOverweight => PrecisionUtils.SmallerThan(HandTotalCapacity, HandTotalUsage);
+        internal bool IsMechOverweight => PrecisionUtils.SmallerThan(MechCapacity, MechUsage);
+
+        internal bool IsHandMissingFreeHand =>
+            (LeftHandReq == MinHandReq.Two && RightHandReq != MinHandReq.None)
+            || (RightHandReq == MinHandReq.Two && LeftHandReq != MinHandReq.None);
+
+        internal MinHandReq LeftHandReq => CalcHandReq(HandLeftCapacity, HandLeftUsage);
+        internal MinHandReq RightHandReq => CalcHandReq(HandRightCapacity, HandRightUsage);
+
+        private static MinHandReq CalcHandReq(float capacityOnLocation, float usageOnLocation)
         {
-            CalculateCapacity(mechDef, location, CarryInHandCollectionId, out var capacityOnLocation, out var usageOnLocation);
-
-            context.HandCapacity += capacityOnLocation;
-            context.HandUsage += usageOnLocation;
-
             if (PrecisionUtils.SmallerThan(capacityOnLocation, usageOnLocation))
             {
                 return MinHandReq.Two;
@@ -127,34 +175,52 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             }
             return MinHandReq.None;
         }
-        context.LeftHandReq = CheckArm(ChassisLocations.LeftArm);
-        context.RightHandReq = CheckArm(ChassisLocations.RightArm);
+
+        internal float HandTotalCapacity => HandLeftCapacity + HandRightCapacity;
+        internal float HandTotalUsage => HandLeftUsage + HandRightUsage;
+
+        internal float HandLeftCapacity => TopOffHandLeftCapacity + StatHandLeftCapacity;
+        internal float HandLeftUsage => StatHandLeftUsage;
+
+        internal float HandRightCapacity => TopOffHandRightCapacity + StatHandRightCapacity;
+        internal float HandRightUsage => StatHandRightUsage;
+
+        internal bool HasMechUsageOrCapacity => !PrecisionUtils.Equals(0, MechCapacity) || !PrecisionUtils.Equals(0, MechUsage);
+
+        internal float MechCapacity => TopOffMechCapacity + StatMechCapacity;
+        internal float MechUsage => StatMechUsage;
+
+        #region TopOff
+
+        private float TopOffHandLeftCapacity => Mathf.Min(SharedTopOffCapacity / 2, HandLeftCapacityMissing);
+        private float HandLeftCapacityMissing => Mathf.Max(0, StatHandLeftUsage - StatHandLeftCapacity);
+
+        private float TopOffHandRightCapacity => Mathf.Min(Mathf.Min(SharedTopOffCapacity / 2, SharedMinCapacityAfterLeftHand), HandRightCapacityMissing);
+        private float HandRightCapacityMissing => Mathf.Max(0, StatHandRightUsage - StatHandRightCapacity);
+        private float SharedMinCapacityAfterLeftHand => SharedTopOffCapacity - TopOffHandLeftCapacity;
+
+        private float TopOffMechCapacity => Mathf.Min(SharedMinCapacityAfterRightHand, MechCapacityMissing);
+        private float MechCapacityMissing => Mathf.Max(0, StatMechCapacity - StatMechUsage);
+        private float SharedMinCapacityAfterRightHand => SharedTopOffCapacity - TopOffHandLeftCapacity - TopOffHandRightCapacity;
+
+        internal bool HasSharedTopOffCapacity => !PrecisionUtils.Equals(0, SharedTopOffCapacity);
+
+        internal float SharedTopOffCapacity;
+        internal float SharedTopOffUsage => TopOffHandLeftCapacity + TopOffHandRightCapacity + TopOffMechCapacity;
+
+        #endregion
+
+        internal float StatHandLeftCapacity;
+        internal float StatHandLeftUsage;
+
+        internal float StatHandRightCapacity;
+        internal float StatHandRightUsage;
+
+        internal float StatMechCapacity;
+        internal float StatMechUsage;
     }
 
-    internal class CarryContext
-    {
-        internal float HandCapacity;
-        internal float HandUsage;
-
-        internal bool IsHandOverweight => PrecisionUtils.SmallerThan(HandCapacity, HandUsage);
-
-        internal float MechCapacity;
-        internal float MechUsage;
-
-        internal float TotalCapacity => HandCapacity + MechCapacity;
-        internal float TotalUsage => HandUsage + MechUsage;
-
-        internal bool IsTotalOverweight => PrecisionUtils.SmallerThan(TotalCapacity, TotalUsage);
-
-        internal MinHandReq LeftHandReq;
-        internal MinHandReq RightHandReq;
-
-        internal bool IsHandMissingFreeHand =>
-            (LeftHandReq == MinHandReq.Two && RightHandReq != MinHandReq.None)
-            || (RightHandReq == MinHandReq.Two && LeftHandReq != MinHandReq.None);
-    }
-
-    internal enum MinHandReq
+    private enum MinHandReq
     {
         None,
         One,
@@ -163,8 +229,9 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
     internal const string CarryInHandCollectionId = "CarryInHand";
     internal const string CarryOnMechCollectionId = "CarryOnMech";
+    internal const string SharedTopOffCollectionId = "SharedTopOff";
 
-    private static void CalculateCapacity(MechDef mechDef, ChassisLocations location, string collectionId, out float capacity, out float usage)
+    private static void CalculateCapacity(MechDef mechDef, string collectionId, ChassisLocations location, out float capacity, out float usage, float initialCapacity = 0)
     {
         var mods = mechDef.Inventory
             .SelectMany(r =>
@@ -196,7 +263,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
         capacity = mods
             .Where(m => !m.IsUsage)
-            .Aggregate(0f, ApplyOperation);
+            .Aggregate(initialCapacity, ApplyOperation);
 
         usage = mods
             .Where(m => m.IsUsage)
