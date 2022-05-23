@@ -115,11 +115,11 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     {
         CalculateCapacity(
             mechDef,
-            SharedTopOffCollectionId,
+            CarrySharedTopOffCollectionId,
             ChassisLocations.All,
             out context.SharedTopOffCapacity,
             out _,
-            Settings.SharedTopOff * mechDef.Chassis.Tonnage);
+            Settings.CarrySharedTopOff * mechDef.Chassis.Tonnage);
     }
 
     private static void CalculateCarryMech(MechDef mechDef, CarryContext context)
@@ -229,7 +229,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
     internal const string CarryInHandCollectionId = "CarryInHand";
     internal const string CarryOnMechCollectionId = "CarryOnMech";
-    internal const string SharedTopOffCollectionId = "SharedTopOff";
+    internal const string CarrySharedTopOffCollectionId = "CarrySharedTopOff";
 
     private static void CalculateCapacity(MechDef mechDef, string collectionId, ChassisLocations location, out float capacity, out float usage, float initialCapacity = 0)
     {

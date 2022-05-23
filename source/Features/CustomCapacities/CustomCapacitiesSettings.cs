@@ -7,11 +7,11 @@ public class CustomCapacitiesSettings : ISettings
     public bool Enabled { get; set; } = true;
     public string EnabledDescription => "Enables some carry rules.";
 
-    public float SharedTopOff;
-    public string SharedTopOffDescription =>
-        "If not using the CBT rules of items providing capacity, one can use this to define a value that tops off any capacity where needed to fulfill usage." +
+    public float CarrySharedTopOff;
+    public string CarrySharedTopOffDescription =>
+        "If not using the CBT rules of items providing carry capacity, one can use this to define a value that tops off any capacity where needed to fulfill usage." +
         " Only half of the full top off value can be used to top off an arm location. The value is multiplied by the chassis tonnage." +
-        $" Modifiable via custom capacity collection '{CustomCapacitiesFeature.SharedTopOffCollectionId}'.";
+        $" Modifiable via custom capacity collection '{CustomCapacitiesFeature.CarrySharedTopOffCollectionId}'.";
 
     public string CarryHandErrorOverweight = "OVERWEIGHT: 'Mechs handheld carry weight exceeds maximum.";
     public string CarryHandErrorOneFreeHand = "OVERWEIGHT: 'Mechs handheld carry weight requires one free hand.";
