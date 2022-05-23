@@ -113,6 +113,13 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
     private void CalculateSharedTopOff(MechDef mechDef, CarryContext context)
     {
+        bool HasHandActuator(ChassisLocations location)
+        {
+            return mechDef.Inventory.Any(x => x.MountedLocation == location && x.GetCategory("ArmHandActuator") != null);
+        }
+        context.HasLeftHandActuator = HasHandActuator(ChassisLocations.LeftArm);
+        context.HasRightHandActuator = HasHandActuator(ChassisLocations.RightArm);
+
         CalculateCapacity(
             mechDef,
             CarrySharedTopOffCollectionId,
@@ -192,10 +199,16 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
         #region TopOff
 
-        private float TopOffHandLeftCapacity => Mathf.Min(SharedTopOffCapacity / 2, HandLeftCapacityMissing);
+        internal float SharedTopOffUsage => TopOffHandLeftCapacity + TopOffHandRightCapacity + TopOffMechCapacity;
+
+        private float TopOffHandLeftCapacity => HasLeftHandActuator ? TopOffHandLeftCapacityIfHand : 0;
+        private float TopOffHandLeftCapacityIfHand => Mathf.Min(TopOffHandLeftCapacityPotential, HandLeftCapacityMissing);
+        private float TopOffHandLeftCapacityPotential => SharedTopOffCapacity / 2;
         private float HandLeftCapacityMissing => Mathf.Max(0, StatHandLeftUsage - StatHandLeftCapacity);
 
-        private float TopOffHandRightCapacity => Mathf.Min(Mathf.Min(SharedTopOffCapacity / 2, SharedMinCapacityAfterLeftHand), HandRightCapacityMissing);
+        private float TopOffHandRightCapacity => HasRightHandActuator ? TopOffHandRightCapacityIfHand : 0;
+        private float TopOffHandRightCapacityIfHand => Mathf.Min(TopOffHandRightCapacityPotential, HandRightCapacityMissing);
+        private float TopOffHandRightCapacityPotential => Mathf.Min(SharedTopOffCapacity / 2, SharedMinCapacityAfterLeftHand);
         private float HandRightCapacityMissing => Mathf.Max(0, StatHandRightUsage - StatHandRightCapacity);
         private float SharedMinCapacityAfterLeftHand => SharedTopOffCapacity - TopOffHandLeftCapacity;
 
@@ -206,7 +219,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         internal bool HasSharedTopOffCapacity => !PrecisionUtils.Equals(0, SharedTopOffCapacity);
 
         internal float SharedTopOffCapacity;
-        internal float SharedTopOffUsage => TopOffHandLeftCapacity + TopOffHandRightCapacity + TopOffMechCapacity;
+        internal bool HasLeftHandActuator;
+        internal bool HasRightHandActuator;
 
         #endregion
 
