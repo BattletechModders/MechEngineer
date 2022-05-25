@@ -3,7 +3,7 @@
         "Category" : { "CategoryID" : "HandHeld" },
         "BonusDescriptions": [
             "MeleeDamage: + 70",
-            "CarryHandUsage: 9"
+            "CarryHandUsage: 8"
         ],
         "StatusEffects": [
             "StatusEffect-Attack_DamageMelee-T{amt}: 70"
