@@ -3,12 +3,12 @@
         "Category" : { "CategoryID" : "HandHeld" },
         "BonusDescriptions": [
             "MeleeDamage: + 60",
-            "CarryHandUsage: 1"
+            "CarryHandUsage: 7"
         ],
         "StatusEffects": [
             "StatusEffect-Attack_DamageMelee-T{amt}: 60"
         ],
-        "CarryHandUsage" : 1
+        "CarryHandUsage" : 7
     },
     "Description" : {
         "UIName" : "Sword + + + + + +",
