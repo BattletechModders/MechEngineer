@@ -1,8 +1,8 @@
 {
 	"Custom": {
         "BonusDescriptions": [
-            "CarryHandCapacityPercent: 5",
-            "MeleeAccuracy: + 1"
+            "MeleeAccuracy: + 1",
+            "CarryHandCapacityPercent: 5"
         ],
         "Category" : { "CategoryID" : "ArmHandActuator" },
         "Flags" : [ "autorepair", "not_broken" ]
