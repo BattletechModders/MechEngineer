@@ -21,6 +21,7 @@ public static class SimGameState_GetAllInventoryStrings_Patch
         try
         {
             var state = __instance;
+            var minCount = TagManagerFeature.Shared.Settings.SimGameItemsMinCount!;
 
             void AddApplicable<T>(DictionaryStore<T> store) where T : MechComponentDef, new()
             {
@@ -37,7 +38,6 @@ public static class SimGameState_GetAllInventoryStrings_Patch
                     }
 
                     var id = state.GetItemStatID(def.Description.Id, SimGameState.GetTypeFromComponent(def.ComponentType));
-                    var minCount = TagManagerFeature.Shared.Settings.SimGameItemsMinCount!;
                     if (state.companyStats.ContainsStatistic(id))
                     {
                         var count = state.companyStats.GetValue<int>(id);

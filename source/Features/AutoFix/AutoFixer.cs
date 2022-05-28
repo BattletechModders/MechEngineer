@@ -104,7 +104,7 @@ internal class AutoFixer : IAutoFixMechDef
             CheckArm(ChassisLocations.LeftArm);
             CheckArm(ChassisLocations.RightArm);
 
-            mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
+            mechDef.SetInventory(builder.Inventory.ToArray());
         }
 
         ArmorStructureRatioFeature.Shared.AutoFixMechDef(mechDef);
@@ -372,7 +372,7 @@ internal class AutoFixer : IAutoFixMechDef
             }
         }
 
-        mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
+        mechDef.SetInventory(builder.Inventory.ToArray());
 
         {
             var freeTonnage = Weights.CalculateFreeTonnage(mechDef);
@@ -410,16 +410,7 @@ internal class AutoFixer : IAutoFixMechDef
             }
         }
 
-        mechDef.SetInventory(builder.Inventory.OrderBy(element => element, new OrderComparer()).ToArray());
-    }
-
-    private class OrderComparer : IComparer<MechComponentRef>
-    {
-        private readonly SorterComparer comparer = new();
-        public int Compare(MechComponentRef x, MechComponentRef y)
-        {
-            return comparer.Compare(x?.Def, y?.Def);
-        }
+        mechDef.SetInventory(builder.Inventory.ToArray());
     }
 
     private static bool IsMovable(MechComponentRef c)
