@@ -9,6 +9,9 @@ public class TagManagerSettings : ISettings
     public bool Enabled { get; set; }
     public string EnabledDescription => "Manipulates MechDef and ComponentDef Tags";
 
+    public int? SimGameItemsMinCount;
+    public string SimGameItemsMinCountDescription = $"Set the owned minimum count of each mech component in SimGame.";
+
     public string[] SkirmishWhitelistTags = {MechValidationRules.ComponentTag_Stock};
     public string SkirmishWhitelistTagsDescription = "Components with these tags will appear in the skirmish mechlab, blacklisted tagged items never appear.";
 
