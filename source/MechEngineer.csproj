@@ -14,8 +14,8 @@
     <DebugSymbols>false</DebugSymbols>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ReferencePath>
-      $(BattleTechGameDir)\BattleTech_Data\Managed\publicized;
-      $(BattleTechGameDir)\BattleTech_Data\Managed;
+      $(BattleTechGameDir)\Mods\.modtek\AssembliesPublicized\;
+      $(BattleTechGameDir)\BattleTech_Data\Managed\;
       $(CustomComponentsModPath);
     </ReferencePath>
     <AssemblySearchPaths>$(ReferencePath)</AssemblySearchPaths>
