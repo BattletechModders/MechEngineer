@@ -17,13 +17,9 @@ or
 
 * install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
 * install [CustomComponents](https://github.com/BattletechModders/CustomComponents/releases) using [instructions here](https://github.com/BattletechModders/CustomComponents)
-* install MechEngineer by copying the MechEngineer folder to the mods/ directory of ModTek
+* install MechEngineer by copying the `MechEngineer/` folder to the `BATTLETECH/Mods/` folder
 
 Note: HBS BattleTech ModLoader is not supported, you need to get ModTekV2 for DLC support.
-
-## Suggested Mods
-
-* [Pansar](https://github.com/hokvel/pansar) - applies armor ratio enforcement according to CBT rules
 
 ## TODOs and Bug Reporting
 
@@ -42,24 +38,22 @@ CptMoore ([MechEngineer](https://github.com/BattletechModders/MechEngineer))
 * Colobos - ideas, lore and rules, item and mech balancing, testing
 * CptMoore - ideas, rules, coding, testing, core items
 * CrusherBob - ideas, lore and rules, engine rating to walk/sprint distance conversions
-* Denadan - ideas, custom components lib, coding
+* Denadan - ideas, [CustomComponents](https://github.com/BattletechModders/CustomComponents), coding
 * Gentleman Reaper - ideas, lore and rules, testing
 * kmission - russian localization support improvements
-* LadyAlekto + RT Team - ideas, lore and rules, lots of testing, items
+* LadyAlekto + [RogueTech](https://github.com/BattletechModders/RogueTech) Team - ideas, lore and rules, lots of testing, items
+* hokvel - [Pansar](https://github.com/hokvel/pansar) for inspiration of max armor feature
 * TotalMeltdown - ideas, lore and rules
 
 ### How-to start contributing
 
 MechEngineer uses publicized assemblies, those are .NET dlls whose classes and methods visibility were changed to public.
 
-0. Install ModTekV2 and CustomComponents if not already done.
-1. Download the [AssemblyPublicizer](https://github.com/CptMoore/AssemblyPublicizer/releases/tag/latest)
-2. Run the Publicizier by drag'n dropping the BATTLETECH/BattleTech_Data/Managed/ folder onto the exe
-      and it will create a BATTLETECH/BattleTech_Data/Managed/publicized directory with only `Assembly-CSharp.dll` inside.
-3. Checkout the MechEngineer repository to BATTLETECH/mods/MechEngineer.
-4. Copy the Directory.Build.props.template to Directory.Build.props and replace the ReferencePath directory with the location of the publicized directory.
-5. Open the solution in Visual Studio 2022 and compile the MechEngineer.dll .
-6. Start the game.
+0. Install ModTek v2.1 or later and CustomComponents if not already done.
+1. Checkout the MechEngineer repository as `BATTLETECH/Mods/MechEngineer/`.
+2. Copy the `Directory.Build.props.template` to `Directory.Build.props` and replace the BattleTechGameDir directory path.
+3. Open the solution in Visual Studio 2022 and compile the MechEngineer.dll .
+4. Start the game.
 
 ## Features
 
