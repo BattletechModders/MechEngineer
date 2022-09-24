@@ -24,15 +24,18 @@ public static class Control
         try
         {
             FileUtils.SetReadonly(Mod.SettingsDefaultsPath, false);
+            File.Delete(Mod.SettingsDefaultsPath);
+
+            FileUtils.SetReadonly(Mod.SettingsHelpPath, false);
             FileUtils.SetReadonly(Mod.SettingsLastPath, false);
 
-            Mod.SaveSettings(Settings, Mod.SettingsDefaultsPath);
+            Mod.SaveSettings(Settings, Mod.SettingsHelpPath);
             Mod.LoadSettings(Settings);
             Mod.SaveSettings(Settings, Mod.SettingsLastPath);
 
             if (Settings.GeneratedSettingsFilesReadonly)
             {
-                FileUtils.SetReadonly(Mod.SettingsDefaultsPath, true);
+                FileUtils.SetReadonly(Mod.SettingsHelpPath, true);
                 FileUtils.SetReadonly(Mod.SettingsLastPath, true);
             }
 

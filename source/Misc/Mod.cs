@@ -18,6 +18,7 @@ internal class Mod
 
     private string SettingsPath => Path.Combine(Directory, "Settings.json");
     public string SettingsDefaultsPath => Path.Combine(Directory, "Settings.defaults.json");
+    public string SettingsHelpPath => Path.Combine(Directory, "Settings.help.json");
     public string SettingsLastPath => Path.Combine(Directory, "Settings.last.json");
 
     internal void LoadSettings(object settings)
