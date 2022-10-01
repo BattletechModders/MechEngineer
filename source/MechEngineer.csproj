@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup Condition="'$(MechEngineerModPath)' == '' And Exists('$(BattleTechGameDir)\Mods\Core\MechEngineer')">
+    <!-- RogueTech -->
+    <MechEngineerModPath>$(BattleTechGameDir)\Mods\Core\MechEngineer</MechEngineerModPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(MechEngineerModPath)' == '' And Exists('$(BattleTechGameDir)\Mods\MechEngineer')">
+    <!-- flat dir -->
+    <MechEngineerModPath>$(BattleTechGameDir)\Mods\MechEngineer</MechEngineerModPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(MechEngineerModPath)' == ''">
+    <!-- sources dir -->
     <MechEngineerModPath>$(SolutionDir)</MechEngineerModPath>
   </PropertyGroup>
   <PropertyGroup>
@@ -12,8 +21,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblySearchPaths>
       $(ReferencePath);
-      $(BattleTechGameDir)\Mods\.modtek\AssembliesPublicized\;
-      $(BattleTechGameDir)\BattleTech_Data\Managed\;
+      $(BattleTechGameDir)\Mods\.modtek\AssembliesPublicized;
+      $(BattleTechGameDir)\BattleTech_Data\Managed;
       {HintPathFromItem}
     </AssemblySearchPaths>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
@@ -24,6 +33,7 @@
   </Target>
   <ItemGroup>
     <Reference Include="CustomComponents">
+      <!-- relative to ME -->
       <HintPath>$(MechEngineerModPath)\..\CustomComponents\CustomComponents.dll</HintPath>
       <Private>False</Private>
     </Reference>
