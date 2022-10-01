@@ -9,7 +9,5 @@
         -->
         <!-- where should the MechEngineer DLL be copied to? -->
   	    <!-- <MechEngineerModPath>$(BattleTechGameDir)\Mods\MechEngineer</MechEngineerModPath> -->
-        <!-- where can the CustomComponents DLL be found? -->
-  	    <!-- <CustomComponentsModPath>$(BattleTechGameDir)\Mods\CustomComponents</CustomComponentsModPath> -->
 	</PropertyGroup>
 </Project>
