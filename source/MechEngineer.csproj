@@ -4,7 +4,7 @@
     <MechEngineerModPath>$(SolutionDir)</MechEngineerModPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(CustomComponentsModPath)' == ''">
-    <CustomComponentsModPath>..\..\CustomComponents</CustomComponentsModPath>
+    <CustomComponentsModPath>$(MechEngineerModPath)\..\CustomComponents</CustomComponentsModPath>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -13,12 +13,11 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ReferencePath>
+    <AssemblySearchPaths>
       $(BattleTechGameDir)\Mods\.modtek\AssembliesPublicized\;
       $(BattleTechGameDir)\BattleTech_Data\Managed\;
-      $(CustomComponentsModPath);
-    </ReferencePath>
-    <AssemblySearchPaths>$(ReferencePath)</AssemblySearchPaths>
+      {HintPathFromItem}
+    </AssemblySearchPaths>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -27,6 +26,7 @@
   </Target>
   <ItemGroup>
     <Reference Include="CustomComponents">
+      <HintPath>$(CustomComponentsModPath)\CustomComponents.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
