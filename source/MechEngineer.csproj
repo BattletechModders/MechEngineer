@@ -22,7 +22,7 @@
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  <Target Name="CopyDLLtoModDir" AfterTargets="AfterBuild">
+  <Target Name="CopyFilesToGame" AfterTargets="CopyFilesToOutputDirectory">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MechEngineerModPath)" />
   </Target>
   <ItemGroup>

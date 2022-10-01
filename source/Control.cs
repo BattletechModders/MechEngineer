@@ -69,6 +69,7 @@ public static class Control
         }
     }
 
+    [UsedByModTek]
     public static void FinishedLoading(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
     {
         try
