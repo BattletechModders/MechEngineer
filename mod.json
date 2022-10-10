@@ -5,7 +5,7 @@
 
 	"Enabled": true,
 	"DependsOn": ["CustomComponents"],
-	"ConflictsWith": ["Pansar"],
+	"ConflictsWith": ["CustomSlots", "HandHeld", "OnePointArmorStep", "Pansar"],
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
