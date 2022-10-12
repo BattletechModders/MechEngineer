@@ -213,7 +213,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         private float SharedMinCapacityAfterLeftHand => SharedTopOffCapacity - TopOffHandLeftCapacity;
 
         private float TopOffMechCapacity => Mathf.Min(SharedMinCapacityAfterRightHand, MechCapacityMissing);
-        private float MechCapacityMissing => Mathf.Max(0, StatMechCapacity - StatMechUsage);
+        private float MechCapacityMissing => Mathf.Max(0, StatMechUsage - StatMechCapacity);
         private float SharedMinCapacityAfterRightHand => SharedTopOffCapacity - TopOffHandLeftCapacity - TopOffHandRightCapacity;
 
         internal bool HasSharedTopOffCapacity => !PrecisionUtils.Equals(0, SharedTopOffCapacity);
