@@ -13,6 +13,9 @@ public class CustomCapacitiesSettings : ISettings
         " Only half of the full top off value can be used to top off an arm location. The value is multiplied by the chassis tonnage." +
         $" Modifiable via custom capacity collection '{CustomCapacitiesFeature.CarrySharedTopOffCollectionId}'.";
 
+    public string CarrySharedTopOffHandCategoryID = "ArmHandActuator";
+    public string CarrySharedTopOffHandCategoryIDDescription = "The category an item has to have to be recognized to be a hand actuator for one/two-handed shared top off calculations.";
+
     public string CarryHandErrorOverweight = "OVERWEIGHT: 'Mechs handheld carry weight exceeds maximum.";
     public string CarryHandErrorOneFreeHand = "OVERWEIGHT: 'Mechs handheld carry weight requires one free hand.";
 

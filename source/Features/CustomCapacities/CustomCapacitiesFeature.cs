@@ -115,7 +115,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     {
         bool HasHandActuator(ChassisLocations location)
         {
-            return mechDef.Inventory.Any(x => x.MountedLocation == location && x.GetCategory("ArmHandActuator") != null);
+            return mechDef.Inventory.Any(x => x.MountedLocation == location && x.GetCategory(Settings.CarrySharedTopOffHandCategoryID) != null);
         }
         context.HasLeftHandActuator = HasHandActuator(ChassisLocations.LeftArm);
         context.HasRightHandActuator = HasHandActuator(ChassisLocations.RightArm);

@@ -6,7 +6,7 @@ log.txt
 /*.dll
 /publicized_assemblies/
 /dist/
-Settings.defaults.json
+Settings.help.json
 Settings.last.json
 Directory.Build.props
 
