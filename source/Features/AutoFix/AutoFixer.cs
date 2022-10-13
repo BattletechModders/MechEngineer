@@ -73,31 +73,29 @@ internal class AutoFixer : IAutoFixMechDef
         }
 
         var dataManager = mechDef.DataManager;
+
+        if (AutoFixerFeature.settings.ArmActuatorAdder.Enabled)
         {
-            bool CheckAndAdd(ChassisLocations location, string defId, string categoryId, string tagLimit)
+            bool CheckAndAdd(ChassisLocations location, AutoFixerSettings.ArmActuatorAdderSettings.ActuatorSettings settings)
             {
+                var tagLimit = location == ChassisLocations.LeftArm ? settings.TagLimitLeft : settings.TagLimitRight;
                 if (mechDef.Chassis.ChassisTags.Contains(tagLimit))
                 {
                     return false;
                 }
-                if (builder.Inventory.Any(x => x.MountedLocation == location && x.GetCategory(categoryId) != null))
+                if (builder.Inventory.Any(x => x.MountedLocation == location && x.GetCategory(settings.CategoryId) != null))
                 {
                     return true;
                 }
-                var def = dataManager.UpgradeDefs.Get(defId);
+                var def = dataManager.UpgradeDefs.Get(settings.DefId);
                 return builder.Add(def, location) != null;
             }
 
             void CheckArm(ChassisLocations location)
             {
-                var leftRight = location == ChassisLocations.LeftArm ? "Left" : "Right";
-                // TODO normalize naming across the board
-                // Gear_Actuator_Arm_Lower
-                // ActuatorArmLower
-                // LimitActuatorArmUpper
-                if (CheckAndAdd(location, "emod_arm_part_lower", "ArmLowerActuator", "ArmLimitUpper"+leftRight))
+                if (CheckAndAdd(location, AutoFixerFeature.settings.ArmActuatorAdder.Lower))
                 {
-                    CheckAndAdd(location, "emod_arm_part_hand", "ArmHandActuator", "ArmLimitLower"+leftRight);
+                    CheckAndAdd(location, AutoFixerFeature.settings.ArmActuatorAdder.Hand);
                 }
             }
 

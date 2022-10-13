@@ -294,4 +294,34 @@ internal class AutoFixerSettings : ISettings
             SlotChange = new SlotChange {From = 4, By = 6}
         }
     };
+
+    public ArmActuatorAdderSettings ArmActuatorAdder = new();
+    public class ArmActuatorAdderSettings
+    {
+        public bool Enabled = true;
+        public ActuatorSettings Lower = new()
+        {
+            DefId = "emod_arm_part_lower",
+            CategoryId = "ArmLowerActuator",
+            TagLimitLeft = "ArmLimitUpperLeft",
+            TagLimitRight = "ArmLimitUpperRight",
+        };
+        public ActuatorSettings Hand = new()
+        {
+            DefId = "emod_arm_part_hand",
+            CategoryId = "ArmHandActuator",
+            TagLimitLeft = "ArmLimitLowerLeft",
+            TagLimitRight = "ArmLimitLowerRight",
+        };
+
+        public class ActuatorSettings
+        {
+#nullable disable
+            public string DefId;
+            public string CategoryId;
+            public string TagLimitLeft;
+            public string TagLimitRight;
+#nullable enable
+        }
+    }
 }
