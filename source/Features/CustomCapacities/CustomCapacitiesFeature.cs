@@ -37,8 +37,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         if (customCapacity == Shared.Settings.CarryWeight)
         {
             var context = CalculateCarryWeight(mechDef);
-            capacity = context.MechCapacity + context.HandTotalCapacity;
-            usage = context.MechUsage + context.HandTotalUsage;
+            capacity = context.TotalCapacity;
+            usage = context.TotalUsage;
             hasError = context.IsMechOverweight || context.IsHandOverweight || context.IsHandMissingFreeHand;
             description = new(customCapacity.Description);
             string ReqString(MinHandReq req)
@@ -53,8 +53,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             }
             description.Details +=
                 $"\r\n" +
+                (context.HasSharedTopOffCapacity ? $"\r\n<i>Shared</i>   usage <b>{context.SharedTopOffUsage:0.##} / {context.SharedTopOffCapacity:0.###}</b>" : "") +
                 (context.HasMechUsageOrCapacity ? $"\r\n<i>Mech</i>   usage <b>{context.MechUsage:0.##} / {context.MechCapacity:0.###}</b>" : "") +
-                (context.HasSharedTopOffCapacity ? $"\r\n<i>Shared Top Off</i>   usage <b>{context.SharedTopOffUsage:0.##} / {context.SharedTopOffCapacity:0.###}</b>" : "") +
                 $"\r\n<i>HandHeld</i>" +
                 $"\r\n   <i>Total</i>   usage <b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>" +
                 $"\r\n   <i>Left</i>    usage <b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>   <b>{ReqString(context.LeftHandReq)}</b>" +
@@ -183,6 +183,9 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             return MinHandReq.None;
         }
 
+        internal float TotalCapacity => MechCapacity + HandTotalCapacity + LeftOverSharedTopOffCapacity;
+        internal float TotalUsage => MechUsage + HandTotalUsage;
+
         internal float HandTotalCapacity => HandLeftCapacity + HandRightCapacity;
         internal float HandTotalUsage => HandLeftUsage + HandRightUsage;
 
@@ -214,8 +217,9 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
         private float TopOffMechCapacity => Mathf.Min(SharedMinCapacityAfterRightHand, MechCapacityMissing);
         private float MechCapacityMissing => Mathf.Max(0, StatMechUsage - StatMechCapacity);
-        private float SharedMinCapacityAfterRightHand => SharedTopOffCapacity - TopOffHandLeftCapacity - TopOffHandRightCapacity;
+        private float SharedMinCapacityAfterRightHand => SharedMinCapacityAfterLeftHand - TopOffHandRightCapacity;
 
+        private float LeftOverSharedTopOffCapacity => SharedMinCapacityAfterRightHand - TopOffMechCapacity;
         internal bool HasSharedTopOffCapacity => !PrecisionUtils.Equals(0, SharedTopOffCapacity);
 
         internal float SharedTopOffCapacity;
