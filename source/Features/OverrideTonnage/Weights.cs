@@ -41,7 +41,7 @@ internal class Weights
     internal Weights(MechDef mechDef)
     {
         StandardArmorWeight = mechDef.StandardArmorTonnage();
-        StandardStructureWeight = mechDef.Chassis.Tonnage / 10f;
+        StandardStructureWeight = mechDef.Chassis.InitialTonnage;
         StandardChassisWeightCapacity = mechDef.Chassis.Tonnage;
         Engine = mechDef.GetEngine();
         Factors = Engine?.WeightFactors ?? WeightsUtils.GetWeightFactorsFromInventory(mechDef.Inventory);
