@@ -55,7 +55,7 @@ internal class MechArmorState
     private static int CalculateMaximum(MechDef mechDef)
     {
         var tonsPerPoint = ArmorUtils.TonPerPointWithFactor(mechDef);
-        var maxPointsWithoutWeightLimit = ArmorStructureRatioFeature.GetMaximumArmorPoints(mechDef);
+        var maxPointsWithoutWeightLimit = ArmorUtils.GetMaximumArmorPoints(mechDef);
         var maxWeightWithoutWeightLimit = maxPointsWithoutWeightLimit * tonsPerPoint;
 
         var weights = new Weights(mechDef)
@@ -83,7 +83,7 @@ internal class MechArmorState
     private void PrepareTorsoLocation(ChassisLocations chassisLocation, LocationDef locationDef, LocationLoadoutDef loadoutDef)
     {
         var chassisLocationState = new ChassisLocationState(
-            ArmorStructureRatioFeature.GetMaximumArmorPoints(locationDef),
+            ArmorUtils.GetMaximumArmorPoints(locationDef),
             PrecisionUtils.RoundDownToInt(loadoutDef.AssignedArmor + loadoutDef.AssignedRearArmor)
         );
 

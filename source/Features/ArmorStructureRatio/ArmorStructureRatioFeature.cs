@@ -16,6 +16,11 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
 
     internal static ArmorStructureRatioSettings settings => Shared.Settings;
 
+    protected override void SetupFeatureLoaded()
+    {
+        ArmorUtils.MaxTotalArmorCalc = locationDef => locationDef.InternalStructure * GetArmorToStructureRatio(locationDef.Location);
+    }
+
     public void AutoFixChassisDef(ChassisDef chassisDef)
     {
         if (!Loaded)
@@ -31,7 +36,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
         for (var index = 0; index < chassisDef.Locations.Length; index++)
         {
             var locationDef = chassisDef.Locations[index];
-            var max = GetMaximumArmorPoints(locationDef);
+            var max = ArmorUtils.GetMaximumArmorPoints(locationDef);
             float front, back;
             if ((locationDef.Location & ChassisLocations.Torso) != ChassisLocations.None)
             {
@@ -121,7 +126,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
         var structure = chassisLocationDef.InternalStructure;
 
         var total = armor + armorRear;
-        var totalMax = GetMaximumArmorPoints(chassisLocationDef);
+        var totalMax = ArmorUtils.GetMaximumArmorPoints(chassisLocationDef);
 
         // only fix over-allocated locations
         if (total <= totalMax)
@@ -137,7 +142,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
             if ((location & ChassisLocations.Torso) != 0)
             {
                 var ratio = ArmorAllocationRatioFrontRear(location);
-                mechLocationDef.AssignedArmor = PrecisionUtils.RoundDown(totalMax * ratio, ArmorPerStep);
+                mechLocationDef.AssignedArmor = PrecisionUtils.RoundDown(totalMax * ratio, ArmorUtils.ArmorPerStep);
                 mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
                 mechLocationDef.AssignedRearArmor = totalMax - mechLocationDef.AssignedArmor;
                 mechLocationDef.CurrentRearArmor = mechLocationDef.AssignedRearArmor;
@@ -162,22 +167,6 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
         return false;
     }
 
-    internal static int GetMaximumArmorPoints(MechDef mechDef)
-    {
-        return MechDefBuilder.Locations
-            .Select(location => mechDef.Chassis.GetLocationDef(location))
-            .Select(GetMaximumArmorPoints)
-            .Sum();
-    }
-
-    internal static int GetMaximumArmorPoints(LocationDef locationDef)
-    {
-        var ratio = GetArmorToStructureRatio(locationDef.Location);
-        return (int)PrecisionUtils.RoundDown(locationDef.InternalStructure * ratio, ArmorPerStep);
-    }
-
-    internal static int ArmorPerStep => (int)UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_STEP;
-
     private static float ArmorAllocationRatioFrontRear(ChassisLocations location)
     {
         var constants = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
@@ -201,7 +190,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
         return front / total;
     }
 
-    private static int GetArmorToStructureRatio(ChassisLocations location)
+    internal static int GetArmorToStructureRatio(ChassisLocations location)
     {
         return location == ChassisLocations.Head ? 3 : 2;
     }

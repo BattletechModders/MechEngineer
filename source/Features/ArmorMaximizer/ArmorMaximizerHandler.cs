@@ -30,7 +30,7 @@ internal static class ArmorMaximizerHandler
 
     internal static void OnMaxArmor(MechLabPanel mechLabPanel, MechLabMechInfoWidget infoWidget)
     {
-        if (!MechArmorState.Maximize(mechLabPanel.activeMechDef, InputUtils.ControlModifierPressed, ArmorStructureRatioFeature.ArmorPerStep, out var updates))
+        if (!MechArmorState.Maximize(mechLabPanel.activeMechDef, InputUtils.ControlModifierPressed, ArmorUtils.ArmorPerStep, out var updates))
         {
             return;
         }
@@ -49,8 +49,8 @@ internal static class ArmorMaximizerHandler
 
     internal static void OnArmorAddOrSubtract(MechLabLocationWidget widget, bool isRearArmor, float direction)
     {
-        var stepPrecision = ArmorMaximizerFeature.Shared.Settings.StepPrecision.Get() ?? ArmorStructureRatioFeature.ArmorPerStep;
-        var stepSize = ArmorMaximizerFeature.Shared.Settings.StepSize.Get() ?? ArmorStructureRatioFeature.ArmorPerStep;
+        var stepPrecision = ArmorMaximizerFeature.Shared.Settings.StepPrecision.Get() ?? ArmorUtils.ArmorPerStep;
+        var stepSize = ArmorMaximizerFeature.Shared.Settings.StepSize.Get() ?? ArmorUtils.ArmorPerStep;
 
         var stepDirection = direction < 0 ? -1 : 1;
         var current = isRearArmor ? widget.currentRearArmor : widget.currentArmor;
@@ -65,16 +65,19 @@ internal static class ArmorMaximizerHandler
             var max = isRearArmor ? widget.maxRearArmor : widget.maxArmor;
             updated = Mathf.Min(updated, max);
 
-            var maxTotal = ArmorStructureRatioFeature.GetMaximumArmorPoints(widget.chassisLocationDef);
+            var maxTotal = ArmorUtils.GetMaximumArmorPoints(widget.chassisLocationDef);
             var maxOther = maxTotal - updated;
             var currentOther = isRearArmor ? widget.currentArmor : widget.currentRearArmor;
             var updatedOther = Mathf.Min(currentOther,maxOther);
 
-            var otherNotChanged = PrecisionUtils.Equals(currentOther, updatedOther);
-            if (otherNotChanged || !ArmorLocationLocker.IsLocked(widget.loadout.Location, !isRearArmor))
+            var otherChanged = !PrecisionUtils.Equals(currentOther, updatedOther);
+            if (!otherChanged || !ArmorLocationLocker.IsLocked(widget.loadout.Location, !isRearArmor))
             {
                 widget.SetArmor(isRearArmor, updated);
-                widget.SetArmor(!isRearArmor, updatedOther);
+                if (otherChanged)
+                {
+                    widget.SetArmor(!isRearArmor, updatedOther);
+                }
             }
 
             Control.Logger.Trace?.Log($"HandleArmorUpdate updated={updated} maxTotal={maxTotal} maxOther={maxOther} currentOther={currentOther} updatedOther={updatedOther} isRearArmor={updatedOther}");

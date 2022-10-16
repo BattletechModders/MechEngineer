@@ -16,8 +16,9 @@ public class ArmorMaximizerSettings : ISettings
 
 	public ValueByModifier StepSize = new ValueByModifier
 	{
-		Shift = 25f,
-		Control = 999f,
+        Alt = 1,
+		Control = 999,
+        Shift = 25,
 	};
 
 	public ValueByModifier StepPrecision = new ValueByModifier
