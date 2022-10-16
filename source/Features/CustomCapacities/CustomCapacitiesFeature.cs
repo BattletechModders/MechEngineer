@@ -261,11 +261,14 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             .ThenBy(m => m.Operation)
             .ToList();
 
+        var quantityCapacityFactor = 0f;
+
         float ApplyOperation(float previous, CapacityModCustom mod)
         {
             var factor = mod.QuantityFactorType switch
             {
                 QuantityFactorType.One => 1f,
+                QuantityFactorType.Capacity => quantityCapacityFactor,
                 QuantityFactorType.ChassisTonnage => mechDef.Chassis.Tonnage,
                 _ => throw new ArgumentOutOfRangeException()
             };
@@ -282,6 +285,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         capacity = mods
             .Where(m => !m.IsUsage)
             .Aggregate(initialCapacity, ApplyOperation);
+        quantityCapacityFactor = capacity;
 
         usage = mods
             .Where(m => m.IsUsage)

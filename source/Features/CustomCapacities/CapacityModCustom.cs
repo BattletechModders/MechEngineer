@@ -39,5 +39,6 @@ public enum OperationType
 public enum QuantityFactorType
 {
     One,
-    ChassisTonnage
+    Capacity, // only usable from Usage otherwise 0
+    ChassisTonnage,
 }
