@@ -126,7 +126,9 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             ChassisLocations.All,
             out context.SharedTopOffCapacity,
             out _,
-            Settings.CarrySharedTopOff * mechDef.Chassis.Tonnage);
+            context,
+            Settings.CarrySharedTopOff * mechDef.Chassis.Tonnage
+        );
     }
 
     private static void CalculateCarryMech(MechDef mechDef, CarryContext context)
@@ -136,7 +138,9 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             CarryOnMechCollectionId,
             ChassisLocations.All,
             out context.StatMechCapacity,
-            out context.StatMechUsage);
+            out context.StatMechUsage,
+            context
+        );
     }
 
     private static void CalculateCarryHand(MechDef mechDef, CarryContext context)
@@ -146,7 +150,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             CarryInHandCollectionId,
             ChassisLocations.LeftArm,
             out context.StatHandLeftCapacity,
-            out context.StatHandLeftUsage
+            out context.StatHandLeftUsage,
+            context
         );
 
         CalculateCapacity(
@@ -154,7 +159,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             CarryInHandCollectionId,
             ChassisLocations.RightArm,
             out context.StatHandRightCapacity,
-            out context.StatHandRightUsage
+            out context.StatHandRightUsage,
+            context
         );
     }
 
@@ -249,7 +255,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     internal const string CarryOnMechCollectionId = "CarryOnMech";
     internal const string CarrySharedTopOffCollectionId = "CarrySharedTopOff";
 
-    private static void CalculateCapacity(MechDef mechDef, string collectionId, ChassisLocations location, out float capacity, out float usage, float initialCapacity = 0)
+    private static void CalculateCapacity(MechDef mechDef, string collectionId, ChassisLocations location, out float capacity, out float usage, CarryContext? context = null, float initialCapacity = 0)
     {
         var mods = mechDef.Inventory
             .SelectMany(r =>
@@ -257,18 +263,19 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
                 .Where(mod => mod.Collection == collectionId)
                 .Where(mod => !mod.IsLocationRestricted || (r.MountedLocation & location) != ChassisLocations.None)
             )
-            .OrderBy(m => m.Priority)
+            .OrderBy(m => m.IsUsage)
+            .ThenBy(m => m.Priority)
             .ThenBy(m => m.Operation)
             .ToList();
 
         var quantityCapacityFactor = 0f;
-
         float ApplyOperation(float previous, CapacityModCustom mod)
         {
             var factor = mod.QuantityFactorType switch
             {
                 QuantityFactorType.One => 1f,
                 QuantityFactorType.Capacity => quantityCapacityFactor,
+                QuantityFactorType.CarrySharedTopOffCapacity => context!.SharedTopOffCapacity,
                 QuantityFactorType.ChassisTonnage => mechDef.Chassis.Tonnage,
                 _ => throw new ArgumentOutOfRangeException()
             };

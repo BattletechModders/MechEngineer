@@ -40,5 +40,6 @@ public enum QuantityFactorType
 {
     One,
     Capacity, // only usable from Usage otherwise 0
+    CarrySharedTopOffCapacity, // special case required by RT
     ChassisTonnage,
 }
