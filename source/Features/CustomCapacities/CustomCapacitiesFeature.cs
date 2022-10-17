@@ -37,8 +37,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         if (customCapacity == Shared.Settings.CarryWeight)
         {
             var context = CalculateCarryWeight(mechDef);
-            capacity = context.HandTotalCapacity;
-            usage = context.HandTotalUsage;
+            capacity = context.HandTotalCapacity + context.LeftOverCapacity;
+            usage = context.HandTotalUsage + context.LeftOverUsage;
             hasError = context.IsHandOverweight || context.IsHandMissingFreeHand;
             description = new(customCapacity.Description);
             string ReqString(MinHandReq req)
@@ -57,7 +57,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
                 $"\r\n   <i>Total</i>     usage <b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>" +
                 $"\r\n   <i>Left</i>      usage <b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>   <b>{ReqString(context.LeftHandReq)}</b>" +
                 $"\r\n   <i>Right</i>     usage <b>{context.HandRightUsage:0.###} / {context.HandRightCapacity:0.###}</b>   <b>{ReqString(context.RightHandReq)}</b>" +
-                (context.HasLeftOver ? $"\r\n   <i>Left Over</i> usage <b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>" : "");
+                (context.HasLeftOverTopOff ? $"\r\n   <i>Left Over</i> usage <b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>" : "");
         }
         else
         {
@@ -180,7 +180,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         internal float HandRightCapacity;
         internal float HandRightUsage;
 
-        internal bool HasLeftOver => !PrecisionUtils.Equals(0, LeftOverCapacity) || !PrecisionUtils.Equals(0, LeftOverUsage);
+        internal bool HasLeftOverTopOff => !PrecisionUtils.Equals(0, LeftOverTopOff);
 
         internal float LeftOverTopOff;
         internal float LeftOverCapacity;
