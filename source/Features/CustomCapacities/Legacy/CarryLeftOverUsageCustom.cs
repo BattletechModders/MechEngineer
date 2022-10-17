@@ -3,8 +3,8 @@ using CustomComponents;
 
 namespace MechEngineer.Features.CustomCapacities.Legacy;
 
-[CustomComponent("CarryMechUsage")]
-public class CarryMechUsageCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
+[CustomComponent("CarryLeftOverUsage")]
+public class CarryLeftOverUsageCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
 {
     private float Value;
 
@@ -17,7 +17,7 @@ public class CarryMechUsageCustom : SimpleCustomComponent, IValueComponent<float
     {
         Def.AddComponent(new CapacityModCustom
             {
-                Collection = CustomCapacitiesFeature.CarryOnMechCollectionId,
+                Collection = CustomCapacitiesFeature.CarryLeftOverCollectionId,
                 IsUsage = true,
                 Quantity = Value
             }

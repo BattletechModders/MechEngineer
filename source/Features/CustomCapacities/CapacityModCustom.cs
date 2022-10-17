@@ -39,7 +39,7 @@ public enum OperationType
 public enum QuantityFactorType
 {
     One,
-    Capacity, // only usable from Usage otherwise 0
-    CarrySharedTopOffCapacity, // special case required by RT
+    Capacity, // only usable from Usage as otherwise 0
+    CarryLeftOverTopOff, // special case wanted by RT
     ChassisTonnage,
 }

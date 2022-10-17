@@ -3,8 +3,8 @@ using CustomComponents;
 
 namespace MechEngineer.Features.CustomCapacities.Legacy;
 
-[CustomComponent("CarryMechCapacityChassisFactor")]
-public class CarryMechCapacityChassisFactorCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
+[CustomComponent("CarryLeftOverCapacityChassisFactor")]
+public class CarryLeftOverCapacityChassisFactorCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
 {
     private float Value;
 
@@ -17,7 +17,7 @@ public class CarryMechCapacityChassisFactorCustom : SimpleCustomComponent, IValu
     {
         Def.AddComponent(new CapacityModCustom
             {
-                Collection = CustomCapacitiesFeature.CarryOnMechCollectionId,
+                Collection = CustomCapacitiesFeature.CarryLeftOverCollectionId,
                 Quantity = Value,
                 QuantityFactorType = QuantityFactorType.ChassisTonnage
             }

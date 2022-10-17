@@ -23,14 +23,7 @@ public class CarryCapacityFactorCustom : SimpleCustomComponent, IValueComponent<
         );
         Def.AddComponent(new CapacityModCustom
             {
-                Collection = CustomCapacitiesFeature.CarryOnMechCollectionId,
-                Operation = OperationType.Multiply,
-                Quantity = Value
-            }
-        );
-        Def.AddComponent(new CapacityModCustom
-            {
-                Collection = CustomCapacitiesFeature.CarrySharedTopOffCollectionId,
+                Collection = CustomCapacitiesFeature.CarryLeftOverTopOffCollectionId,
                 Operation = OperationType.Multiply,
                 Quantity = Value
             }

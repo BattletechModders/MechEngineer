@@ -7,16 +7,11 @@ public class CustomCapacitiesSettings : ISettings
     public bool Enabled { get; set; } = true;
     public string EnabledDescription => "Enables some carry rules.";
 
-    public float CarrySharedTopOff;
-    public string CarrySharedTopOffDescription =>
-        "If not using the CBT rules of items providing carry capacity, one can use this to define a value that tops off any capacity where needed to fulfill usage." +
-        " Only half of the full top off value can be used to top off an arm location. The value is multiplied by the chassis tonnage." +
-        $" Modifiable via custom capacity collection '{CustomCapacitiesFeature.CarrySharedTopOffCollectionId}'.";
+    public float CarryLeftOverTopOff;
+    public string CarryLeftOverTopOffDescription =>
+        "Non CBT mechanism. The value is multiplied by the chassis tonnage. Carry in hand might have left overs, `top off` - `carry in hand usage` = `carry left over capacity`." +
+        $" Modifiable via custom capacity collection '{CustomCapacitiesFeature.CarryLeftOverTopOffCollectionId}'.";
 
-    public string CarrySharedTopOffHandCategoryID = "ArmHandActuator";
-    public string CarrySharedTopOffHandCategoryIDDescription = "The category an item has to have to be recognized to be a hand actuator for one/two-handed shared top off calculations.";
-
-    public string CarryHandErrorOverweight = "OVERWEIGHT: 'Mechs handheld carry weight exceeds maximum.";
     public string CarryHandErrorOneFreeHand = "OVERWEIGHT: 'Mechs handheld carry weight requires one free hand.";
 
     public CustomCapacity CarryWeight = new()
@@ -34,7 +29,7 @@ public class CustomCapacitiesSettings : ISettings
         ErrorOverweight = "OVERWEIGHT: 'Mechs total carry weight exceeds maximum.",
         HideIfNoUsageAndCapacity = true
     };
-    public string CarryWeightDescription => $"Modifiable via custom capacity collections '{CustomCapacitiesFeature.CarryInHandCollectionId}' and '{CustomCapacitiesFeature.CarryOnMechCollectionId}'.";
+    public string CarryWeightDescription => $"Modifiable via custom capacity collection '{CustomCapacitiesFeature.CarryInHandCollectionId}'.";
 
     public CustomCapacity[] Capacities =
     {
