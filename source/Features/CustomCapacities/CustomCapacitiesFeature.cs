@@ -37,8 +37,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         if (customCapacity == Shared.Settings.CarryWeight)
         {
             var context = CalculateCarryWeight(mechDef);
-            capacity = context.HandTotalCapacity + context.LeftOverCapacity;
-            usage = context.HandTotalUsage + context.LeftOverUsage;
+            capacity = context.TotalCapacity;
+            usage = context.TotalUsage;
             hasError = context.IsHandOverweight || context.IsHandMissingFreeHand;
             description = new(customCapacity.Description);
             string ReqString(MinHandReq req)
@@ -170,6 +170,9 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             }
             return MinHandReq.None;
         }
+
+        internal float TotalCapacity => LeftOverTopOff > HandTotalCapacity ? LeftOverTopOff : HandTotalCapacity;
+        internal float TotalUsage => HandTotalUsage + LeftOverUsage;
 
         internal float HandTotalCapacity => HandLeftCapacity + HandRightCapacity;
         internal float HandTotalUsage => HandLeftUsage + HandRightUsage;
