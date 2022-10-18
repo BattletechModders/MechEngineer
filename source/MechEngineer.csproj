@@ -20,12 +20,10 @@
     <LangVersion>preview</LangVersion>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblySearchPaths>
       $(ReferencePath);
-      $(BattleTechGameDir)\Mods\.modtek\AssembliesPublicized;
-      $(BattleTechGameDir)\BattleTech_Data\Managed;
-      {HintPathFromItem}
+      {HintPathFromItem};
+      $(BattleTechGameDir)\BattleTech_Data\Managed
     </AssemblySearchPaths>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <Nullable>enable</Nullable>
@@ -34,12 +32,15 @@
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MechEngineerModPath)" />
   </Target>
   <ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.3.0" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="CustomComponents">
       <!-- relative to ME -->
       <HintPath>$(MechEngineerModPath)\..\CustomComponents\CustomComponents.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Assembly-CSharp">
+    <Reference Include="Assembly-CSharp" Publicize="true">
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
