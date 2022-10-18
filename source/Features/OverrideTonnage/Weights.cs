@@ -56,11 +56,9 @@ internal class Weights
     private float EngineWeight => Engine?.TotalTonnage ?? 0;
     private float ChassisWeightCapacity => CalculateWeight(StandardChassisWeightCapacity, Factors.ChassisFactor);
 
-    private float ArmorRoundingPrecision => PrecisionUtils.RoundUp(StandardArmorRoundingPrecision * Factors.ArmorFactor, 0.0001f);
+    private float ArmorRoundingPrecision => PrecisionUtils.RoundUp(StandardArmorRoundingPrecision * Factors.ArmorFactor, OverrideTonnageFeature.settings.PrecisionEpsilon);
 
-    private readonly float StandardArmorRoundingPrecision =
-        OverrideTonnageFeature.settings.ArmorRoundingPrecision
-        ?? UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
+    private readonly float StandardArmorRoundingPrecision = UnityGameInstance.BattleTechGame.MechStatisticsConstants.TONNAGE_PER_ARMOR_POINT;
 
     private static float CalculateWeight(float unmodified, float factor, float? precision = null)
     {

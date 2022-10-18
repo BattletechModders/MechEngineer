@@ -117,7 +117,8 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
             sign = "- ";
             number = -number;
         }
-        return $"{sign}{number:0.##}";
+        var digits = new string('#', OverrideTonnageFeature.settings.MechLabComponentDecimalPlaces);
+        return sign + string.Format("{0:0." + digits + "}", number);
     }
 
     internal static void AdjustInfoWidget(
