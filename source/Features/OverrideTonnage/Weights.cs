@@ -22,7 +22,7 @@ internal class Weights
 
     internal static float CalculateWeightFactorsChange(MechDef mechDef, WeightFactors componentFactors)
     {
-        var weights = new Weights(mechDef);
+        var weights = new Weights(mechDef, false);
         var before = weights.TotalWeight;
         weights.Factors.Combine(componentFactors);
         var after = weights.TotalWeight;
@@ -38,14 +38,21 @@ internal class Weights
     // must reference Engine factors if they exist
     private readonly WeightFactors Factors;
 
-    internal Weights(MechDef mechDef)
+    internal Weights(MechDef mechDef, bool processInventory = true)
     {
         StandardArmorWeight = mechDef.StandardArmorTonnage();
         StandardStructureWeight = mechDef.Chassis.InitialTonnage;
         StandardChassisWeightCapacity = mechDef.Chassis.Tonnage;
         Engine = mechDef.GetEngine();
-        Factors = Engine?.WeightFactors ?? WeightsUtils.GetWeightFactorsFromInventory(mechDef.Inventory);
-        ComponentSumWeight = mechDef.Inventory.Sum(mechComponentRef => mechComponentRef.Def.Tonnage) - (Engine?.CoreDef.Def.Tonnage ?? 0);
+        if (processInventory)
+        {
+            Factors = Engine?.WeightFactors ?? WeightsUtils.GetWeightFactorsFromInventory(mechDef.Inventory);
+            ComponentSumWeight = mechDef.Inventory.Sum(mechComponentRef => mechComponentRef.Def.Tonnage) - (Engine?.CoreDef.Def.Tonnage ?? 0);
+        }
+        else
+        {
+            Factors = new();
+        }
     }
 
     private float TotalWeight => ArmorWeight + StructureWeight + EngineWeight + ComponentSumWeight;
