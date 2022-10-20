@@ -50,7 +50,7 @@ internal static class ArmorMaximizerHandler
     internal static void OnArmorAddOrSubtract(MechLabLocationWidget widget, bool isRearArmor, float direction)
     {
         var stepPrecision = ArmorMaximizerFeature.Shared.Settings.StepPrecision.Get() ?? ArmorUtils.ArmorPerStep;
-        var stepSize = ArmorMaximizerFeature.Shared.Settings.StepSize.Get() ?? ArmorUtils.ArmorPerStep;
+        var stepSize = ArmorMaximizerFeature.Shared.Settings.StepSize.Get() ?? 0.5f;
 
         var stepDirection = direction < 0 ? -1 : 1;
         var current = isRearArmor ? widget.currentRearArmor : widget.currentArmor;
