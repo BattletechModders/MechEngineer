@@ -55,7 +55,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             {
                 if (condition)
                 {
-                    prefix = "<color=#FF0000FF>";
+                    prefix = "<color=#F04228FF>";
                     postfix = "</color>";
                 }
                 else
@@ -72,11 +72,11 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             description.Details +=
                 $"\r\n" +
                 $"\r\n<i>Carrying</i>" +
-                $"\r\n{thPre}   <i>Total</i>     usage <b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>{thPost}" +
-                $"\r\n{lhPre}   <i>Left</i>      usage <b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>   <b>{ReqString(context.LeftHandReq)}</b>{lhPost}" +
-                $"\r\n{rhPre}   <i>Right</i>     usage <b>{context.HandRightUsage:0.###} / {context.HandRightCapacity:0.###}</b>   <b>{ReqString(context.RightHandReq)}</b>{rhPost}" +
+                $"\r\n   <i>Total</i>     usage {thPre}<b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>{thPost}" +
+                $"\r\n   <i>Left</i>      usage {lhPre}<b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>   <b>{ReqString(context.LeftHandReq)}</b>{lhPost}" +
+                $"\r\n   <i>Right</i>     usage {rhPre}<b>{context.HandRightUsage:0.###} / {context.HandRightCapacity:0.###}</b>   <b>{ReqString(context.RightHandReq)}</b>{rhPost}" +
                 (context.HasLeftOverTopOff ?
-                $"\r\n{loPre}   <i>Left Over</i> usage <b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>{loPost}"
+                $"\r\n   <i>Left Over</i> usage {loPre}<b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>{loPost}"
                 : "");
         }
         else
