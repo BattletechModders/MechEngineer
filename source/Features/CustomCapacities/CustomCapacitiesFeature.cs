@@ -39,7 +39,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             var context = CalculateCarryWeight(mechDef);
             capacity = context.TotalCapacity;
             usage = context.TotalUsage;
-            hasError = context.IsHandOverweight || context.IsHandMissingFreeHand;
+            hasError = context.IsHandOverweight || context.IsHandMissingFreeHand || context.IsLeftOverMissing;
             description = new(customCapacity.Description);
             string ReqString(MinHandReq req)
             {
@@ -51,13 +51,33 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
+            void WeightErrorColor(bool condition, out string prefix, out string postfix)
+            {
+                if (condition)
+                {
+                    prefix = "<color=#FF0000FF>";
+                    postfix = "</color>";
+                }
+                else
+                {
+                    prefix = "";
+                    postfix = "";
+                }
+            }
+            WeightErrorColor(context.IsHandOverweight, out var thPre, out var thPost);
+            WeightErrorColor(context.IsLeftHandOverweight && context.IsHandMissingFreeHand, out var lhPre, out var lhPost);
+            WeightErrorColor(context.IsRightHandOverweight && context.IsHandMissingFreeHand, out var rhPre, out var rhPost);
+            WeightErrorColor(context.IsLeftOverMissing, out var loPre, out var loPost);
+
             description.Details +=
                 $"\r\n" +
                 $"\r\n<i>Carrying</i>" +
-                $"\r\n   <i>Total</i>     usage <b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>" +
-                $"\r\n   <i>Left</i>      usage <b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>   <b>{ReqString(context.LeftHandReq)}</b>" +
-                $"\r\n   <i>Right</i>     usage <b>{context.HandRightUsage:0.###} / {context.HandRightCapacity:0.###}</b>   <b>{ReqString(context.RightHandReq)}</b>" +
-                (context.HasLeftOverTopOff ? $"\r\n   <i>Left Over</i> usage <b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>" : "");
+                $"\r\n{thPre}   <i>Total</i>     usage <b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>{thPost}" +
+                $"\r\n{lhPre}   <i>Left</i>      usage <b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>   <b>{ReqString(context.LeftHandReq)}</b>{lhPost}" +
+                $"\r\n{rhPre}   <i>Right</i>     usage <b>{context.HandRightUsage:0.###} / {context.HandRightCapacity:0.###}</b>   <b>{ReqString(context.RightHandReq)}</b>{rhPost}" +
+                (context.HasLeftOverTopOff ?
+                $"\r\n{loPre}   <i>Left Over</i> usage <b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>{loPost}"
+                : "");
         }
         else
         {
@@ -87,7 +107,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     {
         var context = CalculateCarryWeight(mechDef);
 
-        if (context.IsHandOverweight || context.IsMechOverweight)
+        if (context.IsHandOverweight || context.IsLeftOverMissing)
         {
             errors.Add(MechValidationType.Overweight, Settings.CarryWeight.ErrorOverweight);
         }
@@ -149,7 +169,10 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     private class CarryContext
     {
         internal bool IsHandOverweight => PrecisionUtils.SmallerThan(HandTotalCapacity, HandTotalUsage);
-        internal bool IsMechOverweight => PrecisionUtils.SmallerThan(LeftOverCapacity, LeftOverUsage);
+        internal bool IsLeftOverMissing => PrecisionUtils.SmallerThan(LeftOverCapacity, LeftOverUsage);
+
+        internal bool IsLeftHandOverweight => PrecisionUtils.SmallerThan(HandLeftCapacity, HandLeftUsage);
+        internal bool IsRightHandOverweight => PrecisionUtils.SmallerThan(HandRightCapacity, HandRightUsage);
 
         internal bool IsHandMissingFreeHand =>
             (LeftHandReq == MinHandReq.Two && RightHandReq != MinHandReq.None)
