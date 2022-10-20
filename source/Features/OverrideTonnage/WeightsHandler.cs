@@ -24,7 +24,7 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
             var mechDef = Global.ActiveMechDef;
             if (mechDef != null)
             {
-                var tonnageChanges = Weights.CalculateWeightFactorsChange(mechDef, weightFactors);
+                var tonnageChanges = CalculateWeightFactorsChange(mechDef, weightFactors);
                 tooltip.tonnageText.text = FormatChanges(mechComponentDef.Tonnage, tonnageChanges);
             }
         }
@@ -50,7 +50,7 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
             var mechDef = Global.ActiveMechDef;
             if (mechDef != null)
             {
-                var tonnageChanges = Weights.CalculateWeightFactorsChange(mechDef, weightFactors);
+                var tonnageChanges = CalculateWeightFactorsChange(mechDef, weightFactors);
                 tooltip.tonnage.text = FormatChanges(mechComponentDef.Tonnage, tonnageChanges);
             }
         }
@@ -98,7 +98,7 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
             return;
         }
 
-        var tonnageChanges = Weights.CalculateWeightFactorsChange(mechDef, weightFactors);
+        var tonnageChanges = CalculateWeightFactorsChange(mechDef, weightFactors);
         if (!Mathf.Approximately(tonnageChanges, 0))
         {
             instance.bonusTextA.text = $"{FloatToText(tonnageChanges)} ton";
@@ -129,7 +129,8 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
         TextMeshProUGUI remainingTonnage,
         out float currentTonnage)
     {
-        currentTonnage = Weights.CalculateTotalTonnage(mechDef);
+        var weights = new Weights(mechDef);
+        currentTonnage = weights.TotalWeight;
 
         var precisionHelper = InfoTonnageHelper.KilogramStandard;
 
@@ -167,5 +168,55 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
             var s = precisionHelper.IsSame(tonnageLeft, 1f) ? "s" : string.Empty;
             remainingTonnage.SetText($"{left} ton{s} remaining");
         }
+
+        var layoutTonnage = remainingTonnage.transform.parent;
+        {
+            var go = layoutTonnage.gameObject;
+            var tooltip = go.GetComponent<HBSTooltip>() ?? go.AddComponent<HBSTooltip>();
+            tooltip.defaultStateData.SetObject(new BaseDescriptionDef
+            {
+                // TODO fix precision and layout and naming
+                Id = "weights",
+                Name = "Weights",
+                Details =
+                    $"\r\n<i>Weights</i>" +
+                    $"\r\n  <i>Total</i>" +
+                    $"\r\n    {weights.TotalWeight:0.#####}" +
+                    $"\r\n  <i>Free</i>" +
+                    $"\r\n    {weights.FreeWeight:0.#####}" +
+                    $"\r\n  <i>ChassisWeightCapacity</i>" +
+                    $"\r\n    {weights.ChassisWeightCapacity:0.#####}" +
+                    $"\r\n  <i>StandardChassisWeightCapacity</i>" +
+                    $"\r\n    {weights.StandardChassisWeightCapacity:0.#####}" +
+                    $"\r\n  <i>ChassisFactor</i>" +
+                    $"\r\n    {weights.Factors.ChassisFactor:0.#####}" +
+                    $"\r\n  <i>ArmorWeight</i>" +
+                    $"\r\n    {weights.ArmorWeight:0.#####}" +
+                    $"\r\n  <i>StandardArmorWeight</i>" +
+                    $"\r\n    {weights.StandardArmorWeight:0.#####}" +
+                    $"\r\n  <i>ArmorFactor</i>" +
+                    $"\r\n    {weights.Factors.ArmorFactor:0.#####}" +
+                    $"\r\n  <i>StructureWeight</i>" +
+                    $"\r\n    {weights.StructureWeight:0.#####}" +
+                    $"\r\n  <i>StandardStructureWeight</i>" +
+                    $"\r\n    {weights.StandardStructureWeight:0.#####}" +
+                    $"\r\n  <i>StructureFactor</i>" +
+                    $"\r\n    {weights.Factors.StructureFactor:0.#####}" +
+                    $"\r\n  <i>EngineWeight</i>" +
+                    $"\r\n    {weights.EngineWeight:0.#####}" +
+                    $"\r\n  <i>ComponentSumWeight</i>" +
+                    $"\r\n    {weights.ComponentSumWeight:0.#####}",
+                Icon = "uixSvgIcon_quantity"
+            });
+        }
+    }
+
+    private static float CalculateWeightFactorsChange(MechDef mechDef, WeightFactors componentFactors)
+    {
+        var weights = new Weights(mechDef, false);
+        var before = weights.TotalWeight;
+        weights.Factors.Combine(componentFactors);
+        var after = weights.TotalWeight;
+        return after - before;
     }
 }

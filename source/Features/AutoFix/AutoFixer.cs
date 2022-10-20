@@ -180,7 +180,7 @@ internal class AutoFixer : IAutoFixMechDef
         else
         {
             Control.Logger.Debug?.Log(" Finding engine");
-            var freeTonnage = Weights.CalculateFreeTonnage(mechDef);
+            var freeTonnage = CalculateFreeTonnage(mechDef);
 
             var jumpJets = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
             var jumpJetTonnage = jumpJets.Select(x => x.Def.Tonnage).FirstOrDefault(); //0 if no jjs
@@ -373,7 +373,7 @@ internal class AutoFixer : IAutoFixMechDef
         mechDef.SetInventory(builder.Inventory.ToArray());
 
         {
-            var freeTonnage = Weights.CalculateFreeTonnage(mechDef);
+            var freeTonnage = CalculateFreeTonnage(mechDef);
             if (PrecisionUtils.Equals(freeTonnage, 0))
             {
                 // do nothing
@@ -409,6 +409,13 @@ internal class AutoFixer : IAutoFixMechDef
         }
 
         mechDef.SetInventory(builder.Inventory.ToArray());
+    }
+
+    private static float CalculateFreeTonnage(MechDef mechDef)
+    {
+        var weights = new Weights(mechDef);
+        Control.Logger.Debug?.Log($"Chassis={mechDef.Chassis.Description.Id} weights={weights}");
+        return weights.FreeWeight;
     }
 
     private static bool IsMovable(MechComponentRef c)

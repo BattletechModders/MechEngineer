@@ -12,8 +12,9 @@ public static class MechStatisticsRules_CalculateTonnage_Patch
     {
         try
         {
-            maxValue = mechDef.Chassis.Tonnage;
-            currentValue = Weights.CalculateTotalTonnage(mechDef);
+            var weights = new Weights(mechDef);
+            maxValue = weights.StandardChassisWeightCapacity;
+            currentValue = weights.TotalWeight;
             return false;
         }
         catch (Exception e)

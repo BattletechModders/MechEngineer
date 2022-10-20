@@ -58,10 +58,7 @@ internal class MechArmorState
         var maxPointsWithoutWeightLimit = ArmorUtils.GetMaximumArmorPoints(mechDef);
         var maxWeightWithoutWeightLimit = maxPointsWithoutWeightLimit * tonsPerPoint;
 
-        var weights = new Weights(mechDef)
-        {
-            StandardArmorWeight = 0
-        };
+        var weights = new Weights(mechDef, processArmor: false);
         var maxWeight = Mathf.Min(maxWeightWithoutWeightLimit, weights.FreeWeight);
         var maxPoints = PrecisionUtils.RoundDownToInt(maxWeight / tonsPerPoint);
         return maxPoints;
