@@ -41,15 +41,16 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             usage = context.TotalUsage;
             hasError = context.IsHandOverweight || context.IsHandMissingFreeHand || context.IsLeftOverMissing;
             description = new(customCapacity.Description);
-            string ReqString(MinHandReq req)
+            bool ReqString(MinHandReq req, out string? text)
             {
-                return req switch
+                text = req switch
                 {
-                    MinHandReq.None => "",
+                    MinHandReq.None => null,
                     MinHandReq.One => "one-handed",
                     MinHandReq.Two => "two-handed req.",
                     _ => throw new ArgumentOutOfRangeException()
                 };
+                return text != null;
             }
             void WeightErrorColor(bool condition, out string prefix, out string postfix)
             {
@@ -71,12 +72,24 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
             description.Details +=
                 $"\r\n" +
-                $"\r\n<i>Carrying</i>" +
-                $"\r\n   <i>Total</i>     usage {thPre}<b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>{thPost}" +
-                $"\r\n   <i>Left</i>      usage {lhPre}<b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>   <b>{ReqString(context.LeftHandReq)}</b>{lhPost}" +
-                $"\r\n   <i>Right</i>     usage {rhPre}<b>{context.HandRightUsage:0.###} / {context.HandRightCapacity:0.###}</b>   <b>{ReqString(context.RightHandReq)}</b>{rhPost}" +
+                $"\r\n<i>Total</i>" +
+                $"\r\n  usage {thPre}<b>{context.HandTotalUsage:0.###} / {context.HandTotalCapacity:0.###}</b>{thPost}" +
+                $"\r\n" +
+                $"\r\n<i>Left Hand</i>" +
+                $"\r\n  usage {lhPre}<b>{context.HandLeftUsage:0.###} / {context.HandLeftCapacity:0.###}</b>{lhPost}" +
+                (ReqString(context.LeftHandReq, out var leftHandReqText) ?
+                $"\r\n  {leftHandReqText}"
+                : "") +
+                $"\r\n" +
+                $"\r\n<i>Right Hand</i>" +
+                $"\r\n  usage {rhPre}<b>{context.HandRightUsage:0.###} / {context.HandRightCapacity:0.###}</b>{rhPost}" +
+                (ReqString(context.RightHandReq, out var rightHandReqText) ?
+                $"\r\n  {rightHandReqText}"
+                : "") +
+                $"\r\n" +
                 (context.HasLeftOverTopOff ?
-                $"\r\n   <i>Left Over</i> usage {loPre}<b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>{loPost}"
+                $"\r\n<i>Left Over</i>" +
+                $"\r\n  usage {loPre}<b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>{loPost}"
                 : "");
         }
         else

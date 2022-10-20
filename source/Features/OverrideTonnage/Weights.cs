@@ -7,11 +7,13 @@ namespace MechEngineer.Features.OverrideTonnage;
 
 internal class Weights
 {
+    internal readonly float ArmorAssignedPoints;
+    internal readonly float ArmorPerTon;
     internal readonly float StandardArmorWeight;
     internal readonly float StandardStructureWeight;
     internal readonly float StandardChassisWeightCapacity;
     internal readonly float ComponentSumWeight;
-    private readonly Engine? Engine;
+    internal readonly Engine? Engine;
 
     // must reference Engine factors if they exist
     internal readonly WeightFactors Factors;
@@ -20,7 +22,9 @@ internal class Weights
     {
         if (processArmor)
         {
-            StandardArmorWeight = mechDef.StandardArmorTonnage();
+            ArmorAssignedPoints = mechDef.MechDefAssignedArmor;
+            ArmorPerTon = UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f;
+            StandardArmorWeight = ArmorAssignedPoints / ArmorPerTon;
         }
         StandardStructureWeight = mechDef.Chassis.InitialTonnage;
         StandardChassisWeightCapacity = mechDef.Chassis.Tonnage;

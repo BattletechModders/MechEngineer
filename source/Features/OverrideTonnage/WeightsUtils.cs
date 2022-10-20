@@ -25,12 +25,6 @@ public static class WeightsUtils
         return armorFactor;
     }
 
-    internal static float StandardArmorTonnage(this MechDef mechDef)
-    {
-        var armorPerTon = UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_TENTH_TON * 10f;
-        return mechDef.MechDefAssignedArmor / armorPerTon;
-    }
-
     internal static WeightFactors GetWeightFactorsFromInventory(IList<MechComponentRef> componentRefs)
     {
         var weightFactors = new WeightFactors();

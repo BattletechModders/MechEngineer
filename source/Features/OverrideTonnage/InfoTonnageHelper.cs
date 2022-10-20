@@ -33,8 +33,7 @@ internal class InfoTonnageHelper
     internal string AsString(float number)
     {
         var rounded = PrecisionUtils.RoundUp(number, _precision);
-        var digits = new string('#', OverrideTonnageFeature.settings.MechLabMechInfoWidgetDecimalPlaces);
-        return string.Format("{0:0." + digits + "}", rounded);
+        return rounded.ToString(OverrideTonnageFeature.settings.MechLabMechInfoWidgetFormat);
     }
 
     public bool IsSmaller(float a, float b, out float left)

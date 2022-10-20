@@ -117,8 +117,8 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
             sign = "- ";
             number = -number;
         }
-        var digits = new string('#', OverrideTonnageFeature.settings.MechLabComponentDecimalPlaces);
-        return sign + string.Format("{0:0." + digits + "}", number);
+
+        return sign + number.ToString(OverrideTonnageFeature.settings.MechLabComponentFormat);
     }
 
     internal static void AdjustInfoWidget(
@@ -173,40 +173,53 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
         {
             var go = layoutTonnage.gameObject;
             var tooltip = go.GetComponent<HBSTooltip>() ?? go.AddComponent<HBSTooltip>();
+            string Format(float value)
+            {
+                return "<b>" + value.ToString(OverrideTonnageFeature.settings.MechLabMechInfoWidgetFormat) + "</b>";
+            }
             tooltip.defaultStateData.SetObject(new BaseDescriptionDef
             {
-                // TODO fix precision and layout and naming
                 Id = "weights",
-                Name = "Weights",
+                Name = "Weights Summary",
                 Details =
-                    $"\r\n<i>Weights</i>" +
-                    $"\r\n  <i>Total</i>" +
-                    $"\r\n    {weights.TotalWeight:0.#####}" +
-                    $"\r\n  <i>Free</i>" +
-                    $"\r\n    {weights.FreeWeight:0.#####}" +
-                    $"\r\n  <i>ChassisWeightCapacity</i>" +
-                    $"\r\n    {weights.ChassisWeightCapacity:0.#####}" +
-                    $"\r\n  <i>StandardChassisWeightCapacity</i>" +
-                    $"\r\n    {weights.StandardChassisWeightCapacity:0.#####}" +
-                    $"\r\n  <i>ChassisFactor</i>" +
-                    $"\r\n    {weights.Factors.ChassisFactor:0.#####}" +
-                    $"\r\n  <i>ArmorWeight</i>" +
-                    $"\r\n    {weights.ArmorWeight:0.#####}" +
-                    $"\r\n  <i>StandardArmorWeight</i>" +
-                    $"\r\n    {weights.StandardArmorWeight:0.#####}" +
-                    $"\r\n  <i>ArmorFactor</i>" +
-                    $"\r\n    {weights.Factors.ArmorFactor:0.#####}" +
-                    $"\r\n  <i>StructureWeight</i>" +
-                    $"\r\n    {weights.StructureWeight:0.#####}" +
-                    $"\r\n  <i>StandardStructureWeight</i>" +
-                    $"\r\n    {weights.StandardStructureWeight:0.#####}" +
-                    $"\r\n  <i>StructureFactor</i>" +
-                    $"\r\n    {weights.Factors.StructureFactor:0.#####}" +
-                    $"\r\n  <i>EngineWeight</i>" +
-                    $"\r\n    {weights.EngineWeight:0.#####}" +
-                    $"\r\n  <i>ComponentSumWeight</i>" +
-                    $"\r\n    {weights.ComponentSumWeight:0.#####}",
-                Icon = "uixSvgIcon_quantity"
+                    "A mech consists of a chassis which has an internal structure and an outer protective layer called armor." +
+                    " The chassis determines the maximum weight in components and armor that can be mounted." +
+                    " The technology base of a mech can provide various weight benefits." +
+                    (!PrecisionUtils.Equals(weights.Factors.ChassisFactor, 1) ?
+                    $"\r\n" +
+                    $"\r\n<i>Chassis</i>" +
+                    $"\r\n  <i>Capacity</i>" +
+                    $"\r\n    {Format(weights.ChassisWeightCapacity)}" +
+                    $"\r\n  <i>Standard Capacity</i>" +
+                    $"\r\n    {Format(weights.StandardChassisWeightCapacity)}" +
+                    $"\r\n  <i>Factor</i>" +
+                    $"\r\n    {Format(weights.Factors.ChassisFactor)}"
+                    : "") +
+                    $"\r\n" +
+                    $"\r\n<i>Armor</i>" +
+                    $"\r\n  <i>Weight</i>" +
+                    $"\r\n    {Format(weights.ArmorWeight)}" +
+                    (!PrecisionUtils.Equals(weights.Factors.ArmorFactor, 1) ?
+                    $"\r\n  <i>Standard Weight</i>" +
+                    $"\r\n    {Format(weights.StandardArmorWeight)}" +
+                    $"\r\n  <i>Factor</i>" +
+                    $"\r\n    {Format(weights.Factors.ArmorFactor)}"
+                    : "") +
+                    $"\r\n  <i>Assigned Points</i>" +
+                    $"\r\n    {Format(weights.ArmorAssignedPoints)}" +
+                    $"\r\n  <i>Points Per Ton</i>" +
+                    $"\r\n    {Format(weights.ArmorPerTon)}" +
+                    $"\r\n" +
+                    $"\r\n<i>Structure</i>" +
+                    $"\r\n  <i>Weight</i>" +
+                    $"\r\n    {Format(weights.StructureWeight)}" +
+                    (!PrecisionUtils.Equals(weights.Factors.StructureFactor, 1) ?
+                    $"\r\n  <i>Standard Weight</i>" +
+                    $"\r\n    {Format(weights.StandardStructureWeight)}" +
+                    $"\r\n  <i>Factor</i>" +
+                    $"\r\n    {Format(weights.Factors.StructureFactor)}"
+                    : ""),
+                    Icon = "uixSvgIcon_quantity"
             });
         }
     }
