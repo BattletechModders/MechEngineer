@@ -6,23 +6,24 @@ namespace MechEngineer.Features.MechLabSlots;
 
 internal static class MechLabSlotsFixer
 {
-    internal static void FixSlots(WidgetLayout widgetLayout, int ___maxSlots)
+    internal static void FixSlots(WidgetLayout widgetLayout, int maxSlots)
     {
         var mechLabPanel = (MechLabPanel)widgetLayout.widget.parentDropTarget;
         // MechPropertiesWidget feature
         if (widgetLayout.widget == mechLabPanel.centerTorsoWidget)
         {
-            ___maxSlots = Mathf.Max(0,
-                ___maxSlots - MechLabSlotsFeature.settings.TopLeftWidget.Slots -
+            maxSlots = Mathf.Max(0,
+                maxSlots - MechLabSlotsFeature.settings.TopLeftWidget.Slots -
                 MechLabSlotsFeature.settings.TopRightWidget.Slots);
         }
 
-        ModifyLayoutSlotCount(widgetLayout, ___maxSlots);
+        ModifyLayoutSlotCount(widgetLayout, maxSlots);
     }
 
     internal static void ModifyLayoutSlotCount(WidgetLayout layout, int maxSlots)
     {
         var slots = layout.slots;
+        maxSlots = Mathf.Max(maxSlots, 1);
         var changedSlotCount = maxSlots - slots.Count;
 
         if (changedSlotCount < 0)
