@@ -17,9 +17,9 @@ public class OverrideTonnageSettings : ISettings
     public float ArmorRoundingPrecision = 0.001f;
     public string ArmorRoundingPrecisionDescription = "CBT standard rules say this should be 0.5, but that would round off any single armor points, therefore it's set to fractional accounting precision.";
 
-    public string MechLabMechInfoWidgetFormat = "0.######";
-
-    public string MechLabComponentFormat = "0.######";
+    public string MechLabMechInfoWidgetFormat = "0.###";
+    public string MechLabMechInfoWidgetToolTipFormat = "0.######";
+    public string MechLabComponentFormat = "0.###";
 
     public float UnderweightWarningThreshold = 1f;
     public string UnderweightWarningThresholdDescription = "How many tons a mech has to be underweight to show a warning";

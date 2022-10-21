@@ -175,7 +175,7 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
             var tooltip = go.GetComponent<HBSTooltip>() ?? go.AddComponent<HBSTooltip>();
             string Format(float value)
             {
-                return "<b>" + value.ToString(OverrideTonnageFeature.settings.MechLabMechInfoWidgetFormat) + "</b>";
+                return "<b>" + value.ToString(OverrideTonnageFeature.settings.MechLabMechInfoWidgetToolTipFormat) + "</b>";
             }
             tooltip.defaultStateData.SetObject(new BaseDescriptionDef
             {
