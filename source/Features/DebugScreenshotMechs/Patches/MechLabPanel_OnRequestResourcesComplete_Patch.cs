@@ -28,12 +28,19 @@ public static class MechLabPanel_OnRequestResourcesComplete_Patch
         yield return new WaitForEndOfFrame();
         try
         {
-            var path = DebugScreenshotMechsFeature.Shared.ScreenshotPath(panel.originalMechDef);
-            if (path != null)
+            if (DebugScreenshotMechsFeature.Shared.Settings.CaptureScreenshots)
             {
-                CaptureScreenshot(path);
-                panel.OnCancelClicked();
+                var path = DebugScreenshotMechsFeature.Shared.ScreenshotPath(panel.originalMechDef);
+                if (path != null)
+                {
+                    CaptureScreenshot(path);
+                }
             }
+            if (DebugScreenshotMechsFeature.Shared.Settings.DumpGameObjectCounts)
+            {
+                SceneMemoryStatsDumper.DumpUiStuff();
+            }
+            panel.OnCancelClicked();
         }
         catch (Exception e)
         {
