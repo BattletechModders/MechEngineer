@@ -8,6 +8,23 @@
             "component_type_lostech"
         ]
     },
+	"disabled_TagManager" : {
+        "Enabled" : true,
+        "SkirmishWhitelistTags" : [
+        ],
+        "WhitelistComponentTags" : [
+        ],
+        "BlacklistComponentTags" : [
+            "component_type_stock",
+            "component_type_variant",
+            "component_type_lostech"
+        ]
+    },
+    "disabled_DebugScreenshotMechs" : {
+        "Enabled": true,
+        "CaptureScreenshots": false,
+        "DumpGameObjectCounts": true
+    },
     "BetterLog": {
 		"Level": "Debug",
         "TraceEnabled": true
