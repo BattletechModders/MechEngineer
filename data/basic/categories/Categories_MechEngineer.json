@@ -248,6 +248,21 @@
             }
         },
         {
+            "Name": "EngineHeatSink",
+            "DisplayName": "Heat Sink",
+            "DefaultCustoms": {
+                "InventorySorter": "CzOrder1",
+                "Sorter": 200
+            }
+        },
+        {
+            "Name": "Ammunition",
+            "DisplayName": "Ammunition",
+            "DefaultCustoms": {
+                "Sorter": 190
+            }
+        },
+        {
             "Name": "LegHip",
             "DisplayName": "Hip",
             "BaseLimits": [

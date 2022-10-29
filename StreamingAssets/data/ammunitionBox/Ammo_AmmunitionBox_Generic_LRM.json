@@ -1,5 +1,6 @@
 {
 	"Custom": {
+        "Category": { "CategoryID" : "Ammunition" },
 		"ComponentExplosion": {
 			"ExplosionDamagePerAmmo": 4
 		}
