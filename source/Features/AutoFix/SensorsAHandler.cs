@@ -4,7 +4,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features.AutoFix;
 
-internal class SensorsAHandler : IPreProcessor
+internal class SensorsAHandler
 {
     private static readonly Lazier<SensorsAHandler> Lazy = new();
     internal static SensorsAHandler Shared => Lazy.Value;
@@ -14,10 +14,5 @@ internal class SensorsAHandler : IPreProcessor
     public SensorsAHandler()
     {
         identity = AutoFixerFeature.settings.SensorsACategorizer;
-    }
-
-    public void PreProcess(object target, Dictionary<string, object> values)
-    {
-        identity?.PreProcess(target, values);
     }
 }

@@ -5,7 +5,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features.AutoFix;
 
-internal class GyroHandler : IAdjustUpgradeDef, IPreProcessor
+internal class GyroHandler : IAdjustUpgradeDef
 {
     private static readonly Lazier<GyroHandler> Lazy = new();
     internal static GyroHandler Shared => Lazy.Value;
@@ -26,11 +26,6 @@ internal class GyroHandler : IAdjustUpgradeDef, IPreProcessor
         {
             resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.GyroSlotChange);
         }
-    }
-
-    public void PreProcess(object target, Dictionary<string, object> values)
-    {
-        identity?.PreProcess(target, values);
     }
 
     public void AdjustUpgradeDef(UpgradeDef upgradeDef)

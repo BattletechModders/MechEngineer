@@ -113,51 +113,31 @@ internal class AutoFixerSettings : ISettings
 
     public IdentityHelper? GyroCategorizer = new()
     {
-        AllowedLocations = ChassisLocations.CenterTorso, // optional if category is properly setup
-        ComponentType = ComponentType.Upgrade, // optional if category is properly setup
-        Prefix = "Gear_Gyro_", // optional if category is properly setup
-        CategoryId = "Gyro", // required
-        AutoAddCategoryIdIfMissing = true // adds category id to items matched by optional filters
+        CategoryId = "Gyro",
     };
     public SlotChange? GyroSlotChange = new() {From = 3, By = 1};
 
     public IdentityHelper? CockpitCategorizer = new()
     {
-        AllowedLocations = ChassisLocations.Head,
-        ComponentType = ComponentType.Upgrade,
-        Prefix = "Gear_Cockpit_Ceres_",
         CategoryId = "Cockpit",
-        AutoAddCategoryIdIfMissing = true
     };
     public TonnageChange? CockpitTonnageChange = new() {From = 0, By = 3};
     public SlotChange? CockpitSlotChange = new() {From = 1, By = 0};
 
     public IdentityHelper? SensorsACategorizer = new()
     {
-        AllowedLocations = ChassisLocations.Head,
-        ComponentType = ComponentType.Upgrade,
-        Prefix = "Gear_Cockpit_",
         CategoryId = "SensorsA",
-        AutoAddCategoryIdIfMissing = true
     };
 
     public IdentityHelper? SensorsBCategorizer = new()
     {
-        AllowedLocations = ChassisLocations.All,
-        ComponentType = ComponentType.Upgrade,
-        Prefix = "Gear_TargetingTrackingSystem_",
         CategoryId = "SensorsB",
-        AutoAddCategoryIdIfMissing = true
     };
     public SlotChange? SensorsBSlotChange = new() {From = 2, By = -1};
 
     public IdentityHelper? LegUpgradesCategorizer = new()
     {
-        AllowedLocations = ChassisLocations.Legs,
-        ComponentType = ComponentType.Upgrade,
-        Prefix = null, //"Gear_Actuator_";
         CategoryId = "LegFootActuator",
-        AutoAddCategoryIdIfMissing = true
     };
     public SlotChange? LegUpgradesSlotChange = new() {From = 3, By = -1, FromIsMin = true, NewMin = 1};
 

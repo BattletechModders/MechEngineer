@@ -6,7 +6,7 @@ using MechEngineer.Misc;
 namespace MechEngineer.Features.AutoFix;
 
 // this isn't yet leg actuators, but we still did reduce the legs size
-internal class LegActuatorHandler : IAdjustUpgradeDef, IPreProcessor
+internal class LegActuatorHandler : IAdjustUpgradeDef
 {
     private static readonly Lazier<LegActuatorHandler> Lazy = new();
     internal static LegActuatorHandler Shared => Lazy.Value;
@@ -27,11 +27,6 @@ internal class LegActuatorHandler : IAdjustUpgradeDef, IPreProcessor
         {
             resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.LegUpgradesSlotChange);
         }
-    }
-
-    public void PreProcess(object target, Dictionary<string, object> values)
-    {
-        identity?.PreProcess(target, values);
     }
 
     public void AdjustUpgradeDef(UpgradeDef upgradeDef)

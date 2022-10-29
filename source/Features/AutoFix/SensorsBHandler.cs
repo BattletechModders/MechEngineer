@@ -5,7 +5,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features.AutoFix;
 
-internal class SensorsBHandler : IAdjustUpgradeDef, IPreProcessor
+internal class SensorsBHandler : IAdjustUpgradeDef
 {
     private static readonly Lazier<SensorsBHandler> Lazy = new();
     internal static SensorsBHandler Shared => Lazy.Value;
@@ -26,11 +26,6 @@ internal class SensorsBHandler : IAdjustUpgradeDef, IPreProcessor
         {
             resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.SensorsBSlotChange);
         }
-    }
-
-    public void PreProcess(object target, Dictionary<string, object> values)
-    {
-        identity?.PreProcess(target, values);
     }
 
     public void AdjustUpgradeDef(UpgradeDef upgradeDef)

@@ -5,7 +5,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features.AutoFix;
 
-internal class CockpitHandler : IAdjustUpgradeDef, IPreProcessor
+internal class CockpitHandler : IAdjustUpgradeDef
 {
     private static readonly Lazier<CockpitHandler> Lazy = new();
     internal static CockpitHandler Shared => Lazy.Value;
@@ -32,11 +32,6 @@ internal class CockpitHandler : IAdjustUpgradeDef, IPreProcessor
         {
             resizer = new AdjustCompDefInvSizeHelper(identity, AutoFixerFeature.settings.CockpitSlotChange);
         }
-    }
-
-    public void PreProcess(object target, Dictionary<string, object> values)
-    {
-        identity?.PreProcess(target, values);
     }
 
     public void AdjustUpgradeDef(UpgradeDef upgradeDef)
