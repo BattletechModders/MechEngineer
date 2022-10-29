@@ -116,7 +116,7 @@ internal static class SceneMemoryStatsDumper
         return tmpKey ?? "<empty>";
     }
 
-    private static IEnumerable<string> GatherParents(GameObject go)
+    private static IEnumerable<string> GatherParents(GameObject? go)
     {
         do
         {
@@ -125,6 +125,7 @@ internal static class SceneMemoryStatsDumper
                 yield break;
             }
             yield return go.name;
+            // ReSharper disable once Unity.NoNullPropagation
             go = go.transform.parent?.gameObject;
         }
         while (true);
