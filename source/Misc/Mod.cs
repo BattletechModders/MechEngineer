@@ -28,41 +28,9 @@ internal class Mod
             return;
         }
 
-        try
-        {
-            using var reader = new StreamReader(SettingsPath);
-            var json = reader.ReadToEnd();
-            JSONSerializationUtility.FromJSON(settings, json);
-        }
-        catch (Exception e)
-        {
-            WriteStartupError(e);
-        }
-    }
-
-    private string StartupErrorLogPath => Path.Combine(Directory, "log.txt");
-
-    internal void ResetStartupErrorLog()
-    {
-        if (!File.Exists(StartupErrorLogPath))
-        {
-            return;
-        }
-
-        try
-        {
-            using var writer = new StreamWriter(StartupErrorLogPath);
-        }
-        catch (Exception)
-        {
-            // ignored
-        }
-    }
-
-    internal void WriteStartupError(object o)
-    {
-        using var s = new StreamWriter(StartupErrorLogPath, true);
-        s.WriteLine(o);
+        using var reader = new StreamReader(SettingsPath);
+        var json = reader.ReadToEnd();
+        JSONSerializationUtility.FromJSON(settings, json);
     }
 
     internal void SaveSettings(object settings, string path)

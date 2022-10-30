@@ -20,32 +20,24 @@ public static class Control
     public static void Start(string modDirectory, string json)
     {
         Mod = new(modDirectory);
-        Mod.ResetStartupErrorLog();
-        try
+
+        FileUtils.SetReadonly(Mod.SettingsDefaultsPath, false);
+        File.Delete(Mod.SettingsDefaultsPath);
+
+        FileUtils.SetReadonly(Mod.SettingsHelpPath, false);
+        FileUtils.SetReadonly(Mod.SettingsLastPath, false);
+
+        Mod.SaveSettings(Settings, Mod.SettingsHelpPath);
+        Mod.LoadSettings(Settings);
+        Mod.SaveSettings(Settings, Mod.SettingsLastPath);
+
+        if (Settings.GeneratedSettingsFilesReadonly)
         {
-            FileUtils.SetReadonly(Mod.SettingsDefaultsPath, false);
-            File.Delete(Mod.SettingsDefaultsPath);
-
-            FileUtils.SetReadonly(Mod.SettingsHelpPath, false);
-            FileUtils.SetReadonly(Mod.SettingsLastPath, false);
-
-            Mod.SaveSettings(Settings, Mod.SettingsHelpPath);
-            Mod.LoadSettings(Settings);
-            Mod.SaveSettings(Settings, Mod.SettingsLastPath);
-
-            if (Settings.GeneratedSettingsFilesReadonly)
-            {
-                FileUtils.SetReadonly(Mod.SettingsHelpPath, true);
-                FileUtils.SetReadonly(Mod.SettingsLastPath, true);
-            }
-
-            Logger = BetterLogFeature.SetupLog(Path.Combine(modDirectory, "log.txt"), nameof(MechEngineer), Settings.BetterLog);
+            FileUtils.SetReadonly(Mod.SettingsHelpPath, true);
+            FileUtils.SetReadonly(Mod.SettingsLastPath, true);
         }
-        catch (Exception e)
-        {
-            Mod.WriteStartupError(e);
-            throw;
-        }
+
+        Logger = BetterLogFeature.SetupLog(nameof(MechEngineer), Settings.BetterLog);
 
         try
         {

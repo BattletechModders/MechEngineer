@@ -26,9 +26,21 @@ internal class BetterLogger
     internal void RefreshLogLevel()
     {
         Logger.GetLoggerLevel(log.Name, out var level);
-        Warning = level > LogLevel.Warning ? null : new BetterLevelLogger(log, LogLevel.Warning);
-        Info = level > LogLevel.Log ? null : new BetterLevelLogger(log, LogLevel.Log);
-        Debug = level > LogLevel.Debug ? null : new BetterLevelLogger(log, LogLevel.Debug);
-        Trace = level > LogLevel.Debug || !traceEnabled ? null : new BetterLevelLogger(log, LogLevel.Debug);
+        SyncLevelLogger(level > LogLevel.Warning, LogLevel.Warning, ref Warning);
+        SyncLevelLogger(level > LogLevel.Log, LogLevel.Log, ref Info);
+        SyncLevelLogger(level > LogLevel.Debug, LogLevel.Debug, ref Debug);
+        SyncLevelLogger(level > LogLevel.Debug || !traceEnabled, LogLevel.Debug, ref Trace);
+    }
+
+    private void SyncLevelLogger(bool disabled, LogLevel logLevel, ref BetterLevelLogger? field)
+    {
+        if (disabled)
+        {
+            field = null;
+        }
+        else if (field == null)
+        {
+            field = new BetterLevelLogger(log, logLevel);
+        }
     }
 }
