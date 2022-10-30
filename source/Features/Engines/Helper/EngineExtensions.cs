@@ -1,19 +1,20 @@
 ﻿using System.Linq;
 using BattleTech;
 using CustomComponents;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.Engines.Helper;
 
-// Extensions method became public for BV reasons -- bhtrail
+[UsedBy(User.BattleValue)]
 public static class EngineExtensions
 {
-    // Extensions method became public for BV reasons -- bhtrail
+    [UsedBy(User.BattleValue)]
     public static Engine? GetEngine(this MechDef @this)
     {
         return Engine.GetEngine(@this.Chassis, @this.Inventory);
     }
 
-    // Extensions method became public for BV reasons -- bhtrail
+    [UsedBy(User.BattleValue)]
     public static bool HasDestroyedEngine(this MechDef mechDef)
     {
         return mechDef.Inventory.Any(x => x.DamageLevel == ComponentDamageLevel.Destroyed && x.Is<EngineCoreDef>());

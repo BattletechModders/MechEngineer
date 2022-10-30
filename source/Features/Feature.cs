@@ -9,7 +9,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer.Features;
 
-[UsedByFastJson]
+[UsedBy(User.FastJson)]
 public interface ISettings
 {
     bool Enabled { get; }

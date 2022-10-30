@@ -1,11 +1,9 @@
-﻿using System;
-using JetBrains.Annotations;
-
-namespace MechEngineer.Misc;
+﻿namespace MechEngineer.Misc;
 
 // since HarmonyTargetMethod, HarmonyTargetMethods and HarmonyPrepare are buggy, we use this attribute instead
-[MeansImplicitUse(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.WithMembers)]
-public class UsedByHarmonyAttribute : Attribute
+internal class UsedByHarmonyAttribute : UsedByAttribute
 {
-
+    internal UsedByHarmonyAttribute() : base(User.Harmony)
+    {
+    }
 }

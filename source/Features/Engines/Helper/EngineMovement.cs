@@ -1,12 +1,13 @@
 ﻿using BattleTech;
 using MechEngineer.Features.OverrideTonnage;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.Engines.Helper;
 
-// publicized to have access from BV module -- bhtrail
+[UsedBy(User.BattleValue)]
 public class EngineMovement
 {
-    // goes public too -- bhtrail
+    [UsedBy(User.BattleValue)]
     public EngineMovement(int rating, float tonnage)
     {
         WalkMovementPoint = RoundWalkMovementPoints(rating / tonnage);
@@ -17,7 +18,7 @@ public class EngineMovement
         WalkMovementPoint = RoundWalkMovementPoints(walkMovementPoint);
     }
 
-    // Five below goes public too -- bhtrail
+    [UsedBy(User.BattleValue)]
     public float WalkMovementPoint { get; }
 
     public float WalkSpeed => EngineFeature.settings.AdditionalWalkSpeed + ConvertMPToGameDistance(WalkMovementPoint);

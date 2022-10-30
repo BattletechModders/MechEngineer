@@ -5,6 +5,7 @@ using CustomComponents;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.Engines;
 
@@ -18,7 +19,7 @@ public class EngineCoreDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment,
         Rating = value;
     }
 
-    // This methid goes public -- bhtrail
+    [UsedBy(User.BattleValue)]
     public EngineMovement GetMovement(float tonnage)
     {
         return new(Rating, tonnage);

@@ -35,7 +35,7 @@ using MechEngineer.Misc;
 
 namespace MechEngineer;
 
-[UsedByFastJson]
+[UsedBy(User.FastJson)]
 internal class MechEngineerSettings
 {
     public bool GeneratedSettingsFilesReadonly = true;

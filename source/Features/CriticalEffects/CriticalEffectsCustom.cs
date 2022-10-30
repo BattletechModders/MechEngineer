@@ -4,6 +4,7 @@ using CustomComponents;
 using CustomComponents.ExtendedDetails;
 using Localize;
 using MechEngineer.Features.OverrideDescriptions;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.CriticalEffects;
 
@@ -29,7 +30,7 @@ public class CriticalEffectsCustom : SimpleCustomComponent, IAfterLoad, IIsDestr
     }
 
     // how many crits can be absorbed incl. destruction of component itself
-    // used by FieldRepairs
+    [UsedBy(User.FieldRepairs)]
     public int MaxHits => PenalizedEffectIDs.Length + 1;
 
     public void OnLoaded(Dictionary<string, object> values)

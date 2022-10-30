@@ -2,7 +2,7 @@
 
 namespace MechEngineer.Features.OverrideDescriptions;
 
-[UsedByFastJson]
+[UsedBy(User.FastJson)]
 internal class BonusDescriptionSettings
 {
     public string Bonus = null!;

@@ -16,7 +16,7 @@ public static class Control
 
     internal static readonly MechEngineerSettings Settings = new();
 
-    [UsedByModTek]
+    [UsedBy(User.ModTek)]
     public static void Start(string modDirectory, string json)
     {
         Mod = new(modDirectory);
@@ -61,7 +61,7 @@ public static class Control
         }
     }
 
-    [UsedByModTek]
+    [UsedBy(User.ModTek)]
     public static void FinishedLoading(Dictionary<string, Dictionary<string, VersionManifestEntry>> customResources)
     {
         try

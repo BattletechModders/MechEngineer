@@ -4,14 +4,15 @@ using BattleTech;
 using CustomComponents;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.OverrideTonnage;
+using MechEngineer.Misc;
 using UnityEngine;
 
 namespace MechEngineer.Features.Engines;
 
-// Declared public to have access from BattleValue module -- bhtrail
+[UsedBy(User.BattleValue)]
 public class Engine
 {
-    // Declared public to have access from BattleValue module -- bhtrail
+    [UsedBy(User.BattleValue)]
     public static Engine? GetEngine(ChassisDef chassisDef, IList<MechComponentRef> componentRefs)
     {
         var result = EngineSearcher.SearchInventory(componentRefs);
@@ -53,7 +54,7 @@ public class Engine
     }
 
     private CoolingDef _coolingDef = null!;
-    // Declared public to have access from BattleValue module -- bhtrail
+    [UsedBy(User.BattleValue)]
     public CoolingDef CoolingDef
     {
         get => _coolingDef;
@@ -65,20 +66,20 @@ public class Engine
             HeatSinkDef = def.GetComponent<EngineHeatSinkDef>();
         }
     }
-    // Declared public to have access from BattleValue module -- bhtrail
     // type of internal heat sinks and compatible external heat sinks
+    [UsedBy(User.BattleValue)]
     public EngineHeatSinkDef HeatSinkDef { get; set; } = null!;
 
-    // Declared public to have access from BattleValue module -- bhtrail
     // amount of internal heat sinks
+    [UsedBy(User.BattleValue)]
     public EngineHeatBlockDef HeatBlockDef { get; set; }
 
-    // Declared public to have access from BattleValue module -- bhtrail
+    [UsedBy(User.BattleValue)]
     public EngineCoreDef CoreDef { get; set; }
 
     internal WeightFactors WeightFactors { get; set; }
 
-    // Declared public to have access from BattleValue module -- bhtrail
+    [UsedBy(User.BattleValue)]
     public List<MechComponentRef> HeatSinksExternal { get; set; }
 
     private int HeatSinkExternalCount { get; set; }
@@ -91,7 +92,7 @@ public class Engine
         return heatSinks.Select(r => r.Def).Count(d => d == heatSinkDef);
     }
 
-    // Declared public to have access from BattleValue module -- bhtrail
+    [UsedBy(User.BattleValue)]
     public float EngineHeatDissipation
     {
         get
