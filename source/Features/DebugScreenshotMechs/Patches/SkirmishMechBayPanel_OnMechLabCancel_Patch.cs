@@ -34,7 +34,7 @@ public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
         {
             if (mechDefsIterator == null)
             {
-                mechDefsIterator = panel.allMechs.GetEnumerator();
+                mechDefsIterator = panel.allMechs.OrderBy(x => x.Description.Id).GetEnumerator();
             }
             while (mechDefsIterator.MoveNext())
             {
