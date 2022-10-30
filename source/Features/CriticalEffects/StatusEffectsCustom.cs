@@ -13,7 +13,7 @@ public class StatusEffectsCustom : SimpleCustomComponent, IListComponent<string>
         var effects = new List<EffectData>();
         foreach (var keyValue in keyValues)
         {
-            var parts = keyValue.Split(',');
+            var parts = keyValue.Split(':');
             var effectTemplateId = parts[0];
             var amount = parts.Length > 0 ? parts[1] : null;
 
