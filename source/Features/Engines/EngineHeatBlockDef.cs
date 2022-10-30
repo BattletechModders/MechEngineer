@@ -2,6 +2,7 @@
 using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
+using MechEngineer.Features.CustomCapacities;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.OverrideDescriptions;
@@ -9,9 +10,27 @@ using MechEngineer.Features.OverrideDescriptions;
 namespace MechEngineer.Features.Engines;
 
 [CustomComponent("EngineHeatBlock")]
-public class EngineHeatBlockDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment, IAdjustSlotElement
+public class EngineHeatBlockDef : SimpleCustom<HeatSinkDef>, IAdjustTooltipEquipment, IAdjustSlotElement, IValueComponent<int>
 {
     public int HeatSinkCount { get; set; }
+
+    public void LoadValue(int value)
+    {
+        HeatSinkCount = value;
+        Def.AddComponent(new CapacityModCustom
+            {
+                Collection = CustomCapacitiesFeature.HeatSinkEngineAdditionalCollectionId,
+                IsUsage = true,
+                Quantity = value
+            }
+        );
+        Def.AddComponent(new CapacityModCustom
+            {
+                Collection = CustomCapacitiesFeature.HeatSinkCollectionId,
+                Quantity = value
+            }
+        );
+    }
 
     public void AdjustTooltipEquipment(TooltipPrefab_Equipment tooltip, MechComponentDef mechComponentDef)
     {

@@ -112,6 +112,21 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     public void ValidateMech(MechDef mechDef, Errors errors)
     {
         ValidateCarryWeight(mechDef, errors);
+        foreach (var customCapacity in Settings.Capacities)
+        {
+            CalculateCapacity(
+                mechDef,
+                customCapacity.Description.Id,
+                ChassisLocations.All,
+                out var capacity,
+                out var usage
+            );
+            var hasError = PrecisionUtils.SmallerThan(capacity, usage);
+            if (hasError)
+            {
+                errors.Add(MechValidationType.InvalidInventorySlots, customCapacity.ErrorOverweight);
+            }
+        }
     }
 
     // Carry Capacity - TacOps p.92
@@ -233,6 +248,8 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
         Two
     }
 
+    internal const string HeatSinkCollectionId = "HeatSink";
+    internal const string HeatSinkEngineAdditionalCollectionId = "HeatSinkEngineAdditional";
     internal const string CarryInHandCollectionId = "CarryInHand";
     internal const string CarryLeftOverCollectionId = "CarryLeftOver";
     internal const string CarryLeftOverTopOffCollectionId = "CarryLeftOverTopOff";

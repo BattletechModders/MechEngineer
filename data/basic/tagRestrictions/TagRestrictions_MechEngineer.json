@@ -17,6 +17,18 @@
             "RequiredTagsOnSameLocation": [
                 "ArmHandActuator"
             ]
+        },
+        {
+            "Tag": "Gear_HeatSink_Generic_Standard",
+            "RequiredTags": [
+                "emod_kit_shs"
+            ]
+        },
+        {
+            "Tag": "Gear_HeatSink_Generic_Double",
+            "RequiredTags": [
+                "emod_kit_dhs"
+            ]
         }
     ]
 }

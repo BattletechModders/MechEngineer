@@ -100,7 +100,9 @@ foreach my $row_ref (@engine_tonnages) {
 			COST => $total_cost,
 			ICON => next_icon(),
 			BONUS => $bonus,
-			TAG => $tag
+			TAG => $tag,
+			IHS => $ihs_count,
+            AHS => $ahs_count
 		};
 
 		my $json = $tache->render("${prefix}_template.json", $engine);

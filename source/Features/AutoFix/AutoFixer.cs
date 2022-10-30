@@ -119,21 +119,6 @@ internal class AutoFixer : IAutoFixMechDef
 
         var engineHeatSinkDef = dataManager.HeatSinkDefs.Get(res.CoolingDef.HeatSinkDefId).GetComponent<EngineHeatSinkDef>();
 
-        if (!EngineFeature.settings.AllowMixingHeatSinkTypes)
-        {
-            // remove incompatible heat sinks
-            var incompatibleHeatSinks = builder.Inventory
-                .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HeatSinkCategory != engineHeatSinkDef.HeatSinkCategory)
-                .ToList();
-
-            foreach (var incompatibleHeatSink in incompatibleHeatSinks)
-            {
-                builder.Remove(incompatibleHeatSink);
-                builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);
-                Control.Logger.Debug?.Log($" Converted incompatible heat sinks to compatible ones");
-            }
-        }
-
         Engine? engine = null;
         if (res.CoreDef != null)
         {
@@ -150,7 +135,7 @@ internal class AutoFixer : IAutoFixMechDef
                 var current = oldCurrent;
 
                 var heatSinks = builder.Inventory
-                    .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HeatSinkCategory == engineHeatSinkDef.HeatSinkCategory)
+                    .Where(r => r.Def.Is<EngineHeatSinkDef>())
                     .ToList();
 
                 while (current < max && heatSinks.Count > 0)
@@ -186,7 +171,7 @@ internal class AutoFixer : IAutoFixMechDef
             var jumpJetTonnage = jumpJets.Select(x => x.Def.Tonnage).FirstOrDefault(); //0 if no jjs
 
             var externalHeatSinks = builder.Inventory
-                .Where(r => r.Def.Is<EngineHeatSinkDef>(out var hs) && hs.HeatSinkCategory == engineHeatSinkDef.HeatSinkCategory)
+                .Where(r => r.Def.Is<EngineHeatSinkDef>())
                 .ToList();
             var internalHeatSinksCount = res.HeatBlockDef.HeatSinkCount;
 
@@ -330,9 +315,7 @@ internal class AutoFixer : IAutoFixMechDef
         // add free heat sinks
         {
             var max = engine.HeatSinkExternalFreeMaxCount;
-            var current = builder.Inventory
-                .Count(r => r.Def.Is<EngineHeatSinkDef>(out var hs)
-                            && hs.HeatSinkCategory == engineHeatSinkDef.HeatSinkCategory);
+            var current = builder.Inventory.Count(r => r.Def.Is<EngineHeatSinkDef>());
             for (var i = current; i < max; i++)
             {
                 builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);

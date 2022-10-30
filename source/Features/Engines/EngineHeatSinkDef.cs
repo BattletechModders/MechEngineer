@@ -8,6 +8,4 @@ public class EngineHeatSinkDef : SimpleCustom<HeatSinkDef>
 {
     public string FullName { get; set; } = null!;
     public string Abbreviation { get; set; } = null!;
-    public string Tag { get; set; } = null!;
-    public string HeatSinkCategory => Tag;
 }

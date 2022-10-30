@@ -1,6 +1,9 @@
 {
 	"Custom": {
 		"EngineCore": 355,
+        "HeatSinkEngineAdditionalCapacity": 4,
+        "HeatSinkCapacity": 10,
+        "HeatSinkUsage": 10,
 		"BonusDescriptions": [
             "EngineHSCap: 4"
         ],

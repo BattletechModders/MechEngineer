@@ -248,7 +248,7 @@
             }
         },
         {
-            "Name": "EngineHeatSink",
+            "Name": "HeatSink",
             "DisplayName": "Heat Sink",
             "DefaultCustoms": {
                 "InventorySorter": "CzOrder1",

@@ -20,13 +20,13 @@ public class CustomCapacitiesSettings : ISettings
         {
             Id = "carry_weight",
             Name = "Carry Weight",
-            Details = "Carry weight represents the total carry capacity of a mech on top of the normal chassis weight internal capacity." +
+            Details = "Carry weight represents the total carry capacity of a 'Mech on top of the normal chassis weight internal capacity." +
                       " Each hand actuator allows to carry an equivalent of up to 5% chassis maximum tonnage." +
                       " If a melee weapon is too heavy for a single arm, it can be held two-handed by combining both hands carry capacities.",
             Icon = "UixSvgIcon_specialEquip_Melee"
         },
         Format = "{0:0.#} / {1:0.#}",
-        ErrorOverweight = "OVERWEIGHT: 'Mechs total carry weight exceeds maximum.",
+        ErrorOverweight = "OVERWEIGHT: This 'Mechs total carry weight exceeds maximum",
         HideIfNoUsageAndCapacity = true
     };
     public string CarryWeightDescription => $"Modifiable via custom capacity collection '{CustomCapacitiesFeature.CarryInHandCollectionId}'.";
@@ -37,14 +37,27 @@ public class CustomCapacitiesSettings : ISettings
         {
             Description = new()
             {
-                Id = "special",
-                Name = "e.g. Special",
-                Details = "This is just an example on how you can define custom capacities on anything and use it up on anything." +
-                          " Useful if you want some more knapsack problem solving gameplay.",
-                Icon = "uixSvgIcon_ability_angelofdeath"
+                Id = CustomCapacitiesFeature.HeatSinkCollectionId,
+                Name = "Heat Sinks",
+                Details = "A 'Mechs engine requires at least 10 heat sinks, which are usually provided by the engine itself." +
+                          " Engine cores with a rating lower than 250 need supplementary heat sinks installed elsewhere on the 'Mech.",
+                Icon = "uixSvgIcon_equipment_Heatsink"
             },
             Format = "{0:0} / {1:0}",
-            ErrorOverweight = "OVERUSE: 'Mechs special points exceeds maximum.",
+            ErrorOverweight = "HEAT SINKS: This 'Mech does not have the minimum amount of heat sinks",
+            HideIfNoUsageAndCapacity = false
+        },
+        new()
+        {
+            Description = new()
+            {
+                Id = CustomCapacitiesFeature.HeatSinkEngineAdditionalCollectionId,
+                Name = "Additional Engine Heat Sinks",
+                Details = "If a 'Mechs engine rating is at or above 275, additional heat sinks can directly be installed within the engine without using up criticals on the 'Mech.",
+                Icon = "uixSvgIcon_equipment_Heatsink"
+            },
+            Format = "E {0:0} / {1:0}",
+            ErrorOverweight = "HEAT SINKS: This 'Mech has exceeded the amount of heat sinks the engine can be fitted with",
             HideIfNoUsageAndCapacity = true
         }
     };
