@@ -103,8 +103,7 @@ public static class MechLabMechInfoWidget_RefreshInfo_Patch
         }
 
         var shownCounter = 0;
-        SetCapacity(CustomCapacitiesFeature.Shared.Settings.CarryWeight, ref shownCounter);
-        foreach (var customCapacity in CustomCapacitiesFeature.Shared.Settings.Capacities)
+        foreach (var customCapacity in CustomCapacitiesFeature.Shared.Settings.Capacities.Values)
         {
             SetCapacity(customCapacity, ref shownCounter);
         }

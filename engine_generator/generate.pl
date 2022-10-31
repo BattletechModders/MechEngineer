@@ -80,8 +80,6 @@ foreach my $row_ref (@engine_tonnages) {
 		
 		my $engine_cost = int($rating * $rating * $rating * $rating / 10000 / 10000) * 10000;
 		
-		#my $total_cost = $engine_cost + $gyro_cost;
-		
 		my $total_cost = $engine_values{$rating};
 		
 		my $bonus = "";
@@ -91,7 +89,7 @@ foreach my $row_ref (@engine_tonnages) {
 		if ($hs_free_tonnage > 0) {
 			$bonus = "\"EngineHSFreeExt: $hs_free_tonnage\""
 		}
-		
+
 		my $engine = {
 			ID => "${prefix}_${rating_string}",
 			RATING => $rating,
@@ -101,8 +99,8 @@ foreach my $row_ref (@engine_tonnages) {
 			ICON => next_icon(),
 			BONUS => $bonus,
 			TAG => $tag,
-			IHS => $ihs_count,
-            AHS => $ahs_count
+			IHS_COUNT => $ihs_count,
+            AHS_COUNT => $ahs_count
 		};
 
 		my $json = $tache->render("${prefix}_template.json", $engine);

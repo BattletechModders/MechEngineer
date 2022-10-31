@@ -31,7 +31,7 @@ internal static class MechLabAutoZoom
                 - 40 // repair button height
                 - confirmRectTransform.localPosition.y + confirmRectTransform.sizeDelta.y; // save button bottom
 
-            var scale = Mathf.Min(1, targetSize / mechSize);
+            var scale = Mathf.Min(MechLabSlotsFeature.settings.ZoomMaximumScale, targetSize / mechSize);
             mechRectTransform.localScale = new(scale, scale, 1);
 
             Control.Logger.Debug?.Log($"AutoZoom scale={scale} mechSize={mechSize} targetSize={targetSize}");

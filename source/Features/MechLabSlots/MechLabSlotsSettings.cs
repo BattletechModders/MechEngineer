@@ -8,6 +8,9 @@ internal class MechLabSlotsSettings : ISettings
     public bool HideHelpButton = false;
     public bool HideECMButton = false;
 
+    public float ZoomMaximumScale = 0.95f;
+    public string ZoomMaximumScaleDescription => "Set the minimum zoom, makes sure custom capacities fit.";
+
     public float MechLabStatusLeftShift = 0;
     public string MechLabStatusLeftShiftDescription => "Between 0 (vanilla) and 10. Allows custom capacities to be wider.";
 

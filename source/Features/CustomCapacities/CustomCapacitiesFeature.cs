@@ -20,6 +20,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     {
         var ccValidation = new CCValidationAdapter(this);
         Validator.RegisterMechValidator(ccValidation.ValidateMech, ccValidation.ValidateMechCanBeFielded);
+        Settings.Complete();
     }
 
     internal void CalculateCustomCapacityResults(
@@ -112,7 +113,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
     public void ValidateMech(MechDef mechDef, Errors errors)
     {
         ValidateCarryWeight(mechDef, errors);
-        foreach (var customCapacity in Settings.Capacities)
+        foreach (var customCapacity in Settings.Capacities.Values)
         {
             CalculateCapacity(
                 mechDef,

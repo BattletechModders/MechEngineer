@@ -1,27 +1,27 @@
 {
-	"Custom": {
-		"EngineCore": 310,
+    "Custom": {
+        "EngineCore": 310,
         "HeatSinkEngineAdditionalCapacity": 2,
         "HeatSinkCapacity": 10,
         "HeatSinkUsage": 10,
-		"BonusDescriptions": [
+        "BonusDescriptions": [
             "EngineHSCap: 2"
         ],
-		"WorkOrderCosts": {
-			"Default": {
-				"TechCost": "0",
-				"CBillCost": "0"
-			},
-			"Install": {
-				"TechCost": "310 * [[Chassis.Tonnage]] / 2000",
-				"CBillCost": "310 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 10"
-			}
-		},
-		"Category" : [
-			{"CategoryID": "EngineCore"},
-			{"CategoryID": "EnginePart"}
-		]
-	},
+        "WorkOrderCosts": {
+            "Default": {
+                "TechCost": "0",
+                "CBillCost": "0"
+            },
+            "Install": {
+                "TechCost": "310 * [[Chassis.Tonnage]] / 2000",
+                "CBillCost": "310 * [[Chassis.Tonnage]] * [[Chassis.Tonnage]] / 10"
+            }
+        },
+        "Category" : [
+            {"CategoryID": "EngineCore"},
+            {"CategoryID": "EnginePart"}
+        ]
+    },
     "DissipationCapacity" : 0,
     "Description" : {
         "Cost" : 1218000,
