@@ -112,20 +112,26 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
     public void ValidateMech(MechDef mechDef, Errors errors)
     {
-        ValidateCarryWeight(mechDef, errors);
-        foreach (var customCapacity in Settings.Capacities.Values)
+        foreach (var customCapacity in Settings.AllCapacities)
         {
-            CalculateCapacity(
-                mechDef,
-                customCapacity.Description.Id,
-                ChassisLocations.All,
-                out var capacity,
-                out var usage
-            );
-            var hasError = PrecisionUtils.SmallerThan(capacity, usage);
-            if (hasError)
+            if (customCapacity == Shared.Settings.CarryWeight)
             {
-                errors.Add(MechValidationType.InvalidInventorySlots, customCapacity.ErrorOverweight);
+                ValidateCarryWeight(mechDef, errors);
+            }
+            else
+            {
+                CalculateCapacity(
+                    mechDef,
+                    customCapacity.Description.Id,
+                    ChassisLocations.All,
+                    out var capacity,
+                    out var usage
+                );
+                var hasError = PrecisionUtils.SmallerThan(capacity, usage);
+                if (hasError)
+                {
+                    errors.Add(MechValidationType.InvalidInventorySlots, customCapacity.ErrorOverweight);
+                }
             }
         }
     }
@@ -138,7 +144,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
         if (context.IsHandOverweight || context.IsLeftOverMissing)
         {
-            errors.Add(MechValidationType.Overweight, Settings.CarryWeight.ErrorOverweight);
+            errors.Add(MechValidationType.Overweight, Settings.CarryWeight!.ErrorOverweight);
         }
         else if (context.IsHandMissingFreeHand)
         {
