@@ -8,6 +8,11 @@
 	],
 	"Instructions": [
 		{
+			"JSONPath": "ChassisTags.items",
+			"Action": "ArrayConcat",
+			"Value": [ "ArmLimitLowerLeft", "ArmLimitLowerRight" ]
+		},
+		{
 			"JSONPath": "FixedEquipment[?(@.ComponentDefID == 'Gear_General_Lance_Command_Module')].MountedLocation",
 			"Action": "Replace",
 			"Value": "CenterTorso"
