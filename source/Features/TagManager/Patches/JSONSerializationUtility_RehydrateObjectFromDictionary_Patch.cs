@@ -30,6 +30,14 @@ public static class JSONSerializationUtility_RehydrateObjectFromDictionary_Patch
             {
                 TagManagerFeature.Shared.ManageMechTags(mechDef);
             }
+            else if (target is PilotDef pilotDef)
+            {
+                TagManagerFeature.Shared.ManagePilotTags(pilotDef);
+            }
+            else if (target is LanceDef lanceDef)
+            {
+                TagManagerFeature.Shared.ManageLanceTags(lanceDef);
+            }
         }
         catch (Exception e)
         {

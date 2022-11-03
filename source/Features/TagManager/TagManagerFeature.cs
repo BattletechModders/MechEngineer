@@ -11,7 +11,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 
     protected override void SetupFeatureLoaded()
     {
-        Settings.Setup();
+        Settings.Complete();
     }
 
     internal void ManageComponentTags(MechComponentDef def)
@@ -23,43 +23,81 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
             && !def.Description.Id.EndsWith("-STOCK")
             && tags.Contains(MechValidationRules.ComponentTag_LosTech))
         {
-            Control.Logger.Debug?.Log($"LostechStockWeaponVariantFix {def.Description.Id}");
+            Control.Logger.Trace?.Log($"LostechStockWeaponVariantFix {def.Description.Id}");
 
             tags.Remove(MechValidationRules.ComponentTag_Stock);
             tags.Add(MechValidationRules.ComponentTag_Variant);
         }
 
-        if (Check(tags, Settings.WhitelistComponentTagSet))
-        {
-            Control.Logger.Debug?.Log($"WhitelistComponentTags {def.Description.Id}");
-            tags.Remove(MechValidationRules.Tag_Blacklisted);
-        }
+        ApplyFilter(tags, Settings.Components);
+    }
 
-        if (Check(tags, Settings.BlacklistComponentTagSet))
-        {
-            Control.Logger.Debug?.Log($"BlacklistComponentTags {def.Description.Id}");
-            tags.Add(MechValidationRules.Tag_Blacklisted);
-        }
+    internal bool ComponentIsValidForSkirmish(MechComponentDef def, bool isDebugLab)
+    {
+        return IsValidForSkirmish(def.ComponentTags, Settings.Components);
     }
 
     internal void ManageMechTags(MechDef def)
     {
-        var tags = def.MechTags;
+        ApplyFilter(def.MechTags, Settings.Mechs);
+    }
 
-        if (Check(tags, Settings.WhitelistMechTagSet))
+    internal bool MechIsValidForSkirmish(MechDef def, bool includeCustomMechs)
+    {
+        return IsValidForSkirmish(def.MechTags, Settings.Mechs);
+    }
+
+    public void ManagePilotTags(PilotDef def)
+    {
+        ApplyFilter(def.PilotTags, Settings.Pilots);
+    }
+
+    internal bool PilotIsValidForSkirmish(PilotDef def)
+    {
+        return IsValidForSkirmish(def.PilotTags, Settings.Pilots);
+    }
+
+    internal void ManageLanceTags(LanceDef def)
+    {
+        ApplyFilter(def.LanceTags, Settings.Lances);
+    }
+
+    internal bool LanceIsValidForSkirmish(LanceDef def, bool requireFullLance, bool includeCustomLances)
+    {
+        return IsValidForSkirmish(def.LanceTags, Settings.Lances);
+    }
+
+    private bool IsValidForSkirmish(TagSet tags, TagManagerSettings.TagsFilter filter)
+    {
+        if (filter.SkirmishForce.HasValue)
         {
-            Control.Logger.Debug?.Log($"WhitelistMechTags {def.Description.Id}");
-            tags.Remove(MechValidationRules.Tag_Blacklisted);
+            return filter.SkirmishForce.Value;
         }
 
-        if (Check(tags, Settings.BlacklistMechTagSet))
+        if (ContainsAny(tags, filter.SkirmishBlockTagSet))
         {
-            Control.Logger.Debug?.Log($"BlacklistMechTags {def.Description.Id}");
+            return false;
+        }
+        if (ContainsAny(tags, filter.SkirmishAllowTagSet))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void ApplyFilter(TagSet tags, TagManagerSettings.TagsFilter filter)
+    {
+        if (ContainsAny(tags, filter.WhitelistTagSet))
+        {
+            tags.Remove(MechValidationRules.Tag_Blacklisted);
+        }
+        if (ContainsAny(tags, filter.BlacklistTagSet))
+        {
             tags.Add(MechValidationRules.Tag_Blacklisted);
         }
     }
 
-    private bool Check(TagSet a, TagSet b)
+    private bool ContainsAny(TagSet a, TagSet b)
     {
         if (a.Count < 1 || b.Count < 1)
         {

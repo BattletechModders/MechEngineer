@@ -2,23 +2,14 @@
     "TagManager": {
         "Enabled": true,
         "disabled_SimGameItemsMinCount": 20,
-        "SkirmishWhitelistTags": [
-            "component_type_stock",
-            "component_type_variant",
-            "component_type_lostech"
-        ]
-    },
-	"disabled_TagManager" : {
-        "Enabled" : true,
-        "SkirmishWhitelistTags" : [
-        ],
-        "WhitelistComponentTags" : [
-        ],
-        "BlacklistComponentTags" : [
-            "component_type_stock",
-            "component_type_variant",
-            "component_type_lostech"
-        ]
+        "Components" : {
+            "SkirmishAllow" : [
+                "component_type_stock",
+                "component_type_variant",
+                "component_type_lostech"
+            ],
+            "disabled_SkirmishForce": false
+        }
     },
     "disabled_DebugScreenshotMechs" : {
         "Enabled": true,
