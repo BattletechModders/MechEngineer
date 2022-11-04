@@ -16,6 +16,9 @@ internal class AutoFixerSettings : ISettings
     public string[] IgnoreAutofixTags = {"ignore_autofix", "noautofix"};
     public string IgnoreAutofixTagsDescription => "These tags on a MechDef, ChassisDef or ComponentDef make sure that the respective object is being ignored by the autofixer";
 
+    public bool MaximizeArmor = true;
+    public string MaximizeArmorDescription => "Maximize armor to use up as much as possible of any left over free tonnage.";
+
     public bool InternalizeHeatSinksOnValidEngines = true;
     public string InternalizeHeatSinksOnValidEnginesDescription => "Converts external heat sinks to internal heat sinks (critical slots -> engine) even for valid mech layouts. Useful when autofixing vanilla mechs, conflicts with modded loadouts.";
 

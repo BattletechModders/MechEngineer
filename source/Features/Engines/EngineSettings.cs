@@ -16,8 +16,8 @@ internal class EngineSettings : ISettings
     public bool EnforceRulesForAdditionalInternalHeatSinks = true;
     public string EnforceRulesForAdditionalInternalHeatSinksDescription = "Can't have those juicy ++ cooling systems with smaller fusion cores than the rules allow it.";
 
-    public bool AllowMixingHeatSinkTypes = false;
-    public string AllowMixingHeatSinkTypesDescription = "Allow heat sinks patchwork.";
+    public bool KeepIncompatibleHeatSinks = false;
+    public string KeepIncompatibleHeatSinksDescription = "Replace incompatible heat sinks with compatible ones.";
 
     public int EngineMissingFallbackHeatSinkCapacity = 30;
     public string EngineMissingFallbackHeatSinkCapacityDescription = "Heat sink capacity if no engine is detected.";
