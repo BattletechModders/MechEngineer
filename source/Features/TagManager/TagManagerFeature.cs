@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
-using BattleTech.Data;
 using BattleTech.UI;
 using HBS;
 using HBS.Collections;
@@ -30,7 +28,8 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
         {
             if (!option.Hide)
             {
-                builder = builder.AddButton(option.Label, () =>
+                var queries = new FilterQueries(option);
+                builder = builder.AddButton($"{option.Label} ({queries.LancesAndMechCount})", () =>
                 {
                     _currentSkirmishFilter = option;
                     OpenSkirmishMechBay(menu);
@@ -56,8 +55,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
     internal void RequestResources(SkirmishMechBayPanel panel)
     {
         var loadRequest = panel.dataManager.CreateLoadRequest(panel.LanceConfiguratorDataLoaded);
-
-        var mdd = MetadataDatabase.Instance;
+        var queries = new FilterQueries(_currentSkirmishFilter);
 
         // vanilla
         // loadRequest.AddAllOfTypeBlindLoadRequest(BattleTechResourceType.ChassisDef, true);
@@ -72,7 +70,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 
         panel.allPilots = new();
         panel.allPilotDefs = new();
-        foreach (var id in QueryItems("PilotDefID", "PilotDef", _currentSkirmishFilter.Pilots))
+        foreach (var id in queries.PilotIds())
         {
             loadRequest.AddLoadRequest(BattleTechResourceType.PilotDef, id, delegate(string _, PilotDef? def)
             {
@@ -90,7 +88,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
         }
 
         panel.stockMechs = new();
-        foreach (var id in QueryItems("UnitDefID", "UnitDef", _currentSkirmishFilter.Mechs))
+        foreach (var id in queries.MechIds())
         {
             loadRequest.AddLoadRequest(BattleTechResourceType.MechDef, id, delegate(string _, MechDef? def)
             {
@@ -116,7 +114,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
         }
 
         panel.stockLances = new();
-        foreach (var id in QueryItems("LanceDefID", "LanceDef", _currentSkirmishFilter.Lances))
+        foreach (var id in queries.LanceIds())
         {
             loadRequest.AddLoadRequest(BattleTechResourceType.LanceDef, id, delegate(string _, LanceDef? def)
             {
@@ -132,21 +130,6 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
         }
 
         loadRequest.ProcessRequests();
-    }
-
-    private static List<string> QueryItems(string idColumn, string tableName, TagManagerSettings.TagsFilter filter)
-    {
-        var queryString =
-            $"SELECT {idColumn} FROM {tableName} d LEFT JOIN TagSetTag tst ON d.TagSetID = tst.TagSetID" +
-            " WHERE tst.TagName NOT IN @Exclude";
-        if (!filter.AllowByDefault)
-        {
-            queryString += " AND tst.TagName IN @Include";
-        }
-
-        return MetadataDatabase.Instance
-            .Query<string>(queryString, new { Include = filter.Allow, Exclude = filter.Block })
-            .ToList();
     }
 
     internal void ManageComponentTags(MechComponentDef def)
