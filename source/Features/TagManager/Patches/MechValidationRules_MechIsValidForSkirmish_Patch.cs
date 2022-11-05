@@ -8,11 +8,11 @@ namespace MechEngineer.Features.TagManager.Patches;
 public static class MechValidationRules_MechIsValidForSkirmish_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(MechDef def, bool includeCustomMechs, ref bool __result)
+    public static bool Prefix(MechDef? def, bool includeCustomMechs, ref bool __result)
     {
         try
         {
-            __result = TagManagerFeature.Shared.MechIsValidForSkirmish(def, includeCustomMechs);
+            __result = def != null && TagManagerFeature.Shared.MechIsValidForSkirmish(def, includeCustomMechs);
             return false;
         }
         catch (Exception e)

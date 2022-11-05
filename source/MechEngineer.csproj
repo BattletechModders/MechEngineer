@@ -52,10 +52,16 @@
     <Reference Include="0Harmony">
       <Private>False</Private>
     </Reference>
+    <Reference Include="InControl">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System">
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Data">
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">

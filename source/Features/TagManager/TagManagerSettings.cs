@@ -7,74 +7,136 @@ namespace MechEngineer.Features.TagManager;
 public class TagManagerSettings : ISettings
 {
     public bool Enabled { get; set; }
+
     public string EnabledDescription =>
-        $"Manipulates Tags on Components, Mechs, Pilots and Lances by adding ({nameof(TagsFilter.Blacklist)}) or removing ({nameof(TagsFilter.Whitelist)}) {MechValidationRules.Tag_Blacklisted}." +
-        $" {nameof(TagsFilter.Blacklist)} is applied after {nameof(TagsFilter.Whitelist)}." +
-        $" {nameof(TagsFilter.SkirmishAllow)} and {nameof(TagsFilter.SkirmishBlock)} is only for the skirmish mech lab and {nameof(TagsFilter.SkirmishBlock)} has precedence.";
+        $"Manipulates tags on Components, Mechs, Pilots and Lances by adding or removing {MechValidationRules.Tag_Blacklisted}:" +
+        $" {nameof(TagsTransformer.Blacklist)} is applied after {nameof(TagsTransformer.Whitelist)}." +
+        $" Also allows filtering by tags when entering the skirmish mech lab: {nameof(TagsFilter.Block)} has precedence over {nameof(TagsFilter.Allow)}";
 
     public int SimGameItemsMinCount;
     public string SimGameItemsMinCountDescription = $"Set the owned minimum count of each mech component in SimGame.";
 
-    public bool LostechStockWeaponVariantFix { get; set; } = false;
+    public bool LostechStockWeaponVariantFix { get; set; } = true;
     public string LostechStockWeaponVariantDescription => "Fixes lostech variant weapon tagging by checking if id ends with -STOCK.";
 
-    public TagsFilter Components = new()
+    public string SkirmishOptionsTitle { get; set; } = "Selection";
+
+    public TagsFilterSet SkirmishDefault = new()
     {
-        SkirmishAllow = new [] { MechValidationRules.ComponentTag_Stock },
-        SkirmishBlock = new [] { MechValidationRules.Tag_Blacklisted },
-        Blacklist = new[] { MechValidationRules.ComponentTag_Debug },
+        Label = "Default",
+        Components = new()
+        {
+            Allow = new[] { MechValidationRules.ComponentTag_Stock, MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
+            Block = new[] { MechValidationRules.Tag_Blacklisted }
+        },
+        Mechs = new()
+        {
+            Allow = new[] { MechValidationRules.MechTag_Released },
+            Block = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked, MechValidationRules.MechTag_Custom }
+        },
+        Pilots = new()
+        {
+            Allow = new[] { MechValidationRules.PilotTag_Released }
+        },
+        Lances = new()
+        {
+            Allow = new[] { MechValidationRules.LanceTag_Skirmish },
+            Block = new[] { MechValidationRules.LanceTag_Custom }
+        }
     };
 
-    public TagsFilter Mechs = new()
+    public TagsFilterSet[] SkirmishOptions =
     {
-        SkirmishAllow = new[] { MechValidationRules.MechTag_Released },
-        SkirmishBlock = new [] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked, MechValidationRules.MechTag_Custom },
+        new()
+        {
+            Label = "Stock",
+            Components = new()
+            {
+                Allow = new[] { MechValidationRules.ComponentTag_Stock },
+                Block = new[] { MechValidationRules.Tag_Blacklisted }
+            },
+            Mechs = new()
+            {
+                Allow = new[] { MechValidationRules.MechTag_Released },
+                Block = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked, MechValidationRules.MechTag_Custom }
+            },
+            Pilots = new()
+            {
+                Allow = new[] { MechValidationRules.PilotTag_Released }
+            },
+            Lances = new()
+            {
+                Allow = new[] { MechValidationRules.LanceTag_Skirmish },
+                Block = new[] { MechValidationRules.LanceTag_Custom }
+            }
+        },
+        new()
+        {
+            Label = "RT all",
+            Components = new()
+            {
+                AllowByDefault = true,
+                Block = new[] { MechValidationRules.Tag_Blacklisted, "VanillaOverride" }
+            },
+            Mechs = new()
+            {
+                AllowByDefault = true,
+                Block = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Custom, "unit_vehicle" }
+            },
+            Pilots = new(),
+            Lances = new()
+        },
+        new()
+        {
+            Label = "RT SLDF",
+            Components = new()
+            {
+                AllowByDefault = true,
+                Block = new[] { MechValidationRules.Tag_Blacklisted, "VanillaOverride" }
+            },
+            Mechs = new()
+            {
+                Allow = new[] { "unit_sldf" },
+                Block = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Custom, "unit_vehicle" }
+            },
+            Pilots = new(),
+            Lances = new()
+        }
     };
 
-    public TagsFilter Pilots = new()
+    public class TagsFilterSet
     {
-        SkirmishAllow = new[] { MechValidationRules.PilotTag_Released },
-    };
-
-    public TagsFilter Lances = new()
-    {
-        SkirmishAllow = new[] { MechValidationRules.LanceTag_Skirmish },
-        SkirmishBlock = new [] { MechValidationRules.LanceTag_Custom },
-    };
-
+        public string Label = "<null>";
+        public bool Hide;
+        public TagsFilter Components = new();
+        public TagsFilter Mechs = new();
+        public TagsFilter Pilots = new();
+        public TagsFilter Lances = new();
+    }
     public class TagsFilter
     {
-        public string[] SkirmishAllow = { };
-        public string[] SkirmishBlock = { };
-        public bool SkirmishAllowByDefault = false;
-
-        public string[] Whitelist = { };
-        public string[] Blacklist = { };
-
-        [JsonIgnore]
-        internal TagSet SkirmishAllowTagSet = null!;
-        [JsonIgnore]
-        internal TagSet SkirmishBlockTagSet = null!;
-
-        [JsonIgnore]
-        internal TagSet WhitelistTagSet = null!;
-        [JsonIgnore]
-        internal TagSet BlacklistTagSet = null!;
-
-        internal void Complete()
-        {
-            SkirmishAllowTagSet = new(SkirmishAllow);
-            SkirmishBlockTagSet = new(SkirmishBlock);
-            WhitelistTagSet = new(Whitelist);
-            BlacklistTagSet = new(Blacklist);
-        }
+        public string[] Allow = { };
+        public string[] Block = { };
+        public bool AllowByDefault = false;
     }
 
-    internal void Complete()
+    public TagsTransformer Components = new()
     {
-        Components.Complete();
-        Mechs.Complete();
-        Pilots.Complete();
-        Lances.Complete();
+        Whitelist = new[] { MechValidationRules.ComponentTag_Stock, MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
+        Blacklist = new[] { MechValidationRules.ComponentTag_Debug }
+    };
+    public TagsTransformer Mechs = new()
+    {
+        Whitelist = new[] { MechValidationRules.MechTag_Released }
+    };
+    public TagsTransformer Pilots = new();
+    public TagsTransformer Lances = new()
+    {
+        Whitelist = new[] { MechValidationRules.LanceTag_Released }
+    };
+    public class TagsTransformer
+    {
+        public string[] Whitelist = { };
+        public string[] Blacklist = { };
     }
 }

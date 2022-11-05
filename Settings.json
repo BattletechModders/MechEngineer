@@ -1,31 +1,7 @@
 {
     "TagManager": {
         "Enabled": true,
-        "LostechStockWeaponVariantFix": true,
-        "disabled_SimGameItemsMinCount": 20,
-        "Components" : {
-            "SkirmishAllow" : [
-                "component_type_stock",
-                "component_type_variant",
-                "component_type_lostech"
-            ],
-            "disabled_SkirmishAllow" : [],
-            "Whitelist" : [
-                "component_type_stock",
-                "component_type_variant",
-                "component_type_lostech"
-            ]
-        },
-        "Mechs" : {
-            "Whitelist" : [
-                "unit_release"
-            ]
-        },
-        "Lances" : {
-            "Whitelist" : [
-                "lance_release"
-            ]
-        }
+        "disabled_SimGameItemsMinCount": 20
     },
     "disabled_DebugScreenshotMechs" : {
         "Enabled": true,

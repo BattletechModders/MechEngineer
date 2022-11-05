@@ -1,17 +1,25 @@
-﻿using BattleTech;
+﻿using System;
 using BattleTech.UI;
 using Harmony;
-using System.Collections.Generic;
-using MechEngineer.Helper;
 
 namespace MechEngineer.Features.TagManager.Patches;
 
 [HarmonyPatch(typeof(SkirmishMechBayPanel), nameof(SkirmishMechBayPanel.RequestResources))]
 public static class SkirmishMechBayPanel_RequestResources_Patch
 {
-    [HarmonyTranspiler]
-    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    [HarmonyPriority(Priority.High)]
+    [HarmonyPrefix]
+    public static bool Prefix(SkirmishMechBayPanel __instance)
     {
-        return instructions.StringReplacer("I do not care as this shouldn't exist", MechValidationRules.MechTag_Unlocked);
+        try
+        {
+            TagManagerFeature.Shared.RequestResources(__instance);
+            return false;
+        }
+        catch (Exception e)
+        {
+            Control.Logger.Error.Log(e);
+        }
+        return true;
     }
 }
