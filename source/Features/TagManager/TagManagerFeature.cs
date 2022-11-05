@@ -69,11 +69,6 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 
     private bool IsValidForSkirmish(TagSet tags, TagManagerSettings.TagsFilter filter)
     {
-        if (filter.SkirmishForce.HasValue)
-        {
-            return filter.SkirmishForce.Value;
-        }
-
         if (ContainsAny(tags, filter.SkirmishBlockTagSet))
         {
             return false;
@@ -82,7 +77,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
         {
             return true;
         }
-        return false;
+        return filter.SkirmishAllowByDefault;
     }
 
     private void ApplyFilter(TagSet tags, TagManagerSettings.TagsFilter filter)

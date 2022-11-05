@@ -7,28 +7,28 @@ namespace MechEngineer.Features.TagManager;
 public class TagManagerSettings : ISettings
 {
     public bool Enabled { get; set; }
-    public string EnabledDescription => $"Manipulates Tags on Components, Mechs, Pilots and Lances by adding ({nameof(TagsFilter.Blacklist)}) or removing ({nameof(TagsFilter.Whitelist)}) {MechValidationRules.Tag_Blacklisted}.";
+    public string EnabledDescription =>
+        $"Manipulates Tags on Components, Mechs, Pilots and Lances by adding ({nameof(TagsFilter.Blacklist)}) or removing ({nameof(TagsFilter.Whitelist)}) {MechValidationRules.Tag_Blacklisted}." +
+        $" {nameof(TagsFilter.Blacklist)} is applied after {nameof(TagsFilter.Whitelist)}." +
+        $" {nameof(TagsFilter.SkirmishAllow)} and {nameof(TagsFilter.SkirmishBlock)} is only for the skirmish mech lab and {nameof(TagsFilter.SkirmishBlock)} has precedence.";
 
     public int SimGameItemsMinCount;
     public string SimGameItemsMinCountDescription = $"Set the owned minimum count of each mech component in SimGame.";
 
-    public bool LostechStockWeaponVariantFix { get; set; } = true;
+    public bool LostechStockWeaponVariantFix { get; set; } = false;
     public string LostechStockWeaponVariantDescription => "Fixes lostech variant weapon tagging by checking if id ends with -STOCK.";
 
     public TagsFilter Components = new()
     {
         SkirmishAllow = new [] { MechValidationRules.ComponentTag_Stock },
         SkirmishBlock = new [] { MechValidationRules.Tag_Blacklisted },
-        Whitelist = new [] { MechValidationRules.ComponentTag_Stock, MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
         Blacklist = new[] { MechValidationRules.ComponentTag_Debug },
     };
 
     public TagsFilter Mechs = new()
     {
         SkirmishAllow = new[] { MechValidationRules.MechTag_Released },
-        // TODO fix so custom does not have to be blocked anymore
         SkirmishBlock = new [] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked, MechValidationRules.MechTag_Custom },
-        Whitelist = new[] { MechValidationRules.MechTag_Released },
     };
 
     public TagsFilter Pilots = new()
@@ -39,20 +39,17 @@ public class TagManagerSettings : ISettings
     public TagsFilter Lances = new()
     {
         SkirmishAllow = new[] { MechValidationRules.LanceTag_Skirmish },
-        // TODO fix so custom does not have to be blocked anymore
         SkirmishBlock = new [] { MechValidationRules.LanceTag_Custom },
-        Whitelist = new[] { MechValidationRules.LanceTag_Released },
     };
 
     public class TagsFilter
     {
         public string[] SkirmishAllow = { };
         public string[] SkirmishBlock = { };
+        public bool SkirmishAllowByDefault = false;
 
         public string[] Whitelist = { };
         public string[] Blacklist = { };
-
-        public bool? SkirmishForce;
 
         [JsonIgnore]
         internal TagSet SkirmishAllowTagSet = null!;
