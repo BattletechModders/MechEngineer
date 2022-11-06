@@ -13,16 +13,16 @@ public class TagManagerSettings : ISettings
         $" {nameof(TagsTransformer.Blacklist)} is applied after {nameof(TagsTransformer.Whitelist)}." +
         $" Also allows filtering by tags when entering the skirmish mech lab: {nameof(TagsFilter.BlockAny)} has precedence over {nameof(TagsFilter.AllowAny)}. Empty allow can be used to match nothing, while null means to allow everything.";
 
-    internal int SimGameItemsMinCount = 0;
-    internal const string SimGameItemsMinCountDescription = $"Set the owned minimum count of each mech component in SimGame.";
+    public int SimGameItemsMinCount = 0;
+    public const string SimGameItemsMinCountDescription = $"Set the owned minimum count of each mech component in SimGame.";
 
-    internal bool LostechStockWeaponVariantFix = true;
-    internal const string LostechStockWeaponVariantDescription = "Fixes lostech variant weapon tagging by checking if id ends with -STOCK.";
+    public bool LostechStockWeaponVariantFix = true;
+    public const string LostechStockWeaponVariantDescription = "Fixes lostech variant weapon tagging by checking if id ends with -STOCK.";
 
     public int SkirmishOverloadWarningCount = 500;
     public const string SkirmishOverloadWarningDescription = "Warn the user before loading into the SkirmishMechBay if too many 'Mech will be loaded.";
 
-    internal TagsFilterSet SkirmishDefault = new()
+    public TagsFilterSet SkirmishDefault = new()
     {
         Label = "Default",
         Components = new()
@@ -45,9 +45,9 @@ public class TagManagerSettings : ISettings
             BlockAny = new[] { MechValidationRules.LanceTag_Custom }
         }
     };
-    internal const string SkirmishDefaultDescription = "The default settings used when no options panel is shown. Can be shown as a preset in the options panel.";
+    public const string SkirmishDefaultDescription = "The default settings used when no options panel is shown. Can be shown as a preset in the options panel.";
 
-    internal TagsFilterSet[] SkirmishPresets =
+    public TagsFilterSet[] SkirmishPresets =
     {
         new()
         {
@@ -73,9 +73,9 @@ public class TagManagerSettings : ISettings
             }
         },
     };
-    internal const string SkirmishPresetsDescription = "If empty, no options panel is shown. Otherwise these are presets to quickly select a filter-combination.";
+    public const string SkirmishPresetsDescription = "If empty, no options panel is shown. Otherwise these are presets to quickly select a filter-combination.";
 
-    internal TagsFilterSet SkirmishOptionsDefault = new()
+    public TagsFilterSet SkirmishOptionsDefault = new()
     {
         Components = new()
         {
@@ -96,9 +96,9 @@ public class TagManagerSettings : ISettings
             AllowAny = Array.Empty<string>(),
         }
     };
-    internal const string SkirmishOptionsDefaultDescription = "(Alpha) The options panel uses these defaults when dynamically combining filters or using the search filter.";
+    public const string SkirmishOptionsDefaultDescription = "(Alpha) The options panel uses these defaults when dynamically combining filters or using the search filter.";
 
-    internal TagOptionsGroup[] SkirmishOptionsGroups =
+    public TagOptionsGroup[] SkirmishOptionsGroups =
     {
         new()
         {
@@ -326,28 +326,28 @@ public class TagManagerSettings : ISettings
         }
     };
 
-    internal class TagOptionsGroup
+    public class TagOptionsGroup
     {
-        internal string Label = "<null>";
-        internal TagOption[] Options = Array.Empty<TagOption>();
+        public string Label = "<null>";
+        public TagOption[] Options = Array.Empty<TagOption>();
     }
 
-    internal class TagOption
+    public class TagOption
     {
-        internal string Label = "<null>";
-        internal string[]? IncludeAny;
-        internal string[]? ExcludeAny;
+        public string Label = "<null>";
+        public string[]? IncludeAny;
+        public string[]? ExcludeAny;
         [JsonIgnore]
         internal bool OptionActive = false;
     }
 
-    internal class TagsFilterSet
+    public class TagsFilterSet
     {
-        internal string Label = "<null>";
-        internal TagsFilter Components = new();
-        internal TagsFilter Mechs = new();
-        internal TagsFilter Pilots = new();
-        internal TagsFilter Lances = new();
+        public string Label = "<null>";
+        public TagsFilter Components = new();
+        public TagsFilter Mechs = new();
+        public TagsFilter Pilots = new();
+        public TagsFilter Lances = new();
     }
     public class TagsFilter
     {
@@ -359,23 +359,23 @@ public class TagManagerSettings : ISettings
         internal TagOptionsGroup[]? OptionsGroups;
     }
 
-    internal TagsTransformer Components = new()
+    public TagsTransformer Components = new()
     {
         Whitelist = new[] { MechValidationRules.ComponentTag_Stock, MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
         Blacklist = new[] { MechValidationRules.ComponentTag_Debug }
     };
-    internal TagsTransformer Mechs = new()
+    public TagsTransformer Mechs = new()
     {
         Whitelist = new[] { MechValidationRules.MechTag_Released }
     };
-    internal TagsTransformer Pilots = new();
-    internal TagsTransformer Lances = new()
+    public TagsTransformer Pilots = new();
+    public TagsTransformer Lances = new()
     {
         Whitelist = new[] { MechValidationRules.LanceTag_Released }
     };
-    internal class TagsTransformer
+    public class TagsTransformer
     {
-        internal string[] Whitelist = { };
-        internal string[] Blacklist = { };
+        public string[] Whitelist = { };
+        public string[] Blacklist = { };
     }
 }
