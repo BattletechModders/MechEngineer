@@ -19,7 +19,7 @@ public class TagManagerSettings : ISettings
     internal bool LostechStockWeaponVariantFix = true;
     internal const string LostechStockWeaponVariantDescription = "Fixes lostech variant weapon tagging by checking if id ends with -STOCK.";
 
-    public int SkirmishOverloadWarning = 500;
+    public int SkirmishOverloadWarningCount = 500;
     public const string SkirmishOverloadWarningDescription = "Warn the user before loading into the SkirmishMechBay if too many 'Mech will be loaded.";
 
     internal TagsFilterSet SkirmishDefault = new()
@@ -111,6 +111,7 @@ public class TagManagerSettings : ISettings
                     ExcludeAny = new[]
                     {
                         "unit_clan",
+                        "unit_omni",
                         "unit_primitive",
                         "unit_prototype"
                     }
@@ -119,6 +120,11 @@ public class TagManagerSettings : ISettings
                 {
                     Label = "Clan",
                     IncludeAny = new[] { "unit_clan" }
+                },
+                new()
+                {
+                    Label = "Omni",
+                    IncludeAny = new[] { "unit_omni" }
                 },
                 new()
                 {
@@ -282,34 +288,38 @@ public class TagManagerSettings : ISettings
                 new()
                 {
                     Label = "Clan Invasion",
-                    IncludeAny = new[] { "source_" }
+                    IncludeAny = new[] { "unit_era_clan_invasion" }
                 },
                 new()
                 {
                     Label = "Civil War",
-                    IncludeAny = new[] { "source_" }
+                    IncludeAny = new[] { "unit_era_civil_war" }
                 },
                 new()
                 {
                     Label = "Jihad",
-                    IncludeAny = new[] { "source_" }
+                    IncludeAny = new[] { "unit_era_jihad" }
                 },
                 new()
                 {
                     Label = "Republic",
-                    IncludeAny = new[] { "source_" }
+                    IncludeAny = new[] { "unit_era_republic" }
                 },
                 new()
                 {
                     Label = "Dark Age",
-                    IncludeAny = new[] { "source_" }
+                    IncludeAny = new[] { "unit_era_dark_ages" }
                 },
                 new()
                 {
                     Label = "Unknown",
                     ExcludeAny = new[]
                     {
-                        "source_"
+                        "unit_era_clan_invasion",
+                        "unit_era_civil_war",
+                        "unit_era_jihad",
+                        "unit_era_republic",
+                        "unit_era_dark_ages"
                     }
                 }
             }

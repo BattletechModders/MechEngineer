@@ -203,7 +203,10 @@ internal class OptionsPanel
     private void RefreshCount()
     {
         var count = new FilterQueries(CreateFilterSet()).MechCount;
-        _inputTitleText.SetText($"Filter by Tag ... {count} found");
+        var warningSuffix = count > TagManagerFeature.Shared.Settings.SkirmishOverloadWarningCount
+            ? " <color=#F06248FF>Warning too many units!</color>"
+            : "";
+        _inputTitleText.SetText($"Filter by Tag ... {count} found.{warningSuffix}");
         Control.Logger.Trace?.Log("Input Tag Search yielded {count} results: " + _searchText);
     }
 
@@ -218,7 +221,7 @@ internal class OptionsPanel
     private void CheckFilteredCountAndLoadCallback(TagManagerSettings.TagsFilterSet filter)
     {
         var count = new FilterQueries(filter).MechCount;
-        var max = TagManagerFeature.Shared.Settings.SkirmishOverloadWarning;
+        var max = TagManagerFeature.Shared.Settings.SkirmishOverloadWarningCount;
         if (count > max)
         {
             GenericPopupBuilder
