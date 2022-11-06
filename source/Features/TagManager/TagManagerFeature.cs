@@ -19,37 +19,24 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
         _currentSkirmishFilter = Settings.SkirmishDefault;
     }
 
+    private OptionsPanel? _optionsPanel;
+    private MainMenu? _mainMenu;
+
     internal void ShowOptions(MainMenu menu)
     {
-        var builder = GenericPopupBuilder.Create(Settings.SkirmishOptionsTitle, "")
-            .AddFader();
-
-        void AddOption(TagManagerSettings.TagsFilterSet option)
+        _mainMenu = menu;
+        _optionsPanel ??= new(filter =>
         {
-            if (!option.Hide)
-            {
-                var queries = new FilterQueries(option);
-                builder = builder.AddButton($"{option.Label} ({queries.LancesAndMechCount})", () =>
-                {
-                    _currentSkirmishFilter = option;
-                    OpenSkirmishMechBay(menu);
-                });
-            }
-        }
-
-        AddOption(Settings.SkirmishDefault);
-        foreach (var option in Settings.SkirmishOptions)
-        {
-            AddOption(option);
-        }
-
-        builder.Render();
+            _currentSkirmishFilter = filter;
+            OpenSkirmishMechBay();
+        });
+        _optionsPanel.Show();
     }
 
-    private void OpenSkirmishMechBay(MainMenu menu)
+    private void OpenSkirmishMechBay()
     {
         LazySingletonBehavior<UIManager>.Instance.GetOrCreateUIModule<SkirmishMechBayPanel>().SetData();
-        menu.Pool();
+        _mainMenu!.Pool();
     }
 
     internal void RequestResources(SkirmishMechBayPanel panel)
@@ -162,6 +149,10 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 
     internal bool MechIsValidForSkirmish(MechDef def, bool includeCustomMechs)
     {
+        if (!includeCustomMechs && def.MechTags.Contains(MechValidationRules.MechTag_Custom))
+        {
+            return false;
+        }
         return IsValidForSkirmish(def.MechTags, _currentSkirmishFilter.Mechs);
     }
 
@@ -182,20 +173,24 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 
     internal bool LanceIsValidForSkirmish(LanceDef def, bool requireFullLance, bool includeCustomLances)
     {
+        if (!includeCustomLances && def.LanceTags.Contains(MechValidationRules.LanceTag_Custom))
+        {
+            return false;
+        }
         return IsValidForSkirmish(def.LanceTags, _currentSkirmishFilter.Lances);
     }
 
     private bool IsValidForSkirmish(TagSet tags, TagManagerSettings.TagsFilter filter)
     {
-        if (ContainsAny(tags, filter.Block))
+        if (filter.BlockAny != null && ContainsAny(tags, filter.BlockAny))
         {
             return false;
         }
-        if (ContainsAny(tags, filter.Allow))
+        if (filter.AllowAny != null && !ContainsAny(tags, filter.AllowAny))
         {
-            return true;
+            return false;
         }
-        return filter.AllowByDefault;
+        return true;
     }
 
     private void ApplyFilter(TagSet tags, TagManagerSettings.TagsTransformer transformer)
@@ -212,7 +207,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 
     private bool ContainsAny(TagSet tagSet, string[] tags)
     {
-        if (tagSet.Count < 1 || tags.Length < 1)
+        if (tags.Length < 1 || tagSet.Count < 1)
         {
             return false;
         }

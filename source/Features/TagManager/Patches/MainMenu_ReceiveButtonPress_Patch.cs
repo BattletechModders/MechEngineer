@@ -12,7 +12,7 @@ public static class MainMenu_ReceiveButtonPress_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return TagManagerFeature.Shared.Settings.SkirmishOptions.Any(o => !o.Hide);
+        return TagManagerFeature.Shared.Settings.SkirmishPresets.Any();
     }
 
     [HarmonyPrefix]
@@ -29,6 +29,7 @@ public static class MainMenu_ReceiveButtonPress_Patch
         catch (Exception e)
         {
             Control.Logger.Error.Log(e);
+            return false;
         }
         return true;
     }
