@@ -48,10 +48,56 @@ public class TagManagerSettings : ISettings
     };
 
     public const string SkirmishOptionsShowDescription = "Shows or hides the skirmish options panel before entering the skirmish 'Mech bay.";
-    public bool SkirmishOptionsShow = true;
+    public bool SkirmishOptionsShow = false;
 
     public const string SkirmishPresetsDescription = "Presets allow to quickly select a custom filter-combination.";
-    public TagsFilterSet[]? SkirmishOptionsPresets = null;
+    public TagsFilterSet[] SkirmishOptionsPresets =
+    {
+        new()
+        {
+            Label = "Stock",
+            Components = new()
+            {
+                ContainsAny = new[] { MechValidationRules.ComponentTag_Stock },
+                NotContainsAny = new[] { MechValidationRules.Tag_Blacklisted }
+            },
+            Mechs = new()
+            {
+                ContainsAny = new[] { MechValidationRules.MechTag_Released },
+                NotContainsAny = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked }
+            },
+            Pilots = new()
+            {
+                ContainsAny = new[] { MechValidationRules.PilotTag_Released }
+            },
+            Lances = new()
+            {
+                ContainsAny = new[] { MechValidationRules.LanceTag_Skirmish }
+            }
+        },
+        new()
+        {
+            Label = "DEBUG Screenshots",
+            Components = new()
+            {
+                ContainsAny = new string[] { },
+                NotContainsAny = new[] { MechValidationRules.Tag_Blacklisted }
+            },
+            Mechs = new()
+            {
+                ContainsAny = new[] { MechValidationRules.MechTag_Released },
+                NotContainsAny = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked }
+            },
+            Pilots = new()
+            {
+                ContainsAny = new string[] { }
+            },
+            Lances = new()
+            {
+                ContainsAny = new string[] { }
+            }
+        }
+    };
 
     public const string SkirmishOptionsDefaultDescription = "Filters that are always active regardless of what the user selects in the options panel.";
     public TagsFilterSet SkirmishOptionsDefault = new()
@@ -100,7 +146,7 @@ public class TagManagerSettings : ISettings
                 ContainsAny = new[] { MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
                 NotContainsAny = new[] { MechValidationRules.ComponentTag_Stock },
                 OptionActive = true
-            },
+            }
         }
     };
 
