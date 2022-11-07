@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using BattleTech.Data;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;

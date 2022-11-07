@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using BattleTech;
+﻿using BattleTech;
 using CustomComponents;
-using MechEngineer.Helper;
 using MechEngineer.Misc;
 
 namespace MechEngineer.Features.AutoFix;

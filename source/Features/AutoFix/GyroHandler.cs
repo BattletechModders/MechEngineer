@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleTech;
-using CustomComponents;
+﻿using BattleTech;
 using MechEngineer.Misc;
 
 namespace MechEngineer.Features.AutoFix;
