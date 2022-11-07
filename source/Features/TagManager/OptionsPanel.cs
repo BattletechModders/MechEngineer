@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
 using HBS;
@@ -21,7 +22,7 @@ internal class OptionsPanel
 
         {
             var module = LazySingletonBehavior<UIManager>.Instance.GetOrCreatePopupModule<GenericPopup>();
-            _root = Object.Instantiate(module.gameObject, UIManager.Instance.popupNode.nodeTransform);
+            _root = Object.Instantiate(module.gameObject, UIManager.Instance.uiNode.nodeTransform);
             _root.GetComponent<GenericPopup>().OnPooled();
             Object.DestroyImmediate(_root.GetComponent<GenericPopup>());
             _background = _root.transform.Find("Representation/secondLayerBackfill-CONDITIONAL").gameObject;
@@ -204,9 +205,9 @@ internal class OptionsPanel
     {
         var count = new FilterQueries(CreateFilterSet()).MechCount;
         var warningSuffix = count > TagManagerFeature.Shared.Settings.SkirmishOverloadWarningCount
-            ? " <color=#F06248FF>Warning too many units!</color>"
+            ? "  <color=#F06248FF>Warning too many units!</color>"
             : "";
-        _inputTitleText.SetText($"Filter by Tag ... {count} found.{warningSuffix}");
+        _inputTitleText.SetText($"Filter by Tag{warningSuffix}\r\n{count} results");
         Control.Logger.Trace?.Log("Input Tag Search yielded {count} results: " + _searchText);
     }
 
@@ -226,6 +227,7 @@ internal class OptionsPanel
         {
             GenericPopupBuilder
                 .Create(GenericPopupType.Warning, $"You are about to load more than {max} 'Mechs ({count}), this will reduce the performance until the game is restarted.")
+                .AddFader()
                 .AddButton("Cancel")
                 .AddButton("Confirm", () => LoadCallbackAndHide(filter))
                 .Render();
@@ -268,12 +270,14 @@ internal class OptionsPanel
 
     internal void Show()
     {
+        _root.transform.SetParent(UIManager.Instance.uiNode.nodeTransform);
         _root.gameObject.SetActive(true);
     }
 
     private void Hide()
     {
         _root.gameObject.SetActive(false);
+        _root.transform.SetParent(UnityGameInstance.BattleTechGame.DataManager.GameObjectPool.inactivePooledGameObjectRoot);
     }
 
     private void AddButton(string label, Action action)
