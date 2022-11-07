@@ -170,7 +170,7 @@ internal class OptionsPanel
             hlg.padding.bottom = 10;
         }
 
-        AddButton(_buttonCancelTemplate, _filterPanelGroup, "Cancel", () => {});
+        AddButton(_buttonCancelTemplate, _filterPanelGroup, "Cancel", Hide);
         AddButton(_buttonTemplate, _filterPanelGroup, "Load", AssemblyFilterAndLoadCallback);
         {
             void AddPreset(TagManagerSettings.TagsFilterSet option)
