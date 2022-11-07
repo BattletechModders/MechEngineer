@@ -16,14 +16,14 @@ internal class FilterQueries
         _filterSet = filterSet;
     }
 
-    internal List<string> PilotIds()
-    {
-        return QueryItems("PilotDefID", "PilotDef", _filterSet.Pilots);
-    }
-
     internal List<string> MechIds()
     {
         return QueryItems("UnitDefID", "UnitDef", _filterSet.Mechs, MechValidationRules.MechTag_Custom);
+    }
+
+    internal List<string> PilotIds()
+    {
+        return QueryItems("PilotDefID", "PilotDef", _filterSet.Pilots);
     }
 
     internal List<string> LanceIds()
@@ -41,22 +41,22 @@ internal class FilterQueries
         {
             var queryString = @$"SELECT DISTINCT {idColumn} FROM {tableName} d";
 
-            var outerOr = new List<string>();
+            var orForceLoadTag = new List<string>();
             if (forceLoadTag != null)
             {
-                outerOr.Add(ExistsIn(forceLoadTag));
+                orForceLoadTag.Add(ExistsIn(forceLoadTag));
             }
 
             {
-                var innerAnd = new List<string>();
+                var andFilters = new List<string>();
                 if (filter.BlockAny != null)
                 {
-                    innerAnd.Add(NotExistsIn(filter.BlockAny));
+                    andFilters.Add(NotExistsIn(filter.BlockAny));
                 }
 
                 if (filter.AllowAny != null)
                 {
-                    innerAnd.Add(ExistsIn(filter.AllowAny));
+                    andFilters.Add(ExistsIn(filter.AllowAny));
                 }
 
                 if (filter.OptionsSearch != null)
@@ -76,7 +76,7 @@ internal class FilterQueries
 
                     if (termQueries.Length > 0)
                     {
-                        innerAnd.Add(@$"({termQueries})");
+                        andFilters.Add(@$"({termQueries})");
                     }
                 }
 
@@ -89,7 +89,7 @@ internal class FilterQueries
                             continue;
                         }
 
-                        var innerOr = new List<string>();
+                        var orOptions = new List<string>();
                         foreach (var option in group.Options)
                         {
                             if (!option.OptionActive)
@@ -97,26 +97,26 @@ internal class FilterQueries
                                 continue;
                             }
 
-                            var extremeInnerAnd = new List<string>();
+                            var andOptionTagsFilters = new List<string>();
                             if (option.ExcludeAny != null)
                             {
-                                extremeInnerAnd.Add(NotExistsIn(option.ExcludeAny));
+                                andOptionTagsFilters.Add(NotExistsIn(option.ExcludeAny));
                             }
                             if (option.IncludeAny != null)
                             {
-                                extremeInnerAnd.Add(ExistsIn(option.IncludeAny));
+                                andOptionTagsFilters.Add(ExistsIn(option.IncludeAny));
                             }
-                            JoinAndAddIfNotEmpty(innerOr, " AND ", extremeInnerAnd);
+                            JoinAndAddIfNotEmpty(orOptions, " AND ", andOptionTagsFilters);
                         }
-                        JoinAndAddIfNotEmpty(innerAnd, " OR ", innerOr);
+                        JoinAndAddIfNotEmpty(andFilters, " OR ", orOptions);
                     }
                 }
-                JoinAndAddIfNotEmpty(outerOr, " AND ", innerAnd);
+                JoinAndAddIfNotEmpty(orForceLoadTag, " AND ", andFilters);
             }
 
-            if (outerOr.Count > 0)
+            if (orForceLoadTag.Count > 0)
             {
-                queryString += @$" WHERE {string.Join(" OR ", outerOr)}";
+                queryString += @$" WHERE {string.Join(" OR ", orForceLoadTag)}";
             }
 
             Control.Logger.Trace?.Log(queryString);
@@ -133,7 +133,7 @@ internal class FilterQueries
     {
         if (inner.Count > 0)
         {
-            outer.Add(string.Join(separator, inner));
+            outer.Add("(" + string.Join(separator, inner) + ")");
         }
     }
 
