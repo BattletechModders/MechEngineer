@@ -8,6 +8,30 @@ namespace MechEngineer.Features.TagManager;
 
 internal class FilterQueries
 {
+    internal static List<string> AllTags()
+    {
+        var includeLikes = new[] { "unit\\_%" };
+        var excludeLikes = new[] { "unit\\_chassis\\_%" };
+        var queryString = @"SELECT DISTINCT TagName FROM TagSetTag";
+
+        var limits = new List<string>();
+        foreach (var includeLike in includeLikes)
+        {
+            limits.Add(@$"TagName LIKE {Quote(includeLike)} ESCAPE '\'");
+        }
+        foreach (var excludeLike in excludeLikes)
+        {
+            limits.Add(@$"TagName NOT LIKE {Quote(excludeLike)} ESCAPE '\'");
+        }
+        if (limits.Count > 0)
+        {
+            queryString += " WHERE " + string.Join(" AND ", limits);
+        }
+
+        Control.Logger.Trace?.Log(queryString);
+        return MetadataDatabase.Instance.Query<string>(queryString, null).ToList();
+    }
+
     private readonly TagManagerSettings.TagsFilterSet _filterSet;
     private readonly MetadataDatabase _mdd = MetadataDatabase.Instance;
 
@@ -18,7 +42,7 @@ internal class FilterQueries
 
     internal List<string> MechIds()
     {
-        return QueryItems("UnitDefID", "UnitDef", _filterSet.Mechs, MechValidationRules.MechTag_Custom);
+        return QueryItems("UnitDefID", "UnitDef", _filterSet.Mechs, MechValidationRules.MechTag_Custom, "d.UnitTypeID = 1");
     }
 
     internal List<string> PilotIds()
@@ -33,7 +57,7 @@ internal class FilterQueries
 
     internal int MechCount => MechIds().Count;
 
-    private List<string> QueryItems(string idColumn, string tableName, TagManagerSettings.TagsFilter filter, string? forceLoadTag = null)
+    private List<string> QueryItems(string idColumn, string tableName, TagManagerSettings.TagsFilter filter, string? forceLoadTag = null, string? customFilter = null)
     {
         var sw = new Stopwatch();
         sw.Start();
@@ -49,14 +73,14 @@ internal class FilterQueries
 
             {
                 var andFilters = new List<string>();
-                if (filter.BlockAny != null)
+                if (filter.NotContainsAny != null)
                 {
-                    andFilters.Add(NotExistsIn(filter.BlockAny));
+                    andFilters.Add(NotExistsIn(filter.NotContainsAny));
                 }
 
-                if (filter.AllowAny != null)
+                if (filter.ContainsAny != null)
                 {
-                    andFilters.Add(ExistsIn(filter.AllowAny));
+                    andFilters.Add(ExistsIn(filter.ContainsAny));
                 }
 
                 if (filter.OptionsSearch != null)
@@ -98,13 +122,13 @@ internal class FilterQueries
                             }
 
                             var andOptionTagsFilters = new List<string>();
-                            if (option.ExcludeAny != null)
+                            if (option.NotContainsAny != null)
                             {
-                                andOptionTagsFilters.Add(NotExistsIn(option.ExcludeAny));
+                                andOptionTagsFilters.Add(NotExistsIn(option.NotContainsAny));
                             }
-                            if (option.IncludeAny != null)
+                            if (option.ContainsAny != null)
                             {
-                                andOptionTagsFilters.Add(ExistsIn(option.IncludeAny));
+                                andOptionTagsFilters.Add(ExistsIn(option.ContainsAny));
                             }
                             JoinAndAddIfNotEmpty(orOptions, " AND ", andOptionTagsFilters);
                         }
@@ -114,9 +138,18 @@ internal class FilterQueries
                 JoinAndAddIfNotEmpty(orForceLoadTag, " AND ", andFilters);
             }
 
+            var andCustom = new List<string>();
+            if (customFilter != null)
+            {
+                andCustom.Add(customFilter);
+            }
             if (orForceLoadTag.Count > 0)
             {
-                queryString += @$" WHERE {string.Join(" OR ", orForceLoadTag)}";
+                JoinAndAddIfNotEmpty(andCustom, " OR ", orForceLoadTag);
+            }
+            if (andCustom.Count > 0)
+            {
+                queryString += @$" WHERE {string.Join(" AND ", andCustom)}";
             }
 
             Control.Logger.Trace?.Log(queryString);

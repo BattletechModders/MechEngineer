@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
@@ -155,42 +156,55 @@ internal class OptionsPanel
         }
 
         {
-            _filterPanelGroup = CreateFilterGroup("Actions");
+            _filterPanelGroup = CreateFilterGroup("Actions", false);
+            _filterPanelGroup.transform.SetParent(_layout.transform);
             var hlg = _filterPanelGroup.GetComponent<HorizontalLayoutGroup>();
             // fix for issues with buttons
             hlg.spacing = 20;
             hlg.padding.bottom = 10;
+
+            AddButton(_buttonCancelTemplate, _filterPanelGroup, "Cancel", Hide);
+            AddButton(_buttonTemplate, _filterPanelGroup, "Load", AssemblyFilterAndLoadCallback);
         }
 
         {
-            _filterPresetsGroup = CreateFilterGroup("'Quick' Load");
-            var hlg = _filterPresetsGroup.GetComponent<HorizontalLayoutGroup>();
-            // fix for issues with buttons
-            hlg.spacing = 20;
-            hlg.padding.bottom = 10;
-        }
-
-        AddButton(_buttonCancelTemplate, _filterPanelGroup, "Cancel", Hide);
-        AddButton(_buttonTemplate, _filterPanelGroup, "Load", AssemblyFilterAndLoadCallback);
-        {
-            void AddPreset(TagManagerSettings.TagsFilterSet option)
-            {
-                var queries = new FilterQueries(option);
-                AddButton($"{option.Label} ({queries.MechCount})", () => CheckFilteredCountAndLoadCallback(option));
-            }
-
             var settings = TagManagerFeature.Shared.Settings;
-            AddPreset(settings.SkirmishDefault);
-            foreach (var preset in settings.SkirmishPresets)
+            if (settings.SkirmishOptionsPresets != null)
             {
-                AddPreset(preset);
+                var presetsGroupGo = CreateFilterGroup("'Quick' Load");
+                presetsGroupGo.transform.SetParent(_layout.transform);
+                presetsGroupGo.transform.SetSiblingIndex(1);
+                var hlg = presetsGroupGo.GetComponent<HorizontalLayoutGroup>();
+                // fix for issues with buttons
+                hlg.spacing = 20;
+                hlg.padding.bottom = 10;
+                foreach (var preset in settings.SkirmishOptionsPresets)
+                {
+                    var queries = new FilterQueries(preset);
+                    AddButton(
+                        _buttonTemplate,
+                        presetsGroupGo,
+                        $"{preset.Label} ({queries.MechCount})",
+                        () => CheckFilteredCountAndLoadCallback(preset)
+                    );
+                }
             }
 
-            foreach (var group in settings.SkirmishOptionsGroups)
+            if (settings.SkirmishOptionsComponentGroup != null)
             {
-                AddOptionGroup(group);
+                AddOptionsGroup(settings.SkirmishOptionsComponentGroup);
+            }
+
+            if (settings.SkirmishOptionsMechGroups != null)
+            {
+                foreach (var group in settings.SkirmishOptionsMechGroups)
+                {
+                    AddOptionsGroup(group);
+                }
             }
         }
+
+        _container.transform.SetAsLastSibling();
 
         SetSearchText(null);
     }
@@ -207,7 +221,7 @@ internal class OptionsPanel
         var warningSuffix = count > TagManagerFeature.Shared.Settings.SkirmishOverloadWarningCount
             ? "  <color=#F06248FF>Warning too many units!</color>"
             : "";
-        _inputTitleText.SetText($"Filter by Tag{warningSuffix}\r\n{count} results");
+        _inputTitleText.SetText($"Search by Tag{warningSuffix}\r\n{count} results");
         Control.Logger.Trace?.Log("Input Tag Search yielded {count} results: " + _searchText);
     }
 
@@ -244,13 +258,94 @@ internal class OptionsPanel
         Hide();
     }
 
+    private static string[]? CombineOrDefault(IEnumerable<string[]?> all)
+    {
+        HashSet<string>? list = null;
+        foreach (var each in all)
+        {
+            if (each == null)
+            {
+                continue;
+            }
+            list ??= new();
+            foreach (var term in each)
+            {
+                list.Add(term);
+            }
+        }
+        return list?.ToArray();
+    }
+
     private TagManagerSettings.TagsFilterSet CreateFilterSet()
     {
         var settings = TagManagerFeature.Shared.Settings;
         var defaults = settings.SkirmishOptionsDefault;
-        defaults.Mechs.OptionsSearch = string.IsNullOrEmpty(_searchText) ? null : _searchText;
-        defaults.Mechs.OptionsGroups = settings.SkirmishOptionsGroups;
-        return defaults;
+
+        TagManagerSettings.TagsFilter componentsFilter;
+        if (settings.SkirmishOptionsComponentGroup != null)
+        {
+            componentsFilter = new()
+            {
+                ContainsAny = CombineOrDefault(
+                    settings.SkirmishOptionsComponentGroup.Options
+                        .Where(x => x.OptionActive)
+                        .Select(x => x.ContainsAny)
+                ),
+                NotContainsAny = CombineOrDefault(
+                    settings.SkirmishOptionsComponentGroup.Options
+                        .Where(x => x.OptionActive)
+                        .Select(x => x.NotContainsAny)
+                ),
+            };
+
+            if (componentsFilter.ContainsAny != null && componentsFilter.NotContainsAny != null)
+            {
+                componentsFilter.NotContainsAny = componentsFilter.NotContainsAny.Except(componentsFilter.ContainsAny).ToArray();
+            }
+
+            if (componentsFilter.ContainsAny == null)
+            {
+                componentsFilter.ContainsAny = defaults.Components.ContainsAny;
+            }
+            else if (defaults.Components.ContainsAny != null)
+            {
+                componentsFilter.ContainsAny =
+                    componentsFilter.ContainsAny
+                        .Concat(defaults.Components.ContainsAny)
+                        .ToArray();
+            }
+
+            if (componentsFilter.NotContainsAny == null)
+            {
+                componentsFilter.NotContainsAny = defaults.Components.NotContainsAny;
+            }
+            else if (defaults.Components.NotContainsAny != null)
+            {
+                componentsFilter.NotContainsAny =
+                    componentsFilter.NotContainsAny
+                        .Concat(defaults.Components.NotContainsAny)
+                        .ToArray();
+            }
+        }
+        else
+        {
+            componentsFilter = defaults.Components;
+        }
+
+        var filterSet = new TagManagerSettings.TagsFilterSet
+        {
+            Components = componentsFilter,
+            Mechs = new()
+            {
+                ContainsAny = defaults.Mechs.ContainsAny,
+                NotContainsAny = defaults.Mechs.NotContainsAny,
+                OptionsSearch = string.IsNullOrEmpty(_searchText) ? null : _searchText,
+                OptionsGroups = settings.SkirmishOptionsMechGroups
+            },
+            Pilots = defaults.Pilots,
+            Lances = defaults.Lances
+        };
+        return filterSet;
     }
 
     private readonly GameObject _root;
@@ -266,7 +361,6 @@ internal class OptionsPanel
     private readonly GameObject _buttonTemplate;
     private readonly GameObject _toggleTemplate;
     private readonly GameObject _filterPanelGroup;
-    private readonly GameObject _filterPresetsGroup;
 
     internal void Show()
     {
@@ -278,11 +372,6 @@ internal class OptionsPanel
     {
         _root.gameObject.SetActive(false);
         _root.transform.SetParent(UnityGameInstance.BattleTechGame.DataManager.GameObjectPool.inactivePooledGameObjectRoot);
-    }
-
-    private void AddButton(string label, Action action)
-    {
-        AddButton(_buttonTemplate, _filterPresetsGroup, label, action);
     }
 
     private void AddButton(GameObject template, GameObject parent, string label, Action action)
@@ -298,28 +387,33 @@ internal class OptionsPanel
         buttonGo.SetActive(true);
     }
 
-    private void AddOptionGroup(TagManagerSettings.TagOptionsGroup group)
+    private void AddOptionsGroup(TagManagerSettings.TagOptionsGroup group)
     {
+        Transform rowTransform;
+        {
+            var rowGo = CreateFilterGroup(group.Label);
+            rowTransform = rowGo.transform;
+            rowTransform.SetParent(_container.transform);
+        }
+
         foreach (var option in group.Options)
         {
-            AddOption(group, option);
+            if (option.OptionBreakLineBefore)
+            {
+                var rowGo = CreateFilterGroup("");
+                rowTransform = rowGo.transform;
+                rowTransform.SetParent(_container.transform);
+            }
+            AddOption(option, rowTransform);
         }
     }
 
-    private void AddOption(TagManagerSettings.TagOptionsGroup group, TagManagerSettings.TagOption option)
+    private void AddOption(TagManagerSettings.TagOption option, Transform parent)
     {
-        var groupLabel = group.Label;
-        var toggleLabel = option.Label;
-        if (!filterGroups.TryGetValue(groupLabel, out var rowGo))
-        {
-            rowGo = CreateFilterGroup(groupLabel);
-            filterGroups[groupLabel] = rowGo;
-        }
-
-        var cellGo = Object.Instantiate(_toggleTemplate, rowGo.transform);
-        cellGo.name = "Filter Toggle " + toggleLabel;
+        var cellGo = Object.Instantiate(_toggleTemplate, parent);
+        cellGo.name = "Filter Toggle " + option.Label;
         var toggle = cellGo.GetComponent<SGDSToggle>();
-        toggle.header.SetText(toggleLabel);
+        toggle.header.SetText(option.Label);
         toggle.toggle.SetToggled(option.OptionActive);
         toggle.toggle.onStateChange.AddListener(s =>
         {
@@ -343,9 +437,7 @@ internal class OptionsPanel
         cellGo.SetActive(true);
     }
 
-    private readonly Dictionary<string, GameObject> filterGroups = new();
-
-    private GameObject CreateFilterGroup(string label)
+    private GameObject CreateFilterGroup(string label, bool showLabel = true)
     {
         var group = new GameObject();
         group.name = "Filter Group " + label;
@@ -371,6 +463,7 @@ internal class OptionsPanel
         csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         csf.enabled = true;
 
+        if (showLabel)
         {
             var labelGo = Object.Instantiate(_toggleTemplate.GetComponent<SGDSToggle>().header.gameObject, group.transform);
             var lt = labelGo.GetComponent<LocalizableText>();
@@ -389,7 +482,6 @@ internal class OptionsPanel
             labelGo.SetActive(true);
         }
 
-        group.transform.SetParent(_container.transform);
         group.SetActive(true);
         return group;
     }

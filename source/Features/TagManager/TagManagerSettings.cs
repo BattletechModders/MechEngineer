@@ -6,97 +6,107 @@ namespace MechEngineer.Features.TagManager;
 
 public class TagManagerSettings : ISettings
 {
-    public bool Enabled { get; set; }
-
     public string EnabledDescription =>
         $"Manipulates tags on Components, Mechs, Pilots and Lances by adding or removing {MechValidationRules.Tag_Blacklisted}:" +
         $" {nameof(TagsTransformer.Blacklist)} is applied after {nameof(TagsTransformer.Whitelist)}." +
-        $" Also allows filtering by tags when entering the skirmish mech lab: {nameof(TagsFilter.BlockAny)} has precedence over {nameof(TagsFilter.AllowAny)}. Empty allow can be used to match nothing, while null means to allow everything.";
+        $" Also allows filtering by tags when entering the skirmish mech lab:" +
+        $" {nameof(TagsFilter.NotContainsAny)} has precedence over {nameof(TagsFilter.ContainsAny)}." +
+        $" Empty allow can be used to match nothing, while null means to allow everything.";
+    public bool Enabled { get; set; }
 
-    public int SimGameItemsMinCount = 0;
     public const string SimGameItemsMinCountDescription = $"Set the owned minimum count of each mech component in SimGame.";
+    public int SimGameItemsMinCount = 0;
 
-    public bool LostechStockWeaponVariantFix = true;
     public const string LostechStockWeaponVariantDescription = "Fixes lostech variant weapon tagging by checking if id ends with -STOCK.";
+    public bool LostechStockWeaponVariantFix = true;
 
-    public int SkirmishOverloadWarningCount = 500;
     public const string SkirmishOverloadWarningDescription = "Warn the user before loading into the SkirmishMechBay if too many 'Mech will be loaded.";
+    public int SkirmishOverloadWarningCount = 500;
 
+    public const string SkirmishDefaultDescription = "The default settings used when no options panel is shown and the user enters the skirmish 'Mech bay directly.";
     public TagsFilterSet SkirmishDefault = new()
     {
         Label = "Default",
         Components = new()
         {
-            AllowAny = new[] { MechValidationRules.ComponentTag_Stock, MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
-            BlockAny = new[] { MechValidationRules.Tag_Blacklisted }
+            ContainsAny = new[] { MechValidationRules.ComponentTag_Stock, MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
+            NotContainsAny = new[] { MechValidationRules.Tag_Blacklisted }
         },
         Mechs = new()
         {
-            AllowAny = new[] { MechValidationRules.MechTag_Released },
-            BlockAny = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked }
+            ContainsAny = new[] { MechValidationRules.MechTag_Released },
+            NotContainsAny = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked }
         },
         Pilots = new()
         {
-            AllowAny = new[] { MechValidationRules.PilotTag_Released }
+            ContainsAny = new[] { MechValidationRules.PilotTag_Released }
         },
         Lances = new()
         {
-            AllowAny = new[] { MechValidationRules.LanceTag_Skirmish }
+            ContainsAny = new[] { MechValidationRules.LanceTag_Skirmish }
         }
     };
-    public const string SkirmishDefaultDescription = "The default settings used when no options panel is shown. Can be shown as a preset in the options panel.";
 
-    public TagsFilterSet[] SkirmishPresets =
-    {
-        new()
-        {
-            Label = "Stock",
-            Components = new()
-            {
-                AllowAny = new[] { MechValidationRules.ComponentTag_Stock },
-                BlockAny = new[] { MechValidationRules.Tag_Blacklisted }
-            },
-            Mechs = new()
-            {
-                AllowAny = new[] { MechValidationRules.MechTag_Released },
-                BlockAny = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked }
-            },
-            Pilots = new()
-            {
-                AllowAny = new[] { MechValidationRules.PilotTag_Released }
-            },
-            Lances = new()
-            {
-                AllowAny = new[] { MechValidationRules.LanceTag_Skirmish }
-            }
-        },
-    };
-    public const string SkirmishPresetsDescription = "If empty, no options panel is shown. Otherwise these are presets to quickly select a filter-combination.";
+    public const string SkirmishOptionsShowDescription = "Shows or hides the skirmish options panel before entering the skirmish 'Mech bay.";
+    public bool SkirmishOptionsShow = true;
 
+    public const string SkirmishPresetsDescription = "Presets allow to quickly select a custom filter-combination.";
+    public TagsFilterSet[]? SkirmishOptionsPresets = null;
+
+    public const string SkirmishOptionsDefaultDescription = "Filters that are always active regardless of what the user selects in the options panel.";
     public TagsFilterSet SkirmishOptionsDefault = new()
     {
         Components = new()
         {
-            AllowAny = new[] { MechValidationRules.ComponentTag_Stock, MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
-            BlockAny = new[] { MechValidationRules.Tag_Blacklisted }
+            ContainsAny = new string[] { },
+            NotContainsAny = new[] { MechValidationRules.Tag_Blacklisted }
         },
         Mechs = new()
         {
-            AllowAny = null,
-            BlockAny = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked, "VanillaOverride", "unit_override" }
+            ContainsAny = new[] { MechValidationRules.MechTag_Released },
+            NotContainsAny = new[] { MechValidationRules.Tag_Blacklisted, MechValidationRules.MechTag_Unlocked }
         },
         Pilots = new()
         {
-            AllowAny = new[] { MechValidationRules.PilotTag_Released }
+            ContainsAny = new[] { MechValidationRules.PilotTag_Released }
         },
         Lances = new()
         {
-            AllowAny = new[] { MechValidationRules.LanceTag_Skirmish }
+            ContainsAny = new[] { MechValidationRules.LanceTag_Skirmish }
         }
     };
-    public const string SkirmishOptionsDefaultDescription = "(Alpha) The options panel uses these defaults when dynamically combining filters or using the search filter.";
 
-    public TagOptionsGroup[] SkirmishOptionsGroups =
+    public const string SkirmishOptionsComponentDescription =
+        "Component options that can be selected in the options panel, they don't influence what is loaded into the 'Mech bay only what is shown later on in the 'Mech lab inventory." +
+        " (Alpha) All active ContainsAny are combined with an OR, all active NotContainsAny are combined with an OR." +
+        " Afterwards NotContainsAny has anything removed that exists in ContainsAny." +
+        " Then anything from the defaults are added to each." +
+        " Then the ContainsAny and NotContainsAny are combined with an AND.";
+    public TagOptionsGroup? SkirmishOptionsComponentGroup = new()
+    {
+        Label = "Components",
+        Options = new TagOption[]
+        {
+            new()
+            {
+                Label = "Stock",
+                ContainsAny = new[] { MechValidationRules.ComponentTag_Stock },
+                NotContainsAny = new[] { MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
+                OptionActive = true
+            },
+            new()
+            {
+                Label = "Variants & LosTech",
+                ContainsAny = new[] { MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
+                NotContainsAny = new[] { MechValidationRules.ComponentTag_Stock },
+                OptionActive = true
+            },
+        }
+    };
+
+    public const string SkirmishOptionsMechGroupsDescription =
+        "Filter which 'Mech get loaded. Each group is combined with an AND, each toggle within a group is combined with an OR.";
+    public TagOptionsGroup[]? SkirmishOptionsMechGroups =
     {
         new()
         {
@@ -106,282 +116,73 @@ public class TagManagerSettings : ISettings
                 new()
                 {
                     Label = "Light",
-                    IncludeAny = new[] { "unit_light" }
-                },
-                new()
-                {
-                    Label = "Medium",
-                    IncludeAny = new[] { "unit_medium" }
-                },
-                new()
-                {
-                    Label = "Heavy",
-                    IncludeAny = new[] { "unit_heavy" }
-                },
-                new()
-                {
-                    Label = "Assault",
-                    IncludeAny = new[] { "unit_assault" }
-                },
-            }
-        },
-        new()
-        {
-            Label = "Release",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Skirmish",
-                    IncludeAny = new[] { "unit_release" },
+                    ContainsAny = new[] { "unit_light" },
                     OptionActive = true
                 },
                 new()
                 {
-                    Label = "Other",
-                    ExcludeAny = new[] { "unit_release" }
+                    Label = "Medium",
+                    ContainsAny = new[] { "unit_medium" },
+                    OptionActive = true
                 },
+                new()
+                {
+                    Label = "Heavy",
+                    ContainsAny = new[] { "unit_heavy" },
+                    OptionActive = true,
+                    OptionBreakLineBefore = true
+                },
+                new()
+                {
+                    Label = "Assault",
+                    ContainsAny = new[] { "unit_assault" },
+                    OptionActive = true
+                }
             }
         },
         new()
         {
-            Label = "DLC",
+            Label = "Source",
             Options = new TagOption[]
             {
+                new()
+                {
+                    Label = "Base",
+                    NotContainsAny = new[] { "unit_dlc" },
+                    OptionActive = true
+                },
                 new()
                 {
                     Label = "DLC",
-                    IncludeAny = new[] { "unit_dlc" }
-                },
-                new()
-                {
-                    Label = "Other",
-                    ExcludeAny = new[] { "unit_dlc" }
-                },
-            }
-        },
-        new()
-        {
-            Label = "Common",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Common",
-                    IncludeAny = new[] { "unit_common" }
-                },
-                new()
-                {
-                    Label = "Other",
-                    ExcludeAny = new[] { "unit_common" }
-                },
-            }
-        },
-        new()
-        {
-            Label = "Speed",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "High",
-                    IncludeAny = new[] { "unit_speed_high" }
-                },
-                new()
-                {
-                    Label = "Low",
-                    IncludeAny = new[] { "unit_speed_low" }
-                },
-                new()
-                {
-                    Label = "Other",
-                    ExcludeAny = new[]
-                    {
-                        "unit_speed_high",
-                        "unit_speed_low"
-                    }
-                },
-            }
-        },
-        new()
-        {
-            Label = "Armor",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "High",
-                    IncludeAny = new[] { "unit_armor_high" }
-                },
-                new()
-                {
-                    Label = "Low",
-                    IncludeAny = new[] { "unit_armor_low" }
-                },
-                new()
-                {
-                    Label = "Other",
-                    ExcludeAny = new[]
-                    {
-                        "unit_armor_high",
-                        "unit_armor_low"
-                    }
-                },
-            }
-        },
-        new()
-        {
-            Label = "Range",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Long",
-                    IncludeAny = new[] { "unit_range_long" }
-                },
-                new()
-                {
-                    Label = "Medium",
-                    IncludeAny = new[] { "unit_range_medium" }
-                },
-                new()
-                {
-                    Label = "Short",
-                    IncludeAny = new[] { "unit_range_short" }
-                },
-                new()
-                {
-                    Label = "Other",
-                    ExcludeAny = new[]
-                    {
-                        "unit_range_long",
-                        "unit_range_medium",
-                        "unit_range_short"
-                    }
-                },
-            }
-        },
-        new()
-        {
-            Label = "Misc",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Indirect Fire",
-                    IncludeAny = new[] { "unit_indirectFire" }
-                },
-                new()
-                {
-                    Label = "Jump",
-                    IncludeAny = new[] { "unit_jumpOK" }
-                },
-                new()
-                {
-                    Label = "Hot",
-                    IncludeAny = new[] { "unit_hot" }
-                },
-                new()
-                {
-                    Label = "Other",
-                    ExcludeAny = new[]
-                    {
-                        "unit_indirectFire",
-                        "unit_jumpOK",
-                        "unit_hot"
-                    }
-                },
-            }
-        },
-        new()
-        {
-            Label = "Role",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Brawler",
-                    IncludeAny = new[] { "unit_role_brawler" }
-                },
-                new()
-                {
-                    Label = "Flanker",
-                    IncludeAny = new[] { "unit_role_flanker" }
-                },
-                new()
-                {
-                    Label = "Scout",
-                    IncludeAny = new[] { "unit_role_scout" }
-                },
-                new()
-                {
-                    Label = "Sniper",
-                    IncludeAny = new[] { "unit_role_sniper" }
-                },
-                new()
-                {
-                    Label = "AP & ECM",
-                    IncludeAny = new[]
-                    {
-                        "unit_role_activeprobe",
-                        "unit_role_ecmcarrier",
-                        "unit_role_ewe"
-                    }
-                },
-                new()
-                {
-                    Label = "Other",
-                    ExcludeAny = new[]
-                    {
-                        "unit_role_brawler",
-                        "unit_role_flanker",
-                        "unit_role_scout",
-                        "unit_role_sniper",
-                        "unit_role_activeprobe",
-                        "unit_role_ecmcarrier",
-                        "unit_role_ewe"
-                    }
+                    ContainsAny = new[] { "unit_dlc" },
+                    OptionActive = true
                 }
             }
-        },
-        new()
-        {
-            Label = "Lance",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Assassin",
-                    IncludeAny = new[] { "unit_lance_assassin" }
-                },
-                new()
-                {
-                    Label = "Support",
-                    IncludeAny = new[] { "unit_lance_support" }
-                },
-                new()
-                {
-                    Label = "Tank",
-                    IncludeAny = new[] { "unit_lance_tank" }
-                },
-                new()
-                {
-                    Label = "Vanguard",
-                    IncludeAny = new[] { "unit_lance_vanguard" }
-                },
-                new()
-                {
-                    Label = "Other",
-                    ExcludeAny = new[]
-                    {
-                        "unit_lance_assassin",
-                        "unit_lance_support",
-                        "unit_lance_tank",
-                        "unit_lance_vanguard"
-                    }
-                }
-            }
-        },
+        }
+/* TODO add description explaining custom tags to search for
+unit_common
+unit_speed_high
+unit_speed_low
+unit_armor_high
+unit_armor_low
+unit_range_long
+unit_range_medium
+unit_range_short
+unit_indirectFire
+unit_jumpOK
+unit_hot
+unit_role_brawler
+unit_role_flanker
+unit_role_scout
+unit_role_sniper
+unit_role_activeprobe
+unit_role_ecmcarrier
+unit_role_ewe
+unit_lance_assassin
+unit_lance_support
+unit_lance_tank
+unit_lance_vanguard
+*/
     };
 
     public class TagOptionsGroup
@@ -393,9 +194,10 @@ public class TagManagerSettings : ISettings
     public class TagOption
     {
         public string Label = "<null>";
-        public string[]? IncludeAny;
-        public string[]? ExcludeAny;
+        public string[]? ContainsAny;
+        public string[]? NotContainsAny;
         public bool OptionActive = false;
+        public bool OptionBreakLineBefore = false;
     }
 
     public class TagsFilterSet
@@ -408,8 +210,8 @@ public class TagManagerSettings : ISettings
     }
     public class TagsFilter
     {
-        public string[]? AllowAny;
-        public string[]? BlockAny;
+        public string[]? ContainsAny;
+        public string[]? NotContainsAny;
         [JsonIgnore]
         internal string? OptionsSearch;
         [JsonIgnore]

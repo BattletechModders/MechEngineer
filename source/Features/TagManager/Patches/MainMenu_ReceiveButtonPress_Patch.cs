@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using BattleTech.UI;
 using Harmony;
 using MechEngineer.Misc;
@@ -12,7 +11,7 @@ public static class MainMenu_ReceiveButtonPress_Patch
     [UsedByHarmony]
     public static bool Prepare()
     {
-        return TagManagerFeature.Shared.Settings.SkirmishPresets.Any();
+        return TagManagerFeature.Shared.Settings.SkirmishOptionsShow;
     }
 
     [HarmonyPrefix]

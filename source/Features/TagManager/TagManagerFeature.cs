@@ -182,11 +182,11 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
 
     private bool IsValidForSkirmish(TagSet tags, TagManagerSettings.TagsFilter filter)
     {
-        if (filter.BlockAny != null && ContainsAny(tags, filter.BlockAny))
+        if (filter.NotContainsAny != null && ContainsAny(tags, filter.NotContainsAny))
         {
             return false;
         }
-        if (filter.AllowAny != null && !ContainsAny(tags, filter.AllowAny))
+        if (filter.ContainsAny != null && !ContainsAny(tags, filter.ContainsAny))
         {
             return false;
         }
