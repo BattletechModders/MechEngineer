@@ -41,8 +41,7 @@ public class TagManagerSettings : ISettings
         },
         Lances = new()
         {
-            AllowAny = new[] { MechValidationRules.LanceTag_Skirmish },
-            BlockAny = new[] { MechValidationRules.LanceTag_Custom }
+            AllowAny = new[] { MechValidationRules.LanceTag_Skirmish }
         }
     };
     public const string SkirmishDefaultDescription = "The default settings used when no options panel is shown. Can be shown as a preset in the options panel.";
@@ -68,8 +67,7 @@ public class TagManagerSettings : ISettings
             },
             Lances = new()
             {
-                AllowAny = new[] { MechValidationRules.LanceTag_Skirmish },
-                BlockAny = new[] { MechValidationRules.LanceTag_Custom }
+                AllowAny = new[] { MechValidationRules.LanceTag_Skirmish }
             }
         },
     };
@@ -79,7 +77,7 @@ public class TagManagerSettings : ISettings
     {
         Components = new()
         {
-            AllowAny = null,
+            AllowAny = new[] { MechValidationRules.ComponentTag_Stock, MechValidationRules.ComponentTag_Variant, MechValidationRules.ComponentTag_LosTech },
             BlockAny = new[] { MechValidationRules.Tag_Blacklisted }
         },
         Mechs = new()
@@ -89,55 +87,17 @@ public class TagManagerSettings : ISettings
         },
         Pilots = new()
         {
-            AllowAny = Array.Empty<string>(),
+            AllowAny = new[] { MechValidationRules.PilotTag_Released }
         },
         Lances = new()
         {
-            AllowAny = Array.Empty<string>(),
+            AllowAny = new[] { MechValidationRules.LanceTag_Skirmish }
         }
     };
     public const string SkirmishOptionsDefaultDescription = "(Alpha) The options panel uses these defaults when dynamically combining filters or using the search filter.";
 
     public TagOptionsGroup[] SkirmishOptionsGroups =
     {
-        new()
-        {
-            Label = "Tech Base",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Inner Sphere",
-                    ExcludeAny = new[]
-                    {
-                        "unit_clan",
-                        "unit_omni",
-                        "unit_primitive",
-                        "unit_prototype"
-                    }
-                },
-                new()
-                {
-                    Label = "Clan",
-                    IncludeAny = new[] { "unit_clan" }
-                },
-                new()
-                {
-                    Label = "Omni",
-                    IncludeAny = new[] { "unit_omni" }
-                },
-                new()
-                {
-                    Label = "Primitive",
-                    IncludeAny = new[] { "unit_primitive" }
-                },
-                new()
-                {
-                    Label = "Prototype",
-                    IncludeAny = new[] { "unit_prototype" }
-                }
-            }
-        },
         new()
         {
             Label = "Tonnage",
@@ -163,167 +123,265 @@ public class TagManagerSettings : ISettings
                     Label = "Assault",
                     IncludeAny = new[] { "unit_assault" }
                 },
+            }
+        },
+        new()
+        {
+            Label = "Release",
+            Options = new TagOption[]
+            {
                 new()
                 {
-                    Label = "Super Heavy",
-                    IncludeAny = new[] { "unit_superheavy" }
+                    Label = "Skirmish",
+                    IncludeAny = new[] { "unit_release" },
+                    OptionActive = true
+                },
+                new()
+                {
+                    Label = "Other",
+                    ExcludeAny = new[] { "unit_release" }
+                },
+            }
+        },
+        new()
+        {
+            Label = "DLC",
+            Options = new TagOption[]
+            {
+                new()
+                {
+                    Label = "DLC",
+                    IncludeAny = new[] { "unit_dlc" }
+                },
+                new()
+                {
+                    Label = "Other",
+                    ExcludeAny = new[] { "unit_dlc" }
+                },
+            }
+        },
+        new()
+        {
+            Label = "Common",
+            Options = new TagOption[]
+            {
+                new()
+                {
+                    Label = "Common",
+                    IncludeAny = new[] { "unit_common" }
+                },
+                new()
+                {
+                    Label = "Other",
+                    ExcludeAny = new[] { "unit_common" }
+                },
+            }
+        },
+        new()
+        {
+            Label = "Speed",
+            Options = new TagOption[]
+            {
+                new()
+                {
+                    Label = "High",
+                    IncludeAny = new[] { "unit_speed_high" }
+                },
+                new()
+                {
+                    Label = "Low",
+                    IncludeAny = new[] { "unit_speed_low" }
                 },
                 new()
                 {
                     Label = "Other",
                     ExcludeAny = new[]
                     {
-                        "unit_light",
-                        "unit_medium",
-                        "unit_heavy",
-                        "unit_assault",
-                        "unit_superheavy"
+                        "unit_speed_high",
+                        "unit_speed_low"
                     }
                 },
             }
         },
         new()
         {
-            Label = "'Mech Type",
+            Label = "Armor",
             Options = new TagOption[]
             {
                 new()
                 {
-                    Label = "BattleMech",
+                    Label = "High",
+                    IncludeAny = new[] { "unit_armor_high" }
+                },
+                new()
+                {
+                    Label = "Low",
+                    IncludeAny = new[] { "unit_armor_low" }
+                },
+                new()
+                {
+                    Label = "Other",
                     ExcludeAny = new[]
                     {
-                        "unit_industrial",
-                        "unit_protomech",
-                        "unit_quad",
-                        "unit_LAM",
-                        "unit_vehicle",
-                        "unit_powerarmor",
+                        "unit_armor_high",
+                        "unit_armor_low"
+                    }
+                },
+            }
+        },
+        new()
+        {
+            Label = "Range",
+            Options = new TagOption[]
+            {
+                new()
+                {
+                    Label = "Long",
+                    IncludeAny = new[] { "unit_range_long" }
+                },
+                new()
+                {
+                    Label = "Medium",
+                    IncludeAny = new[] { "unit_range_medium" }
+                },
+                new()
+                {
+                    Label = "Short",
+                    IncludeAny = new[] { "unit_range_short" }
+                },
+                new()
+                {
+                    Label = "Other",
+                    ExcludeAny = new[]
+                    {
+                        "unit_range_long",
+                        "unit_range_medium",
+                        "unit_range_short"
+                    }
+                },
+            }
+        },
+        new()
+        {
+            Label = "Misc",
+            Options = new TagOption[]
+            {
+                new()
+                {
+                    Label = "Indirect Fire",
+                    IncludeAny = new[] { "unit_indirectFire" }
+                },
+                new()
+                {
+                    Label = "Jump",
+                    IncludeAny = new[] { "unit_jumpOK" }
+                },
+                new()
+                {
+                    Label = "Hot",
+                    IncludeAny = new[] { "unit_hot" }
+                },
+                new()
+                {
+                    Label = "Other",
+                    ExcludeAny = new[]
+                    {
+                        "unit_indirectFire",
+                        "unit_jumpOK",
+                        "unit_hot"
+                    }
+                },
+            }
+        },
+        new()
+        {
+            Label = "Role",
+            Options = new TagOption[]
+            {
+                new()
+                {
+                    Label = "Brawler",
+                    IncludeAny = new[] { "unit_role_brawler" }
+                },
+                new()
+                {
+                    Label = "Flanker",
+                    IncludeAny = new[] { "unit_role_flanker" }
+                },
+                new()
+                {
+                    Label = "Scout",
+                    IncludeAny = new[] { "unit_role_scout" }
+                },
+                new()
+                {
+                    Label = "Sniper",
+                    IncludeAny = new[] { "unit_role_sniper" }
+                },
+                new()
+                {
+                    Label = "AP & ECM",
+                    IncludeAny = new[]
+                    {
+                        "unit_role_activeprobe",
+                        "unit_role_ecmcarrier",
+                        "unit_role_ewe"
                     }
                 },
                 new()
                 {
-                    Label = "IndustrialMech",
-                    IncludeAny = new[] { "unit_industrial" }
-                },
-                new()
-                {
-                    Label = "ProtoMech",
-                    IncludeAny = new[] { "unit_protomech" }
-                },
-                new()
-                {
-                    Label = "Quadrupedal",
-                    IncludeAny = new[] { "unit_quad" }
-                },
-                new()
-                {
-                    Label = "LAM",
-                    IncludeAny = new[] { "unit_LAM" }
+                    Label = "Other",
+                    ExcludeAny = new[]
+                    {
+                        "unit_role_brawler",
+                        "unit_role_flanker",
+                        "unit_role_scout",
+                        "unit_role_sniper",
+                        "unit_role_activeprobe",
+                        "unit_role_ecmcarrier",
+                        "unit_role_ewe"
+                    }
                 }
             }
         },
         new()
         {
-            Label = "Unit Type",
+            Label = "Lance",
             Options = new TagOption[]
             {
                 new()
                 {
-                    Label = "'Mech",
+                    Label = "Assassin",
+                    IncludeAny = new[] { "unit_lance_assassin" }
+                },
+                new()
+                {
+                    Label = "Support",
+                    IncludeAny = new[] { "unit_lance_support" }
+                },
+                new()
+                {
+                    Label = "Tank",
+                    IncludeAny = new[] { "unit_lance_tank" }
+                },
+                new()
+                {
+                    Label = "Vanguard",
+                    IncludeAny = new[] { "unit_lance_vanguard" }
+                },
+                new()
+                {
+                    Label = "Other",
                     ExcludeAny = new[]
                     {
-                        "unit_vehicle",
-                        "unit_powerarmor",
+                        "unit_lance_assassin",
+                        "unit_lance_support",
+                        "unit_lance_tank",
+                        "unit_lance_vanguard"
                     }
-                },
-                new()
-                {
-                    Label = "Vehicle",
-                    IncludeAny = new[] { "unit_vehicle" }
-                },
-                new()
-                {
-                    Label = "Battle Armor",
-                    IncludeAny = new[] { "unit_powerarmor" }
                 }
             }
         },
-        new()
-        {
-            Label = "Rarity",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Normal",
-                    ExcludeAny = new[]
-                    {
-                        "unit_elite",
-                        "unit_hero",
-                        "unit_legendary"
-                    }
-                },
-                new()
-                {
-                    Label = "Elite",
-                    IncludeAny = new[] { "unit_elite" }
-                },
-                new()
-                {
-                    Label = "Hero",
-                    IncludeAny = new[] { "unit_hero" }
-                },
-                new()
-                {
-                    Label = "Legendary",
-                    IncludeAny = new[] { "unit_legendary" }
-                }
-            }
-        },
-        new()
-        {
-            Label = "Era",
-            Options = new TagOption[]
-            {
-                new()
-                {
-                    Label = "Clan Invasion",
-                    IncludeAny = new[] { "unit_era_clan_invasion" }
-                },
-                new()
-                {
-                    Label = "Civil War",
-                    IncludeAny = new[] { "unit_era_civil_war" }
-                },
-                new()
-                {
-                    Label = "Jihad",
-                    IncludeAny = new[] { "unit_era_jihad" }
-                },
-                new()
-                {
-                    Label = "Republic",
-                    IncludeAny = new[] { "unit_era_republic" }
-                },
-                new()
-                {
-                    Label = "Dark Age",
-                    IncludeAny = new[] { "unit_era_dark_ages" }
-                },
-                new()
-                {
-                    Label = "Unknown",
-                    ExcludeAny = new[]
-                    {
-                        "unit_era_clan_invasion",
-                        "unit_era_civil_war",
-                        "unit_era_jihad",
-                        "unit_era_republic",
-                        "unit_era_dark_ages"
-                    }
-                }
-            }
-        }
     };
 
     public class TagOptionsGroup
@@ -337,8 +395,7 @@ public class TagManagerSettings : ISettings
         public string Label = "<null>";
         public string[]? IncludeAny;
         public string[]? ExcludeAny;
-        [JsonIgnore]
-        internal bool OptionActive = false;
+        public bool OptionActive = false;
     }
 
     public class TagsFilterSet
