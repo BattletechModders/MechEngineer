@@ -7,6 +7,7 @@ using BattleTech.UI.TMProWrapper;
 using HBS;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -24,14 +25,21 @@ internal class OptionsPanel
         {
             var module = LazySingletonBehavior<UIManager>.Instance.GetOrCreatePopupModule<GenericPopup>();
             _root = Object.Instantiate(module.gameObject, UIManager.Instance.uiNode.nodeTransform);
-            _root.GetComponent<GenericPopup>().OnPooled();
-            Object.DestroyImmediate(_root.GetComponent<GenericPopup>());
+            {
+                var popup = _root.GetComponent<GenericPopup>();
+                popup.OnPooled();
+                popup.ShowInput(new GenericPopupInputSettings
+                {
+                    SampleText = "Search by Tag ... use comma to enter multiple terms and prepend ! to negate a term.",
+                    InputFieldName = "",
+                });
+                _inputTitleText = popup._inputTitleText;
+                popup._inputField.onValueChanged.AddListener(SetSearchText);
+                Object.DestroyImmediate(popup);
+            }
             _background = _root.transform.Find("Representation/secondLayerBackfill-CONDITIONAL").gameObject;
             _expanderViewport = _root.transform.Find("Representation/ExpanderViewport").gameObject;
             _layout = _expanderViewport.transform.Find("popupContainerLayout").gameObject;
-            _input = _layout.transform.Find("InputField_content").gameObject;
-            _inputTitle = _input.transform.Find("text_inputTitle").gameObject;
-            _inputField = _input.transform.Find("uixPrfField_inputField").gameObject;
             _container = _layout.transform.Find("popup_buttonLayout").gameObject;
             _buttonCancelTemplate = Object.Instantiate(module._prefabButtons[0].gameObject, _layout.transform);
             _buttonTemplate = Object.Instantiate(module._prefabButtons[1].gameObject, _layout.transform);
@@ -52,13 +60,6 @@ internal class OptionsPanel
             Object.DestroyImmediate(layoutTransform.Find("popUpTitle").gameObject);
             Object.DestroyImmediate(layoutTransform.Find("popup_subtitle-Optional").gameObject);
             Object.DestroyImmediate(layoutTransform.Find("Text_content").gameObject);
-
-            _input.SetActive(true);
-            _inputTitleText = _inputTitle.GetComponent<LocalizableText>();
-            var inputFieldComponent = _inputField.GetComponent<HBS_InputField>();
-            inputFieldComponent.characterValidation = HBS_InputField.CharacterValidation.None;
-            inputFieldComponent.richText = false;
-            inputFieldComponent.onValueChanged.AddListener(SetSearchText);
 
             for (var i = 0; i < 3; i++)
             {
@@ -219,9 +220,9 @@ internal class OptionsPanel
     {
         var count = new FilterQueries(CreateFilterSet()).MechCount;
         var warningSuffix = count > TagManagerFeature.Shared.Settings.SkirmishOverloadWarningCount
-            ? "  <color=#F06248FF>Warning too many units!</color>"
+            ? "<color=#F06248FF>Warning too many units!</color>"
             : "";
-        _inputTitleText.SetText($"Search by Tag{warningSuffix}\r\n{count} results");
+        _inputTitleText.SetText($"{warningSuffix}\r\n{count} results");
         Control.Logger.Trace?.Log("Input Tag Search yielded {count} results: " + _searchText);
     }
 
@@ -352,10 +353,7 @@ internal class OptionsPanel
     private readonly GameObject _background;
     private readonly GameObject _expanderViewport;
     private readonly GameObject _layout;
-    private readonly GameObject _input;
-    private readonly GameObject _inputTitle;
     private readonly LocalizableText _inputTitleText;
-    private readonly GameObject _inputField;
     private readonly GameObject _container;
     private readonly GameObject _buttonCancelTemplate;
     private readonly GameObject _buttonTemplate;
@@ -374,15 +372,12 @@ internal class OptionsPanel
         _root.transform.SetParent(UnityGameInstance.BattleTechGame.DataManager.GameObjectPool.inactivePooledGameObjectRoot);
     }
 
-    private void AddButton(GameObject template, GameObject parent, string label, Action action)
+    private void AddButton(GameObject template, GameObject parent, string label, UnityAction action)
     {
         var buttonGo = Object.Instantiate(template, parent.transform);
         var hbsButton = buttonGo.GetComponent<HBSButton>();
         hbsButton.SetText(label);
-        hbsButton.OnClicked.AddListener(() =>
-        {
-            action();
-        });
+        hbsButton.OnClicked.AddListener(action);
         hbsButton.SetState(ButtonState.Enabled);
         buttonGo.SetActive(true);
     }

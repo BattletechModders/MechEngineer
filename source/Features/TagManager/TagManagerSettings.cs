@@ -51,7 +51,7 @@ public class TagManagerSettings : ISettings
     public bool SkirmishOptionsShow = false;
 
     public const string SkirmishPresetsDescription = "Presets allow to quickly select a custom filter-combination.";
-    public TagsFilterSet[] SkirmishOptionsPresets =
+    public TagsFilterSet[]? SkirmishOptionsPresets =
     {
         new()
         {
