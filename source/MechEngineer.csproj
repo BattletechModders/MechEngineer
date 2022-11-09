@@ -82,7 +82,10 @@
     <Reference Include="UnityEngine.TextRenderingModule">
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UI">
+    <Reference Include="UnityEngine.UI" Publicize="true">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
       <Private>False</Private>
     </Reference>
   </ItemGroup>

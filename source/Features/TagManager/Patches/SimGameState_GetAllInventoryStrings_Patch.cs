@@ -55,6 +55,28 @@ public static class SimGameState_GetAllInventoryStrings_Patch
             AddApplicable(dataManager.jumpJetDefs);
             AddApplicable(dataManager.upgradeDefs);
             AddApplicable(dataManager.weaponDefs);
+
+            foreach (var def in dataManager.mechDefs.items.Values)
+            {
+                if (!feature.MechIsValidForSkirmish(def, false))
+                {
+                    continue;
+                }
+
+                var id = state.GetItemStatID(def.Description.Id, "MECHPART");
+                if (state.companyStats.ContainsStatistic(id))
+                {
+                    var count = state.companyStats.GetValue<int>(id);
+                    if (count < minCount)
+                    {
+                        state.companyStats.ModifyStat("SimGameState", 0, id, StatCollection.StatOperation.Set, minCount);
+                    }
+                }
+                else
+                {
+                    state.companyStats.AddStatistic(id, minCount);
+                }
+            }
         }
         catch (Exception e)
         {
