@@ -3,10 +3,12 @@ using BattleTech.UI;
 using BattleTech.UI.Tooltips;
 using CustomComponents;
 using MechEngineer.Features.OverrideDescriptions;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.OverrideTonnage;
 
 [CustomComponent("Weights")]
+[UsedBy(User.BattleValue)]
 public class WeightFactors : SimpleCustomComponent, IAdjustSlotElement, IAdjustTooltipEquipment, IAdjustTooltipWeapon
 {
     public int ReservedSlots { get; set; } = 0; // TODO move to own feature... SlotsHandler or SizeHandler
