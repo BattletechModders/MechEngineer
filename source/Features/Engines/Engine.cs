@@ -77,7 +77,8 @@ public class Engine
     [UsedBy(User.BattleValue)]
     public EngineCoreDef CoreDef { get; set; }
 
-    internal WeightFactors WeightFactors { get; set; }
+    [UsedBy(User.BattleValue)]
+    public WeightFactors WeightFactors { get; set; }
 
     [UsedBy(User.BattleValue)]
     public List<MechComponentRef> HeatSinksExternal { get; set; }
