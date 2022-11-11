@@ -99,7 +99,7 @@ internal class WeaponComponentPrefabCalculator
             }
             if (name == null)
             {
-                Control.Logger.Error.Log($"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}");
+                Logging.Error?.Log($"no prefabName mapped for weapon ComponentDefID={mechComponentRef.ComponentDefID} PrefabIdentifier={mechComponentRef.Def.PrefabIdentifier}");
             }
             return name;
         }
@@ -121,14 +121,14 @@ internal class WeaponComponentPrefabCalculator
         var availablePrefabSets = GetAvailablePrefabSetsForLocation(location);
         var bestSelection = new PrefabSelectionCandidate(availablePrefabSets);
 
-        Control.Logger.Debug?.Log($"CalculateMappingForLocation chassisDef={chassisDef.Description.Id} location={location} availablePrefabSets={availablePrefabSets.JoinAsString()} sortedComponentRefs=[{sortedComponentRefs.Select(x => x.ComponentDefID).JoinAsString()}]");
+        Logging.Debug?.Log($"CalculateMappingForLocation chassisDef={chassisDef.Description.Id} location={location} availablePrefabSets={availablePrefabSets.JoinAsString()} sortedComponentRefs=[{sortedComponentRefs.Select(x => x.ComponentDefID).JoinAsString()}]");
 
         foreach (var componentRef in sortedComponentRefs)
         {
             var prefabIdentifier = componentRef.Def.PrefabIdentifier;
             var compatibleTerms = HardpointFixFeature.Shared.GetCompatiblePrefabTerms(prefabIdentifier);
 
-            Control.Logger.Debug?.Log($" componentRef={componentRef.ComponentDefID} prefabIdentifier={prefabIdentifier} compatibleTerms={compatibleTerms.JoinAsString()}");
+            Logging.Debug?.Log($" componentRef={componentRef.ComponentDefID} prefabIdentifier={prefabIdentifier} compatibleTerms={compatibleTerms.JoinAsString()}");
 
             foreach (var compatibleTerm in compatibleTerms)
             {
@@ -141,7 +141,7 @@ internal class WeaponComponentPrefabCalculator
                     continue;
                 }
 
-                Control.Logger.Debug?.Log($"  prefab={prefab}");
+                Logging.Debug?.Log($"  prefab={prefab}");
 
                 var newMapping = new PrefabMapping(prefab, componentRef);
                 bestSelection = bestSelection.CreateWithoutPrefab(prefab, newMapping);
@@ -151,7 +151,7 @@ internal class WeaponComponentPrefabCalculator
 
         }
         fallbackPrefabs[location] = bestSelection.FreeSets;
-        Control.Logger.Debug?.Log($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
+        Logging.Debug?.Log($"Mappings for chassis {chassisDef.Description.Id} at {location} [{bestSelection.Mappings.JoinAsString()}]");
         foreach (var mapping in bestSelection.Mappings)
         {
             weaponMappings[mapping.MechComponentRef] = mapping.Prefab.Name;
@@ -185,7 +185,7 @@ internal class WeaponComponentPrefabCalculator
             .Where(x => !usedSlots.Contains(PrefabHardpoint(x)))
             .ToList();
 
-        Control.Logger.Debug?.Log($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
+        Logging.Debug?.Log($"Blank mappings for chassis {chassisDef.Description.Id} at {location} [{requiredBlanks.JoinAsString()}]");
 
         blanks[location] = requiredBlanks;
     }
@@ -196,7 +196,7 @@ internal class WeaponComponentPrefabCalculator
         var sets = new List<PrefabSet>();
         if (weaponsData.weapons == null)
         {
-            Control.Logger.Debug?.Log($"no hardpoint data found for {chassisDef.Description.Id} at {location}");
+            Logging.Debug?.Log($"no hardpoint data found for {chassisDef.Description.Id} at {location}");
         }
         else
         {
@@ -210,7 +210,7 @@ internal class WeaponComponentPrefabCalculator
                 }
                 catch (Exception e)
                 {
-                    Control.Logger.Warning?.Log($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
+                    Logging.Warning?.Log($"error processing hardpoint data for {chassisDef.Description.Id} at {location}: index={index} weapons=[{weapons?.JoinAsString()}]", e);
                     //throw;
                 }
             }

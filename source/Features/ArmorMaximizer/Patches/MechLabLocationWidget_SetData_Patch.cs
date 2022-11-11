@@ -21,7 +21,7 @@ public static class MechLabLocationWidget_SetData_Patch
                 var button = child.gameObject.GetComponent<Button>() ?? child.gameObject.AddComponent<Button>();
                 button.onClick.RemoveAllListeners();
                 button.onClick.AddListener(() => ArmorMaximizerHandler.OnBarClick(widget, isRearArmor));
-                Control.Logger.Trace?.Log($"Added onClick Location={widget.chassisLocationDef.Location.GetShortString()} isRearArmor={isRearArmor}");
+                Logging.Trace?.Log($"Added onClick Location={widget.chassisLocationDef.Location.GetShortString()} isRearArmor={isRearArmor}");
             }
             Setup(widget.armorBar, false);
             if (widget.useRearArmor)
@@ -31,7 +31,7 @@ public static class MechLabLocationWidget_SetData_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }

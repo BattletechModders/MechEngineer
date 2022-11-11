@@ -113,7 +113,7 @@ public class CustomWidgetsFixMechLab
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
 
         @this.SetParent(parent, worldPositionStays);

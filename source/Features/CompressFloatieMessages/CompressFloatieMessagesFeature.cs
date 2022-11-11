@@ -16,7 +16,7 @@ internal class CompressFloatieMessagesFeature : Feature<CompressFloatieMessagesS
     public static bool CompressFloatieMessages(FloatieMessage incoming, Queue<FloatieMessage> queue)
     {
         var incomingString = incoming.text.ToString();
-        Control.Logger.Debug?.Log($"Floatie {incomingString}");
+        Logging.Debug?.Log($"Floatie {incomingString}");
         foreach (var message in queue)
         {
             // quick preliminary check

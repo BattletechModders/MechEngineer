@@ -26,7 +26,7 @@ internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 
@@ -35,11 +35,11 @@ internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
     {
         try
         {
-            Control.Logger.Debug?.Log($"ShowEffectStatuses Postfix effectDict {___effectDict.Keys.JoinAsString()}");
+            Logging.Debug?.Log($"ShowEffectStatuses Postfix effectDict {___effectDict.Keys.JoinAsString()}");
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }
@@ -58,11 +58,11 @@ internal static class EffectManager_CancelEffect_Patch
     {
         try
         {
-            Control.Logger.Debug?.Log($"CancelEffect Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
+            Logging.Debug?.Log($"CancelEffect Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
         }
         catch (Exception e2)
         {
-            Control.Logger.Error.Log(e2);
+            Logging.Error?.Log(e2);
         }
     }
 }
@@ -81,11 +81,11 @@ internal static class EffectManager_EffectComplete_Patch
     {
         try
         {
-            Control.Logger.Debug?.Log($"EffectComplete Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
+            Logging.Debug?.Log($"EffectComplete Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
         }
         catch (Exception e2)
         {
-            Control.Logger.Error.Log(e2);
+            Logging.Error?.Log(e2);
         }
     }
 }
@@ -95,7 +95,7 @@ internal static class DebugUtils
     internal static void LogActor(string topic, AbstractActor actor)
     {
         var effects = actor.Combat.EffectManager.GetAllEffectsTargeting(actor);
-        Control.Logger.Debug?.Log($"{topic} effects on actor {actor.GUID} {effects.Select(x => x.EffectData.Description.Id).JoinAsString()}");
+        Logging.Debug?.Log($"{topic} effects on actor {actor.GUID} {effects.Select(x => x.EffectData.Description.Id).JoinAsString()}");
     }
 
     internal static string JoinAsString<T>(this IEnumerable<T> @this) where T : class
@@ -116,6 +116,6 @@ internal static class CombatHUDStatusPanel_ShouldShowEffect_Patch
     [HarmonyPostfix]
     internal static void Postfix(ref bool __result)
     {
-        Control.Logger.Debug?.Log($"ShouldShowEffect {__result}");
+        Logging.Debug?.Log($"ShouldShowEffect {__result}");
     }
 }

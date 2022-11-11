@@ -20,7 +20,7 @@ internal static class ChassisHandler
             return;
         }
 
-        Control.Logger.Info?.Log($"Auto fixing chassisDef={chassisDef.Description.Id}");
+        Logging.Info?.Log($"Auto fixing chassisDef={chassisDef.Description.Id}");
 
         AutoFixChassisDef(chassisDef);
         AutoFixSlots(chassisDef);
@@ -36,7 +36,7 @@ internal static class ChassisHandler
             var value = Convert.ChangeType(tonnage, info.PropertyType);
             info.SetValue(chassisDef, value, null);
 
-            Control.Logger.Debug?.Log($"set InitialTonnage={tonnage}");
+            Logging.Debug?.Log($"set InitialTonnage={tonnage}");
         }
 
         if (AutoFixerFeature.settings.ChassisDefMaxJumpjets)
@@ -50,7 +50,7 @@ internal static class ChassisHandler
             var value = Convert.ChangeType(maxCount, info.PropertyType);
             info.SetValue(chassisDef, value, null);
 
-            Control.Logger.Debug?.Log($"set MaxJumpjets={maxCount}");
+            Logging.Debug?.Log($"set MaxJumpjets={maxCount}");
         }
 
         if (AutoFixerFeature.settings.ChassisDefArmorStructureRatio)
@@ -125,6 +125,6 @@ internal static class ChassisHandler
         info.SetValue(box, value);
         locationDef = (LocationDef)box;
 
-        Control.Logger.Debug?.Log($"set InventorySlots={locationDef.InventorySlots} on location={location}");
+        Logging.Debug?.Log($"set InventorySlots={locationDef.InventorySlots} on location={location}");
     }
 }

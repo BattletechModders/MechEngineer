@@ -22,7 +22,7 @@ public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 
@@ -60,7 +60,7 @@ public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }

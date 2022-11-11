@@ -25,7 +25,7 @@ public static class CombatHUDFloatieStack_AddFloatie_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
 
         return true;

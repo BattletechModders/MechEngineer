@@ -38,7 +38,7 @@ public static class MechLabPanel_GetNonFieldableErrorString_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
 
         return MechValidationRules.GetValidationErrors(errorMessages, validationTypes);

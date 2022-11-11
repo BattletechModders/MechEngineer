@@ -19,7 +19,7 @@ public static class CombatHUDWeaponSlot_AddToolTipDetail_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }

@@ -16,7 +16,7 @@ public static class MechBayPanel_SelectMech_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }

@@ -19,7 +19,7 @@ public static class MechLabPanel_OnRequestResourcesComplete_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 
@@ -44,7 +44,7 @@ public static class MechLabPanel_OnRequestResourcesComplete_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 

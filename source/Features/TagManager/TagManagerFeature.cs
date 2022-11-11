@@ -69,7 +69,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
                 }
                 else
                 {
-                    Control.Logger.Warning?.Log($"Invalid pilot {id} for skirmish was loaded");
+                    Logging.Warning?.Log($"Invalid pilot {id} for skirmish was loaded");
                 }
             }, true);
         }
@@ -85,7 +85,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
                 }
                 catch (Exception e)
                 {
-                    Control.Logger.Warning?.Log($"Mech {id} could not be refreshed", e);
+                    Logging.Warning?.Log($"Mech {id} could not be refreshed", e);
                     return;
                 }
 
@@ -95,7 +95,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
                 }
                 else
                 {
-                    Control.Logger.Warning?.Log($"Invalid mech {id} for skirmish was loaded");
+                    Logging.Warning?.Log($"Invalid mech {id} for skirmish was loaded");
                 }
             }, true);
         }
@@ -111,7 +111,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
                 }
                 else
                 {
-                    Control.Logger.Warning?.Log($"Invalid lance {id} for skirmish was loaded");
+                    Logging.Warning?.Log($"Invalid lance {id} for skirmish was loaded");
                 }
             }, true);
         }
@@ -128,7 +128,7 @@ internal class TagManagerFeature : Feature<TagManagerSettings>
             && !def.Description.Id.EndsWith("-STOCK")
             && tags.Contains(MechValidationRules.ComponentTag_LosTech))
         {
-            Control.Logger.Trace?.Log($"LostechStockWeaponVariantFix {def.Description.Id}");
+            Logging.Trace?.Log($"LostechStockWeaponVariantFix {def.Description.Id}");
 
             tags.Remove(MechValidationRules.ComponentTag_Stock);
             tags.Add(MechValidationRules.ComponentTag_Variant);

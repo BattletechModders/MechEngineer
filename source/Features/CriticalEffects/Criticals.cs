@@ -125,7 +125,7 @@ internal class Criticals
             CreateEffects(effectsNext, damageLevel);
         }
 
-        Control.Logger.Debug?.Log(
+        Logging.Debug?.Log(
             $"Component hit (uid={component.uid} Id={component.Description.Id} Location={component.Location}) " +
             $"effectsMax={effectsMax} effectsPrev={effectsPrev} effectsNext={effectsNext} " +
             $"damageLevel={damageLevel} HasEffects={Effects != null} LinkedStatisticName={Effects?.LinkedStatisticName}"
@@ -224,7 +224,7 @@ internal class Criticals
         {
             var id = LinkedScopedId();
 
-            Control.Logger.Debug?.Log($"HasLinked id={id}");
+            Logging.Debug?.Log($"HasLinked id={id}");
             foreach (var otherMechComponent in actor.allComponents)
             {
                 if (otherMechComponent.DamageLevel == ComponentDamageLevel.Destroyed)
@@ -249,7 +249,7 @@ internal class Criticals
 
         static void LocalSetDamageLevel(MechComponent mechComponent, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
         {
-            Control.Logger.Debug?.Log($"damageLevel={damageLevel} uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location})");
+            Logging.Debug?.Log($"damageLevel={damageLevel} uid={mechComponent.uid} (Id={mechComponent.Description.Id} Location={mechComponent.Location})");
             mechComponent.StatCollection.ModifyStat(
                 hitInfo.attackerId,
                 hitInfo.stackItemUID,
@@ -321,7 +321,7 @@ internal class Criticals
 
         // collect disabled effects, probably easier to cache these in a mech statistic
         var disabledScopedEffectIds = DisabledSimpleScopedEffectIdsOnActor(actor);
-        Control.Logger.Debug?.Log($"disabledEffectIds={string.Join(",", disabledScopedEffectIds.ToArray())}");
+        Logging.Debug?.Log($"disabledEffectIds={string.Join(",", disabledScopedEffectIds.ToArray())}");
         foreach (var effectId in effectIds)
         {
             var simpleScopedEffectId = ScopedId(effectId);
@@ -402,7 +402,7 @@ internal class EffectIdUtil
     {
         var actor = component.parent;
 
-        Control.Logger.Debug?.Log($"Creating id={effectId} statName={effectData.statisticData.statName}");
+        Logging.Debug?.Log($"Creating id={effectId} statName={effectData.statisticData.statName}");
         actor.Combat.EffectManager.CreateEffect(effectData, effectId, -1, actor, actor, default, 0);
     }
 
@@ -415,7 +415,7 @@ internal class EffectIdUtil
         }
         if (effectData.targetingData.effectTriggerType != EffectTriggerType.Passive) // we only support passive for now
         {
-            Control.Logger.Warning?.Log($"Effect templateEffectId={templateEffectId} is not passive");
+            Logging.Warning?.Log($"Effect templateEffectId={templateEffectId} is not passive");
             return;
         }
 
@@ -431,10 +431,10 @@ internal class EffectIdUtil
             .GetAllEffectsWithID(resolvedEffectId)
             .Where(e => e.Target == actor);
 
-        Control.Logger.Debug?.Log($"Canceling id={resolvedEffectId}");
+        Logging.Debug?.Log($"Canceling id={resolvedEffectId}");
         foreach (var statusEffect in statusEffects)
         {
-            Control.Logger.Debug?.Log($"Canceling statName={statusEffect.EffectData.statisticData.statName}");
+            Logging.Debug?.Log($"Canceling statName={statusEffect.EffectData.statisticData.statName}");
             actor.CancelEffect(statusEffect);
         }
     }

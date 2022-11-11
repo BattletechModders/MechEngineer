@@ -33,7 +33,7 @@ public static class MechLabItemSlotElement_SetIconAndText_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }

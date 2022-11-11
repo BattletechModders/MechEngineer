@@ -24,7 +24,7 @@ public static class ToHit_GetSelfArmMountedModifier_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
 
         return true;

@@ -41,7 +41,7 @@ public static class Contract_GenerateSalvage_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
 
         return pilot.IsIncapacitated;

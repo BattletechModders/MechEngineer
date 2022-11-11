@@ -10,7 +10,7 @@ public static class TagSetExtensions
     {
         if (set == null)
         {
-            Control.Logger.Error.Log("Found null tagset!");
+            Logging.Error?.Log("Found null tagset!");
             throw new NullReferenceException();
         }
         return set.ContainsAny(AutoFixerFeature.Shared.IgnoreAutofixTags);

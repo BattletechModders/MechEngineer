@@ -18,7 +18,7 @@ public static class Mech_CalcJumpHeat_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }

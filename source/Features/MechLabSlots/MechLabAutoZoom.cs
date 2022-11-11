@@ -34,7 +34,7 @@ internal static class MechLabAutoZoom
             var scale = Mathf.Min(MechLabSlotsFeature.settings.ZoomMaximumScale, targetSize / mechSize);
             mechRectTransform.localScale = new(scale, scale, 1);
 
-            Control.Logger.Debug?.Log($"AutoZoom scale={scale} mechSize={mechSize} targetSize={targetSize}");
+            Logging.Debug?.Log($"AutoZoom scale={scale} mechSize={mechSize} targetSize={targetSize}");
         }
     }
 }

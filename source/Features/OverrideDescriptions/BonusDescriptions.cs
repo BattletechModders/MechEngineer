@@ -65,7 +65,7 @@ public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment,
 
             if (!OverrideDescriptionsFeature.Resources.TryGetValue(bonusKey, out var settings))
             {
-                Control.Logger.Error.Log($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
+                Logging.Error?.Log($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
                 continue;
             }
 
@@ -146,7 +146,7 @@ public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment,
             catch (Exception e)
             {
                 var message = $"Can't process '{format}'";
-                Control.Logger.Error.Log(message, e);
+                Logging.Error?.Log(message, e);
                 return message;
             }
         }

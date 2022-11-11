@@ -27,7 +27,7 @@ public static class Mech_InitGameRep_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 

@@ -15,13 +15,13 @@ public static class GameRepresentation_PlayVFXAt_Patch
         {
             if (Control.Settings.OverrideGhostVFX.Blacklisted.Contains(vfxName))
             {
-                Control.Logger.Debug?.Log($"skipped {vfxName}");
+                Logging.Debug?.Log($"skipped {vfxName}");
                 return false;
             }
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
 
         return true;

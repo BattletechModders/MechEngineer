@@ -21,7 +21,7 @@ internal static class ArmorMaximizerHandler
         {
             var widget = mechLabPanel.GetLocationWidget(update.Location);
             widget.SetArmor(update.Location.IsRear(), update.Assigned);
-            Control.Logger.Trace?.Log($"OnStripArmor.SetArmor update={update}");
+            Logging.Trace?.Log($"OnStripArmor.SetArmor update={update}");
         }
 
         mechLabPanel.FlagAsModified();
@@ -39,7 +39,7 @@ internal static class ArmorMaximizerHandler
         {
             var widget = mechLabPanel.GetLocationWidget(update.Location);
             widget.SetArmor(update.Location.IsRear(), update.Assigned);
-            Control.Logger.Trace?.Log($"OnMaxArmor.SetArmor update={update}");
+            Logging.Trace?.Log($"OnMaxArmor.SetArmor update={update}");
         }
 
         infoWidget.RefreshInfo();
@@ -59,7 +59,7 @@ internal static class ArmorMaximizerHandler
             ? PrecisionUtils.RoundUp(current + stepSize, stepPrecision)
             : PrecisionUtils.RoundDown(current - stepSize, stepPrecision);
 
-        Control.Logger.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={stepPrecision} isRearArmor={isRearArmor}");
+        Logging.Trace?.Log($"HandleArmorUpdate stepDirection={stepDirection} current={current} precision={stepPrecision} isRearArmor={isRearArmor}");
         if (stepDirection > 0)
         {
             var max = isRearArmor ? widget.maxRearArmor : widget.maxArmor;
@@ -80,13 +80,13 @@ internal static class ArmorMaximizerHandler
                 }
             }
 
-            Control.Logger.Trace?.Log($"HandleArmorUpdate updated={updated} maxTotal={maxTotal} maxOther={maxOther} currentOther={currentOther} updatedOther={updatedOther} isRearArmor={updatedOther}");
+            Logging.Trace?.Log($"HandleArmorUpdate updated={updated} maxTotal={maxTotal} maxOther={maxOther} currentOther={currentOther} updatedOther={updatedOther} isRearArmor={updatedOther}");
         }
         else
         {
             updated = Mathf.Max(updated, 0);
             widget.SetArmor(isRearArmor, updated);
-            Control.Logger.Trace?.Log($"HandleArmorUpdate updated={updated}");
+            Logging.Trace?.Log($"HandleArmorUpdate updated={updated}");
         }
     }
 

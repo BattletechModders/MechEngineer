@@ -167,7 +167,7 @@ internal class MechArmorState
         var tmp = updates.ToList();
 
         // this does a lot of looping, just 20ms on my machine though for an empty atlas
-        Control.Logger.Trace?.Log($"Maximize before loop");
+        Logging.Trace?.Log($"Maximize before loop");
         while (Remaining > 0)
         {
             tmp.RemoveAll(s => s.IsFull || (s.LinkedChassisLocationState?.IsFull ?? false));
@@ -177,7 +177,7 @@ internal class MechArmorState
             }
             Increment(tmp.Max(), armorPerStep);
         }
-        Control.Logger.Trace?.Log($"Maximize after loop");
+        Logging.Trace?.Log($"Maximize after loop");
 
         return HasChanges;
     }
@@ -205,7 +205,7 @@ internal class MechArmorState
             armorLocationState.LinkedChassisLocationState.Assigned += change;
         }
 
-        Control.Logger.Trace?.Log($"Increment change={change} Assigned={Assigned} armorLocationState={armorLocationState}");
+        Logging.Trace?.Log($"Increment change={change} Assigned={Assigned} armorLocationState={armorLocationState}");
         HasChanges = true;
     }
 }

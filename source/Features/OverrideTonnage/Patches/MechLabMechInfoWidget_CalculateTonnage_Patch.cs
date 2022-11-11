@@ -37,7 +37,7 @@ public static class MechLabMechInfoWidget_CalculateTonnage_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }

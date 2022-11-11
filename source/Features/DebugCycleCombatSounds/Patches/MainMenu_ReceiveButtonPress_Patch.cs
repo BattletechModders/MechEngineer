@@ -36,7 +36,7 @@ public static class MainMenu_ReceiveButtonPress_Patch
         ____version.text = eventId;
         SceneSingletonBehavior<WwiseManager>.Instance.StopAllAudio();
         WwiseManager.PostEvent(Iterator.Current, WwiseManager.GlobalAudioObject);
-        Control.Logger.Info?.Log($"WwiseManager.PostEvent eventName={eventId}");
+        Logging.Info?.Log($"WwiseManager.PostEvent eventName={eventId}");
 
         // AudioEventList_aircraft.aircraft_leopard_destruction
         return false;

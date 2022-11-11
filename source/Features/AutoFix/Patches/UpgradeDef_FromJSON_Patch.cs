@@ -28,7 +28,7 @@ public static class UpgradeDef_FromJSON_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }

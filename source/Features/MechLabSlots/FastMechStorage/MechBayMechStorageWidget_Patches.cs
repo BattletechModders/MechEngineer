@@ -19,7 +19,7 @@ public static class ScrollRect_LateUpdate_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }
@@ -30,7 +30,7 @@ public static class MechBayMechStorageWidget_ClearInventory_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.ClearInventory");
+        Logging.Trace?.Log("MechBayMechStorageWidget.ClearInventory");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -41,7 +41,7 @@ public static class MechBayMechStorageWidget_ClearInventory_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -54,7 +54,7 @@ public static class MechBayMechStorageWidget_InitInventory_MechDefs_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance, List<MechDef> mechDefs, bool resetFilters)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.InitInventory<MechDef>");
+        Logging.Trace?.Log("MechBayMechStorageWidget.InitInventory<MechDef>");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -65,7 +65,7 @@ public static class MechBayMechStorageWidget_InitInventory_MechDefs_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -77,7 +77,7 @@ public static class MechBayMechStorageWidget_InitInventory_Chassis_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance, List<ChassisDef> chassisDefs, bool resetFilters)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.InitInventory<ChassisDef>");
+        Logging.Trace?.Log("MechBayMechStorageWidget.InitInventory<ChassisDef>");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -88,7 +88,7 @@ public static class MechBayMechStorageWidget_InitInventory_Chassis_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -100,7 +100,7 @@ public static class MechBayMechStorageWidget_GetInventoryItem_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance, string id, ref IMechLabDraggableItem __result)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.GetInventoryItem");
+        Logging.Trace?.Log("MechBayMechStorageWidget.GetInventoryItem");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -111,7 +111,7 @@ public static class MechBayMechStorageWidget_GetInventoryItem_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -123,7 +123,7 @@ public static class MechBayMechStorageWidget_GetMechDefByGUID_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance, string GUID, ref IMechLabDraggableItem __result)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.GetMechDefByGUID");
+        Logging.Trace?.Log("MechBayMechStorageWidget.GetMechDefByGUID");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -134,7 +134,7 @@ public static class MechBayMechStorageWidget_GetMechDefByGUID_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -146,7 +146,7 @@ public static class MechBayMechStorageWidget_ApplyFiltering_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.ApplyFiltering");
+        Logging.Trace?.Log("MechBayMechStorageWidget.ApplyFiltering");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -157,7 +157,7 @@ public static class MechBayMechStorageWidget_ApplyFiltering_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -170,7 +170,7 @@ public static class MechBayMechStorageWidget_SetSorting_Patch
     [HarmonyPriority(Priority.High)]
     public static bool Prefix(MechBayMechStorageWidget __instance)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.SetSorting");
+        Logging.Trace?.Log("MechBayMechStorageWidget.SetSorting");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -181,7 +181,7 @@ public static class MechBayMechStorageWidget_SetSorting_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -193,7 +193,7 @@ public static class MechBayMechStorageWidget_SetData_Patch
     [HarmonyPrefix]
     public static bool Prefix()
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.SetData");
+        Logging.Trace?.Log("MechBayMechStorageWidget.SetData");
         return true;
     }
 }
@@ -204,7 +204,7 @@ public static class MechBayMechStorageWidget_CreateLanceItem_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance, MechDef def, ref LanceLoadoutMechItem __result)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.CreateLanceItem");
+        Logging.Trace?.Log("MechBayMechStorageWidget.CreateLanceItem");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -215,7 +215,7 @@ public static class MechBayMechStorageWidget_CreateLanceItem_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -227,7 +227,7 @@ public static class MechBayMechStorageWidget_OnAddItem_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance, IMechLabDraggableItem item, bool validate, ref bool __result)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.OnAddItem");
+        Logging.Trace?.Log("MechBayMechStorageWidget.OnAddItem");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -238,7 +238,7 @@ public static class MechBayMechStorageWidget_OnAddItem_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -250,7 +250,7 @@ public static class MechBayMechStorageWidget_OnRemoveItem_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechBayMechStorageWidget __instance, IMechLabDraggableItem item, ref bool __result)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.OnRemoveItem");
+        Logging.Trace?.Log("MechBayMechStorageWidget.OnRemoveItem");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -261,7 +261,7 @@ public static class MechBayMechStorageWidget_OnRemoveItem_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         return true;
     }
@@ -273,7 +273,7 @@ public static class MechBayMechStorageWidget_OnItemGrab_Patch
     [HarmonyPrefix]
     public static void Prefix(MechBayMechStorageWidget __instance, IMechLabDraggableItem item)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.OnItemGrab");
+        Logging.Trace?.Log("MechBayMechStorageWidget.OnItemGrab");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -283,7 +283,7 @@ public static class MechBayMechStorageWidget_OnItemGrab_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }
@@ -294,7 +294,7 @@ public static class MechBayMechStorageWidget_OnButtonClicked_Patch
     [HarmonyPrefix]
     public static void Prefix(MechBayMechStorageWidget __instance, ref IMechLabDraggableItem item)
     {
-        Control.Logger.Trace?.Log("MechBayMechStorageWidget.OnButtonClicked");
+        Logging.Trace?.Log("MechBayMechStorageWidget.OnButtonClicked");
         try
         {
             if (CustomMechBayMechStorageWidgetTracker.TryGet(__instance, out var customWidget))
@@ -304,7 +304,7 @@ public static class MechBayMechStorageWidget_OnButtonClicked_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }

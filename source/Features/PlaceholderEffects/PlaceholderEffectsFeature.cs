@@ -22,7 +22,7 @@ internal class PlaceholderEffectsFeature : Feature<PlaceholderEffectsSettings>
             effect = new EffectData();
             effect.FromJSON(data);
 
-            Control.Logger.Debug?.Log($"Replacing placeholders in {effect.Description.Id} with {naming.LocationId}");
+            Logging.Debug?.Log($"Replacing placeholders in {effect.Description.Id} with {naming.LocationId}");
 
             effect.statisticData.statName = naming.InterpolateStatisticName(effect.statisticData.statName);
 

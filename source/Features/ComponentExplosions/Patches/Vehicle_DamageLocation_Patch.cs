@@ -42,7 +42,7 @@ internal static class Vehicle_DamageLocation_Patch
 
             var directDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
             var backDamage = damage - directDamage;
-            Control.Logger.Debug?.Log($"reducing structure damage from {damage} to {directDamage} in {location}");
+            Logging.Debug?.Log($"reducing structure damage from {damage} to {directDamage} in {location}");
             damage = directDamage;
 
             if (backDamage <= 0)
@@ -60,13 +60,13 @@ internal static class Vehicle_DamageLocation_Patch
             }
 
             var armorDamage = Mathf.Min(backDamage, armor);
-            Control.Logger.Debug?.Log($"added blowout armor damage {armorDamage} to {armorLocation}");
+            Logging.Debug?.Log($"added blowout armor damage {armorDamage} to {armorLocation}");
 
             vehicle.applyArmorStatDamage(armorLocation, armorDamage, hitInfo);
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
         finally
         {

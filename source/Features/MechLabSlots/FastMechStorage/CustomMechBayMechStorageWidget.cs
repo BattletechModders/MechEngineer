@@ -41,7 +41,7 @@ internal class CustomMechBayMechStorageWidget
         _rowCellCount = Mathf.FloorToInt(rect.sizeDelta.x / (_grid.cellSize.x + _grid.spacing.x));
         // Ceil for SimGame MechBay Storage, otherwise all others enclose much of the cells
         _screenRowCount = Mathf.CeilToInt(rect.sizeDelta.y / (_grid.cellSize.y + _grid.spacing.y));
-        Control.Logger.Debug?.Log($"Widget dimensions set to _rowCellCount={_rowCellCount} and _screenRowCount={_screenRowCount}");
+        Logging.Debug?.Log($"Widget dimensions set to _rowCellCount={_rowCellCount} and _screenRowCount={_screenRowCount}");
     }
 
     private List<FakeItem> _inventory;
@@ -57,7 +57,7 @@ internal class CustomMechBayMechStorageWidget
     private void PoolInventory(int startIndex, int endIndex)
     {
         var inventory = _widget.inventory;
-        Control.Logger.Trace?.Log($"PoolInventory Count={_widget.inventory.Count} startIndex={startIndex} endIndex={endIndex}");
+        Logging.Trace?.Log($"PoolInventory Count={_widget.inventory.Count} startIndex={startIndex} endIndex={endIndex}");
         for (var index = endIndex; index >= startIndex; index--)
         {
             var inventoryItem = inventory[index];
@@ -257,8 +257,8 @@ internal class CustomMechBayMechStorageWidget
             .ThenBy(item => item.ChassisDef?.Description.Cost)
             .ToList();
 
-        Control.Logger.Trace?.Log($"_inventory.Count={_inventory.Count}");
-        Control.Logger.Trace?.Log($"_sortedAndFilteredInventory.Count={_sortedAndFilteredInventory.Count}");
+        Logging.Trace?.Log($"_inventory.Count={_inventory.Count}");
+        Logging.Trace?.Log($"_sortedAndFilteredInventory.Count={_sortedAndFilteredInventory.Count}");
 
         if (reset)
         {
@@ -352,7 +352,7 @@ internal class CustomMechBayMechStorageWidget
 
         LayoutRebuilder.MarkLayoutForRebuild(_grid.GetComponent<RectTransform>());
 
-        Control.Logger.Trace?.Log($"Render {nameof(_rowIndexMaxForLoadingData)}={_rowIndexMaxForLoadingData} {nameof(_rowIndexForLoadingData)}={_rowIndexForLoadingData} padding={padding}");
+        Logging.Trace?.Log($"Render {nameof(_rowIndexMaxForLoadingData)}={_rowIndexMaxForLoadingData} {nameof(_rowIndexForLoadingData)}={_rowIndexForLoadingData} padding={padding}");
     }
 
     private IMechLabDraggableItem PooledInstantiate(IMechLabDraggableItem fakeItem, bool addToItemListParent, bool addItemToRadioSet)

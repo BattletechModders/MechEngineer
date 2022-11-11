@@ -1,4 +1,5 @@
 {
+    "TraceEnabled": true,
     "TagManager": {
         "Enabled": true,
         "disabled_SimGameItemsMinCount": 20
@@ -7,10 +8,6 @@
         "Enabled": true,
         "CaptureScreenshots": false,
         "DumpGameObjectCounts": true
-    },
-    "BetterLog": {
-		"Level": "Debug",
-        "TraceEnabled": true
     },
     "Performance": {
         "Enabled": true

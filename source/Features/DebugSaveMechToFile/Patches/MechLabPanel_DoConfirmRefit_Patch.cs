@@ -37,7 +37,7 @@ public static class MechLabPanel_DoConfirmRefit_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }

@@ -3,7 +3,6 @@ using MechEngineer.Features.ArmorMaximizer;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.ArmorStructureRatio;
 using MechEngineer.Features.AutoFix;
-using MechEngineer.Features.BetterLog;
 using MechEngineer.Features.ComponentExplosions;
 using MechEngineer.Features.CompressFloatieMessages;
 using MechEngineer.Features.CriticalEffects;
@@ -39,7 +38,6 @@ internal static class FeaturesList
     // order matters, dependencies between "Features" are encoded into the order
     internal static readonly IFeature[] Features =
     {
-        BetterLogFeature.Shared,
         OrderedStatusEffectsFeature.Shared,
         OverrideTonnageFeature.Shared,
         CustomCapacitiesFeature.Shared,

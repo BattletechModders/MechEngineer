@@ -22,7 +22,7 @@ internal static class Mech_DamageLocation_Patch
             if (ComponentExplosionsFeature.IsInternalExplosionContained)
             {
                 __result = false;
-                Control.Logger.Warning?.Log("prevented explosion pass through (you should never see this message)");
+                Logging.Warning?.Log("prevented explosion pass through (you should never see this message)");
                 return false;
             }
 
@@ -34,7 +34,7 @@ internal static class Mech_DamageLocation_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
 
         return true;
@@ -59,10 +59,10 @@ internal static class Mech_DamageLocation_Patch
         }
 
         ComponentExplosionsFeature.IsInternalExplosionContained = true;
-        Control.Logger.Debug?.Log($"prevent explosion pass through from {Mech.GetAbbreviatedChassisLocation(location)}");
+        Logging.Debug?.Log($"prevent explosion pass through from {Mech.GetAbbreviatedChassisLocation(location)}");
 
         var maxStructureDamage = mech.GetCurrentStructure(location);
-        Control.Logger.Debug?.Log($"damage={damage} maxStructureDamage={maxStructureDamage}");
+        Logging.Debug?.Log($"damage={damage} maxStructureDamage={maxStructureDamage}");
 
         if (properties.MaximumDamage == null)
         {
@@ -73,7 +73,7 @@ internal static class Mech_DamageLocation_Patch
 
         var newInternalDamage = Mathf.Min(damage, properties.MaximumDamage.Value);
         var backDamage = damage - newInternalDamage;
-        Control.Logger.Debug?.Log($"reducing structure damage from {damage} to {newInternalDamage}");
+        Logging.Debug?.Log($"reducing structure damage from {damage} to {newInternalDamage}");
 
         damage = Mathf.Min(maxStructureDamage, newInternalDamage);
         mech.PublishFloatieMessage("EXPLOSION REDIRECTED");
@@ -109,7 +109,7 @@ internal static class Mech_DamageLocation_Patch
         }
 
         var armorDamage = Mathf.Min(backDamage, armor);
-        Control.Logger.Debug?.Log($"added blowout armor damage {armorDamage} to {Mech.GetLongArmorLocation(armorLocation)}");
+        Logging.Debug?.Log($"added blowout armor damage {armorDamage} to {Mech.GetLongArmorLocation(armorLocation)}");
 
         mech.ApplyArmorStatDamage(armorLocation, armorDamage, hitInfo);
     }

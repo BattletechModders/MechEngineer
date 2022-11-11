@@ -16,7 +16,7 @@ public static class ChassisDef_FromJSON_Patch
         }
         catch (Exception e)
         {
-            Control.Logger.Error.Log(e);
+            Logging.Error?.Log(e);
         }
     }
 }
