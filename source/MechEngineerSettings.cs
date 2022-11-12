@@ -40,7 +40,7 @@ internal class MechEngineerSettings
     public bool GeneratedSettingsFilesReadonly = true;
     public string GeneratedSettingsFilesReadonlyDescription => "If true, generated last and default settings files are set to readonly, to indicate that those are not intended to be edited.";
 
-    public bool TraceEnabled;
+    public bool TraceEnabled = false;
 
     public AccuracyEffectsSettings AccuracyEffects = new();
     public ArmorStructureChangesSettings ArmorStructureChanges = new();
