@@ -27,7 +27,6 @@ using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.Performance;
 using MechEngineer.Features.PlaceholderEffects;
 using MechEngineer.Features.ShutdownInjuryProtection;
-using MechEngineer.Features.TagManager;
 using MechEngineer.Features.TurretLimitedAmmo;
 using MechEngineer.Features.TurretMechComponents;
 using MechEngineer.Misc;
@@ -69,7 +68,6 @@ internal class MechEngineerSettings
     public ShutdownInjuryProtectionSettings ShutdownInjuryProtection = new();
     public TurretLimitedAmmoSettings TurretLimitedAmmo = new();
     public TurretMechComponentSettings TurretMechComponents = new();
-    public TagManagerSettings TagManager = new();
 
     public PerformanceSettings Performance = new();
 

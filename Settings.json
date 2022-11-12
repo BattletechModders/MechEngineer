@@ -1,9 +1,5 @@
 {
     "TraceEnabled": true,
-    "TagManager": {
-        "Enabled": true,
-        "disabled_SimGameItemsMinCount": 20
-    },
     "disabled_DebugScreenshotMechs" : {
         "Enabled": true,
         "CaptureScreenshots": false,

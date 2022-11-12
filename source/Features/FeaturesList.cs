@@ -27,7 +27,6 @@ using MechEngineer.Features.OverrideTonnage;
 using MechEngineer.Features.Performance;
 using MechEngineer.Features.PlaceholderEffects;
 using MechEngineer.Features.ShutdownInjuryProtection;
-using MechEngineer.Features.TagManager;
 using MechEngineer.Features.TurretLimitedAmmo;
 using MechEngineer.Features.TurretMechComponents;
 
@@ -64,7 +63,6 @@ internal static class FeaturesList
         TurretMechComponentsFeature.Shared,
         TurretLimitedAmmoFeature.Shared,
         OverrideGhostVFXFeature.Shared,
-        TagManagerFeature.Shared,
         OverrideStatTooltipsFeature.Shared,
         PerformanceFeature.Shared,
         DebugSaveMechToFileFeature.Shared,
