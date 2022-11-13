@@ -1,7 +1,6 @@
 ﻿using System;
 using Harmony;
 using HBS.Logging;
-using LogLevel = HBS.Logging.LogLevel;
 
 namespace MechEngineer;
 
@@ -13,21 +12,13 @@ internal static class Logging
     internal static LevelLogger? Debug;
     internal static LevelLogger? Trace;
 
-    private static readonly ILog LOG = Logger.GetLogger(nameof(MechEngineer), LogLevel.Debug);
-
     static Logging()
     {
-        RefreshLogLevel();
-    }
-
-    private static bool _traceEnabled = true;
-    internal static void Setup(bool traceEnabled)
-    {
-        _traceEnabled = traceEnabled;
         RefreshLogLevel();
         TrackLoggerLevelChanges();
     }
 
+    private static readonly ILog LOG = Logger.GetLogger(nameof(MechEngineer), LogLevel.Debug);
     private static void TrackLoggerLevelChanges()
     {
         HarmonyInstance
@@ -54,32 +45,32 @@ internal static class Logging
 
     private static void RefreshLogLevel()
     {
-        Logger.GetLoggerLevel(LOG.Name, out var level);
-        SyncLevelLogger(level > LogLevel.Error, LogLevel.Error, ref Error);
-        SyncLevelLogger(level > LogLevel.Warning, LogLevel.Warning, ref Warning);
-        SyncLevelLogger(level > LogLevel.Log, LogLevel.Log, ref Info);
-        SyncLevelLogger(level > LogLevel.Debug, LogLevel.Debug, ref Debug);
-        SyncLevelLogger(level > LogLevel.Debug || !_traceEnabled, LogLevel.Debug, ref Trace);
+        SyncLevelLogger(LogLevel.Error, ref Error);
+        SyncLevelLogger(LogLevel.Warning, ref Warning);
+        SyncLevelLogger(LogLevel.Log, ref Info);
+        SyncLevelLogger(LogLevel.Debug, ref Debug);
+        SyncLevelLogger((LogLevel)200, ref Trace);
     }
 
-    private static void SyncLevelLogger(bool disabled, LogLevel logLevel, ref LevelLogger? field)
+    private static void SyncLevelLogger(LogLevel logLevel, ref LevelLogger? field)
     {
-        if (disabled)
+        var log = (Logger.LogImpl)LOG;
+        if (log.IsEnabledFor(logLevel))
+        {
+            field ??= new(LOG, logLevel);
+        }
+        else
         {
             field = null;
         }
-        else if (field == null)
-        {
-            field = new(LOG, logLevel);
-        }
     }
 
-    internal class LevelLogger
+    internal sealed class LevelLogger
     {
         private readonly ILog log;
         private readonly LogLevel level;
 
-        public LevelLogger(ILog log, LogLevel level)
+        internal LevelLogger(ILog log, LogLevel level)
         {
             this.log = log;
             this.level = level;
@@ -95,9 +86,9 @@ internal static class Logging
             log.LogAtLevel(level, message, e);
         }
 
-        public void Log(Func<string> callback)
+        public void Log(Exception e)
         {
-            log.LogAtLevel(level, callback());
+            log.LogAtLevel(level, null, e);
         }
     }
 }

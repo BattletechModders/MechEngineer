@@ -35,8 +35,6 @@ public static class Control
             FileUtils.SetReadonly(Mod.SettingsLastPath, true);
         }
 
-        Logging.Setup(Settings.TraceEnabled);
-
         try
         {
             Logging.Info?.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
