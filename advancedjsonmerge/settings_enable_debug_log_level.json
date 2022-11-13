@@ -1,7 +1,5 @@
 {
-	"TargetIDs": [
-		"settings"
-	],
+	"TargetID": "settings",
 	"Instructions": [
 		{
 			"JSONPath": "loggerLevels",
@@ -9,7 +7,7 @@
 			"Value":
 			{
 				"k" : "MechEngineer",
-				"v" : "Debug"
+				"v" : "200"
 			}
 		}
 	]

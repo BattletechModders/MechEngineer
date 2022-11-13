@@ -1,6 +1,7 @@
 ﻿using System;
 using Harmony;
 using HBS.Logging;
+using LogLevel = HBS.Logging.LogLevel;
 
 namespace MechEngineer;
 
