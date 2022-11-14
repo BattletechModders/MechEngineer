@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using CustomComponents;
 
-namespace MechEngineer.Features.CustomCapacities.Legacy;
+namespace MechEngineer.Features.CustomCapacities.Aliases;
 
-[CustomComponent("HeatSinkCapacity")]
-public class HeatSinkCapacityCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
+[CustomComponent("HeatSinkEngineAdditionalCapacity")]
+public class HeatSinkEngineAdditionalCapacityCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
 {
     private float Value;
 
@@ -17,7 +17,7 @@ public class HeatSinkCapacityCustom : SimpleCustomComponent, IValueComponent<flo
     {
         Def.AddComponent(new CapacityModCustom
             {
-                Collection = CustomCapacitiesFeature.HeatSinkCollectionId,
+                Collection = CustomCapacitiesFeature.HeatSinkEngineAdditionalCollectionId,
                 Quantity = Value
             }
         );

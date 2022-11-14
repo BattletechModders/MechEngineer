@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using CustomComponents;
 
-namespace MechEngineer.Features.CustomCapacities.Legacy;
+namespace MechEngineer.Features.CustomCapacities.Aliases;
 
-[CustomComponent("CarryLeftOverUsage")]
-public class CarryLeftOverUsageCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
+[CustomComponent("CarryHandUsage")]
+public class CarryHandUsageCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
 {
     private float Value;
 
@@ -17,7 +17,8 @@ public class CarryLeftOverUsageCustom : SimpleCustomComponent, IValueComponent<f
     {
         Def.AddComponent(new CapacityModCustom
             {
-                Collection = CustomCapacitiesFeature.CarryLeftOverCollectionId,
+                Collection = CustomCapacitiesFeature.CarryInHandCollectionId,
+                IsLocationRestricted = true,
                 IsUsage = true,
                 Quantity = Value
             }

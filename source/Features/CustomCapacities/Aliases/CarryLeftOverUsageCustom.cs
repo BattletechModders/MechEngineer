@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using CustomComponents;
 
-namespace MechEngineer.Features.CustomCapacities.Legacy;
+namespace MechEngineer.Features.CustomCapacities.Aliases;
 
-[CustomComponent("HeatSinkUsage")]
-public class HeatSinkUsageCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
+[CustomComponent("CarryLeftOverUsage")]
+public class CarryLeftOverUsageCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
 {
     private float Value;
 
@@ -17,7 +17,7 @@ public class HeatSinkUsageCustom : SimpleCustomComponent, IValueComponent<float>
     {
         Def.AddComponent(new CapacityModCustom
             {
-                Collection = CustomCapacitiesFeature.HeatSinkCollectionId,
+                Collection = CustomCapacitiesFeature.CarryLeftOverCollectionId,
                 IsUsage = true,
                 Quantity = Value
             }

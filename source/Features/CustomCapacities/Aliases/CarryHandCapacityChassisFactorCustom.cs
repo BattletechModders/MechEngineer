@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using CustomComponents;
 
-namespace MechEngineer.Features.CustomCapacities.Legacy;
+namespace MechEngineer.Features.CustomCapacities.Aliases;
 
-[CustomComponent("CarryHandUsage")]
-public class CarryHandUsageCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
+[CustomComponent("CarryHandCapacityChassisFactor")]
+public class CarryHandCapacityChassisFactorCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
 {
     private float Value;
 
@@ -19,8 +19,8 @@ public class CarryHandUsageCustom : SimpleCustomComponent, IValueComponent<float
             {
                 Collection = CustomCapacitiesFeature.CarryInHandCollectionId,
                 IsLocationRestricted = true,
-                IsUsage = true,
-                Quantity = Value
+                Quantity = Value,
+                QuantityFactorType = QuantityFactorType.ChassisTonnage
             }
         );
     }

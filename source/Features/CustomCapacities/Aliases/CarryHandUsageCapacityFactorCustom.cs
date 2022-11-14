@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CustomComponents;
 
-namespace MechEngineer.Features.CustomCapacities.Legacy;
+namespace MechEngineer.Features.CustomCapacities.Aliases;
 
 [CustomComponent("CarryHandUsageCapacityFactor")]
 public class CarryHandUsageCapacityFactorCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad

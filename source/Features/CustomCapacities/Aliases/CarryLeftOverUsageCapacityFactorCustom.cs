@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CustomComponents;
 
-namespace MechEngineer.Features.CustomCapacities.Legacy;
+namespace MechEngineer.Features.CustomCapacities.Aliases;
 
 [CustomComponent("CarryLeftOverUsageCapacityFactor")]
 public class CarryLeftOverUsageCapacityFactorCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
