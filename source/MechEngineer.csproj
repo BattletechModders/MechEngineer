@@ -90,12 +90,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\*.json" />
+    <None Include="..\advancedjsonmerge\loglevels.json" />
+    <None Include="$(BattleTechGameDir)\Mods\.modtek\battletech_log.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="GitVersion.MsBuild" Version="5.10.1">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None LinkBase=".modtek" Include="$(BattleTechGameDir)\Mods\.modtek\battletech_*" />
-    <None LinkBase=".modpath" Include="$(MechEngineerModPath)\*.json" />
   </ItemGroup>
 </Project>
