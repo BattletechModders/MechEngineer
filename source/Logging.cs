@@ -19,7 +19,7 @@ internal static class Logging
         TrackLoggerLevelChanges();
     }
 
-    private static readonly ILog LOG = Logger.GetLogger(nameof(MechEngineer), LogLevel.Debug);
+    private static readonly ILog s_log = Logger.GetLogger(nameof(MechEngineer), LogLevel.Debug);
     private static void TrackLoggerLevelChanges()
     {
         HarmonyInstance
@@ -33,7 +33,7 @@ internal static class Logging
     {
         try
         {
-            if (name == LOG.Name)
+            if (name == s_log.Name)
             {
                 RefreshLogLevel();
             }
@@ -55,10 +55,10 @@ internal static class Logging
 
     private static void SyncLevelLogger(LogLevel logLevel, ref LevelLogger? field)
     {
-        var log = (Logger.LogImpl)LOG;
+        var log = (Logger.LogImpl)s_log;
         if (log.IsEnabledFor(logLevel))
         {
-            field ??= new(LOG, logLevel);
+            field ??= new(logLevel);
         }
         else
         {
@@ -68,28 +68,26 @@ internal static class Logging
 
     internal sealed class LevelLogger
     {
-        private readonly ILog log;
-        private readonly LogLevel level;
+        private readonly LogLevel _level;
 
-        internal LevelLogger(ILog log, LogLevel level)
+        internal LevelLogger(LogLevel level)
         {
-            this.log = log;
-            this.level = level;
+            _level = level;
         }
 
         public void Log(object message)
         {
-            log.LogAtLevel(level, message);
+            s_log.LogAtLevel(_level, message);
         }
 
         public void Log(object message, Exception e)
         {
-            log.LogAtLevel(level, message, e);
+            s_log.LogAtLevel(_level, message, e);
         }
 
         public void Log(Exception e)
         {
-            log.LogAtLevel(level, null, e);
+            s_log.LogAtLevel(_level, null, e);
         }
     }
 }
