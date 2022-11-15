@@ -105,7 +105,7 @@ foreach my $row_ref (@engine_tonnages) {
 
 		my $json = $tache->render("${prefix}_template.json", $engine);
 
-		write_to_file("../data/basic/engines/$engine->{ID}.json", $json);
+		write_to_file("../../data/basic/engines/$engine->{ID}.json", $json);
 	};
 	
 	$generate_engine_sub->("emod_engine");

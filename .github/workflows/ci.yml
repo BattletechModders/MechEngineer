@@ -6,6 +6,22 @@ jobs:
     uses: BattletechModders/ModTek/.github/workflows/mod-builder.yml@master
     with:
       checkout-directory: 'BATTLETECH/Mods/MechEngineer'
+      build-script: |
+        (
+          cd ..
+          curl -L -o CustomComponents.zip https://github.com/BattletechModders/CustomComponents/releases/download/latest/CustomComponents.zip
+          unzip CustomComponents.zip
+        )
+        (
+          cd source
+          dotnet build -c Release -p:BattleTechGameDir="$BATTLETECH_DIR/"
+        )
+        (
+          cd ..
+          7z a -tzip -mx9 "$DIST_DIR/MechEngineer.zip" \
+            -ir!MechEngineer -ir!CustomComponents \
+            -xr!source "-xr!.*"
+        )
       release-notes: |
         Works best with ModTek V3
         - MechEngineer.zip contains only the bare bones mod + CustomComponents
