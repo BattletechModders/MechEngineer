@@ -1,0 +1,12 @@
+on: push
+name: CI
+
+jobs:
+  build:
+    uses: BattletechModders/ModTek/.github/workflows/mod-builder.yml@master
+    with:
+      checkout-directory: 'BATTLETECH/Mods/MechEngineer'
+      release-notes: |
+        Works best with ModTek V3
+        - MechEngineer.zip contains only the bare bones mod + CustomComponents
+    secrets: inherit
