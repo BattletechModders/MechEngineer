@@ -18,7 +18,7 @@ public static class Mech_JumpDistance_Patch
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
         return true;
     }

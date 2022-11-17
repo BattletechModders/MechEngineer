@@ -29,7 +29,7 @@ internal class MechDefBuilder
 
         CalculateStats();
 
-        Logging.Debug?.Log(this);
+        Log.Main.Debug?.Log(ToString());
     }
 
     #region counting stats and functions
@@ -47,7 +47,7 @@ internal class MechDefBuilder
 
     internal int TotalMissing => Mathf.Max(TotalUsage - TotalMax, 0) + TotalDynamicLocationalNoSpace;
 
-    public override string ToString()
+    public sealed override string ToString()
     {
         return $"ChassisId={Chassis.Description.Id} TotalInventoryUsage={TotalInventoryUsage} TotalDynamicGlobalUsage={TotalDynamicGlobalUsage}" +
                $" TotalDynamicLocationRestrictedUsage={TotalDynamicLocationalUsage} TotalDynamicLocationRestrictedMissing={TotalDynamicLocationalNoSpace}";
@@ -343,16 +343,16 @@ internal class MechDefBuilder
             return null;
         }
 
-        Logging.Trace?.Log($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+        Log.Main.Trace?.Log($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
 
         var componentRef = new MechComponentRef(def.Description.Id, null, def.ComponentType, location);
         componentRef.DataManager = DataManager;
         componentRef.RefreshComponentDef();
         Inventory.Add(componentRef);
 
-        Logging.Trace?.Log($"  adding id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+        Log.Main.Trace?.Log($"  adding id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
         CalculateStats();
-        Logging.Trace?.Log($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
+        Log.Main.Trace?.Log($"  added id={def.Description.Id} location={location} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage} overUseAtLocation={overUseAtLocation} overUseOverall={overUseOverall}");
 
         return componentRef;
     }
@@ -369,9 +369,9 @@ internal class MechDefBuilder
         var locationInfo = GetLocationInfo(componentRef.MountedLocation);
         Inventory.Remove(componentRef);
 
-        Logging.Trace?.Log($"  removing id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
+        Log.Main.Trace?.Log($"  removing id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
         CalculateStats();
-        Logging.Trace?.Log($"  removed id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
+        Log.Main.Trace?.Log($"  removed id={def.Description.Id} location={componentRef.MountedLocation} InventorySize={def.InventorySize} InventoryUsage={locationInfo.InventoryUsage} TotalInventoryUsage={TotalInventoryUsage}");
     }
 
     private IEnumerable<ChassisLocations> GetLocations()

@@ -20,7 +20,7 @@ public static class TooltipPrefab_WeaponSetData_Patch
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
     }
 }

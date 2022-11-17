@@ -29,7 +29,7 @@ public static class SG_Shop_FullMechDetailPanel_FillInFullMech_Patch
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
     }
 }

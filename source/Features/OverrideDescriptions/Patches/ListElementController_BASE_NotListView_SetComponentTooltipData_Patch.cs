@@ -16,7 +16,7 @@ internal static class ListElementController_BASE_NotListView_SetComponentTooltip
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
     }
 }

@@ -51,7 +51,7 @@ internal class OrderedStatusEffectsFeature : Feature<OrderedStatusEffectsSetting
             {
                 if (currentOrder > lastOrder)
                 {
-                    Logging.Debug?.Log($"sorting statName={currentEvent.statName} coperation={currentEvent.operation} loperation={lastEvent.operation}");
+                    Log.Main.Debug?.Log($"sorting statName={currentEvent.statName} coperation={currentEvent.operation} loperation={lastEvent.operation}");
                     historyList[currentIndex] = lastEvent;
                     historyList[lastIndex] = currentEvent;
 

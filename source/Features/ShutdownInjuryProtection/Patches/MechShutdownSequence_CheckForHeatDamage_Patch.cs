@@ -35,7 +35,7 @@ public static class MechShutdownSequence_CheckForHeatDamage_Patch
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
 
         return true;

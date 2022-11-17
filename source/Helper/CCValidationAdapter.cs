@@ -66,7 +66,7 @@ public class Errors : IEnumerable<Error>
 
     internal bool Add(MechValidationType type, string message)
     {
-        Logging.Debug?.Log($"Add type={type} message={message}");
+        Log.Main.Debug?.Log($"Add type={type} message={message}");
         Messages.Add(new Error(type, message));
         return FailOnFirstError;
     }

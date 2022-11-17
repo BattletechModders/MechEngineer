@@ -26,7 +26,7 @@ public static class MechHardpointRules_GetComponentBlankNames_Patch
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
         return true;
     }
@@ -36,11 +36,11 @@ public static class MechHardpointRules_GetComponentBlankNames_Patch
     {
         try
         {
-            Logging.Trace?.Log($"GetComponentBlankNames blanks=[{__result?.JoinAsString()}] location={location}");
+            Log.Main.Trace?.Log($"GetComponentBlankNames blanks=[{__result?.JoinAsString()}] location={location}");
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
     }
 }

@@ -36,7 +36,7 @@ internal class AutoFixer : IAutoFixMechDef
             }
             catch (Exception e)
             {
-                Logging.Error?.Log(e);
+                Log.Main.Error?.Log(e);
             }
         }
     }
@@ -58,17 +58,17 @@ internal class AutoFixer : IAutoFixMechDef
             return;
         }
 
-        Logging.Info?.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
+        Log.Main.Info?.Log($"Auto fixing mechDef={mechDef.Description.Id} chassisDef={mechDef.Chassis.Description.Id}");
 
         MechDefBuilder builder;
         {
             var inventory = mechDef.Inventory.ToList();
-            if (Logging.Debug != null)
+            if (Log.Main.Debug != null)
             {
                 foreach (var cref in inventory)
                 {
                     var def = cref.Def;
-                    Logging.Debug.Log($" {cref.ComponentDefID}{(cref.IsFixed ? " (fixed)" : "")} at {cref.MountedLocation} tonnage={def.Tonnage}");
+                    Log.Main.Debug.Log($" {cref.ComponentDefID}{(cref.IsFixed ? " (fixed)" : "")} at {cref.MountedLocation} tonnage={def.Tonnage}");
                 }
             }
 
@@ -133,14 +133,14 @@ internal class AutoFixer : IAutoFixMechDef
             {
                 builder.Remove(incompatibleHeatSink);
                 builder.Add(engineHeatSinkDef.Def, ChassisLocations.Head, true);
-                Logging.Debug?.Log($" Converted incompatible heat sinks to compatible ones");
+                Log.Main.Debug?.Log($" Converted incompatible heat sinks to compatible ones");
             }
         }
 
         Engine? engine = null;
         if (res.CoreDef != null)
         {
-            Logging.Debug?.Log($" Found an existing engine");
+            Log.Main.Debug?.Log($" Found an existing engine");
             engine = new Engine(res.CoolingDef, res.HeatBlockDef, res.CoreDef, res.WeightFactors, new List<MechComponentRef>());
 
             // convert external heat sinks into internal ones
@@ -176,13 +176,13 @@ internal class AutoFixer : IAutoFixMechDef
                     var def = dataManager.HeatSinkDefs.Get(heatBlockDefId);
                     builder.Add(def, ChassisLocations.CenterTorso, true);
 
-                    Logging.Debug?.Log($" Converted external heat sinks ({current - oldCurrent}) to internal ones (to make space)");
+                    Log.Main.Debug?.Log($" Converted external heat sinks ({current - oldCurrent}) to internal ones (to make space)");
                 }
             }
         }
         else
         {
-            Logging.Debug?.Log(" Finding engine");
+            Log.Main.Debug?.Log(" Finding engine");
             var freeTonnage = CalculateFreeTonnage(mechDef);
 
             var jumpJets = builder.Inventory.Where(x => x.ComponentDefType == ComponentType.JumpJet).ToList();
@@ -216,14 +216,14 @@ internal class AutoFixer : IAutoFixMechDef
                         builder.Remove(jumpJet);
                         jumpJets.Remove(jumpJet);
 
-                        Logging.Trace?.Log("  Removed JumpJet");
+                        Log.Main.Trace?.Log("  Removed JumpJet");
                     }
                 }
 
                 {
                     var candidate = new Engine(res.CoolingDef, res.HeatBlockDef, coreDef, res.WeightFactors, externalHeatSinks, false);
 
-                    Logging.Trace?.Log($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
+                    Log.Main.Trace?.Log($"  candidate id={coreDef.Def.Description.Id} TotalTonnage={candidate.TotalTonnage}");
 
                     engineCandidates.Add(candidate);
 
@@ -237,7 +237,7 @@ internal class AutoFixer : IAutoFixMechDef
                         builder.Remove(component);
                         internalHeatSinksCount++;
 
-                        Logging.Trace?.Log("  ~Converted external heat sinks to internal ones");
+                        Log.Main.Trace?.Log("  ~Converted external heat sinks to internal ones");
                     }
 
                     // this only runs on the engine that takes the most heat sinks (since this is in a for loop with rating descending order)
@@ -250,7 +250,7 @@ internal class AutoFixer : IAutoFixMechDef
                         var newComponent = builder.Add(component.Def);
                         if (newComponent == null)
                         {
-                            Logging.Trace?.Log("  Removed external heat sink that doesn't fit");
+                            Log.Main.Trace?.Log("  Removed external heat sink that doesn't fit");
                             // might still need to remove some
                             continue;
                         }
@@ -266,13 +266,13 @@ internal class AutoFixer : IAutoFixMechDef
                         var externalHeatSink = builder.Add(engineHeatSinkDef.Def);
                         if (externalHeatSink == null)
                         {
-                            Logging.Trace?.Log("  ~Dropped external when converting from internal");
+                            Log.Main.Trace?.Log("  ~Dropped external when converting from internal");
                             freeTonnage++;
                         }
                         else
                         {
                             externalHeatSinks.Add(externalHeatSink);
-                            Logging.Trace?.Log("  ~Converted internal heat sink to external one");
+                            Log.Main.Trace?.Log("  ~Converted internal heat sink to external one");
                         }
                         internalHeatSinksCount--;
                     }
@@ -296,7 +296,7 @@ internal class AutoFixer : IAutoFixMechDef
 
             if (engine != null)
             {
-                Logging.Debug?.Log($" engine={engine.CoreDef} freeTonnage={freeTonnage}");
+                Log.Main.Debug?.Log($" engine={engine.CoreDef} freeTonnage={freeTonnage}");
                 var dummyCore = builder.Inventory.FirstOrDefault(r => r.ComponentDefID == AutoFixerFeature.settings.MechDefCoreDummy);
                 if (dummyCore != null)
                 {
@@ -343,7 +343,7 @@ internal class AutoFixer : IAutoFixMechDef
         // find any overused location
         if (builder.HasOveruseAtAnyLocation())
         {
-            Logging.Info?.Log($" Overuse found");
+            Log.Main.Info?.Log($" Overuse found");
             // heatsinks, upgrades
             var itemsToBeReordered = builder.Inventory
                 .Where(IsMovable)
@@ -362,11 +362,11 @@ internal class AutoFixer : IAutoFixMechDef
             {
                 if (builder.Add(item.Def) == null)
                 {
-                    Logging.Warning?.Log($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
+                    Log.Main.Warning?.Log($" Component {item.ComponentDefID} from {item.MountedLocation} can't be re-added");
                 }
                 else
                 {
-                    Logging.Debug?.Log($"  Component {item.ComponentDefID} re-added");
+                    Log.Main.Debug?.Log($"  Component {item.ComponentDefID} re-added");
                 }
             }
         }
@@ -377,7 +377,7 @@ internal class AutoFixer : IAutoFixMechDef
             var freeTonnage = CalculateFreeTonnage(mechDef);
             if (freeTonnage < 0)
             {
-                Logging.Debug?.Log($" Found over tonnage {-freeTonnage}");
+                Log.Main.Debug?.Log($" Found over tonnage {-freeTonnage}");
                 var removableItems = builder.Inventory
                     .Where(IsRemovable)
                     .OrderBy(c => c.Def.Tonnage)
@@ -396,7 +396,7 @@ internal class AutoFixer : IAutoFixMechDef
                     removableItems.RemoveAt(0);
                     freeTonnage += item.Def.Tonnage;
                     builder.Remove(item);
-                    Logging.Debug?.Log($"  Removed item, freeTonnage={freeTonnage}");
+                    Log.Main.Debug?.Log($"  Removed item, freeTonnage={freeTonnage}");
                 }
 
                 mechDef.SetInventory(builder.Inventory.ToArray());
@@ -420,11 +420,11 @@ internal class AutoFixer : IAutoFixMechDef
                     {
                         locationDef.CurrentArmor = locationDef.AssignedArmor = update.Assigned;
                     }
-                    Logging.Trace?.Log($"OnMaxArmor.SetArmor update={update}");
+                    Log.Main.Trace?.Log($"OnMaxArmor.SetArmor update={update}");
                 }
             }
             sw.Stop();
-            Logging.Debug?.Log($"Autofixer MechArmorState.Maximize took {sw.Elapsed}");
+            Log.Main.Debug?.Log($"Autofixer MechArmorState.Maximize took {sw.Elapsed}");
         }
     }
 
@@ -433,7 +433,7 @@ internal class AutoFixer : IAutoFixMechDef
     private static float CalculateFreeTonnage(MechDef mechDef)
     {
         var weights = new Weights(mechDef);
-        Logging.Debug?.Log($"Chassis={mechDef.Chassis.Description.Id} weights={weights}");
+        Log.Main.Debug?.Log($"Chassis={mechDef.Chassis.Description.Id} weights={weights}");
         return weights.FreeWeight;
     }
 

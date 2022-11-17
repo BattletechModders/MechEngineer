@@ -17,7 +17,7 @@ internal static class InjuryUtils
         // check if we might override an existing injury
         if (pilot.NeedsInjury)
         {
-            Logging.Warning?.Log($"Can't apply injury as another injury is already queued, conflicting res={pilot.injuryReason} desc={pilot.InjuryReasonDescription}");
+            Log.Main.Warning?.Log($"Can't apply injury as another injury is already queued, conflicting res={pilot.injuryReason} desc={pilot.InjuryReasonDescription}");
             return;
         }
 

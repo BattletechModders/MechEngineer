@@ -135,8 +135,8 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
 
         if (applyChanges)
         {
-            Logging.Trace?.Log($"structure={structure} location={location} total={total} totalMax={totalMax}");
-            Logging.Trace?.Log($"before AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor}");
+            Log.Main.Trace?.Log($"structure={structure} location={location} total={total} totalMax={totalMax}");
+            Log.Main.Trace?.Log($"before AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor}");
 
             if ((location & ChassisLocations.Torso) != 0)
             {
@@ -152,10 +152,10 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
                 mechLocationDef.CurrentArmor = mechLocationDef.AssignedArmor;
             }
 
-            Logging.Trace?.Log($"set AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor} on location={location}");
+            Log.Main.Trace?.Log($"set AssignedArmor={mechLocationDef.AssignedArmor} AssignedRearArmor={mechLocationDef.AssignedRearArmor} on location={location}");
         }
 
-        Logging.Trace?.Log($"{Mech.GetAbbreviatedChassisLocation(location)} armor={armor} armorRear={armorRear} structure={structure}");
+        Log.Main.Trace?.Log($"{Mech.GetAbbreviatedChassisLocation(location)} armor={armor} armorRear={armorRear} structure={structure}");
 
         if (errorMessages != null)
         {

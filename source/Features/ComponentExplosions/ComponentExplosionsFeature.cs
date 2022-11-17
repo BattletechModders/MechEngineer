@@ -51,7 +51,7 @@ internal class ComponentExplosionsFeature : Feature<ComponentExplosionsSettings>
         var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
         if (!Mathf.Approximately(heatDamage, 0))
         {
-            Logging.Debug?.Log($"heatDamage={heatDamage}");
+            Log.Main.Debug?.Log($"heatDamage={heatDamage}");
             actor.AddExternalHeat($"{component.Name} EXPLOSION HEAT", (int)heatDamage);
             attackSequence?.FlagAttackDidHeatDamage(actor.GUID);
         }
@@ -62,7 +62,7 @@ internal class ComponentExplosionsFeature : Feature<ComponentExplosionsSettings>
                 var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
                 if (!Mathf.Approximately(stabilityDamage, 0))
                 {
-                    Logging.Debug?.Log($"stabilityDamage={stabilityDamage}");
+                    Log.Main.Debug?.Log($"stabilityDamage={stabilityDamage}");
                     mech.AddAbsoluteInstability(stabilityDamage, StabilityChangeSource.Effect, hitInfo.targetId);
                 }
             }
@@ -73,7 +73,7 @@ internal class ComponentExplosionsFeature : Feature<ComponentExplosionsSettings>
         {
             return;
         }
-        Logging.Debug?.Log($"explosionDamage={explosionDamage}");
+        Log.Main.Debug?.Log($"explosionDamage={explosionDamage}");
 
         var reason = component.componentType == ComponentType.AmmunitionBox
             ? InjuryReason.AmmoExplosion

@@ -21,7 +21,7 @@ public static class MechComponent_inventorySize_Patch
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
 
         return true;

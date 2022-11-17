@@ -37,22 +37,22 @@ public static class Control
 
         try
         {
-            Logging.Info?.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
-            Logging.Info?.Log("settings loaded");
-            Logging.Debug?.Log("debugging enabled");
+            Log.Main.Info?.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
+            Log.Main.Info?.Log("settings loaded");
+            Log.Main.Debug?.Log("debugging enabled");
 
-            Logging.Debug?.Log("setting up features");
+            Log.Main.Debug?.Log("setting up features");
 
             foreach (var feature in FeaturesList.Features)
             {
                 feature.SetupFeature();
             }
 
-            Logging.Info?.Log("started");
+            Log.Main.Info?.Log("started");
         }
         catch (Exception e)
         {
-            Logging.Error?.Log("error starting", e);
+            Log.Main.Error?.Log("error starting", e);
             throw;
         }
     }
@@ -67,11 +67,11 @@ public static class Control
                 feature.SetupFeatureResources(customResources);
             }
 
-            Logging.Info?.Log("loaded");
+            Log.Main.Info?.Log("loaded");
         }
         catch (Exception e)
         {
-            Logging.Error?.Log("error loading", e);
+            Log.Main.Error?.Log("error loading", e);
         }
     }
 

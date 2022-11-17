@@ -31,7 +31,7 @@ internal class CriticalEffectsFeature : Feature<CriticalEffectsSettings>
             return effectData;
         }
 
-        Logging.Error?.Log($"Can't find effect id '{effectId}'");
+        Log.Main.Error?.Log($"Can't find effect id '{effectId}'");
         return null;
     }
 }

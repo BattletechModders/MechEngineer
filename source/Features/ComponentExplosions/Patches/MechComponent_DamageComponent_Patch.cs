@@ -31,7 +31,7 @@ public static class MechComponent_DamageComponent_Patch
         }
         catch (Exception e)
         {
-            Logging.Error?.Log(e);
+            Log.Main.Error?.Log(e);
         }
     }
 }
