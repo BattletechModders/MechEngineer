@@ -1,14 +1,13 @@
 {
-	"TargetID": "settings",
-	"Instructions": [
-		{
-			"JSONPath": "loggerLevels",
-			"Action": "ArrayAdd",
-			"Value":
-			{
-				"k" : "MechEngineer",
-				"v" : "200"
-			}
-		}
-	]
+    "TargetID": "settings",
+    "Instructions": [
+        {
+            "JSONPath": "loggerLevels",
+            "Action": "ArrayConcat",
+            "Value":
+            [
+                { "k" : "MechEngineer", "v" : "200" }
+            ]
+        }
+    ]
 }
