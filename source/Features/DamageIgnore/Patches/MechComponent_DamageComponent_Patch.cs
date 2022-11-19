@@ -10,6 +10,7 @@ public static class MechComponent_DamageComponent_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechComponent __instance, ref ComponentDamageLevel damageLevel)
     {
+        Log.Main.Trace?.Log("MechComponent_DamageComponent_Patch");
         try
         {
             if (__instance.componentDef.IsIgnoreDamage())

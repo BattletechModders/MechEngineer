@@ -11,6 +11,7 @@ public static class MechComponent_inventorySize_Patch
     [HarmonyPrefix]
     public static bool Prefix(MechComponent __instance, ref int __result)
     {
+        Log.Main.Trace?.Log("MechComponent_inventorySize_Patch");
         try
         {
             if (__instance.componentDef?.IsIgnoreDamage() ?? false)

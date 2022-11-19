@@ -9,14 +9,4 @@ internal static class DamageIgnoreHelper
     {
         return def.Is<Flags>(out var f) && f.IsSet("ignore_damage");
     }
-
-    public static int OverrideLocation(this MechComponent component)
-    {
-        if (component.componentDef.IsIgnoreDamage())
-        {
-            return 0;
-        }
-
-        return component.Location;
-    }
 }

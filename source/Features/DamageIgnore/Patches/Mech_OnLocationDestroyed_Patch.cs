@@ -8,11 +8,17 @@ namespace MechEngineer.Features.DamageIgnore.Patches;
 internal static class Mech_OnLocationDestroyed_Patch
 {
     [HarmonyTranspiler]
-    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    internal static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
         return instructions.MethodReplacer(
             AccessTools.Property(typeof(MechComponent), nameof(MechComponent.Location)).GetGetMethod(),
-            AccessTools.Method(typeof(DamageIgnoreHelper), nameof(DamageIgnoreHelper.OverrideLocation))
+            AccessTools.Method(typeof(Mech_OnLocationDestroyed_Patch), nameof(OverrideLocation))
         );
+    }
+
+    private static int OverrideLocation(this MechComponent component)
+    {
+        Log.Main.Trace?.Log("Mech_OnLocationDestroyed_Patch OverrideLocation");
+        return component.componentDef.IsIgnoreDamage() ? 0 : component.Location;
     }
 }
