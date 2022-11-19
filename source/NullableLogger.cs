@@ -17,6 +17,7 @@ internal sealed class NullableLogger
             if (!_loggers.TryGetValue(name, out var loggers))
             {
                 loggers = new(name, defaultLogLevel);
+                _loggers[name] = loggers;
             }
             return loggers;
         }
