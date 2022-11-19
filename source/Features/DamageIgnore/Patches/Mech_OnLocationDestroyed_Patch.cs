@@ -18,7 +18,6 @@ internal static class Mech_OnLocationDestroyed_Patch
 
     private static int OverrideLocation(this MechComponent component)
     {
-        Log.Main.Trace?.Log("Mech_OnLocationDestroyed_Patch OverrideLocation");
         return component.componentDef.IsIgnoreDamage() ? 0 : component.Location;
     }
 }
