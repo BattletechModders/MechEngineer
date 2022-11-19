@@ -85,31 +85,6 @@
 			"Type": "ItemCollectionDef",
 			"Path": "data/basic/itemCollections/",
 			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "UpgradeDef",
-			"Path": "disabled data/test/upgrades/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "UpgradeDef",
-			"Path": "disabled data/test/internals/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "disabled data/test/heatsinks/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "disabled data/test/engines/",
-			"ShouldMergeJSON": false
-		},
-		{
-			"Type": "HeatSinkDef",
-			"Path": "disabled data/test/engine_parts/",
-			"ShouldMergeJSON": false
 		}
 	]
 }
