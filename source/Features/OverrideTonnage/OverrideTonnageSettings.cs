@@ -1,4 +1,6 @@
-﻿namespace MechEngineer.Features.OverrideTonnage;
+﻿using MechEngineer.Features.OverrideDescriptions;
+
+namespace MechEngineer.Features.OverrideTonnage;
 
 public class OverrideTonnageSettings : ISettings
 {
@@ -23,4 +25,7 @@ public class OverrideTonnageSettings : ISettings
 
     public float UnderweightWarningThreshold = 1f;
     public string UnderweightWarningThresholdDescription = "How many tons a mech has to be underweight to show a warning";
+
+    public BonusSlot? WeightsDefaultBonusSlot = BonusSlot.A;
+    public string WeightsDefaultBonusSlotDescription = "What BonusSlot to use on a SlotElement for tonnage changes.";
 }

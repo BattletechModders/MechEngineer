@@ -82,15 +82,23 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
         }
     }
 
-    public void AdjustSlotElement(MechLabItemSlotElement instance, MechLabPanel panel)
+    public void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel)
     {
-        var mechComponentDefNullable = instance.ComponentRef?.Def;
-        var weightFactors = mechComponentDefNullable?.GetComponent<WeightFactors>();
+        var weightFactors = element.ComponentRef?.Def?.GetComponent<WeightFactors>();
         if (weightFactors == null)
         {
             return;
         }
-        var mechComponentDef = mechComponentDefNullable!;
+
+        BonusSlot slot;
+        {
+            var slotNullable = weightFactors.BonusSlot ?? OverrideTonnageFeature.settings.WeightsDefaultBonusSlot;
+            if (slotNullable == null)
+            {
+                return;
+            }
+            slot = slotNullable.Value;
+        }
 
         var mechDef = panel.CreateMechDef();
         if (mechDef == null)
@@ -99,13 +107,14 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
         }
 
         var tonnageChanges = CalculateWeightFactorsChange(mechDef, weightFactors);
+        var bonusText = element.GetBonusText(slot);
         if (!Mathf.Approximately(tonnageChanges, 0))
         {
-            instance.bonusTextA.text = $"{FloatToText(tonnageChanges)} ton";
+            bonusText.text = $"{FloatToText(tonnageChanges)} ton";
         }
-        else if (instance.bonusTextA.text.EndsWith("ton"))
+        else if (bonusText.text.EndsWith("ton"))
         {
-            instance.bonusTextA.text = mechComponentDef.BonusValueA;
+            bonusText.text = weightFactors.Def.GetBonusValue(slot);
         }
     }
 

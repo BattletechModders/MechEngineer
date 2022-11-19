@@ -15,9 +15,11 @@ public class WeightFactors : SimpleCustomComponent, IAdjustSlotElement, IAdjustT
     public float ArmorFactor { get; set; } = 1;
     public float StructureFactor { get; set; } = 1;
     public float EngineFactor { get; set; } = 1;
-    //public float EngineFactorFactor { get; set; } = 1;
+    //public float EngineFactorFactor { get; set; } = 1; // TODO was problematic, 1. engine, 2. engine factor, 3. engine factor factor
     public float GyroFactor { get; set; } = 1;
     public float ChassisFactor { get; set; } = 1;
+
+    public BonusSlot? BonusSlot { get; set; }
 
     public void Combine(WeightFactors savings)
     {
