@@ -88,7 +88,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
                 $"\r\n  {rightHandReqText}"
                 : "") +
                 $"\r\n" +
-                (context.HasLeftOverTopOff ?
+                (context.LeftOverCapacity > 0 ?
                 $"\r\n<i>Left Over</i>" +
                 $"\r\n  usage {loPre}<b>{context.LeftOverUsage:0.##} / {context.LeftOverCapacity:0.###}</b>{loPost}"
                 : "");
@@ -229,7 +229,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             return MinHandReq.None;
         }
 
-        internal float TotalCapacity => LeftOverTopOff > HandTotalCapacity ? LeftOverTopOff : HandTotalCapacity;
+        internal float TotalCapacity => HandTotalCapacity + Mathf.Max(LeftOverCapacity - (HandTotalCapacity - HandTotalUsage), 0);
         internal float TotalUsage => HandTotalUsage + LeftOverUsage;
 
         internal float HandTotalCapacity => HandLeftCapacity + HandRightCapacity;
@@ -240,8 +240,6 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
 
         internal float HandRightCapacity;
         internal float HandRightUsage;
-
-        internal bool HasLeftOverTopOff => !PrecisionUtils.Equals(0, LeftOverTopOff);
 
         internal float LeftOverTopOff;
         internal float LeftOverCapacity;
