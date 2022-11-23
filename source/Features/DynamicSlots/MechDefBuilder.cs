@@ -29,7 +29,7 @@ internal class MechDefBuilder
 
         CalculateStats();
 
-        Log.Main.Debug?.Log(ToString());
+        Log.Main.Trace?.Log(ToString());
     }
 
     #region counting stats and functions

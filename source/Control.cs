@@ -48,7 +48,7 @@ public static class Control
                 feature.SetupFeature();
             }
 
-            Log.Main.Info?.Log("started");
+            Log.Main.Info?.Log("initialized");
         }
         catch (Exception e)
         {

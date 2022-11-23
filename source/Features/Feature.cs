@@ -69,7 +69,7 @@ internal abstract class Feature<T> : IFeature where T : ISettings
             var type = feature.GetType();
             var topic = type.Name;
             var enabled = feature.Enabled;
-            Log.Main.Debug?.Log($"{topic} setting up (Enabled={enabled} Namespace={type.Namespace})");
+            Log.Main.Trace?.Log($"{topic} setting up (Enabled={enabled} Namespace={type.Namespace})");
             if (enabled)
             {
                 var typesInNamespace = FindTypesInNamespace(type).ToList();
@@ -127,7 +127,7 @@ internal abstract class Feature<T> : IFeature where T : ISettings
 
             foreach (var type in types)
             {
-                Log.Main.Debug?.Log($" Custom {type.Name}");
+                Log.Main.Trace?.Log($" Custom {type.Name}");
                 Registry.RegisterSimpleCustomComponents(type);
             }
         }
@@ -151,7 +151,7 @@ internal abstract class Feature<T> : IFeature where T : ISettings
                     continue;
                 }
 
-                // Control.Logger.Trace?.Log($"found {type.Namespace}.{type.Name}");
+                Log.Main.Trace?.Log($"found {type.Namespace}.{type.Name}");
 
                 yield return type;
             }
@@ -164,12 +164,13 @@ internal abstract class Feature<T> : IFeature where T : ISettings
             {
                 try
                 {
-                    Log.Main.Debug?.Log($" Patch {type.Name}");
+                    Log.Main.Trace?.Log($" Patch {type.Name}");
                     var hook = Patch(harmony, type);
                     hooks.Add(hook);
                 }
-                catch
+                catch (Exception e)
                 {
+                    Log.Main.Error?.Log($"Patch {type.Name} failed", e);
                     foreach (var hook in hooks)
                     {
                         hook.UnPatch();

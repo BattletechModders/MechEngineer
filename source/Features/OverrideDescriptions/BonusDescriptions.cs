@@ -65,7 +65,7 @@ public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment,
 
             if (!OverrideDescriptionsFeature.Resources.TryGetValue(bonusKey, out var settings))
             {
-                Log.Main.Error?.Log($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
+                Log.Main.Warning?.Log($"Could not find bonus description \"{bonusKey}\" used by {Def.Description.Id}");
                 continue;
             }
 
