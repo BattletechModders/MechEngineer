@@ -11,25 +11,30 @@ namespace MechEngineer.Features.OverrideTonnage;
 [UsedBy(User.BattleValue)]
 public class WeightFactors : SimpleCustomComponent, IAdjustSlotElement, IAdjustTooltipEquipment, IAdjustTooltipWeapon
 {
-    public int ReservedSlots { get; set; } = 0; // TODO move to own feature... SlotsHandler or SizeHandler
     public float ArmorFactor { get; set; } = 1;
     public float StructureFactor { get; set; } = 1;
     public float EngineFactor { get; set; } = 1;
     //public float EngineFactorFactor { get; set; } = 1; // TODO was problematic, 1. engine, 2. engine factor, 3. engine factor factor
     public float GyroFactor { get; set; } = 1;
-    public float ChassisFactor { get; set; } = 1;
+    public float ChassisCapacityFactor { get; set; } = 1;
+
+    // not factors
+    public int ReservedSlots { get; set; } = 0; // TODO move to own feature... SlotsHandler or SizeHandler
+    public float ComponentByChassisFactor { get; set; } = 0; // TODO move to something more elaborate (see CustomCapacities / HBS statistics)
 
     public BonusSlot? BonusSlot { get; set; }
 
     public void Combine(WeightFactors savings)
     {
-        ReservedSlots += savings.ReservedSlots;
         ArmorFactor += savings.ArmorFactor - 1;
         StructureFactor += savings.StructureFactor - 1;
         EngineFactor += savings.EngineFactor - 1;
         //EngineFactorFactor += savings.EngineFactorFactor - 1;
         GyroFactor += savings.GyroFactor - 1;
-        ChassisFactor += savings.ChassisFactor - 1;
+        ChassisCapacityFactor += savings.ChassisCapacityFactor - 1;
+
+        ReservedSlots += savings.ReservedSlots;
+        ComponentByChassisFactor += savings.ComponentByChassisFactor;
     }
 
     public void AdjustSlotElement(MechLabItemSlotElement element, MechLabPanel panel)

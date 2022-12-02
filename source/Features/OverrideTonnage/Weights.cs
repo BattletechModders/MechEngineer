@@ -2,6 +2,7 @@
 using BattleTech;
 using MechEngineer.Features.Engines;
 using MechEngineer.Features.Engines.Helper;
+using MechEngineer.Misc;
 
 namespace MechEngineer.Features.OverrideTonnage;
 
@@ -12,6 +13,7 @@ internal class Weights
     internal readonly float StandardArmorWeight;
     internal readonly float StandardStructureWeight;
     internal readonly float StandardChassisWeightCapacity;
+    [ToString]
     internal readonly float ComponentSumWeight;
     internal readonly Engine? Engine;
 
@@ -40,16 +42,24 @@ internal class Weights
         }
     }
 
-    internal float TotalWeight => ArmorWeight + StructureWeight + EngineWeight + ComponentSumWeight;
+    [ToString]
+    internal float TotalWeight => ArmorWeight + StructureWeight + EngineWeight + ComponentWeightByChassisFactor + ComponentSumWeight;
+    [ToString]
     internal float FreeWeight => ChassisWeightCapacity - TotalWeight;
 
-    internal float ArmorWeight => PrecisionUtils.RoundUp(StandardArmorWeight *  Factors.ArmorFactor, OverrideTonnageFeature.settings.ArmorRoundingPrecision);
-    internal float StructureWeight => PrecisionUtils.RoundUp(StandardStructureWeight *  Factors.StructureFactor, OverrideTonnageFeature.settings.TonnageStandardPrecision);
+    [ToString]
+    internal float ArmorWeight => PrecisionUtils.RoundUp(StandardArmorWeight * Factors.ArmorFactor, OverrideTonnageFeature.settings.ArmorRoundingPrecision);
+    [ToString]
+    internal float StructureWeight => PrecisionUtils.RoundUp(StandardStructureWeight * Factors.StructureFactor, OverrideTonnageFeature.settings.TonnageStandardPrecision);
+    [ToString]
     internal float EngineWeight => Engine?.TotalTonnage ?? 0;
-    internal float ChassisWeightCapacity => PrecisionUtils.RoundUp(StandardChassisWeightCapacity *  Factors.ChassisFactor, OverrideTonnageFeature.settings.TonnageStandardPrecision);
+    [ToString]
+    internal float ChassisWeightCapacity => PrecisionUtils.RoundUp(StandardChassisWeightCapacity * Factors.ChassisCapacityFactor, OverrideTonnageFeature.settings.TonnageStandardPrecision);
+    [ToString]
+    internal float ComponentWeightByChassisFactor => PrecisionUtils.RoundUp(StandardChassisWeightCapacity * Factors.ComponentByChassisFactor, OverrideTonnageFeature.settings.TonnageStandardPrecision);
 
     public override string ToString()
     {
-        return $"[capacity={ChassisWeightCapacity} total={TotalWeight} armor={ArmorWeight} structure={StructureWeight} components={ComponentSumWeight} engine={Engine?.EngineTonnage}]";
+        return ToStringBuilder.ToString(this);
     }
 }

@@ -194,7 +194,7 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
                     "A mech consists of a chassis which has an internal structure and an outer protective layer called armor." +
                     " The chassis determines the maximum weight in components and armor that can be mounted." +
                     " The technology base of a mech can provide various weight benefits." +
-                    (!PrecisionUtils.Equals(weights.Factors.ChassisFactor, 1) ?
+                    (!PrecisionUtils.Equals(weights.Factors.ChassisCapacityFactor, 1) ?
                     $"\r\n" +
                     $"\r\n<i>Chassis</i>" +
                     $"\r\n  <i>Capacity</i>" +
@@ -202,7 +202,7 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
                     $"\r\n  <i>Standard Capacity</i>" +
                     $"\r\n    {Format(weights.StandardChassisWeightCapacity)}" +
                     $"\r\n  <i>Factor</i>" +
-                    $"\r\n    {Format(weights.Factors.ChassisFactor)}"
+                    $"\r\n    {Format(weights.Factors.ChassisCapacityFactor)}"
                     : "") +
                     $"\r\n" +
                     $"\r\n<i>Armor</i>" +
