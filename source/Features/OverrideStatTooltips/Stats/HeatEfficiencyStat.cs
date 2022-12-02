@@ -13,7 +13,7 @@ internal class HeatEfficiencyStat : IStatHandler
 
         tooltipData.dataList.Add("<u>" + Strings.T("Heat Sinking") + "</u>", Strings.T("{0} Heat", stats.HeatSinking));
         tooltipData.dataList.Add("<u>" + Strings.T("Alpha Strike") + "</u>", Strings.T("{0} Heat", stats.AlphaStrike));
-        tooltipData.dataList.Add(Strings.T("Jump Heat"), Strings.T("{0} Heat", stats.JumpHeat));
+        tooltipData.dataList.Add(Strings.T("Move / Jump"), Strings.T("{0} / {1} Heat", stats.EndMoveHeat, stats.JumpHeat));
         tooltipData.dataList.Add(Strings.T("Heat Levels"), Strings.T("{0} / {1} Heat", stats.Overheat, stats.MaxHeat));
     }
 

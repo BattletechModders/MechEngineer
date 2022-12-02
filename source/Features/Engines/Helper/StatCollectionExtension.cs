@@ -59,4 +59,9 @@ internal static class StatCollectionExtension
     {
         return new("OverheatLevel", statCollection, (int)(MechStatisticsRules.Combat.Heat.OverheatLevel * MechStatisticsRules.Combat.Heat.MaxHeat));
     }
+
+    internal static StatisticAdapter<int> EndMoveHeat(this StatCollection statCollection)
+    {
+        return new("EndMoveHeat", statCollection, 0);
+    }
 }

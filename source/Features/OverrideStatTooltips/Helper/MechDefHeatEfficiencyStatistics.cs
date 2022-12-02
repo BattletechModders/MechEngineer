@@ -15,6 +15,7 @@ internal class MechDefHeatEfficiencyStatistics
     internal int JumpHeat { get; }
     internal int MaxHeat { get; }
     internal int Overheat { get; }
+    internal int EndMoveHeat { get; }
 
     internal MechDefHeatEfficiencyStatistics(MechDef mechDef)
     {
@@ -26,6 +27,7 @@ internal class MechDefHeatEfficiencyStatistics
         JumpHeat = GetJumpHeat();
         MaxHeat = GetMaxHeat();
         Overheat = GetOverheat();
+        EndMoveHeat = GetEndMoveHeat();
     }
 
     private int HeatSinkCapacity { get; }
@@ -37,7 +39,7 @@ internal class MechDefHeatEfficiencyStatistics
     {
         return AlphaStrike < 1
             ? 0
-            : MechStatUtils.NormalizeToFraction(HeatSinking, (float)AlphaStrike / 3, AlphaStrike);
+            : MechStatUtils.NormalizeToFraction(HeatSinking + EndMoveHeat, (float)AlphaStrike / 3, AlphaStrike);
     }
 
     private int GetHeatSinkCapacity()
@@ -93,6 +95,13 @@ internal class MechDefHeatEfficiencyStatistics
     private int GetOverheat()
     {
         var stat = statCollection.OverheatLevel();
+        stat.Create();
+        return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
+    }
+
+    private int GetEndMoveHeat()
+    {
+        var stat = statCollection.EndMoveHeat();
         stat.Create();
         return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
     }
