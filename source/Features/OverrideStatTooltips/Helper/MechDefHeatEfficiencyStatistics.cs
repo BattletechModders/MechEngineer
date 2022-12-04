@@ -39,7 +39,7 @@ internal class MechDefHeatEfficiencyStatistics
     {
         return AlphaStrike < 1
             ? 0
-            : MechStatUtils.NormalizeToFraction(HeatSinking + EndMoveHeat, (float)AlphaStrike / 3, AlphaStrike);
+            : MechStatUtils.NormalizeToFraction(HeatSinking - EndMoveHeat, (float)AlphaStrike / 3, AlphaStrike);
     }
 
     private int GetHeatSinkCapacity()
