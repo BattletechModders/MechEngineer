@@ -11,10 +11,11 @@ internal class HeatEfficiencyStat : IStatHandler
         var stats = new MechDefHeatEfficiencyStatistics(mechDef);
         tooltipData.dataList.Clear();
 
-        tooltipData.dataList.Add("<u>" + Strings.T("Heat Sinking") + "</u>", Strings.T("{0} Heat", stats.HeatSinking));
+        tooltipData.dataList.Add("<u>" + Strings.T("Heat Sinks") + "</u>", Strings.T("{0} Heat", -stats.HeatSinking));
         tooltipData.dataList.Add("<u>" + Strings.T("Alpha Strike") + "</u>", Strings.T("{0} Heat", stats.AlphaStrike));
-        tooltipData.dataList.Add("<u>" + Strings.T("Move") + "</u> / " + Strings.T("Jump"), Strings.T("{0} / {1} Heat", stats.EndMoveHeat, stats.JumpHeat));
         tooltipData.dataList.Add(Strings.T("Heat Levels"), Strings.T("{0} / {1} Heat", stats.Overheat, stats.MaxHeat));
+        tooltipData.dataList.Add("<u>" + Strings.T("Move") + "</u>", Strings.T("{0} Heat", stats.EndMoveHeat));
+        tooltipData.dataList.Add(Strings.T("Jump"), Strings.T("{0} Heat", stats.JumpHeat));
     }
 
     public float BarValue(MechDef mechDef)
