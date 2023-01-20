@@ -149,7 +149,7 @@ internal class Criticals
 
     private int ComponentHitMax()
     {
-        var inventorySize = component.componentDef.Is<CriticalChance>(out var chance) ? chance.Size : component.componentDef.InventorySize;
+        var inventorySize = component.componentDef.Is<CriticalChanceCustom>(out var chance) ? chance.Size : component.componentDef.InventorySize;
         // TODO fix size correctly for location:
         // introduce fake items for overflow location that is crit linked and overwrite component hit max for original + crit linked
         var additionalSize = component.componentDef.Is<DynamicSlots.DynamicSlots>(out var slot) && slot.InnerAdjacentOnly ? slot.ReservedSlots : 0;
