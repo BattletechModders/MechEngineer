@@ -20,11 +20,15 @@ internal class AutoFixer : IAutoFixMechDef
 {
     internal static readonly AutoFixer Shared = new();
 
-    public void AutoFix(List<MechDef> mechDefs, SimGameState? simGameState)
+    public void AutoFix(List<MechDef> mechDefs)
     {
-        // we dont fix save games anymore, have to have money and time to fix an ongoing campaign
-        if (simGameState != null)
+        // if GUID is set, this indicates its already part of the save system and already altered
+        if (mechDefs.Any(m => m.GUID != null))
         {
+            if (mechDefs.Any(m => m.GUID == null))
+            {
+                Log.Main.Error?.Log("Some save game mechs are missing a GUID, this should not be");
+            }
             return;
         }
 

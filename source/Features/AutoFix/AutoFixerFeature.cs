@@ -16,6 +16,6 @@ internal class AutoFixerFeature : Feature<AutoFixerSettings>
         CustomComponents.AutoFixer.Shared.RegisterMechFixer(AutoFixer.Shared.AutoFix);
     }
 
-    private readonly Lazy<TagSet> IgnoreAutofixTagsLazy = new Lazy<TagSet>(() => new TagSet(settings.IgnoreAutofixTags));
+    private readonly Lazy<TagSet> IgnoreAutofixTagsLazy = new(() => new(settings.IgnoreAutofixTags));
     internal TagSet IgnoreAutofixTags => IgnoreAutofixTagsLazy.Value;
 }
