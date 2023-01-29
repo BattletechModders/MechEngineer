@@ -229,7 +229,7 @@ internal class CustomCapacitiesFeature : Feature<CustomCapacitiesSettings>, IVal
             return MinHandReq.None;
         }
 
-        internal float TotalCapacity => HandTotalCapacity + Mathf.Max(LeftOverCapacity - (HandTotalCapacity - HandTotalUsage), 0);
+        internal float TotalCapacity => HandTotalCapacity + Mathf.Max(LeftOverCapacity - Mathf.Max(HandTotalCapacity - HandTotalUsage , 0), 0);
         internal float TotalUsage => HandTotalUsage + LeftOverUsage;
 
         internal float HandTotalCapacity => HandLeftCapacity + HandRightCapacity;
