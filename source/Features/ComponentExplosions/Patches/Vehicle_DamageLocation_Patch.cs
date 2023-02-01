@@ -34,7 +34,7 @@ internal static class Vehicle_DamageLocation_Patch
                 return;
             }
 
-            var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(vehicle, (int)location);
+            var properties = ComponentExplosionsFeature.GetExplosionProtection<ExplosionProtectionStructureCustom>(vehicle, (int)location);
             if (properties?.MaximumDamage == null)
             {
                 return;

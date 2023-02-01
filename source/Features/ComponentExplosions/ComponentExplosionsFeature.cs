@@ -48,18 +48,22 @@ internal class ComponentExplosionsFeature : Feature<ComponentExplosionsSettings>
 
         var attackSequence = actor.Combat.AttackDirector.GetAttackSequence(hitInfo.attackSequenceId);
 
-        var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
-        if (!Mathf.Approximately(heatDamage, 0))
         {
-            Log.Main.Debug?.Log($"heatDamage={heatDamage}");
-            actor.AddExternalHeat($"{component.Name} EXPLOSION HEAT", (int)heatDamage);
-            attackSequence?.FlagAttackDidHeatDamage(actor.GUID);
+            var heatDamage = exp.HeatDamage + ammoCount * exp.HeatDamagePerAmmo;
+            LimitDamageIfApplicable<ExplosionProtectionHeatCustom>(actor, component, ref heatDamage);
+            if (!Mathf.Approximately(heatDamage, 0))
+            {
+                Log.Main.Debug?.Log($"heatDamage={heatDamage}");
+                actor.AddExternalHeat($"{component.Name} EXPLOSION HEAT", (int)heatDamage);
+                attackSequence?.FlagAttackDidHeatDamage(actor.GUID);
+            }
         }
 
         { // only applies for mechs, vehicles don't have stability
             if (actor is Mech mech)
             {
                 var stabilityDamage = exp.StabilityDamage + ammoCount * exp.StabilityDamagePerAmmo;
+                LimitDamageIfApplicable<ExplosionProtectionStabilityCustom>(actor, component, ref stabilityDamage);
                 if (!Mathf.Approximately(stabilityDamage, 0))
                 {
                     Log.Main.Debug?.Log($"stabilityDamage={stabilityDamage}");
@@ -124,15 +128,26 @@ internal class ComponentExplosionsFeature : Feature<ComponentExplosionsSettings>
     internal static bool IsInternalExplosion;
     internal static bool IsInternalExplosionContained;
 
-    internal CASEComponent GetCASEProperties(AbstractActor actor, int location)
+    internal static T? GetExplosionProtection<T>(AbstractActor actor, int location) where T : IExplosionProtectionLocation
     {
         return actor.allComponents
             .Where(c => c.DamageLevel == ComponentDamageLevel.Functional)
-            .Select(componentRef => new {componentRef, CASE = componentRef.componentDef.GetComponent<CASEComponent>()})
-            .Where(t => t.CASE != null)
-            .Where(t => t.CASE.AllLocations || t.componentRef.Location == location)
-            .Select(t => t.CASE)
+            .Select(componentRef => new {componentRef, protection = componentRef.componentDef.GetComponent<T>()})
+            .Where(t => t.protection != null)
+            .Where(t => t.protection.AllLocations || t.componentRef.Location == location)
+            .Select(t => t.protection)
             .OrderBy(c => c.AllLocations) // localized CASE always overrides global CASE
             .FirstOrDefault();
+    }
+
+    private static void LimitDamageIfApplicable<T>(AbstractActor actor, MechComponent component, ref float damage) where T : IExplosionProtectionLocation
+    {
+        var properties = GetExplosionProtection<T>(actor, component.location);
+        if (properties?.MaximumDamage == null)
+        {
+            return;
+        }
+
+        damage = Mathf.Min(properties.MaximumDamage.Value, damage);
     }
 }

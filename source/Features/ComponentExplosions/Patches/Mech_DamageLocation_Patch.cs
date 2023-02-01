@@ -52,7 +52,7 @@ internal static class Mech_DamageLocation_Patch
             return; // ignore 0 damage calls
         }
 
-        var properties = ComponentExplosionsFeature.Shared.GetCASEProperties(mech, (int)location);
+        var properties = ComponentExplosionsFeature.GetExplosionProtection<ExplosionProtectionStructureCustom>(mech, (int)location);
         if (properties == null)
         {
             return;
