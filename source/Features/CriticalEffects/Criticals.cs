@@ -136,7 +136,7 @@ internal class Criticals
     {
         if (CriticalEffectsFeature.settings.DefaultMaxCritsComponentTypes.Contains(component.componentType))
         {
-            var slots = CriticalEffectsFeature.settings.DefaultMaxCritsPerSlots * component.inventorySize;
+            var slots = CriticalEffectsFeature.settings.DefaultMaxCritsPerSlots * component.componentDef.InventorySize;
             return Mathf.FloorToInt(slots) + 1; // last effect = Destroyed
         }
         return 1;
