@@ -4,6 +4,7 @@ using System.Linq;
 using BattleTech;
 using CustomComponents;
 using FluffyUnderware.DevTools.Extensions;
+using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.PlaceholderEffects;
 using MechEngineer.Helper;
 using UnityEngine;
@@ -403,7 +404,16 @@ internal class EffectIdUtil
         var actor = component.parent;
 
         Log.Main.Debug?.Log($"Creating id={effectId} statName={effectData.statisticData.statName}");
-        actor.Combat.EffectManager.CreateEffect(effectData, effectId, -1, actor, actor, default, 0);
+
+        EffectManager_GetTargetStatCollections_Patch.SetContext(component, effectData);
+        try
+        {
+            actor.Combat.EffectManager.CreateEffect(effectData, effectId, -1, actor, actor, default, 0);
+        }
+        finally
+        {
+            EffectManager_GetTargetStatCollections_Patch.ClearContext();
+        }
     }
 
     internal void CreateCriticalEffect()
