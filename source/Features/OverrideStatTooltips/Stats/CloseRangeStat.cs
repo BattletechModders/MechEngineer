@@ -1,4 +1,4 @@
-using BattleTech;
+﻿using BattleTech;
 using Localize;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 
@@ -49,7 +49,7 @@ internal class CloseRangeStat : IStatHandler
     {
         if (canUseInMelee.HasValue)
         {
-            return new MechDefFirepowerStatistics(mechDef, (x) => x.WeaponCategoryValue.CanUseInMelee == canUseInMelee.Value);
+            return new MechDefFirepowerStatistics(mechDef, (x) => x.CanUseInMelee() == canUseInMelee.Value);
         }
         else
         {

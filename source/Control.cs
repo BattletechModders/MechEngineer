@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using BattleTech;
 using MechEngineer.Features;
+using MechEngineer.Features.OverrideStatTooltips.Helper;
 using MechEngineer.Misc;
 
 namespace MechEngineer;
@@ -68,6 +69,7 @@ public static class Control
             }
 
             Log.Main.Info?.Log("loaded");
+            WeaponRefDataHelper.InitHelper();
         }
         catch (Exception e)
         {
