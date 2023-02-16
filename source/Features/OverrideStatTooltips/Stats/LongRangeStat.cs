@@ -1,4 +1,4 @@
-using BattleTech;
+﻿using BattleTech;
 using Localize;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 
@@ -39,7 +39,7 @@ internal class LongRangeStat : IStatHandler
 
     private MechDefFirepowerStatistics GetIndirectFirepower(MechDef mechDef)
     {
-        return new(mechDef, (x) => x.IndirectFireCapable);
+        return new(mechDef, (x) => x.IndirectFireCapable());
     }
 
     private MechDefFirepowerStatistics GetExtremeLongRangeFirepower(MechDef mechDef)
