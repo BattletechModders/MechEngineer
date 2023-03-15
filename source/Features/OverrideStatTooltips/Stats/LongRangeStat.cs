@@ -39,7 +39,7 @@ internal class LongRangeStat : IStatHandler
 
     private MechDefFirepowerStatistics GetIndirectFirepower(MechDef mechDef)
     {
-        return new(mechDef, (x) => x.IndirectFireCapable());
+        return new(mechDef, x => x.WeaponRefHelper().IndirectFireCapable);
     }
 
     private MechDefFirepowerStatistics GetExtremeLongRangeFirepower(MechDef mechDef)

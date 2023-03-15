@@ -15,7 +15,7 @@ internal class MechDefFirepowerStatistics
     internal float AverageAccuracy { get; }
 
     internal MechDefFirepowerStatistics(MechDef mechDef, int minRange, int maxRange)
-        : this(mechDef, x => RangeOverlap(minRange, maxRange, Mathf.RoundToInt(x.MinRange()), Mathf.RoundToInt(x.MaxRange())))
+        : this(mechDef, x => RangeOverlap(minRange, maxRange, Mathf.RoundToInt(x.WeaponRefHelper().MinRange), Mathf.RoundToInt(x.WeaponRefHelper().MaxRange)))
     {
     }
 
@@ -72,7 +72,7 @@ internal class MechDefFirepowerStatistics
         internal float Accuracy { get; }
 
         internal WeaponDefFirepowerStatistics(MechDef mechDef, BaseComponentRef weaponRef) :
-            this(mechDef, (weaponRef.Def as WeaponDef)!, weaponRef, weaponRef.Damage(), weaponRef.Instability(), weaponRef.AccuracyModifier())
+            this(mechDef, (weaponRef.Def as WeaponDef)!, weaponRef, weaponRef.WeaponRefHelper().Damage, weaponRef.WeaponRefHelper().Instability, weaponRef.WeaponRefHelper().AccuracyModifier)
         {
         }
 
@@ -94,9 +94,9 @@ internal class MechDefFirepowerStatistics
         private readonly MechDef mechDef;
         private readonly StatCollection statCollection = new();
 
-        private int GetBaseShotsWhenFired => weaponRef?.ShotsWhenFired() ?? weaponDef.ShotsWhenFired;
-        private float GetBaseHeatDamage => weaponRef?.HeatDamage() ?? weaponDef.HeatDamage;
-        private float GetBaseStructureDamage => weaponRef?.StructureDamage() ?? weaponDef.StructureDamage;
+        private int GetBaseShotsWhenFired => weaponRef?.WeaponRefHelper().ShotsWhenFired ?? weaponDef.ShotsWhenFired;
+        private float GetBaseHeatDamage => weaponRef?.WeaponRefHelper().HeatDamage ?? weaponDef.HeatDamage;
+        private float GetBaseStructureDamage => weaponRef?.WeaponRefHelper().StructureDamage ?? weaponDef.StructureDamage;
 
         private float GetDamagePerShot(float baseValue)
         {

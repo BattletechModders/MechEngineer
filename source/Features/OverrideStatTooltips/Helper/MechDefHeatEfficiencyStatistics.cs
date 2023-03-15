@@ -58,7 +58,7 @@ internal class MechDefHeatEfficiencyStatistics
         var defaultValue = mechDef.Inventory
             .Where(x => x.IsFunctionalORInstalling())
             .Where(x => x.Def is WeaponDef)
-            .Sum(x => x.HeatGenerated());
+            .Sum(x => x.WeaponRefHelper().HeatGenerated);
 
         // TODO HeatDivisor support or not? nah we just don't support COIL, who needs that anyway...
 

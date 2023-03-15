@@ -49,7 +49,7 @@ internal class CloseRangeStat : IStatHandler
     {
         if (canUseInMelee.HasValue)
         {
-            return new MechDefFirepowerStatistics(mechDef, x => x.CanUseInMelee() == canUseInMelee.Value);
+            return new MechDefFirepowerStatistics(mechDef, x => x.WeaponRefHelper().CanUseInMelee == canUseInMelee.Value);
         }
         else
         {
