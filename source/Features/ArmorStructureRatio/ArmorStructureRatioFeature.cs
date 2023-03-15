@@ -17,7 +17,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
 
     protected override void SetupFeatureLoaded()
     {
-        ArmorUtils.MaxTotalArmorCalc = locationDef => locationDef.InternalStructure * GetArmorToStructureRatio(locationDef.Location);
+        ArmorUtils.MaxTotalArmorCalc = locationDef => Mathf.Max(0, locationDef.InternalStructure * GetArmorToStructureRatio(locationDef.Location));
     }
 
     public void AutoFixChassisDef(ChassisDef chassisDef)

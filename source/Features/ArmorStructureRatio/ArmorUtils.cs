@@ -3,6 +3,7 @@ using System.Linq;
 using BattleTech;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.OverrideTonnage;
+using UnityEngine;
 
 namespace MechEngineer.Features.ArmorStructureRatio;
 
@@ -29,10 +30,10 @@ public static class ArmorUtils
     internal static int GetMaximumArmorPoints(LocationDef locationDef)
     {
         var maxTotalArmor = MaxTotalArmorCalc(locationDef);
-        return (int)PrecisionUtils.RoundDown(maxTotalArmor, ArmorPerStep);
+        return PrecisionUtils.RoundDownToInt(maxTotalArmor);
     }
 
-    internal static Func<LocationDef, float> MaxTotalArmorCalc = locationDef => locationDef.MaxArmor + locationDef.MaxRearArmor;
+    internal static Func<LocationDef, float> MaxTotalArmorCalc = locationDef => Mathf.Max(0, locationDef.MaxArmor) + Mathf.Max(0, locationDef.MaxRearArmor);
 
     internal static int ArmorPerStep => (int)UnityGameInstance.BattleTechGame.MechStatisticsConstants.ARMOR_PER_STEP;
 }

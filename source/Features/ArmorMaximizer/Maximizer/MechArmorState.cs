@@ -167,7 +167,7 @@ internal class MechArmorState
         var tmp = updates.ToList();
 
         // this does a lot of looping, just 20ms on my machine though for an empty atlas
-        Log.Main.Trace?.Log($"Maximize before loop");
+        Log.Main.Trace?.Log($"Maximize before loop Max={Max} Assigned={Assigned}");
         while (Remaining > 0)
         {
             tmp.RemoveAll(s => s.IsFull || (s.LinkedChassisLocationState?.IsFull ?? false));
