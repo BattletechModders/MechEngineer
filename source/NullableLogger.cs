@@ -5,6 +5,7 @@ using HBS.Logging;
 
 namespace NullableLogging;
 
+[HarmonyPatch]
 internal sealed class NullableLogger
 {
     // instantiation
@@ -16,7 +17,6 @@ internal sealed class NullableLogger
             if (!_loggers.TryGetValue(name, out var loggers))
             {
                 loggers = new(name, defaultLogLevel);
-                _loggers[name] = loggers;
             }
             return loggers;
         }
@@ -29,20 +29,10 @@ internal sealed class NullableLogger
     // tracking (static)
 
     private static readonly SortedList<string, NullableLogger> _loggers = new();
-    static NullableLogger()
-    {
-        TrackLoggerLevelChanges();
-    }
-    private static void TrackLoggerLevelChanges()
-    {
-        HarmonyInstance
-            .Create(typeof(NullableLogger).FullName)
-            .Patch(
-                original: typeof(Logger.LogImpl).GetProperty(nameof(Logger.LogImpl.Level))!.SetMethod,
-                postfix: new(typeof(NullableLogger), nameof(LogImpl_set_Level_Postfix))
-            );
-    }
-    private static void LogImpl_set_Level_Postfix()
+
+    [HarmonyPatch(typeof(Logger.LogImpl), nameof(Logger.LogImpl.Level), MethodType.Setter)]
+    [HarmonyPostfix]
+    internal static void LogImpl_set_Level_Postfix()
     {
         lock (_loggers)
         {
@@ -68,36 +58,30 @@ internal sealed class NullableLogger
 
     // log levels
 
-    internal ILevel? Trace => _trace;
-    internal ILevel? Debug => _debug;
-    internal ILevel? Info => _info;
-    internal ILevel? Warning => _warning;
-    internal ILevel? Error => _error;
-
-    private LevelLogger? _trace;
-    private LevelLogger? _debug;
-    private LevelLogger? _info;
-    private LevelLogger? _warning;
-    private LevelLogger? _error;
+    internal ILevel? Trace { get; private set; }
+    internal ILevel? Debug { get; private set; }
+    internal ILevel? Info { get; private set; }
+    internal ILevel? Warning { get; private set; }
+    internal ILevel? Error { get; private set; }
 
     private void RefreshLogLevel()
     {
-        var lowerLevelEnabled = SyncLevelLogger(false, TraceLogLevel, ref _trace);
-        SyncLevelLogger(lowerLevelEnabled, LogLevel.Debug, ref _debug);
-        SyncLevelLogger(lowerLevelEnabled, LogLevel.Log, ref _info);
-        SyncLevelLogger(lowerLevelEnabled, LogLevel.Warning, ref _warning);
-        SyncLevelLogger(lowerLevelEnabled, LogLevel.Error, ref _error);
+        var lowerLevelEnabled = false;
+        Trace = SyncLevelLogger(ref lowerLevelEnabled, TraceLogLevel, Trace);
+        Debug = SyncLevelLogger(ref lowerLevelEnabled, LogLevel.Debug, Debug);
+        Info = SyncLevelLogger(ref lowerLevelEnabled, LogLevel.Log, Info);
+        Warning = SyncLevelLogger(ref lowerLevelEnabled, LogLevel.Warning, Warning);
+        Error = SyncLevelLogger(ref lowerLevelEnabled, LogLevel.Error, Error);
     }
 
-    private bool SyncLevelLogger(bool lowerLevelEnabled, LogLevel logLevel, ref LevelLogger? field)
+    private ILevel? SyncLevelLogger(ref bool lowerLevelEnabled, LogLevel logLevel, ILevel? logger)
     {
         if (lowerLevelEnabled || Log.IsEnabledFor(logLevel))
         {
-            field ??= new(logLevel, Log);
-            return true;
+            lowerLevelEnabled = true;
+            return logger ?? new LevelLogger(logLevel, Log);
         }
-        field = null;
-        return false;
+        return null;
     }
 
     // logging

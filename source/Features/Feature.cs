@@ -110,9 +110,21 @@ internal abstract class Feature<T> : IFeature where T : ISettings
                 return;
             }
 
-            //HarmonyInstance.DEBUG = true;
-            var harmony = HarmonyInstance.Create(rootType.Namespace);
-            PatchTypes(harmony, types);
+            var harmony = new Harmony(rootType.Namespace);
+            foreach (var type in types)
+            {
+                try
+                {
+                    Log.Main.Trace?.Log($" Patch {type.Name}");
+                    harmony.CreateClassProcessor(type).Patch();
+                }
+                catch (Exception e)
+                {
+                    Log.Main.Error?.Log($"Patch {type.Name} failed", e);
+                    harmony.UnpatchSelf();
+                    throw;
+                }
+            }
         }
 
         private static void RegisterCustomCandidates(List<Type> candidates)
@@ -153,63 +165,6 @@ internal abstract class Feature<T> : IFeature where T : ISettings
                 Log.Main.Trace?.Log($"found {type.Namespace}.{type.Name}");
 
                 yield return type;
-            }
-        }
-
-        private static void PatchTypes(HarmonyInstance harmony, List<Type> types)
-        {
-            var hooks = new List<Hook>();
-            foreach (var type in types)
-            {
-                try
-                {
-                    Log.Main.Trace?.Log($" Patch {type.Name}");
-                    var hook = Patch(harmony, type);
-                    hooks.Add(hook);
-                }
-                catch (Exception e)
-                {
-                    Log.Main.Error?.Log($"Patch {type.Name} failed", e);
-                    foreach (var hook in hooks)
-                    {
-                        hook.UnPatch();
-                    }
-
-                    throw;
-                }
-            }
-        }
-
-        private static Hook Patch(HarmonyInstance harmony, Type type)
-        {
-            var parentMethodInfos = type.GetHarmonyMethods();
-            if (parentMethodInfos == null || !parentMethodInfos.Any())
-            {
-                throw new InvalidOperationException();
-            }
-
-            var info = HarmonyMethod.Merge(parentMethodInfos);
-            var processor = new PatchProcessor(harmony, type, info);
-            return new(processor.Patch(), processor);
-        }
-
-        private class Hook
-        {
-            private readonly List<DynamicMethod> patches;
-            private readonly PatchProcessor processor;
-
-            public Hook(List<DynamicMethod> patches, PatchProcessor processor)
-            {
-                this.patches = patches;
-                this.processor = processor;
-            }
-
-            public void UnPatch()
-            {
-                foreach (var patch in patches)
-                {
-                    processor.Unpatch(patch);
-                }
             }
         }
     }

@@ -36,6 +36,10 @@
       <PrivateAssets>all</PrivateAssets>
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
+    <PackageReference Include="HarmonyX" Version="2.10.1">
+      <PrivateAssets>all</PrivateAssets>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CustomComponents">
@@ -50,9 +54,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="DOTweenPro">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="0Harmony">
       <Private>False</Private>
     </Reference>
     <Reference Include="InControl">
