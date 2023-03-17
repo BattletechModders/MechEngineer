@@ -14,8 +14,13 @@ public static class MechShutdownSequence_CheckForHeatDamage_Patch
     }
 
     [HarmonyPrefix]
-    public static bool Prefix(MechShutdownSequence __instance)
+    public static void Prefix(ref bool __runOriginal, MechShutdownSequence __instance)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var mech = __instance.OwningMech;
@@ -30,13 +35,11 @@ public static class MechShutdownSequence_CheckForHeatDamage_Patch
                 ShutdownInjuryProtectionFeature.SetInjury(mech, sourceID, stackItemUID);
             }
 
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-
-        return true;
     }
 }

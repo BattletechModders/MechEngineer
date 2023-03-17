@@ -12,8 +12,13 @@ public static class LanceMechEquipmentList_SetLoadout_Patch
 {
     [HarmonyPriority(Priority.High)]
     [HarmonyPrefix]
-    public static void Prefix(LanceMechEquipmentList __instance)
+    public static void Prefix(ref bool __runOriginal, LanceMechEquipmentList __instance)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             CustomWidgetsFixLanceMechEquipment.SetLoadout_LabelDefaults(__instance);

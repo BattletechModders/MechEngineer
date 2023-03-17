@@ -8,17 +8,21 @@ namespace MechEngineer.Features.Engines.Patches;
 public static class Mech_JumpDistance_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(Mech __instance, ref float __result)
+    public static void Prefix(ref bool __runOriginal, Mech __instance, ref float __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             __result = Jumping.CalcMaxJumpDistance(__instance);
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }

@@ -9,24 +9,27 @@ namespace MechEngineer.Features.CompressFloatieMessages.Patches;
 public static class CombatHUDFloatieStack_AddFloatie_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(
+    public static void Prefix(ref bool __runOriginal, 
         CombatHUDFloatieStack __instance,
         FloatieMessage message,
         Queue<FloatieMessage> ___msgQueue
         )
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (CompressFloatieMessagesFeature.CompressFloatieMessages(message, ___msgQueue))
             {
-                return false;
+                __runOriginal = false;
             }
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-
-        return true;
     }
 }

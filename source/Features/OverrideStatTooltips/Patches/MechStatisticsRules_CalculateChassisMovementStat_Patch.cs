@@ -8,17 +8,21 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class MechStatisticsRules_CalculateChassisMovementStat_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(ref float currentValue, ref float maxValue)
+    public static void Prefix(ref bool __runOriginal, ref float currentValue, ref float maxValue)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             MechStatUtils.SetStatValues(0, ref currentValue, ref maxValue);
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }

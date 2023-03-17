@@ -29,20 +29,24 @@ internal static class EffectManager_GetTargetStatCollections_Patch
     private static List<StatCollection>? ForcedStatCollections;
 
     [HarmonyPrefix]
-    public static bool Prefix(ref List<StatCollection> __result, EffectData effectData, ICombatant target)
+    public static void Prefix(ref bool __runOriginal, ref List<StatCollection> __result, EffectData effectData, ICombatant target)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (ForcedStatCollections != null)
             {
                 __result = ForcedStatCollections;
-                return false;
+                __runOriginal = false;
             }
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }

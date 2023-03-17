@@ -6,8 +6,13 @@ namespace MechEngineer.Features.DynamicSlots.Patches;
 public static class MechLabItemSlotElement_OnPointerEnter_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(MechLabItemSlotElement __instance)
+    public static void Prefix(ref bool __runOriginal, MechLabItemSlotElement __instance)
     {
-        return !__instance.IsDynamicSlotElement();
+        if (!__runOriginal)
+        {
+            return;
+        }
+
+        __runOriginal = !__instance.IsDynamicSlotElement();
     }
 }

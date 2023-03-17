@@ -14,8 +14,13 @@ public static class Mech_OnActivationEnd_Patch
     }
 
     [HarmonyPrefix]
-    public static void Prefix(Mech __instance, string sourceID, int stackItemID)
+    public static void Prefix(ref bool __runOriginal, Mech __instance, string sourceID, int stackItemID)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var mech = __instance;

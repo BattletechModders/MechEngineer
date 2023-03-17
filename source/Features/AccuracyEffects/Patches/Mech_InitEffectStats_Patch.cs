@@ -7,8 +7,13 @@ namespace MechEngineer.Features.AccuracyEffects.Patches;
 public static class Mech_InitEffectStats_Patch
 {
     [HarmonyPrefix]
-    public static void Prefix(Mech __instance)
+    public static void Prefix(ref bool __runOriginal, Mech __instance)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             AccuracyEffectsFeature.SetupAccuracyStatistics(__instance.StatCollection);

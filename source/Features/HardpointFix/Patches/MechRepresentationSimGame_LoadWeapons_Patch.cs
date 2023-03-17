@@ -12,8 +12,13 @@ public static class MechRepresentationSimGame_LoadWeapons_Patch
     [HarmonyBefore(Mods.CU)]
     [HarmonyPriority(Priority.High)]
     [HarmonyPrefix]
-    public static void Prefix(MechRepresentationSimGame __instance)
+    public static void Prefix(ref bool __runOriginal, MechRepresentationSimGame __instance)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             CalculatorSetup.Setup(

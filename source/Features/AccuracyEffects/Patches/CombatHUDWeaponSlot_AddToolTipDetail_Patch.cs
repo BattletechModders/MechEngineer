@@ -7,8 +7,13 @@ namespace MechEngineer.Features.AccuracyEffects.Patches;
 public static class CombatHUDWeaponSlot_AddToolTipDetail_Patch
 {
     [HarmonyPrefix]
-    public static void Prefix(ref string description)
+    public static void Prefix(ref bool __runOriginal, ref string description)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (description == "ARM MOUNTED")

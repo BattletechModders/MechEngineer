@@ -6,9 +6,14 @@ namespace MechEngineer.Features.HeatSinkCapacityStat.Patches;
 public static class Mech_GetHeatSinkDissipation_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(ref float __result)
+    public static void Prefix(ref bool __runOriginal, ref float __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         __result = 0;
-        return false;
+        __runOriginal = false;
     }
 }

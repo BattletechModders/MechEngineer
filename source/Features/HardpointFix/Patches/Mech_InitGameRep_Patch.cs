@@ -12,8 +12,13 @@ public static class Mech_InitGameRep_Patch
     [HarmonyBefore(Mods.AC, Mods.CU)]
     [HarmonyPriority(Priority.High)]
     [HarmonyPrefix]
-    public static void Prefix(Mech __instance)
+    public static void Prefix(ref bool __runOriginal, Mech __instance)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var componentRefs = __instance.Weapons.Union(__instance.supportComponents)

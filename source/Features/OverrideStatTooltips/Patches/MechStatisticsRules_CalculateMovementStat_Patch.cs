@@ -8,18 +8,22 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class MechStatisticsRules_CalculateMovementStat_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(MechDef mechDef, ref float currentValue, ref float maxValue)
+    public static void Prefix(ref bool __runOriginal, MechDef mechDef, ref float currentValue, ref float maxValue)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var value = OverrideStatTooltipsFeature.MovementStat.BarValue(mechDef);
             MechStatUtils.SetStatValues(value, ref currentValue, ref maxValue);
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }

@@ -17,8 +17,13 @@ internal static class CombatHUDStatusPanel_ShowEffectStatuses_Patch
     }
 
     [HarmonyPrefix]
-    internal static void Prefix(AbstractActor actor)
+    internal static void Prefix(ref bool __runOriginal, AbstractActor actor)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             DebugUtils.LogActor("ShowEffectStatuses Prefix", actor);
@@ -53,8 +58,13 @@ internal static class EffectManager_CancelEffect_Patch
     }
 
     [HarmonyPrefix]
-    internal static void Prefix(Effect e)
+    internal static void Prefix(ref bool __runOriginal, Effect e)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             Log.Main.Debug?.Log($"CancelEffect Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");
@@ -76,8 +86,13 @@ internal static class EffectManager_EffectComplete_Patch
     }
 
     [HarmonyPrefix]
-    internal static void Prefix(Effect e)
+    internal static void Prefix(ref bool __runOriginal, Effect e)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             Log.Main.Debug?.Log($"EffectComplete Prefix {e.EffectData.Description.Id} + {new System.Diagnostics.StackTrace()}");

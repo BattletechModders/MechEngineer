@@ -7,21 +7,24 @@ namespace MechEngineer.Features.DamageIgnore.Patches;
 public static class MechComponent_DamageComponent_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(MechComponent __instance, ref ComponentDamageLevel damageLevel)
+    public static void Prefix(ref bool __runOriginal, MechComponent __instance, ref ComponentDamageLevel damageLevel)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (__instance.componentDef.IsIgnoreDamage())
             {
                 damageLevel = ComponentDamageLevel.Functional;
-                return false;
+                __runOriginal = false;
             }
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-
-        return true;
     }
 }

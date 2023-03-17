@@ -9,20 +9,26 @@ namespace MechEngineer.Features.ComponentExplosions.Patches;
 internal static class Mech_DamageLocation_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(
+    public static void Prefix(ref bool __runOriginal, 
         Mech __instance,
         WeaponHitInfo hitInfo,
         ArmorLocation aLoc,
         ref float directStructureDamage,
         ref bool __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (ComponentExplosionsFeature.IsInternalExplosionContained)
             {
                 __result = false;
                 Log.Main.Warning?.Log("prevented explosion pass through (you should never see this message)");
-                return false;
+                __runOriginal = false;
+                return;
             }
 
             if (ComponentExplosionsFeature.IsInternalExplosion)
@@ -35,8 +41,6 @@ internal static class Mech_DamageLocation_Patch
         {
             Log.Main.Error?.Log(e);
         }
-
-        return true;
     }
 
     internal static void UpdateStructureDamage(

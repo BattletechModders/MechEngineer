@@ -7,8 +7,13 @@ namespace MechEngineer.Features.PlaceholderEffects.Patches;
 public static class MechComponent_ApplyPassiveEffectToTarget_Patch
 {
     [HarmonyPrefix]
-    public static void Prefix(MechComponent __instance, ref EffectData effect)
+    public static void Prefix(ref bool __runOriginal, MechComponent __instance, ref EffectData effect)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             PlaceholderEffectsFeature.ProcessLocationalEffectData(ref effect, __instance);

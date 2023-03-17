@@ -8,7 +8,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches;
 public static class MechLabMechInfoWidget_CalculateTonnage_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(
+    public static void Prefix(ref bool __runOriginal, 
         MechLabPanel ___mechLab,
         ref float ___currentTonnage,
         TextMeshProUGUI ___totalTonnage,
@@ -16,12 +16,18 @@ public static class MechLabMechInfoWidget_CalculateTonnage_Patch
         TextMeshProUGUI ___remainingTonnage,
         UIColorRefTracker ___remainingTonnageColor)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var mechDef = ___mechLab.CreateMechDef();
             if (mechDef == null)
             {
-                return false;
+                __runOriginal = false;
+                return;
             }
 
             WeightsHandler.AdjustInfoWidget(
@@ -32,12 +38,11 @@ public static class MechLabMechInfoWidget_CalculateTonnage_Patch
                 ___remainingTonnage,
                 out ___currentTonnage
             );
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }

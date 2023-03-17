@@ -10,17 +10,21 @@ internal static class MechComponent_inventorySize_Patch
 {
     [HarmonyAfter(DamageIgnoreFeature.Namespace)]
     [HarmonyPrefix]
-    public static bool Prefix(MechComponent __instance, ref int __result)
+    public static void Prefix(ref bool __runOriginal, MechComponent __instance, ref int __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             __result = __instance.Criticals().ComponentHittableCount();
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }

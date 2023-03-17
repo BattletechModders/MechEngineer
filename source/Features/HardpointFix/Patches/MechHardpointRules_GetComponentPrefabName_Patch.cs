@@ -9,21 +9,25 @@ public static class MechHardpointRules_GetComponentPrefabName_Patch
 {
     [HarmonyPriority(Priority.High)]
     [HarmonyPrefix]
-    public static bool Prefix(BaseComponentRef componentRef, ref string? __result)
+    public static void Prefix(ref bool __runOriginal, BaseComponentRef componentRef, ref string? __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (CalculatorSetup.SharedCalculator != null)
             {
                 __result = CalculatorSetup.SharedCalculator.GetPrefabName(componentRef);
-                return false;
+                __runOriginal = false;
             }
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 
     [HarmonyPostfix]

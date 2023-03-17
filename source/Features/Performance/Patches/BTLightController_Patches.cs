@@ -13,8 +13,13 @@ public static class BTLightController_State
 public static class BTLightController_GetLightArray_Patch
 {
     [HarmonyPrefix]
-    public static void Prefix(List<BTLight> ___lightList)
+    public static void Prefix(ref bool __runOriginal, List<BTLight> ___lightList)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         if (BTLightController_State.RequiresSorting)
         {
             ___lightList.Sort();
@@ -26,8 +31,13 @@ public static class BTLightController_GetLightArray_Patch
 public static class BTLightController_ProcessCommandBufferLegacy_Patch
 {
     [HarmonyPrefix]
-    public static void Prefix(List<BTLight> ___lightList)
+    public static void Prefix(ref bool __runOriginal, List<BTLight> ___lightList)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         if (BTLightController_State.RequiresSorting)
         {
             ___lightList.Sort();
@@ -40,10 +50,15 @@ public static class BTLightController_ProcessCommandBufferLegacy_Patch
 public static class BTLightController_SortList_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix()
+    public static void Prefix(ref bool __runOriginal)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         BTLightController_State.RequiresSorting = true;
-        return false;
+        __runOriginal = false;
     }
 }
 [HarmonyPatch(typeof(BTLightController), nameof(BTLightController.AddLight))]

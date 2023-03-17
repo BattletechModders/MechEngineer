@@ -8,20 +8,23 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 public static class MechLabLocationWidget_OnDrop_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(MechLabLocationWidget __instance, PointerEventData eventData)
+    public static void Prefix(ref bool __runOriginal, MechLabLocationWidget __instance, PointerEventData eventData)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (CustomWidgetsFixMechLab.OnDrop(__instance, eventData))
             {
-                return false;
+                __runOriginal = false;
             }
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-
-        return true;
     }
 }

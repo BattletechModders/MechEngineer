@@ -27,8 +27,13 @@ public static class MechComponent_DamageComponent_Patch
 
     [HarmonyAfter(DamageIgnoreFeature.Namespace)]
     [HarmonyPrefix]
-    public static void Prefix(MechComponent __instance, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
+    public static void Prefix(ref bool __runOriginal, MechComponent __instance, WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var mechComponent = __instance;

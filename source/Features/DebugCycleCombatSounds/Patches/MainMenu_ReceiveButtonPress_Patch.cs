@@ -22,8 +22,13 @@ public static class MainMenu_ReceiveButtonPress_Patch
 
     // ReSharper disable once InconsistentNaming
     [HarmonyPrefix]
-    public static bool Prefix(TextMeshProUGUI ____version, string button)
+    public static void Prefix(ref bool __runOriginal, TextMeshProUGUI ____version, string button)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         if (Iterator == null || button == DebugCycleCombatSoundsFeature.Shared.Settings.SpecificButton && !Iterator.MoveNext())
         {
             SceneSingletonBehavior<WwiseManager>.Instance.LoadCombatBanks();
@@ -38,7 +43,7 @@ public static class MainMenu_ReceiveButtonPress_Patch
         Log.Main.Info?.Log($"WwiseManager.PostEvent eventName={eventId}");
 
         // AudioEventList_aircraft.aircraft_leopard_destruction
-        return false;
+        __runOriginal = false;
     }
 
     public static IEnumerator<string> EventIds()

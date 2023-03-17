@@ -12,8 +12,13 @@ public static class MechLabPanel_GetNonFieldableErrorString_Patch
     private static bool _isSimGame;
 
     [HarmonyPrefix]
-    public static void Prefix(MechLabPanel __instance)
+    public static void Prefix(ref bool __runOriginal, MechLabPanel __instance)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         _isSimGame = __instance.IsSimGame;
     }
 

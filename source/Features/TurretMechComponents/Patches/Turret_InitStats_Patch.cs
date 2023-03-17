@@ -7,8 +7,13 @@ namespace MechEngineer.Features.TurretMechComponents.Patches;
 public static class Turret_InitStats_Patch
 {
     [HarmonyPrefix]
-    public static void Prefix(Turret __instance)
+    public static void Prefix(ref bool __runOriginal, Turret __instance)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (__instance.Combat.IsLoadingFromSave)

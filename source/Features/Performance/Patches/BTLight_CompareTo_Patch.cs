@@ -8,19 +8,23 @@ namespace MechEngineer.Features.Performance.Patches;
 public static class BTLight_CompareTo_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(BTLight __instance, object obj, ref int __result)
+    public static void Prefix(ref bool __runOriginal, BTLight __instance, object obj, ref int __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var one = __instance;
             var other = obj as BTLight;
             __result = (int)one.lightType - (int)other!.lightType;
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }

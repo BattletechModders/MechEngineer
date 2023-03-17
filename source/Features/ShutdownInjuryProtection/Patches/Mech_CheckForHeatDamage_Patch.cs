@@ -14,8 +14,13 @@ public static class Mech_CheckForHeatDamage_Patch
     }
 
     [HarmonyPrefix]
-    public static void Prefix(Mech __instance, int stackID, string attackerID)
+    public static void Prefix(ref bool __runOriginal, Mech __instance, int stackID, string attackerID)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var mech = __instance;

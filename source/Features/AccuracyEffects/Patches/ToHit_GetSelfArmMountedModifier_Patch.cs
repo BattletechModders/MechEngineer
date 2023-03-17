@@ -7,8 +7,13 @@ namespace MechEngineer.Features.AccuracyEffects.Patches;
 public static class ToHit_GetSelfArmMountedModifier_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(Weapon weapon, ref float __result)
+    public static void Prefix(ref bool __runOriginal, Weapon weapon, ref float __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (weapon.parent is Mech mech)
@@ -18,14 +23,12 @@ public static class ToHit_GetSelfArmMountedModifier_Patch
                     weapon.mechComponentRef.MountedLocation
                 );
 
-                return false;
+                __runOriginal = false;
             }
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-
-        return true;
     }
 }

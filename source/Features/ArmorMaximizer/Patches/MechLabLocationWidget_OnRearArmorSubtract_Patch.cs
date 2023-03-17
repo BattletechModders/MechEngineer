@@ -7,17 +7,21 @@ namespace MechEngineer.Features.ArmorMaximizer.Patches;
 public static class MechLabLocationWidget_OnRearArmorSubtract_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(MechLabLocationWidget __instance)
+    public static void Prefix(ref bool __runOriginal, MechLabLocationWidget __instance)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             ArmorMaximizerHandler.OnArmorAddOrSubtract(__instance, true, -1f);
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }

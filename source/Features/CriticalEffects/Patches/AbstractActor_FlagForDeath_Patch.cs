@@ -9,13 +9,18 @@ namespace MechEngineer.Features.CriticalEffects.Patches;
 internal static class AbstractActor_FlagForDeath_Patch
 {
     [HarmonyPrefix]
-    public static void Prefix(
+    public static void Prefix(ref bool __runOriginal, 
         AbstractActor __instance,
         DeathMethod deathMethod,
         DamageType damageType,
         int stackItemID,
         string attackerID)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             var actor = __instance;

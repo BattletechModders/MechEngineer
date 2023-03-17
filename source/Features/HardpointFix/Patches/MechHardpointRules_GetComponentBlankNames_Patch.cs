@@ -13,21 +13,25 @@ public static class MechHardpointRules_GetComponentBlankNames_Patch
 
     [HarmonyPriority(Priority.High)]
     [HarmonyPrefix]
-    public static bool Prefix(ChassisLocations location, ref List<string> __result)
+    public static void Prefix(ref bool __runOriginal, ChassisLocations location, ref List<string> __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             if (calculator != null)
             {
                 __result = calculator.GetRequiredBlankPrefabNamesInLocation(location);
-                return false;
+                __runOriginal = false;
             }
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 
     [HarmonyPostfix]

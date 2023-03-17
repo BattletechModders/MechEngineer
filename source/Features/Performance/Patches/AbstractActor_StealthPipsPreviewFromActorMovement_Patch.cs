@@ -8,17 +8,21 @@ namespace MechEngineer.Features.Performance.Patches;
 public static class AbstractActor_StealthPipsPreviewFromActorMovement_Patch
 {
     [HarmonyPrefix]
-    public static bool Prefix(AbstractActor __instance, ref int __result)
+    public static void Prefix(ref bool __runOriginal, AbstractActor __instance, ref int __result)
     {
+        if (!__runOriginal)
+        {
+            return;
+        }
+
         try
         {
             __result = 0;
-            return false;
+            __runOriginal = false;
         }
         catch (Exception e)
         {
             Log.Main.Error?.Log(e);
         }
-        return true;
     }
 }
