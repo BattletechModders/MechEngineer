@@ -23,6 +23,6 @@ jobs:
             -xr!source "-xr!.*"
         )
       release-notes: |
-        Works best with ModTek V3
+        Requires ModTek V4 or later
         - MechEngineer.zip contains only the bare bones mod + CustomComponents
     secrets: inherit
