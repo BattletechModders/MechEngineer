@@ -2,7 +2,6 @@
 using System.Collections;
 using System.IO;
 using BattleTech.UI;
-using Harmony;
 using UnityEngine;
 
 namespace MechEngineer.Features.DebugScreenshotMechs.Patches;

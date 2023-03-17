@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
-using Harmony;
 using MechEngineer.Features.DynamicSlots;
 using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;

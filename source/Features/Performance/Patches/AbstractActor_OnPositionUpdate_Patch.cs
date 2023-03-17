@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using BattleTech;
-using Harmony;
 using UnityEngine;
 
 namespace MechEngineer.Features.Performance.Patches;

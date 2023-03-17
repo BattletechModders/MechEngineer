@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleTech;
 using CustomComponents;
-using Harmony;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
 

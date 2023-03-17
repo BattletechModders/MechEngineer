@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
-using Harmony;
 
 namespace MechEngineer.Features.CompressFloatieMessages.Patches;
 

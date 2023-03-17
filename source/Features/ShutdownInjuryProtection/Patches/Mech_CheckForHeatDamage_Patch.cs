@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech;
-using Harmony;
 using MechEngineer.Misc;
 
 namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
-using Harmony;
 using Localize;
 
 namespace MechEngineer.Features.InvalidInventory.Patches;

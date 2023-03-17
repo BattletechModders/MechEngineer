@@ -2,7 +2,6 @@
 using System.IO;
 using BattleTech.UI;
 using fastJSON;
-using Harmony;
 
 namespace MechEngineer.Features.DebugSaveMechToFile.Patches;
 

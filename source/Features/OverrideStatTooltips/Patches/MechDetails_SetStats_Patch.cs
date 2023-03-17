@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleTech.UI;
-using Harmony;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 

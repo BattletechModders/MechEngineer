@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech;
-using Harmony;
 using MechEngineer.Features.Engines.StaticHandler;
 
 namespace MechEngineer.Features.Engines.Patches;

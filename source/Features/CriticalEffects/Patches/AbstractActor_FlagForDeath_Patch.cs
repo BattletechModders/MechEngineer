@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech;
-using Harmony;
 using Localize;
 using MechEngineer.Misc;
 

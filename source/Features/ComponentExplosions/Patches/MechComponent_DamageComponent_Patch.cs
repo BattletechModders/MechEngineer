@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleTech;
-using Harmony;
 
 namespace MechEngineer.Features.ComponentExplosions.Patches;
 

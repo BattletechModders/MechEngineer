@@ -1,7 +1,6 @@
 ﻿using System;
 using BattleTech;
 using BattleTech.UI;
-using Harmony;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches;
 

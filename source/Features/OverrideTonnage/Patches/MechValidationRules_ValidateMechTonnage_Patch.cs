@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using BattleTech;
-using Harmony;
 using UnityEngine;
 
 namespace MechEngineer.Features.OverrideTonnage.Patches;

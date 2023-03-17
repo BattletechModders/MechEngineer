@@ -1,5 +1,4 @@
 ﻿using BattleTech;
-using Harmony;
 using System;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;

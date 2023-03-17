@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using BattleTech.UI;
-using Harmony;
 
 namespace MechEngineer.Features.ArmorMaximizer.Patches;
 

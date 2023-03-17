@@ -2,7 +2,6 @@
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
-using Harmony;
 using SVGImporter;
 
 namespace MechEngineer.Features.DynamicSlots.Patches;

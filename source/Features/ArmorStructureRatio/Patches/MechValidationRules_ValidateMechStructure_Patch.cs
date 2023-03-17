@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleTech;
-using Harmony;
 using Localize;
 
 namespace MechEngineer.Features.ArmorStructureRatio.Patches;

@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech.Rendering;
-using Harmony;
 
 namespace MechEngineer.Features.Performance.Patches;
 

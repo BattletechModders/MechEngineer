@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech;
-using Harmony;
 using MechEngineer.Helper;
 
 namespace MechEngineer.Features.AutoFix.Patches;

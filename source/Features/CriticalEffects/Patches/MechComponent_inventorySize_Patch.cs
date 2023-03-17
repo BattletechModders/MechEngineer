@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech;
-using Harmony;
 using MechEngineer.Features.DamageIgnore;
 
 namespace MechEngineer.Features.CriticalEffects.Patches;

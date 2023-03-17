@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection.Emit;
 using BattleTech.UI;
-using Harmony;
 
 namespace MechEngineer.Features.HeatSinkCapacityStat.Patches;
 

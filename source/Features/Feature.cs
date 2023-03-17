@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection.Emit;
 using BattleTech;
 using CustomComponents;
-using Harmony;
 using MechEngineer.Misc;
 
 namespace MechEngineer.Features;

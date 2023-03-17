@@ -1,5 +1,4 @@
 ﻿using BattleTech;
-using Harmony;
 
 namespace MechEngineer.Features.CriticalEffects.Patches;
 

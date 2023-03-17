@@ -2,7 +2,6 @@
 using BattleTech;
 using BattleTech.UI.TMProWrapper;
 using BattleTech.UI.Tooltips;
-using Harmony;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 

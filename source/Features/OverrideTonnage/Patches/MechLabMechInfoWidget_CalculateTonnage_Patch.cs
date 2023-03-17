@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech.UI;
-using Harmony;
 using TMPro;
 
 namespace MechEngineer.Features.OverrideTonnage.Patches;

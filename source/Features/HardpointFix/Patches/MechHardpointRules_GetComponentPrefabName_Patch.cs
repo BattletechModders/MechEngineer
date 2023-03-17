@@ -1,6 +1,5 @@
 ﻿using System;
 using BattleTech;
-using Harmony;
 using MechEngineer.Features.HardpointFix.Public;
 
 namespace MechEngineer.Features.HardpointFix.Patches;

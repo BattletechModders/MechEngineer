@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleTech;
-using Harmony;
 using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.HardpointFix.Public;
 

@@ -2,7 +2,6 @@
 using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
-using Harmony;
 using MechEngineer.Features.MechLabSlots;
 using UnityEngine;
 using UnityEngine.UI;

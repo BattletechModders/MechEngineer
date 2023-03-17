@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using BattleTech.UI;
-using Harmony;
 using HBS;
 using HBS.Scripting.Reflection;
 using MechEngineer.Misc;

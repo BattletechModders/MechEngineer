@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using BattleTech;
 using BattleTech.UI;
-using Harmony;
 using UnityEngine;
 
 namespace MechEngineer.Features.DebugScreenshotMechs.Patches;

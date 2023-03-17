@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using BattleTech;
-using Harmony;
 using MechEngineer.Features.Engines.Helper;
 
 namespace MechEngineer.Features.Engines.Patches;

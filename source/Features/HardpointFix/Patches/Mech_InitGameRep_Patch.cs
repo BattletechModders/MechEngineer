@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using BattleTech;
-using Harmony;
 using MechEngineer.Features.HardpointFix.Public;
 using MechEngineer.Misc;
 

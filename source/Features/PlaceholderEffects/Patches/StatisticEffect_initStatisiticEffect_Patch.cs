@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using BattleTech;
-using Harmony;
 
 namespace MechEngineer.Features.PlaceholderEffects.Patches;
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleTech.UI;
 using DG.Tweening.Core;
-using Harmony;
 
 namespace MechEngineer.Features.Performance.Patches;
 
