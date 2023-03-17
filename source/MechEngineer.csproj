@@ -16,7 +16,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <LangVersion>11</LangVersion>
     <AssemblySearchPaths>
       $(ReferencePath);
@@ -99,7 +99,7 @@
     <None Include="$(BattleTechGameDir)\Mods\.modtek\battletech_log.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="GitVersion.MsBuild" Version="5.10.1">
+    <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
