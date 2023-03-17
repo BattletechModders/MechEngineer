@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 
 namespace MechEngineer.Features.ArmorMaximizer.Patches;
 
@@ -7,6 +6,7 @@ namespace MechEngineer.Features.ArmorMaximizer.Patches;
 public static class MechLabLocationWidget_OnFrontArmorAdd_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, MechLabLocationWidget __instance)
     {
         if (!__runOriginal)
@@ -14,14 +14,7 @@ public static class MechLabLocationWidget_OnFrontArmorAdd_Patch
             return;
         }
 
-        try
-        {
-            ArmorMaximizerHandler.OnArmorAddOrSubtract(__instance, false, +1f);
-            __runOriginal = false;
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        ArmorMaximizerHandler.OnArmorAddOrSubtract(__instance, false, +1f);
+        __runOriginal = false;
     }
 }

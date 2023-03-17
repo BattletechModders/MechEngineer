@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.OrderedStatusEffects.Patches;
 
@@ -7,19 +6,13 @@ namespace MechEngineer.Features.OrderedStatusEffects.Patches;
 public static class StatCollection_ModifyStatistic_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(StatCollection __instance, string statName, int __result)
     {
-        try
+        if (__result < 0)
         {
-            if (__result < 0)
-            {
-                return;
-            }
-            OrderedStatusEffectsFeature.Shared.ModifyStatisticPostfix(__instance, statName);
+            return;
         }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        OrderedStatusEffectsFeature.Shared.ModifyStatisticPostfix(__instance, statName);
     }
 }

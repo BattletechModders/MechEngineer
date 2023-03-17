@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 using UnityEngine.EventSystems;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
@@ -8,6 +7,7 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 public static class MechLabLocationWidget_OnDrop_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, MechLabLocationWidget __instance, PointerEventData eventData)
     {
         if (!__runOriginal)
@@ -15,16 +15,9 @@ public static class MechLabLocationWidget_OnDrop_Patch
             return;
         }
 
-        try
+        if (CustomWidgetsFixMechLab.OnDrop(__instance, eventData))
         {
-            if (CustomWidgetsFixMechLab.OnDrop(__instance, eventData))
-            {
-                __runOriginal = false;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
+            __runOriginal = false;
         }
     }
 }

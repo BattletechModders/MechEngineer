@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using BattleTech.UI.Tooltips;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches;
@@ -8,20 +7,14 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches;
 public static class TooltipPrefab_EquipmentSetData_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(TooltipPrefab_Equipment __instance, object data)
     {
-        try
-        {
-            BonusDescriptions.AdjustTooltipEquipment_ShowBonusSection(__instance);
+        BonusDescriptions.AdjustTooltipEquipment_ShowBonusSection(__instance);
 
-            if (data is MechComponentDef def)
-            {
-                OverrideDescriptionsFeature.Shared.AdjustTooltipEquipment(__instance, def);
-            }
-        }
-        catch (Exception e)
+        if (data is MechComponentDef def)
         {
-            Log.Main.Error?.Log(e);
+            OverrideDescriptionsFeature.Shared.AdjustTooltipEquipment(__instance, def);
         }
     }
 }

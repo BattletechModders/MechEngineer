@@ -13,16 +13,10 @@ namespace MechEngineer.Features.DebugScreenshotMechs.Patches;
 public static class SkirmishMechBayPanel_OnMechLabCancel_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(SkirmishMechBayPanel __instance)
     {
-        try
-        {
-            __instance.StartCoroutine(CallBack(__instance));
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        __instance.StartCoroutine(CallBack(__instance));
     }
 
     private static IEnumerator<MechDef>? mechDefsIterator;

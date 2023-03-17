@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 
 namespace MechEngineer.Features.ArmorMaximizer.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.ArmorMaximizer.Patches;
 public static class MechLabLocationWidget_RefreshArmor_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechLabLocationWidget __instance)
     {
-        try
-        {
-            ArmorMaximizerHandler.OnRefreshArmor(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        ArmorMaximizerHandler.OnRefreshArmor(__instance);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches;
 internal static class ListElementController_BASE_NotListView_SetComponentTooltipData_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     internal static void Postfix(ListElementController_BASE_NotListView __instance)
     {
-        try
-        {
-            OverrideDescriptionsFeature.Shared.AdjustInventoryElement(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        OverrideDescriptionsFeature.Shared.AdjustInventoryElement(__instance);
     }
 }

@@ -13,6 +13,7 @@ public static class BTLightController_State
 public static class BTLightController_GetLightArray_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, List<BTLight> ___lightList)
     {
         if (!__runOriginal)
@@ -31,6 +32,7 @@ public static class BTLightController_GetLightArray_Patch
 public static class BTLightController_ProcessCommandBufferLegacy_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, List<BTLight> ___lightList)
     {
         if (!__runOriginal)
@@ -50,6 +52,7 @@ public static class BTLightController_ProcessCommandBufferLegacy_Patch
 public static class BTLightController_SortList_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal)
     {
         if (!__runOriginal)

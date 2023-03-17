@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 
@@ -9,6 +8,7 @@ namespace MechEngineer.Features.CompressFloatieMessages.Patches;
 public static class CombatHUDFloatieStack_AddFloatie_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, 
         CombatHUDFloatieStack __instance,
         FloatieMessage message,
@@ -20,16 +20,9 @@ public static class CombatHUDFloatieStack_AddFloatie_Patch
             return;
         }
 
-        try
+        if (CompressFloatieMessagesFeature.CompressFloatieMessages(message, ___msgQueue))
         {
-            if (CompressFloatieMessagesFeature.CompressFloatieMessages(message, ___msgQueue))
-            {
-                __runOriginal = false;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
+            __runOriginal = false;
         }
     }
 }

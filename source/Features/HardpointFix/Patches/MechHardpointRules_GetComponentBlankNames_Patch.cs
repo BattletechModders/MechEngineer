@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleTech;
 using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.HardpointFix.Public;
@@ -13,6 +12,7 @@ public static class MechHardpointRules_GetComponentBlankNames_Patch
 
     [HarmonyPriority(Priority.High)]
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, ChassisLocations location, ref List<string> __result)
     {
         if (!__runOriginal)
@@ -20,30 +20,17 @@ public static class MechHardpointRules_GetComponentBlankNames_Patch
             return;
         }
 
-        try
+        if (calculator != null)
         {
-            if (calculator != null)
-            {
-                __result = calculator.GetRequiredBlankPrefabNamesInLocation(location);
-                __runOriginal = false;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
+            __result = calculator.GetRequiredBlankPrefabNamesInLocation(location);
+            __runOriginal = false;
         }
     }
 
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(ChassisLocations location, ref List<string> __result)
     {
-        try
-        {
-            Log.Main.Trace?.Log($"GetComponentBlankNames blanks=[{__result?.JoinAsString()}] location={location}");
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        Log.Main.Trace?.Log($"GetComponentBlankNames blanks=[{__result?.JoinAsString()}] location={location}");
     }
 }

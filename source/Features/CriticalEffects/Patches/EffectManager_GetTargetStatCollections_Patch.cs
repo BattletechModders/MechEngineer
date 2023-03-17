@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 
@@ -29,6 +28,7 @@ internal static class EffectManager_GetTargetStatCollections_Patch
     private static List<StatCollection>? ForcedStatCollections;
 
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, ref List<StatCollection> __result, EffectData effectData, ICombatant target)
     {
         if (!__runOriginal)
@@ -36,17 +36,10 @@ internal static class EffectManager_GetTargetStatCollections_Patch
             return;
         }
 
-        try
+        if (ForcedStatCollections != null)
         {
-            if (ForcedStatCollections != null)
-            {
-                __result = ForcedStatCollections;
-                __runOriginal = false;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
+            __result = ForcedStatCollections;
+            __runOriginal = false;
         }
     }
 }

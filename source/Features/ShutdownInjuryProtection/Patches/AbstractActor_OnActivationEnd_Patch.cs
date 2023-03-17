@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using MechEngineer.Misc;
 
 namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;
@@ -14,6 +13,7 @@ public static class Mech_OnActivationEnd_Patch
     }
 
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, Mech __instance, string sourceID, int stackItemID)
     {
         if (!__runOriginal)
@@ -21,22 +21,15 @@ public static class Mech_OnActivationEnd_Patch
             return;
         }
 
-        try
+        var mech = __instance;
+        if (mech.HasActivatedThisRound)
         {
-            var mech = __instance;
-            if (mech.HasActivatedThisRound)
-            {
-                return;
-            }
-            if (!mech.StatCollection.ReceiveOverheatedOnActivationEndInjury().Get())
-            {
-                return;
-            }
-            ShutdownInjuryProtectionFeature.SetInjury(mech, sourceID, stackItemID);
+            return;
         }
-        catch (Exception e)
+        if (!mech.StatCollection.ReceiveOverheatedOnActivationEndInjury().Get())
         {
-            Log.Main.Error?.Log(e);
+            return;
         }
+        ShutdownInjuryProtectionFeature.SetInjury(mech, sourceID, stackItemID);
     }
 }

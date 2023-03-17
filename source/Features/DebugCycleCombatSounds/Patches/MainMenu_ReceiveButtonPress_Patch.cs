@@ -22,6 +22,7 @@ public static class MainMenu_ReceiveButtonPress_Patch
 
     // ReSharper disable once InconsistentNaming
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, TextMeshProUGUI ____version, string button)
     {
         if (!__runOriginal)

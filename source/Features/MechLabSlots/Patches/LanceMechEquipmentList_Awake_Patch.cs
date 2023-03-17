@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
@@ -8,15 +7,9 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 public static class LanceMechEquipmentList_Awake_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(LocalizableText ___centerTorsoLabel)
     {
-        try
-        {
-            CustomWidgetsFixLanceMechEquipment.Awake(___centerTorsoLabel);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        CustomWidgetsFixLanceMechEquipment.Awake(___centerTorsoLabel);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.TurretMechComponents.Patches;
 
@@ -7,6 +6,7 @@ namespace MechEngineer.Features.TurretMechComponents.Patches;
 public static class Turret_InitStats_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, Turret __instance)
     {
         if (!__runOriginal)
@@ -14,39 +14,32 @@ public static class Turret_InitStats_Patch
             return;
         }
 
-        try
+        if (__instance.Combat.IsLoadingFromSave)
         {
-            if (__instance.Combat.IsLoadingFromSave)
-            {
-                return;
-            }
-
-            var turret = __instance;
-
-            var num = 0;
-
-            foreach (var componentRef in turret.TurretDef.Inventory)
-            {
-                if (componentRef.ComponentDefType == ComponentType.Weapon)
-                {
-                }
-                else if (componentRef.ComponentDefType == ComponentType.AmmunitionBox)
-                {
-                }
-                else
-                {
-                    componentRef.DataManager = turret.TurretDef.DataManager;
-                    componentRef.RefreshComponentDef();
-
-                    var uid = $"{num++}_addedByME";
-                    var component = new MechComponent(turret, turret.Combat, componentRef, uid);
-                    turret.allComponents.Add(component);
-                }
-            }
+            return;
         }
-        catch (Exception e)
+
+        var turret = __instance;
+
+        var num = 0;
+
+        foreach (var componentRef in turret.TurretDef.Inventory)
         {
-            Log.Main.Error?.Log(e);
+            if (componentRef.ComponentDefType == ComponentType.Weapon)
+            {
+            }
+            else if (componentRef.ComponentDefType == ComponentType.AmmunitionBox)
+            {
+            }
+            else
+            {
+                componentRef.DataManager = turret.TurretDef.DataManager;
+                componentRef.RefreshComponentDef();
+
+                var uid = $"{num++}_addedByME";
+                var component = new MechComponent(turret, turret.Combat, componentRef, uid);
+                turret.allComponents.Add(component);
+            }
         }
     }
 }

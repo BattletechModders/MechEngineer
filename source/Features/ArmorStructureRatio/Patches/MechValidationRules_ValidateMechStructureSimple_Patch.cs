@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.ArmorStructureRatio.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.ArmorStructureRatio.Patches;
 public static class MechValidationRules_ValidateMechStructureSimple_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechDef mechDef)
     {
-        try
-        {
-            ArmorStructureRatioFeature.ValidateMechArmorStructureRatio(mechDef);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        ArmorStructureRatioFeature.ValidateMechArmorStructureRatio(mechDef);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
 
@@ -7,17 +6,11 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 public static class MechLabPanel_InitWidgets_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechLabPanel __instance)
     {
-        try
-        {
-            MechLabLayoutUtils.FixMechLabLayouts(__instance);
-            CustomWidgetsFixMechLab.Setup(__instance);
-            MechLabMoveUIElements.MoveMechUIElements(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        MechLabLayoutUtils.FixMechLabLayouts(__instance);
+        CustomWidgetsFixMechLab.Setup(__instance);
+        MechLabMoveUIElements.MoveMechUIElements(__instance);
     }
 }

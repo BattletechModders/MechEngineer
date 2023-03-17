@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.Rendering;
+﻿using BattleTech.Rendering;
 
 namespace MechEngineer.Features.Performance.Patches;
 
@@ -8,6 +7,7 @@ namespace MechEngineer.Features.Performance.Patches;
 public static class BTLight_CompareTo_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, BTLight __instance, object obj, ref int __result)
     {
         if (!__runOriginal)
@@ -15,16 +15,9 @@ public static class BTLight_CompareTo_Patch
             return;
         }
 
-        try
-        {
-            var one = __instance;
-            var other = obj as BTLight;
-            __result = (int)one.lightType - (int)other!.lightType;
-            __runOriginal = false;
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        var one = __instance;
+        var other = obj as BTLight;
+        __result = (int)one.lightType - (int)other!.lightType;
+        __runOriginal = false;
     }
 }

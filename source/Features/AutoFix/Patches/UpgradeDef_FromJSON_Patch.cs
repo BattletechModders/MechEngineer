@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using MechEngineer.Helper;
 
 namespace MechEngineer.Features.AutoFix.Patches;
@@ -8,26 +7,20 @@ namespace MechEngineer.Features.AutoFix.Patches;
 public static class UpgradeDef_FromJSON_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     // reduce upgrade components for the center torso that are 3 or larger 
     public static void Postfix(UpgradeDef __instance)
     {
-        try
-        {
-            var def = __instance;
+        var def = __instance;
 
-            if (def.ComponentTags.IgnoreAutofix())
-            {
-                return;
-            }
-
-            GyroHandler.Shared.AdjustUpgradeDef(def);
-            LegActuatorHandler.Shared.AdjustUpgradeDef(def);
-            CockpitHandler.Shared.AdjustUpgradeDef(def);
-            SensorsBHandler.Shared.AdjustUpgradeDef(def);
-        }
-        catch (Exception e)
+        if (def.ComponentTags.IgnoreAutofix())
         {
-            Log.Main.Error?.Log(e);
+            return;
         }
+
+        GyroHandler.Shared.AdjustUpgradeDef(def);
+        LegActuatorHandler.Shared.AdjustUpgradeDef(def);
+        CockpitHandler.Shared.AdjustUpgradeDef(def);
+        SensorsBHandler.Shared.AdjustUpgradeDef(def);
     }
 }

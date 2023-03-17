@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class StatTooltipData_SetRangeData_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(StatTooltipData __instance, MechDef def)
     {
-        try
-        {
-            OverrideStatTooltipsFeature.RangeStat.SetupTooltip(__instance, def);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        OverrideStatTooltipsFeature.RangeStat.SetupTooltip(__instance, def);
     }
 }

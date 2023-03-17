@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.AutoFix.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.AutoFix.Patches;
 public static class ChassisDef_FromJSON_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(ChassisDef __instance)
     {
-        try
-        {
-            ChassisHandler.OverrideChassisSettings(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        ChassisHandler.OverrideChassisSettings(__instance);
     }
 }

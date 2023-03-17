@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 using MechEngineer.Helper;
 using UnityEngine.UI;
 
@@ -9,28 +8,22 @@ namespace MechEngineer.Features.ArmorMaximizer.Patches;
 public static class MechLabLocationWidget_SetData_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechLabLocationWidget __instance)
     {
-        try
+        var widget = __instance;
+        void Setup(LanceStat lanceStat, bool isRearArmor)
         {
-            var widget = __instance;
-            void Setup(LanceStat lanceStat, bool isRearArmor)
-            {
-                var child = lanceStat.transform.Find("hit_tooltip");
-                var button = child.gameObject.GetComponent<Button>() ?? child.gameObject.AddComponent<Button>();
-                button.onClick.RemoveAllListeners();
-                button.onClick.AddListener(() => ArmorMaximizerHandler.OnBarClick(widget, isRearArmor));
-                Log.Main.Trace?.Log($"Added onClick Location={widget.chassisLocationDef.Location.GetShortString()} isRearArmor={isRearArmor}");
-            }
-            Setup(widget.armorBar, false);
-            if (widget.useRearArmor)
-            {
-                Setup(widget.rearArmorBar, true);
-            }
+            var child = lanceStat.transform.Find("hit_tooltip");
+            var button = child.gameObject.GetComponent<Button>() ?? child.gameObject.AddComponent<Button>();
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => ArmorMaximizerHandler.OnBarClick(widget, isRearArmor));
+            Log.Main.Trace?.Log($"Added onClick Location={widget.chassisLocationDef.Location.GetShortString()} isRearArmor={isRearArmor}");
         }
-        catch (Exception e)
+        Setup(widget.armorBar, false);
+        if (widget.useRearArmor)
         {
-            Log.Main.Error?.Log(e);
+            Setup(widget.rearArmorBar, true);
         }
     }
 }

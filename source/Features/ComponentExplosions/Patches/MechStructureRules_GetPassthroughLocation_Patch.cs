@@ -6,6 +6,7 @@ namespace MechEngineer.Features.ComponentExplosions.Patches;
 internal static class MechStructureRules_GetPassthroughLocation_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, ArmorLocation location, ref ArmorLocation __result)
     {
         if (!__runOriginal)

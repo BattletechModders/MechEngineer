@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using UnityEngine;
 
 namespace MechEngineer.Features.ArmorStructureChanges.Patches;
@@ -9,16 +8,10 @@ namespace MechEngineer.Features.ArmorStructureChanges.Patches;
 public static class Mech_ToMechDef_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(Mech __instance, MechDef __result)
     {
-        try
-        {
-            UndoArmorStructureChanges(__instance, __result);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        UndoArmorStructureChanges(__instance, __result);
     }
 
     private static void UndoArmorStructureChanges(Mech mech, MechDef mechDef)

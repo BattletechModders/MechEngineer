@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 using TMPro;
 
 namespace MechEngineer.Features.OverrideTonnage.Patches;
@@ -8,6 +7,7 @@ namespace MechEngineer.Features.OverrideTonnage.Patches;
 public static class MechLabMechInfoWidget_CalculateTonnage_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, 
         MechLabPanel ___mechLab,
         ref float ___currentTonnage,
@@ -21,28 +21,21 @@ public static class MechLabMechInfoWidget_CalculateTonnage_Patch
             return;
         }
 
-        try
+        var mechDef = ___mechLab.CreateMechDef();
+        if (mechDef == null)
         {
-            var mechDef = ___mechLab.CreateMechDef();
-            if (mechDef == null)
-            {
-                __runOriginal = false;
-                return;
-            }
-
-            WeightsHandler.AdjustInfoWidget(
-                mechDef,
-                ___remainingTonnageColor,
-                ___totalTonnageColor,
-                ___totalTonnage,
-                ___remainingTonnage,
-                out ___currentTonnage
-            );
             __runOriginal = false;
+            return;
         }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+
+        WeightsHandler.AdjustInfoWidget(
+            mechDef,
+            ___remainingTonnageColor,
+            ___totalTonnageColor,
+            ___totalTonnage,
+            ___remainingTonnage,
+            out ___currentTonnage
+        );
+        __runOriginal = false;
     }
 }

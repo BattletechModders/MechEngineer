@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 
 namespace MechEngineer.Features.DynamicSlots.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.DynamicSlots.Patches;
 public static class MechLabPanel_ValidateLoadout_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechLabPanel __instance)
     {
-        try
-        {
-            DynamicSlotsFeature.Shared.RefreshData(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        DynamicSlotsFeature.Shared.RefreshData(__instance);
     }
 }

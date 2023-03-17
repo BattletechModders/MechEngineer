@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using BattleTech.UI;
 using MechEngineer.Misc;
 
@@ -18,6 +17,7 @@ public static class MechLabLocationWidget_ShowHighlightFrame_Patch
     [HarmonyBefore(Mods.CC)]
     [HarmonyPriority(Priority.HigherThanNormal)]
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, MechLabLocationWidget __instance, bool isOriginalLocation, ref MechComponentRef? cRef)
     {
         if (!__runOriginal)
@@ -25,16 +25,6 @@ public static class MechLabLocationWidget_ShowHighlightFrame_Patch
             return;
         }
 
-        try
-        {
-            __runOriginal = CustomWidgetsFixMechLab.ShowHighlightFrame(__instance, isOriginalLocation, ref cRef);
-            return;
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
-
-        __runOriginal = false;
+        __runOriginal = CustomWidgetsFixMechLab.ShowHighlightFrame(__instance, isOriginalLocation, ref cRef);
     }
 }

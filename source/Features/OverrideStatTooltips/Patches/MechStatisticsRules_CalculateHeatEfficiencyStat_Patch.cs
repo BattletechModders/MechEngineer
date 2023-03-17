@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
@@ -8,6 +7,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class MechStatisticsRules_CalculateHeatEfficiencyStat_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, MechDef mechDef, ref float currentValue, ref float maxValue)
     {
         if (!__runOriginal)
@@ -15,15 +15,8 @@ public static class MechStatisticsRules_CalculateHeatEfficiencyStat_Patch
             return;
         }
 
-        try
-        {
-            var value = OverrideStatTooltipsFeature.HeatEfficiencyStat.BarValue(mechDef);
-            MechStatUtils.SetStatValues(value, ref currentValue, ref maxValue);
-            __runOriginal = false;
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        var value = OverrideStatTooltipsFeature.HeatEfficiencyStat.BarValue(mechDef);
+        MechStatUtils.SetStatValues(value, ref currentValue, ref maxValue);
+        __runOriginal = false;
     }
 }

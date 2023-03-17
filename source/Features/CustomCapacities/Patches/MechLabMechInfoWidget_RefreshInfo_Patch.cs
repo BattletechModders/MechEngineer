@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
 using MechEngineer.Features.MechLabSlots;
@@ -12,24 +11,18 @@ namespace MechEngineer.Features.CustomCapacities.Patches;
 public static class MechLabMechInfoWidget_RefreshInfo_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(
         MechLabPanel ___mechLab,
         LocalizableText ___remainingTonnage)
     {
-        try
+        var mechDef = ___mechLab.CreateMechDef();
+        if (mechDef == null)
         {
-            var mechDef = ___mechLab.CreateMechDef();
-            if (mechDef == null)
-            {
-                return;
-            }
+            return;
+        }
 
-            SetupCapacitiesLayout(mechDef, ___remainingTonnage);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        SetupCapacitiesLayout(mechDef, ___remainingTonnage);
     }
 
     private static void SetupCapacitiesLayout(MechDef mechDef, LocalizableText remainingTonnage)

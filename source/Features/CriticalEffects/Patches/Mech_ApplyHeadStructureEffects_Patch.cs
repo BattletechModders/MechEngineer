@@ -6,6 +6,7 @@ namespace MechEngineer.Features.CriticalEffects.Patches;
 internal static class Mech_ApplyHeadStructureEffects_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal)
     {
         // handle effects via critical effects and DeathMethod CockpitDestroyed

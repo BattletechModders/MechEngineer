@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using CustomComponents;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
@@ -11,18 +10,12 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 public static class CCLanceMechEquipmentList_MountedLocation_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(this MechComponentRef componentRef, ref ChassisLocations __result)
     {
-        try
+        if (__result == ChassisLocations.CenterTorso && componentRef.Is<CustomWidget>())
         {
-            if (__result == ChassisLocations.CenterTorso && componentRef.Is<CustomWidget>())
-            {
-                __result = ChassisLocations.None;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
+            __result = ChassisLocations.None;
         }
     }
 }

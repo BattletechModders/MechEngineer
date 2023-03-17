@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.HeatSinkCapacityStat.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.HeatSinkCapacityStat.Patches;
 public static class Mech_InitEffectStats_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(Mech __instance)
     {
-        try
-        {
-            HeatSinkCapacityStatFeature.Shared.InitEffectStats(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        HeatSinkCapacityStatFeature.Shared.InitEffectStats(__instance);
     }
 }

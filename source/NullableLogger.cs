@@ -32,6 +32,7 @@ internal sealed class NullableLogger
 
     [HarmonyPatch(typeof(Logger.LogImpl), nameof(Logger.LogImpl.Level), MethodType.Setter)]
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     internal static void LogImpl_set_Level_Postfix()
     {
         lock (_loggers)

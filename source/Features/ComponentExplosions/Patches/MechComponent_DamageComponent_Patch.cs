@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleTech;
 
 namespace MechEngineer.Features.ComponentExplosions.Patches;
@@ -22,15 +21,9 @@ public static class MechComponent_DamageComponent_Patch
     }
 
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechComponent __instance, WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel, bool applyEffects)
     {
-        try
-        {
-            ComponentExplosionsFeature.Shared.CheckForExplosion(__instance, hitInfo, damageLevel, applyEffects);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        ComponentExplosionsFeature.Shared.CheckForExplosion(__instance, hitInfo, damageLevel, applyEffects);
     }
 }

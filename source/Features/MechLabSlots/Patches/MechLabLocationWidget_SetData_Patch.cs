@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BattleTech;
 using BattleTech.UI;
 using MechEngineer.Features.DynamicSlots;
@@ -23,21 +22,15 @@ public static class MechLabLocationWidget_SetData_Patch
     }
 
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechLabLocationWidget __instance, int ___maxSlots, ref LocationLoadoutDef loadout)
     {
-        try
-        {
-            var widget = __instance;
+        var widget = __instance;
 
-            var widgetLayout = new WidgetLayout(widget);
-            MechLabSlotsFixer.FixSlots(widgetLayout, ___maxSlots);
-            DynamicSlotsFeature.PrepareWidget(widgetLayout);
-            AdjustMechLabLocationNaming(widget, loadout.Location);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        var widgetLayout = new WidgetLayout(widget);
+        MechLabSlotsFixer.FixSlots(widgetLayout, ___maxSlots);
+        DynamicSlotsFeature.PrepareWidget(widgetLayout);
+        AdjustMechLabLocationNaming(widget, loadout.Location);
     }
 
     private static void AdjustMechLabLocationNaming(MechLabLocationWidget widget, ChassisLocations location)

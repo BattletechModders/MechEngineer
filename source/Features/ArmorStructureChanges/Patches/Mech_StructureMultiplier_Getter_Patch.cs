@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.ArmorStructureChanges.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.ArmorStructureChanges.Patches;
 public static class Mech_StructureMultiplier_Getter_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(Mech __instance, ref float __result)
     {
-        try
-        {
-            __result *= ArmorStructureChangesFeature.GetStructureFactorForMech(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        __result *= ArmorStructureChangesFeature.GetStructureFactorForMech(__instance);
     }
 }

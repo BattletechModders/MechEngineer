@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using MechEngineer.Features.DamageIgnore;
 
 namespace MechEngineer.Features.CriticalEffects.Patches;
@@ -10,6 +9,7 @@ internal static class MechComponent_inventorySize_Patch
 {
     [HarmonyAfter(DamageIgnoreFeature.Namespace)]
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, MechComponent __instance, ref int __result)
     {
         if (!__runOriginal)
@@ -17,14 +17,7 @@ internal static class MechComponent_inventorySize_Patch
             return;
         }
 
-        try
-        {
-            __result = __instance.Criticals().ComponentHittableCount();
-            __runOriginal = false;
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        __result = __instance.Criticals().ComponentHittableCount();
+        __runOriginal = false;
     }
 }

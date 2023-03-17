@@ -1,5 +1,4 @@
 ﻿using BattleTech.UI;
-using System;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 
@@ -7,6 +6,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class SG_Shop_FullMechDetailPanel_FillInFullMech_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(
         LanceStat ___Stat1,
         LanceStat ___Stat2,
@@ -16,19 +16,12 @@ public static class SG_Shop_FullMechDetailPanel_FillInFullMech_Patch
         LanceStat ___Stat6
         )
     {
-        try
-        {
-            var settings = OverrideStatTooltipsFeature.Shared.Settings;
-            ___Stat1.SetText(settings.FirepowerTitleText);
-            ___Stat2.SetText(settings.MovementTitleText);
-            ___Stat3.SetText(settings.DurabilityTitleText);
-            ___Stat4.SetText(settings.HeatEfficiencyTitleText);
-            ___Stat5.SetText(settings.AvgRangeTitleText);
-            ___Stat6.SetText(settings.MeleeTitleText);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        var settings = OverrideStatTooltipsFeature.Shared.Settings;
+        ___Stat1.SetText(settings.FirepowerTitleText);
+        ___Stat2.SetText(settings.MovementTitleText);
+        ___Stat3.SetText(settings.DurabilityTitleText);
+        ___Stat4.SetText(settings.HeatEfficiencyTitleText);
+        ___Stat5.SetText(settings.AvgRangeTitleText);
+        ___Stat6.SetText(settings.MeleeTitleText);
     }
 }

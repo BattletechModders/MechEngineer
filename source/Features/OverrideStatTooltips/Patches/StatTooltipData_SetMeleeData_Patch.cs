@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class StatTooltipData_SetMeleeData_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(StatTooltipData __instance, MechDef def)
     {
-        try
-        {
-            OverrideStatTooltipsFeature.MeleeStat.SetupTooltip(__instance, def);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        OverrideStatTooltipsFeature.MeleeStat.SetupTooltip(__instance, def);
     }
 }

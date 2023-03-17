@@ -1,5 +1,4 @@
 ﻿using BattleTech.UI;
-using System;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 
@@ -7,16 +6,10 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class MechBayMechInfoWidget_Awake_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(LanceStat[] ___mechStats)
     {
-        try
-        {
-            SetMechStats(___mechStats);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        SetMechStats(___mechStats);
     }
 
     internal static void SetMechStats(LanceStat[] mechStats)

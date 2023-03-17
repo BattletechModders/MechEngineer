@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
@@ -8,6 +7,7 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class MechStatisticsRules_CalculateChassisMeleeStat_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, ref float currentValue, ref float maxValue)
     {
         if (!__runOriginal)
@@ -15,14 +15,7 @@ public static class MechStatisticsRules_CalculateChassisMeleeStat_Patch
             return;
         }
 
-        try
-        {
-            MechStatUtils.SetStatValues(0, ref currentValue, ref maxValue);
-            __runOriginal = false;
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        MechStatUtils.SetStatValues(0, ref currentValue, ref maxValue);
+        __runOriginal = false;
     }
 }

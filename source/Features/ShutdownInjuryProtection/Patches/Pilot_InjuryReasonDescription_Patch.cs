@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;
 
@@ -7,18 +6,12 @@ namespace MechEngineer.Features.ShutdownInjuryProtection.Patches;
 public static class Pilot_InjuryReasonDescription_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(Pilot __instance, ref string __result)
     {
-        try
+        if (__instance.InjuryReason == InjuryReasonOverheated)
         {
-            if (__instance.InjuryReason == InjuryReasonOverheated)
-            {
-                __result = "OVERHEATED";
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
+            __result = "OVERHEATED";
         }
     }
 

@@ -1,5 +1,4 @@
 ﻿using BattleTech;
-using System;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.OverrideStatTooltips.Patches;
 public static class StatTooltipData_SetMovementData_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(StatTooltipData __instance, MechDef def)
     {
-        try
-        {
-            OverrideStatTooltipsFeature.MovementStat.SetupTooltip(__instance, def);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        OverrideStatTooltipsFeature.MovementStat.SetupTooltip(__instance, def);
     }
 }

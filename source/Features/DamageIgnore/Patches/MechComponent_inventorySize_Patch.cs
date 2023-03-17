@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.DamageIgnore.Patches;
 
@@ -8,6 +7,7 @@ namespace MechEngineer.Features.DamageIgnore.Patches;
 public static class MechComponent_inventorySize_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, MechComponent __instance, ref int __result)
     {
         if (!__runOriginal)
@@ -15,17 +15,10 @@ public static class MechComponent_inventorySize_Patch
             return;
         }
 
-        try
+        if (__instance.componentDef?.IsIgnoreDamage() ?? false)
         {
-            if (__instance.componentDef?.IsIgnoreDamage() ?? false)
-            {
-                __result = 0;
-                __runOriginal = false;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
+            __result = 0;
+            __runOriginal = false;
         }
     }
 }

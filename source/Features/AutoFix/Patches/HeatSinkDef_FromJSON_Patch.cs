@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using MechEngineer.Features.Engines.Helper;
 using MechEngineer.Helper;
 using UnityEngine;
@@ -10,17 +9,11 @@ namespace MechEngineer.Features.AutoFix.Patches;
 public static class HeatSinkDef_FromJSON_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     // reduce upgrade components for the center torso that are 3 or larger 
     public static void Postfix(HeatSinkDef __instance)
     {
-        try
-        {
-            HeatSinkDef_FromJSON(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        HeatSinkDef_FromJSON(__instance);
     }
 
     private static void HeatSinkDef_FromJSON(HeatSinkDef def)

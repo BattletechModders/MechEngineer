@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 using BattleTech.UI;
 using BattleTech.UI.TMProWrapper;
 using SVGImporter;
@@ -10,6 +9,7 @@ namespace MechEngineer.Features.DynamicSlots.Patches;
 public static class MechLabItemSlotElement_SetIconAndText_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(
         MechComponentRef ___componentRef,
         SVGImage ___icon,
@@ -18,21 +18,14 @@ public static class MechLabItemSlotElement_SetIconAndText_Patch
         LocalizableText ___bonusTextB
         )
     {
-        try
-        {
-            // support no icon
-            ___icon.gameObject.SetActive(!string.IsNullOrEmpty(___componentRef.Def.Description.Icon));
+        // support no icon
+        ___icon.gameObject.SetActive(!string.IsNullOrEmpty(___componentRef.Def.Description.Icon));
 
-            // support no name
-            ___nameText.gameObject.SetActive(!string.IsNullOrEmpty(___componentRef.Def.Description.UIName));
+        // support no name
+        ___nameText.gameObject.SetActive(!string.IsNullOrEmpty(___componentRef.Def.Description.UIName));
 
-            // support null besides empty string
-            ___bonusTextA.gameObject.SetActive(!string.IsNullOrEmpty(___componentRef.Def.BonusValueA));
-            ___bonusTextB.gameObject.SetActive(!string.IsNullOrEmpty(___componentRef.Def.BonusValueB));
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        // support null besides empty string
+        ___bonusTextA.gameObject.SetActive(!string.IsNullOrEmpty(___componentRef.Def.BonusValueA));
+        ___bonusTextB.gameObject.SetActive(!string.IsNullOrEmpty(___componentRef.Def.BonusValueB));
     }
 }

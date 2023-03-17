@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.DamageIgnore.Patches;
 
@@ -7,6 +6,7 @@ namespace MechEngineer.Features.DamageIgnore.Patches;
 public static class MechComponent_DamageComponent_Patch
 {
     [HarmonyPrefix]
+    [HarmonyWrapSafe]
     public static void Prefix(ref bool __runOriginal, MechComponent __instance, ref ComponentDamageLevel damageLevel)
     {
         if (!__runOriginal)
@@ -14,17 +14,10 @@ public static class MechComponent_DamageComponent_Patch
             return;
         }
 
-        try
+        if (__instance.componentDef.IsIgnoreDamage())
         {
-            if (__instance.componentDef.IsIgnoreDamage())
-            {
-                damageLevel = ComponentDamageLevel.Functional;
-                __runOriginal = false;
-            }
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
+            damageLevel = ComponentDamageLevel.Functional;
+            __runOriginal = false;
         }
     }
 }

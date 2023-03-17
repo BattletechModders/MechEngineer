@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech;
+﻿using BattleTech;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches;
 
@@ -7,18 +6,12 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches;
 public static class MechDef_RefreshChassis_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechDef __instance)
     {
-        try
-        {
-            var mechDef = __instance;
-            var details = mechDef.Chassis.Description.Details;
+        var mechDef = __instance;
+        var details = mechDef.Chassis.Description.Details;
 
-            mechDef.Description.Details = details;
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        mechDef.Description.Details = details;
     }
 }

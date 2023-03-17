@@ -10,16 +10,10 @@ namespace MechEngineer.Features.DebugScreenshotMechs.Patches;
 public static class MechLabPanel_OnRequestResourcesComplete_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechLabPanel __instance)
     {
-        try
-        {
-            __instance.StartCoroutine(CallBack(__instance));
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        __instance.StartCoroutine(CallBack(__instance));
     }
 
     private static IEnumerator CallBack(MechLabPanel panel)

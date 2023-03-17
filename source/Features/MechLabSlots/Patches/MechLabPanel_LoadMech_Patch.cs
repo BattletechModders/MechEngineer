@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.MechLabSlots.Patches;
 public static class MechLabPanel_LoadMech_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechLabPanel __instance)
     {
-        try
-        {
-            MechLabAutoZoom.LoadMech(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        MechLabAutoZoom.LoadMech(__instance);
     }
 }

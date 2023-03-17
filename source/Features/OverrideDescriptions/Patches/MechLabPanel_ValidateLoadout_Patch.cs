@@ -1,5 +1,4 @@
-﻿using System;
-using BattleTech.UI;
+﻿using BattleTech.UI;
 
 namespace MechEngineer.Features.OverrideDescriptions.Patches;
 
@@ -7,15 +6,9 @@ namespace MechEngineer.Features.OverrideDescriptions.Patches;
 public static class MechLabPanel_ValidateLoadout_Patch
 {
     [HarmonyPostfix]
+    [HarmonyWrapSafe]
     public static void Postfix(MechLabPanel __instance)
     {
-        try
-        {
-            OverrideDescriptionsFeature.Shared.RefreshData(__instance);
-        }
-        catch (Exception e)
-        {
-            Log.Main.Error?.Log(e);
-        }
+        OverrideDescriptionsFeature.Shared.RefreshData(__instance);
     }
 }
