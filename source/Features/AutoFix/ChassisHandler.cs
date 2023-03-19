@@ -31,26 +31,19 @@ internal static class ChassisHandler
     {
         if (AutoFixerFeature.settings.ChassisDefInitialTonnage)
         {
-            var tonnage = chassisDef.Tonnage * AutoFixerFeature.settings.ChassisDefInitialToTotalTonnageFactor;
-            var info = typeof(ChassisDef).GetProperty("InitialTonnage");
-            var value = Convert.ChangeType(tonnage, info.PropertyType);
-            info.SetValue(chassisDef, value, null);
+            chassisDef.InitialTonnage *= AutoFixerFeature.settings.ChassisDefInitialToTotalTonnageFactor;
 
-            Log.Main.Debug?.Log($"set InitialTonnage={tonnage}");
+            Log.Main.Debug?.Log($"set InitialTonnage={chassisDef.InitialTonnage}");
         }
 
         if (AutoFixerFeature.settings.ChassisDefMaxJumpjets)
         {
             var coreDef = new EngineCoreDef {Rating = AutoFixerFeature.settings.ChassisDefMaxJumpjetsRating};
-            var maxCount = Mathf.Min(
+            chassisDef.MaxJumpjets = Mathf.Min(
                 AutoFixerFeature.settings.ChassisDefMaxJumpjetsCount,
                 coreDef.GetMovement(chassisDef.Tonnage).JumpJetCount
             );
-            var info = typeof(ChassisDef).GetProperty("MaxJumpjets");
-            var value = Convert.ChangeType(maxCount, info.PropertyType);
-            info.SetValue(chassisDef, value, null);
-
-            Log.Main.Debug?.Log($"set MaxJumpjets={maxCount}");
+            Log.Main.Debug?.Log($"set MaxJumpjets={chassisDef.MaxJumpjets}");
         }
 
         if (AutoFixerFeature.settings.ChassisDefArmorStructureRatio)

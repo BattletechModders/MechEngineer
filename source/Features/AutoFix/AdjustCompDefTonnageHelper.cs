@@ -33,9 +33,6 @@ internal class AdjustCompDefTonnageHelper
             return;
         }
 
-        var value = newTonnage.Value;
-        var propInfo = typeof(UpgradeDef).GetProperty("Tonnage");
-        var propValue = Convert.ChangeType(value, propInfo.PropertyType);
-        propInfo.SetValue(def, propValue, null);
+        def.Tonnage = newTonnage.Value;
     }
 }

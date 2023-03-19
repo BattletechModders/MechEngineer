@@ -33,9 +33,6 @@ internal class AdjustCompDefInvSizeHelper
             return;
         }
 
-        var value = newSize.Value;
-        var propInfo = typeof(UpgradeDef).GetProperty("InventorySize");
-        var propValue = Convert.ChangeType(value, propInfo.PropertyType);
-        propInfo.SetValue(def, propValue, null);
+        def.InventorySize = newSize.Value;
     }
 }
