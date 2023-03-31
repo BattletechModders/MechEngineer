@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BattleTech;
 using CustomComponents;
 using CustomComponents.ExtendedDetails;
@@ -11,20 +12,20 @@ namespace MechEngineer.Features.CriticalEffects;
 [CustomComponent("CriticalEffects")]
 public class CriticalEffectsCustom : SimpleCustomComponent, IAfterLoad, IIsDestroyed
 {
-    public string[][] PenalizedEffectIDs { get; set; } = new string[0][];
-    public string[] OnDestroyedEffectIDs { get; set; } = new string[0];
-    public string[] OnDestroyedDisableEffectIds { get; set; } = new string[0];
+    public string[][] PenalizedEffectIDs { get; set; } = Array.Empty<string[]>();
+    public string[] OnDestroyedEffectIDs { get; set; } = Array.Empty<string>();
+    public string[] OnDestroyedDisableEffectIds { get; set; } = Array.Empty<string>();
 
     public DeathMethod DeathMethod { get; set; } = DeathMethod.NOT_SET;
     public string? OnDestroyedVFXName { get; set; } = null;
     public string? OnDestroyedAudioEventName { get; set; } = null;
 
-    public readonly string? LinkedStatisticName = null;
+    public string? LinkedStatisticName { get; set; } = null;
 
-    public readonly string? CritFloatieMessage = null;
-    public readonly string? DestroyedFloatieMessage = null;
+    public string? CritFloatieMessage { get; set; } = null;
+    public string? DestroyedFloatieMessage { get; set; } = null;
 
-    public virtual UnitType GetUnitType()
+    protected virtual UnitType GetUnitType()
     {
         return UnitType.UNDEFINED;
     }

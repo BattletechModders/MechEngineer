@@ -29,12 +29,28 @@ internal class Criticals
     {
         var customs = component.componentDef.GetComponents<CriticalEffectsCustom>().ToList();
 
-        if (actor is Mech)
+        if (actor is Mech mech)
         {
-            var custom = customs.FirstOrDefault(x => x is MechCriticalEffectsCustom);
-            if (custom != null)
             {
-                return custom;
+                var unitTypes = UnitTypeDatabase.Instance.GetUnitTypes(mech.MechDef);
+                if (unitTypes is { Count: > 0 })
+                {
+                    foreach (var custom in customs.OfType<MechCriticalEffectsCustom>())
+                    {
+                        if (custom.UnitTypes.All(t => unitTypes.Contains(t)))
+                        {
+                            return custom;
+                        }
+                    }
+                }
+            }
+
+            {
+                var custom = customs.OfType<MechCriticalEffectsCustom>().FirstOrDefault(x => x.UnitTypes.Length == 0);
+                if (custom != null)
+                {
+                    return custom;
+                }
             }
         }
 
@@ -57,7 +73,7 @@ internal class Criticals
         }
 
         {
-            var custom = customs.FirstOrDefault(x => !(x is MechCriticalEffectsCustom) && !(x is TurretCriticalEffectsCustom) && !(x is VehicleCriticalEffectsCustom));
+            var custom = customs.FirstOrDefault(x => x is not MechCriticalEffectsCustom && x is not TurretCriticalEffectsCustom && x is not VehicleCriticalEffectsCustom);
             return custom;
         }
     }

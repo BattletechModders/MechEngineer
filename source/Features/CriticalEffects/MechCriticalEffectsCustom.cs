@@ -1,12 +1,15 @@
-﻿using BattleTech;
+﻿using System;
+using BattleTech;
 using CustomComponents;
 
 namespace MechEngineer.Features.CriticalEffects;
 
-[CustomComponent("MechCriticalEffects")]
+[CustomComponent("MechCriticalEffects", AllowArray = true)]
 public class MechCriticalEffectsCustom : CriticalEffectsCustom
 {
-    public override UnitType GetUnitType()
+    public string[] UnitTypes { get; set; }= Array.Empty<string>();
+
+    protected override UnitType GetUnitType()
     {
         return UnitType.Mech;
     }
