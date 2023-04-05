@@ -4,17 +4,30 @@ using System.Linq;
 using BattleTech;
 using MechEngineer.Features.OrderedStatusEffects;
 using MechEngineer.Helper;
+using MechEngineer.Misc;
 using static BattleTech.StatisticEffectData;
 
 namespace MechEngineer.Features.OverrideStatTooltips.Helper;
 
-internal static class MechDefStatisticModifier
+public static class MechDefStatisticModifier
 {
-    private static readonly Dictionary<string, Func<MechDef, MechComponentDef, EffectData, bool>> filters = new Dictionary<string, Func<MechDef, MechComponentDef, EffectData, bool>>();
-    internal static void RegisterFilter(string name, Func<MechDef, MechComponentDef, EffectData, bool> filter)
+    private static readonly Dictionary<string, Func<MechDef, MechComponentDef?, EffectData, bool>> s_allowFilters = new();
+    [UsedBy(User.Abilifier)]
+    public static void RegisterFilter(string name, Func<MechDef, MechComponentDef?, EffectData, bool> filter)
     {
-        filters[name] = filter;
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name));
+        }
+        s_allowFilters[name] = filter ?? throw new ArgumentNullException(nameof(filter));
+        Log.Main.Debug?.Log($"Registered StatisticModifier Allow Filter {name}");
     }
+
+    private static bool IsAllowedByFilters(MechDef mechDef, MechComponentDef? componentDef, EffectData effectData)
+    {
+        return s_allowFilters.Values.All(filter => filter(mechDef, componentDef, effectData));
+    }
+
     internal static T ModifyStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, bool acceptAllDamageLevels = false) where T : notnull
     {
         var effects = new List<EffectData>();
@@ -40,13 +53,12 @@ internal static class MechDefStatisticModifier
                 {
                     continue;
                 }
-                bool can_be_applied = true;
-                foreach(var filter in filters)
+
+                if (!IsAllowedByFilters(mechDef, null, effectData))
                 {
-                    if (filter.Value == null) { continue; }
-                    if (filter.Value(mechDef, null, effectData) == false) { can_be_applied = false; break; }
+                    continue;
                 }
-                if (can_be_applied == false) { continue; }
+
                 effects.Add(effectData);
             }
         }
@@ -87,13 +99,12 @@ internal static class MechDefStatisticModifier
                 {
                     continue;
                 }
-                bool can_be_applied = true;
-                foreach (var filter in filters)
+
+                if (!IsAllowedByFilters(mechDef, componentDef, effectData))
                 {
-                    if (filter.Value == null) { continue; }
-                    if (filter.Value(mechDef, weaponDef, effectData) == false) { can_be_applied = false; break; }
+                    continue;
                 }
-                if (can_be_applied == false) { continue; }
+
                 effects.Add(effectData);
             }
         }

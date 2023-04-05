@@ -26,5 +26,6 @@ internal enum User
 
     // try not to modify or refactor
     FieldRepairs, // FrostRaptor
-    BattleValue // bhtrail
+    BattleValue, // bhtrail
+    Abilifier // ajkroeg(fboob) / Cmission(Kmission)
 }
