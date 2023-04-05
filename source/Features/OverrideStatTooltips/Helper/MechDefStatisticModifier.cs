@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BattleTech;
 using MechEngineer.Features.OrderedStatusEffects;
@@ -9,6 +10,11 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper;
 
 internal static class MechDefStatisticModifier
 {
+    private static readonly Dictionary<string, Func<MechDef, MechComponentDef, EffectData, bool>> filters = new Dictionary<string, Func<MechDef, MechComponentDef, EffectData, bool>>();
+    internal static void RegisterFilter(string name, Func<MechDef, MechComponentDef, EffectData, bool> filter)
+    {
+        filters[name] = filter;
+    }
     internal static T ModifyStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, bool acceptAllDamageLevels = false) where T : notnull
     {
         var effects = new List<EffectData>();
@@ -34,6 +40,13 @@ internal static class MechDefStatisticModifier
                 {
                     continue;
                 }
+                bool can_be_applied = true;
+                foreach(var filter in filters)
+                {
+                    if (filter.Value == null) { continue; }
+                    if (filter.Value(mechDef, null, effectData) == false) { can_be_applied = false; break; }
+                }
+                if (can_be_applied == false) { continue; }
                 effects.Add(effectData);
             }
         }
@@ -46,11 +59,6 @@ internal static class MechDefStatisticModifier
     }
 
     internal static T ModifyWeaponStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, WeaponDef weaponDef) where T : notnull
-    {
-        return ModifyWeaponStatistic<T>(stat, mechDef, weaponDef.WeaponSubType, weaponDef.Type, weaponDef.WeaponCategoryValue);
-    }
-
-    private static T ModifyWeaponStatistic<T>(StatisticAdapter<T> stat, MechDef mechDef, WeaponSubType subType, WeaponType type, WeaponCategoryValue categoryValue) where T : notnull
     {
         var effects = new List<EffectData>();
         foreach (var componentDef in mechDef.Inventory.Where(x => x.IsFunctionalORInstalling()).Select(x => x.Def))
@@ -75,10 +83,17 @@ internal static class MechDefStatisticModifier
                 {
                     continue;
                 }
-                if (!IsStatusEffectAffectingWeapon(effectData.statisticData, subType, type, categoryValue))
+                if (!IsStatusEffectAffectingWeapon(effectData.statisticData, weaponDef.WeaponSubType, weaponDef.Type, weaponDef.WeaponCategoryValue))
                 {
                     continue;
                 }
+                bool can_be_applied = true;
+                foreach (var filter in filters)
+                {
+                    if (filter.Value == null) { continue; }
+                    if (filter.Value(mechDef, weaponDef, effectData) == false) { can_be_applied = false; break; }
+                }
+                if (can_be_applied == false) { continue; }
                 effects.Add(effectData);
             }
         }
