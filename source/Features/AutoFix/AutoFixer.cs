@@ -66,7 +66,7 @@ internal class AutoFixer : IAutoFixMechDef
 
         MechDefBuilder builder;
         {
-            var inventory = mechDef.Inventory.ToList();
+            var inventory = mechDef.Inventory;
             if (Log.Main.Debug != null)
             {
                 foreach (var cref in inventory)
@@ -345,13 +345,13 @@ internal class AutoFixer : IAutoFixMechDef
         }
 
         // find any overused location
-        if (builder.HasOveruseAtAnyLocation())
+        if (builder.HasOveruseAtAnyLocation(null))
         {
-            Log.Main.Info?.Log($" Overuse found");
+            Log.Main.Info?.Log(" Overuse found");
             // heatsinks, upgrades
             var itemsToBeReordered = builder.Inventory
                 .Where(IsMovable)
-                .OrderBy(c => MechDefBuilder.LocationCount(c.Def.AllowedLocations))
+                .OrderBy(c => LocationUtils.LocationCount(c.Def.AllowedLocations))
                 .ThenByDescending(c => c.Def.InventorySize)
                 .ToList();
 
@@ -451,7 +451,7 @@ internal class AutoFixer : IAutoFixMechDef
         var def = c.Def;
 
         // items in arms and legs are usually bound to a certain side, so lets ignore them from relocation
-        if (MechDefBuilder.LocationCount(def.AllowedLocations) <= 2)
+        if (LocationUtils.LocationCount(def.AllowedLocations) <= 2)
         {
             return false;
         }

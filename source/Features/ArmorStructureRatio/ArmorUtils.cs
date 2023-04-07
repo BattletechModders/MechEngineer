@@ -21,7 +21,7 @@ public static class ArmorUtils
 
     internal static int GetMaximumArmorPoints(MechDef mechDef)
     {
-        return MechDefBuilder.Locations
+        return LocationUtils.Locations
             .Select(location => mechDef.Chassis.GetLocationDef(location))
             .Select(GetMaximumArmorPoints)
             .Sum();

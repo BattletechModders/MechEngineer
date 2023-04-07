@@ -72,7 +72,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
             return;
         }
 
-        foreach (var location in MechDefBuilder.Locations)
+        foreach (var location in LocationUtils.Locations)
         {
             ProcessMechArmorStructureRatioForLocation(mechDef, location, applyChanges: true);
         }
@@ -88,7 +88,7 @@ internal class ArmorStructureRatioFeature : Feature<ArmorStructureRatioSettings>
         }
 
         var hasInvalid = false;
-        foreach (var location in MechDefBuilder.Locations)
+        foreach (var location in LocationUtils.Locations)
         {
 
             var valid = ProcessMechArmorStructureRatioForLocation(mechDef, location, errorMessages);

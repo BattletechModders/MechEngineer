@@ -35,14 +35,14 @@ internal class WeaponComponentPrefabCalculator
             .ThenByDescending(c => c.ComponentDefID)
             .ToList();
 
-        if (!MechDefBuilder.Locations.Contains(location))
+        if (!LocationUtils.Locations.Contains(location))
         {
             location = ChassisLocations.All;
         }
 
         if (location == ChassisLocations.All)
         {
-            foreach (var tlocation in MechDefBuilder.Locations)
+            foreach (var tlocation in LocationUtils.Locations)
             {
                 var localRefs = componentRefs.Where(c => c.MountedLocation == tlocation).ToList();
                 CalculateMappingForLocation(tlocation, localRefs);

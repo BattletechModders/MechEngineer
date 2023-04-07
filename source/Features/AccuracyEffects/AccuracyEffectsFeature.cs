@@ -14,7 +14,7 @@ internal class AccuracyEffectsFeature : Feature<AccuracyEffectsSettings>
 
     internal static void SetupAccuracyStatistics(StatCollection statCollection)
     {
-        foreach (var location in MechDefBuilder.Locations)
+        foreach (var location in LocationUtils.Locations)
         {
             AccuracyForLocation(statCollection, location);
         }

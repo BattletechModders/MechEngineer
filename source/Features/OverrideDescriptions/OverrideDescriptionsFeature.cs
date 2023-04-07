@@ -77,7 +77,7 @@ internal class OverrideDescriptionsFeature : Feature<OverrideDescriptionsSetting
 
     private static IEnumerable<MechLabItemSlotElement> Elements(MechLabPanel panel)
     {
-        return MechDefBuilder.Locations
+        return LocationUtils.Locations
             .Select(location => panel.GetLocationWidget((ArmorLocation)location))
             .SelectMany(widget => widget.localInventory);
     }
