@@ -31,7 +31,7 @@ internal static class ChassisHandler
     {
         if (AutoFixerFeature.settings.ChassisDefInitialTonnage)
         {
-            chassisDef.InitialTonnage *= AutoFixerFeature.settings.ChassisDefInitialToTotalTonnageFactor;
+            chassisDef.InitialTonnage = chassisDef.Tonnage * AutoFixerFeature.settings.ChassisDefInitialToTotalTonnageFactor;
 
             Log.Main.Debug?.Log($"set InitialTonnage={chassisDef.InitialTonnage}");
         }
