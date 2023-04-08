@@ -227,7 +227,7 @@ internal class MechDefBuilder
         {
             location = GetLocations()
                 .Where(l => (l & def.AllowedLocations) != 0)
-                .FirstOrDefault(l => LocationUsages[l].Free >= def.InventorySize);
+                .FirstOrDefault(l => LocationUsages[l].FreeIncludingDynamicMovable >= def.InventorySize);
 
             if (location == ChassisLocations.None)
             {
@@ -236,7 +236,7 @@ internal class MechDefBuilder
         }
 
         var locationInfo = LocationUsages[location];
-        var overUseAtLocation = locationInfo.Free < def.InventorySize; // considers locational dynamic slots
+        var overUseAtLocation = locationInfo.FreeIncludingDynamicMovable < def.InventorySize; // considers locational dynamic slots
         var overUseOverall = TotalFree < def.InventorySize; // considers global dynamic slots
         if (!force && (overUseAtLocation || overUseOverall))
         {
@@ -278,7 +278,7 @@ internal class MechDefBuilder
     {
         yield return ChassisLocations.CenterTorso;
 
-        if (LocationUsages[ChassisLocations.LeftTorso].Free >= LocationUsages[ChassisLocations.RightTorso].Free)
+        if (LocationUsages[ChassisLocations.LeftTorso].FreeIncludingDynamicMovable >= LocationUsages[ChassisLocations.RightTorso].FreeIncludingDynamicMovable)
         {
             yield return ChassisLocations.LeftTorso;
             yield return ChassisLocations.RightTorso;
@@ -289,7 +289,7 @@ internal class MechDefBuilder
             yield return ChassisLocations.LeftTorso;
         }
 
-        if (LocationUsages[ChassisLocations.LeftLeg].Free >= LocationUsages[ChassisLocations.RightLeg].Free)
+        if (LocationUsages[ChassisLocations.LeftLeg].FreeIncludingDynamicMovable >= LocationUsages[ChassisLocations.RightLeg].FreeIncludingDynamicMovable)
         {
             yield return ChassisLocations.LeftLeg;
             yield return ChassisLocations.RightLeg;
@@ -302,7 +302,7 @@ internal class MechDefBuilder
 
         yield return ChassisLocations.Head;
 
-        if (LocationUsages[ChassisLocations.LeftArm].Free >= LocationUsages[ChassisLocations.RightArm].Free)
+        if (LocationUsages[ChassisLocations.LeftArm].FreeIncludingDynamicMovable >= LocationUsages[ChassisLocations.RightArm].FreeIncludingDynamicMovable)
         {
             yield return ChassisLocations.LeftArm;
             yield return ChassisLocations.RightArm;
