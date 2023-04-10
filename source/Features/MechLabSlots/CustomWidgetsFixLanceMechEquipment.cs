@@ -93,7 +93,7 @@ internal static class CustomWidgetsFixLanceMechEquipment
         var topRight = new List<MechComponentRef>();
         foreach (var componentRef in el.activeMech.Inventory)
         {
-            if (componentRef.Flags<CCFlags>().HideFromEquip)
+            if (componentRef.Def.CCFlags().HideFromEquip)
             {
                 continue;
             }

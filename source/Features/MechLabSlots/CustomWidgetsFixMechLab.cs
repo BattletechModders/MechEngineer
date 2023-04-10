@@ -177,7 +177,7 @@ public class CustomWidgetsFixMechLab
             return true;
         }
 
-        if (cRef.Flags<CCFlags>().NoRemove || cRef.IsFixed)
+        if (cRef.Def.CCFlags().NoRemove || cRef.IsFixed)
         {
             return true;
         }
