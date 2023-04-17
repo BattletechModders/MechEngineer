@@ -16,7 +16,6 @@ using MechEngineer.Features.Engines;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.HeatSinkCapacityStat;
-using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OrderedStatusEffects;
@@ -52,7 +51,6 @@ internal static class FeaturesList
         DynamicSlotsFeature.Shared,
         ShutdownInjuryProtectionFeature.Shared,
         MechLabSlotsFeature.Shared,
-        InvalidInventoryFeature.Shared,
         ComponentExplosionsFeature.Shared,
         ArmorStructureRatioFeature.Shared,
         ArmorStructureChangesFeature.Shared,

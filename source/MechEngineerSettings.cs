@@ -16,7 +16,6 @@ using MechEngineer.Features.Engines;
 using MechEngineer.Features.Globals;
 using MechEngineer.Features.HardpointFix;
 using MechEngineer.Features.HeatSinkCapacityStat;
-using MechEngineer.Features.InvalidInventory;
 using MechEngineer.Features.MechLabSlots;
 using MechEngineer.Features.MoveMultiplierStat;
 using MechEngineer.Features.OrderedStatusEffects;
@@ -54,7 +53,6 @@ internal class MechEngineerSettings
     public GlobalsSettings Globals = new();
     public HardpointFixSettings HardpointFix = new();
     public HeatSinkCapacityStatSettings HeatSinkCapacityStat = new();
-    public InvalidInventorySettings InvalidInventory = new();
     public MechLabSlotsSettings MechLabSlots = new();
     public MoveMultiplierStatSettings MoveMultiplierStat = new();
     public OrderedStatusEffectsSettings OrderedStatusEffects = new();
