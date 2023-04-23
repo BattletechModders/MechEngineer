@@ -1,21 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿#nullable disable
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using MechEngineer.Misc;
+using DG.Tweening.Core;
 using UnityEngine;
 
 namespace MechEngineer.Features.Performance.Patches;
 
-// we don't do DOKill anymore, but I kept this patch anyway. This wasn't enough and DOKill had to be disabled anyway
-[HarmonyPatch]
+[HarmonyPatch(typeof(TweenManager), nameof(TweenManager.FilteredOperation))]
 public static class TweenManager_FilteredOperation_Patch
 {
-    [UsedByHarmony]
-    public static MethodBase TargetMethod()
-    {
-        return AccessTools.Method("DG.Tweening.Core.TweenManager:FilteredOperation");
-    }
-
     [HarmonyTranspiler]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
@@ -30,14 +23,18 @@ public static class TweenManager_FilteredOperation_Patch
 
     public static bool ObjectEquals(object objA, object objB)
     {
-        if (ReferenceEquals(objA, objB))
+        if (objA is null && objB is null)
         {
             return true;
         }
-        if (objA is GameObject goA && objB is GameObject goB)
+
+        if (objA is GameObject || objB is GameObject)
         {
-            return goA.GetInstanceID() == goB.GetInstanceID();
+            // reference equals check, hope that's good enough
+            return objA == objB;
         }
+
+        // Fallback for all other types, dont think this can even happen
         return RuntimeHelpers.Equals(objA, objB);
     }
 }

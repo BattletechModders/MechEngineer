@@ -38,6 +38,8 @@
   <ItemGroup>
     <PackageReference Include="Krafs.Publicizer" Version="2.2.1" />
     <Publicize Include="Assembly-CSharp" />
+    <Publicize Include="DOTween;DOTweenPro" />
+    <Publicize Include="UnityEngine.CoreModule" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HarmonyX" Version="2.10.1">
@@ -55,6 +57,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DOTween">
       <Private>False</Private>
     </Reference>
     <Reference Include="DOTweenPro">
@@ -90,7 +95,7 @@
     <Reference Include="UnityEngine.TextRenderingModule">
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEngine.UI" Publicize="true">
+    <Reference Include="UnityEngine.UI">
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIModule">
