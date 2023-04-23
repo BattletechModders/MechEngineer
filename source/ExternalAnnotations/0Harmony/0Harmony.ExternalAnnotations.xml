@@ -25,4 +25,32 @@
     <member name="T:Harmony.HarmonyTargetMethods">
         <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
     </member>
+    <!-- common harmonyX attributes -->
+    <member name="T:HarmonyLib.HarmonyPatch">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:HarmonyLib.HarmonyPostfix">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:HarmonyLib.HarmonyPrefix">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:HarmonyLib.HarmonyTranspiler">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:HarmonyLib.HarmonyFinalizer">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:HarmonyLib.HarmonyCleanup">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:HarmonyLib.HarmonyPrepare">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:HarmonyLib.HarmonyTargetMethod">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
+    <member name="T:HarmonyLib.HarmonyTargetMethods">
+        <attribute ctor="M:JetBrains.Annotations.MeansImplicitUseAttribute.#ctor" />
+    </member>
 </assembly>
