@@ -35,8 +35,10 @@ internal class Criticals
                 var unitTypes = UnitTypeDatabase.Instance.GetUnitTypes(mech.MechDef);
                 if (unitTypes is { Count: > 0 })
                 {
+                    Log.Main.Trace?.Log($"Found mech.UnitTypes=[{string.Join(",", unitTypes)}] on ChassisID={mech.MechDef.ChassisID}");
                     foreach (var custom in customs.OfType<MechCriticalEffectsCustom>())
                     {
+                        Log.Main.Trace?.Log($"Found custom.UnitTypes=[{string.Join(",", custom.UnitTypes)}] on ComponentDefId={component.componentDef.Description.Id}");
                         if (custom.UnitTypes.All(t => unitTypes.Contains(t)))
                         {
                             return custom;
