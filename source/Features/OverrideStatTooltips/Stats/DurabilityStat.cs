@@ -10,8 +10,6 @@ internal class DurabilityStat : IStatHandler
 {
     public void SetupTooltip(StatTooltipData tooltipData, MechDef mechDef)
     {
-        tooltipData.dataList.Clear();
-
         {
             var value = mechDef.MechDefAssignedArmor;
             value *= ArmorMultiplier(mechDef);

@@ -8,8 +8,6 @@ internal class LongRangeStat : IStatHandler
 {
     public void SetupTooltip(StatTooltipData tooltipData, MechDef mechDef)
     {
-        tooltipData.dataList.Clear();
-
         {
             var firepower = GetLongRangeFirepower(mechDef);
             tooltipData.dataList.Add("<u>" + Strings.T("Long Range Dmg") + "</u>", $"{firepower.TotalDamage}");

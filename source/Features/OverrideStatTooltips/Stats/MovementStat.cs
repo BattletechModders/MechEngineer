@@ -12,7 +12,6 @@ internal class MovementStat : IStatHandler
     public void SetupTooltip(StatTooltipData tooltipData, MechDef mechDef)
     {
         var stats = new MechDefMovementStatistics(mechDef);
-        tooltipData.dataList.Clear();
 
         static string DistanceToSummary(float meter)
         {

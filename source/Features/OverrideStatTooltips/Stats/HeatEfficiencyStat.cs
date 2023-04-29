@@ -9,7 +9,6 @@ internal class HeatEfficiencyStat : IStatHandler
     public void SetupTooltip(StatTooltipData tooltipData, MechDef mechDef)
     {
         var stats = new MechDefHeatEfficiencyStatistics(mechDef);
-        tooltipData.dataList.Clear();
 
         tooltipData.dataList.Add("<u>" + Strings.T("Heat Sinking") + "</u>", Strings.T("{0} Heat", - stats.HeatSinking + stats.EndMoveHeat));
         tooltipData.dataList.Add(Strings.T("End of Turn"), Strings.T("{0} Heat", - stats.HeatSinking));

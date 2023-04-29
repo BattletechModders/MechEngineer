@@ -8,8 +8,6 @@ internal class CloseRangeStat : IStatHandler
 {
     public void SetupTooltip(StatTooltipData tooltipData, MechDef mechDef)
     {
-        tooltipData.dataList.Clear();
-
         {
             var melee = MechDefFirepowerStatistics.GetMelee(mechDef);
             var meleeFirepower = GetFirepower(mechDef, true);

@@ -8,8 +8,6 @@ internal class MediumRangeStat : IStatHandler
 {
     public void SetupTooltip(StatTooltipData tooltipData, MechDef mechDef)
     {
-        tooltipData.dataList.Clear();
-
         var firepower = GetFirepower(mechDef);
         tooltipData.dataList.Add("<u>" + Strings.T("Medium Range Dmg") + "</u>", $"{firepower.TotalDamage}");
         tooltipData.dataList.Add(Strings.T("Instability Damage"), $"{firepower.TotalInstability}");
