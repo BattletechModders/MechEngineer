@@ -10,6 +10,8 @@ namespace MechEngineer.Features.OverrideStatTooltips.Helper;
 
 internal class MechDefHeatEfficiencyStatistics
 {
+    private static readonly HeatConstantsDef s_heatConstants = MechStatisticsRules.Combat.Heat;
+
     internal int HeatSinking { get; }
     internal int AlphaStrike { get; }
     internal int JumpHeat { get; }
@@ -21,9 +23,15 @@ internal class MechDefHeatEfficiencyStatistics
     {
         this.mechDef = mechDef;
 
+        var weaponStats = mechDef.Inventory
+            .Where(x => x.IsFunctionalORInstalling())
+            .Where(x => x.Def is WeaponDef)
+            .Select(x => new WeaponDefHeatStatistics(mechDef, x, (x.Def as WeaponDef)!))
+            .ToList();
+
         HeatSinkCapacity = GetHeatSinkCapacity();
-        HeatSinking = (int)(HeatSinkCapacity * MechStatisticsRules.Combat.Heat.GlobalHeatSinkMultiplier);
-        AlphaStrike = (int)(GetHeatGenerated() * GetWeaponHeatMultiplier());
+        HeatSinking = (int)(HeatSinkCapacity * s_heatConstants.GlobalHeatSinkMultiplier);
+        AlphaStrike = weaponStats.Select(x => x.HeatGeneratedWhenFired).Sum();
         JumpHeat = GetJumpHeat();
         MaxHeat = GetMaxHeat();
         Overheat = GetOverheat();
@@ -50,28 +58,6 @@ internal class MechDefHeatEfficiencyStatistics
         var engineEffect = HeatSinkCapacityStatFeature.EngineEffectForMechDef(mechDef);
         stat.Modify(engineEffect);
 
-        return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
-    }
-
-    private int GetHeatGenerated()
-    {
-        var defaultValue = mechDef.Inventory
-            .Where(x => x.IsFunctionalORInstalling())
-            .Where(x => x.Def is WeaponDef)
-            .Sum(x => x.WeaponRefHelper().HeatGenerated);
-
-        // TODO HeatDivisor support or not? nah we just don't support COIL, who needs that anyway...
-
-        var stat = statCollection.HeatGenerated();
-        stat.CreateWithDefault(defaultValue);
-        var value = MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
-        return PrecisionUtils.RoundUpToInt(value);
-    }
-
-    private float GetWeaponHeatMultiplier()
-    {
-        var stat = statCollection.WeaponHeatMultiplier();
-        stat.Create();
         return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
     }
 
@@ -102,5 +88,47 @@ internal class MechDefHeatEfficiencyStatistics
         var stat = statCollection.EndMoveHeat();
         stat.Create();
         return MechDefStatisticModifier.ModifyStatistic(stat, mechDef);
+    }
+
+    private class WeaponDefHeatStatistics
+    {
+        internal int HeatGeneratedWhenFired { get; }
+
+        internal WeaponDefHeatStatistics(MechDef mechDef, BaseComponentRef weaponRef, WeaponDef weaponDef)
+        {
+            this.mechDef = mechDef;
+            this.weaponRef = weaponRef;
+            this.weaponDef = weaponDef;
+
+            {
+                var heatGeneratedStat = GetHeatGenerated(GetBaseHeatGenerated);
+                var weaponHeatMultiplierStat = GetWeaponHeatMultiplier();
+                // see Weapon.HeatGenerated
+                var heatGeneratedGetter = heatGeneratedStat * s_heatConstants.GlobalHeatIncreaseMultiplier * weaponHeatMultiplierStat;
+                // see Weapon.FireWeapon()
+                HeatGeneratedWhenFired = (int)heatGeneratedGetter;
+            }
+        }
+
+        private readonly MechDef mechDef;
+        private readonly BaseComponentRef? weaponRef;
+        private readonly WeaponDef weaponDef;
+        private readonly StatCollection statCollection = new();
+
+        private int GetBaseHeatGenerated => weaponRef?.WeaponRefHelper().HeatGenerated ?? weaponDef.HeatGenerated;
+
+        private float GetHeatGenerated(int baseValue)
+        {
+            var stat = statCollection.HeatGenerated();
+            stat.CreateWithDefault(baseValue);
+            return MechDefStatisticModifier.ModifyWeaponStatistic(stat, mechDef, weaponDef);
+        }
+
+        private float GetWeaponHeatMultiplier()
+        {
+            var stat = statCollection.WeaponHeatMultiplier();
+            stat.Create();
+            return MechDefStatisticModifier.ModifyWeaponStatistic(stat, mechDef, weaponDef);
+        }
     }
 }
