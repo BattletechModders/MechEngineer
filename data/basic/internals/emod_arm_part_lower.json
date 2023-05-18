@@ -4,7 +4,7 @@
             "AccuracyArm: + 1"
         ],
         "Category" : { "CategoryID" : "ArmLowerActuator" },
-        "Flags" : [ "autorepair", "not_broken" ]
+        "Flags" : [ "inv_unlimited", "autorepair", "not_broken" ]
     },
     "Description" : {
         "Cost" : 20000,
