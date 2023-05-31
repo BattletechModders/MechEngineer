@@ -21,6 +21,13 @@ internal static class AbstractActor_FlagForDeath_Patch
             return;
         }
 
+        // mechs are destroyed by CockpitDestroyed not HeadDestruction anymore
+        if (deathMethod == DeathMethod.HeadDestruction)
+        {
+            __runOriginal = false;
+            return;
+        }
+
         var actor = __instance;
         if (actor._flaggedForDeath)
         {
