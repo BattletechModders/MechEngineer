@@ -25,6 +25,8 @@ public class CriticalEffectsCustom : SimpleCustomComponent, IAfterLoad, IIsDestr
     public string? CritFloatieMessage { get; set; } = null;
     public string? DestroyedFloatieMessage { get; set; } = null;
 
+    public bool IsArmored { get; set; } = false;
+
     protected virtual UnitType GetUnitType()
     {
         return UnitType.UNDEFINED;

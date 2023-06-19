@@ -16,15 +16,23 @@ internal class Criticals
     internal Criticals(MechComponent component)
     {
         this.component = component;
-        ce = new Lazy<CriticalEffectsCustom?>(FetchCriticalEffects);
+        if (actor == null)
+        {
+            throw new NullReferenceException($"{nameof(actor)} is null");
+        }
+
+        ce = new(FetchCriticalEffects);
     }
 
     private readonly MechComponent component;
-    private AbstractActor? actor => component.parent;
+    private AbstractActor actor => component.parent;
+
+    private bool IsLocationDestroyed => actor.StructureForLocation(component.Location) <= 0f;
 
     internal CriticalEffectsCustom? Effects => ce.Value;
     private readonly Lazy<CriticalEffectsCustom?> ce;
     private bool HasLinked => Effects?.LinkedStatisticName != null;
+    private bool IsArmored => Effects?.IsArmored ?? false;
     private CriticalEffectsCustom? FetchCriticalEffects()
     {
         var customs = component.componentDef.GetComponents<CriticalEffectsCustom>().ToList();
@@ -80,13 +88,8 @@ internal class Criticals
         }
     }
 
-    internal void Hit(WeaponHitInfo hitInfo, ref ComponentDamageLevel damageLevel)
+    internal void Hit(WeaponHitInfo hitInfo, out ComponentDamageLevel damageLevel)
     {
-        if (actor == null)
-        {
-            return;
-        }
-
         SetHits(hitInfo, out damageLevel);
 
         if (damageLevel == ComponentDamageLevel.Destroyed)
@@ -97,18 +100,33 @@ internal class Criticals
 
     private void SetHits(WeaponHitInfo hitInfo, out ComponentDamageLevel damageLevel)
     {
-        if (actor == null)
-        {
-            throw new NullReferenceException();
-        }
-
         int effectsMax, effectsPrev, effectsNext;
         {
             var compCritsMax = ComponentHitMax();
             var compCritsPrev = ComponentHitCount();
 
-            var locationDestroyed = actor.StructureForLocation(component.Location) <= 0f;
-            var possibleAddedHits = locationDestroyed ? compCritsMax : 1;
+            var possibleAddedHits = 1;
+            if (IsLocationDestroyed)
+            {
+                possibleAddedHits = compCritsMax;
+            }
+            else if (IsArmored)
+            {
+                var compCritsArmoredPrev = ComponentHitArmoredCount();
+                if (compCritsArmoredPrev < compCritsMax)
+                {
+                    var randomCache = actor.Combat.AttackDirector.GetRandomFromCache(hitInfo, 1);
+                    var isArmoredHit = compCritsArmoredPrev <= Mathf.RoundToInt(compCritsMax * randomCache[0]);
+                    if (isArmoredHit)
+                    {
+                        var compCritsArmoredNext = compCritsArmoredPrev + 1;
+                        ComponentHitArmoredCount(compCritsArmoredNext);
+                        damageLevel = component.DamageLevel;
+                        return;
+                    }
+                }
+            }
+
             var compCritsNext = Mathf.Min(compCritsMax, compCritsPrev + possibleAddedHits);
             var compCritsAdded = Mathf.Max(compCritsNext - compCritsPrev, 0);
 
@@ -178,6 +196,17 @@ internal class Criticals
     private int ComponentHitCount(int? setHits = null)
     {
         var stat = component.StatCollection.MECriticalSlotsHit();
+        stat.CreateIfMissing(); // move to Mech.init and remove "CreateIfMissing" from StatAdapter
+        if (setHits.HasValue)
+        {
+            stat.SetValue(setHits.Value);
+        }
+        return stat.Get();
+    }
+
+    private int ComponentHitArmoredCount(int? setHits = null)
+    {
+        var stat = component.StatCollection.MECriticalSlotsHitArmored();
         stat.CreateIfMissing(); // move to Mech.init and remove "CreateIfMissing" from StatAdapter
         if (setHits.HasValue)
         {
@@ -473,5 +502,10 @@ internal static class StatCollectionExtension
     internal static StatisticAdapter<int> MECriticalSlotsHit(this StatCollection statCollection)
     {
         return new("MECriticalSlotsHit", statCollection, 0);
+    }
+
+    internal static StatisticAdapter<int> MECriticalSlotsHitArmored(this StatCollection statCollection)
+    {
+        return new("MECriticalSlotsHitArmored", statCollection, 0);
     }
 }
