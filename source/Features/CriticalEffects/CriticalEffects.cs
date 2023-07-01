@@ -4,33 +4,26 @@ using System.Linq;
 using BattleTech;
 using CustomComponents;
 using FluffyUnderware.DevTools.Extensions;
-using MechEngineer.Features.CriticalEffects.Patches;
 using MechEngineer.Features.PlaceholderEffects;
-using MechEngineer.Helper;
 using UnityEngine;
 
 namespace MechEngineer.Features.CriticalEffects;
 
-internal class Criticals
+internal readonly struct CriticalEffects
 {
-    internal Criticals(MechComponent component)
-    {
-        this.component = component;
-        if (actor == null)
-        {
-            throw new NullReferenceException($"{nameof(actor)} is null");
-        }
-
-        ce = new(FetchCriticalEffects);
-    }
-
-    private readonly MechComponent component;
+    private readonly ComponentCriticals _criticals;
+    private MechComponent component => _criticals.component;
     private AbstractActor actor => component.parent;
+
+    internal CriticalEffects(MechComponent component)
+    {
+        _criticals = new(component);
+        Effects = FetchCriticalEffects();
+    }
 
     private bool IsLocationDestroyed => actor.StructureForLocation(component.Location) <= 0f;
 
-    internal CriticalEffectsCustom? Effects => ce.Value;
-    private readonly Lazy<CriticalEffectsCustom?> ce;
+    internal readonly CriticalEffectsCustom? Effects;
     private bool HasLinked => Effects?.LinkedStatisticName != null;
     private bool IsArmored => Effects?.IsArmored ?? false;
     private CriticalEffectsCustom? FetchCriticalEffects()
@@ -43,10 +36,12 @@ internal class Criticals
                 var unitTypes = UnitTypeDatabase.Instance.GetUnitTypes(mech.MechDef);
                 if (unitTypes is { Count: > 0 })
                 {
-                    Log.Main.Trace?.Log($"Found mech.UnitTypes=[{string.Join(",", unitTypes)}] on ChassisID={mech.MechDef.ChassisID}");
+                    // TODO move back to trace
+                    Log.Main.Debug?.Log($"Found mech.UnitTypes=[{string.Join(",", unitTypes)}] on ChassisID={mech.MechDef.ChassisID}");
                     foreach (var custom in customs.OfType<MechCriticalEffectsCustom>())
                     {
-                        Log.Main.Trace?.Log($"Found custom.UnitTypes=[{string.Join(",", custom.UnitTypes)}] on ComponentDefId={component.componentDef.Description.Id}");
+                        // TODO move back to trace
+                        Log.Main.Debug?.Log($"Found custom.UnitTypes=[{string.Join(",", custom.UnitTypes)}] on ComponentDefId={component.componentDef.Description.Id}");
                         if (custom.UnitTypes.All(t => unitTypes.Contains(t)))
                         {
                             return custom;
@@ -102,8 +97,8 @@ internal class Criticals
     {
         int effectsMax, effectsPrev, effectsNext;
         {
-            var compCritsMax = ComponentHitMax();
-            var compCritsPrev = ComponentHitCount();
+            var compCritsMax = _criticals.ComponentHitMax();
+            var compCritsPrev = _criticals.ComponentHitCount();
 
             var possibleAddedHits = 1;
             if (IsLocationDestroyed)
@@ -112,7 +107,7 @@ internal class Criticals
             }
             else if (IsArmored)
             {
-                var compCritsArmoredPrev = ComponentHitArmoredCount();
+                var compCritsArmoredPrev = _criticals.ComponentHitArmoredCount();
                 if (compCritsArmoredPrev < compCritsMax)
                 {
                     var randomCache = actor.Combat.AttackDirector.GetRandomFromCache(hitInfo, 1);
@@ -120,7 +115,7 @@ internal class Criticals
                     if (isArmoredHit)
                     {
                         var compCritsArmoredNext = compCritsArmoredPrev + 1;
-                        ComponentHitArmoredCount(compCritsArmoredNext);
+                        _criticals.ComponentHitArmoredCount(compCritsArmoredNext);
                         damageLevel = component.DamageLevel;
                         return;
                     }
@@ -130,7 +125,7 @@ internal class Criticals
             var compCritsNext = Mathf.Min(compCritsMax, compCritsPrev + possibleAddedHits);
             var compCritsAdded = Mathf.Max(compCritsNext - compCritsPrev, 0);
 
-            ComponentHitCount(compCritsNext);
+            _criticals.ComponentHitCount(compCritsNext);
 
             // if max is reached, component is destroyed and no new effects can be applied
             // Destroyed components can still soak up crits, requires properly configured AIM from CAC
@@ -177,42 +172,6 @@ internal class Criticals
             return Mathf.FloorToInt(slots) + 1; // last effect = Destroyed
         }
         return 1;
-    }
-
-    public int ComponentHittableCount()
-    {
-        return ComponentHitMax() - ComponentHitCount();
-    }
-
-    private int ComponentHitMax()
-    {
-        var inventorySize = component.componentDef.Is<CriticalChanceCustom>(out var chance) ? chance.Size : component.componentDef.InventorySize;
-        // TODO fix size correctly for location:
-        // introduce fake items for overflow location that is crit linked and overwrite component hit max for original + crit linked
-        var additionalSize = component.componentDef.Is<DynamicSlots.DynamicSlots>(out var slot) && slot.InnerAdjacentOnly ? slot.ReservedSlots : 0;
-        return inventorySize + additionalSize;
-    }
-
-    private int ComponentHitCount(int? setHits = null)
-    {
-        var stat = component.StatCollection.MECriticalSlotsHit();
-        stat.CreateIfMissing(); // move to Mech.init and remove "CreateIfMissing" from StatAdapter
-        if (setHits.HasValue)
-        {
-            stat.SetValue(setHits.Value);
-        }
-        return stat.Get();
-    }
-
-    private int ComponentHitArmoredCount(int? setHits = null)
-    {
-        var stat = component.StatCollection.MECriticalSlotsHitArmored();
-        stat.CreateIfMissing(); // move to Mech.init and remove "CreateIfMissing" from StatAdapter
-        if (setHits.HasValue)
-        {
-            stat.SetValue(setHits.Value);
-        }
-        return stat.Get();
     }
 
     private int GroupHitCount(int? setHits = null)
@@ -280,7 +239,7 @@ internal class Criticals
                     continue;
                 }
 
-                var otherCriticals = otherMechComponent.Criticals();
+                var otherCriticals = otherMechComponent.CriticalEffects();
                 if (!otherCriticals.HasLinked)
                 {
                     continue;
@@ -387,13 +346,13 @@ internal class Criticals
         {
             var iter = from mc in actor.allComponents
                 where !mc.IsFunctional
-                let ce = mc.Criticals().Effects
+                let ce = mc.CriticalEffects().Effects
                 where ce != null
                 from effectId in ce.OnDestroyedDisableEffectIds
                 select mc.
-                    Criticals().ScopedId(effectId);
+                    CriticalEffects().ScopedId(effectId);
 
-            return new HashSet<string>(iter);
+            return new(iter);
         }
     }
 
@@ -430,82 +389,5 @@ internal class Criticals
         {
             WwiseManager.PostEvent(Effects.OnDestroyedAudioEventName, actor.GameRep.audioObject);
         }
-    }
-}
-
-internal class EffectIdUtil
-{
-    private readonly string templateEffectId;
-    private readonly string resolvedEffectId;
-    private readonly MechComponent mechComponent;
-
-    internal EffectIdUtil(string templateEffectId, string resolvedEffectId, MechComponent mechComponent)
-    {
-        this.templateEffectId = templateEffectId;
-        this.resolvedEffectId = $"MECriticalHitEffect_{resolvedEffectId}_{mechComponent.parent.GUID}";
-        this.mechComponent = mechComponent;
-    }
-
-    internal static void CreateEffect(MechComponent component, EffectData effectData, string effectId)
-    {
-        var actor = component.parent;
-
-        Log.Main.Debug?.Log($"Creating id={effectId} statName={effectData.statisticData.statName}");
-
-        EffectManager_GetTargetStatCollections_Patch.SetContext(component, effectData);
-        try
-        {
-            actor.Combat.EffectManager.CreateEffect(effectData, effectId, -1, actor, actor, default, 0);
-        }
-        finally
-        {
-            EffectManager_GetTargetStatCollections_Patch.ClearContext();
-        }
-    }
-
-    internal void CreateCriticalEffect()
-    {
-        var effectData = CriticalEffectsFeature.GetEffectData(templateEffectId);
-        if (effectData == null)
-        {
-            return;
-        }
-        if (effectData.targetingData.effectTriggerType != EffectTriggerType.Passive) // we only support passive for now
-        {
-            Log.Main.Warning?.Log($"Effect templateEffectId={templateEffectId} is not passive");
-            return;
-        }
-
-        PlaceholderEffectsFeature.ProcessLocationalEffectData(ref effectData, mechComponent);
-
-        CreateEffect(mechComponent, effectData, resolvedEffectId);
-    }
-
-    internal void CancelCriticalEffect()
-    {
-        var actor = mechComponent.parent;
-        var statusEffects = actor.Combat.EffectManager
-            .GetAllEffectsWithID(resolvedEffectId)
-            .Where(e => e.Target == actor);
-
-        Log.Main.Debug?.Log($"Canceling id={resolvedEffectId}");
-        foreach (var statusEffect in statusEffects)
-        {
-            Log.Main.Debug?.Log($"Canceling statName={statusEffect.EffectData.statisticData.statName}");
-            actor.CancelEffect(statusEffect);
-        }
-    }
-}
-
-internal static class StatCollectionExtension
-{
-    internal static StatisticAdapter<int> MECriticalSlotsHit(this StatCollection statCollection)
-    {
-        return new("MECriticalSlotsHit", statCollection, 0);
-    }
-
-    internal static StatisticAdapter<int> MECriticalSlotsHitArmored(this StatCollection statCollection)
-    {
-        return new("MECriticalSlotsHitArmored", statCollection, 0);
     }
 }

@@ -7,7 +7,7 @@ public static class MessagesHandler
 {
     public static void PublishComponentState(MechComponent mechComponent)
     {
-        var ce = mechComponent.Criticals().Effects;
+        var ce = mechComponent.CriticalEffects().Effects;
         if (mechComponent.DamageLevel == ComponentDamageLevel.Penalized)
         {
             var critMessage = new Text(CriticalEffectsFeature.settings.CritFloatieMessage, mechComponent.UIName);
