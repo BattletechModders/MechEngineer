@@ -19,6 +19,11 @@ internal readonly struct CriticalEffects
     {
         _criticals = new(component);
         Effects = FetchCriticalEffects();
+        if (Effects != null)
+        {
+            // TODO move back to trace
+            Log.Main.Debug?.Log($"Found matching {Effects.GetType()}");
+        }
     }
 
     private bool IsLocationDestroyed => actor.StructureForLocation(component.Location) <= 0f;
@@ -29,6 +34,8 @@ internal readonly struct CriticalEffects
     private CriticalEffectsCustom? FetchCriticalEffects()
     {
         var customs = component.componentDef.GetComponents<CriticalEffectsCustom>().ToList();
+        // TODO move back to trace
+        Log.Main.Debug?.Log($"Finding CriticalEffects custom for {component.componentDef.Description.Id} on Actor Id={actor.Description.Id} type={actor.GetType()}");
 
         if (actor is Mech mech)
         {
@@ -41,7 +48,7 @@ internal readonly struct CriticalEffects
                     foreach (var custom in customs.OfType<MechCriticalEffectsCustom>())
                     {
                         // TODO move back to trace
-                        Log.Main.Debug?.Log($"Found custom.UnitTypes=[{string.Join(",", custom.UnitTypes)}] on ComponentDefId={component.componentDef.Description.Id}");
+                        Log.Main.Debug?.Log($"Found custom.UnitTypes=[{string.Join(",", custom.UnitTypes)}]");
                         if (custom.UnitTypes.All(t => unitTypes.Contains(t)))
                         {
                             return custom;
