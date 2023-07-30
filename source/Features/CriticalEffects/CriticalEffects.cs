@@ -21,8 +21,7 @@ internal readonly struct CriticalEffects
         Effects = FetchCriticalEffects();
         if (Effects != null)
         {
-            // TODO move back to trace
-            Log.Main.Debug?.Log($"Found matching {Effects.GetType()}");
+            Log.Main.Trace?.Log($"Found matching {Effects.GetType()}");
         }
     }
 
@@ -34,8 +33,7 @@ internal readonly struct CriticalEffects
     private CriticalEffectsCustom? FetchCriticalEffects()
     {
         var customs = component.componentDef.GetComponents<CriticalEffectsCustom>().ToList();
-        // TODO move back to trace
-        Log.Main.Debug?.Log($"Finding CriticalEffects custom for {component.componentDef.Description.Id} on Actor Id={actor.Description.Id} type={actor.GetType()}");
+        Log.Main.Trace?.Log($"Finding CriticalEffects custom for {component.componentDef.Description.Id} on Actor Id={actor.Description.Id} type={actor.GetType()}");
 
         if (actor is Mech mech)
         {
@@ -43,12 +41,10 @@ internal readonly struct CriticalEffects
                 var unitTypes = UnitTypeDatabase.Instance.GetUnitTypes(mech.MechDef);
                 if (unitTypes is { Count: > 0 })
                 {
-                    // TODO move back to trace
-                    Log.Main.Debug?.Log($"Found mech.UnitTypes=[{string.Join(",", unitTypes)}] on ChassisID={mech.MechDef.ChassisID}");
+                    Log.Main.Trace?.Log($"Found mech.UnitTypes=[{string.Join(",", unitTypes)}] on ChassisID={mech.MechDef.ChassisID}");
                     foreach (var custom in customs.OfType<MechCriticalEffectsCustom>())
                     {
-                        // TODO move back to trace
-                        Log.Main.Debug?.Log($"Found custom.UnitTypes=[{string.Join(",", custom.UnitTypes)}]");
+                        Log.Main.Trace?.Log($"Found custom.UnitTypes=[{string.Join(",", custom.UnitTypes)}]");
                         if (custom.UnitTypes.All(t => unitTypes.Contains(t)))
                         {
                             return custom;
@@ -227,11 +223,6 @@ internal readonly struct CriticalEffects
 
     private void SetDamageLevel(WeaponHitInfo hitInfo, ComponentDamageLevel damageLevel)
     {
-        if (actor == null)
-        {
-            throw new NullReferenceException();
-        }
-
         LocalSetDamageLevel(component, hitInfo, damageLevel);
 
         if (HasLinked)
