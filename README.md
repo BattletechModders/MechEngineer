@@ -15,11 +15,10 @@ install [BattleTech Advanced](https://www.nexusmods.com/battletech/mods/452) for
 
 or
 
-* install [ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
-* install [CustomComponents](https://github.com/BattletechModders/CustomComponents/releases) using [instructions here](https://github.com/BattletechModders/CustomComponents)
-* install MechEngineer by copying the `MechEngineer/` folder to the `BATTLETECH/Mods/` folder
+* install [the latest ModTek](https://github.com/BattletechModders/ModTek/releases) using [instructions here](https://github.com/BattletechModders/ModTek)
+* install MechEngineer by copying the contents of the zip to the `BATTLETECH/Mods/` folder
 
-Note: HBS BattleTech ModLoader is not supported, you need to get ModTekV2 for DLC support.
+> **Warning** The HBS BattleTech ModLoader is not supported, as it based on an outdated ModTek (e.g no DLC support).
 
 ## TODOs and Bug Reporting
 
@@ -27,9 +26,8 @@ Note: HBS BattleTech ModLoader is not supported, you need to get ModTekV2 for DL
 
 ## Contributors
 
-Maintainers:
-CptMoore ([MechEngineer](https://github.com/BattletechModders/MechEngineer))
-, Denadan ([CustomComponents](https://github.com/BattletechModders/CustomComponents))
+Maintainer:
+CptMoore
 
 * adammartinez271828 - rounding logic
 * Aliencreature - ideas, lore and rules, item variants, testing
@@ -41,7 +39,7 @@ CptMoore ([MechEngineer](https://github.com/BattletechModders/MechEngineer))
 * Denadan - ideas, [CustomComponents](https://github.com/BattletechModders/CustomComponents), coding
 * Gentleman Reaper - ideas, lore and rules, testing
 * kmission - russian localization support improvements
-* LadyAlekto + [RogueTech](https://github.com/BattletechModders/RogueTech) Team - ideas, lore and rules, lots of testing, items
+* Harkonnen, LadyAlekto, Redbat + [RogueTech](https://github.com/BattletechModders/RogueTech) Team - ideas, lore and rules, lots of testing, items
 * hokvel - [Pansar](https://github.com/hokvel/pansar) for inspiration of max armor feature
 * TotalMeltdown - ideas, lore and rules
 
@@ -49,15 +47,15 @@ CptMoore ([MechEngineer](https://github.com/BattletechModders/MechEngineer))
 
 MechEngineer uses publicized assemblies, those are .NET dlls whose classes and methods visibility were changed to public.
 
-0. Install ModTek v2.1 or later and CustomComponents if not already done.
-1. Checkout the MechEngineer repository as `BATTLETECH/Mods/MechEngineer/`.
+0. Install MechEngineer dependencies (ModTek, CustomComponents)
+1. Checkout the MechEngineer repository, for example as `BATTLETECH/Mods/MechEngineer/`
 2. Copy the `Directory.Build.props.template` to `Directory.Build.props` and replace the BattleTechGameDir directory path.
 3. Open the solution in Visual Studio 2022 and compile the MechEngineer.dll .
 4. Start the game.
 
 ## Features
 
-The current features are always described right within the default settings in `Settings.defaults.json`.
+The current features are always described right within the default settings in `Settings.help.json`.
 
 ### Engines
 

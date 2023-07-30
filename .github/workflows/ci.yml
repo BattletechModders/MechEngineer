@@ -13,16 +13,24 @@ jobs:
           unzip CustomComponents.zip
         )
         (
+          cd ..
+          curl -L -o CustomFilters.zip https://github.com/BattletechModders/CustomFilters/releases/download/latest/CustomFilters.zip
+          unzip CustomFilters.zip
+        )
+        (
           cd source
           dotnet build -c Release -p:BattleTechGameDir="$BATTLETECH_DIR/"
         )
         (
           cd ..
           7z a -tzip -mx9 "$DIST_DIR/MechEngineer.zip" \
-            -ir!MechEngineer -ir!CustomComponents \
+            -ir!MechEngineer -ir!CustomComponents -ir!CustomFilters \
             -xr!source "-xr!.*"
         )
       release-notes: |
-        Requires ModTek V4 or later
-        - MechEngineer.zip contains only the bare bones mod + CustomComponents
+        Requires ModTek v4 or later.
+        MechEngineer.zip contains:
+          - MechEngineer
+          - [CustomComponents](https://github.com/BattletechModders/CustomComponents) (Required)
+          - [CustomFilters](https://github.com/BattletechModders/CustomFilters) (Recommended)
     secrets: inherit
