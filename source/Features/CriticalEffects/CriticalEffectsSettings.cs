@@ -7,6 +7,9 @@ public class CriticalEffectsSettings : ISettings
     public bool Enabled { get; set; } = true;
     public string EnabledDescription => "Allows custom multiple critical hit states for individual components.";
 
+    public bool ShowComponentFloatie { get; set; } = true;
+    public string ShowComponentFloatieDescription => "Shows the component status after being damaged using floaties.";
+
     public bool DebugLogEffects { get; set; } = false;
     public string DebugLogEffectsDescription => "Log effect changes for debugging purposes.";
 
