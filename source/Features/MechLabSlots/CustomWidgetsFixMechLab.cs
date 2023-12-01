@@ -22,12 +22,15 @@ public class CustomWidgetsFixMechLab
 
     internal static void Setup(MechLabPanel mechLabPanel)
     {
+        var cwcc = mechLabPanel.activeMechDef.Chassis.GetComponent<CustomWidgetChassisCustom>();
+
         SetupWidget(
             "TopLeftWidget",
             ref TopLeftWidget,
             mechLabPanel,
             mechLabPanel.rightArmWidget,
-            MechLabSlotsFeature.settings.TopLeftWidget
+            MechLabSlotsFeature.settings.TopLeftWidget,
+            cwcc?.TopLeftWidgetEnabled
         );
 
         SetupWidget(
@@ -35,17 +38,17 @@ public class CustomWidgetsFixMechLab
             ref TopRightWidget,
             mechLabPanel,
             mechLabPanel.leftArmWidget,
-            MechLabSlotsFeature.settings.TopRightWidget
+            MechLabSlotsFeature.settings.TopRightWidget,
+            cwcc?.TopRightWidgetEnabled
         );
     }
 
-    internal static void SetupWidget(
-        string id,
+    internal static void SetupWidget(string id,
         ref MechLabLocationWidget? topWidget,
         MechLabPanel mechLabPanel,
         MechLabLocationWidget armWidget,
-        MechLabSlotsSettings.WidgetSettings settings
-        )
+        MechLabSlotsSettings.WidgetSettings settings,
+        bool? chassisEnabled)
     {
         GameObject go;
         if (topWidget == null)
@@ -71,6 +74,7 @@ public class CustomWidgetsFixMechLab
         else
         {
             go = topWidget.gameObject;
+            go.SetActive(settings.Enabled);
         }
 
         var parent = armWidget.transform.parent;
@@ -95,6 +99,11 @@ public class CustomWidgetsFixMechLab
         {
             var mechRectTransform = parent.parent.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(mechRectTransform);
+        }
+
+        if (chassisEnabled.HasValue)
+        {
+            go.SetActive(chassisEnabled.Value);
         }
     }
 
