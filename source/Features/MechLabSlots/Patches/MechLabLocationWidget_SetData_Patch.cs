@@ -31,6 +31,7 @@ public static class MechLabLocationWidget_SetData_Patch
         MechLabSlotsFixer.FixSlots(widgetLayout, ___maxSlots);
         DynamicSlotsFeature.PrepareWidget(widgetLayout);
         AdjustMechLabLocationNaming(widget, loadout.Location);
+        CustomWidgetsFixMechLab.ShowOrHideCustomWidgets(widget);
     }
 
     private static void AdjustMechLabLocationNaming(MechLabLocationWidget widget, ChassisLocations location)

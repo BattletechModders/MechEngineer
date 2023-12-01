@@ -22,15 +22,12 @@ public class CustomWidgetsFixMechLab
 
     internal static void Setup(MechLabPanel mechLabPanel)
     {
-        var cwcc = mechLabPanel.activeMechDef.Chassis.GetComponent<CustomWidgetChassisCustom>();
-
         SetupWidget(
             "TopLeftWidget",
             ref TopLeftWidget,
             mechLabPanel,
             mechLabPanel.rightArmWidget,
-            MechLabSlotsFeature.settings.TopLeftWidget,
-            cwcc?.TopLeftWidgetEnabled
+            MechLabSlotsFeature.settings.TopLeftWidget
         );
 
         SetupWidget(
@@ -38,8 +35,7 @@ public class CustomWidgetsFixMechLab
             ref TopRightWidget,
             mechLabPanel,
             mechLabPanel.leftArmWidget,
-            MechLabSlotsFeature.settings.TopRightWidget,
-            cwcc?.TopRightWidgetEnabled
+            MechLabSlotsFeature.settings.TopRightWidget
         );
     }
 
@@ -47,8 +43,7 @@ public class CustomWidgetsFixMechLab
         ref MechLabLocationWidget? topWidget,
         MechLabPanel mechLabPanel,
         MechLabLocationWidget armWidget,
-        MechLabSlotsSettings.WidgetSettings settings,
-        bool? chassisEnabled)
+        MechLabSlotsSettings.WidgetSettings settings)
     {
         GameObject go;
         if (topWidget == null)
@@ -99,11 +94,6 @@ public class CustomWidgetsFixMechLab
         {
             var mechRectTransform = parent.parent.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(mechRectTransform);
-        }
-
-        if (chassisEnabled.HasValue)
-        {
-            go.SetActive(chassisEnabled.Value);
         }
     }
 
@@ -201,5 +191,30 @@ public class CustomWidgetsFixMechLab
         nwidget.ShowHighlightFrame(true, isOriginalLocation ? UIColor.Blue : UIColor.Gold);
         cRef = null;
         return false;
+    }
+
+    internal static void ShowOrHideCustomWidgets(MechLabLocationWidget widget)
+    {
+        if (widget.loadout.Location != ChassisLocations.CenterTorso)
+        {
+            return;
+        }
+
+        var custom = widget.mechLab.activeMechDef.Chassis.GetComponent<CustomWidgetChassisCustom>();
+        if (custom == null)
+        {
+            return;
+        }
+
+        static void ShowOrHideCustomWidget(MechLabLocationWidget? customWidget, bool? enabled)
+        {
+            if (customWidget == null || !enabled.HasValue)
+            {
+                return;
+            }
+            customWidget.gameObject.SetActive(enabled.Value);
+        }
+        ShowOrHideCustomWidget(TopLeftWidget, custom.TopLeftWidgetEnabled);
+        ShowOrHideCustomWidget(TopRightWidget, custom.TopRightWidgetEnabled);
     }
 }
