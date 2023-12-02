@@ -89,8 +89,10 @@ public class CustomWidgetsFixMechLab
 
         topWidget.Init(mechLabPanel);
 
+        // allow modify layout to go to 0 and
         var layout = new WidgetLayout(topWidget);
         MechLabSlotsFixer.ModifyLayoutSlotCount(layout, settings.Slots);
+
         {
             var mechRectTransform = parent.parent.GetComponent<RectTransform>();
             LayoutRebuilder.ForceRebuildLayoutImmediate(mechRectTransform);
@@ -195,26 +197,27 @@ public class CustomWidgetsFixMechLab
 
     internal static void ShowOrHideCustomWidgets(MechLabLocationWidget widget)
     {
+        if (TopLeftWidget == null || TopRightWidget == null)
+        {
+            Log.Main.Warning?.Log("Top widgets not initialized even though they should be");
+            return;
+        }
+
         if (widget.loadout.Location != ChassisLocations.CenterTorso)
         {
             return;
         }
 
         var custom = widget.mechLab.activeMechDef.Chassis.GetComponent<CustomWidgetChassisCustom>();
-        if (custom == null)
+        static void ShowOrHideCustomWidget(
+            MechLabLocationWidget customWidget,
+            bool? enabled,
+            MechLabSlotsSettings.WidgetSettings settings
+        )
         {
-            return;
+            customWidget.gameObject.SetActive(enabled ?? settings.Enabled);
         }
-
-        static void ShowOrHideCustomWidget(MechLabLocationWidget? customWidget, bool? enabled)
-        {
-            if (customWidget == null || !enabled.HasValue)
-            {
-                return;
-            }
-            customWidget.gameObject.SetActive(enabled.Value);
-        }
-        ShowOrHideCustomWidget(TopLeftWidget, custom.TopLeftWidgetEnabled);
-        ShowOrHideCustomWidget(TopRightWidget, custom.TopRightWidgetEnabled);
+        ShowOrHideCustomWidget(TopLeftWidget, custom?.TopLeftWidgetEnabled, MechLabSlotsFeature.settings.TopLeftWidget);
+        ShowOrHideCustomWidget(TopRightWidget, custom?.TopRightWidgetEnabled, MechLabSlotsFeature.settings.TopRightWidget);
     }
 }
