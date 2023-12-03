@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using BattleTech;
 using BattleTech.UI;
-using MechEngineer.Features.DynamicSlots;
-using MechEngineer.Features.OverrideTonnage;
 using UnityEngine;
 
 namespace MechEngineer.Features.MechLabSlots.Patches;
@@ -23,34 +20,8 @@ public static class MechLabLocationWidget_SetData_Patch
 
     [HarmonyPostfix]
     [HarmonyWrapSafe]
-    public static void Postfix(MechLabLocationWidget __instance, int ___maxSlots, ref LocationLoadoutDef loadout)
+    public static void Postfix(MechLabLocationWidget __instance)
     {
-        var widget = __instance;
-
-        var widgetLayout = new WidgetLayout(widget);
-        MechLabSlotsFixer.FixSlots(widgetLayout, ___maxSlots);
-        DynamicSlotsFeature.PrepareWidget(widgetLayout);
-        AdjustMechLabLocationNaming(widget, loadout.Location);
-        CustomWidgetsFixMechLab.ShowOrHideCustomWidgets(widget);
-    }
-
-    private static void AdjustMechLabLocationNaming(MechLabLocationWidget widget, ChassisLocations location)
-    {
-        // just hide armor = 0 stuff
-        widget.gameObject.SetActive(!ShouldHide(widget));
-
-        var mechLab = (MechLabPanel)widget.parentDropTarget;
-        var text = ChassisLocationNamingUtils.GetLocationLabel(mechLab.activeMechDef.Chassis, location);
-
-        widget.locationName.SetText(text);
-    }
-
-    // hide any location with maxArmor <= 0 && structure <= 1
-    // for vehicles and troopers
-    private static bool ShouldHide(MechLabLocationWidget widget)
-    {
-        var def = widget.chassisLocationDef;
-        return PrecisionUtils.SmallerOrEqualsTo(def.MaxArmor, 0)
-               && PrecisionUtils.SmallerOrEqualsTo(def.InternalStructure, 1);
+        MechLabSlotsFixer.FixWidgetSlotsActiveNamingFillers(__instance);
     }
 }

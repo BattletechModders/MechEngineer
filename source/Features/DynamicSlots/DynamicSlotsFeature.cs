@@ -45,6 +45,7 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
         internal readonly MechLabLocationWidget widget;
         internal int currentFreeSlots;
         internal int fixedSlots;
+        internal int customSlotsInCenterTorso;
 
         internal DynamicSlotBuilder(
             MechDefBuilder builder,
@@ -59,6 +60,7 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
             fixedSlots = locationInfo.Fixed;
 
             maxSlots = widget.maxSlots;
+            customSlotsInCenterTorso = CustomWidgetsFixMechLab.GetCustomWidgetSlotsCount(widget.mechLab.activeMechDef.Chassis);
         }
 
         int IComparable<DynamicSlotBuilder>.CompareTo(DynamicSlotBuilder other)
@@ -82,8 +84,7 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
                 var index = maxSlots - currentFreeSlots;
                 if (location == ChassisLocations.CenterTorso)
                 {
-                    index -= MechLabSlotsFeature.settings.TopLeftWidget.Slots;
-                    index -= MechLabSlotsFeature.settings.TopRightWidget.Slots;
+                    index -= customSlotsInCenterTorso;
                 }
                 return index;
             }
@@ -180,11 +181,6 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
         builder.HasOveruseAtAnyLocation(errors);
     }
 
-    internal static void PrepareWidget(WidgetLayout widgetLayout)
-    {
-        AddFillersToSlots(widgetLayout);
-    }
-
     internal static void ClearFillers(MechLabLocationWidget widget)
     {
         if (Fillers.TryGetValue(widget.loadout.Location, out var fillers))
@@ -204,7 +200,7 @@ internal class DynamicSlotsFeature : Feature<DynamicSlotsSettings>, IValidateMec
 
     private static Dictionary<ChassisLocations, List<Filler>> Fillers = new();
 
-    private static void AddFillersToSlots(WidgetLayout layout)
+    internal static void PrepareFillerSlots(WidgetLayout layout)
     {
         var location = layout.widget.loadout.Location;
 

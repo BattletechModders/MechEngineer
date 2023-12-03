@@ -5,6 +5,6 @@ namespace MechEngineer.Features.MechLabSlots;
 [CustomComponent("CustomWidgetChassis")]
 public class CustomWidgetChassisCustom : SimpleCustomChassis
 {
-    public bool? TopLeftWidgetEnabled { get; set; }
-    public bool? TopRightWidgetEnabled { get; set; }
+    internal MechLabSlotsSettings.WidgetOverrideSettings TopLeftWidget { get; set; } = new();
+    internal MechLabSlotsSettings.WidgetOverrideSettings TopRightWidget { get; set; } = new();
 }

@@ -67,7 +67,7 @@ internal static class ChassisHandler
             var location = locations[i].Location;
             foreach (var change in changes.Where(x => x.Location == location).Select(x => x.Change))
             {
-                ModifyInventorySlots(ref locations[i], location, change);
+                ModifyInventorySlots(chassisDef, ref locations[i], location, change);
             }
         }
 
@@ -93,8 +93,12 @@ internal static class ChassisHandler
         }
     }
 
-    private static void ModifyInventorySlots(ref LocationDef locationDef, ChassisLocations location, ValueChange<int> change)
-    {
+    private static void ModifyInventorySlots(
+        ChassisDef chassisDef,
+        ref LocationDef locationDef,
+        ChassisLocations location,
+        ValueChange<int> change
+    ) {
         if (locationDef.Location != location)
         {
             return;
@@ -108,8 +112,7 @@ internal static class ChassisHandler
 
         if (location == ChassisLocations.CenterTorso)
         {
-            newValue += MechLabSlotsFeature.settings.TopLeftWidget.Slots +
-                        MechLabSlotsFeature.settings.TopRightWidget.Slots;
+            newValue += CustomWidgetsFixMechLab.GetCustomWidgetSlotsCount(chassisDef);
         }
 
         var info = typeof(LocationDef).GetField("InventorySlots");

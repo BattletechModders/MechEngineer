@@ -2,7 +2,6 @@
 using BattleTech;
 using BattleTech.UI;
 using CustomComponents;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -26,24 +25,21 @@ public class CustomWidgetsFixMechLab
             "TopLeftWidget",
             ref TopLeftWidget,
             mechLabPanel,
-            mechLabPanel.rightArmWidget,
-            MechLabSlotsFeature.settings.TopLeftWidget
+            mechLabPanel.rightArmWidget
         );
 
         SetupWidget(
             "TopRightWidget",
             ref TopRightWidget,
             mechLabPanel,
-            mechLabPanel.leftArmWidget,
-            MechLabSlotsFeature.settings.TopRightWidget
+            mechLabPanel.leftArmWidget
         );
     }
 
-    internal static void SetupWidget(string id,
+    private static void SetupWidget(string id,
         ref MechLabLocationWidget? topWidget,
         MechLabPanel mechLabPanel,
-        MechLabLocationWidget armWidget,
-        MechLabSlotsSettings.WidgetSettings settings)
+        MechLabLocationWidget armWidget)
     {
         GameObject go;
         if (topWidget == null)
@@ -52,7 +48,7 @@ public class CustomWidgetsFixMechLab
 
             go = Object.Instantiate(template.gameObject, null);
             go.name = id;
-            go.SetActive(settings.Enabled);
+            go.SetActive(true);
             {
                 var vlg = go.GetComponent<VerticalLayoutGroup>();
                 vlg.padding = new RectOffset(0, 0, 0, 3);
@@ -62,15 +58,16 @@ public class CustomWidgetsFixMechLab
             go.transform.Find("layout_armor").gameObject.SetActive(false);
             go.transform.Find("layout_hardpoints").gameObject.SetActive(false);
             go.transform.Find("layout_locationText/txt_structure").gameObject.SetActive(false);
-            go.transform.Find("layout_locationText/txt_location").GetComponent<TextMeshProUGUI>().text = settings.Label;
 
             topWidget = go.GetComponent<MechLabLocationWidget>();
         }
         else
         {
             go = topWidget.gameObject;
-            go.SetActive(settings.Enabled);
+            go.SetActive(true);
         }
+
+        topWidget.Init(mechLabPanel);
 
         var parent = armWidget.transform.parent;
         go.transform.SetParent(parent, false);
@@ -85,17 +82,6 @@ public class CustomWidgetsFixMechLab
         {
             var clg = parent.GetComponent<VerticalLayoutGroup>();
             clg.padding = new RectOffset(0, 0, MechLabSlotsFeature.settings.MechLabArmTopPadding, 0);
-        }
-
-        topWidget.Init(mechLabPanel);
-
-        // allow modify layout to go to 0 and
-        var layout = new WidgetLayout(topWidget);
-        MechLabSlotsFixer.ModifyLayoutSlotCount(layout, settings.Slots);
-
-        {
-            var mechRectTransform = parent.parent.GetComponent<RectTransform>();
-            LayoutRebuilder.ForceRebuildLayoutImmediate(mechRectTransform);
         }
     }
 
@@ -122,30 +108,24 @@ public class CustomWidgetsFixMechLab
 
     private static MechLabLocationWidget? MechWidgetLocation(MechComponentDef? def)
     {
-        if (def != null && def.Is<CustomWidget>(out var config))
+        if (def == null || !def.Is<CustomWidget>(out var config))
         {
-            if (config.Location == CustomWidget.MechLabWidgetLocation.TopLeft
-                && MechLabSlotsFeature.settings.TopLeftWidget.Enabled)
-            {
-                return TopLeftWidget;
-            }
-
-            if (config.Location == CustomWidget.MechLabWidgetLocation.TopRight
-                && MechLabSlotsFeature.settings.TopRightWidget.Enabled)
-            {
-                return TopRightWidget;
-            }
+            return null;
         }
 
-        return null;
+        return config.Location switch
+        {
+            CustomWidget.MechLabWidgetLocation.TopLeft => TopLeftWidget,
+            CustomWidget.MechLabWidgetLocation.TopRight => TopRightWidget,
+            _ => null
+        };
     }
 
     internal static bool OnDrop(MechLabLocationWidget widget, PointerEventData eventData)
     {
         if (IsCustomWidget(widget))
         {
-            var mechLab = (MechLabPanel)widget.parentDropTarget;
-            mechLab.centerTorsoWidget.OnDrop(eventData);
+            widget.mechLab.centerTorsoWidget.OnDrop(eventData);
             return true;
         }
 
@@ -195,29 +175,50 @@ public class CustomWidgetsFixMechLab
         return false;
     }
 
-    internal static void ShowOrHideCustomWidgets(MechLabLocationWidget widget)
-    {
+    internal static void GetCustomWidgetsAndSlots(
+        ChassisDef chassisDef,
+        out MechLabSlotsSettings.WidgetSettings topLeftSettings,
+        out MechLabSlotsSettings.WidgetSettings topRightSettings,
+        out MechLabLocationWidget topLeftWidget,
+        out MechLabLocationWidget topRightWidget
+    ) {
         if (TopLeftWidget == null || TopRightWidget == null)
         {
             Log.Main.Warning?.Log("Top widgets not initialized even though they should be");
+            throw new Exception("Wtf, too early");
+        }
+
+        topLeftWidget = TopLeftWidget;
+        topRightWidget = TopRightWidget;
+        var custom = chassisDef.GetComponent<CustomWidgetChassisCustom>();
+        if (custom == null)
+        {
+            topLeftSettings = MechLabSlotsFeature.settings.TopLeftWidget;
+            topRightSettings = MechLabSlotsFeature.settings.TopRightWidget;
             return;
         }
 
-        if (widget.loadout.Location != ChassisLocations.CenterTorso)
-        {
-            return;
+        MechLabSlotsSettings.WidgetSettings Create(
+            MechLabSlotsSettings.WidgetSettings defaults,
+            MechLabSlotsSettings.WidgetOverrideSettings overrides
+        ) {
+            return new()
+            {
+                Label = overrides.Label ?? defaults.Label,
+                ShortLabel = overrides.ShortLabel ?? defaults.ShortLabel,
+                Slots = overrides.Slots ?? defaults.Slots,
+            };
         }
 
-        var custom = widget.mechLab.activeMechDef.Chassis.GetComponent<CustomWidgetChassisCustom>();
-        static void ShowOrHideCustomWidget(
-            MechLabLocationWidget customWidget,
-            bool? enabled,
-            MechLabSlotsSettings.WidgetSettings settings
-        )
-        {
-            customWidget.gameObject.SetActive(enabled ?? settings.Enabled);
-        }
-        ShowOrHideCustomWidget(TopLeftWidget, custom?.TopLeftWidgetEnabled, MechLabSlotsFeature.settings.TopLeftWidget);
-        ShowOrHideCustomWidget(TopRightWidget, custom?.TopRightWidgetEnabled, MechLabSlotsFeature.settings.TopRightWidget);
+        topLeftSettings = Create(MechLabSlotsFeature.settings.TopLeftWidget, custom.TopLeftWidget);
+        topRightSettings = Create(MechLabSlotsFeature.settings.TopRightWidget, custom.TopRightWidget);
+    }
+
+    internal static int GetCustomWidgetSlotsCount(ChassisDef chassisDef)
+    {
+        var custom = chassisDef.GetComponent<CustomWidgetChassisCustom>();
+        var topLeftSlots = custom?.TopLeftWidget.Slots ?? MechLabSlotsFeature.settings.TopLeftWidget.Slots;
+        var topRightSlots = custom?.TopRightWidget.Slots ?? MechLabSlotsFeature.settings.TopRightWidget.Slots;
+        return topLeftSlots + topRightSlots;
     }
 }

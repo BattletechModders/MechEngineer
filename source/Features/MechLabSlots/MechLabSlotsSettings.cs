@@ -43,6 +43,12 @@ internal class MechLabSlotsSettings : ISettings
         public string Label = null!;
         public string ShortLabel = null!;
         public int Slots;
-        public bool Enabled => Slots > 0;
+    }
+
+    internal class WidgetOverrideSettings
+    {
+        public string? Label = null;
+        public string? ShortLabel = null; // doesn't work yet
+        public int? Slots = null;
     }
 }
