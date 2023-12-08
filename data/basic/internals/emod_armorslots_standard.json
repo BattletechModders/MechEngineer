@@ -4,7 +4,7 @@
             "CategoryID": "Armor"
         },
         "Color": "DarkGray",
-        "Flags": [ "ignore_damage", "default", "hide_equip" ]
+        "Flags": [ "ignore_damage", "default", "hide_equip", "hide_combat" ]
     },
     "Description" : {
         "Cost" : 0,

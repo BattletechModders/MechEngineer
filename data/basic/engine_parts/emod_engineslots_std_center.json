@@ -10,7 +10,7 @@
             {"CategoryID": "EngineShield"},
             {"CategoryID": "EnginePart"}
         ],
-		"Flags" : [ "default", "not_broken", "hide_equip" ]
+		"Flags" : [ "default", "not_broken", "hide_equip", "hide_combat" ]
 	},
     "Description" : {
         "Cost" : 0,

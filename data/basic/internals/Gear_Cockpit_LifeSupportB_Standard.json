@@ -3,7 +3,7 @@
 		"Category" : { 
 			"CategoryID" : "LifeSupportB" 
 		},
-		"Flags": [ "not_broken", "default", "hide_equip" ]
+		"Flags": [ "not_broken", "default", "hide_equip", "hide_combat" ]
 	},
     "Description" : {
         "Cost" : 0,

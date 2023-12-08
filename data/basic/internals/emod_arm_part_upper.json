@@ -1,6 +1,6 @@
 {
 	"Custom": {
-		"Flags" : [ "default", "hide_equip" ],
+		"Flags" : [ "default", "hide_equip", "hide_combat" ],
 		"Category" : { "CategoryID" : "ArmUpperActuator" }
 	},
     "Description" : {
