@@ -38,6 +38,11 @@ public class CriticalEffectsCustom : SimpleCustomComponent, IAfterLoad, IIsDestr
 
     public void OnLoaded(Dictionary<string, object> values)
     {
+        if (!CriticalEffectsFeature.settings.DescriptionEnabled)
+        {
+            return;
+        }
+
         var descriptions = new List<string>();
 
         string? GetEffectDescription(string effectId)

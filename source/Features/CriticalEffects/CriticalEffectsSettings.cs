@@ -21,6 +21,7 @@ public class CriticalEffectsSettings : ISettings
     public ComponentType[] DefaultMaxCritsComponentTypes { get; set; } = {ComponentType.Weapon, ComponentType.AmmunitionBox, ComponentType.JumpJet, ComponentType.Upgrade};
     public string DefaultMaxCritsComponentTypesDescription => "For which types the default max crits are applied.";
 
+    public bool DescriptionEnabled = true;
     public string DescriptionIdentifier = "Criticals";
     public string DescriptionTemplate = "Critical Effects:<b><color=#F79B26FF>\r\n{{elements}}</color></b>\r\n";
     public string ElementTemplate = " <indent=10%><line-indent=-5%><line-height=65%>{{element}}</line-height></line-indent></indent>\r\n";
