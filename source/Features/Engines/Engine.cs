@@ -94,16 +94,7 @@ public class Engine
     }
 
     [UsedBy(User.BattleValue)]
-    public float EngineHeatDissipation
-    {
-        get
-        {
-            var dissipation = HeatSinkDef.Def.DissipationCapacity * (HeatSinkInternalFreeMaxCount + HeatBlockDef.HeatSinkCount);
-            dissipation += CoreDef.Def.DissipationCapacity;
-            dissipation += CoolingDef.Def.DissipationCapacity;
-            return dissipation;
-        }
-    }
+    public float EngineHeatDissipation => HeatSinkDef.Def.DissipationCapacity * (HeatSinkInternalFreeMaxCount + HeatBlockDef.HeatSinkCount);
 
     #region heat sink counting
 
