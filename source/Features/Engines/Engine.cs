@@ -117,7 +117,8 @@ public class Engine
 
     private float HeatSinkExternalFreeTonnage => HeatSinkExternalFreeCount * HeatSinkDef.Def.Tonnage;
     internal float GyroTonnage => PrecisionUtils.RoundUp(StandardGyroTonnage * WeightFactors.GyroFactor, WeightPrecision);
-    internal float EngineTonnage => PrecisionUtils.RoundUp(StandardEngineTonnage * WeightFactors.EngineFactor * WeightFactors.EngineMultiplier, WeightPrecision);
+    private float EngineTonnage1 => PrecisionUtils.RoundUp(StandardEngineTonnage * WeightFactors.EngineFactor, WeightPrecision);
+    internal float EngineTonnage => PrecisionUtils.RoundUp(EngineTonnage1 * WeightFactors.Engine2Factor, WeightPrecision);
     internal float HeatSinkTonnage => -HeatSinkExternalFreeTonnage;
     internal float TotalTonnage => HeatSinkTonnage + EngineTonnage + GyroTonnage;
 
