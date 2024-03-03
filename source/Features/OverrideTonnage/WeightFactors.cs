@@ -15,6 +15,9 @@ public class WeightFactors : SimpleCustomComponent, IAdjustSlotElement, IAdjustT
     public float ArmorFactor { get; set; } = 1;
     public float StructureFactor { get; set; } = 1;
     public float EngineFactor { get; set; } = 1; // XL, compact engines etc..
+    // this breaks tooltips/item descriptions on mechs where EngineFactor is not default
+    // mainly since an empty Weight() is being used to compare the weight changes a component does
+    // we would need to hook into the replace logic of CC to work with a full Weight object, removing any competing items
     public float Engine2Factor { get; set; } = 1; // supercharger
     public float GyroFactor { get; set; } = 1;
     public float ChassisCapacityFactor { get; set; } = 1;
