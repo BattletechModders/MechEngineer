@@ -11,12 +11,15 @@ namespace MechEngineer.Features.OverrideTonnage;
 [UsedBy(User.BattleValue)]
 public class WeightFactors : SimpleCustomComponent, IAdjustSlotElement, IAdjustTooltipEquipment, IAdjustTooltipWeapon
 {
+    // TODO rename to BaseMultiplier, all factors are additive and therefore only a factor against the base
     public float ArmorFactor { get; set; } = 1;
     public float StructureFactor { get; set; } = 1;
     public float EngineFactor { get; set; } = 1;
-    //public float EngineFactorFactor { get; set; } = 1; // TODO was problematic, 1. engine, 2. engine factor, 3. engine factor factor
     public float GyroFactor { get; set; } = 1;
     public float ChassisCapacityFactor { get; set; } = 1;
+
+    // Multipliers are multiplied with each other and the base
+    public float EngineMultiplier { get; set; } = 1;
 
     // not factors
     public int ReservedSlots { get; set; } = 0; // TODO move to own feature... SlotsHandler or SizeHandler
@@ -29,9 +32,10 @@ public class WeightFactors : SimpleCustomComponent, IAdjustSlotElement, IAdjustT
         ArmorFactor += savings.ArmorFactor - 1;
         StructureFactor += savings.StructureFactor - 1;
         EngineFactor += savings.EngineFactor - 1;
-        //EngineFactorFactor += savings.EngineFactorFactor - 1;
         GyroFactor += savings.GyroFactor - 1;
         ChassisCapacityFactor += savings.ChassisCapacityFactor - 1;
+
+        EngineMultiplier *= savings.EngineMultiplier;
 
         ReservedSlots += savings.ReservedSlots;
         ComponentByChassisFactor += savings.ComponentByChassisFactor;
