@@ -16,7 +16,7 @@ internal class MovementStat : IStatHandler
         static string DistanceToSummary(float meter)
         {
             var meters = PrecisionUtils.RoundDownToInt(meter);
-            var hexWidth = MechStatisticsRules.Combat.MoveConstants.ExperimentalGridDistance;
+            var hexWidth = EngineFeature.settings.MovementPointDistanceMultiplier;
             var hexes = PrecisionUtils.RoundDownToInt(meters / hexWidth);
             var translatedValue = Strings.T("{0}m / {1} hex", meters, hexes);
             return translatedValue;
