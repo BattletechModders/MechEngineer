@@ -236,6 +236,7 @@ internal class WeightsHandler : IAdjustTooltipEquipment, IAdjustTooltipWeapon, I
     private static float CalculateWeightFactorsChange(MechDef mechDef, WeightFactors componentFactors)
     {
         var weights = new Weights(mechDef, false);
+        weights.Factors.Engine2Factor = 1; // ignore Engine2Factor when calculating
         var before = weights.TotalWeight;
         weights.Factors.Combine(componentFactors);
         var after = weights.TotalWeight;
