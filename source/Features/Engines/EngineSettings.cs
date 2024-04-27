@@ -32,7 +32,7 @@ internal class EngineSettings : ISettings
     public float AdditionalRunSpeed = 24f * 2.5f;
     public string AdditionalRunSpeedDescription => "Additional max run distance regardless of any installed engine.";
 
-    public float MovementPointDistanceMultiplier = MechStatisticsRules.Combat.MoveConstants.ExperimentalGridDistance;
+    public float MovementPointDistanceMultiplier = 24f;
     public string MovementPointDistanceMultiplierDescription => "The distance of a TT movement point, 24 is vanilla CombatGameConstants.ExperimentalGridDistance .";
 
     public float? JumpJetMovementPointDistanceMultiplier = null;
