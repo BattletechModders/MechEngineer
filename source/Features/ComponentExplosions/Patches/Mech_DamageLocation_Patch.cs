@@ -21,6 +21,11 @@ internal static class Mech_DamageLocation_Patch
             return;
         }
 
+        if (aLoc is ArmorLocation.None or ArmorLocation.Invalid)
+        {
+            return;
+        }
+
         if (ComponentExplosionsFeature.IsInternalExplosionContained)
         {
             __result = false;
