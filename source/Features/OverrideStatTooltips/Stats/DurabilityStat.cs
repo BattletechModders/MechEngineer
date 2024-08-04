@@ -13,7 +13,6 @@ internal class DurabilityStat : IStatHandler
         {
             var value = mechDef.MechDefAssignedArmor;
             value *= ArmorMultiplier(mechDef);
-            //value *= DamageReductionMultiplierAll(mechDef);
             tooltipData.dataList.Add("<u>" + Strings.T("Armor") + "</u>", $"{value}");
         }
 
