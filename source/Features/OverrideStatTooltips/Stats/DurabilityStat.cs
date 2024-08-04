@@ -17,7 +17,8 @@ internal class DurabilityStat : IStatHandler
         }
 
         {
-            var value = 1 - DamageReductionMultiplierAll(mechDef);
+            var reduction = 1 - DamageReductionMultiplierAll(mechDef);
+            var percent = (int)(reduction * 100);
             tooltipData.dataList.Add("<u>" + Strings.T("Damage Reduction") + "</u>", Strings.T($"{value * 100} %"));
 /*
 <float>("DamageReductionMultiplierAll", 1f);
