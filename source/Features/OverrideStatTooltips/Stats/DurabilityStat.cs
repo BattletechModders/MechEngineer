@@ -1,4 +1,4 @@
-using BattleTech;
+﻿using BattleTech;
 using Localize;
 using MechEngineer.Features.ArmorStructureChanges;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
@@ -13,13 +13,12 @@ internal class DurabilityStat : IStatHandler
         {
             var value = mechDef.MechDefAssignedArmor;
             value *= ArmorMultiplier(mechDef);
-            value *= DamageReductionMultiplierAll(mechDef);
             tooltipData.dataList.Add("<u>" + Strings.T("Armor") + "</u>", $"{value}");
         }
 
         {
-            var value = DamageReductionMultiplierAll(mechDef);
-            tooltipData.dataList.Add("<u>" + Strings.T("Damage Reduction") + "</u>", Strings.T("{0} %", value));
+            var reduction = 1 - DamageReductionMultiplierAll(mechDef);
+            tooltipData.dataList.Add("<u>" + Strings.T("Damage Reduction") + "</u>", Strings.T("{0:P0}", reduction));
 /*
 <float>("DamageReductionMultiplierAll", 1f);
 <float>("DamageReductionMultiplierMelee", 1f);
@@ -69,7 +68,7 @@ internal class DurabilityStat : IStatHandler
     {
         var armor = mechDef.MechDefAssignedArmor;
         armor *= ArmorMultiplier(mechDef);
-        armor *= DamageReductionMultiplierAll(mechDef);
+        armor /= DamageReductionMultiplierAll(mechDef);
 
         var stats = UnityGameInstance.BattleTechGame.MechStatisticsConstants;
         return MechStatUtils.NormalizeToFraction(armor, 0, stats.MaxArmorFactor);
