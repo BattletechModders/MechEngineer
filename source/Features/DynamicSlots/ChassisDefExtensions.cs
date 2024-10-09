@@ -7,9 +7,30 @@ internal static class ChassisDefExtensions
 {
     internal static ref readonly LocationDef GetRefLocationDef(this ChassisDef chassisDef, ChassisLocations location)
     {
+        // if properly sorted, we can access the locationDef directly
         var indexed = ToIndexed(location);
         var index = (int)indexed;
-        return ref chassisDef.Locations[index];
+        if (index < chassisDef.Locations.Length)
+        {
+            ref readonly var locationDef = ref chassisDef.Locations[index];
+            if (locationDef.Location == location)
+            {
+                return ref locationDef;
+            }
+        }
+
+        // if not sorted properly, we have to search
+        for (var i = 0; i < chassisDef.Locations.Length; i++)
+        {
+            ref readonly var locationDef = ref chassisDef.Locations[i];
+            if (locationDef.Location == location)
+            {
+                return ref locationDef;
+            }
+        }
+
+        // some fallback that is compatible with "ref" no copy syntax
+        return ref chassisDef.Locations[0];
     }
 
     private static ChassisLocationsIndexed ToIndexed(ChassisLocations location)
