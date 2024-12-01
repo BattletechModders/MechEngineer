@@ -9,10 +9,6 @@
 	"DLL": "MechEngineer.dll",
 	"DLLEntryPoint": "MechEngineer.Control.Start",
 	
-	"LogSettings": {
-		"Enabled" : false
-	},
-	
 	"CustomResourceTypes": ["MEBonusDescriptions", "MEStatusEffects"],
 
 	"Manifest": [
