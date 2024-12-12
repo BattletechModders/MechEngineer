@@ -12,7 +12,7 @@ using Localize;
 namespace MechEngineer.Features.OverrideDescriptions;
 
 [CustomComponent("BonusDescriptions")]
-public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment, IAdjustInventoryElement, IAfterLoad, IListComponent<string>
+public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment, IAdjustInventoryElement, IOnLoaded, IListComponent<string>
 {
     public string[] Bonuses { get; set; } = null!;
 
@@ -51,7 +51,7 @@ public class BonusDescriptions : SimpleCustomComponent, IAdjustTooltipEquipment,
         }
     }
 
-    public void OnLoaded(Dictionary<string, object> values)
+    public void OnLoaded()
     {
         if (Bonuses.Length < 1)
         {

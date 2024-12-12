@@ -4,7 +4,7 @@ using CustomComponents;
 namespace MechEngineer.Features.CustomCapacities.Aliases;
 
 [CustomComponent("CarryHandCapacityChassisFactor")]
-public class CarryHandCapacityChassisFactorCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
+public class CarryHandCapacityChassisFactorCustom : SimpleCustomComponent, IValueComponent<float>, IOnLoaded
 {
     private float Value;
 
@@ -13,7 +13,7 @@ public class CarryHandCapacityChassisFactorCustom : SimpleCustomComponent, IValu
         Value = value;
     }
 
-    public void OnLoaded(Dictionary<string, object> values)
+    public void OnLoaded()
     {
         Def.AddComponent(new CapacityModCustom
             {

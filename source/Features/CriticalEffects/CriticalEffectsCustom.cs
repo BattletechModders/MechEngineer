@@ -10,7 +10,7 @@ using MechEngineer.Misc;
 namespace MechEngineer.Features.CriticalEffects;
 
 [CustomComponent("CriticalEffects")]
-public class CriticalEffectsCustom : SimpleCustomComponent, IAfterLoad, IIsDestroyed
+public class CriticalEffectsCustom : SimpleCustomComponent, IOnLoaded, IIsDestroyed
 {
     public string[][] PenalizedEffectIDs { get; set; } = Array.Empty<string[]>();
     public string[] OnDestroyedEffectIDs { get; set; } = Array.Empty<string>();
@@ -36,7 +36,7 @@ public class CriticalEffectsCustom : SimpleCustomComponent, IAfterLoad, IIsDestr
     [UsedBy(User.FieldRepairs)]
     public int MaxHits => PenalizedEffectIDs.Length + 1;
 
-    public void OnLoaded(Dictionary<string, object> values)
+    public void OnLoaded()
     {
         if (!CriticalEffectsFeature.settings.DescriptionEnabled)
         {

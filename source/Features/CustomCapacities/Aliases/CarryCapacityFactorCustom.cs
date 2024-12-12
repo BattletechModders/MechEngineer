@@ -4,7 +4,7 @@ using CustomComponents;
 namespace MechEngineer.Features.CustomCapacities.Aliases;
 
 [CustomComponent("CarryCapacityFactor")]
-public class CarryCapacityFactorCustom : SimpleCustomComponent, IValueComponent<float>, IAfterLoad
+public class CarryCapacityFactorCustom : SimpleCustomComponent, IValueComponent<float>, IOnLoaded
 {
     private float Value;
     public void LoadValue(float value)
@@ -12,7 +12,7 @@ public class CarryCapacityFactorCustom : SimpleCustomComponent, IValueComponent<
         Value = value;
     }
 
-    public void OnLoaded(Dictionary<string, object> values)
+    public void OnLoaded()
     {
         Def.AddComponent(new CapacityModCustom
             {
