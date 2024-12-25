@@ -16,11 +16,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net471</TargetFramework>
-    <LangVersion>11</LangVersion>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>13</LangVersion>
     <AssemblySearchPaths>
       $(ReferencePath);
       {HintPathFromItem};
+      $(BattleTechGameDir)\Mods\ModTek\lib\;
       $(BattleTechGameDir)\BattleTech_Data\Managed\
     </AssemblySearchPaths>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
@@ -36,22 +37,21 @@
     <PublicizerRuntimeStrategies>Unsafe</PublicizerRuntimeStrategies>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Krafs.Publicizer" Version="2.2.1" />
+    <PackageReference Include="Krafs.Publicizer" Version="2.3.0" />
     <Publicize Include="Assembly-CSharp" />
     <Publicize Include="DOTween;DOTweenPro" />
     <Publicize Include="UnityEngine.CoreModule" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HarmonyX" Version="2.10.1">
-      <PrivateAssets>all</PrivateAssets>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </PackageReference>
-    <PackageReference Include="PolySharp" Version="1.13.2">
+    <PackageReference Include="PolySharp" Version="1.15.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="CustomComponents">
       <!-- relative to ME -->
       <HintPath>$(MechEngineerModPath)\..\CustomComponents\CustomComponents.dll</HintPath>
@@ -70,6 +70,9 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="InControl">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ModTek">
       <Private>False</Private>
     </Reference>
     <Reference Include="System">

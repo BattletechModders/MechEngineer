@@ -28,7 +28,7 @@ jobs:
             -xr!source "-xr!.*"
         )
       release-notes: |
-        Requires ModTek v4 or later.
+        Requires ModTek v4.3 or later.
         MechEngineer.zip contains:
           - MechEngineer
           - [CustomComponents](https://github.com/BattletechModders/CustomComponents) (Required)

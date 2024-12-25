@@ -6,7 +6,6 @@ using BattleTech;
 using MechEngineer.Features;
 using MechEngineer.Features.OverrideStatTooltips.Helper;
 using MechEngineer.Misc;
-using NullableLogging;
 
 namespace MechEngineer;
 
@@ -42,8 +41,6 @@ public static class Control
             Log.Main.Info?.Log($"version {Assembly.GetExecutingAssembly().GetInformationalVersion()}");
             Log.Main.Info?.Log("settings loaded");
             Log.Main.Debug?.Log("debugging enabled");
-
-            Harmony.CreateAndPatchAll(typeof(NullableLogger), nameof(MechEngineer) + "." + nameof(NullableLogger));
 
             Log.Main.Debug?.Log("setting up features");
 
