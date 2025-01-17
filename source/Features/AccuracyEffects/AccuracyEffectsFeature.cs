@@ -1,6 +1,6 @@
+using System;
 using BattleTech;
 using MechEngineer.Features.DynamicSlots;
-using MechEngineer.Features.PlaceholderEffects;
 
 namespace MechEngineer.Features.AccuracyEffects;
 
@@ -10,31 +10,35 @@ internal class AccuracyEffectsFeature : Feature<AccuracyEffectsSettings>
 
     internal override AccuracyEffectsSettings Settings => Control.Settings.AccuracyEffects;
 
-    internal override bool Enabled => base.Enabled && PlaceholderEffectsFeature.Shared.Loaded;
-
     internal static void SetupAccuracyStatistics(StatCollection statCollection)
     {
         foreach (var location in LocationUtils.Locations)
         {
-            AccuracyForLocation(statCollection, location);
+            var statName = GetStatNameForChassisLocation(location);
+            statCollection.AddStatistic(statName, 0.0f);
         }
     }
 
     internal static float AccuracyForLocation(StatCollection statCollection, ChassisLocations location)
     {
-        var naming = new MechPlaceholderInterpolation(location);
-        var key = naming.LocationalStatisticName("Accuracy");
-        return AccuracyForKey(statCollection, key);
+        var statName = GetStatNameForChassisLocation(location);
+        return statCollection.GetStatistic(statName).Value<float>();
     }
 
-    private static float AccuracyForKey(StatCollection statCollection, string collectionKey)
+    // this is similar to how Structure and Armor is looked up, see Mech.InitStats
+    private static string GetStatNameForChassisLocation(ChassisLocations location)
     {
-        var statistic = statCollection.GetStatistic(collectionKey);
-        if (statistic == null)
+        return location switch
         {
-            const float defaultValue = 0.0f;
-            statistic = statCollection.AddStatistic(collectionKey, defaultValue);
-        }
-        return statistic.Value<float>();
+            ChassisLocations.Head => "Head.Accuracy",
+            ChassisLocations.LeftArm => "LeftArm.Accuracy",
+            ChassisLocations.LeftTorso => "LeftTorso.Accuracy",
+            ChassisLocations.CenterTorso => "CenterTorso.Accuracy",
+            ChassisLocations.RightTorso => "RightTorso.Accuracy",
+            ChassisLocations.RightArm => "RightArm.Accuracy",
+            ChassisLocations.LeftLeg => "LeftLeg.Accuracy",
+            ChassisLocations.RightLeg => "RightLeg.Accuracy",
+            _ => throw new ArgumentException()
+        };
     }
 }

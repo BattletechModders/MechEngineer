@@ -14,17 +14,6 @@ internal class MechPlaceholderInterpolation : PlaceholderInterpolation
         Location = mechComponent.mechComponentRef.MountedLocation;
     }
 
-    internal MechPlaceholderInterpolation(ChassisLocations location)
-    {
-        Location = location;
-    }
-
-    internal string LocationalStatisticName(string statisticName)
-    {
-        // this is how Structure and Armor is looked up in Mech initstats
-        return InterpolateStatisticName($"{{location}}.{statisticName}");
-    }
-
     internal override string InterpolateEffectId(string id)
     {
         return base.InterpolateEffectId(id).Replace(LocationPlaceholder, LocationId);
