@@ -42,57 +42,38 @@ internal class MechPlaceholderInterpolation : PlaceholderInterpolation
             .Replace(SidePlaceholder, SideName);
     }
 
-    internal override string LocationId => Location.ToString();
-
-    private string LocationName
+    internal override string LocationId => Location switch
     {
-        get
-        {
-            switch (Location)
-            {
-                case ChassisLocations.LeftArm:
-                    return "left arm";
-                case ChassisLocations.LeftLeg:
-                    return "left leg";
-                case ChassisLocations.LeftTorso:
-                    return "left torso";
-                case ChassisLocations.RightArm:
-                    return "right arm";
-                case ChassisLocations.RightLeg:
-                    return "right leg";
-                case ChassisLocations.RightTorso:
-                    return "right torso";
-                case ChassisLocations.CenterTorso:
-                    return "center torso";
-                case ChassisLocations.Head:
-                    return "head";
-                default:
-                    return LocationId;
-            }
-        }
-    }
+        ChassisLocations.Head => "Head",
+        ChassisLocations.LeftArm => "LeftArm",
+        ChassisLocations.LeftTorso => "LeftTorso",
+        ChassisLocations.CenterTorso => "CenterTorso",
+        ChassisLocations.RightTorso => "RightTorso",
+        ChassisLocations.RightArm => "RightArm",
+        ChassisLocations.LeftLeg => "LeftLeg",
+        ChassisLocations.RightLeg => "RightLeg",
+        _ => "LocationId"
+    };
 
-    private string SideName
+    private string LocationName => Location switch
     {
-        get
-        {
-            switch (Location)
-            {
-                case ChassisLocations.LeftArm:
-                case ChassisLocations.LeftLeg:
-                case ChassisLocations.LeftTorso:
-                    return "left";
-                case ChassisLocations.RightArm:
-                case ChassisLocations.RightLeg:
-                case ChassisLocations.RightTorso:
-                    return "right";
-                case ChassisLocations.CenterTorso:
-                    return "center";
-                case ChassisLocations.Head:
-                    return "head";
-                default:
-                    return LocationId;
-            }
-        }
-    }
+        ChassisLocations.Head => "head",
+        ChassisLocations.LeftArm => "left arm",
+        ChassisLocations.LeftTorso => "left torso",
+        ChassisLocations.RightArm => "right arm",
+        ChassisLocations.RightTorso => "right torso",
+        ChassisLocations.CenterTorso => "center torso",
+        ChassisLocations.LeftLeg => "left leg",
+        ChassisLocations.RightLeg => "right leg",
+        _ => "LocationName"
+    };
+
+    private string SideName => Location switch
+    {
+        ChassisLocations.Head => "head",
+        ChassisLocations.LeftArm or ChassisLocations.LeftLeg or ChassisLocations.LeftTorso => "left",
+        ChassisLocations.RightArm or ChassisLocations.RightLeg or ChassisLocations.RightTorso => "right",
+        ChassisLocations.CenterTorso => "center",
+        _ => "SideName"
+    };
 }

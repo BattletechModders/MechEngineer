@@ -27,21 +27,23 @@ internal class VehiclePlaceholderInterpolation : PlaceholderInterpolation
         return text.Replace(LocationPlaceholder, LocationName);
     }
 
-    internal override string LocationId
+    internal override string LocationId => Location switch
     {
-        get
-        {
-            switch (Location)
-            {
-                case VehicleChassisLocations.Left:
-                    return "LeftSide";
-                case VehicleChassisLocations.Right:
-                    return "RightSide";
-                default:
-                    return Location.ToString();
-            }
-        }
-    }
+        VehicleChassisLocations.Turret => "Turret",
+        VehicleChassisLocations.Left => "LeftSide",
+        VehicleChassisLocations.Right => "RightSide",
+        VehicleChassisLocations.Front => "Front",
+        VehicleChassisLocations.Rear => "Rear",
+        _ => "LocationId"
+    };
 
-    private string LocationName => Location.ToString().ToLowerInvariant();
+    private string LocationName => Location switch
+    {
+        VehicleChassisLocations.Turret => "turret",
+        VehicleChassisLocations.Front => "front",
+        VehicleChassisLocations.Left => "left",
+        VehicleChassisLocations.Right => "right",
+        VehicleChassisLocations.Rear => "rear",
+        _ => "LocationName"
+    };
 }
