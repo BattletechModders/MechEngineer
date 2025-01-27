@@ -23,9 +23,17 @@ jobs:
         )
         (
           cd ..
-          7z a -tzip -mx9 "$DIST_DIR/MechEngineer.zip" \
-            -ir!MechEngineer -ir!CustomComponents -ir!CustomFilters \
+          7z a -tzip "MechEngineer.zip" \
+            MechEngineer/ \
             -xr!source "-xr!.*"
+        )
+        (
+          cd ..
+          mkdir all && cd all
+          unzip ../CustomComponents.zip
+          unzip ../CustomFilters.zip
+          unzip ../MechEngineer.zip
+          7z a -tzip -mx9 "$DIST_DIR/MechEngineer.zip" .
         )
       release-notes: |
         Requires ModTek v4.3 or later.
