@@ -47,12 +47,14 @@ internal class StatisticAdapter<T> where T : notnull
         }
     }
 
-    internal void CreateIfMissing()
+    internal bool CreateIfMissing()
     {
         if (!StatCollection.ContainsStatistic(Key))
         {
             Create();
+            return true;
         }
+        return false;
     }
 
     internal void Modify(EffectData effectData)

@@ -5,6 +5,11 @@ namespace MechEngineer.Features.CriticalEffects;
 
 internal static class StatCollectionExtension
 {
+    internal static StatisticAdapter<int> MECriticalSlotsHitMax(this StatCollection statCollection)
+    {
+        return new("MECriticalSlotsHitMax", statCollection, 0);
+    }
+
     internal static StatisticAdapter<int> MECriticalSlotsHit(this StatCollection statCollection)
     {
         return new("MECriticalSlotsHit", statCollection, 0);

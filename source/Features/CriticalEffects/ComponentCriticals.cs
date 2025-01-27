@@ -25,11 +25,18 @@ internal readonly struct ComponentCriticals
 
     internal int ComponentHitMax()
     {
-        var inventorySize = component.componentDef.Is<CriticalChanceCustom>(out var chance) ? chance.Size : component.componentDef.InventorySize;
-        // TODO fix size correctly for location:
-        // introduce fake items for overflow location that is crit linked and overwrite component hit max for original + crit linked
-        var additionalSize = component.componentDef.Is<DynamicSlots.DynamicSlots>(out var slot) && slot.InnerAdjacentOnly ? slot.ReservedSlots : 0;
-        return inventorySize + additionalSize;
+        var stat = component.StatCollection.MECriticalSlotsHitMax();
+        if (stat.CreateIfMissing()) { // move to Mech.init and remove "CreateIfMissing" from StatAdapter
+            var componentDef = component.componentDef;
+            var size = componentDef.InventorySize;
+            // TODO fix size correctly for location:
+            // introduce fake items for overflow location that is crit linked and overwrite component hit max for original + crit linked
+            var additionalSize =
+                componentDef.Is<DynamicSlots.DynamicSlots>(out var slot)
+                && slot.InnerAdjacentOnly ? slot.ReservedSlots : 0;
+            stat.SetDefault(size + additionalSize);
+        }
+        return stat.Get();
     }
 
     internal int ComponentHitCount(int? setHits = null)
