@@ -36,7 +36,7 @@ jobs:
           7z a -tzip -mx9 "$DIST_DIR/MechEngineer.zip" .
         )
       release-notes: |
-        Requires ModTek v4.3 or later.
+        Requires ModTek to be up-to-date.
         MechEngineer.zip contains:
           - MechEngineer
           - [CustomComponents](https://github.com/BattletechModders/CustomComponents) (Required)
