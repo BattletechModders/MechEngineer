@@ -12,14 +12,16 @@ namespace MechEngineer.Features.CriticalEffects;
 [CustomComponent("CriticalEffects")]
 public class CriticalEffectsCustom : SimpleCustomComponent, IOnLoaded, IIsDestroyed
 {
-    public string[][] PenalizedEffectIDs { get; set; } = Array.Empty<string[]>();
-    public string[] OnDestroyedEffectIDs { get; set; } = Array.Empty<string>();
-    public string[] OnDestroyedDisableEffectIds { get; set; } = Array.Empty<string>();
+    public string[][] PenalizedEffectIDs { get; set; } = [];
+    public string[] OnDestroyedEffectIDs { get; set; } = [];
+    public string[] OnDestroyedDisableEffectIds { get; set; } = [];
 
     public DeathMethod DeathMethod { get; set; } = DeathMethod.NOT_SET;
     public string? OnDestroyedVFXName { get; set; } = null;
     public string? OnDestroyedAudioEventName { get; set; } = null;
 
+    // all linked items need to have the same crit list.
+    // those crits are scoped to a mech or a mech location, but never a component
     public string? LinkedStatisticName { get; set; } = null;
 
     public string? CritFloatieMessage { get; set; } = null;
