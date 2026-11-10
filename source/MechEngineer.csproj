@@ -17,7 +17,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net472</TargetFramework>
-    <LangVersion>13</LangVersion>
+    <LangVersion>15</LangVersion>
     <AssemblySearchPaths>
       $(ReferencePath);
       {HintPathFromItem};
@@ -37,13 +37,13 @@
     <PublicizerRuntimeStrategies>Unsafe</PublicizerRuntimeStrategies>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Krafs.Publicizer" Version="2.3.0" />
+    <PackageReference Include="Krafs.Publicizer" Version="2.3.2" />
     <Publicize Include="Assembly-CSharp" />
     <Publicize Include="DOTween;DOTweenPro" />
     <Publicize Include="UnityEngine.CoreModule" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="PolySharp" Version="1.15.0">
+    <PackageReference Include="PolySharp" Version="1.17.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
